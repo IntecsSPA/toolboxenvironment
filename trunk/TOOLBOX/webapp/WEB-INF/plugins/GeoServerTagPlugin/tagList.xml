@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tagList>
+    <tag name="DeployCoverage" class="it.intecs.pisa.toolbox.plugins.geoServerTagPlugin.DeployCoverage"/>
+    <tag name="DeleteCoverage" class="it.intecs.pisa.toolbox.plugins.geoServerTagPlugin.DeleteCoverage"/>
+    <tag name="ModifyCoverage" class="it.intecs.pisa.toolbox.plugins.geoServerTagPlugin.ModifyCoverage"/>
+    <tag name="DeployVectorData" class="it.intecs.pisa.toolbox.plugins.geoServerTagPlugin.DeployVectorData"/>
+    <tag name="DeleteVectorData" class="it.intecs.pisa.toolbox.plugins.geoServerTagPlugin.DeleteVectorData"/>
+    <tag name="ModifyVectorData" class="it.intecs.pisa.toolbox.plugins.geoServerTagPlugin.ModifyVectorData"/>
+</tagList>

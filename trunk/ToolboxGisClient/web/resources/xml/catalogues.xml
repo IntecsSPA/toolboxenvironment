@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalogues xmlns="http://toolbox.pisa.intecs.it/toolbox">
+	<catalogue name="eoli Search" version="2.6">
+		<description>This option allows testing the Search operation of a catalogue compliant with the EOLI catalogue ICD</description>
+		<interfaceTransformer fileName="eoliSearchInterface2_6.xml"/>
+		<messageTransformer fileName="eoliSearchMessageTransformer.xsl"/>
+		<resultTransformer fileName="resultDisplay.xsl"/>
+		<SOAPOperation>http://earth.esa.int/SOAP/searchRequest</SOAPOperation>
+		<defaultURL>http://muiscx2.esrin.esa.int:8090/</defaultURL>
+	</catalogue>
+	<catalogue name="eoli Present" version="2.6">
+		<description>This option allows testing the Present operation of a catalogue compliant with the EOLI catalogue ICD</description>
+		<interfaceTransformer fileName="eoliPresentInterfaceTransformer.xsl"/>
+		<messageTransformer fileName="eoliPresentMessageTransformer.xsl"/>
+		<resultTransformer fileName="resultDisplay.xsl"/>
+		<SOAPOperation>http://earth.esa.int/SOAP/presentRequest</SOAPOperation>
+		<defaultURL>http://muiscx2.esrin.esa.int:8090/</defaultURL>
+	</catalogue>
+	<catalogue name="SSE Search" version="1.3">
+		<description>This option allows testing the Search operation of a catalogue compliant with the SSE ICD</description>
+		<interfaceTransformer fileName="SSESearchInterfaceTransformer.xsl"/>
+		<messageTransformer fileName="SSESearchMessageTransformer.xsl"/>
+		<resultTransformer fileName="resultDisplay.xsl"/>
+		<SOAPOperation>processSearch</SOAPOperation>
+		<defaultURL>http://services.eoportal.org/</defaultURL>
+	</catalogue>
+	<catalogue name="SSE Present" version="1.3">
+		<description>This option allows testing the Present operation of a catalogue compliant with the SSE ICD</description>
+		<interfaceTransformer fileName="SSEPresentInterfaceTransformer.xsl"/>
+		<messageTransformer fileName="SSEPresentMessageTransformer.xsl"/>
+		<resultTransformer fileName="resultDisplay.xsl"/>
+		<defaultURL>http://services.eoportal.org/</defaultURL>
+	</catalogue>
+</catalogues>

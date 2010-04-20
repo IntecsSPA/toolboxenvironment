@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ -
+ -  Developed By:      Intecs  S.P.A.
+ -  File Name:         $RCSfile: exportDescriptor.xml,v $
+ -  TOOLBOX Version:   $Name:  $
+ -  File Revision:     $Revision: 1.2 $
+ -  Revision Date:     $Date: 2004/04/28 15:04:15 $
+ -
+ --><exportDescriptor xmlns="http://pisa.intecs.it/mass/toolbox/exportDescriptor" xmlns:com="http://pisa.intecs.it/mass/toolbox/common" xmlns:dsc="http://pisa.intecs.it/mass/toolbox/serviceDescriptor" xmlns:mtbs="http://pisa.intecs.it/mass/toolbox/xmlScript">
+	<service xmlns="http://pisa.intecs.it/mass/toolbox/serviceDescriptor" queuing="false" serviceName="testService" serviceSchema="" suspendMode="soft" wsdlTargetNS="" xmlns:com="http://pisa.intecs.it/mass/toolbox/common" xmlns:mtbs="http://pisa.intecs.it/mass/toolbox/xmlScript">
+	<schemas/>	
+	<operations><operation name="testOperation" type="synchronous"><wsdlInfo><requestMessage name="" ns=""/><responseMessage name="" ns=""/></wsdlInfo><script soapAction="test"><mtbs:sequence xmlns:mtbs="http://pisa.intecs.it/mass/toolbox/xmlScript">	<mtbs:xml attributePrefix="attribute$" textTag="evaluate">		<testService>			<helloWorld>The TOOLBOX has been correctly installed.</helloWorld>		</testService>	</mtbs:xml></mtbs:sequence></script></operation></operations>
+</service>
+	<schemaDocuments/>
+</exportDescriptor>

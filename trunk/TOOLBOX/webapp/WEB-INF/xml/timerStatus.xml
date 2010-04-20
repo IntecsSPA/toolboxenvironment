@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ -
+ -  Developed By:      Intecs S.P.A.
+ -  File Name:         $RCSfile: timerStatus.xml,v $
+ -  TOOLBOX Version:   $Name:  $
+ -  File Revision:     $Revision: 1.2 $
+ -  Revision Date:     $Date: 2004/04/14 14:37:46 $
+ -
+ -->
+<mtts:timerStatus xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:mtts="http://pisa.intecs.it/mass/toolbox/timerStatus"/>

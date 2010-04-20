@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin name="SecurityPlugin" version="1.0">
+    <tagPlugin namespace="http://pisa.intecs.it/toolbox/security" class="it.intecs.pisa.toolbox.plugins.security.SecurityTagPlugin"/>
+</plugin>

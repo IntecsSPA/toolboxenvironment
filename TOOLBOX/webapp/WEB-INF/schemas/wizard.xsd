@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema elementFormDefault="qualified" targetNamespace="http://pisa.intecs.it/mass/toolbox/wizard" xmlns="http://pisa.intecs.it/mass/toolbox/wizard" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:complexType name="attributeType">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="validValue" type="validValueType"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="default" type="xs:string" use="required"/>
+                <xs:attribute default="true" name="required" type="xs:boolean"/>
+	</xs:complexType>
+	<xs:complexType name="attributesType">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="attribute" type="attributeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="description" type="xs:string"/>
+	<xs:complexType name="enclosedElementType">
+		<xs:sequence>
+			<xs:element name="requiredTypes" type="requiredTypesType"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="enclosedElementsType">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="enclosedElement" type="enclosedElementType"/>
+		</xs:sequence>
+		<xs:attribute name="requiredTypes" type="xs:string"/>
+	</xs:complexType>
+	<xs:complexType name="requiredTypesType">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" name="type" type="typeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="returnsType">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="type" type="typeType"/>
+		</xs:sequence>
+		<xs:attribute name="type" type="xs:string"/>
+	</xs:complexType>
+	<xs:complexType name="tagType">
+		<xs:sequence>
+			<xs:element name="attributes" type="attributesType"/>
+			<xs:element name="enclosedElements" type="enclosedElementsType"/>
+			<xs:element name="returns" type="returnsType"/>
+			<xs:element ref="description"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required">
+			<!--<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="and"/>
+					<xs:enumeration value="bitAnd"/>
+					<xs:enumeration value="bitOr"/>
+					<xs:enumeration value="bitXor"/>
+					<xs:enumeration value="character"/>
+					<xs:enumeration value="class"/>
+					<xs:enumeration value="classLiteral"/>
+					<xs:enumeration value="command"/>
+					<xs:enumeration value="dec"/>
+					<xs:enumeration value="divide"/>
+					<xs:enumeration value="eq"/>
+					<xs:enumeration value="existsVariable"/>
+					<xs:enumeration value="field"/>
+					<xs:enumeration value="generateError"/>
+					<xs:enumeration value="gt"/>
+					<xs:enumeration value="gte"/>
+					<xs:enumeration value="if"/>
+					<xs:enumeration value="inc"/>
+					<xs:enumeration value="isNotNull"/>
+					<xs:enumeration value="isNull"/>
+					<xs:enumeration value="lShift"/>
+					<xs:enumeration value="literal"/>
+					<xs:enumeration value="localHost"/>
+					<xs:enumeration value="log"/>
+					<xs:enumeration value="lt"/>
+					<xs:enumeration value="lte"/>
+					<xs:enumeration value="methodInvocation"/>
+					<xs:enumeration value="minus"/>
+					<xs:enumeration value="module"/>
+					<xs:enumeration value="multiply"/>
+					<xs:enumeration value="negate"/>
+					<xs:enumeration value="neq"/>
+					<xs:enumeration value="newObject"/>
+					<xs:enumeration value="not"/>
+					<xs:enumeration value="null"/>
+					<xs:enumeration value="object"/>
+					<xs:enumeration value="oneq"/>
+					<xs:enumeration value="or"/>
+					<xs:enumeration value="parameter"/>
+					<xs:enumeration value="plus"/>
+					<xs:enumeration value="primitiveType"/>
+					<xs:enumeration value="rSShift"/>
+					<xs:enumeration value="rUShift"/>
+					<xs:enumeration value="randomInt"/>
+					<xs:enumeration value="sequence"/>
+					<xs:enumeration value="set"/>
+					<xs:enumeration value="setVariable"/>
+					<xs:enumeration value="sleep"/>
+					<xs:enumeration value="timer"/>
+					<xs:enumeration value="variable"/>
+					<xs:enumeration value="xor"/>
+					<xs:enumeration value="try"/>
+					<xs:enumeration value="ifError"/>
+					<xs:enumeration value="anyway"/>
+					<xs:enumeration value="atoi"/>
+					<xs:enumeration value="itoa"/>
+                                        <xs:enumeration value="execute"/>
+                                        <xs:enumeration value="string"/>
+                                        <xs:enumeration value="stringLength"/>
+                                        <xs:enumeration value="print"/>
+                                        <xs:enumeration value="oneq"/>
+                                        <xs:enumeration value="oeq"/>
+                                        <xs:enumeration value="stringCat"/>
+                                        <xs:enumeration value="procedure"/>
+                                        <xs:enumeration value="argument"/>
+				</xs:restriction>
+			</xs:simpleType>-->
+		</xs:attribute>
+		<xs:attribute name="minChildren" type="xs:integer" use="required"/>
+		<xs:attribute name="maxChildren" type="xs:NMTOKEN" use="required"/>
+		<xs:attribute default="true" name="standalone" type="xs:boolean"/>
+                <xs:attribute default="false" name="hasContent" type="xs:boolean"/>
+                <xs:attribute default="false" name="hasNSDecl" type="xs:boolean"/>
+	</xs:complexType>
+	<xs:complexType name="elementType">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="setType">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" name="element" type="elementType"/>
+		</xs:sequence>
+		<xs:attribute fixed="Object" name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="tagsType">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" name="tag" type="tagType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="setsType">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" name="set" type="setType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="typeType">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="validValueType">
+		<xs:attribute name="value" type="xs:string" use="required"/>
+	</xs:complexType>
+	<!--<xs:simpleType name="TypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ALL"/>
+			<xs:enumeration value="Boolean"/>
+			<xs:enumeration value="Character"/>
+			<xs:enumeration value="Choice"/>
+			<xs:enumeration value="Class"/>
+			<xs:enumeration value="Double"/>
+			<xs:enumeration value="Float"/>
+			<xs:enumeration value="Integer"/>
+			<xs:enumeration value="LValue"/>
+			<xs:enumeration value="Long"/>
+			<xs:enumeration value="Object"/>
+			<xs:enumeration value="Parameter"/>
+			<xs:enumeration value="Short"/>
+			<xs:enumeration value="String"/>
+			<xs:enumeration value="void"/>
+			<xs:enumeration value="IfError"/>
+			<xs:enumeration value="Anyway"/>
+                        <xs:enumeration value="Parameter"/>
+                        <xs:enumeration value="Argument"/>
+		</xs:restriction>
+	</xs:simpleType>-->
+	<xs:element name="wizard">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="tags" type="tagsType"/>
+				<xs:element name="sets" type="setsType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

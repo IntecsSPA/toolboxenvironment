@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : ToolboxServicesGenericInterface.xml
+    Created on : 31 ottobre 2008, 11.28
+    Author     : Andrea Marongiu
+    Description:
+        Purpose of the document follows.
+-->
+<inputInterface xmlns="http://gisClient.pisa.intecs.it/gisClient">
+<section name="Soap Content">
+        <group label="SOAP message content Type">
+            <input type="radiogroup" name="contentType" id="contentType" optional="true" valueCheked="1" cols="1" valueList="1,2,3" labelList="Synchronous Payload,Asynchronous Payload,SOAP message"/>
+           <!--"Tools?cmd=putFile&amp;type=multipart&amp;modality=view"  --> 
+        </group>
+        <group label="SOAP message">
+             <input type="file" action="http://www.google.it" name="fileContent" submitLabel="Load Request" target="parent.iframeRequest" hideLabel="true" id="fileContent" optional="true" size="35"/>
+            <!--input type="radiogroup" name="contentType" id="contentType" optional="true" valueCheked="" valueList="1,2,3" cols="1" labelList="Synchronous Payload content,Asynchronous Payload content,SOAP message content"/-->
+            <!--input type="textarea" name="textContent" hideLabel="true" id="textContent" optional="true" rows="13" cols="55"/-->
+            <input type="label" id="toolboxInformation" name="toolboxInformation" value="&lt;iframe scrolling='auto' src='Tools?cmd=emptyPage' name='iframeRequest' width='100%' height='100%' marginwidth='0' marginheight='0'&gt;&lt;/iframe&gt;"></input>
+        </group>
+   </section> 
+   <requestInformations>
+        <buttons>
+            <button name="filterButton" id="filterButton" label="Send Request" iconImage="" onclick="tbxTCenter.serviceControl"/>
+            <button name="resetButton" id="resetButton" label="Reset" iconImage="" onclick="tbxTCenter.Reset"/>
+        </buttons>  
+    </requestInformations>
+</inputInterface>    
+    

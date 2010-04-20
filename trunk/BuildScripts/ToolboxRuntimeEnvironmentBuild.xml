@@ -1,0 +1,259 @@
+<project name="TOOLBOX" default="createFromRepository" basedir=".">
+	<description>TOOLBOX SNAPSHOT build file</description>
+	<!-- set global properties for this build -->
+	<property environment="env"/>
+	<property name="src" location="TOOLBOX/src"/>
+	<property name="src2" location="Common/src/"/>
+	<property name="src3" location="Utils/src/"/>
+	<property name="src4" location="PluginsCore/src/"/>
+	<property name="src5" location="ToolboxGisClient/src"/>
+	<property name="build" location="TOOLBOX/webapp"/>
+        <property name="temp" location="temp"/>
+	<property name="tempZipDir" location="temp"/>
+        <property name="revision" value="HEAD"/>
+        
+	<!--Creating the building classpath -->
+	<path id="build.classpath">
+		<fileset dir="TOOLBOX/compile-only-libs">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="TOOLBOX/webapp/WEB-INF/lib/">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<path id="build.classpath.gis">
+		<fileset dir="${basedir}/ToolboxGisClient/lib">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${basedir}/ToolboxGisClient/compile-only-libs">
+			<include name="servlet-api.jar"/>
+		</fileset>
+	</path>
+
+	<target name="init">
+		<!-- Create the time stamp -->
+		<tstamp/>
+	</target>
+	<target name="compileTBX" depends="init" description="compile the source ">
+		<mkdir dir="${temp}"/>
+		<javac srcdir="${src}:${src2}:${src3}:${src4}" destdir="${temp}" classpathref="build.classpath" nowarn="yes" target="1.5"/>
+		<jar jarfile="TOOLBOX/webapp//WEB-INF/lib/toolbox.jar">
+			<fileset dir="${temp}">
+				
+			</fileset>
+		</jar>
+		<!--<jar jarfile="TOOLBOX/webapp/WEB-INF/plugins/ToolboxNativeTagPlugin/libs/ToolboxNativeTagPlugin.jar">
+			<fileset dir="${temp}">
+				<include name="it/intecs/pisa/toolbox/plugins/nativeTagPlugin/**/*.class"/>
+			</fileset>
+		</jar>-->
+		<jar jarfile="TOOLBOX/webapp/WEB-INF/plugins/GeoServerTagPlugin/libs/GeoServerTagPlugin.jar">
+			<fileset dir="${temp}">
+				<include name="it/intecs/pisa/toolbox/plugins/geoServerTagPlugin/**/*.class"/>
+			</fileset>
+		</jar>
+                <jar jarfile="TOOLBOX/webapp/WEB-INF/plugins/ManagerCommandsPlugin/libs/managerCommandsPlugin.jar">
+			<fileset dir="${temp}">
+				<include name="it/intecs/pisa/toolbox/plugins/managerNativePlugins/**/*.class"/>
+			</fileset>
+		</jar>
+		<delete dir="${temp}"/>
+	</target>
+
+	<target name="compileGIS" depends="init" description="compile the source ">
+		<javac srcdir="${src5}" destdir="${basedir}/ToolboxGisClient/web/WEB-INF/classes" classpathref="build.classpath.gis" nowarn="yes" target="1.5"/>
+	</target>
+
+
+	<target name="buildZipPackageTBX" depends="init,compileTBX,zipTBX"/>
+	<target name="buildZipPackageGIS" depends="init,compileGIS,zipGIS"/>
+	<target name="buildPackageTBX" depends="init,compileTBX"/>
+	
+	<target name="zipTBX" description="zip package">
+		<mkdir dir="${temp}"/>
+		<mkdir dir="${temp}/TOOLBOX"/>
+
+		<copy toDir="${temp}/TOOLBOX" overwrite="yes">
+			<fileset dir="TOOLBOX/webapp"/>
+		</copy>
+
+		<zip file="TOOLBOX.zip">
+			<fileset dir="${temp}"/>
+		</zip>
+		
+		<delete dir="${temp}"/>
+	</target>
+
+	<target name="zipGIS" description="zip package">
+		<mkdir dir="${temp}"/>
+		<mkdir dir="${temp}/ToolboxGisClient"/>
+
+		<copy toDir="${temp}/ToolboxGisClient" overwrite="yes">
+			<fileset dir="${basedir}/ToolboxGisClient/web"/>
+		</copy>
+
+		<copy toDir="${temp}/ToolboxGisClient/WEB-INF/lib" overwrite="yes">
+			<fileset dir="${basedir}/ToolboxGisClient/lib"/>
+		</copy>
+
+
+		<zip file="TOOLBOXGISCLIENT.zip">
+			<fileset dir="${temp}"/>
+		</zip>
+		
+		<delete dir="${temp}"/>
+
+	</target>
+	<!-- clean files -->
+	<target name="cleanGIS" description="delete build directory">
+		<delete dir="ToolboxGisClient"/>
+	</target>
+
+	<target name="cleanTBX" description="delete build directory">
+		<delete dir="Common"/>
+            <delete dir="Utils"/>
+            <delete dir="TOOLBOX"/>
+            <delete dir="PluginsCore"/>
+	</target>
+
+        
+        <target name="createFromRepository" depends="createFromRepositoryTBX,createFromRepositoryGIS"/>
+        <target name="createFromRepositoryTBX" depends="svnDownloadTBX,buildZipPackageTBX,cleanTBX"/>
+        <target name="createFromRepositoryGIS" depends="svnDownloadGIS,buildZipPackageGIS,cleanGIS"/>
+    
+        <target name="svnDownloadTBX" depends="">
+            <echo>Donwload packages from SVN</echo> 
+            
+            <mkdir dir="${basedir}/Common"/>
+           <exec executable="svn">
+                <arg value="export"/>
+                <arg value="-r"/>
+                <arg value="${revision}"/>
+                <arg value="http://guest009.pisa.intecs.it/SPAZIO/TOOLBOX_rep/trunk/Common/src"/>
+                 <arg value="${basedir}/Common/src"/>
+            </exec>
+            
+            <mkdir dir="${basedir}/Utils"/>
+           <exec executable="svn">
+                <arg value="export"/>
+                <arg value="-r"/>
+                <arg value="${revision}"/>
+                <arg value="http://guest009.pisa.intecs.it/SPAZIO/TOOLBOX_rep/trunk/Utils/src"/>
+                 <arg value="${basedir}/Utils/src"/>
+            </exec>
+            
+            <mkdir dir="${basedir}/TOOLBOX"/>
+           <exec executable="svn">
+                <arg value="export"/>
+                <arg value="-r"/>
+                <arg value="${revision}"/>
+                <arg value="http://guest009.pisa.intecs.it/SPAZIO/TOOLBOX_rep/trunk/TOOLBOX/webapp"/>
+                 <arg value="${basedir}/TOOLBOX/webapp"/>
+            </exec>
+            
+           <exec executable="svn">
+                <arg value="export"/>
+                <arg value="-r"/>
+                <arg value="${revision}"/>
+                <arg value="http://guest009.pisa.intecs.it/SPAZIO/TOOLBOX_rep/trunk/TOOLBOX/src"/>
+                 <arg value="${basedir}/TOOLBOX/src"/>
+            </exec>
+            
+            <exec executable="svn">
+                <arg value="export"/>
+                <arg value="-r"/>
+                <arg value="${revision}"/>
+                <arg value="http://guest009.pisa.intecs.it/SPAZIO/TOOLBOX_rep/trunk/TOOLBOX/compile-only-libs"/>
+                 <arg value="${basedir}/TOOLBOX/compile-only-libs"/>
+            </exec>
+      
+        
+        <mkdir dir="${basedir}/TOOLBOX/webapp/jsScripts/import"/>
+        <mkdir dir="${basedir}/TOOLBOX/webapp/jsScripts/import/gis-client-library"/>
+         <exec executable="svn">
+                <arg value="export"/>
+                <arg value="-r"/>
+                <arg value="${revision}"/>
+                <arg value="http://guest009.pisa.intecs.it/SPAZIO/GIS-CLIENT_rep/gis-client-library/trunk/web/import"/>
+                 <arg value="${basedir}/TOOLBOX/webapp/jsScripts/import/gis-client-library/import"/>
+            </exec>
+            
+              <exec executable="svn">
+                <arg value="export"/>
+                <arg value="-r"/>
+                <arg value="${revision}"/>
+                <arg value="http://guest009.pisa.intecs.it/SPAZIO/GIS-CLIENT_rep/gis-client-library/trunk/web/widgets"/>
+                 <arg value="${basedir}/TOOLBOX/webapp/jsScripts/import/gis-client-library/widgets"/>
+            </exec>
+            
+           <mkdir dir="${basedir}/PluginsCore"/>
+           <exec executable="svn">
+                <arg value="export"/>
+                <arg value="-r"/>
+                <arg value="${revision}"/>
+                <arg value="http://guest009.pisa.intecs.it/SPAZIO/TOOLBOX_rep/trunk/Plugins/RE/PluginsCore/src"/>
+                 <arg value="${basedir}/PluginsCore/src"/>
+            </exec>
+
+		<mkdir dir="${basedir}/TOOLBOX/webapp/Documentation"/>
+	    <exec executable="svn">
+		<arg value="export"/>
+		<arg value="-r"/>
+		<arg value="${revision}"/>
+		    <arg value="--force"/>
+		<arg value="http://guest009.pisa.intecs.it/SPAZIO/TOOLBOX_rep/trunk/SUM/dhtmlTree/"/>
+		<arg value="${basedir}/TOOLBOX/webapp/Documentation"/>
+	    </exec>
+
+	    <exec executable="svn">
+	        <arg value="export"/>
+	        <arg value="-r"/>
+	        <arg value="${revision}"/>
+	        <arg value="--force"/>
+	        <arg value="http://guest009.pisa.intecs.it/SPAZIO/TOOLBOX_rep/trunk/SUM/htmlDocumentation/"/>
+	        <arg value="${basedir}/TOOLBOX/webapp/Documentation/docsExplorer"/>
+	    </exec>
+
+            <delete dir="${basedir}/Documentation/xsl"/>
+       </target>
+
+
+	 <target name="svnDownloadGIS" depends="">
+            <echo>Donwload packages from SVN</echo> 
+                       
+ 	  <mkdir dir="${basedir}/ToolboxGisClient"/>
+        
+		<exec executable="svn">
+                <arg value="export"/>
+                <arg value="-r"/>
+                <arg value="${revision}"/>
+		<arg value="--force"/>
+                <arg value="http://guest009.pisa.intecs.it/SPAZIO/TOOLBOX_rep/trunk/ToolboxGisClient/"/>
+                 <arg value="${basedir}/ToolboxGisClient/"/>
+            </exec>
+         </target>  
+
+	<target name="SUMBuild">
+		<mkdir dir="${basedir}/Documentation"/>
+		    <exec executable="svn">
+			<arg value="export"/>
+			<arg value="-r"/>
+			<arg value="${revision}"/>
+			    <arg value="--force"/>
+			<arg value="http://guest009.pisa.intecs.it/SPAZIO/TOOLBOX_rep/trunk/SUM/dhtmlTree/"/>
+			<arg value="${basedir}/Documentation"/>
+		    </exec>
+
+		    <exec executable="svn">
+		        <arg value="export"/>
+		        <arg value="-r"/>
+		        <arg value="${revision}"/>
+		        <arg value="--force"/>
+		        <arg value="http://guest009.pisa.intecs.it/SPAZIO/TOOLBOX_rep/trunk/SUM/htmlDocumentation/"/>
+		        <arg value="${basedir}/Documentation/docsExplorer"/>
+		    </exec>
+
+            <delete dir="${basedir}/Documentation/xsl"/>
+	</target>
+</project>

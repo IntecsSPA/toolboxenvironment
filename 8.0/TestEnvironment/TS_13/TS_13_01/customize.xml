@@ -1,0 +1,14 @@
+<variables>
+	<!--localhost address-->
+	<localHost>hrt-102.pisa.intecs.it</localHost>
+	<!--<localHost>pisa013.pisa.intecs.it</localHost>-->
+	<!--MUIS DSM address-->
+	<!--<muisHost>http://193.204.228.203:8090</muisHost>-->
+	<!--<muisHost>http://eoli.esa.int:8090</muisHost>-->
+	<muisHost>http://muiscx3.eo.esa.int:8090</muisHost>
+	<!--Apache directory containing the preview images-->
+	<!--<muisRoot>/usr/local/apache2/htdocs/muis/</muisRoot>-->
+	<muisRoot>C:\Progetti\SAS\TestEnvironment\</muisRoot>
+	<!--address to insert in the gml files indicating where the preview images can be downloaded from-->
+	<hostName>pisa013.pisa.intecs.it</hostName>
+</variables>

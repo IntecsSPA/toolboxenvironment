@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pisa.intecs.it/mass/toolbox/xmlScript file:/E:/Progetti/SAS_branches/Codice/trunk/TDE_EditorFiles/schemas/xmlScript.xsd">
+
+	<if>
+		<and>
+			<checkOrderConfirmation id="$first" />
+			<checkOrderConfirmation id="$second" />
+		</and>
+		<return>
+			<literal type="boolean" value="true"/>
+		</return>
+		<return>
+			<literal type="boolean" value="false"/>
+		</return>
+	</if>
+</sequence>

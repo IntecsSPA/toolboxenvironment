@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<processSearchInputMsg xmlns="http://www.esa.int/mass">
+	<searchInput>
+		<areaOfInterest xmlns="http://www.esa.int/xml/schemas/mass/aoifeatures" xmlns:gml="http://www.opengis.net/gml">
+			<boundedBy xmlns="http://www.opengis.net/gml">
+				<Box srsName="http://www.opengis.net/gml/srs/epsg.xml#4326">
+					<coordinates>3.6404,33.5730 21.4382,48.9438</coordinates>
+				</Box>
+			</boundedBy>
+			<featureMember xmlns="http://www.opengis.net/gml">
+				<Feature xmlns="http://www.esa.int/xml/schemas/mass/aoifeatures">
+					<Geometry>
+						<Polygon srsName="http://www.opengis.net/gml/srs/epsg.xml#4326" xmlns="http://www.opengis.net/gml">
+							<outerBoundaryIs>
+								<LinearRing>
+									<coordinates>3.6404,48.9438 21.4382,48.9438 21.4382,33.5730 3.6404,33.5730 3.6404,48.9438</coordinates>
+								</LinearRing>
+							</outerBoundaryIs>
+						</Polygon>
+					</Geometry>
+				</Feature>
+			</featureMember>
+		</areaOfInterest>
+		<searchRequest xmlns="http://earth.esa.int/XML/eoli" xmlns:gml="http://www.opengis.net/gml">
+			<simpleQuery>
+				<dataExt>
+					<tempEle operator="OVERLAP">
+						<exTemp>
+							<beginEnd>
+								<begin>2003-10-26</begin>
+								<end>2003-10-30</end>
+							</beginEnd>
+						</exTemp>
+					</tempEle>
+				</dataExt>
+			</simpleQuery>
+			<resultType>results</resultType>
+			<iteratorSize>2</iteratorSize>
+			<cursor>1</cursor>
+			<presentation>summary</presentation>
+			<collectionId>ESA.EECF.ENVISAT_ASA_IMx_xS</collectionId>
+		</searchRequest>
+	</searchInput>
+</processSearchInputMsg>

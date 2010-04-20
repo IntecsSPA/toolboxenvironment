@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pisa.intecs.it/mass/toolbox/xmlScript file:/E:/Progetti/SAS_branches/Codice/trunk/TDE_EditorFiles/schemas/xmlScript.xsd">
+
+	<setVariable name="errorMsg1">
+		<getOrderError id="$first"/>
+	</setVariable>
+	
+	<setVariable name="errorMsg2">
+		<getOrderError id="$second"/>
+	</setVariable>
+	<!-- **********************************
+		Creating the response message 
+		********************************** -->
+	<setVariable name="response">
+		<xml attributePrefix="%" textTag="evaluate">
+			<n1:returnRFQResultInputMsg xmlns:n1="%targetNamespace" xmlns:mass="http://www.esa.int/mass">
+				<mass:commonInput>
+					<mass:orderId><evaluate name="orderId"/></mass:orderId>
+				</mass:commonInput>
+				<n1:getRFQOutput>
+					<mass:statusInfo>
+						<mass:statusId>0</mass:statusId>
+						<mass:statusMsg>success</mass:statusMsg>
+					</mass:statusInfo>
+					<n1:rfqOutput>
+						<n1:first><evaluate name="errorMsg1"/></n1:first>
+						<n1:second><evaluate name="errorMsg2"/></n1:second>
+					</n1:rfqOutput>
+				</n1:getRFQOutput>
+			</n1:returnRFQResultInputMsg>
+		</xml>
+
+	</setVariable>
+
+	<!-- **********************************
+		Sending back response message 
+		********************************** -->
+	<variable name="response"/>
+</sequence>

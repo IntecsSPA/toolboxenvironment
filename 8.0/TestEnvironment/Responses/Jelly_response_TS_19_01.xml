@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<jellyOut xmlns="http://www.esa.int/mass/jelly">
+	<jellyOutput>
+		<statusInfo>
+			<statusId>0</statusId>
+			<statusMsg>Successful</statusMsg>
+		</statusInfo>
+			<result>Jelly Works!</result>
+	</jellyOutput>
+</jellyOut>

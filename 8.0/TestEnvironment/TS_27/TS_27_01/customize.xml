@@ -1,0 +1,12 @@
+<variables>
+        <!--smtp server address-->
+        <smtpServer></smtpServer>
+        <!--sender address-->
+        <sender>massimiliano.fanciulli@intecs.it</sender>
+        <!--receiver address-->
+        <receiver>toolbox@intecs.it</receiver>
+         <!--receiver address-->
+        <smtpServerUserName></smtpServerUserName>
+         <!--receiver address-->
+        <smtpServerPassword></smtpServerPassword>
+</variables>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mass:getOrderResultOutputMsg xmlns:mass="http://www.esa.int/mass">
+    <mass:commonInput>
+        <mass:orderId>OrderId</mass:orderId>
+	<mass:isSubscription>0</mass:isSubscription>
+	<mass:massHostAddress>http://www.esrin.esa.it:8080/soap/servlet/messagerouter</mass:massHostAddress>
+    </mass:commonInput>
+    <mass:getOrderOutput>
+        <mass:statusInfo>
+	    <mass:statusId>0</mass:statusId>
+	    <mass:statusMsg>Successful</mass:statusMsg>
+	</mass:statusInfo>
+	<mass:orderResultURL>/home/toolbox/OutputDir</mass:orderResultURL>
+	<mass:userAccount>massAccount</mass:userAccount>
+	<mass:password>mass011202</mass:password>
+	<mass:timePeriodOfService>1</mass:timePeriodOfService>
+	<mass:productSize>78214</mass:productSize>
+	<mass:userQuota>23154300</mass:userQuota>
+    </mass:getOrderOutput>
+</mass:getOrderResultOutputMsg>

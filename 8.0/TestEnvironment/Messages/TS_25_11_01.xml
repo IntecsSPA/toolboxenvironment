@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soapaddr="http://schemas.xmlsoap.org/ws/2003/03/addressing" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.xmlsoap.org/soap/envelope/ bundleentry://388/schemas/envelope.xsd http://schemas.xmlsoap.org/ws/2004/08/addressing bundleentry://388/schemas/addressing.xsd">
+	<soapenv:Header>
+		<soapaddr:MessageID>TS_25_11_01</soapaddr:MessageID>
+		<soapaddr:ReplyTo>
+			<soapaddr:Address>http://localhost:8080/TOOLBOX/Push</soapaddr:Address>
+			<soapenv:PortType>ServicePortType</soapenv:PortType>
+			<soapenv:ServiceName>ServiceName</soapenv:ServiceName>
+		</soapaddr:ReplyTo>
+	</soapenv:Header>
+	<soapenv:Body>
+		<Submit xmlns="http://earth.esa.int/hma/ordering">
+			<userInformation>
+				<userId>intecs</userId>
+				<password>intecs</password>
+			</userInformation>
+			<orderSpecification>
+				<orderAccount>intecsAccount</orderAccount>
+				<orderReference>0001</orderReference>
+				<orderRemark>Remark:</orderRemark>
+				<deliveryInformation>
+					<mail>
+						<recipient>Intecs</recipient>
+						<companyRef>Intecs SPA</companyRef>
+						<postalAddress>
+							<streetAddress/>
+							<city>Roma</city>
+							<state>Roma</state>
+							<postalCode>00155</postalCode>
+							<country>ITA</country>
+							<postBox>-</postBox>
+						</postalAddress>
+						<telNumber>+39 06 40 69 42 22</telNumber>
+					</mail>
+				</deliveryInformation>
+				<orderItem>
+					<productId>
+						<identifier codeSpace="ID">ID</identifier>
+						<collectionId>COLLECTION.ID</collectionId>
+					</productId>
+					<deliveryMethod>ftp-pull</deliveryMethod>
+					<packageMedium>file</packageMedium>
+					<orderItemRemark>test product</orderItemRemark>
+				</orderItem>
+				<priority>1</priority>
+			</orderSpecification>
+			<statusNotification>Final</statusNotification>
+		</Submit>
+	</soapenv:Body>
+</soapenv:Envelope>

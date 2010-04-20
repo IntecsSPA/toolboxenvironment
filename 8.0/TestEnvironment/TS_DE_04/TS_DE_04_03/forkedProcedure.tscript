@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://pisa.intecs.it/mass/toolbox/xmlScript
+          file:/C:/eclipse/plugins/com.intecs.ToolboxScript.editorFiles_1.1.0/schemas/xmlScript.xsd">
+	
+	<setVariable name="forkStartDate">
+		<now/>
+	</setVariable>
+	
+	<setVariable name="forkStartDateStr">
+		<dateStringFormatter format="yyyy-MM-dd HH:mm:ss">
+			<variable name="forkStartDate"/>
+		</dateStringFormatter>
+	</setVariable>
+	
+	<log level="INFO">
+		<variable name="forkStartDateStr"/>
+	</log>
+
+	<setVariable name="localFilePath">
+		<path startFrom="TEMP"><string>downloadedFile.zip</string></path>
+	</setVariable>
+	
+	<ftpGet transfer="binary">
+		<host><string>localhost</string></host>
+		<port><literal type="int" value="2120"/></port>
+		<user><string>TS_DE_04_03</string></user>
+		<password><string>pwd</string></password>
+		<remotePath><string>/fileToDownload.zip</string></remotePath>
+		<localPath><variable name="localFilePath"/></localPath>
+	</ftpGet>
+	
+	<setVariable name="modificationInfo">
+		<fileInfo information="MODIFICATION">
+			<variable name="localFilePath"/>
+		</fileInfo>
+	</setVariable>
+	
+	<setVariable name="size">
+		<fileInfo information="LENGTH">
+			<variable name="localFilePath"/>
+		</fileInfo>
+	</setVariable>
+	
+	<updateFtpPermission permission="TRUE" user="TS_DE_04_03"/>
+	
+	<ftpRename>
+		<host><string>localhost</string></host>
+		<port><literal type="int" value="2120"/></port>
+		<user><string>TS_DE_04_03</string></user>
+		<password><string>pwd</string></password>
+		<remotePath><string>/fileToDownload.zip</string></remotePath>
+		<newRemotePath><string>/fileDownloaded.zip</string></newRemotePath>
+	</ftpRename>
+	
+	<setVariable name="fileText">
+		<string>MODIFICATION: ${modificationInfo} FILE LENGTH: ${size}</string>
+	</setVariable>
+	
+	<dumpFile fileType="text">
+		<path startFrom="TEMP">
+			<string>tempFile.txt</string>
+		</path>
+		<variable name="fileText"/>
+	</dumpFile>
+	
+	<zip file="${zipOutputFileDirectory}/zipOutput.zip">
+		<dir>
+			<path startFrom="SERVICE_RESOURCE_DIR"></path>
+		</dir>
+	</zip>
+	
+	<zip file="${zipOutputFileDirectory}/fileInfo.zip">
+		<file>
+			<path startFrom="TEMP">
+				<string>tempFile.txt</string>
+			</path>
+		</file>
+	</zip>
+
+	<ftpPut>
+		<host><string>localhost</string></host>
+		<port><literal type="int" value="2120"/></port>
+		<user><string>TS_DE_04_03</string></user>
+		<password><string>pwd</string></password>
+		<remotePath><string>/zippedDirectory.zip</string></remotePath>
+		<localPath><string>${zipOutputFileDirectory}/zipOutput.zip</string></localPath>
+	</ftpPut>
+
+	<ftpPut>
+		<host><string>localhost</string></host>
+		<port><literal type="int" value="2120"/></port>
+		<user><string>TS_DE_04_03</string></user>
+		<password><string>pwd</string></password>
+		<remotePath><string>/zippedFile.zip</string></remotePath>
+		<localPath><string>${zipOutputFileDirectory}/fileInfo.zip</string></localPath>
+	</ftpPut>
+	
+	<updateFtpPermission permission="FALSE" user="TS_DE_04_03"/>
+
+	<setVariable name="forkEndDate">
+		<now/>
+	</setVariable>
+
+	<setVariable name="forkEndDateStr">
+		<dateStringFormatter format="yyyy-MM-dd HH:mm:ss">
+			<variable name="forkEndDate"/>
+		</dateStringFormatter>
+	</setVariable>
+	
+	<setVariable name="endDate">
+		<date format="yyyy-MM-dd HH:mm:ss">
+			<variable name="forkEndDateStr"/>
+		</date>
+	</setVariable>
+	
+	<if>
+		<isBefore>
+			<variable name="forkStartDate"/>
+			<variable name="endDate"/>
+		</isBefore>
+		<log level="INFO">
+			<stringCat>
+				<string>The forked script took </string>
+				<itoa>
+					<timeDifference>
+						<variable name="endDate"/>
+						<variable name="forkStartDate"/>
+					</timeDifference>
+				</itoa>
+				<string> milliseconds to execute</string>
+			</stringCat>
+	</log>
+	</if>
+	
+					
+	<log level="INFO">
+		<variable name="forkEndDateStr"/>
+	</log>
+</sequence>

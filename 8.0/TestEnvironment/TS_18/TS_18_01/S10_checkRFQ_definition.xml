@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript">
+	<setVariable name="filename">
+		<stringCat>
+			<string>/home/toolbox/TestEnvironment/OutputDir/RFQ_res_</string>
+			<orderId/>
+			<string>.xml</string>
+		</stringCat>
+	</setVariable>
+	<log>
+		<stringCat>
+			<string>Check File Name: </string>
+			<variable name="filename"/>
+		</stringCat>
+	</log>
+	<if>
+		<fileExists>
+			<variable name="filename"/>
+		</fileExists>
+		<literal type="boolean" value="true"/>
+		<literal type="boolean" value="false"/>
+	</if>
+</sequence>

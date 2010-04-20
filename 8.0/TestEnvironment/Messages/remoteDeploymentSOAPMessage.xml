@@ -1,0 +1,32 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<SOAP-ENV:Header>
+		<m:MessageID xmlns:m="http://schemas.xmlsoap.org/ws/2003/03/addressing"/>
+	</SOAP-ENV:Header>
+	<SOAP-ENV:Body>
+		<exportDescriptor xmlns="http://pisa.intecs.it/mass/toolbox/exportDescriptor" xmlns:com="http://pisa.intecs.it/mass/toolbox/common" xmlns:dsc="http://pisa.intecs.it/mass/toolbox/serviceDescriptor" xmlns:mtbs="http://pisa.intecs.it/mass/toolbox/xmlScript">
+			<service queuing="false" serviceName="newTestService" serviceSchema="" suspendMode="soft" wsdlTargetNS="test.pisa.intecs.it" xmlns="http://pisa.intecs.it/mass/toolbox/serviceDescriptor" xmlns:com="http://pisa.intecs.it/mass/toolbox/common" xmlns:mtbs="http://pisa.intecs.it/mass/toolbox/xmlScript">
+				<abstract>Test service</abstract>
+				<description>This service is used to test the TOOLBOX installation.</description>
+				<schemas/>
+				<operations>
+					<operation name="testOperation" type="synchronous">
+						<wsdlInfo>
+							<requestMessage name="aa" ns="aa"/>
+							<responseMessage name="aa" ns="aa"/>
+						</wsdlInfo>
+						<script soapAction="test">
+							<mtbs:sequence xmlns:mtbs="http://pisa.intecs.it/mass/toolbox/xmlScript">
+								<mtbs:xml attributePrefix="attribute$" textTag="evaluate">
+									<testService>
+										<helloWorld>The TOOLBOX has been correctly installed.</helloWorld>
+									</testService>
+								</mtbs:xml>
+							</mtbs:sequence>
+						</script>
+					</operation>
+				</operations>
+			</service>
+			<schemaDocuments/>
+		</exportDescriptor>
+	</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<mass:returnRFQResultInputMsg xmlns:mass="http://www.esa.int/mass" xmlns="http://www.esa.int/mass" xmlns:aoi="http://www.esa.int/xml/schemas/mass/aoifeatures" xmlns:oi="http://www.esa.int/oi">
+	<mass:commonInput>
+		<mass:orderId>OrderId</mass:orderId>
+	</mass:commonInput>
+	<mass:getRFQOutput>
+		<mass:statusInfo>
+			<mass:statusId>0</mass:statusId>
+			<mass:statusMsg>Successful</mass:statusMsg>
+		</mass:statusInfo>
+		<mass:rfqOutput>
+			<mass:productSize>922</mass:productSize>
+			<mass:userQuota>1048576245</mass:userQuota>
+		</mass:rfqOutput>
+	</mass:getRFQOutput>
+</mass:returnRFQResultInputMsg>

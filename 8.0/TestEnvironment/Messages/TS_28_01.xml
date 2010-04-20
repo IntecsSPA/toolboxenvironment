@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soapaddr="http://schemas.xmlsoap.org/ws/2003/03/addressing" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.xmlsoap.org/soap/envelope/ bundleentry://388/schemas/envelope.xsd http://schemas.xmlsoap.org/ws/2004/08/addressing bundleentry://388/schemas/addressing.xsd">
+	<soapenv:Header>
+		<soapaddr:MessageID>TS_25_11_01</soapaddr:MessageID>
+		<soapaddr:ReplyTo>
+			<soapaddr:Address>http://localhost:8080/TOOLBOX/Push</soapaddr:Address>
+			<soapenv:PortType>ServicePortType</soapenv:PortType>
+			<soapenv:ServiceName>ServiceName</soapenv:ServiceName>
+		</soapaddr:ReplyTo>
+	</soapenv:Header>
+	<soapenv:Body>
+		<sendRFQInputMsg xmlns="http://www.mycompanyname.com/ws/mynamespace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xmlns:mass="http://www.esa.int/mass">
+	<mass:commonInput >
+		<mass:orderId>00000000</mass:orderId>
+	</mass:commonInput>
+	<sendRFQInput>
+		<!-- Add here your content -->
+	</sendRFQInput>
+</sendRFQInputMsg>
+</soapenv:Body>
+</soapenv:Envelope>

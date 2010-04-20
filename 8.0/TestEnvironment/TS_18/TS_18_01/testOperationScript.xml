@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript">
+	<log>
+		<stringCat>
+			<string>INPUT: </string>
+			<xPath xmlns:test="http://intecs/test">
+				<xmlRequest/>
+				<string>/test:testOperationInput/test:input</string>
+			</xPath>
+		</stringCat>
+	</log>
+	<xml attributePrefix="$" textTag="eval">
+		<testOperationOutput xmlns="http://intecs/test">
+			<output>Response Message</output>
+		</testOperationOutput>
+	</xml>
+</sequence>

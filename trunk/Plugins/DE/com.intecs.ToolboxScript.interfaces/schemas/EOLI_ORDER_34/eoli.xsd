@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 rel. 3 U (http://www.altova.com) by INTECS (SOFTWARE ADVISORS SRL) -->
+<!-- 	
+	File			:	eoli.xsd
+	File Type	:	W3C Schema
+	Date		:	21 January 2008
+	Abstract	:	MUIS Schema
+	Uses		:	 	
+	Author		:	INTECS	
+	Issue		:	V2.8-->
+<xsd:schema xmlns="http://earth.esa.int/XML/eoli" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://earth.esa.int/XML/eoli" elementFormDefault="qualified">
+	<!-- ==================== Element Section ====================== -->
+	<!-- ======================================================== -->
+	<xsd:element name="searchRequest" type="SearchRequestType"/>
+	<xsd:element name="beginEnd">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="begin" type="xsd:dateTime"/>
+				<xsd:element name="end" type="xsd:dateTime"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="collectionId" type="NonNullStringType"/>
+	<xsd:element name="cursor" type="xsd:positiveInteger" nillable="false"/>
+	<xsd:element name="presentation" type="PresentationType" nillable="false"/>
+	<xsd:element name="status" type="StatusType" nillable="false"/>
+	<xsd:element name="frame" type="xsd:positiveInteger" nillable="false"/>
+	<xsd:element name="track" type="xsd:positiveInteger" nillable="false"/>
+	<xsd:element name="orbit" type="xsd:positiveInteger" nillable="false"/>
+	<xsd:element name="presentRequest" type="PresentRequestType"/>
+	<xsd:element name="platfSNm" type="NonNullStringType"/>
+	<xsd:element name="platfSer" type="CharacterString"/>
+	<xsd:element name="instShNm" type="NonNullStringType"/>
+	<xsd:element name="resTitle" type="NonNullStringType"/>
+	<xsd:element name="response" type="ResponseType"/>
+	<xsd:element name="coordinates" type="CoordinatesType" nillable="false"/>
+	<xsd:element name="idStatus" type="IdStatusEnumType"/>
+	<!-- ================== Simple Type Section ==================== -->
+	<!-- ======================================================= -->
+	<xsd:simpleType name="DateTimeTypes">
+		<xsd:union memberTypes="xsd:date xsd:dateTime"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNullStringType">
+		<xsd:restriction base="CharacterString">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CharacterString">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="0" fixed="false"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LongitudeType">
+		<xsd:restriction base="xsd:float">
+			<xsd:minInclusive value="-180.0"/>
+			<xsd:maxInclusive value="180.0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LatitudeType">
+		<xsd:restriction base="xsd:float">
+			<xsd:minInclusive value="-90.0"/>
+			<xsd:maxInclusive value="90.0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CoveragePercType">
+		<xsd:restriction base="xsd:unsignedInt"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="PresentationType">
+		<xsd:restriction base="CharacterString">
+			<xsd:enumeration value="brief"/>
+			<xsd:enumeration value="summary"/>
+			<xsd:enumeration value="full"/>
+			<xsd:enumeration value="browse"/>
+			<xsd:enumeration value="orderOption"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StatusType">
+		<xsd:restriction base="CharacterString">
+			<xsd:enumeration value="success"/>
+			<xsd:enumeration value="incomplete"/>
+			<xsd:enumeration value="failure"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RoleEnumType">
+		<xsd:restriction base="NonNullStringType">
+			<xsd:enumeration value="002"/>
+			<xsd:enumeration value="006"/>
+			<xsd:enumeration value="009"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IdStatusEnumType">
+		<xsd:restriction base="NonNullStringType">
+			<xsd:enumeration value="001"/>
+			<xsd:enumeration value="005"/>
+			<xsd:enumeration value="006"/>
+			<xsd:enumeration value="007"/>
+			<xsd:enumeration value="008"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DegreeType">
+		<xsd:restriction base="xsd:float">
+			<xsd:minInclusive value="0.0"/>
+			<xsd:maxInclusive value="360.0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ContentTypeEnum">
+		<xsd:restriction base="NonNullStringType">
+			<xsd:enumeration value="001"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OrbitDirectionEnumType">
+		<xsd:restriction base="CharacterString">
+			<xsd:enumeration value="0"/>
+			<xsd:enumeration value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PolarisationEnumType">
+		<xsd:restriction base="NonNullStringType">
+			<xsd:enumeration value="HH"/>
+			<xsd:enumeration value="VV"/>
+			<xsd:enumeration value="HV"/>
+			<xsd:enumeration value="VH"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="FullSceneEnumType">
+		<xsd:restriction base="NonNullStringType">
+			<xsd:enumeration value="F"/>
+			<xsd:enumeration value="P"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CoordinatesType">
+		<xsd:restriction base="NonNullStringType"/>
+	</xsd:simpleType>
+	<!-- ================== Complex Type Section =================== -->
+	<!-- ======================================================== -->
+	<xsd:complexType name="SearchRequestType">
+		<xsd:sequence>
+			<xsd:element name="simpleQuery" type="SimpleQueryType"/>
+			<xsd:element name="resultType" nillable="false">
+				<xsd:simpleType>
+					<xsd:restriction base="NonNullStringType">
+						<xsd:enumeration value="results"/>
+						<xsd:enumeration value="hits"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="iteratorSize" type="xsd:positiveInteger" nillable="false" minOccurs="0"/>
+			<xsd:element ref="cursor" minOccurs="0"/>
+			<xsd:element ref="presentation" minOccurs="0"/>
+			<xsd:element ref="collectionId"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SimpleQueryType">
+		<xsd:sequence>
+			<xsd:element name="dataExt" type="DataExtExtendedType" minOccurs="0"/>
+			<xsd:element name="satelliteDomainConditions" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="plaInsIdCondition" minOccurs="0">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="plaInsId" maxOccurs="unbounded">
+										<xsd:complexType>
+											<xsd:sequence>
+												<xsd:element ref="platfSNm"/>
+												<xsd:element ref="platfSer" minOccurs="0" maxOccurs="unbounded"/>
+											</xsd:sequence>
+										</xsd:complexType>
+									</xsd:element>
+								</xsd:sequence>
+								<xsd:attribute name="operator">
+									<xsd:simpleType>
+										<xsd:restriction base="CharacterString">
+											<xsd:enumeration value="EQUAL"/>
+										</xsd:restriction>
+									</xsd:simpleType>
+								</xsd:attribute>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="cloudCoverCondition" minOccurs="0">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="cloudCovePerc" type="CoveragePercType" nillable="false"/>
+								</xsd:sequence>
+								<xsd:attribute name="operator">
+									<xsd:simpleType>
+										<xsd:restriction base="CharacterString">
+											<xsd:enumeration value="LESS EQUAL"/>
+										</xsd:restriction>
+									</xsd:simpleType>
+								</xsd:attribute>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="snowCoverCondition" minOccurs="0">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="snowCovePerc" type="CoveragePercType"/>
+								</xsd:sequence>
+								<xsd:attribute name="operator">
+									<xsd:simpleType>
+										<xsd:restriction base="CharacterString">
+											<xsd:enumeration value="LESS EQUAL"/>
+										</xsd:restriction>
+									</xsd:simpleType>
+								</xsd:attribute>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="genericCondition" minOccurs="0" maxOccurs="unbounded">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="attributeId" type="NonNullStringType" nillable="false"/>
+									<xsd:element name="attributeValue" type="NonNullStringType" nillable="false" maxOccurs="unbounded"/>
+								</xsd:sequence>
+								<xsd:attribute name="operator">
+									<xsd:simpleType>
+										<xsd:restriction base="CharacterString">
+											<xsd:enumeration value="EQUAL"/>
+											<xsd:enumeration value="LESS EQUAL"/>
+											<xsd:enumeration value="LESS"/>
+											<xsd:enumeration value="GREATER"/>
+											<xsd:enumeration value="GREATER EQUAL"/>
+											<xsd:enumeration value="WITHIN"/>
+											<xsd:enumeration value="INTERSECTS"/>
+										</xsd:restriction>
+									</xsd:simpleType>
+								</xsd:attribute>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DataExtType">
+		<xsd:sequence>
+			<xsd:element name="geoEle" type="GeoEleType" minOccurs="0"/>
+			<xsd:element name="tempEle" type="EX_TemporalType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EX_GeographicBoundingBoxType">
+		<xsd:sequence>
+			<xsd:element name="westBL" type="LongitudeType" nillable="false"/>
+			<xsd:element name="eastBL" type="LongitudeType" nillable="false"/>
+			<xsd:element name="southBL" type="LatitudeType" nillable="false"/>
+			<xsd:element name="northBL" type="LatitudeType" nillable="false"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EX_TemporalType">
+		<xsd:sequence>
+			<xsd:element name="exTemp">
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element name="beginEnd">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="begin" type="xsd:dateTime" nillable="false"/>
+									<xsd:element name="end" type="xsd:dateTime" nillable="false"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="operator" type="CharacterString"/>
+	</xsd:complexType>
+	<xsd:complexType name="PresentRequestType">
+		<xsd:sequence>
+			<xsd:element name="idCitation">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="resTitle" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element ref="presentation"/>
+			<xsd:element ref="collectionId"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MetadataType">
+		<xsd:sequence>
+			<xsd:element name="mdContact">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="rpOrgName" type="CharacterString"/>
+						<xsd:element name="role" type="RoleEnumType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="mdDateSt" type="DateTimeTypes" nillable="false" minOccurs="0"/>
+			<xsd:element name="dataIdInfo" type="DataIdInfoType"/>
+			<xsd:element name="contInfo" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="attDesc">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="typeName" fixed="imageType" nillable="false">
+										<xsd:simpleType>
+											<xsd:restriction base="CharacterString">
+												<xsd:enumeration value="imageType"/>
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:element>
+									<xsd:element name="attTypes">
+										<xsd:complexType>
+											<xsd:sequence>
+												<xsd:element name="attName" fixed="imageQuality" nillable="false">
+													<xsd:simpleType>
+														<xsd:restriction base="CharacterString">
+															<xsd:enumeration value="imageQuality"/>
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:element>
+												<xsd:element name="typeName" fixed="imageQualityType" nillable="false">
+													<xsd:simpleType>
+														<xsd:restriction base="CharacterString">
+															<xsd:enumeration value="imageQualityType"/>
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:element>
+											</xsd:sequence>
+										</xsd:complexType>
+									</xsd:element>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="contType" type="ContentTypeEnum" nillable="false"/>
+						<xsd:element name="illElevAng" type="LatitudeType" nillable="false" minOccurs="0"/>
+						<xsd:element name="illAziAng" type="DegreeType" nillable="false" minOccurs="0"/>
+						<xsd:element name="cloudCovePerc" type="CoveragePercType" nillable="false" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="dqInfo" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="dqScope" minOccurs="0">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="scpLvl" fixed="DataSet">
+										<xsd:simpleType>
+											<xsd:restriction base="NonNullStringType">
+												<xsd:enumeration value="DataSet"/>
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:element>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="graphOver" minOccurs="0" maxOccurs="unbounded">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="bgFileName" type="NonNullStringType"/>
+									<xsd:element name="brwId" type="NonNullStringType" minOccurs="0"/>
+									<xsd:element name="brwExt">
+										<xsd:complexType>
+											<xsd:sequence>
+												<xsd:element name="tempEle" type="EX_TemporalType" minOccurs="0"/>
+											</xsd:sequence>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element name="brwType" type="NonNullStringType"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="addInfo" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="locAtt" minOccurs="0" maxOccurs="unbounded">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="locName" type="NonNullStringType"/>
+									<xsd:element name="locValue" type="NonNullStringType" minOccurs="0" maxOccurs="unbounded"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DataIdInfoType">
+		<xsd:sequence>
+			<xsd:element name="prcTypeCode">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="identCode" type="NonNullStringType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="plaInsId">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="platfSNm"/>
+						<xsd:element ref="platfSer" minOccurs="0"/>
+						<xsd:element ref="instShNm"/>
+						<xsd:element name="instMode" type="CharacterString" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="satDom" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="orbit" minOccurs="0"/>
+						<xsd:element name="lastOrbit" type="xsd:positiveInteger" nillable="false" minOccurs="0"/>
+						<xsd:element name="orbitDir" type="OrbitDirectionEnumType" nillable="false" minOccurs="0"/>
+						<xsd:element name="wwRefSys" minOccurs="0">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element ref="frame" minOccurs="0"/>
+									<xsd:element ref="track" minOccurs="0"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="swathId" type="NonNullStringType" minOccurs="0"/>
+						<xsd:element name="passCoverage" minOccurs="0">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="start" type="xsd:integer"/>
+									<xsd:element name="stop" type="xsd:integer"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="idCitation">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="resTitle" type="NonNullStringType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="idAbs" type="CharacterString" minOccurs="0"/>
+			<xsd:element ref="idStatus" minOccurs="0"/>
+			<xsd:element name="dataExt">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="tempEle" type="EX_TemporalType" minOccurs="0"/>
+						<xsd:element name="geoEle" minOccurs="0">
+							<xsd:complexType>
+								<xsd:choice>
+									<xsd:sequence>
+										<xsd:element name="polygon">
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element ref="coordinates"/>
+												</xsd:sequence>
+											</xsd:complexType>
+										</xsd:element>
+										<xsd:element name="scCenter" minOccurs="0">
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element ref="coordinates"/>
+												</xsd:sequence>
+											</xsd:complexType>
+										</xsd:element>
+									</xsd:sequence>
+								</xsd:choice>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ResponseType">
+		<xsd:sequence>
+			<xsd:element name="retrievedData" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Metadata" type="MetadataType" minOccurs="0" maxOccurs="unbounded"/>
+					</xsd:sequence>
+					<xsd:attribute name="presentation" type="PresentationType"/>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element ref="cursor" minOccurs="0"/>
+			<xsd:element name="hits" type="xsd:nonNegativeInteger" nillable="false" minOccurs="0"/>
+			<xsd:element ref="status"/>
+			<xsd:element name="errorMessage" type="NonNullStringType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GeoEleType">
+		<xsd:sequence>
+			<xsd:element name="geoBndBox">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="EX_GeographicBoundingBoxType"/>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="operator" type="CharacterString"/>
+	</xsd:complexType>
+	<xsd:complexType name="GeoEleExtendedType">
+		<xsd:choice>
+			<xsd:element name="geoBndBox">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="EX_GeographicBoundingBoxType"/>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="geoCircle">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="center" type="NonNullStringType"/>
+						<xsd:element name="radius" type="xsd:nonNegativeInteger"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="geoPolygon">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="coordinates"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:choice>
+		<xsd:attribute name="operator" type="CharacterString"/>
+	</xsd:complexType>
+	<xsd:complexType name="DataExtExtendedType">
+		<xsd:sequence>
+			<xsd:element name="geoEle" type="GeoEleExtendedType" minOccurs="0"/>
+			<xsd:element name="tempEle" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="exTemp">
+							<xsd:complexType>
+								<xsd:choice>
+									<xsd:element name="beginEnd">
+										<xsd:complexType>
+											<xsd:sequence>
+												<xsd:element name="begin" type="DateTimeTypes" nillable="false"/>
+												<xsd:element name="end" type="DateTimeTypes" nillable="false"/>
+											</xsd:sequence>
+										</xsd:complexType>
+									</xsd:element>
+								</xsd:choice>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+					<xsd:attribute name="operator" type="CharacterString"/>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>
+

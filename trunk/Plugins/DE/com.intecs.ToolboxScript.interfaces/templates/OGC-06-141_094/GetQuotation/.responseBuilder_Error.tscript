@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="">
+	<setVariable name="orderId">
+		<randomInt maxExclusive="1000000"/>
+	</setVariable>
+	
+	<try>
+		<sequence>
+			<setVariable name="orderReference">
+				<xPath xmlns:ord="http://earth.esa.int/hma/ordering">
+					<xmlRequest/>
+					<string>/ord:Submit/ord:orderSpecification/ord:orderReference/text()</string>
+				</xPath>
+			</setVariable>
+		</sequence>
+		<ifError errorMessageName="myError">
+			<setVariable name="orderReference">
+				<string>0000000</string>
+			</setVariable>
+		</ifError>
+	</try>
+	
+	<xml attributePrefix="x" textTag="evaluate">
+		<SubmitResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://earth.esa.int/hma/ordering">
+			<status>failure</status>
+			<orderId><evaluate name="orderId" /></orderId>
+			<orderReference><evaluate name="orderReference" /></orderReference>
+		</SubmitResponse>
+	</xml>
+</sequence>

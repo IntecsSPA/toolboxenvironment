@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<csw:GetRecords xmlns:csw="http://www.opengis.net/cat/csw"
+	xmlns:gml="http://www.opengis.net/gml"
+	xmlns:ogc="http://www.opengis.net/ogc"
+	xmlns:xlink="http://www.w3.org/1999/xlink" outputSchema="csw:HmaRecord"
+	maxRecords="10" startPosition="1" outputFormat="application/xml"
+	service="http://www.opengis.net/cat/csw" resultType="results"
+	version="2.0.1">
+	<csw:Query typeNames="dataset">
+		<csw:ElementSetName typeNames="dataset">
+			summary
+		</csw:ElementSetName>
+		<csw:Constraint version="1.1.0">
+			<ogc:Filter>
+				<ogc:And>
+					<ogc:BBOX>
+						<ogc:PropertyName>BoundingBox</ogc:PropertyName>
+						<gml:Envelope srsName="EPSG:4326">
+							<gml:lowerCorner>
+								-90.0 -90.0
+							</gml:lowerCorner>
+							<gml:upperCorner>90.0 90.0</gml:upperCorner>
+						</gml:Envelope>
+					</ogc:BBOX>
+					<ogc:PropertyIsEqualTo>
+						<ogc:PropertyName>
+							ParentIdentifier
+						</ogc:PropertyName>
+						<ogc:Literal>
+							urn:HMA:PHR_catalog:PHR
+						</ogc:Literal>
+					</ogc:PropertyIsEqualTo><!-- for each selected queryables -->
+					<ogc:PropertyIsGreaterThanOrEqualTo>
+						<ogc:PropertyName>StartDate</ogc:PropertyName>
+						<ogc:Literal>
+							2001-01-01T11:02:47.000
+						</ogc:Literal>
+					</ogc:PropertyIsGreaterThanOrEqualTo>
+					<ogc:PropertyIsLessThanOrEqualTo>
+						<ogc:PropertyName>StartDate</ogc:PropertyName>
+						<ogc:Literal>
+							2001-12-31T11:02:47.000
+						</ogc:Literal>
+					</ogc:PropertyIsLessThanOrEqualTo>
+				</ogc:And>
+			</ogc:Filter>
+		</csw:Constraint>
+	</csw:Query>
+</csw:GetRecords>

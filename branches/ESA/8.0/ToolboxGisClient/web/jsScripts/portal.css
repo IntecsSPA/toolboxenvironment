@@ -1,0 +1,369 @@
+.PortalInputError, ul .PortalInputError
+{
+    font-weight: bold;
+    color: red;
+    font-family: Arial;
+    font-size: 10px;
+    margin: 0px
+    padding : 0px;
+    list-style-type:none;
+    
+
+}
+.arttlItalic {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-style: italic;
+	color:black;
+	text-align: right;
+}
+.readonlyText {
+	background-color: #e7edf5;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color:black;
+	text-align: left;
+}
+.arttlLight {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color:black;
+	text-align: right;
+}
+.stylesheetText{
+	valign: top;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color:#000000;
+	text-align: left;
+	vertical-align: top;
+}
+.stylesheetBoldText{
+	width: 150px;
+	valign: top;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 10px;
+	color:black;/*#336699;*/
+	text-align: left;
+	vertical-align: top;
+	left: 3px;
+	margin-left: 3px;
+	padding-left: 3px;
+	border-left-style: 3;
+}
+.stylesheetHeader
+{
+ 	background-color: #71A0D0;
+ 	height: 24px;
+ 	font-family: Verdana, Arial, Helvetica, sans-serif; 
+ 	font-weight: bold; 
+ 	font-size: 11px; 
+ 	color:#000000;
+	text-align: center; 
+}
+.stylesheetHeaderWhite
+{
+    font-family: Helvetica, Arial, Verdana;
+    font-style: plain;
+    font-size: 13pt;
+    color: #FFFFFF;
+    FONT-WEIGHT: bold
+}
+
+
+.stylesheetBoldSmText
+{
+	background-color: #e7edf5;
+	width: 130px;
+	valign: top;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 10px;
+	color:black;/*#336699;*/
+	text-align: left;
+	vertical-align: top;
+	left: 3px;
+	margin-left: 3px;
+	padding-left: 3px;
+	border-left-style: 3;
+}
+
+.stylesheetBoldSmLargeText
+{
+	background-color: #e7edf5;
+	width: 180px;
+	valign: top;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 10px;
+	color:black;/*#336699;*/
+	text-align: left;
+	vertical-align: top;
+	left: 3px;
+	margin-left: 3px;
+	padding-left: 3px;
+	border-left-style: 3;
+}
+
+.stylesheetBoldWhiteText
+{
+
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #FFFFFF;
+    FONT-WEIGHT: bold
+}
+.stylesheetBoldGreyText
+{
+ 
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #AAAAAA;
+    FONT-WEIGHT: bold
+}
+
+.stylesheetSmText
+{
+	background-color: #e7edf5;
+	valign: top;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color:#000000;
+	text-align: left;
+	vertical-align: top;
+	margin-left: 3px;
+	padding-left: 3px;
+}
+
+.stylesheetSmTextLink
+{
+	background-color: #e7edf5;
+	valign: top;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color:#336699;
+	text-align: left;
+	vertical-align: top;
+	margin-left: 3px;
+	padding-left: 3px;
+}
+
+.stylesheetSmTextLink:hover
+{
+	
+	color:blue;
+	
+}
+
+
+.sortable {
+	background-color: #A9C6E2;
+	height: 24px;
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	font-weight: bold; 
+	font-size: 11px; 
+	color:#000000; 
+	text-align: left; 
+
+}
+th.sorted a, th.sortable a {
+	background-position: right;
+	display: block;
+	width: 100%;
+}
+	
+th a:link {    
+    COLOR: #336699;
+    font-size: 11px;	
+	
+}
+th a:visited {
+    COLOR: #336699;
+    font-size: 11px;	
+}
+
+th.order1 a {
+	background-image: url('../../images/arrow_up.gif');
+	background-position:  right 50%;
+    text-align: left;
+    background-repeat:no-repeat	
+}
+
+th.order2 a {
+	background-image: url('../../images/arrow_down.gif');
+	background-position:  right 50%;	
+    text-align: left;	
+    background-repeat:no-repeat
+}
+pre
+{
+	margin:0px;
+}
+
+.path
+{
+	font-size:10px;
+	color: #FFFFFF;
+	
+}
+
+.path a
+{
+	font-size:10px;
+	color: #FFFFFF;
+}
+
+.path a:hover
+{
+	color: #000000;
+}
+form
+{
+	margin:0px;	
+}
+.catalogueText{
+	display:block;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+
+	font-size:10px;
+	color:#000000;
+	text-align: left;
+	/*vertical-align: top;*/
+}
+.level2 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 11px;
+	line-height: 0em;
+	color:black; /*#336699;*/
+	text-align: left;
+}
+.level2Body {
+	font-size: 12px;
+    line-height: normal;
+	color: #000000;
+	text-align: justify;
+}
+
+/* Begin styles for pop up news of the day */
+
+.popup
+{
+	position: absolute;
+	top:25%;
+	left: 25%;
+	float: none;
+        background-color: #F8D590;
+        border-style: solid;
+        border-color: #FFFFFF;
+        border-left-width: thick;
+        border-right-width: thick;
+        border-top-width: thick;
+        border-bottom-width: thick;
+        padding: 2px;
+}
+.item
+{
+	margin: 0.25%;
+	float: left;
+	width: 49%;
+}
+
+.item div
+{	
+	color: #000066;
+	text-decoration: none;
+	height: 16px;
+	width: 100%;
+	text-align: left;
+	padding:0px;
+	margin:0px;
+	border-bottom: #000000 solid 1px;
+	border-right: #000000 solid 1px;
+}
+.item div p
+{
+	margin: 0px;
+	padding:0px;
+	/*margin-right:8px;*/
+	vertical-align:middle;
+	font-weight: bold;
+	color:#000000;
+}
+.item div a
+{
+	vertical-align:middle;
+	font-weight: bold;
+	color:#336699;
+	padding-left:5px;
+}
+.label
+{
+	font-weight: bold;
+	color:#336699;
+	text-align: center;
+	margin-left:30%;
+	padding:2px;
+}
+/* End of style of news of the day */
+
+
+
+/* Use the style below as base of the  SSE style cleaning task */
+
+/* stylesheet styles */
+.classicFieldPresentStylesheet
+{
+	background-color: #e7edf5;
+	valign: top;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color:black;
+	text-align: left;
+	vertical-align: top;
+	margin-left: 3px;
+	margin-right: 3px;
+	margin-top: 1px;
+	margin-bottom: 1px;
+	padding-left: 3px;
+	
+}
+
+.categoryHeaderPresentStylesheet
+{
+ 	background-color: #71A0D0;
+ 	height: 24px;
+ 	font-family: Verdana, Arial, Helvetica, sans-serif; 
+ 	font-weight: bold; 
+ 	font-size: 11px; 
+ 	color:black;
+	text-align: center; 
+	width: 100%;
+}
+
+.dataListHeaderPresentStylesheet
+{
+ 	background-color: #336699;
+ 	font-family: Verdana, Arial, Helvetica, sans-serif; 
+ 	font-weight: bold; 
+ 	font-size: 10px; 
+ 	color:#B6CEE7;
+	text-align: center; 
+}
+
+.dataListValuePresentStylesheet
+{
+	background-color: #e7edf5;
+	valign: top;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color:black;
+	text-align: left;
+	vertical-align: top;
+	margin: 0px;
+	padding: 0px;
+}
+
+/* end stylesheet styles */
+

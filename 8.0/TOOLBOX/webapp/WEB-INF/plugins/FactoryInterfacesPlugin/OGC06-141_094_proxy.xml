@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface name="OGC-06-141" version="0.9.4" type="Ordering" mode="Proxy">
+		<rootSchemaFile>Order.xsd</rootSchemaFile>
+		<schemaSetLocation>schemas/OGC-06-141_094</schemaSetLocation>
+		<wsdlFile>wsdl/OGC-06-141_094.wsdl</wsdlFile>
+		<targetNameSpace>http://earth.esa.int/hma/ordering</targetNameSpace>
+		<operations>
+			<operation name="Submit" type="asynchronous" SOAPAction="Submit" callbackSOAPAction="SubmitResponse" pollingRate="1m" requestTimeout="1d">
+				<admittedHosts/>
+                                <inputType namespace="http://earth.esa.int/hma/ordering" type="Submit"/>
+				<outputType namespace="http://earth.esa.int/hma/ordering" type="SubmitAck"/>
+				<callbackInputType namespace="http://earth.esa.int/hma/ordering" type="SubmitResponse"/>
+				<callbackOutputType namespace="http://earth.esa.int/hma/ordering" type="SubmitResponseAck"/>
+				<scriptFile type="RESP_BUILDER" path="templates/OGC-06-141_094_Proxy/Submit/responseBuilderScript.tscript" overrideByUser="false"/>
+				<scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-141_094_Proxy/Submit/first_script.tscript" overrideByUser="false"/>
+				<scriptFile type="SECOND_SCRIPT" path="templates/OGC-06-141_094_Proxy/Submit/second_script.tscript" overrideByUser="false"/>
+				<scriptFile type="THIRD_SCRIPT" path="templates/OGC-06-141_094_Proxy/Submit/third_script.tscript" overrideByUser="false"/>
+				<scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-141_094_Proxy/Submit/globalError.tscript" overrideByUser="false"/>
+				<scriptFile type="ERROR_ON_RESP_BUILDER" path="templates/OGC-06-141_094_Proxy/Submit/responseBuilder_Error.tscript" overrideByUser="false"/>
+				<testFiles>testFiles/OGC-06-141_094_Proxy/Submit/test_submit.xml</testFiles>
+			</operation>
+                        <operation name="Cancel" type="asynchronous" SOAPAction="Cancel" callbackSOAPAction="CancelResponse" pollingRate="1m" requestTimeout="1d">
+				<admittedHosts/>
+                                <inputType namespace="http://earth.esa.int/hma/ordering" type="Cancel"/>
+				<outputType namespace="http://earth.esa.int/hma/ordering" type="Cancel"/>
+                                <callbackInputType namespace="http://earth.esa.int/hma/ordering" type="CancelResponse"/>
+				<callbackOutputType namespace="http://earth.esa.int/hma/ordering" type="CancelResponseAck"/>
+				<scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-141_094_Proxy/Cancel/first_script.tscript" overrideByUser="false"/>
+				<scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-141_094_Proxy/Cancel/globalError.tscript" overrideByUser="false"/>
+				<scriptFile type="RESP_BUILDER" path="templates/OGC-06-141_094_Proxy/Cancel/responseBuilderScript.tscript" overrideByUser="false"/>
+				<scriptFile type="SECOND_SCRIPT" path="templates/OGC-06-141_094_Proxy/Cancel/second_script.tscript" overrideByUser="false"/>
+				<scriptFile type="THIRD_SCRIPT" path="templates/OGC-06-141_094_Proxy/Cancel/third_script.tscript" overrideByUser="false"/>
+				<scriptFile type="ERROR_ON_RESP_BUILDER" path="templates/OGC-06-141_094_Proxy/Cancel/responseBuilder_Error.tscript" overrideByUser="false"/>
+                                <testFiles>testFiles/OGC-06-141_094_Proxy/Cancel/test_cancel.xml</testFiles>
+			</operation>
+			<operation name="GetStatus" type="synchronous" SOAPAction="GetStatus">
+				<admittedHosts/>
+                                <inputType namespace="http://earth.esa.int/hma/ordering" type="GetStatus"/>
+				<outputType namespace="http://earth.esa.int/hma/ordering" type="GetStatusResponse"/>
+				<scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-141_094_Proxy/GetStatus/script.tscript" overrideByUser="false"/>
+				<scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-141_094_Proxy/GetStatus/globalError.tscript" overrideByUser="false"/>
+				<testFiles>testFiles/OGC-06-141_094_Proxy/GetStatus/test_getStatus.xml</testFiles>
+			</operation>
+			<operation name="GetOptions" type="synchronous" SOAPAction="GetOptions">
+                                <admittedHosts/>
+                                <inputType namespace="http://earth.esa.int/hma/ordering" type="GetOptions"/>
+				<outputType namespace="http://earth.esa.int/hma/ordering" type="GetOptionsResponse"/>
+				<scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-141_094_Proxy/GetOptions/script.tscript" overrideByUser="false"/>
+				<scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-141_094_Proxy/GetOptions/globalError.tscript" overrideByUser="false"/>
+				<testFiles>testFiles/OGC-06-141_094_Proxy/GetOptions/test_getOptions.xml</testFiles>
+			</operation>
+			<operation name="GetQuotation" type="synchronous" SOAPAction="GetQuotation" callbackSOAPAction="GetQuotation" pollingRate="1m" requestTimeout="1d">
+				<admittedHosts/>
+                                <inputType namespace="http://earth.esa.int/hma/ordering" type="GetQuotation"/>
+				<outputType namespace="http://earth.esa.int/hma/ordering" type="GetQuotationAck"/>
+				<callbackInputType namespace="http://earth.esa.int/hma/ordering" type="GetQuotationResponse"/>
+				<callbackOutputType namespace="http://earth.esa.int/hma/ordering" type="GetQuotationResponseAck"/>
+				<scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-141_094_Proxy/GetQuotation/first_script.tscript" overrideByUser="false"/>
+				<scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-141_094_Proxy/GetQuotation/globalError.tscript" overrideByUser="false"/>
+				<scriptFile type="RESP_BUILDER" path="templates/OGC-06-141_094_Proxy/GetQuotation/responseBuilderScript.tscript" overrideByUser="false"/>
+				<scriptFile type="SECOND_SCRIPT" path="templates/OGC-06-141_094_Proxy/GetQuotation/second_script.tscript" overrideByUser="false"/>
+				<scriptFile type="THIRD_SCRIPT" path="templates/OGC-06-141_094_Proxy/GetQuotation/third_script.tscript" overrideByUser="false"/>
+				<scriptFile type="ERROR_ON_RESP_BUILDER" path="templates/OGC-06-141_094_Proxy/GetQuotation/responseBuilder_Error.tscript" overrideByUser="false"/>
+                                <testFiles>testFiles/OGC-06-141_094_Proxy/GetQuotation/test_getQuotation.xml</testFiles>
+			</operation>
+			<operation name="GetCapabilities" type="synchronous" SOAPAction="GetCapabilities">
+				<admittedHosts/>
+                                <inputType namespace="http://earth.esa.int/hma/ordering" type="GetCapabilities"/>
+				<outputType namespace="http://earth.esa.int/hma/ordering" type="Capabilities"/>
+				<scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-141_094_Proxy/GetCapabilities/script.tscript" overrideByUser="false"/>
+				<scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-141_094_Proxy/GetCapabilities/globalError.tscript" overrideByUser="false"/>
+				<testFiles>testFiles/OGC-06-141_094_Proxy/GetCapabilities/test_GetCapabilities.xml</testFiles>
+			</operation>
+                        <operation name="DescribeResultAccess" type="synchronous" SOAPAction="DescribeResultAccess">
+				<admittedHosts/>
+                                <inputType namespace="http://earth.esa.int/hma/ordering" type="DescribeResultAccess"/>
+				<outputType namespace="http://earth.esa.int/hma/ordering" type="DescribeResultAccessResponse"/>
+				<scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-141_094_Proxy/DescribeResultAccess/script.tscript" overrideByUser="false"/>
+				<scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-141_094_Proxy/DescribeResultAccess/globalError.tscript" overrideByUser="false"/>
+				<testFiles>testFiles/OGC-06-141_094_Proxy/GetCapabilities/test_GetCapabilities.xml</testFiles>
+			</operation>
+		</operations>
+                 <variables>
+                    <variable name="remoteUrl" value="http://" type="string" displayedText="URL of the SOAP endpoint"/>
+                    <variable name="forwardMessageWithClearToken" value="false" type="boolean" displayedText="Forward message with security token unencrypted"/>
+                    <variable name="forwardMessageWithCryptedToken" value="false" type="boolean" displayedText="Forward message with security token encrypted (this will override all forwarding options)"/>
+                    <variable name="keyAlias" value="" type="string" displayedText="Alias of the key to be used for encryption"/>
+                </variables>
+	</interface>

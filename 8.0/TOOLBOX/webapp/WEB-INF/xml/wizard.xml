@@ -1,0 +1,2698 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wizard xmlns="http://pisa.intecs.it/mass/toolbox/wizard" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<tags>
+		<tag name="sequence" minChildren="0" maxChildren="unbounded">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="ALL"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+                            <!--<type name="ALL"/>-->
+                            <type name="Object"/>
+                            <type name="void"/>
+                        </returns>
+			<description>doc/SUM/scripting.html#sequence</description>
+		</tag>
+		<tag name="dec" minChildren="1" maxChildren="1">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+				<!--LValue: variable, field, arrayLocation-->
+			</enclosedElements>
+			<returns>
+				<type name="Integer"/>
+			</returns>
+			<description>doc/SUM/scripting.html#dec</description>
+		</tag>
+		<tag name="inc" minChildren="0" maxChildren="1">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+				<!--LValue: variable, field, arrayLocation-->
+			</enclosedElements>
+			<returns>
+				<type name="Integer"/>
+			</returns>
+			<description>doc/SUM/scripting.html#inc</description>
+		</tag>
+		<tag name="divide" minChildren="0" maxChildren="unbounded">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Integer"/>
+			</returns>
+			<description>doc/SUM/scripting.html#divide</description>
+		</tag>
+		<tag name="minus" minChildren="0" maxChildren="unbounded">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Integer"/>
+			</returns>
+			<description>doc/SUM/scripting.html#minus</description>
+		</tag>
+		<tag name="module" minChildren="2" maxChildren="2">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Integer"/>
+			</returns>
+			<description>doc/SUM/scripting.html#module</description>
+		</tag>
+		<tag name="multiply" minChildren="0" maxChildren="unbounded">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Integer"/>
+			</returns>
+			<description>doc/SUM/scripting.html#multiply</description>
+		</tag>
+		<tag name="negate" minChildren="1" maxChildren="1">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Integer"/>
+			</returns>
+			<description>doc/SUM/scripting.html#negate</description>
+		</tag>
+		<tag name="plus" minChildren="0" maxChildren="unbounded">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Integer"/>
+			</returns>
+			<description>doc/SUM/scripting.html#plus</description>
+		</tag>
+		<tag name="eq" minChildren="2" maxChildren="2">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Boolean"/>
+			</returns>
+			<description>doc/SUM/scripting.html#eq</description>
+		</tag>
+		<tag name="gt" minChildren="2" maxChildren="2">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Boolean"/>
+			</returns>
+			<description>doc/SUM/scripting.html#gt</description>
+		</tag>
+		<tag name="gte" minChildren="2" maxChildren="2">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Boolean"/>
+			</returns>
+			<description>doc/SUM/scripting.html#gte</description>
+		</tag>
+		<tag name="isNotNull" minChildren="1" maxChildren="1">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Object"/>
+						<!--i.e. anything is not "void"-->
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Boolean"/>
+			</returns>
+			<description>doc/SUM/scripting.html#isNotNull</description>
+		</tag>
+		<tag name="isNull" minChildren="1" maxChildren="1">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Object"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Boolean"/>
+			</returns>
+			<description>doc/SUM/scripting.html#isNull</description>
+		</tag>
+		<tag name="lt" minChildren="2" maxChildren="2">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Boolean"/>
+			</returns>
+			<description>doc/SUM/scripting.html#lt</description>
+		</tag>
+		<tag name="lte" minChildren="2" maxChildren="2">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Boolean"/>
+			</returns>
+			<description>doc/SUM/scripting.html#lte</description>
+		</tag>
+		<tag name="neq" minChildren="2" maxChildren="2">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Boolean"/>
+			</returns>
+			<description>doc/SUM/scripting.html#neq</description>
+		</tag>
+		<tag name="oneq" minChildren="2" maxChildren="2">
+			<attributes/>
+			<!--aggiungere valori ammessi-->
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Object"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Object"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Boolean"/>
+			</returns>
+			<description>doc/SUM/scripting.html#oneq</description>
+		</tag>
+		<tag name="and" minChildren="0" maxChildren="unbounded">
+			<attributes>
+				<attribute name="shortcut" default="true">
+					<validValue value="true"/>
+					<validValue value="false"/>
+				</attribute>
+			</attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Boolean"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Boolean"/>
+			</returns>
+			<description>doc/SUM/scripting.html#and</description>
+		</tag>
+		<tag name="not" minChildren="1" maxChildren="1">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Boolean"/>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Boolean"/>
+				<type name="Integer"/>
+			</returns>
+			<description>doc/SUM/scripting.html#not</description>
+		</tag>
+		<tag name="or" minChildren="0" maxChildren="unbounded">
+			<attributes>
+				<attribute name="shortcut" default="true">
+					<validValue value="false"/>
+					<validValue value="true"/>
+				</attribute>
+			</attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Boolean"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Boolean"/>
+			</returns>
+			<description>doc/SUM/scripting.html#or</description>
+		</tag>
+		<tag name="xor" minChildren="0" maxChildren="unbounded">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Boolean"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Boolean"/>
+			</returns>
+			<description>doc/SUM/scripting.html#xor</description>
+		</tag>
+		<tag name="lShift" minChildren="2" maxChildren="2">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Integer"/>
+			</returns>
+			<description>doc/SUM/scripting.html#lShift</description>
+		</tag>
+		<tag name="rSShift" minChildren="2" maxChildren="2">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Integer"/>
+			</returns>
+			<description>doc/SUM/scripting.html#rSShift</description>
+		</tag>
+		<tag name="rUShift" minChildren="2" maxChildren="2">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Integer"/>
+			</returns>
+			<description>doc/SUM/scripting.html#rUShift</description>
+		</tag>
+		<tag name="bitAnd" minChildren="0" maxChildren="unbounded">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Integer"/>
+			</returns>
+			<description>doc/SUM/scripting.html#bitAnd</description>
+		</tag>
+		<tag name="bitOr" minChildren="0" maxChildren="unbounded">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Integer"/>
+			</returns>
+			<description>doc/SUM/scripting.html#bitOr</description>
+		</tag>
+		<tag name="bitXor" minChildren="0" maxChildren="unbounded">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Integer"/>
+			</returns>
+			<description>doc/SUM/scripting.html#bitXor</description>
+		</tag>
+		<tag name="set" minChildren="2" maxChildren="2">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<!--<type name="LValue"/>-->
+						<type name="Object"/>
+						<!--<type name="Boolean"/>
+						<type name="Integer"/>
+						<type name="String"/>
+						<type name="Character"/>-->
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#set</description>
+		</tag>
+		<tag name="setVariable" minChildren="1" maxChildren="1">
+			<attributes>
+				<attribute name="name" default=""/>
+                        </attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<!--<type name="LValue"/>-->
+						<type name="Object"/>
+						<!--<type name="Boolean"/>
+						<type name="Integer"/>
+						<type name="String"/>
+						<type name="Character"/>-->
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#setVariable</description>
+		</tag>
+		<tag name="character" minChildren="0" maxChildren="0">
+			<attributes>
+				<attribute name="value" default=""/>
+			</attributes>
+			<enclosedElements/>
+			<returns>
+				<type name="Character"/>
+			</returns>
+			<description>doc/SUM/scripting.html#character</description>
+		</tag>
+		<tag name="classLiteral" minChildren="0" maxChildren="0">
+			<attributes>
+				<attribute name="class" default=""/>
+			</attributes>
+			<enclosedElements/>
+			<returns>
+				<type name="Class"/>
+			</returns>
+			<description>doc/SUM/scripting.html#classLiteral</description>
+		</tag>
+		<tag name="command" minChildren="1" maxChildren="1">
+			<attributes>
+				<attribute name="asynchronous" default="false">
+					<validValue value="true"/>
+					<validValue value="false"/>
+				</attribute>
+			</attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#command</description>
+		</tag>
+		<tag name="existsVariable" minChildren="0" maxChildren="0">
+			<attributes>
+				<attribute name="name" default=""/>
+			</attributes>
+			<enclosedElements/>
+			<returns>
+				<type name="Boolean"/>
+			</returns>
+			<description>doc/SUM/scripting.html#existsVariable</description>
+		</tag>
+		<tag name="generateError" minChildren="1" maxChildren="1">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Boolean"/>
+			</returns>
+			<description>doc/SUM/scripting.html#generateError</description>
+		</tag>
+		<tag name="literal" minChildren="0" maxChildren="0">
+			<attributes>
+				<attribute name="type" default="int">
+					<validValue value="int"/>
+					<validValue value="short"/>
+					<validValue value="long"/>
+					<validValue value="float"/>
+					<validValue value="double"/>
+					<validValue value="char"/>
+					<validValue value="boolean"/>
+				</attribute>
+				<attribute name="value" default=""/>
+			</attributes>
+			<enclosedElements/>
+			<returns>
+				<type name="Integer"/>
+				<type name="Boolean"/>
+				<type name="Short"/>
+				<type name="Long"/>
+				<type name="Float"/>
+				<type name="Double"/>
+				<type name="Character"/>
+			</returns>
+			<description>doc/SUM/scripting.html#literal</description>
+		</tag>
+		<tag name="localHost" minChildren="0" maxChildren="0">
+			<attributes/>
+			<enclosedElements/>
+			<returns>
+				<type name="String"/>
+			</returns>
+			<description>doc/SUM/scripting.html#localHost</description>
+		</tag>
+		<tag name="log" minChildren="1" maxChildren="1">
+			<attributes>
+				<attribute name="level" default="INFO">
+					<validValue value="INFO"/>
+					<validValue value="ALL"/>
+					<validValue value="DEBUG"/>
+					<validValue value="WARN"/>
+					<validValue value="ERROR"/>
+					<validValue value="FATAL"/>
+					<validValue value="OFF"/>
+				</attribute>
+			</attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#log</description>
+		</tag>
+		<tag name="field" minChildren="1" maxChildren="1">
+			<attributes>
+				<attribute name="fieldName" default=""/>
+			</attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Choice"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="LValue"/>
+			</returns>
+			<description>doc/SUM/scripting.html#field</description>
+		</tag>
+		<tag name="methodInvocation" minChildren="1" maxChildren="unbounded">
+			<attributes>
+				<attribute name="methodName" default=""/>
+			</attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Choice"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Parameter"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Object"/>
+			</returns>
+			<description>doc/SUM/scripting.html#methodInvocation</description>
+		</tag>
+		<tag name="parameter" minChildren="2" maxChildren="2" standalone="false">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Class"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Object"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Parameter"/>
+			</returns>
+			<description>doc/SUM/scripting.html</description>
+		</tag>
+		<tag name="object" minChildren="1" maxChildren="1" standalone="false">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Object"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Choice"/>
+			</returns>
+			<description>doc/SUM/scripting.html</description>
+		</tag>
+		<tag name="class" minChildren="1" maxChildren="1" standalone="false">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Class"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Choice"/>
+			</returns>
+			<description>doc/SUM/scripting.html</description>
+		</tag>
+		<tag name="newObject" minChildren="1" maxChildren="unbounded">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Class"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Parameter"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Object"/>
+			</returns>
+			<description>doc/SUM/scripting.html#newObject</description>
+		</tag>
+		<tag name="null" minChildren="0" maxChildren="0">
+			<attributes/>
+			<enclosedElements/>
+			<returns>
+				<type name="Object"/>
+			</returns>
+			<description>doc/SUM/scripting.html#null</description>
+		</tag>
+		<tag name="primitiveType" minChildren="0" maxChildren="0">
+			<attributes>
+				<attribute name="type" default="int">
+					<validValue value="int"/>
+					<validValue value="boolean"/>
+					<validValue value="byte"/>
+					<validValue value="long"/>
+					<validValue value="double"/>
+					<validValue value="char"/>
+					<validValue value="float"/>
+				</attribute>
+			</attributes>
+			<enclosedElements/>
+			<returns>
+				<type name="Class"/>
+			</returns>
+			<description>doc/SUM/scripting.html#primitiveType</description>
+		</tag>
+		<tag name="randomInt" minChildren="0" maxChildren="0">
+			<attributes>
+				<attribute name="maxExclusive" default="" required="false"/>
+			</attributes>
+			<enclosedElements/>
+			<returns>
+				<type name="Integer"/>
+			</returns>
+			<description>doc/SUM/scripting.html#randomInt</description>
+		</tag>
+		<tag name="sleep" minChildren="0" maxChildren="0">
+			<attributes>
+				<attribute name="amount" default=""/>
+			</attributes>
+			<enclosedElements/>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#sleep</description>
+		</tag>
+		<tag name="timer" minChildren="1" maxChildren="1">
+			<attributes>
+				<attribute name="delay" default=""/>
+			</attributes>
+			<enclosedElements>
+                            <enclosedElement name="">
+                                <requiredTypes>
+                                    <type name="ALL"/>
+                                </requiredTypes>
+                            </enclosedElement>
+                        </enclosedElements>                        
+			<returns>
+                            <type name="ALL"/>
+                        </returns>
+			<description>doc/SUM/scripting.html#timer</description>
+		</tag>
+		<tag name="variable" minChildren="0" maxChildren="0">
+			<attributes>
+				<attribute name="name" default=""/>
+			</attributes>
+			<enclosedElements/>
+			<returns>
+				<type name="LValue"/>
+				<type name="Object"/>
+			</returns>
+			<description>doc/SUM/scripting.html#variable</description>
+		</tag>
+		<tag name="if" minChildren="2" maxChildren="3">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Boolean"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="ALL"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="ALL"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="ALL"/>
+			</returns>
+			<description>doc/SUM/scripting.html#if</description>
+		</tag>
+		<tag name="try" minChildren="2" maxChildren="3">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="ALL"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="IfError"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Anyway"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="ALL"/>
+			</returns>
+			<description>doc/SUM/scripting.html#try</description>
+		</tag>
+		<tag name="ifError" minChildren="1" maxChildren="1" standalone="false">
+			<attributes>
+				<attribute name="errorMessageName" default=""/>
+			</attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="ALL"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="IfError"/>
+			</returns>
+			<description>doc/SUM/scripting.html#try</description>
+		</tag>
+		<tag name="anyway" minChildren="1" maxChildren="1" standalone="false">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="ALL"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Anyway"/>
+			</returns>
+			<description>doc/SUM/scripting.html#try</description>
+		</tag>
+		<!--<tag name="while"/>-->
+		<tag name="atoi" minChildren="1" maxChildren="1">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Integer"/>
+			</returns>
+			<description>doc/SUM/scripting.html#atoi</description>
+		</tag>
+		<tag name="itoa" minChildren="1" maxChildren="1">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="String"/>
+			</returns>
+			<description>doc/SUM/scripting.html#itoa</description>
+		</tag>
+                <tag name="string" minChildren="0" maxChildren="0" hasContent="true">
+			<attributes/>
+			<enclosedElements/>
+			<returns>
+				<type name="String"/>
+			</returns>
+			<description>doc/SUM/scripting.html#string</description>
+		</tag>
+                <tag name="massHost" minChildren="0" maxChildren="0" hasContent="false">
+			<attributes/>
+			<enclosedElements/>
+			<returns>
+				<type name="String"/>
+			</returns>
+			<description>doc/SUM/scripting.html#massHost</description>
+		</tag>
+                <tag name="jelly" minChildren="0" maxChildren="1" hasContent="true">
+			<attributes>
+				<attribute name="returns" default="none">
+                                        <validValue value="none"/>
+					<validValue value="text"/>
+					<validValue value="xml"/>					
+				</attribute>
+			</attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="String"/>
+                                <type name="Document"/>
+                                <type name="none"/>
+			</returns>
+			<description>doc/SUM/scripting.html#jelly</description>
+		</tag>
+                <tag name="stringLength" minChildren="1" maxChildren="1">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Integer"/>
+			</returns>
+			<description>doc/SUM/scripting.html#stringLength</description>
+		</tag>
+                <tag name="stringCat" minChildren="0" maxChildren="unbounded">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Object"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="String"/>
+			</returns>
+			<description>doc/SUM/scripting.html#stringCat</description>
+		</tag>
+                <tag name="oeq" minChildren="2" maxChildren="2">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Object"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+                                            <type name="Object"/>
+                                            <type name="LValue"/>						
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Boolean"/>
+			</returns>
+			<description>doc/SUM/scripting.html#oeq</description>
+		</tag>
+                <tag name="oneq" minChildren="2" maxChildren="2">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Object"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+                                            <type name="Object"/>
+                                            <type name="LValue"/>						
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Boolean"/>
+			</returns>
+			<description>doc/SUM/scripting.html#oneq</description>
+		</tag>
+                <tag name="print" minChildren="1" maxChildren="1">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Object"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>				
+			</enclosedElements>
+			<returns>
+				<type name="String"/>
+			</returns>
+			<description>doc/SUM/scripting.html#print</description>
+		</tag>
+                <tag name="execute" minChildren="1" maxChildren="unbounded">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Procedure"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Argument"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Object"/>
+                                <type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#execute</description>
+		</tag>
+                <tag name="procedure" minChildren="1" maxChildren="1" standalone="false">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<!--<type name="Procedure"/>-->
+                                                <type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Procedure"/>
+			</returns>
+			<description>doc/SUM/scripting.html#execute</description>
+		</tag>
+                <tag name="argument" minChildren="1" maxChildren="1" standalone="false">
+			<attributes>
+				<attribute name="name" default=""/>
+			</attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Object"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Argument"/>
+			</returns>
+			<description>doc/SUM/scripting.html#execute</description>
+		</tag>  
+                <tag name="loadProcedure" minChildren="1" maxChildren="1">
+			<attributes>
+				<attribute name="name" default=""/>
+			</attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Element"/>
+			</returns>
+			<description>doc/SUM/scripting.html#loadProcedure</description>
+		</tag>
+                <tag name="storeProcedure" minChildren="1" maxChildren="1">
+			<attributes>
+				<attribute name="name" default=""/>
+			</attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Element"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Element"/>
+			</returns>
+			<description>doc/SUM/scripting.html#storeProcedure</description>
+		</tag>
+                <tag name="call" minChildren="0" maxChildren="unbounded">
+			<attributes>
+				<attribute name="procedure" default=""/>
+			</attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Argument"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="ALL"/>
+			</returns>
+			<description>doc/SUM/scripting.html#call</description>
+		</tag>
+                <tag name="loadXML" minChildren="1" maxChildren="1">
+			<attributes>
+				<attribute name="validatingSchema" default="" required="false"/>
+			</attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Document"/>
+			</returns>
+			<description>doc/SUM/scripting.html#loadXML</description>
+		</tag>
+                <tag name="dumpXML" minChildren="2" maxChildren="2">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="Document"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#dumpXML</description>
+		</tag>
+                <tag name="xmlRequest" minChildren="0" maxChildren="0">
+			<attributes/>
+			<enclosedElements/>
+			<returns>
+				<type name="Document"/>
+			</returns>
+			<description>doc/SUM/scripting.html#xmlRequest</description>
+		</tag>
+                <tag name="orderId" minChildren="0" maxChildren="0">
+			<attributes/>
+			<enclosedElements/>
+			<returns>
+				<type name="String"/>
+			</returns>
+			<description>doc/SUM/scripting.html#orderId</description>
+		</tag>
+                <tag name="ftpAccount" minChildren="3" maxChildren="3">
+			<attributes>
+                            <attribute name="duration" default=""/>
+                        </attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="User"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Password"/>
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="RootDir"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#ftpAccount</description>
+		</tag>
+                <tag name="user" minChildren="1" maxChildren="1" standalone="false">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="User"/>
+			</returns>
+			<description>doc/SUM/scripting.html</description>
+		</tag>
+                <tag name="password" minChildren="1" maxChildren="1" standalone="false">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Password"/>
+			</returns>
+			<description>doc/SUM/scripting.html</description>
+		</tag>
+                <tag name="rootDir" minChildren="1" maxChildren="1" standalone="false">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="RootDir"/>
+			</returns>
+			<description>doc/SUM/scripting.html</description>
+		</tag>
+                <tag name="ftpGet" minChildren="6" maxChildren="6">
+			<attributes>
+                            <attribute name="transfer" default="ascii">
+                                <validValue value="ascii"/>
+				<validValue value="binary"/>
+                            </attribute>
+                        </attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Host"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="Port"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="User"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="Password"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="RemotePath"/>
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="LocalPath"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#ftpGet</description>
+		</tag>
+                <tag name="ftpPut" minChildren="6" maxChildren="6">
+			<attributes>
+                            <attribute name="transfer" default="ascii">
+                                <validValue value="ascii"/>
+				<validValue value="binary"/>
+                            </attribute>
+                        </attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Host"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="Port"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="User"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="Password"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="RemotePath"/>
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="LocalPath"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#ftpPut</description>
+		</tag>
+                <tag name="ftpDelete" minChildren="5" maxChildren="5">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Host"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="Port"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="User"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="Password"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="RemotePath"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#ftpDelete</description>
+		</tag>
+                <tag name="ftpExists" minChildren="5" maxChildren="5">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Host"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="Port"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="User"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="Password"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="RemotePath"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Boolean"/>
+			</returns>
+			<description>doc/SUM/scripting.html#ftpExists</description>
+		</tag>
+                <tag name="host" minChildren="1" maxChildren="1" standalone="false">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Host"/>
+			</returns>
+			<description>doc/SUM/scripting.html</description>
+		</tag>
+                <tag name="port" minChildren="1" maxChildren="1" standalone="false">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Port"/>
+			</returns>
+			<description>doc/SUM/scripting.html</description>
+		</tag>
+                <tag name="remotePath" minChildren="1" maxChildren="1" standalone="false">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="RemotePath"/>
+			</returns>
+			<description>doc/SUM/scripting.html</description>
+		</tag>
+                <tag name="localPath" minChildren="1" maxChildren="1" standalone="false">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="LocalPath"/>
+			</returns>
+			<description>doc/SUM/scripting.html</description>
+		</tag>
+                <tag name="dumpFile" minChildren="2" maxChildren="2">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>			
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#dumpFile</description>
+		</tag>
+                <tag name="loadFile" minChildren="1" maxChildren="1">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="String"/>
+			</returns>
+			<description>doc/SUM/scripting.html#loadFile</description>
+		</tag>
+                <tag name="fileExists" minChildren="1" maxChildren="1">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Boolean"/>
+			</returns>
+			<description>doc/SUM/scripting.html#fileExists</description>
+		</tag>
+                <tag name="fileDelete" minChildren="1" maxChildren="1">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Boolean"/>
+			</returns>
+			<description>doc/SUM/scripting.html#fileDelete</description>
+		</tag>
+                <tag name="mkDir" minChildren="1" maxChildren="1">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Boolean"/>
+			</returns>
+			<description>doc/SUM/scripting.html#mkDir</description>
+		</tag>
+                <tag name="rmDir" minChildren="1" maxChildren="1">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#rmDir</description>
+		</tag>
+                 <tag name="xslt" minChildren="2" maxChildren="unbounded">
+			<attributes>
+                            <attribute name="xmlOutput" default="true">
+                                <validValue value="true"/>
+				<validValue value="false"/>
+                            </attribute>
+                        </attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Document"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="XSLTParam"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="String"/>
+                                <type name="Document"/>
+			</returns>
+			<description>doc/SUM/scripting.html#xslt</description>
+		</tag>
+                <tag name="parameter" minChildren="1" maxChildren="1" standalone="false">
+			<attributes>
+                            <attribute name="name" default=""/>                                
+                        </attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="XSLTParam"/>
+			</returns>
+			<description>doc/SUM/scripting.html</description>
+		</tag>
+                 <tag name="randomString" minChildren="0" maxChildren="0">
+			<attributes>
+                            <attribute name="length" default=""/>
+                        </attributes>
+			<enclosedElements/>				
+			<returns>
+				<type name="String"/>
+			</returns>
+			<description>doc/SUM/scripting.html#randomString</description>
+		</tag>
+                <tag name="dbConnect" minChildren="3" maxChildren="3">
+			<attributes>
+                            <attribute name="driver" default=""/>
+                            <attribute name="autoCommit" default="true">
+                                <validValue value="true"/>
+				<validValue value="false"/>
+                            </attribute>
+                        </attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Connection"/>
+			</returns>
+			<description>doc/SUM/scripting.html#dbConnect</description>
+		</tag>
+                <tag name="dbClose" minChildren="1" maxChildren="1">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Connection"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#dbClose</description>
+		</tag>
+                <tag name="dbCommit" minChildren="1" maxChildren="1">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Connection"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#dbCommit</description>
+		</tag>
+                <tag name="dbRollback" minChildren="1" maxChildren="1">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Connection"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#dbRollback</description>
+		</tag>
+                <tag name="dbQuery" minChildren="2" maxChildren="2">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Connection"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="ResultSet"/>
+			</returns>
+			<description>doc/SUM/scripting.html#dbQuery</description>
+		</tag>
+                <tag name="dbUpdate" minChildren="2" maxChildren="2">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Connection"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#dbUpdate</description>
+		</tag>
+                <tag name="dbGetColumnCount" minChildren="1" maxChildren="1">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="ResultSet"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>                                
+			</enclosedElements>
+			<returns>
+				<type name="Integer"/>
+			</returns>
+			<description>doc/SUM/scripting.html#dbGetColumnCount</description>
+		</tag>
+                <tag name="dbGetColumnIndex" minChildren="2" maxChildren="2">
+			<attributes/>
+			<enclosedElements>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="ResultSet"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>                                
+			</enclosedElements>
+			<returns>
+				<type name="Integer"/>
+			</returns>
+			<description>doc/SUM/scripting.html#dbGetColumnIndex</description>
+		</tag>
+                <tag name="dbGetColumnName" minChildren="2" maxChildren="2">
+			<attributes/>
+			<enclosedElements>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="ResultSet"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>                                
+			</enclosedElements>
+			<returns>
+				<type name="String"/>
+			</returns>
+			<description>doc/SUM/scripting.html#dbGetColumnName</description>
+		</tag>
+                <tag name="dbGetValue" minChildren="2" maxChildren="2">
+			<attributes/>
+			<enclosedElements>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="ResultSet"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+                                                <type name="String"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>                                
+			</enclosedElements>
+			<returns>
+				<type name="String"/>
+			</returns>
+			<description>doc/SUM/scripting.html#dbGetValue</description>
+		</tag>
+                <tag name="dbNextRow" minChildren="1" maxChildren="1">
+			<attributes/>
+			<enclosedElements>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="ResultSet"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Boolean"/>
+			</returns>
+			<description>doc/SUM/scripting.html#dbNextRow</description>
+		</tag>
+                <tag name="soapCall" minChildren="2" maxChildren="2">
+			<attributes>
+                            <attribute name="operation" default="" required="false"/>                           
+                        </attributes>
+			<enclosedElements>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="Document"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Document"/>
+			</returns>
+			<description>doc/SUM/scripting.html#soapCall</description>
+		</tag>
+                <tag name="xmlGetResponse" minChildren="1" maxChildren="1">
+			<attributes/>
+			<enclosedElements>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="Document"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>                               
+			</enclosedElements>
+			<returns>
+				<type name="Document"/>
+			</returns>
+			<description>doc/SUM/scripting.html#xmlGetResponse</description>
+		</tag>
+                <tag name="dbGetNumOfRows" minChildren="1" maxChildren="1">
+			<attributes/>
+			<enclosedElements>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="ResultSet"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>                               
+			</enclosedElements>
+			<returns>
+				<type name="Integer"/>
+			</returns>
+			<description>doc/SUM/scripting.html#dbGetNumOfRows</description>
+		</tag>
+                <tag name="dbSetCursor" minChildren="2" maxChildren="2">
+			<attributes/>
+			<enclosedElements>
+                        <enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>                               
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="ResultSet"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>                               
+			</enclosedElements>
+			<returns>
+				<type name="Boolean"/>
+			</returns>
+			<description>doc/SUM/scripting.html#dbSetCursor</description>
+		</tag>
+                <tag name="dbExecute" minChildren="2" maxChildren="2">
+			<attributes/>
+			<enclosedElements>
+                        <enclosedElement name="">
+					<requiredTypes>
+						<type name="Connection"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>                               
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>                               
+			</enclosedElements>
+			<returns>
+				<type name="Boolean"/>
+			</returns>
+			<description>doc/SUM/scripting.html#dbExecute</description>
+		</tag>
+                 <tag name="dbExecuteUpdate" minChildren="2" maxChildren="2">
+			<attributes/>
+			<enclosedElements>
+                        <enclosedElement name="">
+					<requiredTypes>
+						<type name="Connection"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>                               
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>                               
+			</enclosedElements>
+			<returns>
+				<type name="Integer"/>
+			</returns>
+			<description>doc/SUM/scripting.html#dbExecuteUpdate</description>
+		</tag>
+                 <tag name="arrayType" minChildren="1" maxChildren="1">
+			<attributes>
+                            <attribute name="dimensions" default=""/>
+                        </attributes>
+			<enclosedElements>
+                        <enclosedElement name="">
+					<requiredTypes>
+						<type name="Class"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>           
+			</enclosedElements>
+			<returns>
+				<type name="Class"/>
+			</returns>
+			<description>doc/SUM/scripting.html#arrayType</description>
+		</tag>
+                <tag name="newArray" minChildren="0" maxChildren="unbounded">
+			<attributes/>
+			<enclosedElements>
+                        <enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>           
+			</enclosedElements>
+			<returns>
+				<type name="Array"/>
+			</returns>
+			<description>doc/SUM/scripting.html#newArray</description>
+		</tag>
+                <tag name="newTypedArray" minChildren="1" maxChildren="unbounded">
+			<attributes/>
+			<enclosedElements>
+                            <enclosedElement name="">
+                                <requiredTypes>
+                                    <type name="Class"/>
+                                    <type name="LValue"/>
+                                </requiredTypes>
+                            </enclosedElement> 
+                            <enclosedElement name="">
+                                <requiredTypes>
+                                    <type name="Integer"/>
+                                    <type name="LValue"/>
+                                </requiredTypes>
+                            </enclosedElement>          
+			</enclosedElements>
+			<returns>
+				<type name="Array"/>
+			</returns>
+			<description>doc/SUM/scripting.html#newTypedArray</description>
+		</tag>
+                <tag name="arrayLocation" minChildren="2" maxChildren="unbounded">
+			<attributes/>
+			<enclosedElements>
+                        <enclosedElement name="">
+					<requiredTypes>
+						<type name="Array"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+                        <enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>           			
+                        <enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement>           
+			</enclosedElements>
+			<returns>
+				<type name="LValue"/>
+                                <type name="Object"/>
+			</returns>
+			<description>doc/SUM/scripting.html#arrayLocation</description>
+		</tag>
+                <tag name="arrayLength" minChildren="1" maxChildren="1">
+			<attributes/>
+			<enclosedElements>
+                        <enclosedElement name="">
+					<requiredTypes>
+						<type name="Array"/>
+                                                <type name="LValue"/>                                                
+					</requiredTypes>
+				</enclosedElement> 
+                        </enclosedElements>                       
+			<returns>
+				<type name="Integer"/>                                
+			</returns>
+			<description>doc/SUM/scripting.html#arrayLength</description>
+		</tag>
+                <tag name="newInternalObject" minChildren="1" maxChildren="unbounded">
+			<attributes>
+                            <attribute name="internalClass" default=""/>                                
+                        </attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Object"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Parameter"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Object"/>
+			</returns>
+			<description>doc/SUM/scripting.html#newInternalObject</description>
+		</tag>
+                <tag name="newInitializedTypedArray" minChildren="1" maxChildren="unbounded">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Class"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Object"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Array"/>
+			</returns>
+			<description>doc/SUM/scripting.html#newInitializedTypedArray</description>
+		</tag>
+                <tag name="newInitializedArray" minChildren="0" maxChildren="unbounded">
+			<attributes/>
+			<enclosedElements>			
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Object"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Array"/>
+			</returns>
+			<description>doc/SUM/scripting.html#newInitializedArray</description>
+		</tag>
+                <tag name="massHost" minChildren="0" maxChildren="0">
+			<attributes/>
+			<enclosedElements/>
+			<returns>
+				<type name="String"/>
+			</returns>
+			<description>doc/SUM/scripting.html#massHost</description>
+		</tag>
+                <tag name="for" minChildren="3" maxChildren="4">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="ALL"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Condition"/>
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="ALL"/>
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="ALL"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="ALL"/>
+			</returns>
+			<description>doc/SUM/scripting.html#for</description>
+		</tag>
+                <tag name="condition" minChildren="1" maxChildren="1" standalone="false">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Boolean"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>				
+			</enclosedElements>
+			<returns>
+				<type name="Condition"/>
+			</returns>
+			<description>doc/SUM/scripting.html#for</description>
+		</tag>
+                <tag name="setText" minChildren="1" maxChildren="1">
+			<attributes>
+                            <attribute name="new" default="true">
+					<validValue value="true"/>
+					<validValue value="false"/>
+				</attribute>
+                        </attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>				
+			</enclosedElements>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#setText</description>
+		</tag>
+                <tag name="horizontalMove" minChildren="0" maxChildren="1">
+			<attributes>
+                            <attribute name="absolute" default="false">
+					<validValue value="true"/>
+					<validValue value="false"/>
+				</attribute>
+                        </attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>				
+			</enclosedElements>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#horizontalMove</description>
+		</tag>
+                <tag name="verticalMove" minChildren="0" maxChildren="1">
+			<attributes>
+                            <attribute name="absolute" default="false">
+					<validValue value="true"/>
+					<validValue value="false"/>
+				</attribute>                        
+                            <attribute name="position" default="column">
+					<validValue value="column"/>
+                                        <validValue value="end"/>
+					<validValue value="start"/>
+				</attribute>
+                        </attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>				
+			</enclosedElements>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#verticalMove</description>
+		</tag>
+                <tag name="fieldMove" minChildren="0" maxChildren="1">
+			<attributes>
+                            <attribute name="absolute" default="false">
+					<validValue value="false"/>
+					<validValue value="true"/>
+				</attribute>                        
+                            <attribute name="position" default="start">
+					<validValue value="end"/>
+					<validValue value="start"/>
+                            </attribute>
+                            <attribute name="separators" default=""/>
+                            <attribute name="greedy" default="true">
+					<validValue value="false"/>
+					<validValue value="true"/>
+                            </attribute>
+                        </attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>				
+			</enclosedElements>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#fieldMove</description>
+		</tag>
+                <tag name="search" minChildren="1" maxChildren="2">
+			<attributes>
+                            <attribute name="absolute" default="false">
+					<validValue value="false"/>
+					<validValue value="true"/>
+				</attribute>                            
+                        </attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="Integer"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>
+			</enclosedElements>
+			<returns>
+				<type name="Boolean"/>
+			</returns>
+			<description>doc/SUM/scripting.html#search</description>
+		</tag>
+                <tag name="gotoLineStart" minChildren="0" maxChildren="0">
+			<attributes/>
+			<enclosedElements/>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#gotoLineStart</description>
+		</tag>
+                <tag name="gotoLineEnd" minChildren="0" maxChildren="0">
+			<attributes/>
+			<enclosedElements/>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#gotoLineEnd</description>
+		</tag>
+                <tag name="gotoFileEnd" minChildren="0" maxChildren="0">
+			<attributes/>
+			<enclosedElements/>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#gotoFileEnd</description>
+		</tag>
+                <tag name="gotoFileStart" minChildren="0" maxChildren="0">
+			<attributes/>
+			<enclosedElements/>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#gotoFileStart</description>
+		</tag>
+                <tag name="lineNumber" minChildren="0" maxChildren="0">
+			<attributes/>
+			<enclosedElements/>
+			<returns>
+				<type name="Integer"/>
+			</returns>
+			<description>doc/SUM/scripting.html#lineNumber</description>
+		</tag>
+                <tag name="columnNumber" minChildren="0" maxChildren="0">
+			<attributes/>
+			<enclosedElements/>
+			<returns>
+				<type name="Integer"/>
+			</returns>
+			<description>doc/SUM/scripting.html#columnNumber</description>
+		</tag>
+                <tag name="extract" minChildren="0" maxChildren="0">
+			<attributes>
+                            <attribute name="start" default=""/>
+                            <attribute name="end" default=""/>
+                        </attributes>
+			<enclosedElements/>
+			<returns>
+				<type name="String"/>
+			</returns>
+			<description>doc/SUM/scripting.html#extract</description>
+		</tag>
+                <tag name="goto" minChildren="0" maxChildren="0">
+			<attributes>
+                            <attribute name="name" default=""/>
+                        </attributes>
+			<enclosedElements/>
+			<returns>
+				<type name="null"/>
+			</returns>
+			<description>doc/SUM/scripting.html#goto</description>
+		</tag>
+                <tag name="cleanupProcedure" minChildren="1" maxChildren="unbounded">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Cleanup"/>
+					</requiredTypes>
+				</enclosedElement>                                
+			</enclosedElements>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#cleanupProcedure</description>
+		</tag>                
+                <tag name="cleanup" minChildren="1" maxChildren="1" standalone="false">
+			<attributes>
+                            <attribute name="marker" default=""/>
+                        </attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="ALL"/>
+					</requiredTypes>
+				</enclosedElement>                                
+			</enclosedElements>
+			<returns>
+				<type name="Cleanup"/>
+			</returns>
+			<description>doc/SUM/scripting.html#cleanupProcedure</description>
+		</tag>
+                <tag name="mark" minChildren="0" maxChildren="0">
+			<attributes>
+                            <attribute name="name" default=""/>
+                        </attributes>
+			<enclosedElements/>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#mark</description>
+		</tag>
+                <tag name="addCleanupMarker" minChildren="0" maxChildren="0">
+			<attributes>
+                            <attribute name="value" default=""/>
+                        </attributes>
+			<enclosedElements/>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#addCleanupMarker</description>
+		</tag>
+                <tag name="removeCleanupMarker" minChildren="0" maxChildren="0">
+			<attributes>
+                            <attribute name="value" default=""/>
+                        </attributes>
+			<enclosedElements/>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#removeCleanupMarker</description>
+		</tag>
+                <tag name="sendMail" minChildren="5" maxChildren="unbounded">
+			<attributes>
+                            <attribute name="smtpServer" default=""/>
+                        </attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="From"/>
+					</requiredTypes>
+				</enclosedElement> 
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="To"/>
+					</requiredTypes>
+				</enclosedElement>                                
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="OtherRecipients"/>
+					</requiredTypes>
+				</enclosedElement> 
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Subject"/>
+					</requiredTypes>
+				</enclosedElement>                                
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Text"/>                                                
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Attachment"/>
+					</requiredTypes>
+				</enclosedElement>                                
+			</enclosedElements>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#sendMail</description>
+		</tag>
+                <tag name="from" minChildren="1" maxChildren="1" standalone="false">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>                                
+			</enclosedElements>
+			<returns>
+				<type name="From"/>
+			</returns>
+			<description>doc/SUM/scripting.html#sendMail</description>
+		</tag>
+                <tag name="to" minChildren="1" maxChildren="1" standalone="false">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>                                
+			</enclosedElements>
+			<returns>
+				<type name="To"/>
+			</returns>
+			<description>doc/SUM/scripting.html#sendMail</description>
+		</tag>
+                <tag name="otherRecipients" minChildren="0" maxChildren="unbounded" standalone="false">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>						
+						<type name="Bcc"/>
+                                                <type name="Cc"/>
+                                                <type name="To"/>					
+					</requiredTypes>
+				</enclosedElement>                                
+			</enclosedElements>
+			<returns>
+				<type name="OtherRecipients"/>
+			</returns>
+			<description>doc/SUM/scripting.html#sendMail</description>
+		</tag>
+                <tag name="subject" minChildren="1" maxChildren="1" standalone="false">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>                                
+			</enclosedElements>
+			<returns>
+				<type name="Subject"/>
+			</returns>
+			<description>doc/SUM/scripting.html#sendMail</description>
+		</tag>
+                <tag name="text" minChildren="1" maxChildren="1" standalone="false">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>                                
+			</enclosedElements>
+			<returns>
+				<type name="Text"/>
+			</returns>
+			<description>doc/SUM/scripting.html#sendMail</description>
+		</tag>
+                <tag name="attachment" minChildren="1" maxChildren="1" standalone="false">
+			<attributes>
+                            <attribute name="name" default="" required="false"/>
+                        </attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>                                
+			</enclosedElements>
+			<returns>
+				<type name="Attachment"/>
+			</returns>
+			<description>doc/SUM/scripting.html#sendMail</description>
+		</tag>
+                <tag name="cc" minChildren="1" maxChildren="1" standalone="false">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>                                
+			</enclosedElements>
+			<returns>
+				<type name="Cc"/>
+			</returns>
+			<description>doc/SUM/scripting.html#sendMail</description>
+		</tag>
+                <tag name="bcc" minChildren="1" maxChildren="1" standalone="false">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>                                
+			</enclosedElements>
+			<returns>
+				<type name="Bcc"/>
+			</returns>
+			<description>doc/SUM/scripting.html#sendMail</description>
+		</tag>
+                <tag name="http" minChildren="1" maxChildren="unbounded">
+			<attributes>                            
+                            <attribute name="host" default=""/>
+                            <attribute name="port" default="80"/>
+                            <attribute name="method" default="POST">
+					<validValue value="GET"/>
+                                        <validValue value="POST"/>
+                            </attribute>
+                        </attributes>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="URL"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="XSLTParam"/>
+					</requiredTypes>
+				</enclosedElement>                                
+			</enclosedElements>
+			<returns>
+				<type name="String"/>
+			</returns>
+			<description>doc/SUM/scripting.html#http</description>
+		</tag>
+                <tag name="url" minChildren="1" maxChildren="1" standalone="false">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+                                                <type name="LValue"/>
+					</requiredTypes>
+				</enclosedElement>                                
+			</enclosedElements>
+			<returns>
+				<type name="URL"/>
+			</returns>
+			<description>doc/SUM/scripting.html#http</description>
+		</tag>
+                <tag name="xml" minChildren="0" maxChildren="0" hasContent="true">
+			<attributes>                            
+                            <attribute name="attributePrefix" default=""/>
+                            <attribute name="textTag" default=""/>
+                        </attributes>
+			<enclosedElements/>
+			<returns>
+				<type name="Document"/>
+			</returns>
+			<description>doc/SUM/scripting.html#xml</description>
+		</tag>
+                <tag name="xPath" minChildren="2" maxChildren="2" hasNSDecl="true">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Document"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+					</requiredTypes>
+				</enclosedElement>                                
+			</enclosedElements>
+			<returns>
+				<type name="String"/>
+			</returns>
+			<description>doc/SUM/scripting.html#xPath</description>
+		</tag>
+                <tag name="setXMLValue" minChildren="3" maxChildren="3" hasNSDecl="true">
+			<attributes/>
+			<enclosedElements>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="Document"/>
+					</requiredTypes>
+				</enclosedElement>
+				<enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+					</requiredTypes>
+				</enclosedElement>
+                                <enclosedElement name="">
+					<requiredTypes>
+						<type name="String"/>
+					</requiredTypes>
+				</enclosedElement>                                 
+			</enclosedElements>
+			<returns>
+				<type name="void"/>
+			</returns>
+			<description>doc/SUM/scripting.html#setXMLValue</description>
+		</tag>
+	</tags>
+	<sets>
+		<set name="Object">
+			<element name="String"/>
+			<element name="Integer"/>
+			<element name="Boolean"/>
+			<element name="Character"/>
+			<element name="Short"/>
+			<element name="LValue"/>
+			<element name="Double"/>
+			<element name="Float"/>
+			<element name="Long"/>
+                        <element name="Element"/>
+                        <element name="Document"/>
+                        <element name="Connection"/> 
+                        <element name="ResultSet"/>
+                        <element name="Array"/>                      
+		</set>
+	</sets>
+</wizard>

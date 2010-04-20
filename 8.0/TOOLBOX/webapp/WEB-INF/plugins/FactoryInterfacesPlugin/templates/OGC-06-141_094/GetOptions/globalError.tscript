@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="">
+    <xml attributePrefix="x" textTag="evaluate">
+        <ExceptionReport xmlns="http://www.opengis.net/ows">
+                <Exception>
+                    <ExceptionText>An error occurred while executing the GetOptions operation</ExceptionText>
+                </Exception>
+        </ExceptionReport>
+    </xml>
+</sequence>

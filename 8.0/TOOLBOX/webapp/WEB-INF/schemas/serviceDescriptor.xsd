@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://pisa.intecs.it/mass/toolbox/serviceDescriptor" xmlns="http://pisa.intecs.it/mass/toolbox/serviceDescriptor" xmlns:com="http://pisa.intecs.it/mass/toolbox/common" xmlns:mtbs="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:import namespace="http://pisa.intecs.it/mass/toolbox/common" schemaLocation="./common.xsd"/>
+	<xs:import namespace="http://pisa.intecs.it/mass/toolbox/xmlScript" schemaLocation="./xmlScript.xsd"/>
+	<xs:element name="service">
+		<xs:complexType>
+			<xs:all>
+                                <xs:element name="abstract" type="xs:string" minOccurs="0"/>
+                                <xs:element name="description" type="xs:string" minOccurs="0"/>
+				<xs:element name="schemas">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="schema" type="SchemaType"/>
+						</xs:sequence>
+                                      		<xs:attribute name="SSESchemaVersion" type="xs:string" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="operations">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="operation" type="OperationType"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:all>
+			<xs:attribute name="serviceName" type="xs:string" use="required"/>
+			<xs:attribute name="serviceSchema" type="xs:string" use="required"/>
+			<xs:attribute name="queuing" type="xs:boolean" use="required"/>
+			<xs:attribute name="sslCertificate" type="xs:string" use="optional"/>
+                        <xs:attribute name="wsdlTargetNS" type="xs:string" use="required"/>
+			<xs:attribute name="suspendMode" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="hard"/>
+						<xs:enumeration value="soft"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="testConfigurationFileName" type="xs:string" use="optional"/>
+			<xs:attribute name="wssecurity" type="xs:boolean" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="ScriptType">
+		<xs:group ref="mtbs:ExpressionChoice"/>
+		<xs:attribute name="soapAction" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="SchemaType">
+		<xs:attribute name="schemaName" type="xs:string" use="required"/>
+		<xs:attribute name="SSE" type="xs:boolean" default="false"/>
+	</xs:complexType>
+        <xs:complexType name="WSDLInfoType">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="requestMessage" type="MessageType"/>
+                    <xs:element minOccurs="0" name="responseMessage" type="MessageType"/>
+                    <xs:element minOccurs="0" name="pushMessage" type="MessageType"/>
+                    <xs:element minOccurs="0" name="pushResponse" type="MessageType"/>
+                </xs:sequence>
+        </xs:complexType>
+        <xs:complexType name="MessageType">
+                <xs:attribute name="name" type="xs:string" use="required"/>
+                <xs:attribute name="ns" type="xs:string" use="required"/>
+                <xs:attribute name="soapAction" type="xs:string" use="optional"/>
+        </xs:complexType>
+        <xs:complexType name="AdmittedHostsType">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="admittedHost" type="xs:string"/>
+                </xs:sequence>
+        </xs:complexType>
+	<xs:complexType name="OperationType">
+		<xs:sequence>
+                        <xs:element minOccurs="1" name="wsdlInfo" type="WSDLInfoType"/>
+                        <xs:element minOccurs="0" name="admittedHosts" type="AdmittedHostsType"/>
+			<xs:element maxOccurs="4" name="script" type="ScriptType"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="type" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="asynchronous"/>
+					<xs:enumeration value="synchronous"/>
+					<xs:enumeration value="synchronous-pull"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="pollingRate" type="com:ToolboxTime" use="optional"/>
+		<xs:attribute name="retryAttempts" type="xs:integer" use="optional"/>
+		<xs:attribute name="requestTimeout" type="com:ToolboxTime" use="optional"/>
+		<xs:attribute name="retryRate" type="com:ToolboxTime" use="optional"/>
+	</xs:complexType>
+</xs:schema>

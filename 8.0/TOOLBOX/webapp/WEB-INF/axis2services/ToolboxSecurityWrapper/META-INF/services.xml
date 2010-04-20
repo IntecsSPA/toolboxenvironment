@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<serviceGroup>
+    <service name="ToolboxDefaultUnprotectedService" scope="application">
+		<module ref="addressing"/>
+        <description>It is the Axis2 service which is mapped to each unprotected Toolbox service</description>
+        <parameter name="ServiceClass">it.intecs.pisa.toolbox.security.service.ToolboxSecurityWrapper</parameter>
+		<operation name="execute">
+	        	<messageReceiver class="org.apache.axis2.receivers.RawXMLINOutMessageReceiver"/>
+	        	<!-- actionMapping>test</actionMapping-->
+	    </operation>       
+    </service>
+
+</serviceGroup>

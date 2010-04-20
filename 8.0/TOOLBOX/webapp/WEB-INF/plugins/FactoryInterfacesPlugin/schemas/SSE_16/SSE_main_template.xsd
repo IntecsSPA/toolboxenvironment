@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 4 U (http://www.xmlspy.com) by Joel Lim (Spacebel) -->
+<!-- 
+    File		    :   ServiceSchemaTemplate.xsl
+    File Type	:	SSE Service schema  template
+    Abstract	:	SSE schema template that can be used  as a basis to be customized  when a new service is registered on the SSE
+    Uses		:	sse_basic.xsd, aoifeatures.xsd, oi.xsd...
+    Used by	:	SSE Service Providers
+    
+        History:
+
+     $Log: ServiceSchemaTemplate.xsd,v $
+     Revision 1.1  2007/03/23 12:21:51  mgs
+     First Issue
+
+     End of history.
+  -->
+<!--
+Replace  http://www.mycompanyname.com/ws/mynamespace by your namespace
+If there is not search before the ordering, you can remove the sse_eoli declaration.
+If another type of catalogue is used, you can replace sse_eoli by the  one your service is using e.g. sse_ebrim. 
+-->
+<xsd:schema targetNamespace="http://www.mycompanyname.com/ws/mynamespace" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:oi="http://www.esa.int/oi" xmlns:sse_eoli="http://www.esa.int/sse_eoli" xmlns:aoi="http://www.esa.int/xml/schemas/mass/aoifeatures" xmlns:sse="http://www.esa.int/mass" xmlns="http://www.mycompanyname.com/ws/mynamespace" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<!--Import available types from the SSE schemas files path is relative to http://sseUrl/wsdl/-->
+	<xsd:import namespace="http://www.esa.int/mass" schemaLocation="sse_basic.xsd"/>
+	<!--Import available types for the Area of interest-->
+	<!-- import  version of GML you want to use for the area of interest. In this template by default, a stub is used.
+     You can replace the stub by specifying the real aoifeatures referencing a specific GML features  -->
+	<xsd:import namespace="http://www.esa.int/xml/schemas/mass/aoifeatures" schemaLocation="aoifeatures.xsd"/>
+	<!--Import available types from ESA Ordering schema-->
+	<xsd:import namespace="http://www.esa.int/oi" schemaLocation="oi.xsd"/>
+	<!-- if another catalogue protocol is used than eoli, change the import here  or remove if no catalogue is used-->
+	<xsd:import namespace="http://www.esa.int/sse_eoli" schemaLocation="sse_eoli.xsd"/>
+	<!--xml message elements exchanged between the client and services-->
+	<!-- according to your service lifecycle operations really used and the mode of each operation synchronous or asynchronous
+        you can remove the elements which are not used -->
+	<!-- Synchronous RFQ -->
+	<xsd:element name="processRFQInputMsg">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="sse:commonInput"/>
+				<xsd:element ref="sse_eoli:searchOutput" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="sendRFQInput"/>
+				<!--<xsd:element ref="sse:searchInput" minOccurs="0"/>-->
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="processRFQOutputMsg">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="getRFQOutput"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- Asynchronous RFQ -->
+	<xsd:element name="sendRFQInputMsg">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="sse:commonInput"/>
+				<xsd:element ref="sse_eoli:searchOutput" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="sendRFQInput"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="sendRFQOutputMsg">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="sse:statusInfo"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="returnRFQResultInputMsg">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="sse:commonInput"/>
+				<xsd:element ref="getRFQOutput"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="returnRFQResultOutputMsg">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="sse:statusInfo"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- Common RFQ -->
+	<xsd:element name="sendRFQInput" type="RFQInputType">
+		<xsd:annotation>
+			<xsd:documentation>element that contains a service's RFQ input parameters</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="RFQInputType">
+		<xsd:annotation>
+			<xsd:documentation>service's rfq input parameters are in this type. The service-specific info must be added at the end of this type definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="oi:originPart" minOccurs="0"/>
+			<xsd:element ref="aoi:areaOfInterest" minOccurs="0"/>
+			<!-- assume GML2-->
+			<!--<xsd:element ref="aoi:AreaOfInterest" minOccurs="0"/> -->
+			<!-- if  GML3-->
+			<!--                                                                                      -->
+			<!-- Add you service specific RFQ Input information here -->
+			<!--                                                                                      -->
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="getRFQOutput" type="MultiRFQOutputType">
+		<xsd:annotation>
+			<xsd:documentation>element contains a service's RFQ results</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="MultiRFQOutputType">
+		<xsd:annotation>
+			<xsd:documentation>service's RFQ can return one or more results which are the "rfqOutput" elements. The viewFileResult or 
+      the viewEmbeddedResult can be used to illustrate the differents "rfqOutput" elements. In some cases, it can make sense to display each rfqOutput
+      on the map as a GML object.
+      </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="sse:statusInfo"/>
+			<xsd:element ref="rfqOutput" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="sse:viewFileResult" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="sse:viewEmbeddedResult" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="rfqOutput" type="RFQOutputType">
+		<xsd:annotation>
+			<xsd:documentation>element contains one  RFQ result</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="RFQOutputType">
+		<xsd:annotation>
+			<xsd:documentation>service's rfq results are in this type. The service-specific info must be added at the end of this type definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="sse:id" minOccurs="0"/>
+			<xsd:element ref="sse:price" minOccurs="0"/>
+			<!--                                                                                      -->
+			<!-- Add you service specific RFQ Output information here -->
+			<!--                                                                                      -->
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Synchronous Order -->
+	<xsd:element name="processOrderInputMsg">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="sse:commonInput"/>
+				<xsd:element ref="sse_eoli:searchOutput" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="sendRFQInput" minOccurs="0"/>
+				<xsd:element ref="rfqOutput" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="sendOrderInput"/>
+				<!--<xsd:element ref="searchInput" minOccurs="0"/>-->
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="processOrderOutputMsg">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="getOrderOutput"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- Asynchronous Order -->
+	<xsd:element name="sendOrderInputMsg">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="sse:commonInput"/>
+				<xsd:element ref="sse_eoli:searchOutput" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="sendRFQInput" minOccurs="0"/>
+				<xsd:element ref="rfqOutput" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element ref="sendOrderInput"/>
+				<!-- <xsd:element ref="sse:searchInput" minOccurs="0"/> -->
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="sendOrderOutputMsg">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="sse:statusInfo"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="returnOrderResultInputMsg">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="sse:commonInput"/>
+				<xsd:element ref="getOrderOutput"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="returnOrderResultOutputMsg">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="sse:statusInfo"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- Common Order -->
+	<xsd:element name="sendOrderInput" type="OrderInputType">
+		<xsd:annotation>
+			<xsd:documentation>contains a service's order input parameters</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="OrderInputType">
+		<xsd:annotation>
+			<xsd:documentation>service's order input parameters are in this type. The service-specific info must be added at the end of this type definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="oi:originPart" minOccurs="0"/>
+			<xsd:element ref="aoi:areaOfInterest" minOccurs="0"/>
+			<!--<xsd:element ref="aoi:AreaOfInterest" minOccurs="0"/> -->
+			<!-- if  GML3-->
+			<!--                                                                                      -->
+			<!-- Add you service specific Order Input information here -->
+			<!--                                                                                      -->
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="getOrderOutput" type="OrderOutputType">
+		<xsd:annotation>
+			<xsd:documentation>contains a service's order result</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="OrderOutputType">
+		<xsd:annotation>
+			<xsd:documentation>service's order results are in this type.  Normally, the service-specific info must be added at the end of this type definition.     </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="sse:statusInfo"/>
+			<xsd:element ref="sse:viewFileResult" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="sse:viewEmbeddedResult" minOccurs="0" maxOccurs="unbounded"/>
+			<!--                                                                                           -->
+			<!-- Add you service specific Order Output information here -->
+			<!--                                                                                          -->
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:geo="http://pisa.intecs.it/mass/toolbox/GeoServer" xmlns:sxn="http://pisa.intecs.it/mass/toolbox/Saxon">
+
+    <variable name="maxRecords"/>
+
+    <xml attributePrefix="attribute$" textTag="evaluate">
+		<testService>
+			<helloWorld>The TOOLBOX has been correctly installed.</helloWorld>
+		</testService>
+	</xml>
+</sequence>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence  xmlns:exs="http://www.extensionsschema.com" xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pisa.intecs.it/mass/toolbox/xmlScript /home/massi/Progetti/TOOLBOX_RE/TOOLBOX/webapp/WEB-INF/schemas/xmlScript.xsd">
+    <xml attributePrefix="attribute$" textTag="evaluate">
+		<testService>
+			<helloWorld>The TOOLBOX has been correctly installed but thrown an Error.</helloWorld>
+		</testService>
+	</xml>
+</sequence>

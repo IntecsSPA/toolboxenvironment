@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ -
+ -  Developed By:      Intecs  S.P.A.
+ -  File Name:         $RCSfile: exportDescriptor.xsd,v $
+ -  TOOLBOX Version:   $Name: HEAD $
+ -  File Revision:     $Revision: 1.1.1.1 $
+ -  Revision Date:     $Date: 2006/06/13 15:02:33 $
+ -
+ -->
+<xs:schema xmlns="http://pisa.intecs.it/mass/toolbox/exportDescriptor" xmlns:com="http://pisa.intecs.it/mass/toolbox/common" xmlns:dsc="http://pisa.intecs.it/mass/toolbox/serviceDescriptor" xmlns:mtbs="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://pisa.intecs.it/mass/toolbox/exportDescriptor" elementFormDefault="qualified">
+	<xs:import namespace="http://pisa.intecs.it/mass/toolbox/serviceDescriptor" schemaLocation="serviceDescriptor.xsd"/>
+	<xs:element name="exportDescriptor">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="dsc:service"/>
+				<xs:element name="schemaDocuments">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="schema" type="SchemaDocumentType" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="SchemaDocumentType">
+		<xs:sequence>
+			<xs:any processContents="skip"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+</xs:schema>

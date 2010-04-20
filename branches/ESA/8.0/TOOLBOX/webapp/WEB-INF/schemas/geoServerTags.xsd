@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://pisa.intecs.it/toolbox/geoserver"
+    xmlns:gsr="http://pisa.intecs.it/toolbox/geoserver"
+    elementFormDefault="qualified">
+
+    <xsd:element name="deployCoverage">
+        <xsd:annotation>
+            <xsd:documentation>This tag is used to deploy a coverage to a GeoServer installation</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                 <xsd:any namespace="##other" processContents="strict"/>
+            </xsd:sequence>
+            <xsd:attribute name="url" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="deleteCoverage">
+        <xsd:annotation>
+            <xsd:documentation>This tag is used to delete a coverage to a GeoServer installation</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="url" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="modifyCoverage">
+        <xsd:annotation>
+            <xsd:documentation>This tag is used to modify a coverage to a GeoServer installation</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                 <xsd:any namespace="##other" processContents="strict"/>
+            </xsd:sequence>
+            <xsd:attribute name="url" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="deployVectorData">
+        <xsd:annotation>
+            <xsd:documentation>This tag is used to deploy a Vector Data to a GeoServer installation</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                 <xsd:any namespace="##other" processContents="strict"/>
+            </xsd:sequence>
+            <xsd:attribute name="url" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="deleteVectorData">
+        <xsd:annotation>
+            <xsd:documentation>This tag is used to delete a Vector Data to a GeoServer installation</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="url" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="modifyVectorData">
+        <xsd:annotation>
+            <xsd:documentation>This tag is used to modify a Vector Data to a GeoServer installation</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                 <xsd:any namespace="##other" processContents="strict"/>
+            </xsd:sequence>
+            <xsd:attribute name="url" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

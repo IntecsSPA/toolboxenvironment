@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence>
+    <copy from="resources/OGC-06-131r6_standalone/GetCapabilities/ServiceProviderInfo.xml" to="AdditionalResources/EOCat/ServiceProviderInfo.xml"/>
+    <copy from="resources/OGC-06-131r6_standalone/GetCapabilities/FilterCapabilities.xml" to="AdditionalResources/EOCat/FilterCapabilities.xml"/>
+</sequence>

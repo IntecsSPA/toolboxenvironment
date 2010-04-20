@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://pisa.intecs.it/toolbox/security"
+    xmlns:sec="http://pisa.intecs.it/toolbox/security"
+    elementFormDefault="qualified">
+
+    <xsd:element name="serviceKeyStorePath">
+        <xsd:annotation>
+            <xsd:documentation>This tag returns the path of the KeyStore associated to the service</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+
+     <xsd:element name="serviceKeyStorePwd">
+        <xsd:annotation>
+            <xsd:documentation>This tag returns the password of the KeyStore associated to the service</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+
+    <xsd:element name="encrypt">
+        <xsd:annotation>
+            <xsd:documentation>Encrypts the XML document provided as child tag using the keystore provided during service configuration</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:any namespace="##other" processContents="strict"/>
+            </xsd:sequence>
+           <xsd:attribute name="alias" type="xsd:string" use="required"/>
+           <xsd:attribute name="keyStorePath" type="xsd:string" use="required"/>
+           <xsd:attribute name="keyStorePwd" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="decrypt">
+        <xsd:annotation>
+            <xsd:documentation>Decrypts the XML document provided as child tag using the keystore provided during service configuration</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:any namespace="##other" processContents="strict"/>
+            </xsd:sequence>
+           <xsd:attribute name="alias" type="xsd:string" use="required"/>
+           <xsd:attribute name="keyStorePath" type="xsd:string" use="required"/>
+           <xsd:attribute name="keyStorePwd" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ -
+ -  Developed By:      Intecs  S.P.A.
+ -  File Name:         $RCSfile: timerStatus.xsd,v $
+ -  TOOLBOX Version:   $Name: HEAD $
+ -  File Revision:     $Revision: 1.1.1.1 $
+ -  Revision Date:     $Date: 2006/06/13 15:02:32 $
+ -
+ --><xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://pisa.intecs.it/mass/toolbox/timerStatus" xmlns="http://pisa.intecs.it/mass/toolbox/timerStatus" xmlns:mtbs="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:import namespace="http://pisa.intecs.it/mass/toolbox/xmlScript" schemaLocation="/usr/local/tomcat-jwsdp-1.4/webapps/TOOLBOX/WEB-INF/schemas/xmlScript.xsd"/>
+  <xsd:element name="timerStatus">
+    <xsd:complexType>
+      <xsd:choice maxOccurs="unbounded" minOccurs="0">
+        <xsd:element name="timer">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="status">
+                <xsd:complexType>
+                  <xsd:choice maxOccurs="unbounded" minOccurs="0">
+                    <xsd:element name="variable">
+                      <xsd:complexType>
+                        <xsd:attribute name="name" type="xsd:string" use="required"/>
+                        <xsd:attribute name="value" type="xsd:string" use="required"/>
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="xml">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:any processContents="skip"/>
+                        </xsd:sequence>
+                        <xsd:attribute name="name" type="xsd:string" use="required"/>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:choice>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="script" type="mtbs:Expression"/>
+            </xsd:sequence>
+            <xsd:attribute name="expirationDateTime" type="xsd:dateTime" use="required"/>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ftpAccount">
+          <xsd:complexType>
+            <xsd:attribute name="ftpUser" type="xsd:string" use="required"/>
+            <xsd:attribute name="expirationDateTime" type="xsd:dateTime" use="required"/>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

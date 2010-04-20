@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  -  -  Developed By:      Intecs  S.P.A.  -  File Name:         $RCSfile: serviceDescriptor.xml,v $  -  TOOLBOX Version:   $Name:  $  -  File Revision:     $Revision: 1.5 $  -  Revision Date:     $Date: 2004/04/28 15:06:01 $  -  -->
+<service xmlns="http://pisa.intecs.it/mass/toolbox/serviceDescriptor" queuing="false" serviceName="testService" serviceSchema="" sslCertificate="" suspendMode="soft" version="2.0" wsdlTargetNS="test.pisa.intecs.it">
+    <interface name="" version="" type="Standard" mode="">
+        <rootSchemaFile/>
+        <schemaSetLocation>Schemas</schemaSetLocation>
+        <wsdlFile>wsdl/SSE_10.wsdl</wsdlFile>
+        <targetNameSpace>http://testnameSpace.it</targetNameSpace>
+        <operations>
+            <operation SOAPAction="test" name="testOperation" type="synchronous">
+                <admittedHosts/>
+                <inputType namespace="http://testnameSpace.it" type="none"/>
+                <outputType namespace="http://testnameSpace.it" type="none"/>
+                <scriptFile path="Operations/testOperation/first_script.tscript" type="FIRST_SCRIPT" overrideByUser="true"/>
+                <scriptFile path="Operations/testOperation/globalError.tscript" type="GLOBAL_ERROR" overrideByUser="true"/>
+            </operation>
+           
+        </operations>
+        <admittedHosts/>
+    </interface>
+</service>

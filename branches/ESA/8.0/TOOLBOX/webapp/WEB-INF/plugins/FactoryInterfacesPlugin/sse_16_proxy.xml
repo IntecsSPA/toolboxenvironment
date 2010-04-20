@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface name="SSE" version="1.6" type="Ordering" mode="Proxy">
+		<rootSchemaFile>SSE_main_template.xsd</rootSchemaFile>
+		<schemaSetLocation>schemas\SSE_16</schemaSetLocation>
+		<wsdlFile>wsdl\SSE_16.wsdl</wsdlFile>
+		<targetNameSpace>http://www.mycompanyname.com/ws/mynamespace</targetNameSpace>
+		<operations>
+			<operation SOAPAction="processRFQ" name="processRFQ" type="synchronous">
+				<admittedHosts/>
+				<inputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="processRFQRequestMsg"/>
+				<outputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="processRFQResponseMsg"/>
+				<scriptFile path="templates/SSE_16_Proxy/processRFQ/script.tscript" type="FIRST_SCRIPT" overrideByUser="false"/>
+				<scriptFile path="templates/SSE_16_Proxy/processRFQ/globalError.tscript" type="GLOBAL_ERROR" overrideByUser="false"/>
+				<testFiles>testFiles/SSE_16_Proxy/processRFQ/test.xml</testFiles>
+			</operation>
+			<operation SOAPAction="processOrder" name="processOrder" type="synchronous">
+				<admittedHosts/>
+				<inputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="processOrderRequestMsg"/>
+				<outputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="processOrderResponseMsg"/>
+				<scriptFile path="templates/SSE_16_Proxy/processOrder/script.tscript" type="FIRST_SCRIPT" overrideByUser="false"/>
+				<scriptFile path="templates/SSE_16_Proxy/processOrder/globalError.tscript" type="GLOBAL_ERROR" overrideByUser="false"/>
+				<testFiles>testFiles/SSE_16_Proxy/processOrder/test.xml</testFiles>
+			</operation>
+			<operation SOAPAction="sendRFQ" callbackSOAPAction="returnRFQResult" name="RFQ" pollingRate="1m" requestTimeout="1h" type="asynchronous">
+				<admittedHosts/>
+				<inputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="sendRFQRequestMsg"/>
+				<outputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="sendRFQResponseMsg"/>
+				<callbackInputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="returnRFQResultRequestMsg"/>
+				<callbackOutputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="returnRFQResultResponseMsg"/>
+				<scriptFile path="templates/SSE_16_Proxy/RFQ/first_script.tscript" type="FIRST_SCRIPT" overrideByUser="false"/>
+				<scriptFile path="templates/SSE_16_Proxy/RFQ/second_script.tscript" type="SECOND_SCRIPT" overrideByUser="false"/>
+				<scriptFile path="templates/SSE_16_Proxy/RFQ/third_script.tscript" type="THIRD_SCRIPT" overrideByUser="false"/>
+				<scriptFile type="GLOBAL_ERROR" path="templates/SSE_16_Proxy/RFQ/globalError.tscript" overrideByUser="false"/>
+				<scriptFile type="ERROR_ON_RESP_BUILDER" path="templates/SSE_16_Proxy/RFQ/response_builder_error.tscript" overrideByUser="false"/>
+				<scriptFile type="RESP_BUILDER" path="templates/SSE_16_Proxy/RFQ/response_builder.tscript" overrideByUser="false"/>
+				<testFiles>testFiles/SSE_16_Proxy/RFQ/test.xml</testFiles>
+			</operation>
+			<operation SOAPAction="sendOrder" callbackSOAPAction="returnOrderResult" name="Order" pollingRate="1m" requestTimeout="1h" type="asynchronous">
+				<admittedHosts/>
+				<inputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="sendOrderRequestMsg"/>
+				<outputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="sendOrderResponseMsg"/>
+				<callbackInputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="returnOrderResultRequestMsg"/>
+				<callbackOutputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="returnOrderResultResponseMsg"/>
+				<scriptFile path="templates/SSE_16_Proxy/Order/first_script.tscript" type="FIRST_SCRIPT" overrideByUser="false"/>
+				<scriptFile path="templates/SSE_16_Proxy/Order/second_script.tscript" type="SECOND_SCRIPT" overrideByUser="false"/>
+				<scriptFile path="templates/SSE_16_Proxy/Order/third_script.tscript" type="THIRD_SCRIPT" overrideByUser="false"/>
+				<scriptFile type="GLOBAL_ERROR" path="templates/SSE_16_Proxy/Order/globalError.tscript" overrideByUser="false"/>
+				<scriptFile type="ERROR_ON_RESP_BUILDER" path="templates/SSE_16_Proxy/Order/response_builder_error.tscript" overrideByUser="false"/>
+				<scriptFile type="RESP_BUILDER" path="templates/SSE_16_Proxy/Order/response_builder.tscript" overrideByUser="false"/>
+				<testFiles>testFiles/SSE_16_Proxy/Order/test.xml</testFiles>
+			</operation>
+		</operations>
+                     <variables>
+                    <variable name="remoteUrl" value="http://" type="string" displayedText="URL of the SOAP endpoint"/>
+                    <variable name="forwardMessageWithClearToken" value="false" type="boolean" displayedText="Forward message with security token unencrypted"/>
+                    <variable name="forwardMessageWithCryptedToken" value="false" type="boolean" displayedText="Forward message with security token encrypted (this will override all forwarding options)"/>
+                    <variable name="keyAlias" value="" type="string" displayedText="Alias of the key to be used for encryption"/>
+                </variables>
+	</interface>

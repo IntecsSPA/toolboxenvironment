@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tagList>
+    <tag name="catalogueConnection" class="it.intecs.pisa.toolbox.plugins.ebrr.CatalogueConnectionTag"/>
+    <tag name="directCatalogueConnection" class="it.intecs.pisa.toolbox.plugins.ebrr.DirectCatalogueConnectionTag"/>
+    <tag name="getRecords" class="it.intecs.pisa.toolbox.plugins.ebrr.GetRecordsTag"/>
+    <tag name="abstractQuery" class="it.intecs.pisa.toolbox.plugins.ebrr.AbstractQueryTag"/>
+    <tag name="getRecordById" class="it.intecs.pisa.toolbox.plugins.ebrr.GetRecordByIdTag"/>
+    <tag name="getCapabilities" class="it.intecs.pisa.toolbox.plugins.ebrr.GetCapabilitiesTag"/>
+    <tag name="describeRecord" class="it.intecs.pisa.toolbox.plugins.ebrr.DescribeRecordTag"/>
+    <tag name="harvest" class="it.intecs.pisa.toolbox.plugins.ebrr.HarvestTag"/>
+</tagList>

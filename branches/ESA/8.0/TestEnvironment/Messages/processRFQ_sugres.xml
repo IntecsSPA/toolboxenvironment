@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<processRFQInputMsg xmlns="http://www.gim.com/ws/sugres" xmlns:aoi="http://www.esa.int/xml/schemas/mass/aoifeatures" xmlns:eoli="http://earth.esa.int/XML/eoli" xmlns:gml="http://www.opengis.net/gml" xmlns:mass="http://www.esa.int/mass" xmlns:oi="http://www.esa.int/oi" xmlns:sns="http://www.gim.com/ws/sugres">
+	<commonInput xmlns="http://www.esa.int/mass">
+		<orderId>BB808080</orderId>
+	</commonInput>
+	<sendRFQInput>
+		<productType/>
+		<outputFormat>SHAPE</outputFormat>
+		<coordinateSystem>Belgium1972</coordinateSystem>
+		<clipRegion>
+			<areaOfInterest xmlns="http://www.esa.int/xml/schemas/mass/aoifeatures" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.esa.int/xml/schemas/mass/aoifeatures http://services.eoportal.org/schemas/1.3draft/aoifeatures.xsd">
+				<boundedBy xmlns="http://www.opengis.net/gml">
+					<Box srsName="EPSG:4326">
+						<coordinates>12.2101,29.1466 54.7484,61.4442</coordinates>
+					</Box>
+				</boundedBy>
+				<featureMember xmlns="http://www.opengis.net/gml">
+					<Feature xmlns="http://www.esa.int/xml/schemas/mass/aoifeatures">
+						<boundedBy xmlns="http://www.opengis.net/gml">
+							<Box srsName="EPSG:4326">
+								<coordinates>12.2101,29.1466 54.7484,61.4442</coordinates>
+							</Box>
+						</boundedBy>
+						<Geometry>
+							<Polygon xmlns="http://www.opengis.net/gml" srsName="EPSG:4326">
+								<outerBoundaryIs>
+									<LinearRing>
+										<coordinates>12.2101,29.1466 12.2101,61.4442 54.7484,61.4442 54.7484,29.1466 12.2101,29.1466</coordinates>
+									</LinearRing>
+								</outerBoundaryIs>
+							</Polygon>
+						</Geometry>
+					</Feature>
+				</featureMember>
+			</areaOfInterest>
+		</clipRegion>
+		<date>--</date>
+		<userInfo>
+			<userId>hmasp</userId>
+			<firstName>hma</firstName>
+			<lastName>hma</lastName>
+			<invoiceAddress/>
+			<city>Hoeilaart</city>
+			<state>brabant</state>
+			<country>BEL</country>
+			<emailAddress>marc.gilles@spacebel.be</emailAddress>
+			<telNumber>32 0 2 658 20 11</telNumber>
+			<faxNumber>32 0 2 658 20 11</faxNumber>
+		</userInfo>
+	</sendRFQInput>
+</processRFQInputMsg>

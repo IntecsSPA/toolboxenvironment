@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ -
+ -  Developed By:      Intecs  S.P.A.
+ -  File Name:         $RCSfile: exportDescriptor.xml,v $
+ -  TOOLBOX Version:   $Name:  $
+ -  File Revision:     $Revision: 1.2 $
+ -  Revision Date:     $Date: 2004/04/28 15:04:15 $
+ -
+ --><exportDescriptor xmlns="http://pisa.intecs.it/mass/toolbox/exportDescriptor" xmlns:com="http://pisa.intecs.it/mass/toolbox/common" xmlns:dsc="http://pisa.intecs.it/mass/toolbox/serviceDescriptor" xmlns:mtbs="http://pisa.intecs.it/mass/toolbox/xmlScript">
+	<service queuing="false" serviceName="S10" serviceSchema="" suspendMode="soft" wsdlTargetNS="" xmlns="http://pisa.intecs.it/mass/toolbox/serviceDescriptor" xmlns:com="http://pisa.intecs.it/mass/toolbox/common" xmlns:mtbs="http://pisa.intecs.it/mass/toolbox/xmlScript"><abstract/><description/><schemas/><operations><operation name="RFQ" pollingRate="20s" requestTimeout="30s" type="asynchronous"><wsdlInfo><requestMessage name="sendRFQInputMsg" ns="http://www.esa.int/mass"/><responseMessage name="sendRFQOutputMsg" ns="http://www.esa.int/mass"/><pushMessage name="returnRFQResultInputMsg" ns="http://www.esa.int/mass" soapAction="returnRFQResult"/><pushResponse name="returnRFQResultOutputMsg" ns="http://www.esa.int/mass"/></wsdlInfo><admittedHosts/><script soapAction="sendRFQ"><sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript">
+		<log>
+						<string>THE SECOND SCRIPT RETURNS ALWAYS FALSE. THUS THE REQUEST SHOULD EXPIRE AND THE CLEANUP PROCEDURE INCLUDED IN THE SECOND SCRIPT SHOULD BE EXECUTED</string>
+		</log>
+</sequence></script><script><sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript">
+<cleanupProcedure>
+	<cleanup>
+		<log>
+						<string>-----------SECOND SCRIPT CLEAN UP EXECUTED--------------</string>
+		</log>
+	</cleanup>
+</cleanupProcedure>
+	<literal type="boolean" value="false"/>
+</sequence></script><script><sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript">
+	<loadXML>
+		<variable name="fileName"/>
+	</loadXML>
+</sequence></script></operation></operations></service>
+	<schemaDocuments/>
+</exportDescriptor>

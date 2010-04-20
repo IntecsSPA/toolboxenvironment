@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 U (http://www.xmlspy.com) by The Hoa Nguyen (SPACEBEL) -->
+<!-- edited with XML Spy v5.0 NT (http://www.xmlspy.com) by The Hoa Nguyen-->
+<!--
+    File		:	VITO_S10.xsd
+    File Type	:	W3C XML schema
+    Abstract	:	VITO S10 Service Schema
+    Uses		:	
+    History	:	v1.0 -created by Simone Gianfranceschi.
+    				v1.1 -Updated according to the new MASS ICD.
+-->
+<xsd:schema targetNamespace="http://www.esa.int/mass" xmlns="http://www.esa.int/mass" xmlns:aoi="http://www.esa.int/xml/schemas/mass/aoifeatures" xmlns:oi="http://www.esa.int/oi" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:redefine schemaLocation="1.0/mass.xsd">
+		<xsd:complexType name="RFQInputType">
+			<xsd:annotation>
+				<xsd:documentation>overrides the predefined RFQInputType in mass.xsd to add more service-specific data</xsd:documentation>
+			</xsd:annotation>
+			<xsd:complexContent>
+				<xsd:extension base="RFQInputType">
+					<xsd:sequence>
+						<xsd:element name="userId" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>This represent the name of the mass user.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="date" type="restrictedDateType">
+							<xsd:annotation>
+								<xsd:documentation>This represents a date of the product. It allows to represent dates from 01-04-1998 to 21-12-2009, The valid values for a day are only 01, 11 and 21.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="instrument">
+							<xsd:annotation>
+								<xsd:documentation>This represents an instrument carrying the sensor. The valid values are VGT1 and VGT2.</xsd:documentation>
+							</xsd:annotation>
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:enumeration value="VGT1"/>
+									<xsd:enumeration value="VGT2"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="format">
+							<xsd:annotation>
+								<xsd:documentation>This represents the format of the S10 product. The valid values are NDVI or RADIOMETRY.</xsd:documentation>
+							</xsd:annotation>
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:enumeration value="NDVI"/>
+									<xsd:enumeration value="Radio"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="RFQOutputType">
+			<xsd:annotation>
+				<xsd:documentation>overrides the predefined RFQOutputType in mass.xsd to add more service-specific data</xsd:documentation>
+			</xsd:annotation>
+			<xsd:complexContent>
+				<xsd:extension base="RFQOutputType">
+					<xsd:sequence minOccurs="0">
+						<xsd:element name="productSize" type="xsd:float">
+							<xsd:annotation>
+								<xsd:documentation>This represents the size of a product required expressed in MB.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="userQuota" type="xsd:float">
+							<xsd:annotation>
+								<xsd:documentation>This represents the free space into the user download directory. The value is expressed in MB. The maximum quota is 10240 MB. </xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="OrderInputType">
+			<xsd:annotation>
+				<xsd:documentation>overrides the predefined OrderInputTypein mass.xsd to add more service-specific data</xsd:documentation>
+			</xsd:annotation>
+			<xsd:complexContent>
+				<xsd:extension base="OrderInputType">
+					<xsd:sequence>
+						<xsd:element name="userId" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>This represent the name of the mass user.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="date" type="restrictedDateType">
+							<xsd:annotation>
+								<xsd:documentation>This represents a date of the product. It allows to represent dates from 01-04-1998 to 21-12-2009, The valid values for a day are only 01, 11 and 21.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="instrument">
+							<xsd:annotation>
+								<xsd:documentation>This represents an instrument carrying the sensor. The valid values are VGT1 and VGT2.</xsd:documentation>
+							</xsd:annotation>
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:enumeration value="VGT1"/>
+									<xsd:enumeration value="VGT2"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="format">
+							<xsd:annotation>
+								<xsd:documentation>This represents the format of the S10 product. The valid values are NDVI or RADIOMETRY.</xsd:documentation>
+							</xsd:annotation>
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:enumeration value="NDVI"/>
+									<xsd:enumeration value="Radio"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="OrderOutputType">
+			<xsd:annotation>
+				<xsd:documentation>overrides the predefined OrderOutputType in mass.xsd to add more service-specific data</xsd:documentation>
+			</xsd:annotation>
+			<xsd:complexContent>
+				<xsd:extension base="OrderOutputType">
+					<xsd:sequence minOccurs="0">
+						<xsd:element name="orderResultURL" type="xsd:anyURI">
+							<xsd:annotation>
+								<xsd:documentation>URL to be used for the data download.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="userName" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>User name to be used for the download.</xsd:documentation>
+							</xsd:annotation>
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:minLength value="3"/>
+									<xsd:maxLength value="100"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="password" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Password to be used for the download.</xsd:documentation>
+							</xsd:annotation>
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:minLength value="8"/>
+									<xsd:maxLength value="20"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="timePeriodOfService" type="xsd:positiveInteger">
+							<xsd:annotation>
+								<xsd:documentation>Period in which the User will be able to download the ordered product.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="productSize" type="xsd:float">
+							<xsd:annotation>
+								<xsd:documentation>This represents the size of a product required expressed in MB.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="userQuota" type="xsd:float">
+							<xsd:annotation>
+								<xsd:documentation>This represents the free space remaining,  into the user download directory, after that the product ordered has been added into the active product list. The value is expressed in MB. The maximum quota is 10240 MB.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:redefine>
+	<!-- Custom types-->
+	<xsd:simpleType name="restrictedDateType">
+		<xsd:restriction base="xsd:date">
+			<xsd:pattern value="(((1998|1999|(200[0-9])))-((0[1-9])|(1[0-2]))-([0-2]1))"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ -
+ -  Developed By:      Intecs  S.P.A.
+ -  File Name:         $RCSfile: exportDescriptor.xml,v $
+ -  TOOLBOX Version:   $Name:  $
+ -  File Revision:     $Revision: 1.2 $
+ -  Revision Date:     $Date: 2004/04/28 15:04:15 $
+ -
+ --><exportDescriptor xmlns="http://pisa.intecs.it/mass/toolbox/exportDescriptor" xmlns:com="http://pisa.intecs.it/mass/toolbox/common" xmlns:dsc="http://pisa.intecs.it/mass/toolbox/serviceDescriptor" xmlns:mtbs="http://pisa.intecs.it/mass/toolbox/xmlScript">
+	<service queuing="false" serviceName="JELLY" serviceSchema="" suspendMode="soft" wsdlTargetNS="" xmlns="http://pisa.intecs.it/mass/toolbox/serviceDescriptor">	<schemas/><operations><operation name="JellyOperation" type="synchronous"><wsdlInfo><requestMessage name="" ns=""/><responseMessage name="" ns=""/></wsdlInfo><script soapAction="jelly"><sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript">
+	<setVariable name="fileName">
+		<stringCat>
+			<string>/home/toolbox/TestEnvironment/InputDir/jelly_req</string>
+			<string>.txt</string>
+		</stringCat>
+	</setVariable>
+	<setVariable name="fileContent">
+		<string>Request</string>
+	</setVariable>
+	<jelly returns="none">
+		<j:jelly xmlns:j="jelly:core">
+			<j:new className="java.io.FileWriter" var="fileWriter">
+				<j:arg type="java.lang.String" value="${fileName}"/>
+			</j:new>
+			<j:invoke method="write" on="${fileWriter}">
+				<j:arg type="java.lang.String" value="${fileContent}"/>
+			</j:invoke>
+			<j:invoke method="close" on="${fileWriter}"/>
+			<j:set value="/home/toolbox/TestEnvironment/Responses/Jelly_response_TS_19_01.xml" var="filePath"/>
+		</j:jelly>
+	</jelly>
+	<loadXML>
+		<variable name="filePath"/>
+	</loadXML>
+</sequence></script></operation></operations></service>
+	<schemaDocuments/>
+</exportDescriptor>

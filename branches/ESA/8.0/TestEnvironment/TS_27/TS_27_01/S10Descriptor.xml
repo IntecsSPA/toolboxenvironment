@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ -
+ -  Developed By:      Intecs  S.P.A.
+ -  File Name:         $RCSfile: exportDescriptor.xml,v $
+ -  TOOLBOX Version:   $Name:  $
+ -  File Revision:     $Revision: 1.2 $
+ -  Revision Date:     $Date: 2004/04/28 15:04:15 $
+ -
+ --><exportDescriptor xmlns="http://pisa.intecs.it/mass/toolbox/exportDescriptor" xmlns:com="http://pisa.intecs.it/mass/toolbox/common" xmlns:dsc="http://pisa.intecs.it/mass/toolbox/serviceDescriptor" xmlns:mtbs="http://pisa.intecs.it/mass/toolbox/xmlScript">
+	<service queuing="false" serviceName="S10" serviceSchema="" suspendMode="soft" wsdlTargetNS="" xmlns="http://pisa.intecs.it/mass/toolbox/serviceDescriptor" xmlns:com="http://pisa.intecs.it/mass/toolbox/common" xmlns:mtbs="http://pisa.intecs.it/mass/toolbox/xmlScript"><abstract/><description/><schemas/><operations><operation name="TestOperation" type="synchronous"><wsdlInfo><requestMessage name="" ns=""/><responseMessage name="" ns=""/></wsdlInfo><script soapAction="test"><sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript">
+	<log>
+		<string>TESTING MODULE... 23 mod 8 </string>
+	</log>
+	<log>
+		<module>
+			<literal value="23"/>
+			<atoi>
+        			<string>8</string>
+			</atoi>
+		</module>
+	</log>
+	<log>
+		<string>MODULE ENDED</string>
+	</log>
+	<log>
+		<string>TESTING NEGATE... negate 1024</string>
+	</log>
+	<log>
+		<negate>
+			<literal value="1024"/>
+		</negate>
+	</log>
+	<log>
+		<string>NEGATE ENDED</string>
+	</log>
+	<log>
+		<string>TESTING AND... </string>
+	</log>
+	<log>
+		<string>AND without arguments </string>
+	</log>
+	<log>
+		<and/>
+	</log>
+	<log>
+		<string>AND with two arguments: true AND false </string>
+	</log>
+	<log>
+		<and>
+			<literal type="boolean" value="true"/>
+			<literal type="boolean" value="false"/>
+		</and>
+	</log>
+	<log>
+		<string>AND ENDED</string>
+	</log>
+	<log>
+		<string>TESTING NOT... </string>
+	</log>
+	<log>
+		<string>NOT 25</string>
+	</log>
+	<log>
+		<not>
+			<literal value="25"/>
+		</not>
+	</log>
+	<log>
+		<string>NOT false</string>
+	</log>
+	<log>
+		<not>
+			<literal type="boolean" value="false"/>
+		</not>
+	</log>
+	<log>
+		<string>NOT ENDED</string>
+	</log>
+	<log>
+		<string>TESTING XOR... </string>
+	</log>
+	<log>
+		<string>XOR without arguments </string>
+	</log>
+	<log>
+		<xor/>
+	</log>
+	<log>
+		<string>XOR with two arguments: true XOR false </string>
+	</log>
+	<log>
+		<xor>
+			<literal type="boolean" value="true"/>
+			<literal type="boolean" value="false"/>
+		</xor>
+	</log>
+	<log>
+		<string>XOR ENDED</string>
+	</log>
+	<log>
+		<string>TESTING LSHIFT... 7 l-shifted by 2</string>
+	</log>
+	<log>
+		<lShift>
+			<literal value="7"/>
+			<literal value="2"/>
+		</lShift>
+	</log>
+	<log>
+		<string>LSHIFT ENDED</string>
+	</log>
+	<log>
+		<string>TESTING RSSHIFT... 8 rs-shifted by 2</string>
+	</log>
+	<log>
+		<rSShift>
+			<literal value="8"/>
+			<literal value="2"/>
+		</rSShift>
+	</log>
+	<log>
+		<string>RSSHIFT ENDED</string>
+	</log>
+	<log>
+		<string>TESTING RUSHIFT... -1 ru-shifted by 15</string>
+	</log>
+	<log>
+		<rUShift>
+			<literal value="-1"/>
+			<literal value="15"/>
+		</rUShift>
+	</log>
+	<log>
+		<string>RUSHIFT ENDED</string>
+	</log>
+	<log>
+		<string>TESTING BITAND... </string>
+	</log>
+	<log>
+		<string>BITAND without arguments </string>
+	</log>
+	<log>
+		<bitAnd/>
+	</log>
+	<log>
+		<string>BITAND with one argument: bitand 3 </string>
+	</log>
+	<log>
+		<bitAnd>
+			<literal value="3"/>
+		</bitAnd>
+	</log>
+	<log>
+		<string>BITAND with two arguments: 3 bitand by 2</string>
+	</log>
+	<log>
+		<bitAnd>
+			<literal value="3"/>
+			<literal value="2"/>
+		</bitAnd>
+	</log>
+	<log>
+		<string>BITAND ENDED</string>
+	</log>
+	<log>
+		<string>TESTING BITOR... </string>
+	</log>
+	<log>
+		<string>BITOR without arguments </string>
+	</log>
+	<log>
+		<bitOr/>
+	</log>
+	<log>
+		<string>BITOR with one argument: bitor 3 </string>
+	</log>
+	<log>
+		<bitOr>
+			<literal value="3"/>
+		</bitOr>
+	</log>
+	<log>
+		<string>BITOR with two arguments: 3 bitor by 2</string>
+	</log>
+	<log>
+		<bitOr>
+			<literal value="3"/>
+			<literal value="2"/>
+		</bitOr>
+	</log>
+	<log>
+		<string>BITOR ENDED</string>
+	</log>
+	<log>
+		<string>TESTING BITXOR... </string>
+	</log>
+	<log>
+		<string>BITXOR without arguments </string>
+	</log>
+	<log>
+		<bitXor/>
+	</log>
+	<log>
+		<string>BITXOR with one argument: bitxor 3 </string>
+	</log>
+	<log>
+		<bitXor>
+			<literal value="3"/>
+		</bitXor>
+	</log>
+	<log>
+		<string>BITXOR with two arguments: 3 bitxor by 2</string>
+	</log>
+	<log>
+		<bitXor>
+			<literal value="3"/>
+			<literal value="2"/>
+		</bitXor>
+	</log>
+	<log>
+		<string>BITXOR ENDED</string>
+	</log>
+	<log>
+		<string>TESTING NEWARRAY AND ARRAYLENGTH... </string>
+	</log>
+	<log>
+		<string>CREATING A MONODIMENSIONAL ARRAY OF LENGTH 3 ... </string>
+	</log>
+	<setVariable name="myArray">
+		<newArray>
+			<literal value="3"/>
+		</newArray>
+	</setVariable>
+	<log>
+		<string>CALCULATING THE ARRAY LENGTH USING THE TAG ARRAYLENGTH...</string>
+	</log>
+
+	<log>
+		<arrayLength>
+			<variable name="myArray"/>
+		</arrayLength>
+	</log>
+	
+	<log>
+		<string>NEWARRAY AND ARRAYLENGTH ENDED</string>
+	</log>
+	<log>
+		<string>TESTING NEWTYPEDARRAY AND ARRAYLOCATION... </string>
+	</log>
+	<log>
+		<string>CREATING A BIDIMENSIONAL ARRAY OF STRINGS...</string>
+	</log>
+	<setVariable name="myBiArray">
+		<newTypedArray>
+			<classLiteral class="java.lang.String"/>
+			<literal value="3"/>
+			<literal value="2"/>
+		</newTypedArray>
+	</setVariable>
+	<log>
+		<string>ASSIGNING THE LOCATION 0,1 OF THE ARRAY...</string>
+	</log>
+	<set>
+		<arrayLocation>
+			<variable name="myBiArray"/>
+			<literal value="0"/>
+			<literal value="1"/>
+		</arrayLocation>
+		<string>myString</string>
+	</set>
+	<log>
+		<string>THE LOCATION 0,1 CONTAINS ...</string>
+	</log>
+	<log>
+		<arrayLocation>
+			<variable name="myBiArray"/>
+			<literal value="0"/>
+			<literal value="1"/>
+		</arrayLocation>
+	</log>
+	
+	<log>
+		<string>NEWTYPEDARRAY AND ARRAYLOCATION ENDED</string>
+	</log>
+	<log>
+		<string>TESTING NEWINITIALIZEDARRAY... </string>
+	</log>
+	<log>
+		<string>CREATING A LINEAR ARRAY OF INTEGERS OF LENGTH 5 ... </string>
+	</log>
+	<setVariable name="myInitializedArray">
+		<newInitializedArray>
+			<literal value="2"/>
+			<literal value="0"/>
+			<literal value="8"/>
+			<literal value="7"/>
+			<literal value="5"/>
+		</newInitializedArray>
+	</setVariable>
+	<log>
+		<string>EXTRACTING THE CONTENT OF THE ARRAY LOCATION 2...</string>
+	</log>
+	<log>
+		<arrayLocation>
+			<variable name="myInitializedArray"/>
+			<literal value="2"/>
+		</arrayLocation>
+	</log>
+	<log>
+		<string>NEWINITIALIZEDARRAY ENDED </string>
+	</log>
+	<log>
+		<string>TESTING NEWINITIALIZEDTYPEDARRAY... </string>
+	</log>
+	<log>
+		<string>CREATING AND INITIALIZING A LINEAR ARRAY OF STRINGS OF LENGTH 3 ... </string>
+	</log>
+	<setVariable name="myInitializedTypedArray">
+		<newInitializedTypedArray>
+			<classLiteral class="java.lang.String"/>
+			<string>string1</string>
+			<string>string2</string>
+			<string>string3</string>
+		</newInitializedTypedArray>
+	</setVariable>
+	<log>
+		<string>VERIFYING THE LENGTH OF THE ARRAY USING THE TAG ARRAYLENGTH ... </string>
+	</log>
+	<log>
+		<string>THE LENGTH OF THE ARRAY IS...</string>
+	</log>
+	<log>
+		<arrayLength>
+			<variable name="myInitializedTypedArray"/>
+		</arrayLength>
+	</log>
+	<log>
+		<string>NEWINITIALIZEDARRAY ENDED </string>
+	</log>
+	<log>
+		<string>TESTING SENDMAIL... </string>
+	</log>
+	<setVariable name="instDir">
+		<string>/home/toolbox/TestEnvironment/TS_27/TS_27_01/</string>
+	</setVariable>
+	<log>
+		<variable name="instDir"/>
+	</log>
+	<setVariable name="customizeFilePath">
+			<stringCat>
+				<variable name="instDir"/>
+				<string>customize.xml</string>
+			</stringCat>
+	</setVariable>
+	<log>
+		<variable name="customizeFilePath"/>
+	</log>
+	<setVariable name="customizeFile">
+		<loadXML>
+			<variable name="customizeFilePath"/>
+		</loadXML>
+	</setVariable>
+	<setVariable name="smtpServer">
+		<xPath>
+			<variable name="customizeFile"/>
+			<string>/variables/smtpServer</string>
+		</xPath>
+	</setVariable>
+	<log>
+		<variable name="smtpServer"/>
+	</log>
+	<setVariable name="sender">
+		<xPath>
+			<variable name="customizeFile"/>
+			<string>/variables/sender</string>
+		</xPath>
+	</setVariable>
+	<log>
+		<variable name="sender"/>
+	</log>
+	<setVariable name="receiver">
+		<xPath>
+			<variable name="customizeFile"/>
+			<string>/variables/receiver</string>
+		</xPath>
+	</setVariable>
+	<log>
+		<variable name="receiver"/>
+	</log>
+	<sendMail smtpServer="$smtpServer">
+		<from><variable name="sender"/></from>
+		<to><variable name="receiver"/></to>
+		<otherRecipients/>
+		<subject><string>TOOLBOX Test: sendMail</string></subject>
+		<text><string>This e-mail has been generated by the TOOLBOX during the execution of the test TS_27_01.
+		The file /home/toolbox/TestEnvironment/TS_27/TS_27_01/customize.xml should be attached
+this e-mail.</string></text>
+		<attachment>
+			<variable name="customizeFilePath"/>
+		</attachment>
+	</sendMail>
+	<log>
+		<string>SENDMAIL ENDED </string>
+	</log>
+	<xmlRequest/>
+</sequence></script></operation></operations></service>
+	<schemaDocuments/>
+</exportDescriptor>

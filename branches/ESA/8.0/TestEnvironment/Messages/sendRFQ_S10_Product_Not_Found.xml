@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing">
+	<soapenv:Header>
+		<wsa:MessageID>S10SendRFQ~1.0</wsa:MessageID>
+		<wsa:ReplyTo>
+			<wsa:Address>http://localhost:8080/TOOLBOX/Push</wsa:Address>
+			<wsa:PortType xmlns:ns3="http://www.vito.be/wsdl/S10Basic">ns3:S10BasicServiceCallback</wsa:PortType>
+			<wsa:ServiceName xmlns:ns4="http://www.vito.be/wsdl/S10Basic">ns4:S10BasicServiceCallbackService</wsa:ServiceName>
+		</wsa:ReplyTo>
+	</soapenv:Header>
+	<soapenv:Body>
+		<sendRFQInputMsg xmlns:aoi="http://www.esa.int/xml/schemas/mass/aoifeatures" xmlns:gml="http://www.opengis.net/gml" xmlns:oi="http://www.esa.int/oi" xmlns="http://www.esa.int/mass">
+			<commonInput>
+				<orderId>AAOAOA</orderId>
+			</commonInput>
+			<sendRFQInput>
+				<aoi:areaOfInterest>
+					<gml:boundedBy>
+						<gml:null>unavailable</gml:null>
+					</gml:boundedBy>
+					<!-- EUROPE -->
+					<gml:featureMember>
+						<aoi:Feature>
+							<gml:boundedBy>
+								<gml:Box srsName="EPSG:4326">
+									<gml:coordinates>-20,34.9305 40,81.8519</gml:coordinates>
+								</gml:Box>
+							</gml:boundedBy>
+							<aoi:Label>Italy</aoi:Label>
+							<aoi:Geometry>
+								<gml:Polygon srsName="EPSG:4326">
+									<gml:outerBoundaryIs>
+										<gml:LinearRing>
+											<gml:coordinates>-20,34.9305 -20,81.8519 40,81.8519 40,34.9305 -20,34.9305</gml:coordinates>
+										</gml:LinearRing>
+									</gml:outerBoundaryIs>
+								</gml:Polygon>
+							</aoi:Geometry>
+						</aoi:Feature>
+					</gml:featureMember>
+				</aoi:areaOfInterest>
+				<userId>mass</userId>
+				<date>2001-07-21</date>
+				<instrument>VGT1</instrument>
+				<format>Radio</format>
+			</sendRFQInput>
+		</sendRFQInputMsg>
+	</soapenv:Body>
+</soapenv:Envelope>

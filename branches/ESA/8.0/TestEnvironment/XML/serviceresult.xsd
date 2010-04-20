@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--==============================================================
+    File:    serviceresult.xsd
+    Version: v3.0.0 2004-05-12
+    Author:  Kristof Vydt
+    Company: G.I.M. Geographic Information Management nv
+    ==============================================================-->
+<xsd:schema targetNamespace="http://www.esa.int/xml/schemas/mass/serviceresult" 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:sr="http://www.esa.int/xml/schemas/mass/serviceresult" 
+    xmlns:gml="http://www.opengis.net/gml" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    elementFormDefault="qualified" version="1.0">
+    <xsd:annotation>
+        <xsd:appinfo>srfeatures.xsd v3.0.0 2004-05-12</xsd:appinfo>
+        <xsd:documentation>GML v2 Schema for Service Result features.</xsd:documentation>
+    </xsd:annotation>
+    <!--==============================================================
+    Import constructs from the GML Feature and Geometry schemas
+    ==============================================================-->
+    <xsd:import namespace="http://www.opengis.net/gml" schemaLocation="feature.xsd"/>
+    <!--==============================================================
+    Type definitions
+    ==============================================================-->
+    <xsd:element name="featureCollection" type="sr:featureCollectionType" substitutionGroup="gml:_FeatureCollection"/>
+    <!--==============================================================
+    Privat element Declarations 
+    ==============================================================-->
+    <xsd:element name="Feature" type="sr:FeatureType" substitutionGroup="gml:_Feature"/>
+    <!--==============================================================
+    Type definitions
+    ==============================================================-->
+    <xsd:complexType name="featureCollectionType">
+        <xsd:complexContent>
+            <xsd:extension base="gml:AbstractFeatureCollectionType"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="FeatureType">
+        <xsd:complexContent>
+            <xsd:extension base="gml:AbstractFeatureType">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+                    <xsd:element name="tooltip" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute1" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute2" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute3" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute4" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute5" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute6" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute7" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute8" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute9" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute10" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute11" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute12" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute13" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute14" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute15" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute16" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute17" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute18" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute19" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute20" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute21" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute22" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute23" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute24" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute25" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute26" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute27" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute28" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute29" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute30" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute31" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute32" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute33" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute34" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute35" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute36" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute37" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute38" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute39" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute40" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute41" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute42" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute43" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute44" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute45" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute46" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute47" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute48" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute49" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="attribute50" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="Geometry" type="gml:GeometryPropertyType" minOccurs="1" maxOccurs="1"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+</xsd:schema>

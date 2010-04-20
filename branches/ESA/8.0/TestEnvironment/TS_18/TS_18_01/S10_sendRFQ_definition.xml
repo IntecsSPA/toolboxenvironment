@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript">
+	<dumpFile>
+		<stringCat>
+			<string>/home/toolbox/TestEnvironment/InputDir/RFQ_req_</string>
+			<orderId/>
+			<string>.txt</string>
+		</stringCat>
+		<xslt xmlOutput="false">
+			<xmlRequest/>
+			<string>/home/toolbox/TestEnvironment/TS_02/TS_02_01/S10.xsl</string>
+		</xslt>
+	</dumpFile>
+</sequence>

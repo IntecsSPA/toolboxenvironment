@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XML Spy v4.4 (http://www.xmlspy.com) by notebook (x) -->
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript">
+	<setVariable name="roi">
+		<xPath>
+			<xmlRequest/>
+			<string>//aoi:Label[1]</string>
+		</xPath>
+	</setVariable>
+	<log>
+		<stringCat>
+			<string>Area of Interest: </string>
+			<variable name="roi"/>
+		</stringCat>
+	</log>
+	<setVariable name="date">
+		<xPath>
+			<xmlRequest/>
+			<string>//:date[1]</string>
+		</xPath>
+	</setVariable>
+	<log>
+		<stringCat>
+			<string>Date: </string>
+			<variable name="date"/>
+		</stringCat>
+	</log>
+	<setVariable name="instrument">
+		<xPath>
+			<xmlRequest/>
+			<string>//:instrument[1]</string>
+		</xPath>
+	</setVariable>
+	<log>
+		<stringCat>
+			<string>Intrument: </string>
+			<variable name="instrument"/>
+		</stringCat>
+	</log>
+	<setVariable name="format">
+		<xPath>
+			<xmlRequest/>
+			<string>//:format[1]</string>
+		</xPath>
+	</setVariable>
+	<log>
+		<stringCat>
+			<string>Format: </string>
+			<variable name="format"/>
+		</stringCat>
+	</log>
+	<setVariable name="orderID">
+		<orderId/>
+	</setVariable>
+	<setText new="true">
+		<http host="192.168.24.64" port="8080" method="POST" fileType="text">
+			<url>
+				<string>/S10/service.jsp</string>
+			</url>
+			<parameter name="ROI">
+				<variable name="roi"/>
+			</parameter>
+			<parameter name="DATE">
+				<variable name="date"/>
+			</parameter>
+			<parameter name="INSTRUMENT">
+				<variable name="instrument"/>
+			</parameter>
+			<parameter name="FORMAT">
+				<variable name="format"/>
+			</parameter>
+		</http>
+	</setText>
+	<if>
+		<search>
+			<string>SUCCESSFUL</string>
+		</search>
+		<sequence>
+			<search>
+				<string>tr</string>
+				<literal value="4"/>
+			</search>
+			<search>
+				<string>Product Size</string>
+			</search>
+			<search>
+				<string>&lt;td&gt;</string>
+			</search>
+			<horizontalMove>
+				<literal value="4"/>
+			</horizontalMove>
+			<mark name="fStart"/>
+			<search>
+				<string>&lt;</string>
+			</search>
+			<mark name="fEnd"/>
+			<setVariable name="fileSize">
+				<extract start="fStart" end="fEnd"/>
+			</setVariable>
+			<search>
+				<string>Available User Quota</string>
+			</search>
+			<search>
+				<string>&lt;td&gt;</string>
+			</search>
+			<horizontalMove>
+				<literal value="4"/>
+			</horizontalMove>
+			<mark name="fStart"/>
+			<search>
+				<string>&lt;</string>
+			</search>
+			<mark name="fEnd"/>
+			<setVariable name="availableQuota">
+				<extract start="fStart" end="fEnd"/>
+			</setVariable>
+			<xmlGetResponse>
+				<xml attributePrefix="attribute$" textTag="evaluate">
+					<mass:getRFQOutput xmlns:mass="http://www.esa.int/mass">
+						<mass:statusInfo>
+							<mass:statusId>0</mass:statusId>
+							<mass:statusMsg>Successful</mass:statusMsg>
+						</mass:statusInfo>
+						<mass:rfqOutput>
+							<mass:productSize>
+								<evaluate name="fileSize"/>
+							</mass:productSize>
+							<mass:userQuota>
+								<evaluate name="availableQuota"/>
+							</mass:userQuota>
+						</mass:rfqOutput>
+					</mass:getRFQOutput>
+				</xml>
+			</xmlGetResponse>
+		</sequence>
+		<xmlGetResponse>
+			<xml attributePrefix="attribute$" textTag="evaluate">
+				<mass:getRFQOutput xmlns:mass="http://www.esa.int/mass">
+					<mass:statusInfo>
+						<mass:statusId>300</mass:statusId>
+						<mass:statusMsg>Product Not Found</mass:statusMsg>
+					</mass:statusInfo>
+				</mass:getRFQOutput>
+			</xml>
+		</xmlGetResponse>
+	</if>
+</sequence>

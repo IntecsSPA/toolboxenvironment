@@ -1,0 +1,4576 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+ -
+ -  Developed By:      Intecs  S.P.A.
+ -  File Name:         $RCSfile: exportDescriptor.xml,v $
+ -  TOOLBOX Version:   $Name: V4_4 $
+ -  File Revision:     $Revision: 1.2 $
+ -  Revision Date:     $Date: 2004/04/28 15:04:15 $
+ -
+ --><exportDescriptor xmlns="http://pisa.intecs.it/mass/toolbox/exportDescriptor" xmlns:com="http://pisa.intecs.it/mass/toolbox/common" xmlns:dsc="http://pisa.intecs.it/mass/toolbox/serviceDescriptor" xmlns:mtbs="http://pisa.intecs.it/mass/toolbox/xmlScript">
+	<service xmlns="http://pisa.intecs.it/mass/toolbox/serviceDescriptor" queuing="false" serviceName="MUISTest" serviceSchema="mass.xsd" suspendMode="soft" wsdlTargetNS="http://esrin.esa.int/MUISTest">	<schemas><schema schemaName="mass.xsd"/><schema schemaName="aoifeatures.xsd"/><schema schemaName="feature.xsd"/><schema schemaName="geometry.xsd"/><schema schemaName="oi.xsd"/><schema schemaName="xlinks.xsd"/><schema schemaName="eoli.xsd"/><schema schemaName="Eoli_Order.xsd"/></schemas><operations><operation name="Search" type="synchronous"><wsdlInfo><requestMessage name="processSearchInputMsg" ns="http://www.esa.int/mass"/><responseMessage name="processSearchOutputMsg" ns="http://www.esa.int/mass"/></wsdlInfo><script soapAction="processSearch"><mtbs:sequence xmlns:mtbs="http://pisa.intecs.it/mass/toolbox/xmlScript">
+	<!-- Start Variable depending on the installation machine-->
+	<mtbs:setVariable name="instDir">
+		<mtbs:string>/home/toolbox/TestEnvironment/TS_13/TS_13_01/</mtbs:string>
+	</mtbs:setVariable>
+	<mtbs:log level="INFO">
+		<mtbs:stringCat>
+			<mtbs:string>instDir:</mtbs:string>
+			<mtbs:variable name="instDir"/>
+		</mtbs:stringCat>
+	</mtbs:log>
+	<mtbs:setVariable name="customizeFile">
+		<mtbs:loadXML>
+			<mtbs:stringCat>
+				<mtbs:variable name="instDir"/>
+				<mtbs:string>customize.xml</mtbs:string>
+			</mtbs:stringCat>
+		</mtbs:loadXML>
+	</mtbs:setVariable>
+	<!--localhost address-->
+	<!--<mtbs:setVariable name="localHost">				<mtbs:string>pisa007.pisa.intecs.it</mtbs:string>			</mtbs:setVariable>-->
+	<mtbs:setVariable name="localHost">
+		<mtbs:xPath>
+			<mtbs:variable name="customizeFile"/>
+			<mtbs:string>/variables/localHost</mtbs:string>
+		</mtbs:xPath>
+	</mtbs:setVariable>
+	<mtbs:log level="INFO">
+		<mtbs:stringCat>
+			<mtbs:string>localHost:</mtbs:string>
+			<mtbs:variable name="localHost"/>
+		</mtbs:stringCat>
+	</mtbs:log>
+	<!--MUIS DSM address-->
+	<!--<mtbs:setVariable name="muisHost">				<mtbs:string>http://urano.pisa.intecs.it:31000</mtbs:string>			</mtbs:setVariable>-->
+	<mtbs:setVariable name="muisHost">
+		<mtbs:xPath>
+			<mtbs:variable name="customizeFile"/>
+			<mtbs:string>/variables/muisHost</mtbs:string>
+		</mtbs:xPath>
+	</mtbs:setVariable>
+	<mtbs:log level="INFO">
+		<mtbs:stringCat>
+			<mtbs:string>muisHost:</mtbs:string>
+			<mtbs:variable name="muisHost"/>
+		</mtbs:stringCat>
+	</mtbs:log>
+	<!--Apache directory containing the preview images-->
+	<!--<mtbs:setVariable name="muisRoot">				<mtbs:string>C:\Programmi\Apache Group\Apache2\htdocs\muis\</mtbs:string>			</mtbs:setVariable>-->
+	<mtbs:setVariable name="muisRoot">
+		<mtbs:xPath>
+			<mtbs:variable name="customizeFile"/>
+			<mtbs:string>/variables/muisRoot</mtbs:string>
+		</mtbs:xPath>
+	</mtbs:setVariable>
+	<mtbs:log level="INFO">
+		<mtbs:stringCat>
+			<mtbs:string>muisRoot:</mtbs:string>
+			<mtbs:variable name="muisRoot"/>
+		</mtbs:stringCat>
+	</mtbs:log>
+	<!--address to insert in the gml files indicating where the preview images can be downloaded from-->
+	<!--<mtbs:setVariable name="hostName">				<mtbs:string>pisa007.pisa.intecs.it</mtbs:string>			</mtbs:setVariable>-->
+	<mtbs:setVariable name="hostName">
+		<mtbs:xPath>
+			<mtbs:variable name="customizeFile"/>
+			<mtbs:string>/variables/hostName</mtbs:string>
+		</mtbs:xPath>
+	</mtbs:setVariable>
+	<mtbs:log level="INFO">
+		<mtbs:stringCat>
+			<mtbs:string>hostName:</mtbs:string>
+			<mtbs:variable name="hostName"/>
+		</mtbs:stringCat>
+	</mtbs:log>
+	<!-- End Variable depending on the installation machine-->
+	<!--path to MUISCatalogue2GML.xsl file-->
+	<mtbs:setVariable name="muis2gml">
+		<mtbs:stringCat>
+			<mtbs:variable name="instDir"/>
+			<mtbs:string>MUISCatalogue2GML.xsl</mtbs:string>
+		</mtbs:stringCat>
+	</mtbs:setVariable>
+	<!--path to MASS2MUISCatalogue.xsl file-->
+	<mtbs:setVariable name="mass2muis">
+		<mtbs:stringCat>
+			<mtbs:variable name="instDir"/>
+			<mtbs:string>MASS2MUISCatalogue.xsl</mtbs:string>
+		</mtbs:stringCat>
+	</mtbs:setVariable>
+	<!--path to MUISCatalogue2MASS.xsl file-->
+	<mtbs:setVariable name="muis2mass">
+		<mtbs:stringCat>
+			<mtbs:variable name="instDir"/>
+			<mtbs:string>MUISCatalogue2MASS_images.xsl</mtbs:string>
+		</mtbs:stringCat>
+	</mtbs:setVariable>
+	<mtbs:setVariable name="muisRequest">
+		<mtbs:xslt>
+			<mtbs:xmlRequest/>
+			<mtbs:variable name="mass2muis"/>
+		</mtbs:xslt>
+	</mtbs:setVariable>
+	<mtbs:try>
+		<mtbs:sequence>
+			<mtbs:setVariable name="muisResponse">
+				<mtbs:soapCall>
+					<mtbs:variable name="muisHost"/>
+					<mtbs:variable name="muisRequest"/>
+				</mtbs:soapCall>
+			</mtbs:setVariable>			
+		</mtbs:sequence>
+		<mtbs:ifError errorMessageName="dsmConnectionError">
+			<mtbs:sequence>
+				<mtbs:log level="ERROR">
+					<mtbs:string>ERROR! Connection with DSM failed!</mtbs:string>
+				</mtbs:log>
+				<mtbs:log level="ERROR">
+					<mtbs:stringCat>
+						<mtbs:string>Exception message: </mtbs:string>
+						<mtbs:variable name="dsmConnectionError"/>
+					</mtbs:stringCat>
+				</mtbs:log>
+				<mtbs:setVariable name="massResponseXml">
+					<mtbs:xml attributePrefix="attribute$" textTag="evaluate">
+						<mass:processSearchOutputMsg xmlns:mass="http://www.esa.int/mass">
+							<mass:searchOutput>
+								<mass:statusInfo>
+									<mass:statusId>300</mass:statusId>
+									<mass:statusMsg>ERROR! Connection with DSM failed!</mass:statusMsg>
+								</mass:statusInfo>
+							</mass:searchOutput>
+						</mass:processSearchOutputMsg>
+					</mtbs:xml>
+				</mtbs:setVariable>
+			</mtbs:sequence>
+		</mtbs:ifError>
+	</mtbs:try>
+	<mtbs:if>
+		<mtbs:existsVariable name="muisResponse"/>
+		<mtbs:if>
+			<mtbs:oneq>
+				<mtbs:xPath xmlns:eoli="http://earth.esa.int/XML/eoli">
+					<mtbs:variable name="muisResponse"/>
+					<mtbs:string>eoli:response/eoli:status</mtbs:string>
+				</mtbs:xPath>
+				<mtbs:string>failure</mtbs:string>
+			</mtbs:oneq>
+			<mtbs:sequence>
+				<mtbs:setVariable name="xPath">
+					<mtbs:xPath xmlns:eoli="http://earth.esa.int/XML/eoli">
+						<mtbs:variable name="muisResponse"/>
+						<mtbs:string>eoli:response/eoli:hits</mtbs:string>
+					</mtbs:xPath>
+				</mtbs:setVariable>
+				<mtbs:setVariable name="hits">
+					<mtbs:atoi>
+						<mtbs:variable name="xPath"/>
+					</mtbs:atoi>
+				</mtbs:setVariable>
+				<mtbs:log>
+					<mtbs:stringCat>
+						<mtbs:string>number of hits </mtbs:string>
+						<mtbs:variable name="xPath"/>
+					</mtbs:stringCat>
+				</mtbs:log>
+				<mtbs:if>
+					<mtbs:oneq>
+						<mtbs:xPath xmlns:eoli="http://earth.esa.int/XML/eoli" xmlns:mass="http://www.esa.int/mass">
+							<mtbs:variable name="xmlRequest"/>
+							<mtbs:string>mass:processSearchInputMsg/mass:searchInput/eoli:searchRequest/eoli:resultType</mtbs:string>
+						</mtbs:xPath>
+						<mtbs:string>hits</mtbs:string>
+					</mtbs:oneq>
+					<mtbs:for>
+						<mtbs:setVariable name="index">
+							<mtbs:literal type="int" value="1"/>
+						</mtbs:setVariable>
+						<mtbs:condition>
+							<mtbs:lte>
+								<mtbs:variable name="index"/>
+								<mtbs:variable name="hits"/>
+							</mtbs:lte>
+						</mtbs:condition>
+						<mtbs:inc>
+							<mtbs:variable name="index"/>
+						</mtbs:inc>
+						<mtbs:sequence>
+							<mtbs:log level="INFO">
+								<mtbs:stringCat>
+									<mtbs:string>index: </mtbs:string>
+									<mtbs:itoa>
+										<mtbs:variable name="index"/>
+									</mtbs:itoa>
+								</mtbs:stringCat>
+							</mtbs:log>
+							<mtbs:setVariable name="bgFileNameXPath">
+								<mtbs:stringCat>
+									<mtbs:string>eoli:response/eoli:retrievedData/eoli:Metadata[</mtbs:string>
+									<mtbs:itoa>
+										<mtbs:variable name="index"/>
+									</mtbs:itoa>
+									<mtbs:string>]/eoli:dqInfo/eoli:graphOver/eoli:bgFileName</mtbs:string>
+								</mtbs:stringCat>
+							</mtbs:setVariable>
+							<mtbs:if>
+								<mtbs:oneq>
+									<mtbs:xPath xmlns:eoli="http://earth.esa.int/XML/eoli">
+										<mtbs:variable name="muisResponse"/>
+										<mtbs:variable name="bgFileNameXPath"/>
+									</mtbs:xPath>
+									<mtbs:string/>
+								</mtbs:oneq>
+								<mtbs:sequence>
+									<mtbs:setVariable name="imageFileName">
+										<mtbs:xPath xmlns:eoli="http://earth.esa.int/XML/eoli">
+											<mtbs:variable name="muisResponse"/>
+											<mtbs:variable name="bgFileNameXPath"/>
+										</mtbs:xPath>
+									</mtbs:setVariable>
+									<mtbs:log level="INFO">
+										<mtbs:stringCat>
+											<mtbs:string>++++++++++++++++++++</mtbs:string>
+											<mtbs:variable name="imageFileName"/>
+										</mtbs:stringCat>
+									</mtbs:log>
+								</mtbs:sequence>
+							</mtbs:if>
+						</mtbs:sequence>
+					</mtbs:for>
+				</mtbs:if>
+				<mtbs:setVariable name="gmlFileName">
+					<mtbs:stringCat>
+						<mtbs:randomString length="8"/>
+						<mtbs:string>.gml</mtbs:string>
+					</mtbs:stringCat>
+				</mtbs:setVariable>
+				<mtbs:setVariable name="massResponseXml">
+					<mtbs:xslt>
+						<mtbs:variable name="muisResponse"/>
+						<mtbs:variable name="muis2mass"/>
+						<mtbs:parameter name="hostName">
+							<mtbs:variable name="localHost"/>
+						</mtbs:parameter>
+						<!--<mtbs:parameter name="imageFileName">
+									<mtbs:variable name="imageFileName"/>
+								</mtbs:parameter>-->
+						<mtbs:parameter name="gmlFileURL">
+							<mtbs:stringCat>
+								<mtbs:string>http://</mtbs:string>
+								<mtbs:variable name="localHost"/>
+								<mtbs:string>/muis/gml/</mtbs:string>
+								<mtbs:variable name="gmlFileName"/>
+							</mtbs:stringCat>
+						</mtbs:parameter>
+						<mtbs:parameter name="operation">
+							<mtbs:string>search</mtbs:string>
+						</mtbs:parameter>
+					</mtbs:xslt>
+				</mtbs:setVariable>
+				<mtbs:setVariable name="gmlDoc">
+					<mtbs:xslt>
+						<mtbs:variable name="muisResponse"/>
+						<mtbs:variable name="muis2gml"/>
+						<mtbs:parameter name="hostName">
+							<mtbs:variable name="hostName"/>
+						</mtbs:parameter>
+					</mtbs:xslt>
+				</mtbs:setVariable>
+				<mtbs:dumpXML>
+					<mtbs:stringCat>
+						<mtbs:variable name="muisRoot"/>
+						<mtbs:string>gml/</mtbs:string>
+						<mtbs:variable name="gmlFileName"/>
+					</mtbs:stringCat>
+					<mtbs:methodInvocation methodName="adjust">
+						<mtbs:class>
+							<mtbs:classLiteral class="it.intecs.pisa.soap.toolbox.services.util.GMLAdjuster2"/>
+						</mtbs:class>
+						<mtbs:parameter>
+							<mtbs:classLiteral class="org.w3c.dom.Document"/>
+							<mtbs:variable name="gmlDoc"/>
+						</mtbs:parameter>
+					</mtbs:methodInvocation>
+				</mtbs:dumpXML>
+			</mtbs:sequence>
+			<mtbs:setVariable name="massResponseXml">
+				<mtbs:xml attributePrefix="attribute$" textTag="evaluate">
+					<mass:processSearchOutputMsg xmlns:mass="http://www.esa.int/mass">
+						<mass:searchOutput>
+							<mass:statusInfo>
+								<mass:statusId>300</mass:statusId>
+								<mass:statusMsg>Back end error</mass:statusMsg>
+							</mass:statusInfo>
+						</mass:searchOutput>
+					</mass:processSearchOutputMsg>
+				</mtbs:xml>
+			</mtbs:setVariable>
+		</mtbs:if>
+	</mtbs:if>
+	<mtbs:variable name="massResponseXml"/>
+</mtbs:sequence></script></operation></operations></service>
+	<schemaDocuments><schema name="mass.xsd"><xsd:schema xmlns="http://www.esa.int/mass" xmlns:aoi="http://www.esa.int/xml/schemas/mass/aoifeatures" xmlns:eoli="http://earth.esa.int/XML/eoli" xmlns:oi="http://www.esa.int/oi" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.esa.int/mass" version="1.0">
+	<xsd:import namespace="http://www.esa.int/oi" schemaLocation="/home/test/jakarta-tomcat-5.5.10/webapps/TOOLBOX/WEB-INF/services/MUISTest/schemas/oi.xsd"/>
+	<xsd:import namespace="http://www.esa.int/xml/schemas/mass/aoifeatures" schemaLocation="/home/test/jakarta-tomcat-5.5.10/webapps/TOOLBOX/WEB-INF/services/MUISTest/schemas/aoifeatures.xsd"/>
+	<xsd:import namespace="http://earth.esa.int/XML/eoli" schemaLocation="/home/test/jakarta-tomcat-5.5.10/webapps/TOOLBOX/WEB-INF/services/MUISTest/schemas/eoli.xsd"/>
+	<xsd:element default="http://www.esrin.esa.it:8080/soap/servlet/messagerouter" name="massHostAddress" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>service provider system uses this url to return MASS server the  rfq and order's result of a service when applying the PUSH mechanism</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!-- Common basic types -->
+	<xsd:complexType name="StatusInfoType">
+		<xsd:annotation>
+			<xsd:documentation>status info of the processing of a service's business functions is in this type.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element default="0" name="statusId" type="xsd:nonNegativeInteger">
+				<xsd:annotation>
+					<xsd:documentation>0 for nominal status</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="statusMsg" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FileResultType">
+		<xsd:annotation>
+			<xsd:documentation>File location that also includes a file type information so that a file viewer can be associated</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="fileURL" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>URL of the file : for the GML viewer it must be a http URL</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="fileType" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>String that is used to determine which viewer will be used e.g GML</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CommonInputType">
+		<xsd:annotation>
+			<xsd:documentation>Common input for all business functions</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="orderId" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Common basic elements -->
+	<xsd:element name="isAvailable" type="xsd:boolean">
+		<xsd:annotation>
+			<xsd:documentation>indicates if the rfq/order result of a service is available</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="commonInput" type="CommonInputType">
+		<xsd:annotation>
+			<xsd:documentation>contains common info of a service business function</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="statusInfo" type="StatusInfoType">
+		<xsd:annotation>
+			<xsd:documentation>contains status info about the processing of a service's business functions</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="viewFileResult" type="FileResultType">
+		<xsd:annotation>
+			<xsd:documentation>Represent a file URL, file which  can be displayed by a MASS viewer</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!-- Present types -->
+	<xsd:complexType name="PresentInputType">
+		<xsd:annotation>
+			<xsd:documentation>Input parameters for the present operation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element minOccurs="0" ref="eoli:presentRequest"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProcessPresentInputType">
+		<xsd:annotation>
+			<xsd:documentation>type of the input message of a service's processPresent soap operation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="eoli:presentRequest"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProcessPresentOutputType">
+		<xsd:annotation>
+			<xsd:documentation>type of the ouput message of a service's present  soap operation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="searchOutput"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Present Elements -->
+	<xsd:element name="presentInput" type="PresentInputType"/>
+	<xsd:element name="processPresentInputMsg" type="ProcessPresentInputType">
+		<xsd:annotation>
+			<xsd:documentation>input message element for the processPresent SOAP request</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="processPresentOutputMsg" type="ProcessPresentOutputType">
+		<xsd:annotation>
+			<xsd:documentation>output message element for the processPresent SOAP response</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!-- Search types -->
+	<xsd:complexType name="SearchInputType">
+		<xsd:annotation>
+			<xsd:documentation>input parameters for the Search operation.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element minOccurs="0" ref="aoi:areaOfInterest"/>
+			<xsd:element minOccurs="0" ref="eoli:searchRequest"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProcessSearchInputType">
+		<xsd:annotation>
+			<xsd:documentation>type of the input message of a service's processPresent SOAP request</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="searchInput"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RetrievedDataType">
+		<xsd:annotation>
+			<xsd:documentation>type of the retrieved data</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="Metadata" type="eoli:MetadataType"/>
+		</xsd:sequence>
+		<xsd:attribute name="presentation" type="eoli:PresentationType"/>
+	</xsd:complexType>
+	<xsd:complexType name="SearchOutputType">
+		<xsd:annotation>
+			<xsd:documentation>standard information that contains the specific output of a Search or Present operation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="statusInfo"/>
+			<xsd:element default="0" minOccurs="0" name="hits" type="xsd:nonNegativeInteger"/>
+			<xsd:element minOccurs="0" name="cursor" nillable="false" type="xsd:positiveInteger"/>
+			<xsd:element minOccurs="0" ref="retrievedData"/>
+			<xsd:element minOccurs="0" ref="viewFileResult"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SearchCollectionsType">
+		<xsd:annotation>
+			<xsd:documentation>type of the ouput message of a service's process Search soap operation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" ref="eoli:collectionId"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProcessSearchOutputType">
+		<xsd:annotation>
+			<xsd:documentation>type of the  information of a service's Search SOAP response</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="searchOutput"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Search Elements -->
+	<xsd:element name="searchCollections" type="SearchCollectionsType">
+		<xsd:annotation>
+			<xsd:documentation>element that contains the CollectionIds that will be searched for</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="searchInput" type="SearchInputType">
+		<xsd:annotation>
+			<xsd:documentation>element that represents the needed information to make a search</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="retrievedData" type="RetrievedDataType">
+		<xsd:annotation>
+			<xsd:documentation>element that represents the collection of retrieved data from a Search or a Present</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="searchOutput" type="SearchOutputType">
+		<xsd:annotation>
+			<xsd:documentation>element that contains the Search/Present Results</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="processSearchInputMsg" type="ProcessSearchInputType">
+		<xsd:annotation>
+			<xsd:documentation>document element of message sent to the Catalogue Search Operation</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="processSearchOutputMsg" type="ProcessSearchOutputType">
+		<xsd:annotation>
+			<xsd:documentation>document element of message responsed by the the Catalogue Search Operation</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!-- RFQ types -->
+	<xsd:complexType name="RFQInputType">
+		<xsd:annotation>
+			<xsd:documentation>service's rfq input parameters are in this type. Normally, the service provider will redefine this type to add more service-specific info</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element minOccurs="0" ref="oi:originPart"/>
+			<xsd:element minOccurs="0" ref="aoi:areaOfInterest"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RFQOutputType">
+		<xsd:annotation>
+			<xsd:documentation>service's rfq results are in this type. Normally, the service provider will redefine this type to add more service-specific info.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="price" type="oi:PriceType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MultiRFQOutputType">
+		<xsd:annotation>
+			<xsd:documentation>service's rfq can return more than one result. </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="statusInfo"/>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="rfqOutput" type="RFQOutputType"/>
+			<xsd:element minOccurs="0" ref="viewFileResult"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SendRFQInputType">
+		<xsd:annotation>
+			<xsd:documentation>type of the input message of a service's sendRFQ soap operation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="commonInput"/>
+			<xsd:element ref="sendRFQInput"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SendRFQOutputType">
+		<xsd:annotation>
+			<xsd:documentation>type of the  output message of a service's sendRFQ soap operation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="statusInfo"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CheckRFQResultInputType">
+		<xsd:annotation>
+			<xsd:documentation>type of the input message of a service's checkRFQResult soap operation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="commonInput"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CheckRFQResultOutputType">
+		<xsd:annotation>
+			<xsd:documentation>type of the output message of a service's checkRFQResult soap operation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="isAvailable"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GetRFQResultInputType">
+		<xsd:annotation>
+			<xsd:documentation>type of the input message of a service's getRFQResult soap operation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="commonInput"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GetRFQResultOutputType">
+		<xsd:annotation>
+			<xsd:documentation>type of the output message of a service's getRFQResult soap operation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="commonInput"/>
+			<xsd:element ref="getRFQOutput"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProcessRFQInputType">
+		<xsd:annotation>
+			<xsd:documentation>type of the input message of a service's processRFQ soap operation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="commonInput"/>
+			<xsd:element ref="sendRFQInput"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProcessRFQOutputType">
+		<xsd:annotation>
+			<xsd:documentation>type of the output message of a service's processRFQ SOAP response</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="getRFQOutput"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ReturnRFQResultInputType">
+		<xsd:annotation>
+			<xsd:documentation>type of the input message of the returnRFQResult SOAP request sent to the MASS server</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="commonInput"/>
+			<xsd:element ref="getRFQOutput"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ReturnRFQResultOutputType">
+		<xsd:annotation>
+			<xsd:documentation>type of the output message of the returnRFQResult SOAP response hosted on MASS server</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="statusInfo"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- RFQ Elements -->
+	<xsd:element name="sendRFQInput" type="RFQInputType">
+		<xsd:annotation>
+			<xsd:documentation>element that contains a service's RFQ input parameters</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="getRFQOutput" type="MultiRFQOutputType">
+		<xsd:annotation>
+			<xsd:documentation>element contains a service's RFQ results</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="sendRFQInputMsg" type="SendRFQInputType"/>
+	<xsd:element name="sendRFQOutputMsg" type="SendRFQOutputType"/>
+	<xsd:element name="checkRFQResultInputMsg" type="CheckRFQResultInputType"/>
+	<xsd:element name="checkRFQResultOutputMsg" type="CheckRFQResultOutputType"/>
+	<xsd:element name="getRFQResultInputMsg" type="GetRFQResultInputType"/>
+	<xsd:element name="getRFQResultOutputMsg" type="GetRFQResultOutputType"/>
+	<xsd:element name="returnRFQResultInputMsg" type="ReturnRFQResultInputType"/>
+	<xsd:element name="returnRFQResultOutputMsg" type="ReturnRFQResultOutputType"/>
+	<xsd:element name="processRFQInputMsg" type="ProcessRFQInputType"/>
+	<xsd:element name="processRFQOutputMsg" type="ProcessRFQOutputType"/>
+	<!-- Order types -->
+	<xsd:complexType name="OrderInputType">
+		<xsd:annotation>
+			<xsd:documentation>service's order input parameters are in this type. Normally, the service provider will redefine this type to add more service-specific info.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element minOccurs="0" ref="oi:originPart"/>
+			<xsd:element minOccurs="0" ref="aoi:areaOfInterest"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrderOutputType">
+		<xsd:annotation>
+			<xsd:documentation>service's order results are in this type.  Normally, the service provider will redefine this type to add more service-specific info.        </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="statusInfo"/>
+			<xsd:element minOccurs="0" ref="viewFileResult"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SendOrderInputType">
+		<xsd:annotation>
+			<xsd:documentation>type of the input message of a service's sendOrder soap operation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="commonInput"/>
+			<xsd:element ref="sendOrderInput"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SendOrderOutputType">
+		<xsd:annotation>
+			<xsd:documentation>type of the output message of a service's sendOrder soap operation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="statusInfo"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CheckOrderResultInputType">
+		<xsd:annotation>
+			<xsd:documentation>type of the input message of a service's checkOrderResult soap operation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="commonInput"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CheckOrderResultOutputType">
+		<xsd:annotation>
+			<xsd:documentation>type of the output message of a service's checkOrderResult soap operation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="isAvailable"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GetOrderResultInputType">
+		<xsd:annotation>
+			<xsd:documentation>type of the input  message of a service's getOrderResult soap operation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="commonInput"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GetOrderResultOutputType">
+		<xsd:annotation>
+			<xsd:documentation>type of the output message of a service's getOrderResult soap operation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="commonInput"/>
+			<xsd:element ref="getOrderOutput"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ReturnOrderResultInputType">
+		<xsd:annotation>
+			<xsd:documentation>type of the input message of the returnOrderResult soap operation hosted on MASS server</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="commonInput"/>
+			<xsd:element ref="getOrderOutput"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ReturnOrderResultOutputType">
+		<xsd:annotation>
+			<xsd:documentation>type of the output message of the returnOrderResult soap operation hosted on MASS server</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="statusInfo"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProcessOrderInputType">
+		<xsd:annotation>
+			<xsd:documentation>type of the input message of a service's process Order soap operation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="commonInput"/>
+			<xsd:element ref="sendOrderInput"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProcessOrderOutputType">
+		<xsd:annotation>
+			<xsd:documentation>type of the output message of a service's process Order soap operation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="getOrderOutput"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Order elements -->
+	<xsd:element name="sendOrderInput" type="OrderInputType">
+		<xsd:annotation>
+			<xsd:documentation>contains a service's order input parameters</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="getOrderOutput" type="OrderOutputType">
+		<xsd:annotation>
+			<xsd:documentation>contains a service's order result</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="sendOrderInputMsg" type="SendOrderInputType"/>
+	<xsd:element name="sendOrderOutputMsg" type="SendOrderOutputType"/>
+	<xsd:element name="checkOrderResultInputMsg" type="CheckOrderResultInputType"/>
+	<xsd:element name="checkOrderResultOutputMsg" type="CheckOrderResultOutputType"/>
+	<xsd:element name="getOrderResultInputMsg" type="GetOrderResultInputType"/>
+	<xsd:element name="getOrderResultOutputMsg" type="GetOrderResultOutputType"/>
+	<xsd:element name="returnOrderResultInputMsg" type="ReturnOrderResultInputType"/>
+	<xsd:element name="returnOrderResultOutputMsg" type="ReturnOrderResultOutputType"/>
+	<xsd:element name="processOrderInputMsg" type="ProcessOrderInputType"/>
+	<xsd:element name="processOrderOutputMsg" type="ProcessOrderOutputType"/>
+	<xsd:complexType name="MultiCataloguesSearchInputType">
+		<xsd:annotation>
+			<xsd:documentation>type for input xml message used to do search on multiple catalogues</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="searchCollections"/>
+			<xsd:element minOccurs="0" ref="aoi:areaOfInterest"/>
+			<xsd:element minOccurs="0" ref="eoli:searchRequest"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MultiCataloguesSearchOutputType">
+		<xsd:annotation>
+			<xsd:documentation>type for ouput xml message resulted from a multiple search</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="statusInfo"/>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" ref="searchOutputs"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="searchOutputs">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="eoli:collectionId"/>
+				<xsd:element ref="searchOutput"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="multiCataloguesSearchInputMsg" type="MultiCataloguesSearchInputType"/>
+	<xsd:element name="multiCataloguesSearchOutputMsg" type="MultiCataloguesSearchOutputType"/>
+</xsd:schema></schema><schema name="aoifeatures.xsd"><xsd:schema xmlns:aoi="http://www.esa.int/xml/schemas/mass/aoifeatures" xmlns:gml="http://www.opengis.net/gml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.esa.int/xml/schemas/mass/aoifeatures" version="1.0">
+
+    <xsd:annotation>
+        <xsd:appinfo>aoifeatures.xsd v3.0.2 2004-06-01</xsd:appinfo>
+        <xsd:documentation>GML v2 Schema for AOI features.</xsd:documentation>
+    </xsd:annotation>
+
+<!--==============================================================
+    Import constructs from the GML Feature and Geometry schemas
+    ==============================================================-->
+    <xsd:import namespace="http://www.opengis.net/gml" schemaLocation="/home/test/jakarta-tomcat-5.5.10/webapps/TOOLBOX/WEB-INF/services/MUISTest/schemas/feature.xsd"/>
+
+<!--================================================================
+    Global element Declarations 
+    ================================================================-->
+    <xsd:element name="areaOfInterest" substitutionGroup="gml:_FeatureCollection" type="aoi:AreaOfInterestType"/>
+
+<!--================================================================
+    Privat element Declarations 
+    ================================================================-->
+    <xsd:element name="Feature" substitutionGroup="gml:_Feature" type="aoi:FeatureType"/>
+
+<!--==============================================================
+    Type definitions
+    ==============================================================-->
+    <xsd:complexType name="AreaOfInterestType">
+        <xsd:complexContent>
+            <xsd:extension base="gml:AbstractFeatureCollectionType"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="GeometryType">
+        <xsd:sequence>
+            <xsd:choice>
+                <xsd:element ref="gml:Polygon"/>
+                <xsd:element ref="gml:MultiPolygon"/>
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="FeatureType">
+        <xsd:complexContent>
+            <xsd:extension base="gml:AbstractFeatureType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="Code" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="Label" type="xsd:string"/>
+                    <xsd:element name="Geometry" type="aoi:GeometryType"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+</xsd:schema></schema><schema name="feature.xsd"><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml" elementFormDefault="qualified" targetNamespace="http://www.opengis.net/gml" version="2.1">
+	<annotation>
+		<appinfo>feature.xsd v2.1 2001-09</appinfo>
+		<documentation xml:lang="en">
+      GML Feature schema. Copyright (c) 2001 OGC, All Rights Reserved.
+    </documentation>
+	</annotation>
+	<!-- include constructs from the GML Geometry schema -->
+	<include schemaLocation="/home/test/jakarta-tomcat-5.5.10/webapps/TOOLBOX/WEB-INF/services/MUISTest/schemas/geometry.xsd"/>
+	<!-- ==============================================================
+       global declarations
+  =================================================================== -->
+	<element abstract="true" name="_Feature" type="gml:AbstractFeatureType"/>
+	<element abstract="true" name="_FeatureCollection" substitutionGroup="gml:_Feature" type="gml:AbstractFeatureCollectionType"/>
+	<element name="featureMember" type="gml:FeatureAssociationType"/>
+	<!-- some basic geometric properties of features -->
+	<element abstract="true" name="_geometryProperty" type="gml:GeometryPropertyType"/>
+	<element name="geometryProperty" type="gml:GeometryPropertyType"/>
+	<element name="boundedBy" type="gml:BoundingShapeType"/>
+	<element name="pointProperty" substitutionGroup="gml:_geometryProperty" type="gml:PointPropertyType"/>
+	<element name="polygonProperty" substitutionGroup="gml:_geometryProperty" type="gml:PolygonPropertyType"/>
+	<element name="lineStringProperty" substitutionGroup="gml:_geometryProperty" type="gml:LineStringPropertyType"/>
+	<element name="multiPointProperty" substitutionGroup="gml:_geometryProperty" type="gml:MultiPointPropertyType"/>
+	<element name="multiLineStringProperty" substitutionGroup="gml:_geometryProperty" type="gml:MultiLineStringPropertyType"/>
+	<element name="multiPolygonProperty" substitutionGroup="gml:_geometryProperty" type="gml:MultiPolygonPropertyType"/>
+	<element name="multiGeometryProperty" substitutionGroup="gml:_geometryProperty" type="gml:MultiGeometryPropertyType"/>
+	<!-- common aliases for geometry properties -->
+	<element name="location" substitutionGroup="gml:pointProperty" type="gml:PointPropertyType"/>
+	<element name="centerOf" substitutionGroup="gml:pointProperty" type="gml:PointPropertyType"/>
+	<element name="position" substitutionGroup="gml:pointProperty" type="gml:PointPropertyType"/>
+	<element name="extentOf" substitutionGroup="gml:polygonProperty" type="gml:PolygonPropertyType"/>
+	<element name="coverage" substitutionGroup="gml:polygonProperty" type="gml:PolygonPropertyType"/>
+	<element name="edgeOf" substitutionGroup="gml:lineStringProperty" type="gml:LineStringPropertyType"/>
+	<element name="centerLineOf" substitutionGroup="gml:lineStringProperty" type="gml:LineStringPropertyType"/>
+	<element name="multiLocation" substitutionGroup="gml:multiPointProperty" type="gml:MultiPointPropertyType"/>
+	<element name="multiCenterOf" substitutionGroup="gml:multiPointProperty" type="gml:MultiPointPropertyType"/>
+	<element name="multiPosition" substitutionGroup="gml:multiPointProperty" type="gml:MultiPointPropertyType"/>
+	<element name="multiCenterLineOf" substitutionGroup="gml:multiLineStringProperty" type="gml:MultiLineStringPropertyType"/>
+	<element name="multiEdgeOf" substitutionGroup="gml:multiLineStringProperty" type="gml:MultiLineStringPropertyType"/>
+	<element name="multiCoverage" substitutionGroup="gml:multiPolygonProperty" type="gml:MultiPolygonPropertyType"/>
+	<element name="multiExtentOf" substitutionGroup="gml:multiPolygonProperty" type="gml:MultiPolygonPropertyType"/>
+	<!-- common feature descriptors -->
+	<element name="description" type="string"/>
+	<element name="name" type="string"/>
+	<!-- ==============================================================
+       abstract supertypes
+  =================================================================== -->
+	<complexType abstract="true" name="AbstractFeatureType">
+		<annotation>
+			<documentation>
+        An abstract feature provides a set of common properties. A concrete 
+        feature type must derive from this type and specify additional 
+        properties in an application schema. A feature may optionally 
+        possess an identifying attribute ('fid').
+      </documentation>
+		</annotation>
+		<sequence>
+			<element minOccurs="0" ref="gml:description"/>
+			<element minOccurs="0" ref="gml:name"/>
+			<element minOccurs="0" ref="gml:boundedBy"/>
+			<!-- additional properties must be specified in an application schema -->
+		</sequence>
+		<attribute name="fid" type="ID" use="optional"/>
+	</complexType>
+	<complexType abstract="true" name="AbstractFeatureCollectionBaseType">
+		<annotation>
+			<documentation>
+        This abstract base type just makes the boundedBy element mandatory 
+        for a feature collection.
+      </documentation>
+		</annotation>
+		<complexContent>
+			<restriction base="gml:AbstractFeatureType">
+				<sequence>
+					<element minOccurs="0" ref="gml:description"/>
+					<element minOccurs="0" ref="gml:name"/>
+					<element ref="gml:boundedBy"/>
+				</sequence>
+				<attribute name="fid" type="ID" use="optional"/>
+			</restriction>
+		</complexContent>
+	</complexType>
+	<complexType abstract="true" name="AbstractFeatureCollectionType">
+		<annotation>
+			<documentation>
+        A feature collection contains zero or more featureMember elements.
+      </documentation>
+		</annotation>
+		<complexContent>
+			<extension base="gml:AbstractFeatureCollectionBaseType">
+				<sequence>
+					<element maxOccurs="unbounded" minOccurs="0" ref="gml:featureMember"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="GeometryPropertyType">
+		<annotation>
+			<documentation>
+        A simple geometry property encapsulates a geometry element.
+        Alternatively, it can function as a pointer (simple-type link) 
+        that refers to a remote geometry element.
+      </documentation>
+		</annotation>
+		<sequence minOccurs="0">
+			<element ref="gml:_Geometry"/>
+		</sequence>
+		<attributeGroup ref="gml:AssociationAttributeGroup"/>
+	</complexType>
+	<complexType name="FeatureAssociationType">
+		<annotation>
+			<documentation>
+        An instance of this type (e.g. a featureMember) can either 
+        enclose or point to a feature (or feature collection); this 
+        type can be restricted in an application schema to allow only 
+        specified features as valid participants in the association. 
+        When serving as a simple link that references a remote feature 
+        instance, the value of the gml:remoteSchema attribute can be 
+        used to locate a schema fragment that constrains the target 
+        instance.
+      </documentation>
+		</annotation>
+		<sequence minOccurs="0">
+			<element ref="gml:_Feature"/>
+		</sequence>
+		<attributeGroup ref="gml:AssociationAttributeGroup"/>
+	</complexType>
+	<complexType name="BoundingShapeType">
+		<annotation>
+			<documentation>
+        Bounding shapes--a Box or a null element are currently allowed.
+      </documentation>
+		</annotation>
+		<sequence>
+			<choice>
+				<element ref="gml:Box"/>
+				<element name="null" type="gml:NullType"/>
+			</choice>
+		</sequence>
+	</complexType>
+	<!-- ==============================================================
+       geometry properties
+  =================================================================== -->
+	<complexType name="PointPropertyType">
+		<annotation>
+			<documentation>
+        Encapsulates a single point to represent position, location, or 
+        centerOf properties.
+      </documentation>
+		</annotation>
+		<complexContent>
+			<restriction base="gml:GeometryPropertyType">
+				<sequence minOccurs="0">
+					<element ref="gml:Point"/>
+				</sequence>
+				<attributeGroup ref="gml:AssociationAttributeGroup"/>
+			</restriction>
+		</complexContent>
+	</complexType>
+	<complexType name="PolygonPropertyType">
+		<annotation>
+			<documentation>
+        Encapsulates a single polygon to represent coverage or extentOf 
+        properties.
+      </documentation>
+		</annotation>
+		<complexContent>
+			<restriction base="gml:GeometryPropertyType">
+				<sequence minOccurs="0">
+					<element ref="gml:Polygon"/>
+				</sequence>
+				<attributeGroup ref="gml:AssociationAttributeGroup"/>
+			</restriction>
+		</complexContent>
+	</complexType>
+	<complexType name="LineStringPropertyType">
+		<annotation>
+			<documentation>
+        Encapsulates a single LineString to represent centerLineOf or 
+        edgeOf properties.
+      </documentation>
+		</annotation>
+		<complexContent>
+			<restriction base="gml:GeometryPropertyType">
+				<sequence minOccurs="0">
+					<element ref="gml:LineString"/>
+				</sequence>
+				<attributeGroup ref="gml:AssociationAttributeGroup"/>
+			</restriction>
+		</complexContent>
+	</complexType>
+	<complexType name="MultiPointPropertyType">
+		<annotation>
+			<documentation>
+        Encapsulates a MultiPoint element to represent the following 
+        discontiguous geometric properties: multiLocation, multiPosition, 
+        multiCenterOf.
+      </documentation>
+		</annotation>
+		<complexContent>
+			<restriction base="gml:GeometryPropertyType">
+				<sequence minOccurs="0">
+					<element ref="gml:MultiPoint"/>
+				</sequence>
+				<attributeGroup ref="gml:AssociationAttributeGroup"/>
+			</restriction>
+		</complexContent>
+	</complexType>
+	<complexType name="MultiLineStringPropertyType">
+		<annotation>
+			<documentation>
+        Encapsulates a MultiLineString element to represent the following 
+        discontiguous geometric properties: multiEdgeOf, multiCenterLineOf.
+      </documentation>
+		</annotation>
+		<complexContent>
+			<restriction base="gml:GeometryPropertyType">
+				<sequence minOccurs="0">
+					<element ref="gml:MultiLineString"/>
+				</sequence>
+				<attributeGroup ref="gml:AssociationAttributeGroup"/>
+			</restriction>
+		</complexContent>
+	</complexType>
+	<complexType name="MultiPolygonPropertyType">
+		<annotation>
+			<documentation>
+        Encapsulates a MultiPolygon to represent the following discontiguous 
+        geometric properties: multiCoverage, multiExtentOf.
+      </documentation>
+		</annotation>
+		<complexContent>
+			<restriction base="gml:GeometryPropertyType">
+				<sequence minOccurs="0">
+					<element ref="gml:MultiPolygon"/>
+				</sequence>
+				<attributeGroup ref="gml:AssociationAttributeGroup"/>
+			</restriction>
+		</complexContent>
+	</complexType>
+	<complexType name="MultiGeometryPropertyType">
+		<annotation>
+			<documentation>Encapsulates a MultiGeometry element.</documentation>
+		</annotation>
+		<complexContent>
+			<restriction base="gml:GeometryPropertyType">
+				<sequence minOccurs="0">
+					<element ref="gml:MultiGeometry"/>
+				</sequence>
+				<attributeGroup ref="gml:AssociationAttributeGroup"/>
+			</restriction>
+		</complexContent>
+	</complexType>
+	<simpleType name="NullType">
+		<annotation>
+			<documentation>
+        If a bounding shape is not provided for a feature collection, 
+        explain why. Allowable values are:
+        innapplicable - the features do not have geometry
+        unknown - the boundingBox cannot be computed
+        unavailable - there may be a boundingBox but it is not divulged
+        missing - there are no features
+      </documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="inapplicable"/>
+			<enumeration value="unknown"/>
+			<enumeration value="unavailable"/>
+			<enumeration value="missing"/>
+		</restriction>
+	</simpleType>
+</schema></schema><schema name="geometry.xsd"><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml" xmlns:xlink="http://www.w3.org/1999/xlink" elementFormDefault="qualified" targetNamespace="http://www.opengis.net/gml" version="2.1">
+	<annotation>
+		<appinfo>geometry.xsd v2.1 2001-09</appinfo>
+		<documentation xml:lang="en">
+      GML Geometry schema. Copyright (c) 2001 OGC, All Rights Reserved.
+    </documentation>
+	</annotation>
+	<!-- bring in the XLink attributes -->
+	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="/home/test/jakarta-tomcat-5.5.10/webapps/TOOLBOX/WEB-INF/services/MUISTest/schemas/xlinks.xsd"/>
+	<!-- ==============================================================
+       global declarations
+  =================================================================== -->
+	<element abstract="true" name="_Geometry" type="gml:AbstractGeometryType"/>
+	<element abstract="true" name="_GeometryCollection" substitutionGroup="gml:_Geometry" type="gml:GeometryCollectionType"/>
+	<element name="geometryMember" type="gml:GeometryAssociationType"/>
+	<element name="pointMember" substitutionGroup="gml:geometryMember" type="gml:PointMemberType"/>
+	<element name="lineStringMember" substitutionGroup="gml:geometryMember" type="gml:LineStringMemberType"/>
+	<element name="polygonMember" substitutionGroup="gml:geometryMember" type="gml:PolygonMemberType"/>
+	<!-- primitive geometry elements -->
+	<element name="Point" substitutionGroup="gml:_Geometry" type="gml:PointType"/>
+	<element name="LineString" substitutionGroup="gml:_Geometry" type="gml:LineStringType"/>
+	<element name="LinearRing" substitutionGroup="gml:_Geometry" type="gml:LinearRingType"/>
+	<element name="Polygon" substitutionGroup="gml:_Geometry" type="gml:PolygonType"/>
+	<element name="Box" type="gml:BoxType"/>
+	<!-- aggregate geometry elements -->
+	<element name="MultiGeometry" substitutionGroup="gml:_Geometry" type="gml:GeometryCollectionType"/>
+	<element name="MultiPoint" substitutionGroup="gml:_Geometry" type="gml:MultiPointType"/>
+	<element name="MultiLineString" substitutionGroup="gml:_Geometry" type="gml:MultiLineStringType"/>
+	<element name="MultiPolygon" substitutionGroup="gml:_Geometry" type="gml:MultiPolygonType"/>
+	<!-- coordinate elements -->
+	<element name="coord" type="gml:CoordType"/>
+	<element name="coordinates" type="gml:CoordinatesType"/>
+	<!-- this attribute gives the location where an element is defined -->
+	<attribute name="remoteSchema" type="anyURI"/>
+	<!-- ==============================================================
+       abstract supertypes
+  =================================================================== -->
+	<complexType abstract="true" name="AbstractGeometryType">
+		<annotation>
+			<documentation>
+        All geometry elements are derived from this abstract supertype; 
+        a geometry element may have an identifying attribute (gid). 
+        It may be associated with a spatial reference system.
+      </documentation>
+		</annotation>
+		<complexContent>
+			<restriction base="anyType">
+				<attribute name="gid" type="ID" use="optional"/>
+				<attribute name="srsName" type="anyURI" use="optional"/>
+			</restriction>
+		</complexContent>
+	</complexType>
+	<complexType abstract="true" name="AbstractGeometryCollectionBaseType">
+		<annotation>
+			<documentation>
+        This abstract base type for geometry collections just makes the 
+        srsName attribute mandatory.
+      </documentation>
+		</annotation>
+		<complexContent>
+			<restriction base="gml:AbstractGeometryType">
+				<attribute name="gid" type="ID" use="optional"/>
+				<attribute name="srsName" type="anyURI" use="required"/>
+			</restriction>
+		</complexContent>
+	</complexType>
+	<attributeGroup name="AssociationAttributeGroup">
+		<annotation>
+			<documentation>
+        These attributes can be attached to any element, thus allowing it 
+        to act as a pointer. The 'remoteSchema' attribute allows an element 
+        that carries link attributes to indicate that the element is declared 
+        in a remote schema rather than by the schema that constrains the 
+        current document instance.  
+      </documentation>
+		</annotation>
+		<attributeGroup ref="xlink:simpleLink"/>
+		<attribute ref="gml:remoteSchema" use="optional"/>
+	</attributeGroup>
+	<complexType name="GeometryAssociationType">
+		<annotation>
+			<documentation>
+        An instance of this type (e.g. a geometryMember) can either 
+        enclose or point to a primitive geometry element. When serving 
+        as a simple link that references a remote geometry instance, 
+        the value of the gml:remoteSchema attribute can be used to 
+        locate a schema fragment that constrains the target instance.
+      </documentation>
+		</annotation>
+		<sequence>
+			<element minOccurs="0" ref="gml:_Geometry"/>
+		</sequence>
+		<attributeGroup ref="gml:AssociationAttributeGroup"/>
+	</complexType>
+	<complexType name="PointMemberType">
+		<annotation>
+			<documentation>Restricts the geometry member to being a Point instance.</documentation>
+		</annotation>
+		<complexContent>
+			<restriction base="gml:GeometryAssociationType">
+				<sequence>
+					<element minOccurs="0" ref="gml:Point"/>
+				</sequence>
+				<attributeGroup ref="gml:AssociationAttributeGroup"/>
+			</restriction>
+		</complexContent>
+	</complexType>
+	<complexType name="LineStringMemberType">
+		<annotation>
+			<documentation>Restricts the geometry member to being a LineString instance.</documentation>
+		</annotation>
+		<complexContent>
+			<restriction base="gml:GeometryAssociationType">
+				<sequence>
+					<element minOccurs="0" ref="gml:LineString"/>
+				</sequence>
+				<attributeGroup ref="gml:AssociationAttributeGroup"/>
+			</restriction>
+		</complexContent>
+	</complexType>
+	<complexType name="PolygonMemberType">
+		<annotation>
+			<documentation>Restricts the geometry member to being a Polygon instance.</documentation>
+		</annotation>
+		<complexContent>
+			<restriction base="gml:GeometryAssociationType">
+				<sequence>
+					<element minOccurs="0" ref="gml:Polygon"/>
+				</sequence>
+				<attributeGroup ref="gml:AssociationAttributeGroup"/>
+			</restriction>
+		</complexContent>
+	</complexType>
+	<!-- ==============================================================
+       primitive geometry types
+  =================================================================== -->
+	<complexType name="PointType">
+		<annotation>
+			<documentation>
+        A Point is defined by a single coordinate tuple.
+      </documentation>
+		</annotation>
+		<complexContent>
+			<extension base="gml:AbstractGeometryType">
+				<sequence>
+					<choice>
+						<element ref="gml:coord"/>
+						<element ref="gml:coordinates"/>
+					</choice>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="LineStringType">
+		<annotation>
+			<documentation>
+        A LineString is defined by two or more coordinate tuples, with 
+        linear interpolation between them. 
+      </documentation>
+		</annotation>
+		<complexContent>
+			<extension base="gml:AbstractGeometryType">
+				<sequence>
+					<choice>
+						<element maxOccurs="unbounded" minOccurs="2" ref="gml:coord"/>
+						<element ref="gml:coordinates"/>
+					</choice>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="LinearRingType">
+		<annotation>
+			<documentation>
+        A LinearRing is defined by four or more coordinate tuples, with 
+        linear interpolation between them; the first and last coordinates 
+        must be coincident.
+      </documentation>
+		</annotation>
+		<complexContent>
+			<extension base="gml:AbstractGeometryType">
+				<sequence>
+					<choice>
+						<element maxOccurs="unbounded" minOccurs="4" ref="gml:coord"/>
+						<element ref="gml:coordinates"/>
+					</choice>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="BoxType">
+		<annotation>
+			<documentation>
+        The Box structure defines an extent using a pair of coordinate tuples.
+      </documentation>
+		</annotation>
+		<complexContent>
+			<extension base="gml:AbstractGeometryType">
+				<sequence>
+					<choice>
+						<element maxOccurs="2" minOccurs="2" ref="gml:coord"/>
+						<element ref="gml:coordinates"/>
+					</choice>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="PolygonType">
+		<annotation>
+			<documentation>
+        A Polygon is defined by an outer boundary and zero or more inner 
+        boundaries which are in turn defined by LinearRings.
+      </documentation>
+		</annotation>
+		<complexContent>
+			<extension base="gml:AbstractGeometryType">
+				<sequence>
+					<element name="outerBoundaryIs">
+						<complexType>
+							<sequence>
+								<element ref="gml:LinearRing"/>
+							</sequence>
+						</complexType>
+					</element>
+					<element maxOccurs="unbounded" minOccurs="0" name="innerBoundaryIs">
+						<complexType>
+							<sequence>
+								<element ref="gml:LinearRing"/>
+							</sequence>
+						</complexType>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!-- ==============================================================
+       aggregate geometry types
+  =================================================================== -->
+	<complexType name="GeometryCollectionType">
+		<annotation>
+			<documentation>
+        A geometry collection must include one or more geometries, referenced 
+        through geometryMember elements. User-defined geometry collections 
+        that accept GML geometry classes as members must instantiate--or 
+        derive from--this type.
+      </documentation>
+		</annotation>
+		<complexContent>
+			<extension base="gml:AbstractGeometryCollectionBaseType">
+				<sequence>
+					<element maxOccurs="unbounded" ref="gml:geometryMember"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="MultiPointType">
+		<annotation>
+			<documentation>
+        A MultiPoint is defined by one or more Points, referenced through 
+        pointMember elements.
+      </documentation>
+		</annotation>
+		<complexContent>
+			<restriction base="gml:GeometryCollectionType">
+				<sequence>
+					<element maxOccurs="unbounded" ref="gml:pointMember"/>
+				</sequence>
+				<attribute name="gid" type="ID" use="optional"/>
+				<attribute name="srsName" type="anyURI" use="required"/>
+			</restriction>
+		</complexContent>
+	</complexType>
+	<complexType name="MultiLineStringType">
+		<annotation>
+			<documentation>
+        A MultiLineString is defined by one or more LineStrings, referenced 
+        through lineStringMember elements.
+      </documentation>
+		</annotation>
+		<complexContent>
+			<restriction base="gml:GeometryCollectionType">
+				<sequence>
+					<element maxOccurs="unbounded" ref="gml:lineStringMember"/>
+				</sequence>
+				<attribute name="gid" type="ID" use="optional"/>
+				<attribute name="srsName" type="anyURI" use="required"/>
+			</restriction>
+		</complexContent>
+	</complexType>
+	<complexType name="MultiPolygonType">
+		<annotation>
+			<documentation>
+        A MultiPolygon is defined by one or more Polygons, referenced through 
+        polygonMember elements. 
+      </documentation>
+		</annotation>
+		<complexContent>
+			<restriction base="gml:GeometryCollectionType">
+				<sequence>
+					<element maxOccurs="unbounded" ref="gml:polygonMember"/>
+				</sequence>
+				<attribute name="gid" type="ID" use="optional"/>
+				<attribute name="srsName" type="anyURI" use="required"/>
+			</restriction>
+		</complexContent>
+	</complexType>
+	<!-- ==============================================================
+       There are two ways to represent coordinates: (1) as a sequence 
+       of <coord> elements that encapsulate tuples, or (2) using a 
+       single <coordinates> string.
+  =================================================================== -->
+	<complexType name="CoordType">
+		<annotation>
+			<documentation>
+        Represents a coordinate tuple in one, two, or three dimensions.
+      </documentation>
+		</annotation>
+		<sequence>
+			<element name="X" type="decimal"/>
+			<element minOccurs="0" name="Y" type="decimal"/>
+			<element minOccurs="0" name="Z" type="decimal"/>
+		</sequence>
+	</complexType>
+	<complexType name="CoordinatesType">
+		<annotation>
+			<documentation>
+        Coordinates can be included in a single string, but there is no 
+        facility for validating string content. The value of the 'cs' attribute 
+        is the separator for coordinate values, and the value of the 'ts' 
+        attribute gives the tuple separator (a single space by default); the 
+        default values may be changed to reflect local usage.
+      </documentation>
+		</annotation>
+		<simpleContent>
+			<extension base="string">
+				<attribute default="." name="decimal" type="string" use="optional"/>
+				<attribute default="," name="cs" type="string" use="optional"/>
+				<attribute default=" " name="ts" type="string" use="optional"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+</schema></schema><schema name="oi.xsd"><xsd:schema xmlns="http://www.esa.int/oi" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.esa.int/oi" version="V1.7">
+	<!--XML OpenGIS extended for UOS v 1.10-->
+	<!--=====================================  Root element-->
+	<xsd:element name="originPart">
+		<xsd:annotation>
+			<xsd:documentation>This represent the targetPart elements within the Z39.50- CIP- Order ExtendedRequest</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="action">
+					<xsd:annotation>
+						<xsd:documentation>Indicates the type of operation that is requested to be performed for the order request. It has associated a list of enumeratives defining 5 possible kinds of order requests</xsd:documentation>
+					</xsd:annotation>
+					<xsd:simpleType>
+						<xsd:restriction base="ActionEnum"/>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="orderSpecification" type="OrderSpecification">
+					<xsd:annotation>
+						<xsd:documentation>This level corresponds to the OrderDescriptor level of MUIS-C and to Detail Order Level of DE.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element minOccurs="0" name="orderId" type="xsd:string">
+					<xsd:annotation>
+						<xsd:documentation>It maps MUIS-C OrderDescriptor 'OrderId' and DE implicit order 'Project+OrdCtr+RefDuID'. It coincides with OHS_OrderId for order directed from OHS towards CUS (i.e. composed with Account+sequential number internal to the account for MUIS and N/A for DE Interface). It coincides again with OHS_OrderId for order directed from OHS towards PROMISE ( i.e. composed with Account+MUIS-C OrderDescriptor 'OrderId' for MUIS, Project+OrdCtrDuID for DE). </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element minOccurs="0" name="statusUpdateOption" type="StatusUpdateOptionEnum">
+					<xsd:annotation>
+						<xsd:documentation>Specify if the update of the status shall be notified automatically or manually. It shall be used to implement DE functionality of requesting a status. For MUIS-C the option will always be set to automatic with value 'OGC_interface'</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element minOccurs="0" name="userInformation" type="UserInformation">
+					<xsd:annotation>
+						<xsd:documentation>Only the userId and the Billing.CustomerReference are used in this context. That is because only the shipping address is needed,  not at this level but at DeliveryUnit level</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element minOccurs="0" name="otherInfo">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element minOccurs="0" name="sourceUserId" type="xsd:string">
+								<xsd:annotation>
+									<xsd:documentation>It maps MUIS-C OrderDescriptor 'UserId' parameter</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element minOccurs="0" name="orderAccount">
+								<xsd:annotation>
+									<xsd:documentation>It maps the DE #UORD 'Project' parameter and the MUIS-C OrderDescriptor 'OrderAccount' parameter.</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:maxLength value="20"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element minOccurs="0" name="answerCounter" type="xsd:int">
+								<xsd:annotation>
+									<xsd:documentation>Counts the Provider Order Status files sent to DE for this detail order</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<!--=====================================  Order level -->
+	<xsd:complexType name="OrderSpecification">
+		<xsd:annotation>
+			<xsd:documentation>This type maps mailny MUIS-C OrderDescriptor structure and DE #DORD (Detailed Order definition) interface.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="identificationInfo" type="IdentificationInformation">
+				<xsd:annotation>
+					<xsd:documentation>It contains identificators of the order</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="orderingCentreId" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Always ESA/UOS for MEH purposes</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element maxOccurs="unbounded" name="deliveryUnits">
+				<xsd:annotation>
+					<xsd:documentation>List of Delivery Units associated to the order</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="DeliveryUnitSpec"/>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="orderPrice" type="PriceInfo">
+				<xsd:annotation>
+					<xsd:documentation>At this level  MUIS-C maps  OrderDescriptor 'OrderPrice', 'OrderListPrice' and 'OrderExpectedPrice'. DE maps only the expectedPrice in the #DORD interface.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="orderCancellationDate" type="DateTime.iso8601">
+				<xsd:annotation>
+					<xsd:documentation>Maps the MUIS-C OrderDescriptor LatestCancelDate. NOt present in DE interfaces.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="otherInfo">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="orderType" type="OrderTypeEnum">
+							<xsd:annotation>
+								<xsd:documentation>it Maps MUIS-C OrderDescriptor 'OrderType'. Not used in DE interfaces.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="orderClass">
+							<xsd:annotation>
+								<xsd:documentation>It maps MUIS-C OrderDescriptor "OrderClass"</xsd:documentation>
+							</xsd:annotation>
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:maxLength value="20"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="orderScope" type="OrderScopeEnum">
+							<xsd:annotation>
+								<xsd:documentation>Scope of the order. Not present in MUIS-C. Used in DE within #DORD to improve service ("Scope").</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="applicationType">
+							<xsd:annotation>
+								<xsd:documentation>It maps the DE #DORD 'Appl Type' parameter</xsd:documentation>
+							</xsd:annotation>
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:maxLength value="3"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="orderSource" type="OrderSourceEnum">
+							<xsd:annotation>
+								<xsd:documentation>The System from which the order has been posted. It maps the  MUIS-C OrderDescriptor 'OrderSource[-CollectionId]' and DE UORD 'Prov' parameter. The CollectionId is a MUIS-C parameter given within TargetService compound paramater. The given enumerative list is extensible.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="orderDateTime" type="DateTime.iso8601">
+							<xsd:annotation>
+								<xsd:documentation>Maps MUIS-C OrderDescriptor "OrderDateTime" and DE #DORD "Date/Time:".</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="orderStatusInfo" type="OrderStatusInfo">
+							<xsd:annotation>
+								<xsd:documentation>It maps MUIS-C OrderItem 'OrderStatus' and 'OrderStatusDescription' parameters</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="orderRemark" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>It maps information depending on the interfaces: 1) customer2orderDesk 2) orderDesk2Customer 3) orderDesk2Processing 4) processing2OrderDesk. It maps MUIS-C "OrderUserRemarks" in OrderDescriptor and DE #UORD 'Remarks'</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="orderCondition" type="OrderCondition">
+							<xsd:annotation>
+								<xsd:documentation>Logical condition to be applied to all order items. Present only in MUIS-C OrderDescriptor</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="partialDeliveryAccepted" type="xsd:boolean">
+							<xsd:annotation>
+								<xsd:documentation>True if DeliveryUnits can be delivered separately. Present in MUIS-C OrderDescriptor and in DE #DORD interface ("PD").</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="partialFulfillmentPercentage">
+							<xsd:annotation>
+								<xsd:documentation>Different from 100  if partial fullfillment is acceptable for the user. Allowed values are from 0 to 100, 100 means MUIS-C 'FALSE' (100% have to be fulfilled, no prtial fulfilment accepted), any other value means MUIS-C 'TRUE'. In DE it expresses the minimum percentage of completeness of the order to consider the order as fulfilled.</xsd:documentation>
+							</xsd:annotation>
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:integer">
+									<xsd:minInclusive value="1"/>
+									<xsd:maxInclusive value="100"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="contactPoint" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>It mapping depends on usage:                             1) customer (DE, cat1) to  OHS: customerContactPoint  (DE #DORD 'CD' (Prov_Who))                     2) OHS 2 customer: orderDeskContactPoint (DE #DORD 'SD' (Supplier Deputy))                          3) OHS 2 processing: (CUS/PROMISE/ENVISAT): orderDeskContactPoint    4) processing 2 OHS: processingContactPoint</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrderCondition">
+		<xsd:annotation>
+			<xsd:documentation>Describes a logical condition to be applied to all order items. It maps MUIS-C OrderDescriptor "OrderCondition"</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="startDate" type="DateTime.iso8601"/>
+			<xsd:element minOccurs="0" name="endDate" type="DateTime.iso8601"/>
+			<xsd:element minOccurs="0" name="observationInterval">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:unsignedLong">
+						<xsd:maxInclusive value="4294967296"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="numberOfObservations">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:unsignedLong">
+						<xsd:maxInclusive value="4294967296"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="areaOfInterest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:choice>
+							<xsd:element name="gPolygon" type="GPolygon"/>
+							<xsd:element name="circle" type="Circle">
+								<xsd:annotation>
+									<xsd:documentation>It maps the DE #AREA 'Radius' parameter</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:choice>
+						<xsd:element minOccurs="0" name="clusterAreaName" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>It maps DE #AREA Area(s) (Cluster_Area_Name). It is not used in MUIS-C</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="areaName" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>It maps DE #AREA Area(s) (Area_Name). It is not used in MUIS-C</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="thematicKeyword">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="40"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="productCodeId" type="ProductCodeEnum"/>
+			<xsd:element minOccurs="0" name="coverageRequired" type="CoverageRequiredEnum"/>
+			<xsd:element minOccurs="0" name="maxNumOfProductsPerObservation">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:unsignedInt">
+						<xsd:maxInclusive value="65535"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="deliveryPolicy" type="DeliveryPolicyEnum"/>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="specificConditions">
+				<xsd:annotation>
+					<xsd:documentation>Split MUIS-C SPECIFIC_CONDITIONS single string at each '\n' encountered defining multiple strings.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="0"/>
+						<xsd:maxLength value="1023"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="correlationConditions">
+				<xsd:annotation>
+					<xsd:documentation>Split MUIS-C CORRELATION_CONDITIONS string at '\n'</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="0"/>
+						<xsd:maxLength value="1023"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--=====================================  DeliveryUnit level  -->
+	<xsd:complexType name="DeliveryUnitSpec">
+		<xsd:annotation>
+			<xsd:documentation>This section maps MUIS-C DeliveryUnitDescriptor structure. DE interface does not have a specific structure mapping this section and most of the relevant information contained here can be found in #DORD interface.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="deliveryUnitId" type="DeliveryUnitId">
+				<xsd:annotation>
+					<xsd:documentation>Identifier of the DeliveryUnit. It maps MUIS-C DeliveryUnitDescriptor "DeliveryUnitId" and DE #DORD "Ref DuId#".</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="deliveryUnitPrice" type="PriceInfoLowLevel">
+				<xsd:annotation>
+					<xsd:documentation>At this level  MUIS-C maps  delivery firmPrice, listPrice and  expectedPrice. DE does not maps this information at this level.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="deliveryMethod" type="DeliveryMethod">
+				<xsd:annotation>
+					<xsd:documentation>Represents the delivery method requested for the DeliveryUnit. It maps MUIS-C DeliveryUnitdescriptor "DeliveryMethod" plus the relevant UserInformation (DeliveryAddress / DeliveryEmailAddress / etc..).  In DE this information are presented at #DORD level for what concern the information related to FTP address an mail / email address, at #ITEM level for what concern the delivery method that shall be used.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="billing" type="Billing">
+				<xsd:annotation>
+					<xsd:documentation>Information related to billing method. It maps MUIS-C DeliveryUnitdescriptor PaymentMethod plus related payment ionformation such as Credit card info. DE does not have this kind of information in its interfaces.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="packages" type="PackageSpec"/>
+			<xsd:element minOccurs="0" name="otherInfo">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="deliveryUnitStatus" type="OrderStatusInfo">
+							<xsd:annotation>
+								<xsd:documentation>It maps MUIS-C DeliveryUnitDescriptor 'DeliveryUnitStatus' and 'DeliveryUnitStatusDescription' parameters</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="deliveryUnitRemark" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>Its mapping depends on the interface: 1)customer2OrderDesk 2)orderDesk2Customer 3)orderDesk2Processing 4)processing2OrderDesk.   With the first meaning it maps also DE #DORD 'Remarks'</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="foreseenDeliveryDate" type="DateTime.iso8601"/>
+						<xsd:element minOccurs="0" name="latestAcceptedDeliveryDate" type="DateTime.iso8601">
+							<xsd:annotation>
+								<xsd:documentation>Date by when the delivery unit has to be delivered. It maps MUIS-C DeliveryUnitDescriptor "LatestAcceptedDeliveryDate" and DE #ITEM "Deadline"</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="additionalParcelLabelInfo">
+							<xsd:annotation>
+								<xsd:documentation>Additional info to be inserted on the physical package. Used only by DE #DORD interface.</xsd:documentation>
+							</xsd:annotation>
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string"/>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="qualityOfService" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>It maps DE #ITEM 'SL' (ServiceLevel)</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="priority" type="xsd:int">
+							<xsd:annotation>
+								<xsd:documentation>Priority of the order. It maps MUIS-C OrderItem "OrderItemPriority" and DE #ITEM "Pr".</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="userCode" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>If present it will be passed to CUS in order to manage multiple addresses for the same user.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="addressNumber" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>If present it will be passed to CUS in order to manage multiple addresses for the same user.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--=====================================  Package level-->
+	<xsd:complexType name="PackageSpec">
+		<xsd:sequence>
+			<xsd:element name="packageId" type="PackageId">
+				<xsd:annotation>
+					<xsd:documentation>Identify the specific package. It maps MUIS-C PackageDescriptor PackageId. DE does not have the package level within its interface but it maps DE #ITEM 'Set'.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="package">
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element name="predefinedPackage" type="PredefinedPackage">
+							<xsd:annotation>
+								<xsd:documentation>It is not used for MEH.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="adHocPackage" type="AdHocPackage"/>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="packageMedium" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Identification of a medium. It maps MUIS-C  'DeliveryMedium' and 'MediumFormattingOption' in OrderItemDescriptor and DE #ITEM "Med"</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="packageKByteSize" type="xsd:integer"/>
+			<xsd:element minOccurs="0" name="packagePrice" type="PriceInfoLowLevel">
+				<xsd:annotation>
+					<xsd:documentation>Package price </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="otherInfo">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="packageRemark" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>Its mapping depends on the interface: 1)customer2orderDesk 2)orderDesk2Customer 3)orderDesk2Processing 4)processing2OrderDesk</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="packageLabel" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>It maps DE #DORD 'Additional media label'.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="packageCopies">
+							<xsd:annotation>
+								<xsd:documentation>It maps MUIS-C PackageDescriptor 'packageCopies' and the number that could be inside  DE #ITEM 'Set' parameter</xsd:documentation>
+							</xsd:annotation>
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:integer">
+									<xsd:minInclusive value="1"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="mediaInPackage">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:integer">
+									<xsd:minInclusive value="1"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AdHocPackage">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" name="orderItem" type="OrderItem"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PredefinedPackage">
+		<xsd:sequence>
+			<xsd:element name="collectionId" type="xsd:string"/>
+			<xsd:element maxOccurs="unbounded" name="orderItem">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="OrderItem"/>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="otherInfo"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--=====================================  OrderItem level  -->
+	<xsd:complexType name="OrderItem">
+		<xsd:sequence>
+			<xsd:element name="orderItemId" type="OrderItemId"/>
+			<xsd:element name="productId" type="ProductId">
+				<xsd:annotation>
+					<xsd:documentation>It identifies the ordered product.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="productPrice" type="PriceInfoLowLevel"/>
+			<xsd:element minOccurs="0" name="productDeliveryOptions" type="ProductDeliveryOptions">
+				<xsd:annotation>
+					<xsd:documentation>It contains delivery options for the  product.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="processingOptions" type="ProcessingOptions">
+				<xsd:annotation>
+					<xsd:documentation>It specifies the processing options to be applied on the product before delivery.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="sceneSelectionOptions" type="SceneSelectionOptions">
+				<xsd:annotation>
+					<xsd:documentation>It specifies the selection of the scene from the product that is to be delivered.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="orderStatusInfo" type="OrderItemStatusInfo">
+				<xsd:annotation>
+					<xsd:documentation>It indicates the status of the order item</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="otherInfo">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="productInfo">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" minOccurs="0" name="acquisitionStation">
+										<xsd:annotation>
+											<xsd:documentation>Acquisition station code.  It maps MUIS-C AcquisitionDescriptor "AcquisitionStation" and DE #ITEM "Station(s)"  </xsd:documentation>
+										</xsd:annotation>
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:string">
+												<xsd:maxLength value="2"/>
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:element>
+									<xsd:element minOccurs="0" name="spatialCoverage" type="SpatialCoverage"/>
+									<xsd:element minOccurs="0" name="passCoverage" type="PassCoverage"/>
+									<xsd:element minOccurs="0" name="passEquatorXLongitude" type="xsd:float"/>
+									<xsd:element minOccurs="0" name="passDirection" type="PassDirectionEnum"/>
+									<xsd:element minOccurs="0" name="verticalCoverage" type="VerticalSelection"/>
+									<xsd:element minOccurs="0" name="regionId">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:string">
+												<xsd:maxLength value="20"/>
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:element>
+									<xsd:element minOccurs="0" name="missionPhaseId">
+										<xsd:annotation>
+											<xsd:documentation>Indication of the mission phase. It maps MUIS-C AcquisitionDescriptor "MissionPhaseId" and last char of DE #ITEM "Mission"</xsd:documentation>
+										</xsd:annotation>
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:string">
+												<xsd:maxLength value="2"/>
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:element>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="productStatus" type="ProductStatusEnum">
+							<xsd:annotation>
+								<xsd:documentation>Status of the product: It maps MUIS-C OrderItem "ProductStatus"</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="productSource" type="ProductSource">
+							<xsd:annotation>
+								<xsd:documentation>Source (terminalCollectionId/Supplier) for the product. It maps MUIS-C OrderItemDescriptor "ProductSource"</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="rejectionInfo" type="RejectionInfo">
+							<xsd:annotation>
+								<xsd:documentation>It maps DE #ITEM 'RejC' and 'RejN'</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="replacementInfo" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>It contains an customerOrderItemId</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="replacesInfo" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>It contains an OHS_OrderItemId</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="processingFacility" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>Suggested facility</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="orderItemRemark" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>Its mapping depends on the interface: 1)customer2OrderDesk 2)orderDesk2Customer 3)orderDesk2Processing 4)processing2OrderDesk</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="qualityLevel" type="xsd:string">
+							<xsd:annotation>
+								<xsd:documentation>Quality information. It maps  DE #DORD 'ICUD D' (Quality_Level)</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--=====================================  User level -->
+	<xsd:complexType name="UserInformation">
+		<xsd:sequence>
+			<xsd:element name="userId">
+				<xsd:annotation>
+					<xsd:documentation>It maps the DE #UORD 'User Id' parameter and  the  MUIS-C OrderDescriptor 'CustomerId'</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="20"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="userName" type="Name">
+				<xsd:annotation>
+					<xsd:documentation>Not needed by MUIS-C. Used  by DE in #DORD</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="userAddress" type="PostalAddress">
+				<xsd:annotation>
+					<xsd:documentation>Not needed in MUIS-C at OrderDescriptor level. used by DE #DORD interface. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="companyRef" type="CompanyReference">
+				<xsd:annotation>
+					<xsd:documentation> Not needed in MUIS-C. used by DE #DORD interface.  For its definition the MUIS-C related attribute length has been used.                             </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="telNumber">
+				<xsd:annotation>
+					<xsd:documentation>Telephone Number</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="18"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="faxNumber">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="18"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="emailAddress">
+				<xsd:annotation>
+					<xsd:documentation/>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="72"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="networkAddress">
+				<xsd:annotation>
+					<xsd:documentation>Not used at this level</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string"/>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="vatRegistrationNo" type="VatRegistrationNo">
+				<xsd:annotation>
+					<xsd:documentation>It maps DE #DORD 'VAT' parameter</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--=====================================  Complex types definition  -->
+	<xsd:complexType name="AlongShiftSpecification">
+		<xsd:sequence>
+			<xsd:element name="shiftUnitId" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>A=Absolute, S=Seconds</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="shift" type="xsd:integer"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AlongSizeSpecification">
+		<xsd:sequence>
+			<xsd:element name="alongSizeUnitId" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>A=Absolute, S=Seconds</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="alongSize" type="xsd:integer"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Billing">
+		<xsd:sequence>
+			<xsd:element name="paymentMethod">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="PaymentMethod"/>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="customerPONumber" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="VATRegistrationNo" type="VatRegistrationNo"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BoundingRectangle">
+		<xsd:sequence>
+			<xsd:element name="northWestPoint" type="Point"/>
+			<xsd:element name="southEastPoint" type="Point"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BoundingRectangleSelection">
+		<xsd:sequence>
+			<xsd:element name="westBoundingCoordinate" type="xsd:string"/>
+			<xsd:element name="eastBoundingCoordinate" type="xsd:string"/>
+			<xsd:element name="northBoundingCoordinate" type="xsd:string"/>
+			<xsd:element name="southBoundingCoordinate" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Circle">
+		<xsd:sequence>
+			<xsd:element name="center" type="Point"/>
+			<xsd:element name="radius" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>The unit for radius is the kilometer ('km')</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CompanyReference">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="organisation">
+				<xsd:annotation>
+					<xsd:documentation>Organisation Name</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="0"/>
+						<xsd:maxLength value="40"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="department">
+				<xsd:annotation>
+					<xsd:documentation>Department or Section</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="0"/>
+						<xsd:maxLength value="40"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CreditCardInfo">
+		<xsd:sequence>
+			<xsd:element name="creditCardInstitute">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="40"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="nameOfCard">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="40"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="cardNumber">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="40"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="expirationDate" type="DateTime.iso8601"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DeliveryMethod">
+		<xsd:choice>
+			<xsd:element name="eMail" type="EmailInfo"/>
+			<xsd:element name="ftp" type="FtpDelivery"/>
+			<xsd:element name="mail" type="DeliveryAddress"/>
+			<xsd:element name="on-line" type="xsd:string"/>
+			<xsd:element name="otherInfo" type="xsd:string"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="DeliveryUnitId">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="OHS_DeliveryUnitId" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="customerDeliveryUnitId" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>It maps the MUIS-C DeliveryUnitDescriptor 'DeliveryUnitId' parameter</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="processingDeliveryUnitId" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>It is the ProcessingDeliveryUnitId. The identificator assigned by processing facility.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DeliveryAddress">
+		<xsd:sequence>
+			<xsd:element name="postalAddress" type="PostalAddress"/>
+			<xsd:element minOccurs="0" name="recipient" type="Name">
+				<xsd:annotation>
+					<xsd:documentation>It maps MUIS-C DeiveryAddress 'c/o' and InvoiceAddress 'c/o'.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="companyRef" type="CompanyReference"/>
+			<xsd:element minOccurs="0" name="telNumber">
+				<xsd:annotation>
+					<xsd:documentation>Telephone Number</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="18"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EmailInfo">
+		<xsd:sequence>
+			<xsd:element name="address">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="72"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="attachmentType" type="AttachmentTypeEnum">
+				<xsd:annotation>
+					<xsd:documentation>Maps different types of attachment supported by DE</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FormattedSceneSelectionOptions">
+		<xsd:annotation>
+			<xsd:documentation> Scene selected over a browse image</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="sceneType" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>It is an extensible list</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="horizontalSelection">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="HorizontalSelection"/>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="verticalSelection" type="VerticalSelection"/>
+			<xsd:element minOccurs="0" name="temporalSelection" type="TemporalSelection"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FtpDelivery">
+		<xsd:sequence>
+			<xsd:element name="transferDirection" type="TransferDirectionEnum"/>
+			<xsd:element name="ftpAddress">
+				<xsd:annotation>
+					<xsd:documentation>ftp URL containing also DE interface directory, username, password information</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"/>
+						<xsd:minLength value="0"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="emailNotificationAddress"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GPolygon">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="3" name="point" type="Point"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HorizontalSelection">
+		<xsd:choice>
+			<xsd:element name="rectangleSceneSelection" type="RectangleSceneSelection"/>
+			<xsd:element name="boundingRectangleSelection" type="BoundingRectangleSelection">
+				<xsd:annotation>
+					<xsd:documentation>Not used for MEH</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="polygonSelection" type="PolygonSelection"/>
+			<xsd:element name="circleSelection" type="Circle">
+				<xsd:annotation>
+					<xsd:documentation>Not used for MEH</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="IdentificationInformation">
+		<xsd:sequence>
+			<xsd:element name="customerOrderId" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>It maps MUIS-C OrderDescriptor 'OrderId' and DE #DORD 'Ref DuId#' parameter</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="OHS_OrderId" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>It identifies the order in OHS</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="orderUserReference">
+				<xsd:annotation>
+					<xsd:documentation>It maps the MUIS-C OrderDescriptor 'OrderUserReference' (it is the end user orderId)</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="20"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="orderName">
+				<xsd:annotation>
+					<xsd:documentation>It maps the MUIS-C OrderDescriptor 'OrderName' parameter</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="30"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="processingOrderId" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>It is  identificator assigned by processing facility.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrderItemId">
+		<xsd:sequence>
+			<xsd:element name="OHS_OrderItemId" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="customerOrderItemId" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation> It map the MUIS-C OrderItemDescriptor  "OrderItemId" and the DE #ITEM "Item".</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="processingOrderItemId" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>It is processingOrderItemId, the identifier of the orderItem  inside the processing system.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrderStatusInfo">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="orderState" type="OrderStatusEnum">
+				<xsd:annotation>
+					<xsd:documentation>It maps MUIS-C Status </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="additionalStatusInfo">
+				<xsd:annotation>
+					<xsd:documentation>it maps MUIS-C StatusDescription </xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="0"/>
+						<xsd:maxLength value="255"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrderItemStatusInfo">
+		<xsd:sequence>
+			<xsd:element name="orderState">
+				<xsd:annotation>
+					<xsd:documentation>It maps the MUIS-C status and DE #ITEM 'St' (Status)</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element name="staticState" type="OrderItemStatusStaticEnum"/>
+						<xsd:element name="dynamicState" type="OrderItemStatusDynamicEnum"/>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="additionalStatusInfo" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>It maps MUIS-C OrderItemDescriptor "OrderItemStatusDescription" and DE #ITEM "RejN" (RejectionNote)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="timeStatusUpdate" type="DateTime.iso8601">
+				<xsd:annotation>
+					<xsd:documentation>Date/Time of this status change</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PackageId">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="OHS_PackageId" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="customerPackageId" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>It maps the MUIS-C PackageDescriptor PackageId' parameter</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="processingPackageId" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PassCoverage">
+		<xsd:sequence>
+			<xsd:element name="passStartEquatorXDeltaTime">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:int">
+						<xsd:minInclusive value="-2147483648"/>
+						<xsd:maxInclusive value="2147483647"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="passStopEquatorXDeltaTime">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:int">
+						<xsd:minInclusive value="-2147483648"/>
+						<xsd:maxInclusive value="2147483647"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PaymentMethod">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="billInvoice" type="DeliveryAddress"/>
+			<xsd:choice minOccurs="0">
+				<xsd:element name="prepay" type="xsd:string"/>
+				<xsd:element name="depositAccount" type="xsd:string"/>
+				<xsd:element name="privateKnown" type="xsd:string"/>
+				<xsd:element name="privateNotKnown" type="xsd:string"/>
+				<xsd:element name="creditCard">
+					<xsd:complexType>
+						<xsd:complexContent>
+							<xsd:extension base="CreditCardInfo"/>
+						</xsd:complexContent>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="creditCard-pre-supplied" type="xsd:string"/>
+				<xsd:element name="quota" type="xsd:string"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Point">
+		<xsd:sequence>
+			<xsd:element name="latitude" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Its format is: [+|-]nn.nn </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="longitude" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Its format is: nnn.nn</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PolygonSelection">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="geoPolygon" type="GPolygon"/>
+			<xsd:element minOccurs="0" name="mapProjection" type="MapProjectionEnum"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PostalAddress">
+		<xsd:sequence>
+			<xsd:element name="streetAddress">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="40"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="city">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="40"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="state">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="40"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="postalCode">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="12"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="country">
+				<xsd:annotation>
+					<xsd:documentation>ISO-3166 2-char  is used (even if 3 chars are available)</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="3"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="postBox">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="12"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PriceInfo">
+		<xsd:annotation>
+			<xsd:documentation>Price Information.  It maps both MUIS-C price  (Order, DeliveryUnit, Package or OrderItem) and DE (#DORD, #ITEM) price and royalty information. </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="priceExpirationDate" type="DateTime.iso8601">
+				<xsd:annotation>
+					<xsd:documentation>It maps MUIS-C OrderDescriptor 'OfferExpirationDate' parameter</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="additionalPriceInfo" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="price" type="PriceType"/>
+			<xsd:element minOccurs="0" name="listPrice" type="PriceType"/>
+			<xsd:element minOccurs="0" name="expectedPrice" type="PriceType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PriceInfoLowLevel">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="additionalPriceInfo" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="price" type="PriceType"/>
+			<xsd:element minOccurs="0" name="listPrice" type="PriceType"/>
+			<xsd:element minOccurs="0" name="expectedPrice" type="PriceType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PriceType">
+		<xsd:sequence>
+			<xsd:element name="refCurrency" type="Currency.iso4217"/>
+			<xsd:element name="refAmount">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:unsignedLong">
+						<xsd:maxInclusive value="4294967296"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="userCurrency" type="Currency.iso4217"/>
+			<xsd:element minOccurs="0" name="userAmount">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:unsignedLong">
+						<xsd:maxInclusive value="4294967296"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProcessingOptions">
+		<xsd:choice>
+			<xsd:element maxOccurs="unbounded" name="formattedProcessingOptions" type="ProcessingOptionSelection"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="ProcessingOptionSelection">
+		<xsd:sequence>
+			<xsd:element name="processingOptionName" type="xsd:string"/>
+			<xsd:element maxOccurs="unbounded" name="processingOptionSelectedValues" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProductDeliveryOptions">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="productByteSize" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>It contains the size of the product in bytes. It maps the  MUIS-C parameter "DataSize" in OrderItemDescriptor</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="productFormat" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>It contains the MUIS-C "Format" Processing Option</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="productCompression" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>It contains the MUIS-C "Compression" Processing Option.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="otherInfo" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Not Used</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProductId">
+		<xsd:sequence>
+			<xsd:element name="productCodeId" type="ProductCodeEnum">
+				<xsd:annotation>
+					<xsd:documentation>Product type code. It maps MUIS-C AcquisitionDescriptor "ProductCodeId" and DE #ITEM "Product Code"</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="missionId" type="MissionIdEnum">
+				<xsd:annotation>
+					<xsd:documentation>Unique code for the satellite/mission. It maps the MUIS-C Acquisitiondescriptor 'Satellite' (PlatformId,SatelliteNumber) and DE #ITEM 'Mission'</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="sensorId" type="SensorIdEnum">
+				<xsd:annotation>
+					<xsd:documentation>Identification of the sensor.  It maps MUIS-C AcquisitionDescriptor "SensorId" and  the second part of DE #ITEM "Mission"  </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="orbit">
+				<xsd:annotation>
+					<xsd:documentation>Absolute orbit number. It maps MUIS-C AcquisitionDescriptor "Orbit" and DE #ITEM "Orbit" </xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:unsignedInt">
+						<xsd:maxInclusive value="16777216"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="track">
+				<xsd:annotation>
+					<xsd:documentation>WRS Track number. It maps MUIS-C AcquisitionDescriptor "Track" and DE #ITEM "Track"</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:unsignedInt">
+						<xsd:maxInclusive value="65535"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="frame">
+				<xsd:annotation>
+					<xsd:documentation>WRS frame number. It maps MUIS-C AcquisitionDescriptor "Frame" and DE #ITEM "Frame" </xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:unsignedInt">
+						<xsd:maxInclusive value="65535"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="swathId">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="2"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="temporalCoverage" type="TemporalSelection">
+				<xsd:annotation>
+					<xsd:documentation>Start date/time for the temporal coverage. It maps MUIS-C AcquisitionDescriptor "TemporalCoverage(Start)" and  DE #ITEM "Date"</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="sceneCentre" type="Point">
+				<xsd:annotation>
+					<xsd:documentation>Selected scene centre coordinates.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="productOrderId">
+				<xsd:annotation>
+					<xsd:documentation>It maps MUIS-C AcquisitionDescriptor 'ProductOrderId' and DE #ITEM 'Scene'</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="255"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProductSource">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="provider">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="20"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="facility">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="20"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="collectionId">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="20"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="supplier">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="20"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Name">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="title">
+				<xsd:annotation>
+					<xsd:documentation>It maps DE #DORD 'TITLE' parameter</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="15"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="firstName">
+				<xsd:annotation>
+					<xsd:documentation>It maps DE #DORD 'FIRST_NAME' parameter</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="40"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="lastName">
+				<xsd:annotation>
+					<xsd:documentation>It maps DE #DORD 'LAST_NAME' parameter</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="40"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RectangleSceneSelection">
+		<xsd:sequence>
+			<xsd:element name="acrossGrid">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:int">
+						<xsd:minInclusive value="-2147483648"/>
+						<xsd:maxInclusive value="2147483647"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="alongGridUnitType" type="xsd:string"/>
+			<xsd:element name="alongGrid">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:int">
+						<xsd:minInclusive value="-2147483648"/>
+						<xsd:maxInclusive value="2147483647"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="acrossSize">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:int">
+						<xsd:minInclusive value="-2147483648"/>
+						<xsd:maxInclusive value="2147483647"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="alongSize">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:int">
+						<xsd:minInclusive value="-2147483648"/>
+						<xsd:maxInclusive value="2147483647"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="acrossCenter">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:int">
+						<xsd:minInclusive value="-2147483648"/>
+						<xsd:maxInclusive value="2147483647"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="alongCenter">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:int">
+						<xsd:minInclusive value="-2147483648"/>
+						<xsd:maxInclusive value="2147483647"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element default="0" minOccurs="0" name="alongOrigin" type="AlongOriginEnum">
+				<xsd:annotation>
+					<xsd:documentation>Used only by MUIS-C </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RejectionInfo">
+		<xsd:annotation>
+			<xsd:documentation>It maps DE #ITEM 'RejC' and 'RejN'</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="rejectionCode" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="rejectionNote" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SceneSelectionOptions">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="formattedSceneSelectionOptions" type="FormattedSceneSelectionOptions">
+				<xsd:annotation>
+					<xsd:documentation>Scene selected over a browse image</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="unformattedSceneSelectionOptions" type="UnformattedSceneSelectionOptions"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SpatialCoverage">
+		<xsd:choice>
+			<xsd:element name="boundingRectangle" type="BoundingRectangle"/>
+			<xsd:element name="circle" type="Circle"/>
+			<xsd:element name="gPolygon" type="GPolygon"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="TemporalSelection">
+		<xsd:sequence>
+			<xsd:element name="startDateTime">
+				<xsd:simpleType>
+					<xsd:restriction base="DateTime.iso8601"/>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="endDateTime" type="DateTime.iso8601"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="UnformattedSceneSelectionOptions">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="sceneCentre" type="Point">
+				<xsd:annotation>
+					<xsd:documentation>It maps #ITEM 'Lat' and 'Long' (Centre Latitude and Longitude of floating frame) and the MUIS-C OrderItemDescriptor 'OrderItemSceneCentre'</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="subSceneIdentification" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>(e.g. 'quarter number')</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="alongShiftSpecification" type="AlongShiftSpecification">
+				<xsd:annotation>
+					<xsd:documentation>It maps DE #ITEM 'DN' </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="alongSizeSpecification" type="AlongSizeSpecification">
+				<xsd:annotation>
+					<xsd:documentation>Used for multi-scenes product. It maps DE #ITEM 'NOF' (Number_Of_frames)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="VerticalSelection">
+		<xsd:sequence>
+			<xsd:element name="lowAltitude" type="xsd:int">
+				<xsd:annotation>
+					<xsd:documentation>The unit for lowAltitude is the Meter ('m')</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="highAltitude" type="xsd:int">
+				<xsd:annotation>
+					<xsd:documentation>The unit for highAltitude is the Meter ('m')</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--=====================================  Simple types definition -->
+	<xsd:simpleType name="Currency.iso4217">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DateTime.iso8601">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="VatRegistrationNo">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--Element Section-->
+	<!--=====================================  Simple types and base elements start from here after  -->
+	<xsd:simpleType name="ActionEnum">
+		<xsd:annotation>
+			<xsd:documentation>List of valid actions allowed</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="orderEstimate"/>
+			<xsd:enumeration value="orderQuoteAndSubmit"/>
+			<xsd:enumeration value="orderMonitor"/>
+			<xsd:enumeration value="orderCancel"/>
+			<xsd:enumeration value="orderDetail"/>
+			<xsd:enumeration value="orderAccount"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AlongOriginEnum">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="0"/>
+			<xsd:enumeration value="s"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AttachmentTypeEnum">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Mime"/>
+			<xsd:enumeration value="Uuencoded"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CoverageRequiredEnum">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Full optimized (best) coverage"/>
+			<xsd:enumeration value="Full coverage required"/>
+			<xsd:enumeration value="any coverage"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DeliveryPolicyEnum">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Only at end of last observation"/>
+			<xsd:enumeration value="At end of each observation"/>
+			<xsd:enumeration value="As product are becoming available"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MapProjectionEnum">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Plate-Caree"/>
+			<xsd:enumeration value="Geodesic"/>
+			<xsd:enumeration value="AcquisitionFootprint"/>
+			<xsd:enumeration value="UTM"/>
+			<xsd:enumeration value="GAUSS_CONFORMAL"/>
+			<xsd:enumeration value="GAUSS_KRUGER"/>
+			<xsd:enumeration value="NONE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MissionIdEnum">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ENVISAT"/>
+			<xsd:enumeration value="ERS-1"/>
+			<xsd:enumeration value="ERS-2"/>
+			<xsd:enumeration value="JERS-1"/>
+			<xsd:enumeration value="Landsat-1"/>
+			<xsd:enumeration value="Landsat-2"/>
+			<xsd:enumeration value="Landsat-3"/>
+			<xsd:enumeration value="Landsat-4"/>
+			<xsd:enumeration value="Landsat-5"/>
+			<xsd:enumeration value="Landsat-7"/>
+			<xsd:enumeration value="MOS-1B"/>
+			<xsd:enumeration value="NIMBUS-7"/>
+			<xsd:enumeration value="NOAA-7"/>
+			<xsd:enumeration value="NOAA-8"/>
+			<xsd:enumeration value="NOAA-9"/>
+			<xsd:enumeration value="NOAA-10"/>
+			<xsd:enumeration value="NOAA-11"/>
+			<xsd:enumeration value="NOAA-12"/>
+			<xsd:enumeration value="NOAA-14"/>
+			<xsd:enumeration value="NOAA-15"/>
+			<xsd:enumeration value="NOAA-16"/>
+			<xsd:enumeration value="NOAA-17"/>
+			<xsd:enumeration value="NOAA-18"/>
+			<xsd:enumeration value="SeaStar"/>
+			<xsd:enumeration value="IRS-P3"/>
+			<xsd:enumeration value="AQUA"/>
+			<xsd:enumeration value="TERRA"/>
+			<xsd:enumeration value="SPOT-4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OrderItemStatusDynamicEnum">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="BeingEstimated"/>
+			<xsd:enumeration value="BeingQuoted"/>
+			<xsd:enumeration value="BeingProcessed"/>
+			<xsd:enumeration value="BeingCancelled"/>
+			<xsd:enumeration value="BeingOnHold"/>
+			<xsd:enumeration value="BeingDeleted"/>
+			<xsd:enumeration value="BeingProcessed (WaitScheduling)"/>
+			<xsd:enumeration value="BeingProcessed (Planned)"/>
+			<xsd:enumeration value="BeingProcessed (WaitPlanning)"/>
+			<xsd:enumeration value="BeingProcessed (Acquired)"/>
+			<xsd:enumeration value="BeingProcessed (DataBeingTransferred)"/>
+			<xsd:enumeration value="BeingProcessed (DataReadyAtProcessingFacility)"/>
+			<xsd:enumeration value="BeingProcessed (WaitProduction)"/>
+			<xsd:enumeration value="BeingProcessed (InProduction)"/>
+			<xsd:enumeration value="BeingProcessed (ProductionCompleted)"/>
+			<xsd:enumeration value="BeingProcessed (BeingShipped)"/>
+			<xsd:enumeration value="BeingProcessed (RejectBeingAnalysed)"/>
+			<xsd:enumeration value="BeingProcessed (QualityControl)"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OrderItemStatusStaticEnum">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Estimated"/>
+			<xsd:enumeration value="NotValid"/>
+			<xsd:enumeration value="Cancelled"/>
+			<xsd:enumeration value="Completed"/>
+			<xsd:enumeration value="Terminated"/>
+			<xsd:enumeration value="Deleted"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OrderScopeEnum">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="40"/>
+			<xsd:enumeration value="interferometry"/>
+			<xsd:enumeration value="multi-temporal"/>
+			<xsd:enumeration value="mosaic"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OrderSourceEnum">
+		<xsd:annotation>
+			<xsd:documentation>List of systems from which the order can be posted. This list is extensible</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="MUIS"/>
+			<xsd:enumeration value="OHS"/>
+			<xsd:enumeration value="DESCW"/>
+			<xsd:enumeration value="Eurimage"/>
+			<xsd:enumeration value="Spotimage"/>
+			<xsd:enumeration value="EMMA"/>
+			<xsd:enumeration value="SARCOM"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OrderStatusEnum">
+		<xsd:annotation>
+			<xsd:documentation>List of Valid Statii for the Delivery Unit as defined in MUIS-C</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="BeingEstimated"/>
+			<xsd:enumeration value="Estimated"/>
+			<xsd:enumeration value="BeingQuoted"/>
+			<xsd:enumeration value="NotValid"/>
+			<xsd:enumeration value="BeingProcessed"/>
+			<xsd:enumeration value="Cancelled"/>
+			<xsd:enumeration value="BeingCancelled"/>
+			<xsd:enumeration value="Completed"/>
+			<xsd:enumeration value="BeingOnHold"/>
+			<xsd:enumeration value="Terminated"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OrderTypeEnum">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="product order"/>
+			<xsd:enumeration value="open order"/>
+			<xsd:enumeration value="acquisition request"/>
+			<xsd:enumeration value="accounting"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PassDirectionEnum">
+		<xsd:annotation>
+			<xsd:documentation>List of valid Pass Direction Values</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="A"/>
+			<xsd:enumeration value="D"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ProductCodeEnum">
+		<xsd:annotation>
+			<xsd:documentation>List of ProductCodeId (to be provided by ESA)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="SAR"/>
+			<xsd:enumeration value="SAR_RAW"/>
+			<xsd:enumeration value="SAR_PRI"/>
+			<xsd:enumeration value="SAR_GEC"/>
+			<xsd:enumeration value="SAR_GTC"/>
+			<xsd:enumeration value="SAR_SLC"/>
+			<xsd:enumeration value="ATS_GBT"/>
+			<xsd:enumeration value="ATS_GST"/>
+			<xsd:enumeration value="ATS_PST"/>
+			<xsd:enumeration value="SWM_FDC"/>
+			<xsd:enumeration value="WSC_FDC"/>
+			<xsd:enumeration value="ALT_FDC"/>
+			<xsd:enumeration value="ALT_OPR"/>
+			<xsd:enumeration value="ALT_WAP"/>
+			<xsd:enumeration value="ALT_SSH"/>
+			<xsd:enumeration value="ALT_TOP"/>
+			<xsd:enumeration value="ORB_PRL"/>
+			<xsd:enumeration value="ORB_PRC"/>
+			<xsd:enumeration value="ORB_EGM"/>
+			<xsd:enumeration value="MWS_VLC"/>
+			<xsd:enumeration value="MWS_MBT"/>
+			<xsd:enumeration value="GOM_L13"/>
+			<xsd:enumeration value="GOM_L22"/>
+			<xsd:enumeration value="JSAR"/>
+			<xsd:enumeration value="OPS"/>
+			<xsd:enumeration value="TM"/>
+			<xsd:enumeration value="ETM"/>
+			<xsd:enumeration value="MSS_SYC"/>
+			<xsd:enumeration value="AVHRR"/>
+			<xsd:enumeration value="CZCS"/>
+			<xsd:enumeration value="SeaWiFS"/>
+			<xsd:enumeration value="MOS_1B"/>
+			<xsd:enumeration value="MODIS_1B"/>
+			<xsd:enumeration value="ASA_EC__0P"/>
+			<xsd:enumeration value="ASA_MS__0P"/>
+			<xsd:enumeration value="ASA_IM"/>
+			<xsd:enumeration value="ASA_IM__0P"/>
+			<xsd:enumeration value="ASA_IMS_1P"/>
+			<xsd:enumeration value="ASA_IMP_1P"/>
+			<xsd:enumeration value="ASA_IMG_1P"/>
+			<xsd:enumeration value="ASA_IMM_1P"/>
+			<xsd:enumeration value="ASA_IM__BP"/>
+			<xsd:enumeration value="ASAR_WS"/>
+			<xsd:enumeration value="ASA_WS__0P"/>
+			<xsd:enumeration value="ASA_WSM_1P"/>
+			<xsd:enumeration value="ASA_WS__BP"/>
+			<xsd:enumeration value="ASA_GM"/>
+			<xsd:enumeration value="ASA_GM__0P"/>
+			<xsd:enumeration value="ASA_GM1_1P"/>
+			<xsd:enumeration value="ASA_GM__BP"/>
+			<xsd:enumeration value="ASA_AP"/>
+			<xsd:enumeration value="ASA_APH_0P"/>
+			<xsd:enumeration value="ASA_APV_0P"/>
+			<xsd:enumeration value="ASA_APC_0P"/>
+			<xsd:enumeration value="ASA_APM_1P"/>
+			<xsd:enumeration value="ASA_APS_1P"/>
+			<xsd:enumeration value="ASA_APP_1P"/>
+			<xsd:enumeration value="ASA_APG_1P"/>
+			<xsd:enumeration value="ASA_AP__BP"/>
+			<xsd:enumeration value="ASA_WV"/>
+			<xsd:enumeration value="ASA_WV__0P"/>
+			<xsd:enumeration value="ASA_WVI_1P"/>
+			<xsd:enumeration value="ASA_WVS_1P"/>
+			<xsd:enumeration value="ASA_WVW_2P"/>
+			<xsd:enumeration value="ATS_NL__0P"/>
+			<xsd:enumeration value="ATS_TOA_1P"/>
+			<xsd:enumeration value="ATS_NR__2P"/>
+			<xsd:enumeration value="ATS_AR__2P"/>
+			<xsd:enumeration value="ATS_MET_2P"/>
+			<xsd:enumeration value="ATS_AST_BP"/>
+			<xsd:enumeration value="RA2_CAL_0P"/>
+			<xsd:enumeration value="RA2_ME__0P"/>
+			<xsd:enumeration value="RA2_MW"/>
+			<xsd:enumeration value="RA2_MW__1P"/>
+			<xsd:enumeration value="RA2_MWS_2P"/>
+			<xsd:enumeration value="RA2_MWG_2P"/>
+			<xsd:enumeration value="RA2_WWV_2PR"/>
+			<xsd:enumeration value="RA2_FDG_2P"/>
+			<xsd:enumeration value="RA2_IDG_2P"/>
+			<xsd:enumeration value="RA2_GDR_2P"/>
+			<xsd:enumeration value="MWR_NL__0P"/>
+			<xsd:enumeration value="GOM_"/>
+			<xsd:enumeration value="GOM_NL__0P"/>
+			<xsd:enumeration value="GOM_MM__0P"/>
+			<xsd:enumeration value="GOM_TRA_1P"/>
+			<xsd:enumeration value="GOM_LIM_1P"/>
+			<xsd:enumeration value="GOM_RR__2P"/>
+			<xsd:enumeration value="GOM_EXT_2P"/>
+			<xsd:enumeration value="GOM_NL__2P"/>
+			<xsd:enumeration value="MER_CA__0P"/>
+			<xsd:enumeration value="MER_RV__0P"/>
+			<xsd:enumeration value="MER_RR"/>
+			<xsd:enumeration value="MER_RR__0P"/>
+			<xsd:enumeration value="MER_RR__1P"/>
+			<xsd:enumeration value="MER_RR__2P"/>
+			<xsd:enumeration value="MER_LRC_2P"/>
+			<xsd:enumeration value="MER_RRC_2P"/>
+			<xsd:enumeration value="MER_RRV_2P"/>
+			<xsd:enumeration value="MER_RR__BP"/>
+			<xsd:enumeration value="MER_FR"/>
+			<xsd:enumeration value="MER_FR__0P"/>
+			<xsd:enumeration value="MER_FR__1P"/>
+			<xsd:enumeration value="MER_FR__2P"/>
+			<xsd:enumeration value="MIP_RW__0P"/>
+			<xsd:enumeration value="MIP_LS__0P"/>
+			<xsd:enumeration value="MIP_NL"/>
+			<xsd:enumeration value="MIP_NL__0P"/>
+			<xsd:enumeration value="MIP_NL__1P"/>
+			<xsd:enumeration value="MIP_NL__2P"/>
+			<xsd:enumeration value="MIP_NLE_2P"/>
+			<xsd:enumeration value="SCI_NL"/>
+			<xsd:enumeration value="SCI_NL__0P"/>
+			<xsd:enumeration value="SCI_NL__1P"/>
+			<xsd:enumeration value="SCI_NL__2P"/>
+			<xsd:enumeration value="SCI_OL__2P"/>
+			<xsd:enumeration value="SCI_RV__2P"/>
+			<xsd:enumeration value="DOR_NAV_0P"/>
+			<xsd:enumeration value="DOR_DOP_0P"/>
+			<xsd:enumeration value="DOR_DOP_1P"/>
+			<xsd:enumeration value="TLM_HK__0P"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ProductStatusEnum">
+		<xsd:annotation>
+			<xsd:documentation>Lit of valid Product Status supported</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Visible"/>
+			<xsd:enumeration value="Planned"/>
+			<xsd:enumeration value="Acquired"/>
+			<xsd:enumeration value="Archived"/>
+			<xsd:enumeration value="Produced"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SensorIdEnum">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="AATSR"/>
+			<xsd:enumeration value="AMI/SAR/Image"/>
+			<xsd:enumeration value="AMI/SAR/wave"/>
+			<xsd:enumeration value="AMI/scatterometer"/>
+			<xsd:enumeration value="ASAR"/>
+			<xsd:enumeration value="ASAR/IM (Image Mode)"/>
+			<xsd:enumeration value="ASAR/AP (Alternating Polarization Mode)"/>
+			<xsd:enumeration value="ASAR/WS (Wide Swath Mode)"/>
+			<xsd:enumeration value="ASAR/GM (Global Monitoring Mode)"/>
+			<xsd:enumeration value="ASAR/WV (Wave Mode)"/>
+			<xsd:enumeration value="ATSR"/>
+			<xsd:enumeration value="ATSR-2"/>
+			<xsd:enumeration value="AVHRR"/>
+			<xsd:enumeration value="CZCS"/>
+			<xsd:enumeration value="DORIS"/>
+			<xsd:enumeration value="ETM+"/>
+			<xsd:enumeration value="GOME"/>
+			<xsd:enumeration value="GOMOS"/>
+			<xsd:enumeration value="HRVIR"/>
+			<xsd:enumeration value="JERS SAR"/>
+			<xsd:enumeration value="MERIS"/>
+			<xsd:enumeration value="MESSR"/>
+			<xsd:enumeration value="MIPAS"/>
+			<xsd:enumeration value="MODIS"/>
+			<xsd:enumeration value="MOS"/>
+			<xsd:enumeration value="MSR"/>
+			<xsd:enumeration value="MSS"/>
+			<xsd:enumeration value="OPS"/>
+			<xsd:enumeration value="RA-2/MWR"/>
+			<xsd:enumeration value="RA/LRR"/>
+			<xsd:enumeration value="RA/MWR"/>
+			<xsd:enumeration value="RBV"/>
+			<xsd:enumeration value="SCIAMACHY"/>
+			<xsd:enumeration value="SeaWiFS"/>
+			<xsd:enumeration value="TM"/>
+			<xsd:enumeration value="VTIR"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StatusUpdateOptionEnum">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="manual"/>
+			<xsd:enumeration value="automatic"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TransferDirectionEnum">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="push"/>
+			<xsd:enumeration value="pull"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema></schema><schema name="xlinks.xsd"><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xlink="http://www.w3.org/1999/xlink" targetNamespace="http://www.w3.org/1999/xlink" version="2.1">
+	<annotation>
+		<appinfo>xlinks.xsd v2.1 2001-09</appinfo>
+		<documentation xml:lang="en">
+      This schema provides the XLink attributes for general use.
+    </documentation>
+	</annotation>
+	<!-- ==============================================================
+       global declarations
+  =============================================================== -->
+	<!-- locator attribute -->
+	<attribute name="href" type="anyURI"/>
+	<!-- semantic attributes -->
+	<attribute name="role" type="anyURI"/>
+	<attribute name="arcrole" type="anyURI"/>
+	<attribute name="title" type="string"/>
+	<!-- behavior attributes -->
+	<attribute name="show">
+		<annotation>
+			<documentation>
+        The 'show' attribute is used to communicate the desired presentation 
+        of the ending resource on traversal from the starting resource; it's 
+        value should be treated as follows: 
+        new - load ending resource in a new window, frame, pane, or other 
+              presentation context
+        replace - load the resource in the same window, frame, pane, or 
+                  other presentation context
+        embed - load ending resource in place of the presentation of the 
+                starting resource
+        other - behavior is unconstrained; examine other markup in the 
+                link for hints 
+        none - behavior is unconstrained 
+      </documentation>
+		</annotation>
+		<simpleType>
+			<restriction base="string">
+				<enumeration value="new"/>
+				<enumeration value="replace"/>
+				<enumeration value="embed"/>
+				<enumeration value="other"/>
+				<enumeration value="none"/>
+			</restriction>
+		</simpleType>
+	</attribute>
+	<attribute name="actuate">
+		<annotation>
+			<documentation>
+        The 'actuate' attribute is used to communicate the desired timing 
+        of traversal from the starting resource to the ending resource; 
+        it's value should be treated as follows:
+        onLoad - traverse to the ending resource immediately on loading 
+                 the starting resource 
+        onRequest - traverse from the starting resource to the ending 
+                    resource only on a post-loading event triggered for 
+                    this purpose 
+        other - behavior is unconstrained; examine other markup in link 
+                for hints 
+        none - behavior is unconstrained
+      </documentation>
+		</annotation>
+		<simpleType>
+			<restriction base="string">
+				<enumeration value="onLoad"/>
+				<enumeration value="onRequest"/>
+				<enumeration value="other"/>
+				<enumeration value="none"/>
+			</restriction>
+		</simpleType>
+	</attribute>
+	<!-- traversal attributes -->
+	<attribute name="label" type="string"/>
+	<attribute name="from" type="string"/>
+	<attribute name="to" type="string"/>
+	<!-- ==============================================================
+       Attributes grouped by XLink type, as specified by the allowed usage patterns 
+       in sec. 4.1 of the W3C Recommendation (dated 2001-06-27)
+  =================================================================== -->
+	<attributeGroup name="simpleLink">
+		<attribute fixed="simple" form="qualified" name="type" type="string" use="optional"/>
+		<attribute ref="xlink:href" use="optional"/>
+		<attribute ref="xlink:role" use="optional"/>
+		<attribute ref="xlink:arcrole" use="optional"/>
+		<attribute ref="xlink:title" use="optional"/>
+		<attribute ref="xlink:show" use="optional"/>
+		<attribute ref="xlink:actuate" use="optional"/>
+	</attributeGroup>
+	<attributeGroup name="extendedLink">
+		<attribute fixed="extended" form="qualified" name="type" type="string" use="required"/>
+		<attribute ref="xlink:role" use="optional"/>
+		<attribute ref="xlink:title" use="optional"/>
+	</attributeGroup>
+	<attributeGroup name="locatorLink">
+		<attribute fixed="locator" form="qualified" name="type" type="string" use="required"/>
+		<attribute ref="xlink:href" use="required"/>
+		<attribute ref="xlink:role" use="optional"/>
+		<attribute ref="xlink:title" use="optional"/>
+		<attribute ref="xlink:label" use="optional"/>
+	</attributeGroup>
+	<attributeGroup name="arcLink">
+		<attribute fixed="arc" form="qualified" name="type" type="string" use="required"/>
+		<attribute ref="xlink:arcrole" use="optional"/>
+		<attribute ref="xlink:title" use="optional"/>
+		<attribute ref="xlink:show" use="optional"/>
+		<attribute ref="xlink:actuate" use="optional"/>
+		<attribute ref="xlink:from" use="optional"/>
+		<attribute ref="xlink:to" use="optional"/>
+	</attributeGroup>
+	<attributeGroup name="resourceLink">
+		<attribute fixed="resource" form="qualified" name="type" type="string" use="required"/>
+		<attribute ref="xlink:role" use="optional"/>
+		<attribute ref="xlink:title" use="optional"/>
+		<attribute ref="xlink:label" use="optional"/>
+	</attributeGroup>
+	<attributeGroup name="titleLink">
+		<attribute fixed="title" form="qualified" name="type" type="string" use="required"/>
+	</attributeGroup>
+	<attributeGroup name="emptyLink">
+		<attribute fixed="empty" form="qualified" name="type" type="string" use="required"/>
+	</attributeGroup>
+</schema></schema><schema name="eoli.xsd"><xsd:schema xmlns="http://earth.esa.int/XML/eoli" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://earth.esa.int/XML/eoli">
+	<!-- ==================== Element Section ====================== -->
+	<!-- ======================================================== -->
+	<xsd:element name="searchRequest" type="SearchRequestType"/>
+	<xsd:element name="beginEnd">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="begin" type="xsd:dateTime"/>
+				<xsd:element name="end" type="xsd:dateTime"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="collectionId" type="NonNullStringType"/>
+	<xsd:element name="cursor" nillable="false" type="xsd:positiveInteger"/>
+	<xsd:element name="presentation" nillable="false" type="PresentationType"/>
+	<xsd:element name="status" nillable="false" type="StatusType"/>
+	<xsd:element name="frame" nillable="false" type="xsd:positiveInteger"/>
+	<xsd:element name="track" nillable="false" type="xsd:positiveInteger"/>
+	<xsd:element name="orbit" nillable="false" type="xsd:positiveInteger"/>
+	<xsd:element name="presentRequest" type="PresentRequestType"/>
+	<xsd:element name="platfSNm" type="NonNullStringType"/>
+	<xsd:element name="platfSer" type="CharacterString"/>
+	<xsd:element name="instShNm" type="NonNullStringType"/>
+	<xsd:element name="resTitle" type="NonNullStringType"/>
+	<xsd:element name="response" type="ResponseType"/>
+	<xsd:element name="coordinates" nillable="false" type="CoordinatesType"/>
+	<xsd:element name="idStatus" type="IdStatusEnumType"/>
+	<!-- ================== Simple Type Section ==================== -->
+	<!-- ======================================================= -->
+	<xsd:simpleType name="DateTimeTypes">
+		<xsd:union memberTypes="xsd:date xsd:dateTime"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNullStringType">
+		<xsd:restriction base="CharacterString">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CharacterString">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength fixed="false" value="0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LongitudeType">
+		<xsd:restriction base="xsd:float">
+			<xsd:minInclusive value="-180.0"/>
+			<xsd:maxInclusive value="180.0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LatitudeType">
+		<xsd:restriction base="xsd:float">
+			<xsd:minInclusive value="-90.0"/>
+			<xsd:maxInclusive value="90.0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="cloudCoveragePercType">
+		<xsd:restriction base="xsd:float">
+			<xsd:minInclusive value="0.0"/>
+			<xsd:maxInclusive value="100.0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PresentationType">
+		<xsd:restriction base="CharacterString">
+			<xsd:enumeration value="brief"/>
+			<xsd:enumeration value="summary"/>
+			<xsd:enumeration value="full"/>
+			<xsd:enumeration value="browse"/>
+			<xsd:enumeration value="orderOption"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StatusType">
+		<xsd:restriction base="CharacterString">
+			<xsd:enumeration value="success"/>
+			<xsd:enumeration value="failure"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RoleEnumType">
+		<xsd:restriction base="NonNullStringType">
+			<xsd:enumeration value="002"/>
+			<xsd:enumeration value="006"/>
+			<xsd:enumeration value="009"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IdStatusEnumType">
+		<xsd:restriction base="NonNullStringType">
+			<xsd:enumeration value="001"/>
+			<xsd:enumeration value="005"/>
+			<xsd:enumeration value="006"/>
+			<xsd:enumeration value="007"/>
+			<xsd:enumeration value="008"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DegreeType">
+		<xsd:restriction base="xsd:float">
+			<xsd:minInclusive value="0.0"/>
+			<xsd:maxInclusive value="360.0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ContentTypeEnum">
+		<xsd:restriction base="NonNullStringType">
+			<xsd:enumeration value="001"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OrbitDirectionEnumType">
+		<xsd:restriction base="CharacterString">
+			<xsd:enumeration value="0"/>
+			<xsd:enumeration value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PolarisationEnumType">
+		<xsd:restriction base="NonNullStringType">
+			<xsd:enumeration value="HH"/>
+			<xsd:enumeration value="VV"/>
+			<xsd:enumeration value="HV"/>
+			<xsd:enumeration value="VH"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="FullSceneEnumType">
+		<xsd:restriction base="NonNullStringType">
+			<xsd:enumeration value="F"/>
+			<xsd:enumeration value="P"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CoordinatesType">
+		<xsd:restriction base="NonNullStringType"/>
+	</xsd:simpleType>
+	<!-- ================== Complex Type Section =================== -->
+	<!-- ======================================================== -->
+	<xsd:complexType name="SearchRequestType">
+		<xsd:sequence>
+			<xsd:element name="simpleQuery" type="SimpleQueryType"/>
+			<xsd:element name="resultType" nillable="false">
+				<xsd:simpleType>
+					<xsd:restriction base="NonNullStringType">
+						<xsd:enumeration value="results"/>
+						<xsd:enumeration value="hits"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="iteratorSize" nillable="false" type="xsd:positiveInteger"/>
+			<xsd:element minOccurs="0" ref="cursor"/>
+			<xsd:element minOccurs="0" ref="presentation"/>
+			<xsd:element ref="collectionId"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SimpleQueryType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="dataExt">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:restriction base="DataExtType">
+							<xsd:sequence>
+								<xsd:element minOccurs="0" name="geoEle">
+									<xsd:complexType>
+										<xsd:choice>
+											<xsd:element name="geoBndBox">
+												<xsd:complexType>
+													<xsd:complexContent>
+														<xsd:extension base="EX_GeographicBoundingBoxType"/>
+													</xsd:complexContent>
+												</xsd:complexType>
+											</xsd:element>
+										</xsd:choice>
+										<xsd:attribute name="operator">
+											<xsd:simpleType>
+												<xsd:restriction base="CharacterString">
+													<xsd:enumeration value="OVERLAP"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:attribute>
+									</xsd:complexType>
+								</xsd:element>
+								<xsd:element minOccurs="0" name="tempEle">
+									<xsd:complexType>
+										<xsd:sequence>
+											<xsd:element name="exTemp">
+												<xsd:complexType>
+													<xsd:choice>
+														<xsd:element name="beginEnd">
+															<xsd:complexType>
+																<xsd:sequence>
+																	<xsd:element name="begin" nillable="false" type="xsd:date"/>
+																	<xsd:element name="end" nillable="false" type="xsd:date"/>
+																</xsd:sequence>
+															</xsd:complexType>
+														</xsd:element>
+													</xsd:choice>
+												</xsd:complexType>
+											</xsd:element>
+										</xsd:sequence>
+										<xsd:attribute name="operator">
+											<xsd:simpleType>
+												<xsd:restriction base="CharacterString">
+													<xsd:enumeration value="OVERLAP"/>
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:attribute>
+									</xsd:complexType>
+								</xsd:element>
+							</xsd:sequence>
+						</xsd:restriction>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="satelliteDomainConditions">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="plaInsIdCondition">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="plaInsId">
+										<xsd:complexType>
+											<xsd:sequence>
+												<xsd:element ref="platfSNm"/>
+												<xsd:element minOccurs="0" ref="platfSer"/>
+											</xsd:sequence>
+										</xsd:complexType>
+									</xsd:element>
+								</xsd:sequence>
+								<xsd:attribute name="operator">
+									<xsd:simpleType>
+										<xsd:restriction base="CharacterString">
+											<xsd:enumeration value="EQUAL"/>
+										</xsd:restriction>
+									</xsd:simpleType>
+								</xsd:attribute>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="cloudCoverCondition">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="cloudCovePerc" nillable="false" type="cloudCoveragePercType"/>
+								</xsd:sequence>
+								<xsd:attribute name="operator">
+									<xsd:simpleType>
+										<xsd:restriction base="CharacterString">
+											<xsd:enumeration value="LESS EQUAL"/>
+										</xsd:restriction>
+									</xsd:simpleType>
+								</xsd:attribute>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="genericCondition">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="attributeId" nillable="false" type="NonNullStringType"/>
+									<xsd:element maxOccurs="unbounded" name="attributeValue" nillable="false" type="NonNullStringType"/>
+								</xsd:sequence>
+								<xsd:attribute name="operator">
+									<xsd:simpleType>
+										<xsd:restriction base="CharacterString">
+											<xsd:enumeration value="EQUAL"/>
+											<xsd:enumeration value="LESS EQUAL"/>
+											<xsd:enumeration value="LESS"/>
+											<xsd:enumeration value="GREATER"/>
+											<xsd:enumeration value="GREATER EQUAL"/>
+											<xsd:enumeration value="WITHIN"/>
+											<xsd:enumeration value="INTERSECTS"/>
+										</xsd:restriction>
+									</xsd:simpleType>
+								</xsd:attribute>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DataExtType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="geoEle">
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:sequence>
+							<xsd:element name="polygon">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element ref="coordinates"/>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element minOccurs="0" name="scCenter">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element ref="coordinates"/>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+						<xsd:element name="geoBndBox">
+							<xsd:complexType>
+								<xsd:complexContent>
+									<xsd:extension base="EX_GeographicBoundingBoxType"/>
+								</xsd:complexContent>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:choice>
+					<xsd:attribute name="operator">
+						<xsd:simpleType>
+							<xsd:restriction base="CharacterString">
+								<xsd:enumeration value="OVERLAP"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="tempEle" type="EX_TemporalExtendType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EX_GeographicBoundingBoxType">
+		<xsd:sequence>
+			<xsd:element name="westBL" nillable="false" type="LongitudeType"/>
+			<xsd:element name="eastBL" nillable="false" type="LongitudeType"/>
+			<xsd:element name="southBL" nillable="false" type="LatitudeType"/>
+			<xsd:element name="northBL" nillable="false" type="LatitudeType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EX_TemporalExtendType">
+		<xsd:sequence>
+			<xsd:element name="exTemp">
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element name="beginEnd">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="begin" nillable="false" type="xsd:dateTime"/>
+									<xsd:element name="end" nillable="false" type="xsd:dateTime"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PresentRequestType">
+		<xsd:sequence>
+			<xsd:element name="idCitation">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" ref="resTitle"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element ref="presentation"/>
+			<xsd:element ref="collectionId"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MetadataType">
+		<xsd:sequence>
+			<xsd:element name="mdContact">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="rpOrgName" type="CharacterString"/>
+						<xsd:element name="role" type="RoleEnumType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="mdDateSt" nillable="false" type="DateTimeTypes"/>
+			<xsd:element name="dataIdInfo" type="DataIdInfoType"/>
+			<xsd:element minOccurs="0" name="contInfo">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="attDesc">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element fixed="imageType" name="typeName" nillable="false">
+										<xsd:simpleType>
+											<xsd:restriction base="CharacterString">
+												<xsd:enumeration value="imageType"/>
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:element>
+									<xsd:element name="attTypes">
+										<xsd:complexType>
+											<xsd:sequence>
+												<xsd:element fixed="imageQuality" name="attName" nillable="false">
+													<xsd:simpleType>
+														<xsd:restriction base="CharacterString">
+															<xsd:enumeration value="imageQuality"/>
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:element>
+												<xsd:element fixed="imageQualityType" name="typeName" nillable="false">
+													<xsd:simpleType>
+														<xsd:restriction base="CharacterString">
+															<xsd:enumeration value="imageQualityType"/>
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:element>
+											</xsd:sequence>
+										</xsd:complexType>
+									</xsd:element>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="contType" nillable="false" type="ContentTypeEnum"/>
+						<xsd:element minOccurs="0" name="illElevAng" nillable="false" type="LatitudeType"/>
+						<xsd:element minOccurs="0" name="illAziAng" nillable="false" type="DegreeType"/>
+						<xsd:element minOccurs="0" name="cloudCovePerc" nillable="false" type="cloudCoveragePercType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="dqInfo">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="dqScope">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element fixed="DataSet" name="scpLvl">
+										<xsd:simpleType>
+											<xsd:restriction base="NonNullStringType">
+												<xsd:enumeration value="DataSet"/>
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:element>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="graphOver">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="bgFileName" type="NonNullStringType"/>
+									<xsd:element name="brwExt">
+										<xsd:complexType>
+											<xsd:sequence>
+												<xsd:element minOccurs="0" name="tempEle" type="EX_TemporalExtendType"/>
+											</xsd:sequence>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element name="brwType" type="NonNullStringType"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="addInfo">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="locAtt">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="locName" type="NonNullStringType"/>
+									<xsd:element minOccurs="0" name="locValue" type="NonNullStringType"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DataIdInfoType">
+		<xsd:sequence>
+			<xsd:element name="plaInsId">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="platfSNm"/>
+						<xsd:element minOccurs="0" ref="platfSer"/>
+						<xsd:element ref="instShNm"/>
+						<xsd:element minOccurs="0" name="instMode" type="CharacterString"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="satDom">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" ref="orbit"/>
+						<xsd:element minOccurs="0" name="lastOrbit" nillable="false" type="xsd:positiveInteger"/>
+						<xsd:element minOccurs="0" name="orbitDir" nillable="false" type="OrbitDirectionEnumType"/>
+						<xsd:element minOccurs="0" name="wwRefSys">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element minOccurs="0" ref="frame"/>
+									<xsd:element minOccurs="0" ref="track"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element minOccurs="0" name="swathId" type="NonNullStringType"/>
+						<xsd:element minOccurs="0" name="passCoverage">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="start" type="xsd:integer"/>
+									<xsd:element name="stop" type="xsd:integer"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="idCitation">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="resTitle" type="NonNullStringType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="idAbs" type="CharacterString"/>
+			<xsd:element minOccurs="0" ref="idStatus"/>
+			<xsd:element name="dataExt">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:restriction base="DataExtType">
+							<xsd:sequence>
+								<xsd:element minOccurs="0" name="tempEle" type="EX_TemporalExtendType"/>
+								<xsd:element minOccurs="0" name="geoEle">
+									<xsd:complexType>
+										<xsd:choice>
+											<xsd:sequence>
+												<xsd:element name="polygon">
+													<xsd:complexType>
+														<xsd:sequence>
+															<xsd:element ref="coordinates"/>
+														</xsd:sequence>
+													</xsd:complexType>
+												</xsd:element>
+												<xsd:element minOccurs="0" name="scCenter">
+													<xsd:complexType>
+														<xsd:sequence>
+															<xsd:element ref="coordinates"/>
+														</xsd:sequence>
+													</xsd:complexType>
+												</xsd:element>
+											</xsd:sequence>
+										</xsd:choice>
+									</xsd:complexType>
+								</xsd:element>
+							</xsd:sequence>
+						</xsd:restriction>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="retrievedData">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="Metadata" type="MetadataType"/>
+					</xsd:sequence>
+					<xsd:attribute name="presentation" type="PresentationType"/>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element minOccurs="0" ref="cursor"/>
+			<xsd:element minOccurs="0" name="hits" nillable="false" type="xsd:nonNegativeInteger"/>
+			<xsd:element ref="status"/>
+			<xsd:element minOccurs="0" name="errorMessage" type="NonNullStringType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema></schema><schema name="Eoli_Order.xsd"><xsd:schema xmlns="http://earth.esa.int/XML/eoli" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://earth.esa.int/XML/eoli">
+	<xsd:redefine schemaLocation="./eoli.xsd">
+		<xsd:complexType name="MetadataType">
+			<xsd:complexContent>
+				<xsd:extension base="MetadataType">
+					<xsd:sequence minOccurs="0">
+						<xsd:element minOccurs="0" name="productServiceOptions" type="ProductServiceOptionsType"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="ResponseType">
+			<xsd:complexContent>
+				<xsd:restriction base="ResponseType">
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="retrievedData">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" minOccurs="0" name="Metadata" type="MetadataType"/>
+								</xsd:sequence>
+								<xsd:attribute name="presentation" type="PresentationType"/>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element minOccurs="0" ref="cursor"/>
+						<xsd:element minOccurs="0" name="hits" nillable="false" type="xsd:nonNegativeInteger"/>
+						<xsd:element ref="status"/>
+						<xsd:element minOccurs="0" name="errorMessage" type="NonNullStringType"/>
+					</xsd:sequence>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="SearchRequestType">
+			<xsd:complexContent>
+				<xsd:extension base="SearchRequestType">
+					<xsd:sequence>
+						<xsd:element minOccurs="0" ref="userInformation"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="PresentRequestType">
+			<xsd:complexContent>
+				<xsd:extension base="PresentRequestType">
+					<xsd:sequence>
+						<xsd:element minOccurs="0" ref="userInformation"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:redefine>
+	<!-- ======================= Functions root element ============================-->
+	<!-- ====================================================================== -->
+	<xsd:element name="acquisitionOrderRequest" type="AcquisitionOrderRequestType"/>
+	<xsd:element name="productOrderRequest" type="ProductOrderRequestType"/>
+	<xsd:element name="orderMonitorRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:choice>
+					<xsd:element ref="orderId"/>
+					<xsd:element name="lastUpdate" type="DateTimeTypes"/>
+				</xsd:choice>
+				<xsd:element ref="userInformation"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="dataAccessRequest" type="DataAccessRequestType"/>
+	<xsd:element name="orderResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element minOccurs="0" ref="orderId"/>
+				<xsd:element minOccurs="0" name="orderReference"/>
+				<xsd:element ref="status"/>
+				<xsd:element minOccurs="0" name="errorMessage" type="NonNullStringType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="orderMonitorResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="unbounded" minOccurs="0" name="orderSpecification" type="OrderMonitorSpecification"/>
+				<xsd:element ref="status"/>
+				<xsd:element minOccurs="0" name="errorMessage" type="NonNullStringType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="dataAccessResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element minOccurs="0" name="ftpURL" type="CharacterString"/>
+				<xsd:element minOccurs="0" name="ftpUserName" type="CharacterString"/>
+				<xsd:element minOccurs="0" name="ftpPassword" type="CharacterString"/>
+				<xsd:element ref="status"/>
+				<xsd:element minOccurs="0" name="errorMessage" type="NonNullStringType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- ====================== Elements RE-Definition Section  ========================= -->
+	<!-- ====================================================================== -->
+	<!-- ====================== Elements Definition Section  ========================= -->
+	<!-- ====================================================================== -->
+	<xsd:element name="sceneCenter">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="coordinates"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="programming">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="optionName">
+					<xsd:simpleType>
+						<xsd:restriction base="NonNullStringType">
+							<xsd:maxLength value="40"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element maxOccurs="unbounded" name="optionSelectedValues" type="NonNullStringType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="userInformation">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="userId" type="NonNullStringType"/>
+				<xsd:element name="password" type="NonNullStringType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="orderAccount" nillable="false">
+		<xsd:simpleType>
+			<xsd:restriction base="NonNullStringType">
+				<xsd:maxLength value="20"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="alongGridUnitType">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="A"/>
+				<xsd:enumeration value="S"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="alongGrid" type="xsd:integer"/>
+	<xsd:element name="acrossGrid" type="xsd:integer"/>
+	<xsd:element name="orderId">
+		<xsd:simpleType>
+			<xsd:restriction base="NonNullStringType">
+				<xsd:maxLength value="16"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<!-- 	<xsd:element name="deliveryMedium"> 		<xsd:simpleType> 			<xsd:restriction base="NonNullStringType"> 				<xsd:maxLength value="40"/> 			</xsd:restriction> 		</xsd:simpleType> 	</xsd:element> 	-->
+	<xsd:element name="packageMedium">
+		<xsd:simpleType>
+			<xsd:restriction base="NonNullStringType">
+				<xsd:maxLength value="40"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="deliveryInformation" type="DeliveryInformationType"/>
+	<xsd:element name="price" type="PriceType"/>
+	<xsd:element name="listPrice" type="PriceType"/>
+	<xsd:element name="expectedPrice" type="PriceType"/>
+	<xsd:element name="productId">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="idCitation">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element ref="resTitle"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element ref="collectionId"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="orderItemRemark" type="NonNullStringType"/>
+	<xsd:element name="processing">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="optionName">
+					<xsd:simpleType>
+						<xsd:restriction base="NonNullStringType">
+							<xsd:maxLength value="40"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element maxOccurs="unbounded" name="optionSelectedValues" type="NonNullStringType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="sceneSelection" type="SceneSelectionType"/>
+	<xsd:element name="orderRemark">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:maxLength value="255"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="packageRemark" type="NonNullStringType"/>
+	<xsd:element name="packageLabel" type="NonNullStringType"/>
+	<xsd:element name="packageCopies" type="xsd:integer"/>
+	<xsd:element name="deliveryUnitRemark" type="NonNullStringType"/>
+	<xsd:element name="latestAcceptedDeliveryDate" type="xsd:date"/>
+	<xsd:element name="priority" type="xsd:integer"/>
+	<!-- ======================  Order Specification Definition ======================= -->
+	<!-- ====================================================================== -->
+	<xsd:complexType name="AcquisitionOrderSpecification">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" ref="orderAccount"/>
+			<xsd:element name="orderReference">
+				<xsd:simpleType>
+					<xsd:restriction base="NonNullStringType">
+						<xsd:maxLength value="30"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" ref="orderRemark"/>
+			<xsd:element maxOccurs="unbounded" name="orderItem" type="AcquisitionOrderItemType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProductOrderSpecification">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" ref="orderAccount"/>
+			<xsd:element name="orderReference">
+				<xsd:simpleType>
+					<xsd:restriction base="NonNullStringType">
+						<xsd:maxLength value="30"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" ref="orderRemark"/>
+			<xsd:element ref="deliveryInformation"/>
+			<xsd:element maxOccurs="unbounded" name="orderItem" type="ProductOrderItemType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrderDataAccessSpecification">
+		<xsd:sequence>
+			<xsd:element name="orderReference">
+				<xsd:simpleType>
+					<xsd:restriction base="NonNullStringType">
+						<xsd:maxLength value="30"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="orderItem" type="ProductOrderItemType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrderMonitorSpecification">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" ref="orderAccount"/>
+			<xsd:element ref="orderId"/>
+			<xsd:element name="orderReference"/>
+			<xsd:element minOccurs="0" ref="orderRemark"/>
+			<xsd:element minOccurs="0" ref="deliveryInformation"/>
+			<xsd:element maxOccurs="unbounded" name="orderItem" type="OrderMonitorItemType"/>
+			<xsd:element name="orderStatusInfo" type="OrderStatusType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--=========================  Order Item Definition ============================ -->
+	<!--======================================================================= -->
+	<xsd:complexType name="AcquisitionOrderItemType">
+		<xsd:sequence>
+			<xsd:element name="productId">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="idCitation">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element ref="resTitle"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element minOccurs="0" ref="collectionId"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element minOccurs="0" ref="sceneCenter"/>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" ref="programming"/>
+			<xsd:element minOccurs="0" name="orderItemStatusInfo" type="OrderItemStatusType"/>
+			<xsd:element minOccurs="0" name="orderItemRemark" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProductOrderItemType">
+		<xsd:sequence>
+			<xsd:element name="productId">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="idCitation">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element ref="resTitle"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element minOccurs="0" ref="collectionId"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" ref="processing"/>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" ref="programming"/>
+			<xsd:element minOccurs="0" ref="sceneSelection"/>
+			<xsd:element minOccurs="0" ref="packageMedium"/>
+			<xsd:element minOccurs="0" name="qualityOfService"/>
+			<xsd:element minOccurs="0" name="orderItemStatusInfo" type="OrderItemStatusType"/>
+			<xsd:element minOccurs="0" name="orderItemRemark" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--===================== ComplexType  Definition Section ======================= -->
+	<!--======================================================================= -->
+	<xsd:complexType name="AcquisitionOrderRequestType">
+		<xsd:sequence>
+			<xsd:element ref="userInformation"/>
+			<xsd:element name="orderSpecification" type="AcquisitionOrderSpecification"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProductOrderRequestType">
+		<xsd:sequence>
+			<xsd:element ref="userInformation"/>
+			<xsd:element name="orderSpecification" type="ProductOrderSpecification"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DataAccessRequestType">
+		<xsd:sequence>
+			<xsd:element ref="userInformation"/>
+			<xsd:element name="orderSpecification" type="OrderDataAccessSpecification"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProductServiceOptionsType">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" name="productOrderOptions">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="productOrderOptionsId" type="CharacterString"/>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="processingOption">
+							<xsd:complexType>
+								<xsd:complexContent>
+									<xsd:extension base="ProductProcessingOptionType">
+										<xsd:sequence>
+											<xsd:element name="optionName" type="NonNullStringType"/>
+											<xsd:element name="optionValueDefinition">
+												<xsd:complexType>
+													<xsd:choice>
+														<xsd:element name="optionValueRange">
+															<xsd:complexType>
+																<xsd:sequence>
+																	<xsd:element name="numericOptionValueMin" type="xsd:float"/>
+																	<xsd:element name="numericOptionValueMax" type="xsd:float"/>
+																	<xsd:element name="numericOptionValueStep" type="xsd:float"/>
+																</xsd:sequence>
+															</xsd:complexType>
+														</xsd:element>
+														<xsd:element name="optionValueList">
+															<xsd:complexType>
+																<xsd:sequence>
+																	<xsd:element maxOccurs="unbounded" name="stringOptionValue" type="NonNullStringType"/>
+																</xsd:sequence>
+															</xsd:complexType>
+														</xsd:element>
+													</xsd:choice>
+												</xsd:complexType>
+											</xsd:element>
+										</xsd:sequence>
+									</xsd:extension>
+								</xsd:complexContent>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="programmingOption">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="optionName" type="NonNullStringType"/>
+									<xsd:element name="optionValueDefinition">
+										<xsd:complexType>
+											<xsd:choice>
+												<xsd:element name="optionValueRange">
+													<xsd:complexType>
+														<xsd:sequence>
+															<xsd:element name="numericOptionValueMin" type="xsd:float"/>
+															<xsd:element name="numericOptionValueMax" type="xsd:float"/>
+															<xsd:element name="numericOptionValueStep" type="xsd:float"/>
+														</xsd:sequence>
+													</xsd:complexType>
+												</xsd:element>
+												<xsd:element name="optionValueList">
+													<xsd:complexType>
+														<xsd:sequence>
+															<xsd:element maxOccurs="unbounded" name="stringOptionValue" type="NonNullStringType"/>
+														</xsd:sequence>
+													</xsd:complexType>
+												</xsd:element>
+											</xsd:choice>
+										</xsd:complexType>
+									</xsd:element>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="sceneSelectionOption">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="sceneType"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element maxOccurs="unbounded" name="productDeliveryOptions">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="deliveryMethod">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:string">
+												<xsd:enumeration value="ftp-push"/>
+												<xsd:enumeration value="ftp-pull"/>
+												<xsd:enumeration value="mail"/>
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:element>
+									<xsd:element maxOccurs="unbounded" ref="packageMedium"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="qualityOfService" type="CharacterString"/>
+						<xsd:element minOccurs="0" name="orderOptionInfoURL" type="CharacterString"/>
+						<xsd:element minOccurs="0" name="priceInformationURL"/>
+						<xsd:element minOccurs="0" name="purchaseConditionURL"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HorizontalSceneSelectionDefinitionType">
+		<xsd:choice>
+			<xsd:element name="rectangleSceneSelectionOption">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="acrossGrid"/>
+						<xsd:element ref="alongGridUnitType"/>
+						<xsd:element ref="alongGrid"/>
+						<xsd:element name="acrossSizeLimitation">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="acrossSizeMin" type="xsd:integer"/>
+									<xsd:element name="acrossSizeMax" type="xsd:integer"/>
+									<xsd:element name="acrossSizeStep" type="xsd:integer"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="acrossPositionLimitation">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="acrossStart" type="xsd:integer"/>
+									<xsd:element name="acrossStop" type="xsd:integer"/>
+									<xsd:element name="acrossStep" type="xsd:integer"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="alongSizeLimitation">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="alongSizeMin" type="xsd:integer"/>
+									<xsd:element name="alongSizeMax" type="xsd:integer"/>
+									<xsd:element name="alongSizeStep" type="xsd:integer"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="alongPositionLimitation">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="alongStart" type="xsd:integer"/>
+									<xsd:element name="alongStop" type="xsd:integer"/>
+									<xsd:element name="alongStep" type="xsd:integer"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="ProductProcessingOptionType"/>
+	<xsd:complexType name="OrderStatusType">
+		<xsd:sequence>
+			<xsd:element name="orderState">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="BeingEstimated"/>
+						<xsd:enumeration value="Estimated"/>
+						<xsd:enumeration value="BeingQuoted"/>
+						<xsd:enumeration value="NotValid"/>
+						<xsd:enumeration value="BeingProcessed"/>
+						<xsd:enumeration value="Cancelled"/>
+						<xsd:enumeration value="BeingCancelled"/>
+						<xsd:enumeration value="Deleted"/>
+						<xsd:enumeration value="BeingDeleted"/>
+						<xsd:enumeration value="Completed"/>
+						<xsd:enumeration value="BeingOnHold"/>
+						<xsd:enumeration value="Terminated"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="additionalStatusInfo" type="NonNullStringType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrderItemStatusType">
+		<xsd:sequence>
+			<xsd:element name="orderState" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="additionalStatusInfo" type="NonNullStringType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PackagePriceType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" ref="price"/>
+			<xsd:element minOccurs="0" ref="listPrice"/>
+			<xsd:element minOccurs="0" ref="expectedPrice"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PriceType">
+		<xsd:sequence>
+			<xsd:element name="refCurrency">
+				<xsd:simpleType>
+					<xsd:restriction base="NonNullStringType">
+						<xsd:maxLength value="3"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="refAmount">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:unsignedLong">
+						<xsd:maxInclusive value="4294967296"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="userCurrency">
+				<xsd:simpleType>
+					<xsd:restriction base="NonNullStringType">
+						<xsd:maxLength value="3"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="userAmount">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:unsignedLong">
+						<xsd:maxInclusive value="4294967296"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProductDeliveryOptionsType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="productByteSize" type="xsd:integer"/>
+			<xsd:element minOccurs="0" name="productFormat" type="NonNullStringType"/>
+			<xsd:element minOccurs="0" name="productCompression" type="NonNullStringType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SceneSelectionType">
+		<xsd:sequence>
+			<xsd:element name="sceneType">
+				<xsd:simpleType>
+					<xsd:restriction base="NonNullStringType">
+						<xsd:maxLength value="20"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" ref="sceneCenter"/>
+			<xsd:element minOccurs="0" name="temporalSelection">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="startDateTime"/>
+						<xsd:element name="endDateTime"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="scenePosition" type="CharacterString"/>
+			<xsd:element minOccurs="0" name="sceneSize" type="CharacterString"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DeliveryUnitType">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="DeliveryInformationType">
+		<xsd:choice>
+			<xsd:element name="ftp-push"/>
+			<xsd:element name="ftp-pull"/>
+			<xsd:element name="mail" type="DeliveryAddressType"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="DeliveryAddressType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="recipient">
+				<xsd:simpleType>
+					<xsd:restriction base="NonNullStringType">
+						<xsd:maxLength value="40"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="companyRef" type="CharacterString"/>
+			<xsd:element minOccurs="0" name="postalAddress">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="streetAddress" type="xsd:string"/>
+						<xsd:element name="city" type="xsd:string"/>
+						<xsd:element name="state" type="xsd:string"/>
+						<xsd:element name="postalCode" type="xsd:string"/>
+						<xsd:element name="country" type="xsd:string"/>
+						<xsd:element name="postBox" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="telNumber">
+				<xsd:simpleType>
+					<xsd:restriction base="NonNullStringType">
+						<xsd:maxLength value="18"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrderMonitorItemType">
+		<xsd:sequence>
+			<xsd:element name="productId">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="idCitation">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element ref="resTitle"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element ref="collectionId"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:choice>
+				<xsd:sequence>
+					<xsd:element minOccurs="0" ref="sceneCenter"/>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" ref="programming"/>
+				</xsd:sequence>
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" ref="processing"/>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" ref="programming"/>
+					<xsd:element minOccurs="0" ref="sceneSelection"/>
+					<xsd:element minOccurs="0" ref="packageMedium"/>
+					<xsd:element minOccurs="0" name="qualityOfService"/>
+				</xsd:sequence>
+			</xsd:choice>
+			<xsd:element minOccurs="0" name="orderItemStatusInfo" type="OrderItemStatusType"/>
+			<xsd:element minOccurs="0" name="orderItemRemark" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema></schema></schemaDocuments>
+</exportDescriptor>

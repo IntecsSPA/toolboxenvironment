@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<sequence>
+  <set>
+    <variable name="usedQuota"/>
+    <literal type="int" value="0"/>
+  </set>
+  <set>
+    <variable name="subDirs"/>
+    <methodInvocation methodName="listFiles">
+      <object>
+        <newObject>
+          <classLiteral class="java.io.File"/>
+          <parameter>
+            <classLiteral class="java.io.File"/>
+            <variable name="downloadDir"/>
+          </parameter>
+          <parameter>
+            <classLiteral class="java.lang.String"/>
+            <variable name="name"/>
+          </parameter>
+        </newObject>
+      </object>
+    </methodInvocation>
+  </set>
+  <set>
+    <variable name="dirIndex"/>
+    <literal type="int" value="0"/>
+  </set>
+  <while>
+    <lt>
+      <variable name="dirIndex"/>
+      <arrayLength>
+        <variable name="subDirs"/>
+      </arrayLength>
+    </lt>
+    <sequence>
+      <set>
+        <variable name="usedQuota"/>
+        <plus>
+          <variable name="usedQuota"/>
+          <methodInvocation methodName="length">
+            <object>
+              <arrayLocation>
+                <methodInvocation methodName="listFiles">
+                  <object>
+                    <arrayLocation>
+                      <variable name="subDirs"/>
+                      <variable name="dirIndex"/>
+                    </arrayLocation>
+                  </object>
+                </methodInvocation>
+                <literal type="int" value="0"/>
+              </arrayLocation>
+            </object>
+          </methodInvocation>
+        </plus>
+      </set>
+      <inc>
+       <variable name="dirIndex"/>
+      </inc>
+    </sequence>
+  </while>
+  <variable name="usedQuota"/>
+</sequence>

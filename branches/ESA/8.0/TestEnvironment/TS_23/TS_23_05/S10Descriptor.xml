@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ -
+ -  Developed By:      Intecs  S.P.A.
+ -  File Name:         $RCSfile: exportDescriptor.xml,v $
+ -  TOOLBOX Version:   $Name: V4_4 $
+ -  File Revision:     $Revision: 1.2 $
+ -  Revision Date:     $Date: 2004/04/28 15:04:15 $
+ -
+ --><exportDescriptor xmlns="http://pisa.intecs.it/mass/toolbox/exportDescriptor" xmlns:com="http://pisa.intecs.it/mass/toolbox/common" xmlns:dsc="http://pisa.intecs.it/mass/toolbox/serviceDescriptor" xmlns:mtbs="http://pisa.intecs.it/mass/toolbox/xmlScript">
+	<service queuing="false" serviceName="S10" serviceSchema="" suspendMode="soft" wsdlTargetNS="" xmlns="http://pisa.intecs.it/mass/toolbox/serviceDescriptor" xmlns:com="http://pisa.intecs.it/mass/toolbox/common" xmlns:mtbs="http://pisa.intecs.it/mass/toolbox/xmlScript">	<schemas/><operations><operation name="RFQ" pollingRate="5s" requestTimeout="5m" type="asynchronous"><wsdlInfo><requestMessage name="sendRFQInputMsg" ns="http://www.esa.int/mass"/><responseMessage name="sendRFQOutputMsg" ns="http://www.esa.int/mass"/><pushMessage name="returnRFQResultInputMsg" ns="http://www.esa.int/mass" soapAction="returnRFQResult"/><pushResponse name="returnRFQResultOutputMsg" ns="http://www.esa.int/mass"/></wsdlInfo><admittedHosts/><script soapAction="sendRFQ"><sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript">
+	<loadFile>
+		<variable name="myVar"/>
+	</loadFile>
+</sequence></script><script><p:variable name="checkResponse" xmlns:p="http://pisa.intecs.it/mass/toolbox/xmlScript"/></script><script><p:sequence xmlns:p="http://pisa.intecs.it/mass/toolbox/xmlScript">	<p:cleanupProcedure>		<p:cleanup marker="marker1">			<p:fileDelete>				<p:string>/home/toolbox/TestEnvironment/tempFile.xml</p:string>			</p:fileDelete>		</p:cleanup>	</p:cleanupProcedure>	<p:loadXML>		<p:variable name="responses"/>	</p:loadXML></p:sequence></script></operation></operations></service>
+	<schemaDocuments/>
+</exportDescriptor>

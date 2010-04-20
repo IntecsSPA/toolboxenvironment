@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing">
+	<soapenv:Header>
+		<wsa:MessageID>S10SendRFQ~1.0</wsa:MessageID>
+		<wsa:ReplyTo>
+			<wsa:Address>http://localhost:8080/TOOLBOX/Push</wsa:Address>
+			<wsa:PortType xmlns:ns3="http://www.vito.be/wsdl/S10Basic">ns3:S10BasicServiceCallback</wsa:PortType>
+			<wsa:ServiceName xmlns:ns4="http://www.vito.be/wsdl/S10Basic">ns4:S10BasicServiceCallbackService</wsa:ServiceName>
+		</wsa:ReplyTo>
+	</soapenv:Header>
+	<soapenv:Body>
+		<testOperationInput xmlns="http://intecs/test">
+			<input>Input Message</input>
+		</testOperationInput>
+	</soapenv:Body>
+</soapenv:Envelope>

@@ -4,7 +4,6 @@
  */
 package it.intecs.pisa.communication;
 
-import it.intecs.pisa.communication.messages.InitSessionMessage;
 import it.intecs.pisa.communication.messages.MessageFactory;
 import it.intecs.pisa.communication.messages.StructuredMessage;
 import java.util.concurrent.ArrayBlockingQueue;

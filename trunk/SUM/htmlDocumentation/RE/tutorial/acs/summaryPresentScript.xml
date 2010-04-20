@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--     	File			:	summaryPresentScript.xml     
+		File Type	:	XML document     
+		Abstract	:	summary present script
+		Uses		:	- None.     				   
+		History 		v1.0 - 08/03/04 B. Baldini. 
+		-->
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript">
+	<!-- start part having ONLY debug purposes-->
+	<log level="INFO">
+		<string>Number of retrieved rows... </string>
+	</log>
+	<log level="INFO">
+		<dbGetNumOfRows>
+			<variable name="sqlResult"/>
+		</dbGetNumOfRows>
+	</log>
+	<!-- end part having ONLY debug purposes-->
+	<setVariable name="index">
+		<literal value="0"/>
+	</setVariable>
+	<if>
+		<gte>
+			<dbGetNumOfRows>
+				<variable name="sqlResult"/>
+			</dbGetNumOfRows>
+			<literal value="1"/>
+		</gte>
+		<sequence>
+			<setVariable name="gmlFileName">
+				<stringCat>
+					<randomString length="8"/>
+					<string>.gml</string>
+				</stringCat>
+			</setVariable>
+			<setVariable name="response">
+				<xmlDocument>
+					<element>
+						<tag>
+							<string>mass:processPresentOutputMsg</string>
+						</tag>
+						<attributes>
+							<namespace prefix="aoi" uri="http://www.gim.be/xml/schemas/AOIFeatures"/>
+							<namespace prefix="eoli" uri="http://earth.esa.int/XML/eoli"/>
+							<namespace prefix="mass" uri="http://www.esa.int/mass"/>
+							<namespace prefix="gml" uri="http://www.opengis.net/gml"/>
+							<namespace prefix="oi" uri="http://www.esa.int/oi"/>
+						</attributes>
+						<content>
+							<mass:searchOutput xmlns:mass="http://www.esa.int/mass">
+								<mass:statusInfo>
+									<mass:statusId>0</mass:statusId>
+									<mass:statusMsg>successful</mass:statusMsg>
+								</mass:statusInfo>
+								<mass:hits>0</mass:hits>
+								<mass:retrievedData presentation="summary">
+									<repeat>
+										<sequence>
+											<inc>
+												<variable name="index"/>
+											</inc>
+											<dbNextRow>
+												<variable name="sqlResult"/>
+											</dbNextRow>
+										</sequence>
+										<content>
+											<mass:Metadata>
+												<eoli:mdContact xmlns:eoli="http://earth.esa.int/XML/eoli">
+													<eoli:rpOrgName>ACS</eoli:rpOrgName>
+													<eoli:role>002</eoli:role>
+												</eoli:mdContact>
+												<eoli:dataIdInfo xmlns:eoli="http://earth.esa.int/XML/eoli">
+													<eoli:plaInsId>
+														<eoli:platfSNm><text><dbGetValue>
+																	<variable name="sqlResult"/>
+																	<string>satellite</string>
+																</dbGetValue></text></eoli:platfSNm>
+														<eoli:platfSer><text><dbGetValue>
+																	<variable name="sqlResult"/>
+																	<string>mission</string>
+																</dbGetValue></text></eoli:platfSer>
+														<eoli:instShNm><text><dbGetValue>
+																	<variable name="sqlResult"/>
+																	<string>instrument</string>
+																</dbGetValue></text></eoli:instShNm>
+													</eoli:plaInsId>
+													<eoli:satDom>
+														<eoli:orbit><text><dbGetValue>
+																	<variable name="sqlResult"/>
+																	<string>orbit</string>
+																</dbGetValue></text></eoli:orbit>
+														<eoli:orbitDir><text><dbGetValue>
+																	<variable name="sqlResult"/>
+																	<string>orbit_dir</string>
+																</dbGetValue></text></eoli:orbitDir>
+														<eoli:wwRefSys>
+															<eoli:frame><text><dbGetValue>
+																		<variable name="sqlResult"/>
+																		<string>frame</string>
+																	</dbGetValue></text></eoli:frame>
+															<eoli:track><text><dbGetValue>
+																		<variable name="sqlResult"/>
+																		<string>track</string>
+																	</dbGetValue></text></eoli:track>
+														</eoli:wwRefSys>
+													</eoli:satDom>
+													<eoli:idCitation>
+														<eoli:resTitle><text><dbGetValue>
+																	<variable name="sqlResult"/>
+																	<string>res_title</string>
+																</dbGetValue></text></eoli:resTitle>
+													</eoli:idCitation>
+													<eoli:dataExt>
+														<eoli:tempEle>
+															<eoli:exTemp>
+																<eoli:beginEnd>
+																	<eoli:begin><text><dbGetValue>
+																				<variable name="sqlResult"/>
+																				<string>begin</string>
+																			</dbGetValue></text></eoli:begin>
+																	<eoli:end><text><dbGetValue>
+																				<variable name="sqlResult"/>
+																				<string>end</string>
+																			</dbGetValue></text></eoli:end>
+																</eoli:beginEnd>
+															</eoli:exTemp>
+														</eoli:tempEle>
+														<eoli:geoEle>
+															<eoli:polygon>
+																<eoli:coordinates><text><stringCat>
+																			<dbGetValue>
+																				<variable name="sqlResult"/>
+																				<string>lat_up_left</string>
+																			</dbGetValue>
+																			<string>,</string>
+																			<dbGetValue>
+																				<variable name="sqlResult"/>
+																				<string>lon_up_left</string>
+																			</dbGetValue>
+																			<string> </string>
+																			<dbGetValue>
+																				<variable name="sqlResult"/>
+																				<string>lat_dn_left</string>
+																			</dbGetValue>
+																			<string>,</string>
+																			<dbGetValue>
+																				<variable name="sqlResult"/>
+																				<string>lon_dn_left</string>
+																			</dbGetValue>
+																			<string> </string>
+																			<dbGetValue>
+																				<variable name="sqlResult"/>
+																				<string>lat_dn_right</string>
+																			</dbGetValue>
+																			<string>,</string>
+																			<dbGetValue>
+																				<variable name="sqlResult"/>
+																				<string>lon_dn_right</string>
+																			</dbGetValue>
+																			<string> </string>
+																			<dbGetValue>
+																				<variable name="sqlResult"/>
+																				<string>lat_up_right</string>
+																			</dbGetValue>
+																			<string>,</string>
+																			<dbGetValue>
+																				<variable name="sqlResult"/>
+																				<string>lon_up_right</string>
+																			</dbGetValue>
+																		</stringCat></text></eoli:coordinates>
+															</eoli:polygon>
+														</eoli:geoEle>
+													</eoli:dataExt>
+												</eoli:dataIdInfo>
+												<eoli:dqInfo xmlns:eoli="http://earth.esa.int/XML/eoli">
+													<eoli:graphOver>
+														<eoli:bgFileName><text><dbGetValue>
+																	<variable name="sqlResult"/>
+																	<string>url</string>
+																</dbGetValue></text></eoli:bgFileName>
+														<eoli:brwExt>
+															<eoli:tempEle>
+																<eoli:exTemp>
+																	<eoli:beginEnd>
+																		<eoli:begin><text><dbGetValue>
+																					<variable name="sqlResult"/>
+																					<string>begin</string>
+																				</dbGetValue></text></eoli:begin>
+																		<eoli:end><text><dbGetValue>
+																					<variable name="sqlResult"/>
+																					<string>end</string>
+																				</dbGetValue></text></eoli:end>
+																	</eoli:beginEnd>
+																</eoli:exTemp>
+															</eoli:tempEle>
+														</eoli:brwExt>
+														<eoli:brwType><text><dbGetValue>
+																	<variable name="sqlResult"/>
+																	<string>image_extention</string>
+																</dbGetValue></text></eoli:brwType>
+													</eoli:graphOver>
+												</eoli:dqInfo>
+											</mass:Metadata>
+										</content>
+									</repeat>
+								</mass:retrievedData>
+								<mass:viewFileResult>
+									<mass:fileURL><text><stringCat>
+												<variable name="gmlBaseURL"/>
+												<variable name="gmlFileName"/>
+											</stringCat></text></mass:fileURL>
+									<mass:fileType>gml</mass:fileType>
+								</mass:viewFileResult>
+							</mass:searchOutput>
+						</content>
+					</element>
+				</xmlDocument>
+			</setVariable>
+			<dumpXML>
+				<string>/home/toolbox/ACS/summaryPresentResponse.xml</string>
+				<variable name="response"/>
+			</dumpXML>
+			<setVariable name="responseDoc">
+				<loadXML>
+					<string>/home/toolbox/ACS/summaryPresentResponse.xml</string>
+				</loadXML>
+			</setVariable>
+			<setXMLValue xmlns:mass="http://www.esa.int/mass">
+				<variable name="responseDoc"/>
+				<string>mass:processPresentOutputMsg/mass:searchOutput/mass:hits/text()</string>
+				<dec>
+					<variable name="index"/>
+				</dec>
+			</setXMLValue>
+			<setVariable name="gmlDoc">
+				<xslt xmlOutput="true">
+					<variable name="responseDoc"/>
+					<stringCat>
+						<variable name="instDir"/>
+						<string>ACSCatalogue2GML.xsl</string>
+					</stringCat>
+					<parameter name="hostName">
+						<variable name="HTTP_BASE_PATH"/>
+					</parameter>
+				</xslt>
+			</setVariable>
+			<!-- start part having ONLY debug purposes-->
+			<!--<dumpXML>
+				<string>/home/toolbox/ACS/gmlDoc.xml</string>
+				<variable name="gmlDoc"/>
+			</dumpXML>-->
+			<!-- end part having ONLY debug purposes-->
+			<dumpXML>
+				<stringCat>
+					<variable name="gmlBasePath"/>
+					<variable name="gmlFileName"/>
+				</stringCat>
+				<methodInvocation methodName="adjust">
+					<class>
+						<classLiteral class="it.intecs.pisa.soap.toolbox.services.util.gmlAdjuster"/>
+					</class>
+					<parameter>
+						<classLiteral class="org.w3c.dom.Document"/>
+						<variable name="gmlDoc"/>
+					</parameter>
+				</methodInvocation>
+			</dumpXML>
+		</sequence>
+		<setVariable name="responseDoc">
+			<xml textTag="" attributePrefix="x">
+				<mass:processPresentOutputMsg xmlns:mass="http://www.esa.int/mass">
+					<mass:searchOutput>
+						<mass:statusInfo>
+							<mass:statusId>0</mass:statusId>
+							<mass:statusMsg>successful</mass:statusMsg>
+						</mass:statusInfo>
+						<mass:hits>0</mass:hits>
+					</mass:searchOutput>
+				</mass:processPresentOutputMsg>
+			</xml>
+		</setVariable>
+	</if>
+	<dbClose>
+		<variable name="connection"/>
+	</dbClose>
+	<variable name="responseDoc"/>
+</sequence>

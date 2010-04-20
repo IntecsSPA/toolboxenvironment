@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>XML Script Tags Reference</title>
+
+<link type="text/css" href="../images/page.css" rel="stylesheet"></head>
+
+<body text="#000000" bgcolor="#ffffff">
+<h1>Shift Operators</h1>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>lShift<a name="lShift"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Returns the integer 
+                        returned by the first enclosed element, shifting left 
+                        its bits by an amount given by the second element and 
+                        filling with zeroes.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;lShift&gt;<br>	&lt;literal value=&quot;7&quot;/&gt;<br>	&lt;literal value=&quot;2&quot;/&gt;<br>&lt;/lShift&gt;</pre>
+                        <font><em>Returns 28.</em></font> <pre>&lt;lShift&gt;<br>	&lt;multiply&gt;<br>		&lt;variable name=&quot;aVariable&quot;/&gt;<br>		&lt;literal value=&quot;2&quot;/&gt;<br>	&lt;/multiply&gt;<br>	&lt;literal value=&quot;3&quot;/&gt;<br>&lt;/lShift&gt;</pre>
+                        <em>Returns the result of the product among the value 
+                        stored in the variable "aVariable" and 2 shifted left 
+                        by 3.</em> <pre>&lt;lShift&gt;<br>	&lt;literal value=&quot;2&quot;/&gt;<br>	&lt;literal value=&quot;7&quot;/&gt;<br>&lt;/lShift&gt;</pre>
+                        <font><em>Returns 256.</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>rSShift<a name="rSShift"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Returns the integer 
+                        returned by the first enclosed element, shifting right 
+                        its bits by an amount given by the second element and 
+                        filling with sign bit.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;rSShift&gt;<br>	&lt;literal value=&quot;8&quot;/&gt;<br>	&lt;literal value=&quot;2&quot;/&gt;<br>&lt;/rSShift&gt;</pre>
+                        <p><font><em>Returns 2</em>.</font></p>
+                        <pre>&lt;rSShift&gt;<br>	&lt;literal value=&quot;2&quot;/&gt;<br>	&lt;literal value=&quot;7&quot;/&gt;<br>&lt;/rSShift&gt;</pre>
+                        <p><font><em>Returns 0.</em></font></p>
+                        <pre>&lt;rSShift&gt;<br>	&lt;literal value=&quot;-1&quot;/&gt;<br>	&lt;literal value=&quot;15&quot;/&gt;<br>&lt;/rSShift&gt;</pre>
+                        <font><em>Returns -1.</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>rUShift<a name="rUShift"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Returns the integer 
+                        returned by the first enclosed element, shifting right 
+                        its bits by an amount given by the second element and 
+                        filling with zeroes.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;rUShift&gt;<br>	&lt;literal value=&quot;8&quot;/&gt;<br>	&lt;literal value=&quot;2&quot;/&gt;<br>&lt;/rUShift&gt;</pre>
+                        <p><font><em>Returns 2</em>.</font></p>
+                        <pre>&lt;rUShift&gt;<br>	&lt;literal value=&quot;2&quot;/&gt;<br>	&lt;literal value=&quot;7&quot;/&gt;<br>&lt;/rUShift&gt;</pre>
+                        <p><font><em>Returns 0.</em></font></p>
+                        <pre>&lt;rUShift&gt;<br>	&lt;literal value=&quot;-1&quot;/&gt;<br>	&lt;literal value=&quot;15&quot;/&gt;<br>&lt;/rUShift&gt;</pre>
+                        <font><em>Returns 131071.</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+</body></html>

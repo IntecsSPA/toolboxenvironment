@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Documento senza titolo</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<h1>Executing Java code </h1>
+<table border="1" width="100%" cellspacing="0">
+  <tbody>
+    <tr>
+      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>java<a name="java" id="java"></a></strong></font></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+      <td align="justify" bgcolor="#F0F0F0">This tag creates a Java class and executes it. The content of the Java class is provided by the user. The first child tag contains the import statements to add to the Java class. The second child tag, enclosed in a CDATA segment, contains the core of the Java class. No class, method or interface definition can be provided since these statements are iternally handled by Toolbox in order to create a class with a predefined method. </td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+      <td align="left" bgcolor="#F0F0F0"><pre>&lt;java&gt;<br>		&lt;imports&gt;<br>			import java.text.SimpleDateFormat;<br>			import java.util.Date;<br>		&lt;/imports&gt;<br>		&lt;code&gt;&lt;![CDATA[<br>			SimpleDateFormat formatter=new SimpleDateFormat(&quot;yyMMddHHmmss&quot;);<br>		<br>			booleanType=true;<br>			integerType=Integer.MAX_VALUE;<br>			byteType=Byte.MAX_VALUE;<br>			shortType=Short.MAX_VALUE;<br>			longType=Long.MAX_VALUE;<br>			floatType=Float.MAX_VALUE;<br>			doubleType=Double.MAX_VALUE;<br>			characterType='X';<br>			stringType=formatter.format(new Date());<br>			]]&gt;<br>		&lt;/code&gt;<br>	&lt;/java&gt;
+	  <br><font><em>This tag creates a class that updates some of the variables in the Toolbox Engine. </em></font></pre>
+          </td>
+    </tr>
+  </tbody>
+</table>
+<p>&nbsp;</p>
+</body>
+</html>

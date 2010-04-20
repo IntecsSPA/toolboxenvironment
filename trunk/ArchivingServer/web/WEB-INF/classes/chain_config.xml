@@ -1,0 +1,54 @@
+<chainConfig>
+    <catalog id="Catalogue">
+        <chain id="localFolderstoreChain">
+            <command id="register" className="it.intecs.pisa.archivingserver.chain.commands.RegisterItemRef"/>
+            <command id="metadata" chain="metadataProductionChain"/>
+            <command id="publish" chain="publishItemChain"/>
+            <command id="cleanup" chain="storeCleanUpChain"/>
+        </chain>
+
+        <chain id="storeChain">
+            <command id="register" className="it.intecs.pisa.archivingserver.chain.commands.RegisterItemRef"/>
+            <command id="download" chain="downloadItemChain"/>
+            <command id="metadata" chain="metadataProductionChain"/>
+            <command id="publish" chain="publishItemChain"/>
+            <command id="cleanup" chain="storeCleanUpChain"/>
+        </chain>
+        
+        <chain id="downloadItemChain">
+            <command id="downloadFromHttp" className="it.intecs.pisa.archivingserver.chain.commands.DownloadFromHttp" />
+            <command id="downloadFromFtp" className="it.intecs.pisa.archivingserver.chain.commands.DownloadFromFtp" />
+        </chain>
+
+        <chain id="publishItemChain">
+            <command id="publishToInternalHttp" className="it.intecs.pisa.archivingserver.chain.commands.PublishToInternalHttp" />
+            <command id="publishToInternalFtp" className="it.intecs.pisa.archivingserver.chain.commands.PublishToInternalFTP" />
+            <command id="publishToFtp" className="it.intecs.pisa.archivingserver.chain.commands.PublishToFTP" />
+            <command id="publishToCatalogue" className="it.intecs.pisa.archivingserver.chain.commands.PublishToEbRIMCatalogue" />
+            <command id="publishToGeoServer" className="it.intecs.pisa.archivingserver.chain.commands.PublishToGeoServer" />
+        </chain>
+
+        <chain id="storeCleanUpChain">
+            <command id="cleanupTemporaryDownload" className="it.intecs.pisa.archivingserver.chain.commands.CleanupTemporaryDownload" />
+        </chain>
+
+        <chain id="metadataProductionChain">
+            <command id="downloadMetadataFromHttp" className="it.intecs.pisa.archivingserver.chain.commands.DownloadMetadataFromHttp" />
+        </chain>
+
+
+        <chain id="deleteChain">
+            <command id="local" chain="deleteLocal"/>
+            <command id="deleteCatalogues" className="it.intecs.pisa.archivingserver.chain.commands.DeleteFromEbRIMCatalogue"/>
+            <command id="deleteFtp" className="it.intecs.pisa.archivingserver.chain.commands.DeleteFromFTP"/>
+            <command id="deleteGeoserver" className="it.intecs.pisa.archivingserver.chain.commands.DeleteFromGeoServer"/>
+        </chain>
+
+        <chain id="deleteLocal">
+            <command id="deleteItemRef" className="it.intecs.pisa.archivingserver.chain.commands.DeleteItemRef"/>
+            <command id="deleteDownload" className="it.intecs.pisa.archivingserver.chain.commands.DeleteDownload"/>
+            <command id="deleteLocalHttp" className="it.intecs.pisa.archivingserver.chain.commands.DeleteFromInternalHttp"/>
+            <command id="deleteLocalFtp" className="it.intecs.pisa.archivingserver.chain.commands.DeleteFromInternalFTP"/>
+        </chain>
+    </catalog>
+</chainConfig>

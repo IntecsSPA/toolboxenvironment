@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : FilterPanel.xml
+    Created on : 5 agosto 2008, 11.38
+    Author     : Maro
+    Description:
+        Purpose of the document follows.
+-->
+
+<inputInterface xmlns="http://gisClient.pisa.intecs.it/gisClient">
+   <section name="Catalogues"> 
+        <group label="Select a catalogue interfaces: ">  
+          <!--input type="combo" name="catalogueInt" hideLabel="true" id="catalogueInt" optional="false" size="35" onChange="tbxCat.onChangeCatalog" store="VALUES" storeFields="['name', 'description','formFileXml', 'requestXsl', 'resultXsl']"
+          storeData="[['eoli Search version 2.6','This option allows testing the Search operation of a catalogue compliant with the EOLI catalogue ICD','resources/xml/eoliSearchInterface2_6.xml','',''],['eoli Present version 2.6','This option allows testing the Present operation of a catalogue compliant with the EOLI catalogue ICD','resources/xml/eoliSearchInterface2_6.xml','','']]">
+          </input-->
+          <input type="combo" name="catalogueInt" hideLabel="true" id="catalogueInt" optional="false" size="30" onChange="tbxCat.onChangeCatalog" store="VALUES" storeFields="['name', 'description','formFileXml', 'requestXsl', 'resultXsl']"
+          storeData="[['CSW-ebRIM-CIM_Profile-07-038r3','This option allows testing the Search operation of a catalogue compliant with the CSW-ebRIM-EO_Profile-07-038 r3 ','resources/xml/CSW-ebRIM-EO_Profile-07-038r3.xml','',''],['CSW-ebRIM-EO_Profile-06-131r6','This option allows testing the Search operation of a catalogue compliant with the CSW-ebRIM-EO_Profile-06-131 r6 ','resources/xml/CSW-ebRIM-EO_Profile-06-131r6.xml','',''],['eoli Search version 2.6','This option allows testing the Search operation of a catalogue compliant with the EOLI catalogue ICD','resources/xml/eoliSearchInterface2_6.xml','','']]">
+          </input>
+        </group>
+        <group label="Description">
+            <input type="label" id="catalogueDescription" name="catalogueDescription" value=""></input> 
+        </group>
+   </section> 
+</inputInterface>

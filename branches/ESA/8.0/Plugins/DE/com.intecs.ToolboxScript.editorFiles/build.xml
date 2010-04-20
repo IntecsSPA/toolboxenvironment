@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<project basedir="." default="build">
+		
+	<target name="build" depends="downloadDoc,makeDocs,clean"/>
+	
+	<target name="downloadDoc" >
+		<delete dir="${basedir}/docTMP"/>
+						
+				
+		<exec executable="svn">
+			<arg value="export"/>
+			<arg value="http://guest009.pisa.intecs.it/SPAZIO/TOOLBOX_rep/branches/7.0RC1/TOOLBOX/webapp/WEB-INF/eclipse/plugins/it.intecs.pisa.toolbox.doc/"/>
+			<arg value="${basedir}/docTMP"/>
+			<arg value="--username"/>
+			<arg value="fanciulli"/>
+			<arg value="--password"/>
+			<arg value="intecs"/>
+		</exec>
+	</target>
+	
+	<target name="makeDocs">
+		<move file="${basedir}/docTMP/toc.xml" tofile="${basedir}/toc.xml"/>
+	
+		<zip destfile="${basedir}/doc.zip"
+		       basedir="${basedir}/docTMP/"
+		  />
+	</target>
+	
+	<target name="clean">
+		<delete dir="${basedir}/docTMP"/>
+	</target>
+
+</project>

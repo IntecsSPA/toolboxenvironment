@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by jrom (CNES) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:gml="http://www.opengis.net/gml" xmlns:hma="http://earth.esa.int/hma" xmlns:ohr="http://earth.esa.int/ohr" targetNamespace="http://earth.esa.int/ohr" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.92">
+<xs:import namespace="http://earth.esa.int/hma" schemaLocation="./hma.xsd"/>
+
+<xs:import namespace="http://www.opengis.net/gml" schemaLocation="../../cat/gml3.1.1/base/feature.xsd"/>
+<xs:import namespace="http://www.opengis.net/gml" schemaLocation="../../cat/gml3.1.1/base/measures.xsd"/>
+<xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="../../cat/gml3.1.1/xlink/xlinks.xsd"/>
+<!-- ===================================================================== -->
+<!--   EarthObservationProduct : feature  -->
+<!-- ===================================================================== -->
+<xs:element name="EarthObservationProduct" type="ohr:EarthObservationProductType" substitutionGroup="hma:EarthObservationProduct">
+<xs:annotation>
+<xs:documentation>EarthObservationProduct feature. Uses the following optional gml properties inherited from gml:_Feature :
+- gml:id attribute
+- gml:name
+- gml:boundedBy (TBC)
+
+Note : the upcoming gml:identifier will replace hma:identifier in GML 3.2</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:complexType name="EarthObservationProductType">
+<xs:complexContent>
+<xs:extension base="hma:EarthObservationProductType">
+<xs:sequence>
+<xs:element ref="ohr:acquisitionParameters" minOccurs="0"/>
+<xs:element ref="ohr:cloudCoverPercentage" minOccurs="0"/>
+<xs:element ref="ohr:snowCoverPercentage" minOccurs="0"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:element name="cloudCoverPercentage" type="gml:MeasureType">
+<xs:annotation>
+<xs:documentation>Must be expressed in percents</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="snowCoverPercentage" type="gml:MeasureType">
+<xs:annotation>
+<xs:documentation>Must be expressed in percents</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Acquisition" type="ohr:AcquisitionType"/>
+<xs:element name="acquisitionParameters" type="ohr:AcquisitionPropertyType">
+<xs:annotation>
+<xs:documentation>These are specific (i.e. non hma) acquisition angles</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:complexType name="AcquisitionPropertyType">
+<xs:sequence>
+<xs:element ref="ohr:Acquisition"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="AcquisitionType">
+<xs:sequence>
+<xs:element name="illuminationAzimuthAngle" type="gml:AngleType" minOccurs="0">
+<xs:annotation>
+<xs:documentation>Solar Azimuth angle given in degrees. EOLI : illAziAng (F)</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="illuminationElevationAngle" type="gml:AngleType" minOccurs="0">
+<xs:annotation>
+<xs:documentation>Solar Elevation angle given in degrees. EOLI : illElevAng (F)</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

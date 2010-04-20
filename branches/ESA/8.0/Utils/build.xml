@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<project default="createJar" basedir=".">
+	<target name="createJar">
+	
+		<mkdir dir="${basedir}/lib"/>
+		<jar destfile="${basedir}/lib/tbxUtils.jar"
+		       basedir="${basedir}/bin"
+		       includes="**/*.class"
+		  />
+		
+		<delete file="${basedir}/../TDE libs//jars/tbxUtils.jar"/>
+		<copy file="${basedir}/lib/tbxUtils.jar"
+			 tofile="${basedir}/../TDE libs/jars/tbxUtils.jar"/>
+	</target>
+</project>

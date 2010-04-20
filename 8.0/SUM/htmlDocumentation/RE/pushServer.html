@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Additional Utilities</title>
+
+<link type="text/css" href="images/page.css" rel="stylesheet">
+</head>
+
+<body text="#000000" bgcolor="#ffffff">
+<h1>Push Server</h1>
+<div class="content">To test services exposing<em> asynchronous operations</em>, 
+                    response messages can be pushed to the Push Server embedded 
+in the TOOLBOX using the following address in the SOAP Header:</div>
+<div class="content">
+                  <p align="center"><em>http://&lt;TOMCAT_HOST&gt;[:TOMCAT_PORT]/TOOLBOX/Push</em></p>
+                  <p align="justify">Pushed messages can be 
+                    viewed clicking on the Push Server section link in the monitoring page</p>
+                  <p align="center"><img src="images/image046.jpg" width="642" ></p>
+                  <p align="justify">Pushed message names has the following format 
+                    &lt;messageId&gt;.xml, where &lt;messageId&gt; is the value 
+                    of the &quot;messageId&quot; contained in the SOAP Header 
+                    of the request where possible characters &quot;&lt;, &gt;, 
+                    :, *, |, ?&quot; have been replaced by &quot;_&quot;.</p>
+                  <p align="center">&nbsp;</p>
+</div>
+</body></html>

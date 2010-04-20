@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript">
+	<setVariable name="fileName">
+		<stringCat>
+			<string>c:\tmp\</string>
+			<orderId/>
+			<string>.xml</string>
+		</stringCat>
+	</setVariable>
+	<dumpFile>
+		<variable name="fileName"/>
+		<http host="193.74.120.94" port="8123">
+			<url>
+				<string>/ice/raster/clip/views/xml.jsp</string>
+			</url>
+			<parameter name="orderId">
+				<xPath xmlns:mass="http://www.esa.int/mass">
+					<xmlRequest/>
+					<string>//mass:commonInput/mass:orderId</string>
+				</xPath>
+			</parameter>
+			<parameter name="clippeeURL">
+				<xPath xmlns:mass="http://www.esa.int/mass">
+					<xmlRequest/>
+					<string>//mass:sendOrderInput/mass:sourceDataset/mass:location</string>
+				</xPath>
+			</parameter>
+			<parameter name="clippeeUserName">
+				<xPath xmlns:mass="http://www.esa.int/mass">
+					<xmlRequest/>
+					<string>//mass:sendOrderInput/mass:sourceDataset/mass:userName</string>
+				</xPath>
+			</parameter>
+			<parameter name="clippeePassWord">
+				<xPath xmlns:mass="http://www.esa.int/mass">
+					<xmlRequest/>
+					<string>//mass:sendOrderInput/mass:sourceDataset/mass:passWord</string>
+				</xPath>
+			</parameter>
+			<parameter name="clippeeType">
+				<xPath xmlns:mass="http://www.esa.int/mass">
+					<xmlRequest/>
+					<string>//mass:sendOrderInput/mass:sourceDataset/mass:geoFormat</string>
+				</xPath>
+			</parameter>
+			<parameter name="clippeeCoordinateSystem">
+				<xPath xmlns:mass="http://www.esa.int/mass">
+					<xmlRequest/>
+					<string>//mass:sendOrderInput/mass:sourceDataset/mass:coordinateSystem</string>
+				</xPath>
+			</parameter>
+			<parameter name="AOI">
+				<xslt xmlOutput="false">
+					<xmlRequest/>
+					<string>c:\jwsdp-1_0_01\webapps\TOOLBOX\services\GIM_RasterClipService\extract_areaOfInterest.xsl</string>
+				</xslt>
+			</parameter>
+			<parameter name="clipperURL">
+				<xPath xmlns:mass="http://www.esa.int/mass">
+					<xmlRequest/>
+					<string>//mass:sendOrderInput/mass:clipRegion/mass:clipDataset/mass:location</string>
+				</xPath>
+			</parameter>
+			<parameter name="clipperUserName">
+				<xPath xmlns:mass="http://www.esa.int/mass">
+					<xmlRequest/>
+					<string>//mass:sendOrderInput/mass:clipRegion/mass:clipDataset/mass:userName</string>
+				</xPath>
+			</parameter>
+			<parameter name="clipperPassWord">
+				<xPath xmlns:mass="http://www.esa.int/mass">
+					<xmlRequest/>
+					<string>//mass:sendOrderInput/mass:clipRegion/mass:clipDataset/mass:passWord</string>
+				</xPath>
+			</parameter>
+			<parameter name="clipperType">
+				<xPath xmlns:mass="http://www.esa.int/mass">
+					<xmlRequest/>
+					<string>//mass:sendOrderInput/mass:clipRegion/mass:clipDataset/mass:geoFormat</string>
+				</xPath>
+			</parameter>
+			<parameter name="clipperCoordinateSystem">
+				<xPath xmlns:mass="http://www.esa.int/mass">
+					<xmlRequest/>
+					<string>//mass:sendOrderInput/mass:clipRegion/mass:clipDataset/mass:coordinateSystem</string>
+				</xPath>
+			</parameter>
+			<parameter name="clippedType">
+				<xPath xmlns:mass="http://www.esa.int/mass">
+					<xmlRequest/>
+					<string>//mass:sendOrderInput/mass:destinationDataset/mass:geoFormat</string>
+				</xPath>
+			</parameter>
+			<parameter name="negativeValuesToZero">
+				<xPath xmlns:mass="http://www.esa.int/mass">
+					<xmlRequest/>
+					<string>//mass:sendOrderInput/mass:negativeValuesToZero</string>
+				</xPath>
+			</parameter>
+		</http>
+	</dumpFile>
+</sequence>

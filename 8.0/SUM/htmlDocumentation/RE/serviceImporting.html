@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Service Management</title>
+<link type="text/css" href="images/page.css" rel="stylesheet">
+</head>
+<body text="#000000" bgcolor="#ffffff"> 
+<h1>Importing a service </h1> 
+<div class="content"> 
+  <p>The import procedure allows to migrate a service to a different installation of the TOOLBOX. To import a service follow these steps.</p> 
+  <p align="justify">To create a new service follow these steps.</p> 
+  <p align="justify">Perform the <a href="toolboxLoggingIn.html">login procedure</a>.</p> 
+  <p>Click on the Service management link in the toolbar. The browser should display</p> 
+  <p align="center"><img src="images/image007.jpg" width="642" ></p> 
+  <p>Click on the <em>&quot;Create a new Service&quot;</em> section link. The following page should be displayed</p> 
+  <p align="center"><img src="images/image009.jpg" width="642" ></p> 
+  <p>Select <em>the &quot;Import a Service Descriptor File&quot;</em> option. Then click on the <em>&quot;Next &gt;&gt;&quot;</em> button. The browser will display the import page</p> 
+  <p align="center"><img src="images/image122.jpg" width="642" ></p> 
+  <p align="justify">This page allows importing a Service that has been exported using the Export procedure. To return to the previous page you can click on <em>&quot;Back&quot;</em>, otherwise fill the fields as follow:</p> 
+</div> 
+<ul> 
+  <li> 
+    <div class="content">Select the <em>&quot;Change service name to...&quot; </em>option and fill the input field if you want to change the name of the imported service. Select <em>&quot;Keep the service name&quot; </em>otherwise.</div> 
+  </li> 
+  <li> 
+    <div class="content">Click on the browse button to select the &quot;Service Descriptor File&quot; (zip file) of the service to be imported.
+        <p align="center"><img src="images/image123.jpg" width="642" ></p> 
+    </div> 
+  </li> 
+</ul> 
+<div align="justify" class="content">Click on the create button. If the service has been correctly imported you will be forwarded to the Service management page with the new service selected. </div> 
+<div class="content"> 
+  <p align="center"><img src="images/image124.jpg" width="642" ></p> 
+</div> 
+<div class="content"> 
+  <p align="justify">If some parameters are not valid, you will be redirected to a page with a WARN message will outline the missing or wrong parameter.</p> 
+  <p align="justify"><strong><img src="images/note.gif" width="17" height="17"> When a service is imported the operation described in the export file are immediately available in the new service. To manage these operation click on the <a href="operationManagement.html">&quot;Operation Manager&quot;</a> link on the toolbar.</strong></p> 
+  <p align="justify"><strong><font color="#000000"><img src="images/warning.gif" width="28" height="21"> Keep attention, all the resources used in the scripts describing the operations have to be present in the new environment. The TOOLBOX exports only the resources uploaded via the Web Application (i.e. scripts and Schema). Thus if, for example, the script uses an XSL file to performs an operation, this file have to be present in the target environment at the same location.</font></strong></p> 
+</div> 
+</body>
+</html>

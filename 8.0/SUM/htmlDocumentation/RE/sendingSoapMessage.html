@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Additional Utilities</title>
+
+  
+  
+  <link type="text/css" href="images/page.css" rel="stylesheet">
+
+</head><body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);">
+<h1>Sending a SOAP message</h1>
+
+
+<div class="content">
+<div style="text-align: left;">
+</div>
+
+<p>To test a service directly from the TOOLBOX Web Application, click
+on the "Test center"
+link on the toolbar, then click on the Send a "Toolbox application
+client" link. A new browser page is opened, displaying the test center.
+The tools implements a desktop like environment in which 3 different
+kind of testing tools can be accessed from the bottom bar.<br>
+</p>
+<h2>Toolbox services client</h2>
+Clicking on this icon, a dialog is opened. This dialog allows the user
+to speficy the URL of the Toolbox where&nbsp; the service to test is
+currently running.&nbsp; When inserted, click on the button "Retrieve
+services". Through this the list of services is retrieved and the
+section on the bottom of the dialog filled. Then select the service and
+the operation to test. When done, click on the button "Create Request".<br>
+A new dialog page is shown, where the content of the test message can be specified.<br>
+Select one of the following content types:<br>
+<ul>
+  <li><strong>Synchronous Payload</strong>: select
+this radio box to provide the XML content to be included in the SOAP
+message in order to send a synchronous request.</li>
+  <li><strong>Asynchronous Payload</strong>: select
+this radio box to provide the XML content to be included in the SOAP
+message in order to send a asynchronous request.</li>
+  <li><strong>SOAP Message</strong>:select this
+radio box to provide directly the SOAP message to be sent. <br>
+  </li>
+</ul>
+Click on "Browse" and select the XML file to be uploaded. Click on the
+button "Load message" to load the specified XML message in the editing
+area. If a change is necessary, simply edit the file directly. <br>
+To send the message to the service, click on the button "Send request".
+The message is sent and the response is displayed in a new dialog page
+for investigation.<br>
+<p><strong><img src="images/note.gif" height="17" width="17"> See the <a href="pushServer.html">Push Server</a> page to know how to use the
+push server to test asynchronous operations.</strong></p>
+</div>
+
+</body></html>

@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript">
+	<setVariable name="maxUserQuota">
+		<itoa>
+			<multiply>
+				<literal value="5248"/>
+			</multiply>
+		</itoa>
+	</setVariable>
+	<setVariable name="realDate">
+		<xslt>
+			<xmlRequest/>
+			<string>/home/toolbox/VITO/NPP/extractDate.xsl</string>
+		</xslt>
+	</setVariable>
+	<setVariable name="coordinates">
+		<xPath xmlns:mass="http://www.esa.int/mass" xmlns:aoi="http://www.esa.int/xml/schemas/mass/aoifeatures" xmlns:gml="http://www.opengis.net/gml">
+			<xmlRequest/>
+			<string>/mass:sendOrderInputMsg/mass:sendOrderInput/aoi:areaOfInterest/gml:boundedBy/gml:Box/gml:coordinates</string>
+		</xPath>
+	</setVariable>
+	<log level="INFO">
+		<variable name="coordinates"/>
+	</log>
+	<setVariable name="label">
+		<xPath xmlns:mass="http://www.esa.int/mass" xmlns:aoi="http://www.esa.int/xml/schemas/mass/aoifeatures" xmlns:gml="http://www.opengis.net/gml">
+			<xmlRequest/>
+			<string>/mass:sendOrderInputMsg/mass:sendOrderInput/aoi:areaOfInterest/gml:featureMember/aoi:Feature/aoi:Label</string>
+		</xPath>
+	</setVariable>
+	<log level="INFO">
+		<variable name="label"/>
+	</log>
+	<setVariable name="shortNameFile">
+		<stringCat>
+			<string>V1KRNS10__</string>
+			<variable name="realDate"/>
+			<string>_NPP___</string>
+			<methodInvocation methodName="getAOILabel">
+				<class>
+					<classLiteral class="AOIFetcher"/>
+				</class>
+				<parameter>
+					<classLiteral class="java.lang.String"/>
+					<variable name="label"/>
+				</parameter>
+				<parameter>
+					<classLiteral class="java.lang.String"/>
+					<variable name="coordinates"/>
+				</parameter>
+			</methodInvocation>
+		</stringCat>
+	</setVariable>
+	<setVariable name="fileName">
+		<stringCat>
+			<string>/data/VGT1/S10/</string>
+			<variable name="realDate"/>
+			<string>/</string>
+			<variable name="shortNameFile"/>
+			<string>.ZIP</string>
+		</stringCat>
+	</setVariable>
+	<setVariable name="userName">
+		<xPath xmlns:mass="http://www.esa.int/mass">
+			<xmlRequest/>
+			<string>/mass:sendOrderInputMsg/mass:sendOrderInput/mass:userId</string>
+		</xPath>
+	</setVariable>
+	<setVariable name="userDirectory">
+		<stringCat>
+			<string>/home/toolbox/data/NPP/users/</string>
+			<variable name="userName"/>
+		</stringCat>
+	</setVariable>
+	<methodInvocation methodName="mkdirs">
+		<object>
+			<newObject>
+				<classLiteral class="java.io.File"/>
+				<parameter>
+					<classLiteral class="java.lang.String"/>
+					<variable name="userDirectory"/>
+				</parameter>
+			</newObject>
+		</object>
+	</methodInvocation>
+	<setVariable name="userQuota">
+		<itoa>
+			<divide>
+				<execute>
+					<procedure>
+						<string>/home/toolbox/VITO/scripts/getQuota.xml</string>
+					</procedure>
+					<argument name="downloadDir">
+						<newObject>
+							<classLiteral class="java.io.File"/>
+							<parameter>
+								<classLiteral class="java.lang.String"/>
+								<string>/home/toolbox/data/NPP/users</string>
+							</parameter>
+						</newObject>
+					</argument>
+					<argument name="name">
+						<variable name="userName"/>
+					</argument>
+				</execute>
+				<literal value="1024"/>
+			</divide>
+		</itoa>
+	</setVariable>
+	<setVariable name="fileSize">
+		<itoa>
+			<divide>
+				<methodInvocation methodName="length">
+					<object>
+						<newObject>
+							<classLiteral class="java.io.File"/>
+							<parameter>
+								<classLiteral class="java.lang.String"/>
+								<variable name="fileName"/>
+							</parameter>
+						</newObject>
+					</object>
+				</methodInvocation>
+				<literal value="1024"/>
+			</divide>
+		</itoa>
+	</setVariable>
+	<setVariable name="availableQuota">
+		<itoa>
+			<minus>
+				<atoi>
+					<variable name="maxUserQuota"/>
+				</atoi>
+				<atoi>
+					<variable name="userQuota"/>
+				</atoi>
+				<atoi>
+					<variable name="fileSize"/>
+				</atoi>
+			</minus>
+		</itoa>
+	</setVariable>
+	<setVariable name="pathProduct">
+		<stringCat>
+			<string>/home/toolbox/data/NPP/users/</string>
+			<variable name="userName"/>
+			<string>/</string>
+			<variable name="shortNameFile"/>
+		</stringCat>
+	</setVariable>
+	<methodInvocation methodName="mkdirs">
+		<object>
+			<newObject>
+				<classLiteral class="java.io.File"/>
+				<parameter>
+					<classLiteral class="java.lang.String"/>
+					<variable name="pathProduct"/>
+				</parameter>
+			</newObject>
+		</object>
+	</methodInvocation>
+	<setVariable name="linkFile">
+		<stringCat>
+			<variable name="pathProduct"/>
+			<string>/</string>
+			<variable name="shortNameFile"/>
+			<string>.ZIP</string>
+		</stringCat>
+	</setVariable>
+	<setVariable name="createLink">
+		<stringCat>
+			<string>ln -s </string>
+			<variable name="fileName"/>
+			<string> </string>
+			<variable name="linkFile"/>
+		</stringCat>
+	</setVariable>
+	<log level="INFO">
+		<variable name="createLink"/>
+	</log>
+	<command>
+		<variable name="createLink"/>
+	</command>
+	<setVariable name="orderID">
+		<xPath xmlns:mass="http://www.esa.int/mass">
+			<xmlRequest/>
+			<string>mass:sendOrderInputMsg/mass:commonInput/mass:orderId</string>
+		</xPath>
+	</setVariable>
+	<setVariable name="orderResultURL">
+		<stringCat>
+			<string>ftp://</string>
+			<localHost/>
+			<string>:21/</string>
+			<variable name="shortNameFile"/>
+			<string>.ZIP</string>
+		</stringCat>
+	</setVariable>
+	<setVariable name="timeService">
+		<string>5</string>
+	</setVariable>
+	<if>
+		<gte>
+			<atoi>
+				<variable name="availableQuota"/>
+			</atoi>
+			<literal value="0"/>
+		</gte>
+		<if>
+			<fileExists>
+				<variable name="fileName"/>
+			</fileExists>
+			<sequence>
+				<setVariable name="userAccount">
+					<stringCat>
+						<variable name="userName"/>
+						<randomString length="3"/>
+					</stringCat>
+				</setVariable>
+				<setVariable name="password">
+					<randomString length="8"/>
+				</setVariable>
+				<ftpAccount duration="5d">
+					<user>
+						<variable name="userAccount"/>
+					</user>
+					<password>
+						<variable name="password"/>
+					</password>
+					<rootDir>
+						<variable name="pathProduct"/>
+					</rootDir>
+				</ftpAccount>
+				<timer delay="5d">
+					<sequence>
+						<fileDelete>
+							<variable name="linkFile"/>
+						</fileDelete>
+						<fileDelete>
+							<variable name="pathProduct"/>
+						</fileDelete>
+					</sequence>
+				</timer>
+				<xml attributePrefix="attribute$" textTag="evaluate">
+					<mass:returnOrderResultInputMsg xmlns:mass="http://www.esa.int/mass">
+						<mass:commonInput>
+							<mass:orderId><evaluate name="orderID"/></mass:orderId>
+						</mass:commonInput>
+						<mass:getOrderOutput>
+							<mass:statusInfo>
+								<mass:statusId>0</mass:statusId>
+								<mass:statusMsg>Successful</mass:statusMsg>
+							</mass:statusInfo>
+							<mass:orderResultURL><evaluate name="orderResultURL"/></mass:orderResultURL>
+							<mass:userName><evaluate name="userAccount"/></mass:userName>
+							<mass:password><evaluate name="password"/></mass:password>
+							<mass:timePeriodOfService><evaluate name="timeService"/></mass:timePeriodOfService>
+							<mass:productSize><evaluate name="fileSize"/></mass:productSize>
+							<mass:userQuota><evaluate name="availableQuota"/></mass:userQuota>
+						</mass:getOrderOutput>
+					</mass:returnOrderResultInputMsg>
+				</xml>
+			</sequence>
+			<xml attributePrefix="attribute$" textTag="evaluate">
+				<mass:returnOrderResultInputMsg xmlns:mass="http://www.esa.int/mass">
+					<mass:commonInput>
+						<mass:orderId><evaluate name="orderID"/></mass:orderId>
+					</mass:commonInput>
+					<mass:getOrderOutput>
+						<mass:statusInfo>
+							<mass:statusId>300</mass:statusId>
+							<mass:statusMsg>Product Not Found</mass:statusMsg>
+						</mass:statusInfo>
+					</mass:getOrderOutput>
+				</mass:returnOrderResultInputMsg>
+			</xml>
+		</if>
+		<xml attributePrefix="attribute$" textTag="evaluate">
+			<mass:returnOrderResultInputMsg xmlns:mass="http://www.esa.int/mass">
+				<mass:commonInput>
+					<mass:orderId><evaluate name="orderID"/></mass:orderId>
+				</mass:commonInput>
+				<mass:getOrderOutput>
+					<mass:statusInfo>
+						<mass:statusId>200</mass:statusId>
+						<mass:statusMsg>Error: Quota Exceeded.</mass:statusMsg>
+					</mass:statusInfo>
+				</mass:getOrderOutput>
+			</mass:returnOrderResultInputMsg>
+		</xml>
+	</if>
+</sequence>

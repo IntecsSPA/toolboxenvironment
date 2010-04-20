@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Operation Management</title>
+<link type="text/css" href="images/page.css" rel="stylesheet">
+</head>
+<body text="#000000" bgcolor="#ffffff"> 
+<h1>Listing the Service operations</h1> 
+<div class="content"><div style="border: 2px none ; margin-left: 0pt;">
+  <p>When a service is imported the operation described in the export file are immediately available in the new service. When a service is created from scratch no operations are available.</p>
+  <p>To list the available operations or to create a new operation <a href="serviceSelecting.html">select a service</a> then click on the Operations management link in the second row of the toolbar (a service has to be selected in order to display this link). The browse will display a table listing the available operations.</p>
+  <p align="center"><img src="images/image018.jpg" width="642" ></p> 
+    <p>The table displayed includes the following information:</p> 
+  </div> 
+</div> 
+<ul> 
+  <li> 
+    <div class="content"> 
+      <div style="border: 2px none ; margin-left: 0pt;"><strong>Operation</strong>:name of the operation. It is only a mnemonic name which is used by the TOOLBOx to store and display information related to a specific operation. It is not used to deploy the real operation and to create the WSDL file.</div> 
+    </div> 
+  </li> 
+  <li> 
+    <div class="content"> 
+      <div style="border: 2px none ; margin-left: 0pt;"><strong>SOAP Action</strong>: it is the SOAP Action associated to the operation. The SOAP Action is used by the TOOLBOX to link the scripts to a specific SOAP message sent to a Service.</div> 
+    </div> 
+  </li> 
+  <li> 
+    <div class="content"> 
+      <div style="border: 2px none ; margin-left: 0pt;"><strong>Type</strong>: Synchronous or Asynchronous.</div> 
+    </div> 
+  </li> 
+  <li> 
+    <div class="content"> 
+      <div style="border: 2px none ; margin-left: 0pt;"><strong>Timeout</strong>: (only for Asynchronous operations) the timeout of the request coming from a client. It is the maximum time the TOOLBOX waits for a response from the back-end service. In practice it represents the time after that the TOOLBOX stops trying performing the Second script for a certain request.</div> 
+    </div> 
+  </li> 
+  <li> 
+    <div class="content"> 
+      <div style="border: 2px none ; margin-left: 0pt;"><strong>Polling Rate</strong>: (only for Asynchronous. operations) indicates the rate the TOOLBOX push manager polls for the responses from the back-end service (the rate the TOOLBOX executed the second Script provided during the Operation adding).</div> 
+    </div> 
+  </li> 
+  <li> 
+    <div class="content"> 
+      <div style="border: 2px none ; margin-left: 0pt;"><strong>Retry Attempts</strong>: (only for Asynchronous. operations) the operation can be configured such that, in case of failing pushing a response, the TOOLBOX tries to push again and again for a configurable (&quot;Retry Attempts&quot;) amount of times.</div> 
+    </div> 
+  </li> 
+  <li> 
+    <div class="content"> 
+      <div style="border: 2px none ; margin-left: 0pt;"><strong>Retry Rate</strong>: (only for Asynchronous. operations) the operation can be configured such that, in case of failing pushing a response, the TOOLBOX tries to push again and again with a configurable (&quot;Retry Rate&quot;) rate.</div> 
+    </div> 
+  </li> 
+  <li> 
+    <div class="content"> 
+      <div style="border: 2px none ; margin-left: 0pt;">Commands: It includes 3 links:</div> 
+    </div> 
+    <ul> 
+      <li> 
+        <div class="content"> 
+          <div style="border: 2px none ; margin-left: 0pt;">The <strong>Configure</strong> links allows <a href="operationReconfiguring.html">configuring an operation</a></div> 
+        </div> 
+      </li> 
+      <li> 
+        <div class="content"> 
+          <div style="border: 2px none ; margin-left: 0pt;">The <strong>Info</strong> links allows <a href="operationWSDLAdding.html">adding</a>, <a href="operationWSDLDisplayingInfo.html">displaying</a> and <a href="operationWSDLChanging.html">updating</a> (only for operations which are not SSE operations) the WSDL information</div> 
+        </div> 
+      </li> 
+      <li> 
+        <div class="content"> 
+          <div style="border: 2px none ; margin-left: 0pt;">The Delete link allows <a href="operationDeleting.html">deleting an operation</a></div> 
+        </div> 
+      </li> 
+    </ul> 
+  </li> 
+</ul> 
+<div class="content"> 
+  <div style="border: 2px none ; margin-left: 0pt;"> 
+    <p>The &quot;<em>ADD Operation&quot;</em> button located at the end of the list allows <a href="../contacts.html">adding a new  operation</a>.</p> 
+  </div> 
+</div> 
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>VITO tutorial</title>
+
+<link type="text/css" href="images/page.css" rel="stylesheet"></head>
+
+<body text="#000000" bgcolor="#ffffff">
+<h1>Import a schema set from a zip file.</h1>
+                  <div class="content"> 
+                      <p align="justify">A schema set can be imported into Toolbox packaging it in a zip file. The structure of the file can be any, with multiple subdirectories and files. The only constraint is that all link to schema of the set shall be placed as relative to the zip root.</p>
+                      <p align="justify">So, if schema a.xsd, placed on the root, imports the schema b.xsd that is placed under the directory &quot;gml&quot; the include statement shall contain the following location: &quot;gml/b.xsd&quot;.</p>
+                      <p align="justify">If this rule is not followed the schema set will not be managed in the right way.</p>
+                  </div>
+                </body></html>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
+<installation version="1.0">
+    <info>
+        <appname>Toolbox Runtime Environment</appname>
+        <appversion>8.0</appversion>
+        <authors>
+            <author email="toolbox@intecs.it" name="Toolbox Team"/>
+        </authors>
+        <url>http://toolbox.esrin.esa.int/Download</url>
+        <uninstaller name="Uninstaller.jar" write="yes"/>
+        <javaversion>1.5</javaversion>
+        <requiresjdk>yes</requiresjdk>
+        <webdir>http://toolbox.esrin.esa.int/Download/toolbox/</webdir>
+        <writeinstallationinformation>no</writeinstallationinformation>
+        <run-privileged condition="izpack.windowsinstall.vista|izpack.windowsinstall.7"/>
+    </info>
+    <guiprefs height="480" resizable="yes" width="640">
+        <modifier key="useFlags" value="yes"/>
+        <modifier key="langDisplayType" value="default"/>
+        <modifier key="headingPanelCounter" value="progressbar"/>
+        <modifier key="headingPanelCounterPos" value="inNavigationPanel"/>
+    </guiprefs>
+    <locale>
+        <langpack iso3="eng"/>
+        <langpack iso3="ita"/>
+        <langpack iso3="fra"/>
+    </locale>
+    <resources>
+        <res id="LicencePanel.licence" parse="yes" src="/home/massi/Progetti/TOOLBOX_rep/trunk/Installer/data/gpl-3.0.txt"/>
+        <res id="installer.langsel.img" src="/home/massi/Progetti/TOOLBOX_rep/trunk/Installer/data/logo.png"/>
+    </resources>
+    <panels>
+        <panel classname="HelloPanel"/>
+        <panel classname="LicencePanel"/>
+        <panel classname="PacksPanel"/>
+        <panel classname="TargetPanel"/>
+        <panel classname="InstallPanel"/>
+        <panel classname="FinishPanel"/>
+    </panels>
+    <packs>
+        <pack name="Toolbox" preselected="yes" required="yes">
+            <description>This package contains the Toolbox application.</description>
+            <file override="update"
+                src="/home/massi/Progetti/TOOLBOX_rep/branches/8.0/BuildScripts/TOOLBOX" targetdir="$INSTALL_PATH/webapps"/>
+        </pack>
+        <pack name="ToolboxGisClient" preselected="yes" required="yes">
+            <description>This package contains the GIS client application.</description>
+            <file override="update"
+                src="/home/massi/Progetti/TOOLBOX_rep/branches/8.0/BuildScripts/ToolboxGisClient" targetdir="$INSTALL_PATH/webapps/"/>
+        </pack>
+    </packs>
+</installation>

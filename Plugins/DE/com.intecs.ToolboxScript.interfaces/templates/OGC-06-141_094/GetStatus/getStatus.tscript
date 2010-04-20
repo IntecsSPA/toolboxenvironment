@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="">
+
+	<!-- **********************************
+			Creating the response message 
+		 ********************************** -->
+	<xml attributePrefix="x" textTag="evaluate">
+		<GetStatusResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://earth.esa.int/hma/ordering">
+			<status>success</status>
+		</GetStatusResponse>
+	</xml>
+</sequence>

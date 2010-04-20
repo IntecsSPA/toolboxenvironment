@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Secure communication</title>
+<link type="text/css" href="images/page.css" rel="stylesheet">
+</head>
+<body text="#000000" bgcolor="#ffffff"> 
+<div class="content">
+<h1>Setting up a secure communication</h1> 
+<p>The TOOLBOX environment can be configured to support a secure communication both on the server (synchronous and asynchronous operations) as well as on the client side (asynchronous operations).</p> 
+<p>The TOOLBOX SSL Server functionality has been provided via Tomcat (Apache is not used to provide SSL on the server side).</p> 
+<h2>Certificates building</h2> 
+<p>To use SSL, it is necessary to generate a Certificate for the client (synchronous) and the server (synchronous/asynchronous). These Certificates are then imported into a keystore, to which the client and server connect. The keystore acts as a database for security certificates.</p> 
+<p>To generate a certificate the keytool utility in the JDK is used (see Sun's documentation for more information on this tool). </p> 
+<h3>Generate a Server Key and Certificate</h3> 
+<p>You have to perform this step if you want to use SSL on the Server side.</p> 
+<p>Launch the keytool from a shell (or command prompt) to generate your public and private key.</p> 
+<p>Note that the Certificate and keystore files will be generated in the directory you run keytool from.</p> 
+<p>Use keytool as follows:</p> 
+<p> <em><font color="#000066">keytool -genkey -alias tomcat-sv -dname &quot;CN=[Common Name],OU=[Organisation Unit], O=[Organisation Name], L=[Locality], S=[State Name], C=[Two-Letter Country Code]&quot; -keyalg RSA -keypass [private key password] -storepass [keystore password] -keystore [keystore file name]</font></em></p> 
+<p>For example, to generate a keystore (in file serviceServer.keystore) for server service.server.test.com using password changeit (for both the keystore and the certificate) in the Service Department group at Service Company, Italy, one would type the following:</p> 
+<p>keytool -genkey -alias tomcat-sv -dname &quot;CN=service.server.test.com, OU=ServiceDepartment, O=ServiceCompany, L=Rome, S=Italy, C=IT&quot; -keyalg RSA -keypass changeit -storepass changeit -keystore serviceServer.keystore</p> 
+<p><strong><img src="images/warning.gif" width="28" height="21"> The RSA algorithm is used to generate certificates. Ensure that the 'CN' field that you specify when you create the server certificate matches the name of the machine on which you're running Tomcat, or your browser will complain about certificate name mis-matches.</strong></p> 
+<h3>Export the Server Certificate</h3> 
+<p>To allow the SSE SOAP client importing the certificate into the SSE's keystore as a trusted certificate you have to export the certificate. From command prompt run this command to export your certificate from the keystore into an external file:</p> 
+<p>keytool -export -alias tomcat-sv -storepass intecs -file serviceServer.cer -keystore serviceServer.keystore</p> 
+<p>If everything works, you should now have a file called serviceServer.cer, which contains your server's certificate.</p> 
+<h3>Generate a Client Key and Certificate</h3> 
+<p>This step is very similar to the generation of the server key and certificate - it uses the same keytool tool with different parameters. Note that the keystore file name has changed (it is now serviceClient.keystore). Use keytool as follows:</p> 
+<p>keytool -genkey -alias tomcat-cl -dname &quot;CN=Client, OU=ServiceDepartment, O=ServiceCompany, L=Rome, S=Italy, C=IT&quot; -keyalg RSA -keypass changeit -storepass changeit -keystore serviceClient.keystore</p> 
+<h3>Export the Client Certificate</h3> 
+<p>To allow the SSE SOAP server importing the certificate into the SSE's keystore as a trusted certificate you have to export the certificate. This step is very similar to the export of the server certificate - it uses the same keytool tool with different parameters:</p> 
+<p>keytool -export -alias tomcat-cl -storepass changeit -file serviceClient.cer -keystore serviceClient.keystore</p> 
+<p>If everything works, you should now have a file called serviceClient.cer, which contains your client's certificate.</p> 
+<h3>Import the SSE Certificates into the Keystores</h3> 
+<p>To use the SSL on both sides the SSE client certificate have to be added to the Service server's keystore, and the SSE server's certificate have to be added to the Service client's keystore. Import the SSE server certificate into the client's keystore (we suppose that SSE provide two certificates named SSEserver.cer and SSEclient.cer):</p> 
+<p>keytool -import -v -trustcacerts -alias tomcat -file SSESserver.cer -keystore serviceClient.keystore -keypass changeit -storepass changeit</p> 
+<p>Import the SSE client certificate into the server's keystore:</p> 
+<p>keytool -import -v -trustcacerts -alias tomcat -file SSEClient.cer -keystore serviceServer.keystore -keypass changeit -storepass changeit</p> 
+<p>To establish a successful secure communication the serviceClient.cer and serviceServer.cer certificates have to be provided to SSE and correctly imported in the SSE SOAP client and server keystore.</p> 
+<h2>Server SSL installation</h2> 
+<p>To use a secure communication on the server side you have to amend server.xml (located in the conf directory of Tomcat).</p> 
+<p>Add the following lines to the xml file:</p> 
+<p> &lt;Connector className=&quot;org.apache.coyote.tomcat5.CoyoteConnector&quot; port=&quot;8443&quot; minProcessors=&quot;5&quot; maxProcessors=&quot;75&quot; enableLookups=&quot;true&quot; disableUploadTimeout=&quot;true&quot; acceptCount=&quot;100&quot; debug=&quot;0&quot; scheme=&quot;https&quot; secure=&quot;true&quot; clientAuth=&quot;false&quot; sslProtocol=&quot;TLS&quot; keystoreFile=&quot;c:\toolbox\serviceServer.keystore&quot; keystorePass=&quot;changeit&quot;/&gt;</p> 
+<p><strong><img src="images/note.gif" width="17" height="17"></strong> For further details on how to set the secure communication on Tomcat see the Tomcat documentation.</p> 
+<p> <strong><img src="images/note.gif" width="17" height="17"> The value used for the keystoreFile parameter may be different on your machine; it should contain the full path and filename of the server keystore file (serviceServer.keystore) generated. Also the keystorePass parameter have to be compliant with the password used during the certificate creation. The port number we chose to use for SSL in the above configuration is 443 (make sure that this port is accessible from outside your network).</strong></p> 
+<p>To test the SSL installation, restart your Tomcat server.</p> 
+<p>Test the SSL installation by opening your browser and typing in the following URL:</p> 
+<p>https://servername/index.html</p> 
+<p>Note that servername should be replaced with the name of the server on which you are running Tomcat. If SSL is working then you should see the default home page for your Tomcat installation. Your browser may generate a warning about un-trusted certificates or unrecognized authorities (just click OK).</p> 
+<h2>Client SSL installation</h2> 
+<p>SSL can be selected a Service level. This means that all the Asynchronous operation included in a service use the secure communication when selected.</p> 
+<p>To use a secure communication when using the Asynchronous communication select the SSL option during the Service creation or configuration. in the &quot;Create New Service (step 2 out of 2)&quot; page</p> 
+<p align="center"><img src="images/image010.jpg" width="642" ></p> 
+<p>check the SSL check-box. Then enter the absolute path to the generated client keystore (serviceClient.keystore, e.g. c:\toolbox\serviceClient.keystore).</p> 
+</div>
+</body>
+</html>

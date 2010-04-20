@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Documento senza titolo</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<h1>Archiving data </h1>
+<table border="1" width="100%" cellspacing="0">
+  <tbody>
+    <tr>
+      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>zip<a name="zip" id="zip"></a></strong></font></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" bgcolor="#CCCCCC">Attributes</td>
+      <td align="center" bgcolor="#F0F0F0"><table border="1" width="100%" bgcolor="#F0F0F0" cellspacing="0">
+          <tbody>
+            <tr>
+              <td width="20%" align="center" bgcolor="#CCCCCC">Name</td>
+              <td width="20%" align="center" bgcolor="#CCCCCC">Type</td>
+              <td width="20%" align="center" bgcolor="#CCCCCC">Use</td>
+              <td width="20%" align="center" bgcolor="#CCCCCC">Default</td>
+              <td width="20%" align="center" bgcolor="#CCCCCC">Description</td>
+            </tr>
+            <tr>
+              <td height="72" align="center">file</td>
+              <td align="center">xsd:string</td>
+              <td align="center">required</td>
+              <td align="center">&nbsp;</td>
+              <td align="justify" >The filename of the archive to create. </td>
+            </tr>
+          </tbody>
+      </table></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+      <td align="justify" bgcolor="#F0F0F0">This tag creates a zip archive . The file name of the created archive is passes with the attribute named file. The content of the archive is given by the child tag </td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+      <td align="left" bgcolor="#F0F0F0"><pre>&lt;zip file=&quot;$zipFileName&quot;&gt;<br>		&lt;dir&gt;<br>	    	&lt;string&gt;/home/toolbox/data/&lt;/string&gt;<br>		&lt;/dir&gt;<br>&lt;/zip&gt;</pre>
+          <font><em>This tag creates a zip file, whose full path is stored in the zipFileName variable. All files and subdirectories under /home/toolbox/data/ are stored into the zip file. </em></font></td>
+    </tr>
+  </tbody>
+</table>
+<p>&nbsp;</p>
+</body>
+</html>

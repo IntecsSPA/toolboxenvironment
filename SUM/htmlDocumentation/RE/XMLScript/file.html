@@ -1,0 +1,295 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>XML Script Tags Reference</title>
+
+<link type="text/css" href="../images/page.css" rel="stylesheet"></head>
+
+<body text="#000000" bgcolor="#ffffff">
+<h1>File handling</h1>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>dumpFile<a name="dumpFile"></a></strong></font></td>
+                    </tr>
+					<tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Attributes</td>
+                      <td align="center" bgcolor="#F0F0F0"><table border="1" width="100%" bgcolor="#F0F0F0" cellspacing="0">
+                          <tbody>
+                            <tr> 
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Name</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Type</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Use</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Default</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Description</td>
+                            </tr>
+                            <tr> 
+                              <td align="center">fileType</td>
+                              <td align="center">&nbsp;</td>
+                              <td align="center">&nbsp;</td>
+                              <td align="center">text</td>
+                              <td align="justify">Defines the type of the file to be stored: the possible values are text and binary. </td>
+                            </tr>
+                          </tbody>
+                        </table></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">This tag dumps, in 
+                        a file whose name is given by the result of the first 
+                        child element, the object given by the second child element. 
+                        It returns null. The fileType attribute specify the type of the file to be stored. By default the file type is text (thus the object in the second child element is treated as a string). </td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;dumpFile&gt;<br>	&lt;string&gt;C:\MyData\data01.txt&lt;/string&gt;<br>	&lt;string&gt;This is my file content.&lt;/string&gt;<br>&lt;/dumpFile&gt;</pre>
+                        <font><em>dumps the string "This is my file content." 
+                        in the file C:\MyData\data01.txt file and returns null.</em></font> 
+                        <pre>&lt;dumpFile fileType=&quot;binary&quot;&gt;<br>	&lt;string&gt;C:\MyData\target.jpg&lt;/string&gt;<br>	&lt;loadFile fileType=&quot;binary&quot;&gt;<br>		&lt;string&gt;C:\MyData\source.jpg&lt;/string&gt;<br>	&lt;/loadFile&gt;<br>&lt;/dumpFile&gt;</pre>
+                        <font><em>Copies the binary file C:\MyData\source.jpg into the 
+                        file C:\MyData\target.jpg and returns null.</em></font> 
+                        <pre>&lt;dumpFile&gt;<br>	&lt;stringCat&gt;<br>		&lt;variable name=&quot;directoryPath&quot;/&gt;<br>		&lt;string&gt;file.txt&lt;/string&gt;<br>	&lt;/stringCat&gt;<br>	&lt;variable name=&quot;fileContent&quot;/&gt;<br>&lt;/dumpFile&gt;</pre>
+                        <font><em>Dumps in the file &quot;file.txt&quot; under 
+                        the directory whose path is stored in the variable &quot;directoryPath&quot; 
+                        the string contained in the variable &quot;fileContent&quot;.</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>fileDelete</strong><a name="fileDelete"></a></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">This tag deletes a 
+                        file whose name is given by the enclosed element. Returns 
+                        true if and only if the deletion was possible (for example 
+                        it returns false if the file didn't exist).</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;fileDelete&gt;<br>	&lt;string&gt;C:\Dir\file.txt&lt;/string&gt;<br>&lt;/fileDelete&gt;</pre>
+                        <font><em>Deletes the file stored in the C:\Dir\file.txt</em></font> 
+                        <pre>&lt;fileDelete&gt;<br>	&lt;stringCat&gt;<br>		&lt;string&gt;C:\Dir\&lt;/string&gt;<br>		&lt;variable name=&quot;fileName&quot;/&gt;<br>	&lt;/stringCat&gt;<br>&lt;/fileDelete&gt;</pre>
+                        <font><em>Deletes the file whose name is stored in the 
+                        variable "fileName" and is contained in the the directory 
+                        C:\Dir.</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>fileExists<a name="fileExists"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Returns a boolean 
+                        value corresponding to the existence of the file whose 
+                        name is given by the enclosed element.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0" ><pre>&lt;fileExists&gt;<br>	&lt;string&gt;C:\Dir\file.txt&lt;/string&gt;<br>&lt;/fileExists&gt;</pre>
+                        <font><em>If the file C:\Dir\file.txt exists returns true, 
+                        otherwise returns false.</em></font> <pre>&lt;fileExists&gt;<br>	&lt;stringCat&gt;<br>		&lt;string&gt;C:\Dir\&lt;/string&gt;<br>		&lt;variable name=&quot;fileName&quot;/&gt;<br>	&lt;/stringCat&gt;<br>&lt;/fileExists&gt;</pre>
+                        <font><em>If the file contained in the directory &quot;fileName&quot; 
+                        and whose name is stored in the variable "fileName" exists 
+                        returns true, otherwise returns false.</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>loadFile<a name="loadFile"></a></strong></font></td>
+                    </tr>
+					
+					                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Attributes</td>
+                      <td align="center" bgcolor="#F0F0F0"><table border="1" width="100%" bgcolor="#F0F0F0" cellspacing="0">
+                          <tbody>
+                            <tr> 
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Name</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Type</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Use</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Default</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Description</td>
+                            </tr>
+                            <tr> 
+                              <td align="center">fileType</td>
+                              <td align="center">&nbsp;</td>
+                              <td align="center">&nbsp;</td>
+                              <td align="center">text</td>
+                              <td align="justify">The addressed host</td>
+                            </tr>
+                          </tbody>
+                        </table></td>
+                    </tr>
+					
+                    <tr> 
+                      <td align="center" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">This tag loads a file 
+                        whose name is given by the result of the enclosed tag. 
+                        It returns the file content according to the fileType attribute value: a string if fileType=text or a binary stream if fileType=binary. By default it returns a string. </td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;variable name=&quot;fileContent&quot;&gt;<br>	&lt;loadFile&gt;<br>		&lt;string&gt;C.\Dir\File.txt&lt;/string&gt;<br>	&lt;/loadFile&gt;<br>&lt;/variable&gt;</pre>
+                        <font><em>Loads the file C:\Dir\File.txt and stores its 
+                        contents in the variable "fileContent".</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>mkdir<a name="mkdir"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">This tag creates the 
+                        directory whose name is given by the enclosed element. 
+                        This works also if the parent directory doesn't exist: 
+                        the whole path is created</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0" ><pre>&lt;mkdir&gt;<br>	&lt;string&gt;C:\ParentDir\Dir&lt;/string&gt;<br>&lt;/mkdir&gt;</pre>
+                        <font><em>Creates the directory Dir (and possibly the 
+                        parent directory ParentDir) and returns true if and only 
+                        if the directory was created, along with all necessary 
+                        parent directories; false otherwise .</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>rmdir<a name="rmdir"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">This tags removes 
+                        recursively a directory and all its contents. The name 
+                        of the directory to be removed is given by the enclosed 
+                        element.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;rmdir&gt;<br>	&lt;string&gt;C:\ParentDir\Dir&lt;/string&gt;<br>&lt;/rmdir&gt;</pre>
+                        <font><em>Removes the directory Dir (and recursively all 
+                        its content) and returns null.</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+				<br>
+				<table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr>
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>path<a name="path" id="path"></a></strong></font></td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Attributes</td>
+                      <td align="center" bgcolor="#F0F0F0"><table border="1" width="100%" bgcolor="#F0F0F0" cellspacing="0">
+                          <tbody>
+                            <tr>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Name</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Type</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Use</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Default</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Description</td>
+                            </tr>
+                            <tr>
+                              <td align="center">startFrom</td>
+                              <td align="center">xsd:string</td>
+                              <td align="center">optional</td>
+                              <td align="center">&nbsp;</td>
+                              <td align="justify"><p>The directory to start from. This attribute may take the following values:</p>
+                              <ul>
+                                  <li>TMP (for system temporay dir) </li>
+                                  <li>HOME (for home directory) </li>
+                                  <li>SERVICE_RESOURCE_DIR (for the Resources dir inside the service directory</li>
+                                  <li>SERVICE_COMMON_SCRIPTS_DIR (for the Common Scripts dir inside the service directory</li>
+                              </ul></td>
+                            </tr>
+                          </tbody>
+                      </table></td>
+                    </tr>
+                    <tr>
+                      <td align="center" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">This tag returns a path string that is composed by the concatenation of the starting dir (provided optionally by the startFrom tag) and the computation of all the children tags. If not provided through that startFrom attribute, the start point can be set through the children attribute. The full path is returned using the system path separator (/ for Linux machines, \ for windows ones) </td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;setVariable name=&quot;path&quot;&gt;<br>	&lt;path startFrom=&quot;HOME&quot;&gt;<br>		&lt;string&gt;/my_dir/&lt;/string&gt;<br>		&lt;string&gt;file.jar&lt;/string&gt;<br>	&lt;/path&gt;<br>&lt;/setVariable&gt;</pre>
+                          <p><font><em>Returns the full path of the file my_dir/file.jar located under the user home diretory. </em></font></p>
+                          <pre>&lt;setVariable name=&quot;path&quot;&gt;
+    &lt;path&gt;
+       &lt;string&gt;c:\temp\&lt;/string&gt;
+       &lt;string&gt;file.jar&lt;/string&gt;
+    &lt;/path&gt;
+&lt;/setVariable&gt;</pre>
+                          <p>Returns the path c:\temp\file.jar. WARNING: If used under Linux this script snippet will return the following: c:/temp/file.jar. </p></td>
+                    </tr>
+                  </tbody>
+                </table>
+				
+				
+				<p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>fileInfo<a name="fileInfo" id="fileInfo"></a></strong></font></td>
+                    </tr>
+					
+					                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Attributes</td>
+                      <td align="center" bgcolor="#F0F0F0"><table border="1" width="100%" bgcolor="#F0F0F0" cellspacing="0">
+                          <tbody>
+                            <tr> 
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Name</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Type</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Use</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Default</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Description</td>
+                            </tr>
+                            <tr> 
+                              <td align="center">information</td>
+                              <td align="center">xsd:string</td>
+                              <td align="center">required</td>
+                              <td align="center">&nbsp;</td>
+                              <td align="justify">The information type to be returned. Valid values are: MODIFICATION and LENGTH</td>
+                            </tr>
+                          </tbody>
+                        </table></td>
+                    </tr>
+					
+                    <tr> 
+                      <td align="center" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Returns information about the file described by the child tag.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;fileInfo information=&quot;MODIFICATION&quot;&gt;<br>		&lt;string&gt;C:\Dir\File.txt&lt;/string&gt;<br>&lt;/fileInfo&gt;</pre>
+                        <p><font><em>Returns the modification date associated to the file.</em></font></p>
+                        <pre>&lt;fileInfo information=&quot;LENGTH&quot;&gt;<br>		&lt;string&gt;C:\Dir\File.txt&lt;/string&gt;<br>&lt;/fileInfo&gt;</pre>
+                        <font><em>Returns the length of the file File.txt.</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+				
+</body></html>

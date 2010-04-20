@@ -1,0 +1,729 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ICE Service tutorial</title>
+
+<link type="text/css" href="images/page.css" rel="stylesheet"></head>
+
+<body text="#000000" bgcolor="#ffffff">
+<h1>Real HTTP based service </h1>
+                <div class="content"> 
+                    <p align="justify">In the following we report a detailed description 
+                      of the integration of a HTTP based service.</p>
+                    <p align="justify">This service is one of the GIM services 
+                      which have been integrated in the SSE framework. This description 
+                      report the steps needed to expose the GIM Raster Clipping 
+                      service as Web Service compliant with the SSE framework 
+                      (script development, service deployment and testing). The 
+                      definition of the Schema that defines the service, the development 
+                      of the style sheet needed to integrate the service in the 
+                      SSE Portal and the integration itself of the GIM Web Service 
+                      in the SSE Portal is out of the scope of this tutorial. 
+                      <font color="#000000">O</font><font color="#000000">n this 
+                      subject, please see the <a href="icd.html">SSE ICD</a>.</font></p>
+                    <p><strong>The Context</strong></p>
+                    <p align="justify">The communication between the Toolbox and 
+                      the ICE services web tier is based on the HTTP request/response 
+                      model. The Toolbox acts as an HTTP client for the ICE Web 
+                      Server.<br>
+                      Incoming SOAP-messages are converted by the Toolbox into 
+                      HTTP-requests and sent to the ICE Web Server. After processing 
+                      the request, the ICE Web Server responds by sending XML 
+                      (the response is not HTML but XML. The message returned 
+                      by the Web Server can be inserted in the SOAP-response with 
+                      no modification. The XML-message contains the location the 
+                      result-dataset can be downloaded by the user) back to the 
+                      TOOLBOX. This XML-string is used to assemble the SOAP-message 
+                      that is sent back from the TOOLBOX to the SOAP Client.</p>
+                    <p><strong>The Script development</strong></p>
+                    <p>We suppose that all the resources needed to perform the 
+                      service are available (c:\jwsdp-1_0_01\webapps\TOOLBOX\services\GIM_RasterClipService\extract_areaOfInterest.xsl 
+                      and the ICE services is available at host=&quot;193.74.120.94&quot;, 
+                      port=&quot;8123&quot;). </p>
+                    <p>The service has been integrated using the Asynchronous 
+                      mechanism. Thus 3 scripts are needed. The <a href="tutorial/GIM/send.xml">first 
+                      script</a> performs the communication with the ICE Web Server 
+                      and stores the XML result file in a temporary file. The 
+                      <a href="tutorial/GIM/check.xml">second script</a> checks 
+                      if the file has been created. The <a href="tutorial/GIM/get.xml">third 
+                      script</a> loads the file and send it back to the SOAP Client.</p>
+                    <p>Hereafter we report a description of the main tags.</p>
+                    <p align="justify"><strong><em><a href="tutorial/GIM/send.xml">First 
+                      Script</a></em></strong></p>
+                    <p align="justify"><em>Setting the file name.</em></p>
+                    <p align="justify">The script creates the name of a temporary 
+                      file concatenating (<a href="XMLScript/strings.html">&lt;stringCat&gt;</a>) 
+                      a fixed string and the <a href="XMLScript/sse.html">&lt;orderId&gt;</a>. 
+                      The file will be used to store the result of the interaction 
+                      with the ICE Web Server.</p>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>&lt;</span><span
+style='font-size:8.5pt;font-family:Arial;color:maroon;background:white;
+mso-highlight:white'>sequence</span><span style='font-size:8.5pt;font-family:
+Arial;color:red;background:white;mso-highlight:white'> xmlns</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>=&quot;</span><span style='font-size:8.5pt;font-family:
+Arial;color:black;background:white;mso-highlight:white'>http://pisa.intecs.it/mass/toolbox/xmlScript</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&quot;&gt;</span><span style='font-size:8.5pt;font-family:
+Arial;color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>     &lt;</span><span
+style='font-size:8.5pt;font-family:Arial;color:maroon;background:white;
+mso-highlight:white'>setVariable</span><span style='font-size:8.5pt;font-family:
+Arial;color:red;background:white;mso-highlight:white'> name</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>=&quot;</span><span style='font-size:8.5pt;font-family:
+Arial;color:black;background:white;mso-highlight:white'>fileName</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&quot;&gt;</span><span style='font-size:8.5pt;font-family:
+Arial;color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'></span><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>          &lt;</span><span
+style='font-size:8.5pt;font-family:Arial;color:maroon;background:white;
+mso-highlight:white'>stringCat</span><span style='font-size:8.5pt;font-family:
+Arial;color:blue;background:white;mso-highlight:white'>&gt;</span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white;
+mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>     </span><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>     </span><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>     </span><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'></span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>string</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'>c:\tmp\</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;/</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>string</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>     </span><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>     </span><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>     </span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>orderId</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>/&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>     </span><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>     </span><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>     </span><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'></span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>string</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'>.xml</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;/</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>string</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>     </span><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>     </span><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>&lt;/</span><span
+style='font-size:8.5pt;font-family:Arial;color:maroon;background:white;
+mso-highlight:white'>stringCat</span><span style='font-size:8.5pt;font-family:
+Arial;color:blue;background:white;mso-highlight:white'>&gt;</span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white;
+mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>     </span><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>&lt;/</span><span
+style='font-size:8.5pt;font-family:Arial;color:maroon;background:white;
+mso-highlight:white'>setVariable</span><span style='font-size:8.5pt;font-family:
+Arial;color:blue;background:white;mso-highlight:white'>&gt;</span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white;
+mso-highlight:white'><o:p></o:p></span></pre>
+                    <p align="justify"><em>Connecting to the ICE Web Server.</em></p>
+                    <p align="justify">The script accesses the JSP page (/ice/raster/clip/views/xml.jsp) 
+                      connecting to the ICE Web Server (193.74.120.94) on port 
+                      8123 using the <a href="XMLScript/http.html">&lt;http&gt;</a> 
+                      tag.</p>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt; font-family:Arial;color:blue;background:white;mso-highlight:white'> </span><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>&lt;</span><span
+style='font-size:8.5pt;font-family:Arial;color:maroon;background:white;
+mso-highlight:white'>http</span><span style='font-size:8.5pt;font-family:Arial;
+color:red;background:white;mso-highlight:white'> host</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>=&quot;</span><span style='font-size:8.5pt;font-family:
+Arial;color:black;background:white;mso-highlight:white'>193.74.120.94</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&quot;</span><span style='font-size:8.5pt;font-family:
+Arial;color:red;background:white;mso-highlight:white'> port</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>=&quot;</span><span style='font-size:8.5pt;font-family:
+Arial;color:black;background:white;mso-highlight:white'>8123</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&quot;&gt;</span><span style='font-size:8.5pt;font-family:
+Arial;color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>url</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>string</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'>/ice/raster/clip/views/xml.jsp</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;/</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>string</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;/</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>url</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>parameter</span><span
+style='font-size:8.5pt;font-family:Arial;color:red;background:white;mso-highlight:
+white'> name</span><span style='font-size:8.5pt;font-family:Arial;color:blue;
+background:white;mso-highlight:white'>=&quot;</span><span style='font-size:
+8.5pt;font-family:Arial;color:black;background:white;mso-highlight:white'>orderId</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&quot;&gt;</span><span style='font-size:8.5pt;font-family:
+Arial;color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt; font-family:Arial;color:black;background:white;mso-highlight:white'>.....</span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;/</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>parameter</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'><o:p></o:p></span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <p align="justify">The parameters needed to perform the http 
+                      POST are extracted from the input message by means of the 
+                      <a href="XMLScript/xmlXsl.html">&lt;xPath&gt;</a> tag</p>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>parameter</span><span
+style='font-size:8.5pt;font-family:Arial;color:red;background:white;mso-highlight:
+white'> name</span><span style='font-size:8.5pt;font-family:Arial;color:blue;
+background:white;mso-highlight:white'>=&quot;</span><span style='font-size:
+8.5pt;font-family:Arial;color:black;background:white;mso-highlight:white'>orderId</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&quot;&gt;</span><span style='font-size:8.5pt;font-family:
+Arial;color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>xPath</span><span
+style='font-size:8.5pt;font-family:Arial;color:red;background:white;mso-highlight:
+white'> xmlns:mass</span><span style='font-size:8.5pt;font-family:Arial;
+color:blue;background:white;mso-highlight:white'>=&quot;</span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white;
+mso-highlight:white'>http://www.esa.int/mass</span><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>&quot;&gt;</span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white;
+mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>xmlRequest</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>/&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>string</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'>//mass:commonInput/mass:orderId</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;/</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>string</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;/</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>xPath</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;/</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>parameter</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>parameter</span><span
+style='font-size:8.5pt;font-family:Arial;color:red;background:white;mso-highlight:
+white'> name</span><span style='font-size:8.5pt;font-family:Arial;color:blue;
+background:white;mso-highlight:white'>=&quot;</span><span style='font-size:
+8.5pt;font-family:Arial;color:black;background:white;mso-highlight:white'>clippeeURL</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&quot;&gt;</span><span style='font-size:8.5pt;font-family:
+Arial;color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>xPath</span><span
+style='font-size:8.5pt;font-family:Arial;color:red;background:white;mso-highlight:
+white'> xmlns:mass</span><span style='font-size:8.5pt;font-family:Arial;
+color:blue;background:white;mso-highlight:white'>=&quot;</span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white;
+mso-highlight:white'>http://www.esa.int/mass</span><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>&quot;&gt;</span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white;
+mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>xmlRequest</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>/&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>string</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'>//mass:sendOrderInput/mass:sourceDataset/mass:location</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;/</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>string</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;/</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>xPath</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;/</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>parameter</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre>...</pre>
+                    <pre>...</pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>parameter</span><span
+style='font-size:8.5pt;font-family:Arial;color:red;background:white;mso-highlight:
+white'> name</span><span style='font-size:8.5pt;font-family:Arial;color:blue;
+background:white;mso-highlight:white'>=&quot;</span><span style='font-size:
+8.5pt;font-family:Arial;color:black;background:white;mso-highlight:white'>negativeValuesToZero</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&quot;&gt;</span><span style='font-size:8.5pt;font-family:
+Arial;color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>xPath</span><span
+style='font-size:8.5pt;font-family:Arial;color:red;background:white;mso-highlight:
+white'> xmlns:mass</span><span style='font-size:8.5pt;font-family:Arial;
+color:blue;background:white;mso-highlight:white'>=&quot;</span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white;
+mso-highlight:white'>http://www.esa.int/mass</span><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>&quot;&gt;</span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white;
+mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>xmlRequest</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>/&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>string</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'>//mass:sendOrderInput/mass:negativeValuesToZero</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;/</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>string</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;/</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>xPath</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;/</span><span style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white'>parameter</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <p>The result of the HTTP exchange is stored in a temporary 
+                      file (whose name is stored in the variable named &quot;fileName&quot;) 
+                      by means of the <a href="XMLScript/file.html">&lt;dumpFile&gt;</a> 
+                      tag.</p>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>&lt;</span><span
+style='font-size:8.5pt;font-family:Arial;color:maroon;background:white;
+mso-highlight:white'>dumpFile</span><span style='font-size:8.5pt;font-family:
+Arial;color:blue;background:white;mso-highlight:white'>&gt;</span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white;
+mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>&lt;</span><span
+style='font-size:8.5pt;font-family:Arial;color:maroon;background:white;
+mso-highlight:white'>variable</span><span style='font-size:8.5pt;font-family:
+Arial;color:red;background:white;mso-highlight:white'> name</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>=&quot;</span><span style='font-size:8.5pt;font-family:
+Arial;color:black;background:white;mso-highlight:white'>fileName</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&quot;/&gt;</span><span style='font-size:8.5pt;font-family:
+Arial;color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;font-family:
+Arial;color:black;background:white;mso-highlight:white'><o:p>...</o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'></span><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>&lt;/</span><span
+style='font-size:8.5pt;font-family:Arial;color:maroon;background:white;
+mso-highlight:white'>dumpFile</span><span style='font-size:8.5pt;font-family:
+Arial;color:blue;background:white;mso-highlight:white'>&gt;</span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white;
+mso-highlight:white'><o:p></o:p></span><span style='font-size:8.5pt;font-family:
+Arial;color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <p align="justify"><strong><em><a href="tutorial/GIM/check.xml">Second 
+                      script</a></em></strong></p>
+                    <p align="justify">This script is executed by the TOOLBOX 
+                      to check if the resources needed to create the response 
+                      message are ready. It looks for the response file stored 
+                      by the first script in the <em>c:\tmp\</em> directory by 
+                      means of the <a href="XMLScript/file.html">&lt;fileExists&gt;</a> 
+                      tag. The <em>fileName</em> variable has been set in the 
+                      first script. The TOOLBOX supports persistence of some types 
+                      of variable among the executions of XML scripts related 
+                      to the same Asynchronous request. This means that a variable 
+                      defined in the first Script can be referred, e.g., in the 
+                      second XML Script.</p>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span lang=EN-GB
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'>&lt;</span><span lang=EN-GB
+style='font-size:8.5pt;font-family:Arial;color:maroon;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'>sequence</span><span lang=EN-GB
+style='font-size:8.5pt;font-family:Arial;color:red;background:white;mso-highlight:
+white;mso-ansi-language:EN-GB'> <span class=SpellE>xmlns</span></span><span
+lang=EN-GB style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'>=&quot;</span><span lang=EN-GB
+style='font-size:8.5pt;font-family:Arial;color:black;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'>http://pisa.intecs.it/mass/toolbox/xmlScript</span><span
+lang=EN-GB style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'>&quot;&gt;</span><span lang=EN-GB
+style='font-size:8.5pt;font-family:Arial;color:black;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span
+lang=EN-GB style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'>&lt;</span><span class=SpellE><span
+class=GramE><span lang=EN-GB style='font-size:8.5pt;font-family:Arial;
+color:maroon;background:white;mso-highlight:white;mso-ansi-language:EN-GB'>fileExists</span></span></span><span
+lang=EN-GB style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'>&gt;</span><span lang=EN-GB
+style='font-size:8.5pt;font-family:Arial;color:black;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span
+lang=EN-GB style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'>&lt;</span><span lang=EN-GB
+style='font-size:8.5pt;font-family:Arial;color:maroon;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'>variable</span><span lang=EN-GB
+style='font-size:8.5pt;font-family:Arial;color:red;background:white;mso-highlight:
+white;mso-ansi-language:EN-GB'> name</span><span lang=EN-GB style='font-size:
+8.5pt;font-family:Arial;color:blue;background:white;mso-highlight:white;
+mso-ansi-language:EN-GB'>=&quot;</span><span class=SpellE><span lang=EN-GB
+style='font-size:8.5pt;font-family:Arial;color:black;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'>fileName</span></span><span
+lang=EN-GB style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'>&quot;/&gt;</span><span
+lang=EN-GB style='font-size:8.5pt;font-family:Arial;color:black;background:
+white;mso-highlight:white;mso-ansi-language:EN-GB'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span lang=EN-GB
+style='font-size:8.5pt;font-family:Arial;color:black;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'></span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;/</span><span class=SpellE><span style='font-size:
+8.5pt;font-family:Arial;color:maroon;background:white;mso-highlight:white'>fileExists</span></span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal><span style='font-size:8.5pt;font-family:Arial;color:blue;
+background:white;mso-highlight:white'>&lt;/</span><span class=SpellE><span
+style='font-size:8.5pt;font-family:Arial;color:maroon;background:white;
+mso-highlight:white'>sequence</span></span><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>&gt;</span><span
+style='font-size:8.5pt;font-family:Arial;color:blue'><o:p></o:p></span></pre>
+                    <p align="justify"><a href="tutorial/GIM/get.xml"><strong><em>Third 
+                      script</em></strong></a></p>
+                    <p align="justify">This script loads the response message 
+                      stored by the first script in the <em>c:\tmp\&lt;orderId&gt;.xml</em> 
+                      file by means of the <a href="XMLScript/xmlXsl.html">&lt;loadXML&gt;</a> 
+                      tag. The <em>fileName</em> variable has been set in the 
+                      first script.</p>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span lang=EN-GB
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'>&lt;</span><span lang=EN-GB
+style='font-size:8.5pt;font-family:Arial;color:maroon;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'>sequence</span><span lang=EN-GB
+style='font-size:8.5pt;font-family:Arial;color:red;background:white;mso-highlight:
+white;mso-ansi-language:EN-GB'> xmlns</span><span lang=EN-GB style='font-size:
+8.5pt;font-family:Arial;color:blue;background:white;mso-highlight:white;
+mso-ansi-language:EN-GB'>=&quot;</span><span lang=EN-GB style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white;mso-ansi-language:
+EN-GB'>http://pisa.intecs.it/mass/toolbox/xmlScript</span><span lang=EN-GB
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'>&quot;&gt;</span><span lang=EN-GB
+style='font-size:8.5pt;font-family:Arial;color:black;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span lang=EN-GB
+style='font-size:8.5pt;font-family:Arial;color:black;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'></span><span
+lang=EN-GB style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'>&lt;</span><span lang=EN-GB
+style='font-size:8.5pt;font-family:Arial;color:maroon;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'>loadXML</span><span lang=EN-GB
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'>&gt;</span><span lang=EN-GB
+style='font-size:8.5pt;font-family:Arial;color:black;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span
+lang=EN-GB style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'>&lt;</span><span lang=EN-GB
+style='font-size:8.5pt;font-family:Arial;color:maroon;background:white;
+mso-highlight:white;mso-ansi-language:EN-GB'>variable</span><span lang=EN-GB
+style='font-size:8.5pt;font-family:Arial;color:red;background:white;mso-highlight:
+white;mso-ansi-language:EN-GB'> name</span><span lang=EN-GB style='font-size:
+8.5pt;font-family:Arial;color:blue;background:white;mso-highlight:white;
+mso-ansi-language:EN-GB'>=&quot;</span><span lang=EN-GB style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white;mso-ansi-language:
+EN-GB'>fileName</span><span lang=EN-GB style='font-size:8.5pt;font-family:Arial;
+color:blue;background:white;mso-highlight:white;mso-ansi-language:EN-GB'>&quot;/&gt;</span><span
+lang=EN-GB style='font-size:8.5pt;font-family:Arial;color:black;background:
+white;mso-highlight:white;mso-ansi-language:EN-GB'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:black;background:white;mso-highlight:white'><span
+style='mso-tab-count:3'> </span></span><span
+style='font-size:8.5pt;font-family:Arial;color:black;background:white; mso-highlight:white'>     </span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&lt;/</span><span class=SpellE><span style='font-size:
+8.5pt;font-family:Arial;color:maroon;background:white;mso-highlight:white'>loadXML</span></span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <pre class=MsoNormal style='tab-stops:15.0pt 30.0pt 45.0pt 60.0pt 75.0pt 90.0pt 105.0pt 120.0pt 135.0pt 150.0pt 165.0pt 180.0pt 195.0pt 210.0pt 225.0pt 240.0pt 255.0pt 270.0pt 285.0pt 300.0pt;
+mso-layout-grid-align:none;text-autospace:none'><span style='font-size:8.5pt;
+font-family:Arial;color:blue;background:white;mso-highlight:white'>&lt;/</span><span
+class=SpellE><span style='font-size:8.5pt;font-family:Arial;color:maroon;
+background:white;mso-highlight:white'>sequence</span></span><span
+style='font-size:8.5pt;font-family:Arial;color:blue;background:white;
+mso-highlight:white'>&gt;</span><span style='font-size:8.5pt;font-family:Arial;
+color:black;background:white;mso-highlight:white'><o:p></o:p></span></pre>
+                    <p><strong>The Integration</strong></p>
+                    <p align="justify">The service has been integrated as an asynchronous 
+                      service .</p>
+                    <p align="justify">In order to integrate an Asynchronous service 
+                      3 scripts are needed. The service has been integrated using 
+                      the procedure reported in the <a href="serviceCreating.html">Creating 
+                      a Service</a> section. The &quot;Order&quot; operation has 
+                      been added using the procedure reported in the <a href="operationManagement.html">Adding 
+                      an operation</a> section.</p>
+                    <p><strong>The GIM service testing</strong></p>
+                    <p align="justify">The service has been tested following the 
+                      procedure reported in the <a href="sendingSoapMessage.html">Sending 
+                      a SOAP message</a> section.</p>
+                    <p class=MsoNormal style='text-autospace:none'>&nbsp;</p>
+                    <p><strong><img src="images/note.gif" width="17" height="17"> 
+                      The toolbox pushes back the response to</strong></p>
+                    <p><span
+lang=EN-GB style='font-size:8.5pt;font-family:Arial;color:blue;background:white'>&lt;</span><span
+lang=EN-GB style='font-size:8.5pt;font-family:Arial;color:maroon;background:
+white'>ns2:Address</span><span lang=EN-GB style='font-size:8.5pt;font-family:
+Arial;color:blue;background:white'>&gt;</span><span lang=EN-GB
+style='font-size:8.5pt;font-family:Arial;color:black;background:white'>http://somehost/PushServer</span><span
+lang=EN-GB style='font-size:8.5pt;font-family:Arial;color:blue;background:white'>&lt;/</span><span
+lang=EN-GB style='font-size:8.5pt;font-family:Arial;color:maroon;background:
+white'>ns2:Address</span><span lang=EN-GB style='font-size:8.5pt;font-family:
+Arial;color:blue;background:white'>&gt;</span></p>
+                    <p align="justify"><strong><img src="images/warning.gif" width="28" height="21"> 
+                      This address has to be a valid address.</strong></p>
+</div>
+</body></html>

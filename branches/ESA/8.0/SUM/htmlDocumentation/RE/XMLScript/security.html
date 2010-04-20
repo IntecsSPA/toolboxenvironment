@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Security Tags Reference</title>
+
+<link type="text/css" href="../images/page.css" rel="stylesheet"></head>
+
+<body text="#000000" bgcolor="#ffffff">
+<h1>Encrypt</h1>           
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>Encrypt<a name="encrypt"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Attributes</td>
+                      <td align="center" bgcolor="#F0F0F0"><table border="1" width="100%" bgcolor="#F0F0F0" cellspacing="0">
+                          <tbody>
+                            <tr> 
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Name</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Type</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Use</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Default</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Description</td>
+                            </tr>                            
+                            <tr> 
+                              <td align="center">operation</td>
+                              <td align="center">xsd:string</td>
+                              <td align="center">optional</td>
+                              <td align="center"></td>
+                              <td align="justify">The soapAction HTTP header: 
+                                this is for communicating with services deployed 
+                                on the TOOLBOX and for all those services requirng 
+                                a non empty soapAction HTTP header.</td>
+                            </tr>
+                            <tr> 
+                              <td align="center">sslCertificateLocation</td>
+                              <td align="center">xsd:string</td>
+                              <td align="center">optional</td>
+                              <td align="center"></td>
+                              <td align="justify">The location of the certificate 
+                                in case of secure communication </td>
+                            </tr>
+                          </tbody>
+                        </table></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Performs a SOAP call 
+                        to the url returned by the evaluation of the first enclosed 
+                        element and returns the XML document contained in the 
+                        SOAP response. The second enclosed element must return 
+                        an XML document representing the payload (i.e. the child 
+                        element of the SOAP body) of the SOAP message to be sent. 
+                        If the optional &quot;operation&quot; attribute is specified 
+                        the soapAction HTTP header is set to that value: this 
+                        is for communicating with services deployed on the TOOLBOX 
+                        and for all those services requirng a non empty soapAction 
+                        HTTP header. The (optional) attribute &quot;sslCertificateLocation&quot; 
+                        allows specifying the path to a certificate for SSL communication.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;soapCall&gt;<br>	&lt;string&gt;http://my.server:31000&lt;/string&gt;<br>	&lt;loadXML&gt;<br>		&lt;string&gt;/tmp/request.xml&lt;/string&gt;<br>	&lt;/loadXML&gt;<br>&lt;/soapCall&gt;</pre>
+                        <font>Sends on the port 31000 of the server my.server 
+                        a SOAP message whose payload (i.e. the child of &lt;SOAP-ENV:Body&gt;) 
+                        is contained in /tmp/request.xml</font>. <pre>&lt;soapCall operation=&quot;sendRFQ&quot;&gt;<br>	&lt;string&gt;http://localhost:8080/TOOLBOX/services/testService&lt;/string&gt;<br>	&lt;loadXML&gt;<br>		&lt;string&gt;/tmp/request.xml&lt;/string&gt;<br>	&lt;/loadXML&gt;<br>&lt;/soapCall&gt;</pre>
+                        <font>Sends to the &quot;testService&quot; service deployed 
+                        on the TOOLBOX installed on &quot;localhost&quot; (port 
+                        8080) a SOAP message whose payload is contained in /tmp/request.xml.</font> 
+                        The HTTP header &quot;SOAPAction&quot; is set to &quot;sendRFQ&quot; 
+                        (which means that a &quot;sendRFQ&quot; request to &quot;testService&quot; 
+                        has been arrived). <pre>&lt;soapCall operation=&quot;sendRFQ&quot; sslCertificateLocation=&quot;/tmp/client.keystore&quot;&gt;<br>	&lt;string&gt;https://localhost:8443/TOOLBOX/services/testService&lt;/string&gt;<br>	&lt;loadXML&gt;<br>		&lt;string&gt;/tmp/request.xml&lt;/string&gt;<br>	&lt;/loadXML&gt;<br>&lt;/soapCall&gt;</pre> 
+                        <font>Sends to the &quot;testService&quot; service deployed 
+                        on the TOOLBOX installed on &quot;localhost&quot; (port 
+                        8443) a SOAP message (whose payload is contained in /tmp/request.xml) 
+                        using secure communication.</font> The certificate is 
+                        loaded from &quot;/tmp/client.keystore&quot;. <font><em><strong>NOTE 
+                        that in this case the protocol &quot;https&quot; has been 
+                        indicated. Make sure to use the right protocol and port 
+                        number. </strong></em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+<h1>SOAPFault</h1> 
+<table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>SOAPFault<a name="soapfault"></a></strong></font></td>
+                    </tr>
+                    
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">This tag builds a SOAP Fault message and returns it. The child tag must return a String which will be used as SOAP Fault message.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;SOAPFault&gt;<br>	&lt;string&gt;An error occurred&lt;/SOAPFault&gt;<br></pre>
+
+                        <font>Returns a SOAP Fault with the "An error occurred" message</font></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+</body></html>

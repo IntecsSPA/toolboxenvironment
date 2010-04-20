@@ -1,0 +1,652 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>XML Script Tags Reference</title>
+
+<link type="text/css" href="../images/page.css" rel="stylesheet"></head>
+
+<body text="#000000" bgcolor="#ffffff">
+<h1>Text handling</h1>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>columnNumber<a name="columnNumber"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Returns the current 
+                        column number of the current text context</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;sequence&gt;<br>	&lt;setText new=&quot;true&quot;&gt;<br>		&lt;string&gt;This is text.<br>	It was written to explain the text handling.<br>	Hoping it will help...&lt;/string&gt;<br>	&lt;/setText&gt;<br>	&lt;print&gt;<br>		&lt;columnNumber/&gt;<br>	&lt;/print&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>The context of the text has been just created 
+                        (see the "setText" tag). The cursor is at the beginning 
+                        of the string, thus evaluation of &quot;columnNumber&quot; 
+                        returns 1. So, the at the end on the sequence 1 is printed 
+                        on video.</em></font> <pre>&lt;sequence&gt;<br>	&lt;setText new=&quot;true&quot;&gt;<br>		&lt;string&gt;This is text.<br>	It was written to explain the text handling.<br>	Hoping it will help...&lt;/string&gt;<br>	&lt;/setText&gt;<br>	&lt;horizontalMove/&gt;<br>	&lt;print&gt;<br>		&lt;columnNumber/&gt;<br>	&lt;/print&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>At the end of the sequence 2 is printed on video.</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>extract<a name="extract"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Attributes</td>
+                      <td align="center" bgcolor="#F0F0F0"><table border="1" width="100%" bgcolor="#F0F0F0" cellspacing="0">
+                          <tbody>
+                            <tr> 
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Name</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Type</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Use</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Default</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Description</td>
+                            </tr>
+                            <tr> 
+                              <td align="center">start</td>
+                              <td align="center">xsd:string</td>
+                              <td align="center">required</td>
+                              <td align="center"></td>
+                              <td align="justify">The name of the start mark</td>
+                            </tr>
+                            <tr> 
+                              <td align="center">end</td>
+                              <td align="center">xsd:string</td>
+                              <td align="center">required</td>
+                              <td align="center"></td>
+                              <td align="justify" >The name of the end mark</td>
+                            </tr>
+                          </tbody>
+                        </table></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">This tag returns the 
+                        string between two previously marked positions. The names 
+                        of the marks are given by the "start" and "end" attributes 
+                        (it's not important that start points to a position in 
+                        the text that precedes the end, thay can be swapped). 
+                        The returned string is the substring starting with the 
+                        first mark and ending with the second (exclusive).</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;sequence&gt;<br>	&lt;setText new=&quot;true&quot;&gt;<br>		&lt;string&gt;0 1 2 3 4 5 6 7 8 9&lt;/string&gt;<br>	&lt;/setText&gt;<br>	&lt;sequence&gt;<br>		&lt;fieldMove separators=&quot;\b&quot;/&gt;<br>		&lt;mark name=&quot;fieldStart&quot;/&gt;<br>		&lt;fieldMove separators=&quot;\b&quot; position=&quot;end&quot;&gt;<br>			&lt;literal value=&quot;0&quot;/&gt;<br>		&lt;/fieldMove&gt;<br>		&lt;mark name=&quot;fieldEnd&quot;/&gt;<br>		&lt;extract start=&quot;fieldStart&quot; end=&quot;fieldEnd&quot;/&gt;<br>	&lt;/sequence&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>The tag "extracts&quot; returns "1".</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>fieldMove</strong><a name="fieldMove"></a></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Attributes</td>
+                      <td align="center" bgcolor="#F0F0F0"><table border="1" width="100%" bgcolor="#F0F0F0" cellspacing="0">
+                          <tbody>
+                            <tr> 
+                              <td align="center" bgcolor="#CCCCCC">Name</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Type</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Use</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Default</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Description</td>
+                            </tr>
+                            <tr> 
+                              <td align="center">absolute</td>
+                              <td align="center">xsd:boolean</td>
+                              <td align="center"></td>
+                              <td align="center">false</td>
+                              <td width="20%" align="justify"><div align="justify">Flag 
+                                  indicating whether the cursor motion must occur 
+                                  from the start of the current line (&quot;absolute&quot; 
+                                  set to &quot;true&quot;) or from the current 
+                                  position (default)</div></td>
+                            </tr>
+                            <tr> 
+                              <td align="center">separators</td>
+                              <td align="center">xsd:string</td>
+                              <td align="center">required</td>
+                              <td align="center"></td>
+                              <td align="justify" >All the characters used to 
+                                separate fields (escape sequences \c, where c 
+                                is a character, have a special meaning see POSIX 
+                                regular expressions. \b means blank)</td>
+                            </tr>
+                            <tr> 
+                              <td align="center">position</td>
+                              <td align="center"></td>
+                              <td align="center"></td>
+                              <td align="center">start</td>
+                              <td align="justify" >Position where cursor will 
+                                be positioned after move. The attribute can take 
+                                two values: &quot;start&quot; (default, field 
+                                start) or &quot;end&quot; (field end, i.e. start 
+                                of next separator)</td>
+                            </tr>
+                            <tr> 
+                              <td align="center">greedy</td>
+                              <td align="center">xsd:boolean</td>
+                              <td align="center"></td>
+                              <td align="center">true</td>
+                              <td align="justify">Flag indicating the way field 
+                                separations are calculated: when is true (default), 
+                                two or more adjacent separator characters are 
+                                considered a single separation, when is false, 
+                                an empty field is considered between two adjacent 
+                                separator characters.</td>
+                            </tr>
+                          </tbody>
+                        </table></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">This tag moves cursor 
+                        along current line, moving from a field to another. What 
+                        a field is depends on a list of separator characters. 
+                        The "separators" attribute is a string containing all 
+                        the characters used to separate fields (escape sequences 
+                        \c, where c is a character, have a special meaning see 
+                        POSIX regular expressions. \b means blank). The "greedy" 
+                        attribute changes the way separations are calculated: 
+                        when is true (default), two or more adjacent separator 
+                        characters are considered a single separation, when is 
+                        false, an empty field is considered between two adjacent 
+                        separator characters. The "position" attribute can have 
+                        two values, start (default) and end, defining where cursor 
+                        will be positioned after move (field start or field end, 
+                        where field end means start of next separator). If the 
+                        move would take the cursor before the first field, it 
+                        will go on the first field. If the move would take the 
+                        cursor after the last field, it will go on the last field. 
+                        The enclosed element gives the number of field to move 
+                        through (non-negative on the right, negative on the left). 
+                        The "absolute" attribute has the same meaning it has in 
+                        the horizontalMove tag.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0" ><pre>&lt;sequence&gt;<br>	&lt;setText new=&quot;true&quot;&gt;<br>		&lt;string&gt;0 1 2 3 4 5 6 7 8 9&lt;/string&gt;<br>	&lt;/setText&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot;/&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>Moves cursor to column 3.</em></font> <pre>&lt;sequence&gt;<br>	&lt;setText new=&quot;true&quot;&gt;<br>		&lt;string&gt;0 1 2 3 4 5 6 7 8 9&lt;/string&gt;<br>	&lt;/setText&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot;/&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot; absolute=&quot;true&quot;/&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>Moves</em></font> <em><font>cursor to column 
+                        1</font>. </em> <pre>&lt;sequence&gt;<br>	&lt;setText new=&quot;true&quot;&gt;<br>		&lt;string&gt;0 1 2 3 4 5 6 7 8 9&lt;/string&gt;<br>	&lt;/setText&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot;/&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot; absolute=&quot;true&quot;/&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot; greedy=&quot;false&quot;/&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>Moves</em></font> <em><font>cursor to column 
+                        3</font>. </em> <pre>&lt;sequence&gt;<br>	&lt;setText new=&quot;true&quot;&gt;<br>		&lt;string&gt;0 1 2 3 4 5 6 7 8 9&lt;/string&gt;<br>	&lt;/setText&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot;/&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot; absolute=&quot;true&quot;/&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot; greedy=&quot;false&quot;/&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot; position=&quot;end&quot;/&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot;&gt;<br>		&lt;literal value=&quot;3&quot;/&gt;<br>	&lt;/fieldMove&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>Moves</em></font> <em><font>cursor to column 
+                        1</font>1. </em> <pre>&lt;sequence&gt;<br>	&lt;setText new=&quot;true&quot;&gt;<br>		&lt;string&gt;0 1 2 3 4 5 6 7 8 9&lt;/string&gt;<br>	&lt;/setText&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot;/&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot; absolute=&quot;true&quot;/&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot; greedy=&quot;false&quot;/&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot; position=&quot;end&quot;/&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot;&gt;<br>		&lt;literal value=&quot;3&quot;/&gt;<br>	&lt;/fieldMove&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot; absolute=&quot;true&quot;&gt;<br>		&lt;literal value=&quot;3&quot;/&gt;<br>	&lt;/fieldMove&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>Moves</em></font> <em><font>cursor to column 
+                        5</font>.</em> <pre>&lt;sequence&gt;<br>	&lt;setText new=&quot;true&quot;&gt;<br>		&lt;string&gt;0 1 2 3 4 5 6 7 8 9&lt;/string&gt;<br>	&lt;/setText&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot;/&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot; absolute=&quot;true&quot;/&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot; greedy=&quot;false&quot;/&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot; position=&quot;end&quot;/&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot;&gt;<br>		&lt;literal value=&quot;3&quot;/&gt;<br>	&lt;/fieldMove&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot; absolute=&quot;true&quot;&gt;<br>		&lt;literal value=&quot;3&quot;/&gt;<br>	&lt;/fieldMove&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot;&gt;<br>		&lt;literal value=&quot;-3&quot;/&gt;<br>	&lt;/fieldMove&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>Moves</em></font> <em><font>cursor to column 
+                        1</font>.</em> <pre>&lt;sequence&gt;<br>	&lt;setText new=&quot;true&quot;&gt;<br>		&lt;string&gt;0 1 2 3 4 5 6 7 8 9&lt;/string&gt;<br>	&lt;/setText&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot;/&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot; absolute=&quot;true&quot;/&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot; greedy=&quot;false&quot;/&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot; position=&quot;end&quot;/&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot;&gt;<br>		&lt;literal value=&quot;3&quot;/&gt;<br>	&lt;/fieldMove&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot; absolute=&quot;true&quot;&gt;<br>		&lt;literal value=&quot;3&quot;/&gt;<br>	&lt;/fieldMove&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot;&gt;<br>		&lt;literal value=&quot;-3&quot;/&gt;<br>	&lt;/fieldMove&gt;<br>	&lt;fieldMove separators=&quot;\b\t&quot; absolute=&quot;true&quot;&gt;<br>		&lt;literal value=&quot;-3&quot;/&gt;<br>	&lt;/fieldMove&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>Moves</em></font> <em><font>cursor to column 
+                        15.</font></em></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>goto</strong><a name="goto"></a></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Attributes</td>
+                      <td align="center" bgcolor="#F0F0F0"><table border="1" width="100%" bgcolor="#F0F0F0" cellspacing="0">
+                          <tbody>
+                            <tr> 
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Name</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Type</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Use</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Default</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Description</td>
+                            </tr>
+                            <tr> 
+                              <td align="center">name</td>
+                              <td align="center">xsd:string</td>
+                              <td align="center">required</td>
+                              <td align="center"></td>
+                              <td align="justify">The name of the mark the cursor 
+                                is moved to</td>
+                            </tr>
+                          </tbody>
+                        </table></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">moves the cursor to 
+                        a previously marked position. The name of the mark is 
+                        given by the "name" attribute.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;sequence&gt;<br>	&lt;setText new=&quot;true&quot;&gt;<br>		&lt;string&gt;0 1 2 3 4 5 6 7 8 9&lt;/string&gt;<br>	&lt;/setText&gt;<br>	&lt;fieldMove separators=&quot;\b&quot;/&gt;<br>	&lt;mark name=&quot;fieldStart&quot;/&gt;<br>	&lt;fieldMove separators=&quot;\b&quot; position=&quot;end&quot;&gt;<br>		&lt;literal value=&quot;0&quot;/&gt;<br>	&lt;/fieldMove&gt;<br>	&lt;mark name=&quot;fieldEnd&quot;/&gt;<br>	&lt;extract start=&quot;fieldStart&quot; end=&quot;fieldEnd&quot;/&gt;<br>	&lt;goto name=&quot;fieldStart&quot;/&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>The "goto" tag moves the cursor on the column 
+                        3.</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>gotoFileEnd<a name="gotoFileEnd"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">moves cursor to last 
+                        line, line end</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;sequence&gt;<br>	&lt;setText new=&quot;true&quot;&gt;<br>		&lt;loadFile&gt;<br>			&lt;string&gt;path_to_file&lt;/string&gt;<br>		&lt;/loadFile&gt;<br>	&lt;/setText&gt;<br>	&lt;gotoFileEnd/&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>The cursor is moved on the last column of the 
+                        last line of the file stored a path "path_to_file".</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>gotoFileStart<a name="gotoFileStart"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">moves cursor to first 
+                        line, line start</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0" ><pre>&lt;sequence&gt;<br>	&lt;setText new=&quot;true&quot;&gt;<br>		&lt;loadFile&gt;<br>			&lt;string&gt;path_to_file&lt;/string&gt;<br>		&lt;/loadFile&gt;<br>	&lt;/setText&gt;<br>	&lt;verticalMove/&gt;<br>	.<br>	.<br>	&lt;gotoFileStart/&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>At the end of the sequence the cursor is moved 
+                        to the first line at the start line of the file stored 
+                        at path "path_to_file"</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>gotoLineEnd</strong><a name="gotoLineEnd"></a></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">moves cursor to line 
+                        end</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;sequence&gt;<br>	&lt;setText new=&quot;true&quot;&gt;<br>		&lt;string&gt;0 1 2 3 4 5 6 7 8 9&lt;/string&gt;<br>	&lt;/setText&gt;<br>	&lt;horizontalMove absolute=&quot;true&quot;&gt;<br>		&lt;literal value=&quot;4&quot;/&gt;<br>	&lt;/horizontalMove&gt;<br>	.<br>	.<br>	&lt;gotoLineEnd/&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>The last operation of the sequence moves the 
+                        cursor to the line end</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>gotoLineStart</strong><a name="gotoLineStart"></a></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">moves cursor to line 
+                        start</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0" ><pre>&lt;sequence&gt;<br>	&lt;setText new=&quot;true&quot;&gt;<br>		&lt;string&gt;0 1 2 3 4 5 6 7 8 9&lt;/string&gt;<br>	&lt;/setText&gt;<br>	&lt;horizontalMove absolute=&quot;true&quot;&gt;<br>		&lt;literal value=&quot;4&quot;/&gt;<br>	&lt;/horizontalMove&gt;<br>	.<br>	.<br>	&lt;gotoLineStart/&gt;<br>&lt;/sequence&gt;</pre>
+                        <font>&nbsp;<em>The last operation of the sequence moves 
+                        the cursor to the line start.</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>horizontalMove</strong></font><a name="horizontalMove"></a></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Attributes</td>
+                      <td align="center" bgcolor="#F0F0F0"><table border="1" width="100%" bgcolor="#F0F0F0" cellspacing="0">
+                          <tbody>
+                            <tr> 
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Name</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Type</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Use</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Default</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Description</td>
+                            </tr>
+                            <tr> 
+                              <td align="center">absolute</td>
+                              <td align="center">xsd:boolean</td>
+                              <td align="center"></td>
+                              <td align="center">false</td>
+                              <td align="justify">Flag indicating whether the 
+                                cursor motion must occur from the start of the 
+                                current line ("absolute" set to "true") or from 
+                                the current position (default)</td>
+                            </tr>
+                          </tbody>
+                        </table></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">This tag moves the 
+                        cursor along the current line. The cursor is moved according 
+                        to the integer value (let's call it 'n') returned by the 
+                        enclosed element and to the value of the "absolute" attribute. 
+                        If absolute is false (default) the cursor is moved n characters 
+                        to the right (if n is negative the cursor moves left). 
+                        If absolute is true, the cursor goes n characters to right 
+                        of line start if it is non-negative and n characters to 
+                        the left of line end if it is negative. If the enclosed 
+                        element is missing, the behaviour is as the returned value 
+                        was 1. If the result of the move would be on the left 
+                        of line start the cursor goes to line start. If the result 
+                        of the move would be on the right of line end the cursor 
+                        goes to line end.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0" ><pre>&lt;horizontalMove/&gt;</pre>
+                        <font><em>moves 1 character to right if possible </em></font> 
+                        <pre>&lt;horizontalMove absolute=&quot;true&quot;/&gt;</pre>
+                        <font><em>goes 1 character to the right of line start 
+                        if possibl</em>e</font> <pre>&lt;horizontalMove&gt;<br>	&lt;literal value=&quot;3&quot;/&gt;<br>&lt;/horizontalMove&gt;</pre>
+                        <font><em>moves 3 characters to the right if possible</em> 
+                        </font> <pre>&lt;horizontalMove absolute=&quot;true&quot;&gt;<br>	&lt;literal value=&quot;3&quot;/&gt;<br>&lt;/horizontalMove&gt;</pre>
+                        <font><em>moves 3 characters to the right of line start 
+                        if possible</em></font> <pre>&lt;horizontalMove&gt;<br>	&lt;literal value=&quot;-3&quot;/&gt;<br>&lt;/horizontalMove&gt;</pre>
+                        <font><em>moves 3 characters to the left if possible</em> 
+                        </font> <pre>&lt;horizontalMove absolute=&quot;true&quot;&gt;<br>	&lt;literal value=&quot;-3&quot;/&gt;<br>&lt;/horizontalMove&gt;</pre>
+                        <font><em>moves 3 characters to the left of line end if 
+                        possible</em> </font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>lineNumber</strong><a name="lineNumber"></a></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Returns the current 
+                        line number of the current text context</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0" ><pre>&lt;sequence&gt;<br>	&lt;setText new=&quot;true&quot;&gt;<br>		&lt;string&gt;This is text.<br>	It was written to explain the text handling.<br>	Hoping it will help...&lt;/string&gt;<br>	&lt;/setText&gt;<br>	&lt;print&gt;<br>		&lt;lineNumber/&gt;<br>	&lt;/print&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>The context of the text has been just created 
+                        (see the "setText" tag). The cursor is at the beginning 
+                        of the string, thus evaluation of &quot;lineNumber&quot; 
+                        returns 1. So, the at the end on the sequence 1 is printed 
+                        on video.</em></font> <pre>&lt;sequence&gt;<br>	&lt;setText new=&quot;true&quot;&gt;<br>		&lt;string&gt;This is text.<br>	It was written to explain the text handling.<br>	Hoping it will help...&lt;/string&gt;<br>	&lt;/setText&gt;<br>	&lt;horizontalMove/&gt;<br>	&lt;print&gt;<br>		&lt;lineNumber/&gt;<br>	&lt;/print&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>At the end of the sequence 2 is printed on video.</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>mark</strong><a name="mark"></a></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Attributes</td>
+                      <td align="center" bgcolor="#F0F0F0"><table border="1" width="100%" bgcolor="#F0F0F0" cellspacing="0">
+                          <tbody>
+                            <tr> 
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Name</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Type</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Use</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Default</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Description</td>
+                            </tr>
+                            <tr> 
+                              <td align="center">name</td>
+                              <td align="center">xsd:string</td>
+                              <td align="center">required</td>
+                              <td align="center"></td>
+                              <td align="justify">The name of the mark given to 
+                                the current position</td>
+                            </tr>
+                          </tbody>
+                        </table></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Gives a name to current 
+                        position (line/column), This name is used by the goto 
+                        and extract tags (see). The name of the mark is given 
+                        by the "name" attribute.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;sequence&gt;<br>	&lt;setText new=&quot;true&quot;&gt;<br>		&lt;string&gt;0 1 2 3 4 5 6 7 8 9&lt;/string&gt;<br>	&lt;/setText&gt;<br>	&lt;sequence&gt;<br>		&lt;fieldMove separators=&quot;\b&quot;/&gt;<br>		&lt;mark name=&quot;fieldStart&quot;/&gt;<br>		&lt;fieldMove separators=&quot;\b&quot; position=&quot;end&quot;&gt;<br>			&lt;literal value=&quot;0&quot;/&gt;<br>		&lt;/fieldMove&gt;<br>		&lt;mark name=&quot;fieldEnd&quot;/&gt;<br>		&lt;extract start=&quot;fieldStart&quot; end=&quot;fieldEnd&quot;/&gt;<br>	&lt;/sequence&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>The tag "extracts&quot; returns "1".</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>search</strong><a name="search"></a></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Attributes</td>
+                      <td align="center" bgcolor="#F0F0F0"><table border="1" width="100%" bgcolor="#F0F0F0" cellspacing="0">
+                          <tbody>
+                            <tr> 
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Name</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Type</td>
+                              <td align="center" bgcolor="#CCCCCC">Use</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Default</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Description</td>
+                            </tr>
+                            <tr> 
+                              <td align="center">absolute</td>
+                              <td align="center">xsd:boolean</td>
+                              <td align="center"></td>
+                              <td align="center">false</td>
+                              <td align="justify">Flag indicating whether the 
+                                search must occur from the beginning of text (&quot;absolute&quot; 
+                                set to &quot;true&quot;), or from the current 
+                                position (default)</td>
+                            </tr>
+                          </tbody>
+                        </table></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">This tag searches 
+                        the n-th occurence of a regular expression (see regular 
+                        expression documentation) and if it exists the cursor 
+                        is positioned to the start of such occurence and the tag 
+                        returns true, otherwise the curos is not moved and the 
+                        tag returns false. If the "absolute" attribute is true, 
+                        the search is done from beginning of text, otherwise (default) 
+                        from the current position. No backward searches are allowed. 
+                        The first enclosed element must return the regular expression, 
+                        whilst the second must return a POSITIVE integer that 
+                        is the occurrence number. The second element is optional 
+                        (default is 1).</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;sequence&gt;<br>	&lt;setText new=&quot;true&quot;&gt;<br>		&lt;loadFile&gt;<br>			&lt;string&gt;file.html&lt;/string&gt;<br>		&lt;/loadFile&gt;<br>	&lt;/setText&gt;<br>	&lt;verticalMove/&gt;<br>	&lt;search&gt;<br>		&lt;string&gt;HEADER&lt;/string&gt;<br>	&lt;/search&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>The tag search searches for the first occurrence 
+                        of the &quot;HEADER&quot; string from current position 
+                        (i.e. the second line start).</em></font> <pre>&lt;sequence&gt;<br>	&lt;setText new=&quot;true&quot;&gt;<br>		&lt;loadFile&gt;<br>			&lt;string&gt;file.html&lt;/string&gt;<br>		&lt;/loadFile&gt;<br>	&lt;/setText&gt;<br>	&lt;verticalMove/&gt;<br>	&lt;search absolute=&quot;true&quot;&gt;<br>		&lt;string&gt;HEADER&lt;/string&gt;<br>	&lt;/search&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>The tag "search" searches for the first occurrence 
+                        of the "HEADER" string from text start (i.e. from the 
+                        file start)</em></font> <pre>&lt;sequence&gt;<br>	&lt;setText new=&quot;true&quot;&gt;<br>		&lt;loadFile&gt;<br>			&lt;string&gt;file.html&lt;/string&gt;<br>		&lt;/loadFile&gt;<br>	&lt;/setText&gt;<br>	&lt;verticalMove/&gt;<br>	&lt;search&gt;<br>		&lt;string&gt;&amp;lt;h1&amp;gt;&lt;/string&gt;<br>		&lt;literal value=&quot;5&quot;/&gt;<br>	&lt;/search&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>The tag "search" searches for the fifth occurence 
+                        of the &quot;&lt;h1&gt;&quot; string from current posisiton</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>setText</strong><a name="setText"></a></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Attributes</td>
+                      <td align="center" bgcolor="#F0F0F0"><table border="1" width="100%" bgcolor="#F0F0F0" cellspacing="0">
+                          <tbody>
+                            <tr> 
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Name</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Type</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Use</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Default</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Description</td>
+                            </tr>
+                            <tr> 
+                              <td align="center">new</td>
+                              <td align="center">xsd:boolean</td>
+                              <td align="center"></td>
+                              <td align="center">true</td>
+                              <td align="justify" ><div align="justify">Flag indicating 
+                                  whether the subsequent text navigation tags 
+                                  will apply on the string returned by the enclosed 
+                                  element (default), or the enclosed element is 
+                                  expected to return an already existent text 
+                                  context (&quot;new&quot; set to &quot;false&quot;).</div></td>
+                            </tr>
+                          </tbody>
+                        </table></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">This tag sets the 
+                        text context for any subsequent text navigation tag in 
+                        the script. Every time it is evaluated, a text context 
+                        context is set and returned. If the "new" attribute is 
+                        set to true (default) the subsequent text navigation tags 
+                        will apply on the string returned by the enclosed element, 
+                        otherwise the enclosed element is expected to return an 
+                        already existent text context. A text context is composed 
+                        by the text, a cursor (line and column) and a set of marked 
+                        positions (line/column couple with an associated name). 
+                        When a new text context is created, the cursor is on line 
+                        1, column 1 and no mark is set. When an old text context 
+                        is used, it has the status it had last time it was used.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;sequence&gt;<br>	&lt;setVariable name=&quot;firstTextContext&quot;&gt;<br>		&lt;setText&gt;<br>			&lt;string&gt;This is the first text to be navigated&lt;/string&gt;<br>		&lt;/setText&gt;<br>	&lt;/setVariable&gt;<br>	<strong>&lt;!-- Text navigation tags on first text --</strong>&gt;<br>	&lt;setText&gt;<br>		&lt;string&gt;This is the second text to be navigated&lt;/string&gt;<br>	&lt;/setText&gt;<br>	<strong>&lt;!-- Text navigation tags on second text --</strong>&gt;<br>	&lt;setText new=&quot;false&quot;&gt;<br>		&lt;variable name=&quot;firstTextContext&quot;/&gt;<br>	&lt;/setText&gt;<br>	<strong>&lt;!-- Text navigation tags on first text --</strong>&gt;<br>&lt;/sequence&gt;</pre></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>verticalMove</strong><a name="verticalMove"></a></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Attributes</td>
+                      <td align="center" bgcolor="#F0F0F0"><table border="1" width="100%" bgcolor="#F0F0F0" cellspacing="0">
+                          <tbody>
+                            <tr> 
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Name</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Type</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Use</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Default</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Description</td>
+                            </tr>
+                            <tr> 
+                              <td width="20%" align="center">absolute</td>
+                              <td width="20%" align="center">xsd:boolean</td>
+                              <td width="20%" align="center"></td>
+                              <td width="20%" align="center">false</td>
+                              <td width="20%" align="justify">Indicates if the 
+                                motion must start from the first line (&quot;true&quot;) 
+                                or from the current one (default).</td>
+                            </tr>
+                            <tr> 
+                              <td align="center">position</td>
+                              <td align="center">&nbsp;</td>
+                              <td align="center"></td>
+                              <td align="center">column</td>
+                              <td align="justify">Indicates if, after the vertical 
+                                move, the cursor will go to line start (&quot;start&quot;), 
+                                to line end (&quot;end&quot;) or to same column 
+                                (default).</td>
+                            </tr>
+                          </tbody>
+                        </table></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">This tag moves the 
+                        cursor on a different line of the current text context. 
+                        The cursor is moved according to the integer value (let's 
+                        call it 'n') returned by the enclosed element, to the 
+                        value of the "absolute" attribute and to the value of 
+                        the "position" attribute. If absolute is false (default) 
+                        the cursor is moved n lines down (if n is negative the 
+                        cursor moves up). If absolute is true, the cursor goes 
+                        on line n + 1 if it is non-negative and n lines above 
+                        the last if it is negative. If the enclosed element is 
+                        missing, the behaviour is as the returned value was 1. 
+                        If the result of the move would above first line the cursor 
+                        goes to first line. If the result of the move would be 
+                        below last line the cursor goes to last line. The value 
+                        of the "position" attribute affects the column the cursor 
+                        will be position after vertical move. The possible values 
+                        are: column (default), start, end. If the value is start 
+                        the cursor will go to line start, if the value is end 
+                        the cursor will go to line end, if the value is column 
+                        the cursor will remain on the same column it was before 
+                        moving, unless the destination line is not long enough, 
+                        in shich case the cursor will go to line end.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;verticalMove/&gt;</pre>
+                        <font><em>moves 1 line down, same column, if possible</em></font> 
+                        <pre>&lt;verticalMove position=&quot;start&quot;/&gt;</pre>
+                        <font><em>moves 1 line down, line start, if possible</em></font> 
+                        <pre>&lt;verticalMove position=&quot;end&quot;/&gt;</pre>
+                        <font><em>moves 1 line down, line end, if possible</em></font> 
+                        <pre>&lt;verticalMove absolute=&quot;true&quot;/&gt;</pre>
+                        <font><em>goes to line 2, same column, if possible</em></font> 
+                        <pre>&lt;verticalMove&gt;<br>	&lt;literal value=&quot;3&quot;/&gt;<br>&lt;/verticalMove&gt;</pre>
+                        <font><em>moves 3 line down, same column, if possible</em> 
+                        </font> <pre>&lt;verticalMove absolute=&quot;true&quot;&gt;<br>	&lt;literal value=&quot;3&quot;/&gt;<br>&lt;/verticalMove&gt;</pre>
+                        <font><em>moves to line 4, same column, if possible</em> 
+                        </font> <pre>&lt;verticalMove&gt;<br>	&lt;literal value=&quot;-3&quot;/&gt;<br>&lt;/verticalMove&gt;</pre>
+                        <font><em>moves 3 lines up, same column, if possible</em></font> 
+                        <pre>&lt;verticalMove absolute=&quot;true&quot;&gt;<br>	&lt;literal value=&quot;-3&quot;/&gt;<br>&lt;/verticalMove&gt;</pre>
+                        <font><em>moves to the last but 3 line, same column, if 
+                        possible</em> </font></td>
+                    </tr>
+                  </tbody>
+                </table>
+</body></html>

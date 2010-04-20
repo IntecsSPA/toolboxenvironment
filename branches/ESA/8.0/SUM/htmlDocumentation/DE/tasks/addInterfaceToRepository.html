@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Documento senza titolo</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<h1>Add an interface to the Interface Repository </h1>
+<p>The internal Interface Repository can be populated with user provided interfaces. This will let the final user describe once an interface that will be implemented by more than one TOOLBOX service. This will speed up development in those cases where an interface is not natively provided by the TOOLBOX DE. In order to add an interface these files are needed:</p>
+<ul>
+  <li>Schema set describing the interface data</li>
+  <li>WSDL describing the interface</li>
+</ul>
+<p>To add an interface, the user have to select &quot;New/Other&quot; from the &quot;File&quot; menu. The below dialog is displayed. Select &quot;Toolbox/Interface Repository/User defined interface&quot; and click &quot;Next&quot;. </p>
+<p align="center"><img src="../images/add_interface_repository_001.png" width="500" height="500"> </p>
+<p align="left">The first step of the wizard asks the user for the name and version of the interface. When provided the user have to click on &quot;Next&quot; in order to move to the next wizard page. </p>
+<p align="center"><img src="../images/add_interface_repository_002.png" width="500" height="500"></p>
+<p align="left">This wizard page asks the user for the directory where the schema set is stored. The content of this directory will be used later for letting the user select the root file of the schema set. The user always have to keep in mind that the schema set shall all be stored under the provided schema directory. Schema files stored outside this directory won't be kept in consideration. The wizard can handle multiple subdirectories, so it is possible to organize the schema set in a complex structure. When the schema directory has been selected (either providing the full path or selecting it through the directory browing accessible with the &quot;Browse&quot; button), the user have to click on &quot;Next&quot; in order to move to the next page. </p>
+<p align="center"><img src="../images/add_interface_repository_003.png" width="500" height="500"></p>
+<p align="left">The figure below shows an example of schema set. In this case the HMA ordering schema set has been selected and it structure has been parsed by the wizard. The structure is provided as a tree. When the tree has been displayed, the user have to select the root schema (below Order.xsd has been selected) and click on &quot;Next&quot;. </p>
+<p align="center"><img src="../images/add_interface_repository_004.png" width="500" height="500"></p>
+<p align="left">The next step asks the user to select a WSDL file that describes the interface. When provided click on &quot;Next&quot;.</p>
+<p align="center"><img src="../images/add_interface_repository_005.png" width="500" height="500"></p>
+<p align="left">The next wizard page shows the result of parsing the WSDL file. For each port type, defined into the WSDL, a  tab is  shown.  The figure below shows what can be obtained providing the WSDL for an HMA Ordering service. The first step that shall be performed is enabling those operations that the user wants to associate to the interface stored into the Interface Repository. The figure below shows how to add a Submit operation to the new interface. When enable, each tab let the user specify some necessary information. </p>
+<p align="left">SOAP Actions can be specified both for the operation and for it callback (if asynchronous), selecting them from  drop downs, populated with all SOAP actions found into the WSDL file.</p>
+<p align="left">Template script file can be associated to the operation in order to be stored into the Interface Repository. These template files will be used when a new service and/or operation is created. </p>
+<p align="center"><img src="../images/add_interface_repository_006.png" width="500" height="500"></p>
+<p align="left">The figures below shows how to specify a SOAP Action for both the operation and its callback. </p>
+<p align="center"><img src="../images/add_interface_repository_007.png" width="500" height="500"></p>
+<p align="center"><img src="../images/add_interface_repository_008.png" width="500" height="500"></p>
+<p align="left">When all information are provided, the interface can be added clicking on &quot;Finish&quot;. </p>
+</body>
+</html>

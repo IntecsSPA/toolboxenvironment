@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>XML Script Tags Reference</title>
+
+<link type="text/css" href="../images/page.css" rel="stylesheet"></head>
+
+<body text="#000000" bgcolor="#ffffff">
+<h1>e-mail</h1> 
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="8%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="92%" bgcolor="#F0F0F0"><font color="#993300"><strong>sendMail</strong><a name="sendMail"></a></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Attributes</td>
+                      <td align="center" bgcolor="#F0F0F0"><table border="1" width="100%" bgcolor="#F0F0F0" cellspacing="0">
+                          <tbody>
+                            <tr> 
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Name</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Type</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Use</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Default</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Description</td>
+                            </tr>
+                            <tr> 
+                              <td align="center">smtpServer</td>
+                              <td align="center">xsd:string</td>
+                              <td align="center">required</td>
+                              <td align="center"></td>
+                              <td align="justify">The smpt server address to be 
+                                used</td>
+                            </tr>
+                          </tbody>
+                        </table></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Sends an e-mail. The 
+                        smpt-server attribute gives the smpt server address to 
+                        be used. The from child contains a child that must return 
+                        the mail address to be set as sender of the e-mail. The 
+                        to child contains a child that must return the mail address 
+                        of the recipient of the e-mail. The otherRecipients element 
+                        contains zero or more to, cc or bcc children each containing 
+                        a child that must give additional recipient e-mail addresses. 
+                        The subject child contains a child that must return the 
+                        subject of the e-mail. The text child contains a child 
+                        that must return the text of the e-mail. Any subsequent 
+                        attachment element cause an attachment to be added to 
+                        the e-mail. The name attribute (optional) of such elements 
+                        gives the name to be given to the attchment in the e-mail. 
+                        The element enclosed in the attachment element gives the 
+                        path of the file to be attached.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0" ><pre>&lt;sendMail smtpServer=&quot;smtpServerAddress&quot;&gt;<br>	&lt;from&gt;&lt;string&gt;bb@pisa.intecs.it&lt;/string&gt;&lt;/from&gt;<br>	&lt;to&gt;&lt;string&gt;pn@pisa.intecs.it&lt;/string&gt;&lt;/to&gt;<br>	&lt;otherRecipients&gt;<br>		&lt;cc&gt;&lt;string&gt;sg@pisa.intecs.it&lt;/string&gt;&lt;/cc&gt;<br>	&lt;/otherRecipients&gt;<br>	&lt;subject&gt;&lt;string&gt;Required file&lt;/string&gt;&lt;/subject&gt;<br>	&lt;text&gt;&lt;string&gt;Dear Patrizia,.....&lt;/string&gt;&lt;/text&gt;<br>	&lt;attachment&gt;<br>		&lt;string&gt;C:\fileToBeAttached.xml&lt;/string&gt;<br>	&lt;/attachment&gt;<br>&lt;/sendMail&gt;</pre>
+                        <font><em>Sends an e-mail from "bb@pisa.intecs.it" to 
+                        &quot;pn@pisa.intecs.it&quot; (putting in cc sg@pisa.intecs.it) 
+                        using the smtp server &quot;smtpServerAddress&quot;. The 
+                        e-mail has attached the file &quot;C:\fileToBeAttached.xml&quot; 
+                        and its content is: &quot;Dear Patrizia,...&quot;.</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+</body></html>

@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>GetRecordById</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<h1>GetRecordById
+</h1>
+<p>The getRecordById interface is called when the id of the item to fetch is already known. Through this interface it is possible to obtain information about the item. The structure of the Toolbox script is quite similar to the one exposed for the getRecords interface (click <a href="getRecords.html">here</a> to show), with a first part where variables are setted and a second part where messages from HMA portal to EOLI service and back are translated through an XSLT and dumped to disk. </p>
+<p>The following piece of code shows how the request type is extracted through XPath. The first child item is the document where extract the information (the request coming from the HMA portal) and the second is the XPath, expressed as string.</p>
+<p>The result of the XPath is stored into the variable called responseType.</p>
+<pre>	&lt;setVariable name=&quot;responseType&quot;&gt;<br>		&lt;xPath xmlns:csw=&quot;http://www.opengis.net/cat/csw&quot; xmlns:ogc=&quot;http://www.opengis.net/ogc&quot;&gt;<br>			&lt;xmlRequest/&gt;<br>			&lt;string&gt;csw:GetRecordById/csw:ElementSetName&lt;/string&gt;<br>		&lt;/xPath&gt;<br>	&lt;/setVariable&gt;<br>
+Just before calling the EOLI host (and when a new message is created/received), the request has been dumped to disk using the following code:</pre>
+<pre>	&lt;dumpXML&gt;
+ 		&lt;variable name=&quot;InputFileName&quot;/&gt;
+		&lt;xmlRequest/&gt;
+ 	&lt;/dumpXML&gt; 
+ 
+</pre>
+<p>The file name has been previously stored into the InputFileName variable and now used (see XML directory of the Help system to see some examples).</p>
+<p>The following piece of code shows how messages are translated from the HMA structure to the EOLI one using the XSL transformation (the file <a href="XSL/GetrecordById_queryBuilder.xsl">GetrecordById_queryBuilder.xsl</a> has been used). When the transformation has been performed, the result document is dumped to disk and a SoapCall is performed, in order to invoke the SOAP interface. The structure of the SOAP xml message is created through the XSLT. </p>
+<pre>	&lt;setVariable name=&quot;searchRequest&quot;&gt;
+  	&lt;xslt&gt;
+ 			&lt;xmlRequest/&gt;
+ 			&lt;variable name=&quot;queryBuilder&quot;/&gt;
+ 		&lt;/xslt&gt;
+ 	&lt;/setVariable&gt;
+ 
+	&lt;dumpXML&gt;
+ 		&lt;variable name=&quot;eoliRequestFile&quot;/&gt;
+ 		&lt;variable name=&quot;searchRequest&quot;/&gt;
+ 	&lt;/dumpXML&gt;
+ 
+	&lt;setVariable name=&quot;searchReply&quot;&gt;
+ 		&lt;soapCall&gt;
+ 			&lt;variable name=&quot;eoliUrl&quot;/&gt;
+ 			&lt;variable name=&quot;searchRequest&quot;/&gt;
+ 		&lt;/soapCall&gt;
+ 	&lt;/setVariable&gt;</pre>
+<p> When the response is received, is it translated to a message compliant ot the HMA ICD through another XSL transformation. The following piece of code shows how it is done, using the optional parameter tag to set values needed by the XSL file.</p>
+<pre>
+
+	&lt;setVariable name=&quot;response2beSentBack&quot;&gt;<br>		&lt;xslt&gt;<br>			&lt;variable name=&quot;searchReply&quot;/&gt;<br>			&lt;variable name=&quot;responseBuilder&quot;/&gt;<br>			&lt;parameter name=&quot;requestType&quot;&gt;<br>				&lt;string&gt;getRecordById&lt;/string&gt;<br>			&lt;/parameter&gt;<br>			&lt;parameter name=&quot;collection&quot;&gt;<br>				&lt;xPath xmlns:csw=&quot;http://www.opengis.net/cat/csw&quot; xmlns:ogc=&quot;http://www.opengis.net/ogc&quot;&gt;<br>					&lt;xmlRequest/&gt;<br>					&lt;string&gt;csw:GetRecordById/csw:Id&lt;/string&gt;<br>				&lt;/xPath&gt;<br>			&lt;/parameter&gt;<br>		&lt;/xslt&gt;<br>	&lt;/setVariable&gt;</pre>
+<p>The XSL file to be used for the EOLI to HMA transformation has been selected by the following piece of code, placed at the start of the script:</p>
+<pre>	&lt;&lt;setVariable name=&quot;responseBuilder&quot;&gt;<br>		&lt;stringCat&gt;<br>			&lt;variable name=&quot;installationDirectory&quot;/&gt;<br>			&lt;string&gt;XSL\&lt;/string&gt;<br>			&lt;variable name=&quot;responseDataset&quot;/&gt;<br>			&lt;variable name=&quot;responseType&quot;/&gt;<br>			&lt;string&gt;.xsl&lt;/string&gt;<br>		&lt;/stringCat&gt;<br>	&lt;/setVariable&gt;</pre>
+<p>The path is built using the variables responseDataset and responseType, previously extracted from the incoming HMA message. The selection of the XSL has made possible naming those files with the following structure &lt;responseSchema&gt;&lt;responseType&gt;.xsl</p>
+<p>All possible XSL schemas are listed below:</p>
+<ul><li><a href="XSL/old.HmaRecordfull.xsl">old.HmaRecordfull.xsl</a></li>
+  <li><a href="XSL/old.HmaRecordsummary.xsl">old.HmaRecordsummary.xsl</a></li>
+</ul>
+<p>.</p>
+<p>&nbsp;</p>
+</body>
+</html>

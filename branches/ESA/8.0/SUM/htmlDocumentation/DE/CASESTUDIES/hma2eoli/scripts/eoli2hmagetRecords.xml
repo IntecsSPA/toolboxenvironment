@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript">
+	<!-- ************************************************************* INSTALLATION DIRECTORY *************************************************************-->
+	<setVariable name="installationDirectory">
+		<string>C:\progetti\HMA_P\DEVELOP\HMA_P\PROTOTYPE\PROTOTYPE_EOLI\</string>
+	</setVariable>
+	<setVariable name="eoliRequestFile">
+		<stringCat>
+			<variable name="installationDirectory"/>
+			<string>request4eoli.xml</string>
+		</stringCat>
+	</setVariable>
+	<setVariable name="hmaresponseFile">
+		<stringCat>
+			<variable name="installationDirectory"/>
+			<string>response4hma.xml</string>
+		</stringCat>
+	</setVariable>
+	<!--*************************************************************  RESOURCE FILES  *************************************************************-->
+	<setVariable name="responseType">
+		<xPath xmlns:csw="http://www.opengis.net/cat/csw" xmlns:ogc="http://www.opengis.net/ogc">
+			<xmlRequest/>
+			<string>csw:GetRecords/csw:Query/csw:ElementSetName</string>
+		</xPath>
+	</setVariable>
+	<!--*************************************************************  EXTRACT THE SCHEMA TO BE USED FOR THE RESPONSE*************************************************************-->
+	<setVariable name="responseSchema">
+		<xPath xmlns:csw="http://www.opengis.net/cat/csw" xmlns:ogc="http://www.opengis.net/ogc">
+			<xmlRequest/>
+			<string>substring-after(csw:GetRecords/@outputSchema,':')</string>
+		</xPath>
+	</setVariable>
+	<setVariable name="queryBuilder">
+		<stringCat>
+			<variable name="installationDirectory"/>
+			<string>XSL\Getrecord_queryBuilder.xsl</string>
+		</stringCat>
+	</setVariable>
+		<setVariable name="responseBuilder">
+		<stringCat>
+			<variable name="installationDirectory"/>
+			<string>XSL\</string>
+			<variable name="responseSchema"/>
+			<variable name="responseType"/>
+			<string>.xsl</string>
+		</stringCat>
+	</setVariable>
+	<!--setVariable name="responseBuilder">
+		<stringCat>
+			<variable name="installationDirectory"/>
+			<string>XSL\</string>
+			<variable name="responseType"/>
+			<string>.xsl</string>
+		</stringCat>
+	</setVariable-->
+	<setVariable name="InputFileName">
+		<stringCat>
+			<variable name="installationDirectory"/>
+			<string>inputMessage.xml</string>
+		</stringCat>
+	</setVariable>
+	<setVariable name="startPosition">
+		<xPath xmlns:csw="http://www.opengis.net/cat/csw" xmlns:ogc="http://www.opengis.net/ogc">
+			<xmlRequest/>
+			<string>/csw:GetRecords/@startPosition</string>
+		</xPath>
+	</setVariable>
+	<setVariable name="maxRecords">
+		<xPath xmlns:csw="http://www.opengis.net/cat/csw" xmlns:ogc="http://www.opengis.net/ogc">
+			<xmlRequest/>
+			<string>/csw:GetRecords/@maxRecords</string>
+		</xPath>
+	</setVariable>
+	<!--*************************************************************  CONNECTION INFORMATION *************************************************************-->
+	<setVariable name="eoliUrl">
+		<string>http://muiscx2.esrin.esa.int:8090/</string>
+	</setVariable>
+	<!-- DUMP THE INPUT MESSAGE -->
+	<dumpXML>
+		<variable name="InputFileName"/>
+		<xmlRequest/>
+	</dumpXML>
+	<!--*************************************************************  PERFORM THE SEARCH *************************************************************-->
+	<setVariable name="searchRequest">
+		<xslt>
+			<xmlRequest/>
+			<variable name="queryBuilder"/>
+		</xslt>
+	</setVariable>
+	<dumpXML>
+		<variable name="eoliRequestFile"/>
+		<variable name="searchRequest"/>
+	</dumpXML>
+	<setVariable name="searchReply">
+		<soapCall>
+			<variable name="eoliUrl"/>
+			<variable name="searchRequest"/>
+		</soapCall>
+	</setVariable>
+	<!--*************************************************************  SWAP THE COORDINATES *************************************************************-->
+	<setVariable name="index">
+		<literal value="1"/>
+	</setVariable>
+	<setVariable name="xpath">
+		<stringCat>
+			<string>/eoli:response/eoli:retrievedData/eoli:Metadata[</string>
+			<variable name="index"/>
+			<string>]/eoli:dataIdInfo/eoli:dataExt/eoli:geoEle/eoli:polygon/eoli:coordinates/text()</string>
+		</stringCat>
+	</setVariable>
+	<dumpXML>
+		<stringCat>
+			<variable name="installationDirectory"/>
+			<string>eoliResponse.xml</string>
+		</stringCat>
+		<variable name="searchReply"/>
+	</dumpXML>
+	<!--while>
+		<and>
+			<isNotNull>
+				<xPath xmlns:eoli="http://earth.esa.int/XML/eoli">
+					<variable name="searchReply"/>
+					<variable name="xpath"/>
+				</xPath>
+			</isNotNull>
+			<oneq>
+				<xPath xmlns:eoli="http://earth.esa.int/XML/eoli">
+					<variable name="searchReply"/>
+					<variable name="xpath"/>
+				</xPath>
+				<string></string>
+			</oneq>
+		</and>
+		<sequence>
+			<setVariable name="swappedCoordinates">
+				<methodInvocation methodName="coordinatesSwap">
+					<class>
+						<classLiteral class="it.intecs.pisa.soap.toolbox.services.util.GMLAdjuster2"/>
+					</class>
+					<parameter>
+						<classLiteral class="java.lang.String"/>
+						<stringCat>
+							<xPath xmlns:eoli="http://earth.esa.int/XML/eoli">
+								<variable name="searchReply"/>
+								<variable name="xpath"/>
+							</xPath>
+						</stringCat>
+					</parameter>
+				</methodInvocation>
+			</setVariable>
+			<setXMLValue xmlns:eoli="http://earth.esa.int/XML/eoli">
+				<variable name="searchReply"/>
+				<variable name="xpath"/>
+				<variable name="swappedCoordinates"/>
+			</setXMLValue>
+			<inc>
+				<variable name="index"/>
+			</inc>
+			<setVariable name="xpath">
+				<stringCat>
+					<string>/eoli:response/eoli:retrievedData/eoli:Metadata[</string>
+					<variable name="index"/>
+					<string>]/eoli:dataIdInfo/eoli:dataExt/eoli:geoEle/eoli:polygon/eoli:coordinates/text()</string>
+				</stringCat>
+			</setVariable>
+		</sequence>
+	</while>
+	<dumpXML>
+		<stringCat>
+			<variable name="installationDirectory"/>
+			<string>eoliResponse_swapped.xml</string>
+		</stringCat>
+		<variable name="searchReply"/>
+	</dumpXML-->
+	<setVariable name="response2beSentBack">
+		<xslt>
+			<variable name="searchReply"/>
+			<variable name="responseBuilder"/>
+			<parameter name="requestType">
+				<string>getRecords</string>
+			</parameter>
+			<parameter name="collection">
+				<xPath xmlns:csw="http://www.opengis.net/cat/csw" xmlns:ogc="http://www.opengis.net/ogc">
+					<xmlRequest/>
+					<string>csw:GetRecords/csw:Query/csw:Constraint/*/*/*/ogc:PropertyName[text()='ParentIdentifier']/../ogc:Literal</string>
+				</xPath>
+			</parameter>
+			<parameter name="startPosition">
+				<variable name="startPosition"/>
+			</parameter>
+			<parameter name="maxRecords">
+				<variable name="maxRecords"/>
+			</parameter>
+		</xslt>
+	</setVariable>
+	<dumpXML>
+		<variable name="hmaresponseFile"/>
+		<variable name="response2beSentBack"/>
+	</dumpXML>
+	<variable name="response2beSentBack"/>
+</sequence>

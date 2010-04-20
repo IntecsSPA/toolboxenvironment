@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Service Management</title>
+
+<link type="text/css" href="images/page.css" rel="stylesheet"></head>
+
+<body text="#000000" bgcolor="#ffffff">
+<h1>Listing synchronous instances</h1>
+                <div class="content">
+                  <p align="justify">To view the list of the asynchronous instances of the selected 
+                    service click on the &quot;Display Synchronous instances&quot; section link in the 
+in the "Monitoring center" page. The browser should display a table listing all the service instances</p>
+                  <p align="center"><img src="images/image035.jpg" width="640"  ></p>
+                  <p>The table displayed includes the following information:</p>
+</div>
+                <ul>
+                  <li> 
+                    <div class="content">TOOLS: this column allows deleting old instances. To delete an old instance click on the &quot;DELETE&quot; link.</div>
+                  </li>
+                  <li> 
+                    <div class="content"> instance: identifier of the instance. 
+                      This is a unique key assigned by the TOOLBOX.</div>
+                  </li>
+                  <li> 
+                    <div class="content"> OrderId: SSE order identifier. It is 
+                      displayed only if the message is a SSE compliant message.</div>
+                  </li>
+                  <li> 
+                    <div class="content">Operation: name of the operation.</div>
+                  </li>
+                  <li><span class="content">Date: date in which the request has been received and served by the service. </span></li>
+                  <li> 
+                    <div class="content">Status: status of the request. Each request 
+                      can be in one of the following status: 
+                      <ul>
+                        <li> 
+                          <div class="content">executing: the TOOLBOX is executing 
+                            the First script corresponding to the request.</div>
+                        </li>
+                        <li> 
+                          <div class="content">error: the request execution returned an error. </div>
+                        </li>
+                        <li> 
+                          <div class="content">completed: this status is reached when the TOOLBOX succeeds in sending back the response</div>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+</ul>
+                <div class="content">
+Additionally the View Status page allows sorting the table by clicking on the header's links.</div>
+</body></html>

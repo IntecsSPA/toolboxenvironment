@@ -11,6 +11,7 @@
         <property name="temp" location="temp"/>
 	<property name="tempZipDir" location="temp"/>
         <property name="revision" value="HEAD"/>
+        <property name="svnroot" value="https://toolboxenvironment.googlecode.com/svn/branches/ESA/8.0"/>
         
 	<!--Creating the building classpath -->
 	<path id="build.classpath">
@@ -35,19 +36,15 @@
 		<!-- Create the time stamp -->
 		<tstamp/>
 	</target>
+
 	<target name="compileTBX" depends="init" description="compile the source ">
 		<mkdir dir="${temp}"/>
 		<javac srcdir="${src}:${src2}:${src3}:${src4}" destdir="${temp}" classpathref="build.classpath" nowarn="yes" target="1.5"/>
-		<jar jarfile="TOOLBOX/webapp//WEB-INF/lib/toolbox.jar">
+		<jar jarfile="TOOLBOX/webapp/WEB-INF/lib/toolbox.jar">
 			<fileset dir="${temp}">
 				
 			</fileset>
 		</jar>
-		<!--<jar jarfile="TOOLBOX/webapp/WEB-INF/plugins/ToolboxNativeTagPlugin/libs/ToolboxNativeTagPlugin.jar">
-			<fileset dir="${temp}">
-				<include name="it/intecs/pisa/toolbox/plugins/nativeTagPlugin/**/*.class"/>
-			</fileset>
-		</jar>-->
 		<jar jarfile="TOOLBOX/webapp/WEB-INF/plugins/GeoServerTagPlugin/libs/GeoServerTagPlugin.jar">
 			<fileset dir="${temp}">
 				<include name="it/intecs/pisa/toolbox/plugins/geoServerTagPlugin/**/*.class"/>
@@ -69,7 +66,9 @@
 	<target name="buildZipPackageTBX" depends="init,compileTBX,zipTBX"/>
 	<target name="buildZipPackageGIS" depends="init,compileGIS,zipGIS"/>
 	<target name="buildPackageTBX" depends="init,compileTBX"/>
-	
+        <target name="buildWarPackageTBX" depends="init,compileTBX,warTBX"/>
+	<target name="buildWarPackageGIS" depends="init,compileGIS,warGIS"/>
+
 	<target name="zipTBX" description="zip package">
 		<mkdir dir="${temp}"/>
 		<mkdir dir="${temp}/TOOLBOX"/>
@@ -82,6 +81,21 @@
 			<fileset dir="${temp}"/>
 		</zip>
 		
+		<delete dir="${temp}"/>
+	</target>
+
+        <target name="warTBX" description="war package">
+		<mkdir dir="${temp}"/>
+		<mkdir dir="${temp}/TOOLBOX"/>
+
+		<copy toDir="${temp}/TOOLBOX" overwrite="yes">
+			<fileset dir="TOOLBOX/webapp"/>
+		</copy>
+
+		<jar file="TOOLBOX.war">
+			<fileset dir="${temp}/TOOLBOX"/>
+		</jar>
+
 		<delete dir="${temp}"/>
 	</target>
 
@@ -105,6 +119,27 @@
 		<delete dir="${temp}"/>
 
 	</target>
+
+        <target name="warGIS" description="zip package">
+		<mkdir dir="${temp}"/>
+		<mkdir dir="${temp}/ToolboxGisClient"/>
+
+		<copy toDir="${temp}/ToolboxGisClient" overwrite="yes">
+			<fileset dir="${basedir}/ToolboxGisClient/web"/>
+		</copy>
+
+		<copy toDir="${temp}/ToolboxGisClient/WEB-INF/lib" overwrite="yes">
+			<fileset dir="${basedir}/ToolboxGisClient/lib"/>
+		</copy>
+
+
+		<jar file="TOOLBOXGISCLIENT.war">
+			<fileset dir="${temp}/ToolboxGisClient"/>
+		</jar>
+
+		<delete dir="${temp}"/>
+
+	</target>
 	<!-- clean files -->
 	<target name="cleanGIS" description="delete build directory">
 		<delete dir="ToolboxGisClient"/>
@@ -121,6 +156,8 @@
         <target name="createFromRepository" depends="createFromRepositoryTBX,createFromRepositoryGIS"/>
         <target name="createFromRepositoryTBX" depends="svnDownloadTBX,buildZipPackageTBX,cleanTBX"/>
         <target name="createFromRepositoryGIS" depends="svnDownloadGIS,buildZipPackageGIS,cleanGIS"/>
+        <target name="createWarFromRepositoryTBX" depends="svnDownloadTBX,buildWarPackageTBX,cleanTBX"/>
+        <target name="createWarFromRepositoryGIS" depends="svnDownloadGIS,buildWarPackageGIS,cleanGIS"/>
     
         <target name="svnDownloadTBX" depends="">
             <echo>Donwload packages from SVN</echo> 
@@ -130,7 +167,7 @@
                 <arg value="export"/>
                 <arg value="-r"/>
                 <arg value="${revision}"/>
-                <arg value="http://guest009.pisa.intecs.it/SPAZIO/TOOLBOX_rep/trunk/Common/src"/>
+                <arg value="${svnroot}/Common/src"/>
                  <arg value="${basedir}/Common/src"/>
             </exec>
             
@@ -139,7 +176,7 @@
                 <arg value="export"/>
                 <arg value="-r"/>
                 <arg value="${revision}"/>
-                <arg value="http://guest009.pisa.intecs.it/SPAZIO/TOOLBOX_rep/trunk/Utils/src"/>
+                <arg value="${svnroot}/Utils/src"/>
                  <arg value="${basedir}/Utils/src"/>
             </exec>
             
@@ -148,7 +185,7 @@
                 <arg value="export"/>
                 <arg value="-r"/>
                 <arg value="${revision}"/>
-                <arg value="http://guest009.pisa.intecs.it/SPAZIO/TOOLBOX_rep/trunk/TOOLBOX/webapp"/>
+                <arg value="${svnroot}/TOOLBOX/webapp"/>
                  <arg value="${basedir}/TOOLBOX/webapp"/>
             </exec>
             
@@ -156,7 +193,7 @@
                 <arg value="export"/>
                 <arg value="-r"/>
                 <arg value="${revision}"/>
-                <arg value="http://guest009.pisa.intecs.it/SPAZIO/TOOLBOX_rep/trunk/TOOLBOX/src"/>
+                <arg value="${svnroot}/TOOLBOX/src"/>
                  <arg value="${basedir}/TOOLBOX/src"/>
             </exec>
             
@@ -164,35 +201,17 @@
                 <arg value="export"/>
                 <arg value="-r"/>
                 <arg value="${revision}"/>
-                <arg value="http://guest009.pisa.intecs.it/SPAZIO/TOOLBOX_rep/trunk/TOOLBOX/compile-only-libs"/>
+                <arg value="${svnroot}/TOOLBOX/compile-only-libs"/>
                  <arg value="${basedir}/TOOLBOX/compile-only-libs"/>
             </exec>
       
         
-        <mkdir dir="${basedir}/TOOLBOX/webapp/jsScripts/import"/>
-        <mkdir dir="${basedir}/TOOLBOX/webapp/jsScripts/import/gis-client-library"/>
-         <exec executable="svn">
-                <arg value="export"/>
-                <arg value="-r"/>
-                <arg value="${revision}"/>
-                <arg value="http://guest009.pisa.intecs.it/SPAZIO/GIS-CLIENT_rep/gis-client-library/trunk/web/import"/>
-                 <arg value="${basedir}/TOOLBOX/webapp/jsScripts/import/gis-client-library/import"/>
-            </exec>
-            
-              <exec executable="svn">
-                <arg value="export"/>
-                <arg value="-r"/>
-                <arg value="${revision}"/>
-                <arg value="http://guest009.pisa.intecs.it/SPAZIO/GIS-CLIENT_rep/gis-client-library/trunk/web/widgets"/>
-                 <arg value="${basedir}/TOOLBOX/webapp/jsScripts/import/gis-client-library/widgets"/>
-            </exec>
-            
            <mkdir dir="${basedir}/PluginsCore"/>
            <exec executable="svn">
                 <arg value="export"/>
                 <arg value="-r"/>
                 <arg value="${revision}"/>
-                <arg value="http://guest009.pisa.intecs.it/SPAZIO/TOOLBOX_rep/trunk/Plugins/RE/PluginsCore/src"/>
+                <arg value="${svnroot}/Plugins/RE/PluginsCore/src"/>
                  <arg value="${basedir}/PluginsCore/src"/>
             </exec>
 
@@ -202,7 +221,7 @@
 		<arg value="-r"/>
 		<arg value="${revision}"/>
 		    <arg value="--force"/>
-		<arg value="http://guest009.pisa.intecs.it/SPAZIO/TOOLBOX_rep/trunk/SUM/dhtmlTree/"/>
+		<arg value="${svnroot}/SUM/dhtmlTree/"/>
 		<arg value="${basedir}/TOOLBOX/webapp/Documentation"/>
 	    </exec>
 
@@ -211,7 +230,7 @@
 	        <arg value="-r"/>
 	        <arg value="${revision}"/>
 	        <arg value="--force"/>
-	        <arg value="http://guest009.pisa.intecs.it/SPAZIO/TOOLBOX_rep/trunk/SUM/htmlDocumentation/"/>
+	        <arg value="${svnroot}/SUM/htmlDocumentation/"/>
 	        <arg value="${basedir}/TOOLBOX/webapp/Documentation/docsExplorer"/>
 	    </exec>
 
@@ -229,7 +248,7 @@
                 <arg value="-r"/>
                 <arg value="${revision}"/>
 		<arg value="--force"/>
-                <arg value="http://guest009.pisa.intecs.it/SPAZIO/TOOLBOX_rep/trunk/ToolboxGisClient/"/>
+                <arg value="${svnroot}/ToolboxGisClient/"/>
                  <arg value="${basedir}/ToolboxGisClient/"/>
             </exec>
          </target>  
@@ -241,7 +260,7 @@
 			<arg value="-r"/>
 			<arg value="${revision}"/>
 			    <arg value="--force"/>
-			<arg value="http://guest009.pisa.intecs.it/SPAZIO/TOOLBOX_rep/trunk/SUM/dhtmlTree/"/>
+			<arg value="${svnroot}/SUM/dhtmlTree/"/>
 			<arg value="${basedir}/Documentation"/>
 		    </exec>
 
@@ -250,7 +269,7 @@
 		        <arg value="-r"/>
 		        <arg value="${revision}"/>
 		        <arg value="--force"/>
-		        <arg value="http://guest009.pisa.intecs.it/SPAZIO/TOOLBOX_rep/trunk/SUM/htmlDocumentation/"/>
+		        <arg value="${svnroot}/SUM/htmlDocumentation/"/>
 		        <arg value="${basedir}/Documentation/docsExplorer"/>
 		    </exec>
 

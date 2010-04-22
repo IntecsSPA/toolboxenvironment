@@ -1,4 +1,4 @@
-<project name="TOOLBOX" default="createFromRepository" basedir=".">
+<project name="TOOLBOX" default="createWarFromRepository" basedir=".">
 	<description>TOOLBOX SNAPSHOT build file</description>
 	<!-- set global properties for this build -->
 	<property environment="env"/>
@@ -156,6 +156,8 @@
         <target name="createFromRepository" depends="createFromRepositoryTBX,createFromRepositoryGIS"/>
         <target name="createFromRepositoryTBX" depends="svnDownloadTBX,buildZipPackageTBX,cleanTBX"/>
         <target name="createFromRepositoryGIS" depends="svnDownloadGIS,buildZipPackageGIS,cleanGIS"/>
+
+	<target name="createWarFromRepository" depends="createWarFromRepositoryTBX,createWarFromRepositoryGIS"/>
         <target name="createWarFromRepositoryTBX" depends="svnDownloadTBX,buildWarPackageTBX,cleanTBX"/>
         <target name="createWarFromRepositoryGIS" depends="svnDownloadGIS,buildWarPackageGIS,cleanGIS"/>
     
@@ -215,7 +217,7 @@
                  <arg value="${basedir}/PluginsCore/src"/>
             </exec>
 
-		<mkdir dir="${basedir}/TOOLBOX/webapp/Documentation"/>
+            <mkdir dir="${basedir}/TOOLBOX/webapp/Documentation"/>
 	    <exec executable="svn">
 		<arg value="export"/>
 		<arg value="-r"/>

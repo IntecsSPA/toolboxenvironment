@@ -14,7 +14,9 @@
  -  Revision Date:     $Date: 2006/06/13 15:02:26 $
  -
 -->
-<%@ page import="it.intecs.pisa.toolbox.configuration.*,it.intecs.pisa.soap.toolbox.*, java.util.*"  errorPage="errorPage.jsp" %>
+<%@ page import="it.intecs.pisa.toolbox.configuration.*,
+                 it.intecs.pisa.soap.toolbox.*,
+                 java.util.*"  errorPage="errorPage.jsp" %>
 <%@taglib uri="http://java.sun.com/jstl/core"  prefix="c"%>
 <%@taglib uri="http://java.sun.com/jstl/fmt"  prefix="fmt"%>
 <%@ include file="checkSession.jsp" %>

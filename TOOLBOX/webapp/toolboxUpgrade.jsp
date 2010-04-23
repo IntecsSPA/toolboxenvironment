@@ -15,7 +15,17 @@
  -
  -->
 <%@ page contentType="text/html; charset=iso-8859-1" language="java"   %>
-<%@ page import="it.intecs.pisa.toolbox.configuration.*,it.intecs.pisa.soap.toolbox.*, java.util.*, org.w3c.dom.*, javax.xml.parsers.*, java.io.*, it.intecs.pisa.util.*, javax.xml.transform.*,  javax.xml.transform.dom.*,  javax.xml.transform.stream.*" %>
+<%@ page import="it.intecs.pisa.toolbox.configuration.*,
+                 it.intecs.pisa.toolbox.*,
+                 it.intecs.pisa.toolbox.util.*,
+                 java.util.*,
+                 org.w3c.dom.*,
+                 javax.xml.parsers.*,
+                 java.io.*,
+                 it.intecs.pisa.util.*,
+                 javax.xml.transform.*,
+                 javax.xml.transform.dom.*,
+                 javax.xml.transform.stream.*" %>
 <%@ include file="checkAccount.jsp" %>
 <%@taglib uri="http://java.sun.com/jstl/core"  prefix="c"%>
 <%@taglib uri="http://java.sun.com/jstl/fmt"  prefix="fmt"%>

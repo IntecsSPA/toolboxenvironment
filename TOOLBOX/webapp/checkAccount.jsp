@@ -14,7 +14,11 @@
  -  Revision Date:     $Date: 2004/09/07 13:24:16 $
  -
  -->
-<%@ page import="it.intecs.pisa.soap.toolbox.*, java.util.*, org.w3c.dom.*, it.intecs.pisa.util.*,java.io.*"  errorPage="errorPage.jsp" %>
+<%@ page import="it.intecs.pisa.toolbox.*, 
+                 java.util.*,
+                 org.w3c.dom.*,
+                 it.intecs.pisa.util.*,
+                 java.io.*"  errorPage="errorPage.jsp" %>
 <%@taglib uri="http://java.sun.com/jstl/core"  prefix="c"%>
 <%@taglib uri="http://java.sun.com/jstl/fmt"  prefix="fmt"%>
 <%	

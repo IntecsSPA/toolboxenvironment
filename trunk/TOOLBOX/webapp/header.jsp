@@ -1,4 +1,8 @@
-<%@ page import="it.intecs.pisa.toolbox.*,it.intecs.pisa.util.*,it.intecs.pisa.toolbox.service.*,it.intecs.pisa.soap.toolbox.*, java.util.*"  errorPage="errorPage.jsp" %>
+<%@ page import="it.intecs.pisa.util.*,
+                 it.intecs.pisa.toolbox.service.*,
+                 it.intecs.pisa.toolbox.util.*,
+                 it.intecs.pisa.toolbox.*,
+                 java.util.*"  errorPage="errorPage.jsp" %>
 <%@taglib uri="http://java.sun.com/jstl/core"  prefix="c"%>
 <%@taglib uri="http://java.sun.com/jstl/fmt"  prefix="fmt"%>
 <c:if test="${sessionScope.languageReq!= null}">

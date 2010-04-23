@@ -5,14 +5,11 @@ import it.intecs.pisa.util.DOMUtil;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.StringWriter;
-import java.io.Writer;
 import java.lang.Object;
 import java.net.URL;
 import java.util.Iterator;
-import javax.xml.transform.Result;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -22,10 +19,8 @@ import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpState;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
-import org.dom4j.io.DocumentSource;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 public class HttpTag extends NativeTagExecutor {
     // protected String tagName="Http";
@@ -68,6 +63,9 @@ public class HttpTag extends NativeTagExecutor {
             urlPath=urlStr;
         }
         
+        if(queryStr==null)
+                queryStr="";
+
 
         if (http.getAttribute(METHOD).equals(POST)) {
             PostMethod pMethod = (PostMethod) (method = new PostMethod(urlPath));

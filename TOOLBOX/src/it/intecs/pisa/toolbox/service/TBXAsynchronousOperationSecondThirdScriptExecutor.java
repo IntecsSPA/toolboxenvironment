@@ -22,6 +22,7 @@ import it.intecs.pisa.pluginscore.exceptions.DebugTerminatedException;
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.db.InstanceResources;
 import it.intecs.pisa.toolbox.db.InstanceStatuses;
+import it.intecs.pisa.toolbox.db.StatisticsUtil;
 import it.intecs.pisa.toolbox.db.ToolboxInternalDatabase;
 import it.intecs.pisa.toolbox.service.instances.InstanceHandler;
 import it.intecs.pisa.util.SOAPUtil;
@@ -161,6 +162,7 @@ public class TBXAsynchronousOperationSecondThirdScriptExecutor extends Thread {
             try {
                 TBXAsynchronousOperationCommonTasks.sendResponseToClient(serviceInstanceId, response);
                 InstanceStatuses.updateInstanceStatus(serviceInstanceId, InstanceStatuses.STATUS_COMPLETED);
+                StatisticsUtil.incrementStatistic(StatisticsUtil.STAT_COMPLETED);
             } catch (Exception ecc) {}
         } finally {
             handler.deleteAllVariablesDumped();

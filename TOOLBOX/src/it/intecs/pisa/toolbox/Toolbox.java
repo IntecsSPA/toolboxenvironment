@@ -60,6 +60,7 @@ import it.intecs.pisa.toolbox.resources.LogResourcesPersistence;
 import it.intecs.pisa.toolbox.resources.XMLResourcesPersistence;
 import it.intecs.pisa.toolbox.db.ServiceStatuses;
 import it.intecs.pisa.pluginscore.UIPluginManager;
+import it.intecs.pisa.toolbox.db.StatisticsUtil;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.soap.SOAP11Constants;
 import org.apache.axiom.soap.SOAP12Constants;
@@ -824,6 +825,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         if (req.getParameter("password") != null) {
             doGet(req, resp);
         } else if (requestURI.startsWith("/TOOLBOX/services")) {
+            StatisticsUtil.incrementStatistic(StatisticsUtil.STAT_ARRIVED);
             super.doPost(req, resp);
             return;
         }

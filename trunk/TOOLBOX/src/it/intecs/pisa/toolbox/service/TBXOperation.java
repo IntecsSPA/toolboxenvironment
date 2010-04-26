@@ -19,6 +19,7 @@ import org.w3c.dom.Element;
 import it.intecs.pisa.toolbox.util.Util;
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.db.InstanceVariable;
+import it.intecs.pisa.toolbox.db.StatisticsUtil;
 
 
 public abstract class TBXOperation extends Operation{
@@ -145,6 +146,7 @@ public abstract class TBXOperation extends Operation{
          if(isAsynch==false)
          {
             updateInstanceStatus(serviceInstanceId,InstanceStatuses.STATUS_COMPLETED);
+            StatisticsUtil.incrementStatistic(StatisticsUtil.STAT_COMPLETED);
 
             handler=new InstanceHandler(serviceInstanceId);
             handler.deleteAllVariablesDumped();

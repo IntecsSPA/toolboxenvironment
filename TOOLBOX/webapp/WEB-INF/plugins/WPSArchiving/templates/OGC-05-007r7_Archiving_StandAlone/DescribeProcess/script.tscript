@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pisa.intecs.it/mass/toolbox/xmlScript file:/home/maro/Programmi/eclipse3.2.1/plugins/com.intecs.ToolboxScript.editorFiles_1.2.0/schemas/xmlScript.xsd">
+	
+	<!-- if>
+		<validateDocument>
+			<xmlRequest/>
+			<path startFrom="SERVICE_RESOURCE_DIR">
+        		<string>../Schemas/wps/1.0.0/wpsDescribeProcess_request.xsd</string>
+        	</path>
+		</validateDocument> -->
+		<xslt xmlOutput="true">
+			<xmlRequest />
+      		<path startFrom="SERVICE_RESOURCE_DIR">
+        		<string>../AdditionalResources/WPS/XSL/GenerateDescribeProcess.xsl</string>
+      		</path>
+      		<parameter name="toolboxURL">
+        		<string>http://localhost:8080/TOOLBOX</string>
+      		</parameter>
+		</xslt>
+		<!-- xslt xmlOutput="true">
+            <variable name="processRequest"/>
+            <path startFrom="SERVICE_RESOURCE_DIR">
+              <string>../AdditionalResources/WPS/XSL/WPSExceptions.xsl</string>
+            </path>
+            <parameter name="exceptionCode">
+              <string>NoApplicableCode</string>
+            </parameter>
+            <parameter name="exceptionText">
+              <string>Describe Process Request is not Valid.</string>
+            </parameter>
+        </xslt>
+	</if>	 -->	
+</sequence>

@@ -1,10 +1,7 @@
-<%-- 
-    Document   : createNewServiceSelectType.jsp
-    Created on : 1-dic-2008, 16.23.43
-    Author     : massi
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8" import="it.intecs.pisa.toolbox.plugins.*,java.io.*,it.intecs.pisa.soap.toolbox.*, java.util.*"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" import="it.intecs.pisa.pluginscore.*,
+                                                             java.io.*,
+                                                             it.intecs.pisa.toolbox.*,
+                                                             java.util.*"%>
 <%@taglib uri="http://java.sun.com/jstl/core"  prefix="c"%>
 <%@taglib uri="http://java.sun.com/jstl/fmt"  prefix="fmt"%>
 <%@ include file="checkSession.jsp" %>

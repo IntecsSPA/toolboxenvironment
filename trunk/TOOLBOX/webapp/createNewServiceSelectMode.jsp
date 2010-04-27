@@ -4,7 +4,7 @@
     Author     : massi
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8" import="it.intecs.pisa.soap.toolbox.*, java.util.*,it.intecs.pisa.toolbox.plugins.*"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" import="it.intecs.pisa.toolbox.*, java.util.*,it.intecs.pisa.pluginscore.*"%>
 <%@taglib uri="http://java.sun.com/jstl/core"  prefix="c"%>
 <%@taglib uri="http://java.sun.com/jstl/fmt"  prefix="fmt"%>
 <%@ include file="checkSession.jsp" %>

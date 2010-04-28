@@ -81,12 +81,7 @@
         </operation>
     </operations>
     <variables>
-        <variable name="maxRecords" value="10" type="integer" displayedText="Maximum number of records returned"/>
-        <variable name="ebRRExternalInstanceUrl" value="" type="string" displayedText="External EbRR to invoke (URL)"/>
-        <variable name="ebRRDbName" value="ergorr" type="string" displayedText="EbRR database name"/>
-        <variable name="ebRRDbUser" value="postgres" type="string" displayedText="EbRR database user"/>
-        <variable name="ebRRDbPwd" value="intecs" type="string" displayedText="EbRR database password"/>
-        <variable name="ebRRDbUrl" value="localhost:5432" type="string" displayedText="EbRR database url (as specified in the JDBC connection)"/>
+       
     </variables>
     <lifeCycleScripts>
         <build path="lifeCycleScripts/OGC-05-007r7_Archiving_StandAlone/servicecreation.xml"/>

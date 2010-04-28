@@ -7,9 +7,9 @@
 	<!-- ==============================================================
 		includes and imports
 	============================================================== -->
-	<include schemaLocation="ows/1.1.0/owsServiceIdentification.xsd"/>
-	<include schemaLocation="ows/1.1.0/owsServiceProvider.xsd"/>
-	<include schemaLocation="ows/1.1.0/owsOperationsMetadata.xsd"/>
+	<include schemaLocation="owsServiceIdentification.xsd"/>
+	<include schemaLocation="owsServiceProvider.xsd"/>
+	<include schemaLocation="owsOperationsMetadata.xsd"/>
 	<!-- ==============================================================
 		elements and types
 	============================================================== -->

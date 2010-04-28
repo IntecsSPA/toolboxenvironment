@@ -7,9 +7,9 @@
 	<!-- ==============================================================
 		includes and imports
 	============================================================== -->
-	<include schemaLocation="ows/1.1.0/owsCommon.xsd"/>
-	<include schemaLocation="ows/1.1.0/ows19115subset.xsd"/>
-	<include schemaLocation="ows/1.1.0/owsDomainType.xsd"/>
+	<include schemaLocation="owsCommon.xsd"/>
+	<include schemaLocation="ows19115subset.xsd"/>
+	<include schemaLocation="owsDomainType.xsd"/>
 	<!-- ==============================================================
 		elements and types
 	============================================================== -->

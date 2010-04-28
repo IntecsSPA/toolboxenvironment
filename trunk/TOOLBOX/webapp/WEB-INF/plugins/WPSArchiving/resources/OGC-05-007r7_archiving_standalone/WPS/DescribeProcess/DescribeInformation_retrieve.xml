@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><ProcessDescription xmlns:wps="http://www.opengis.net/wps/1.0.0" statusSupported="true" storeSupported="true" wps:processVersion="0.1">
+    <ows:Identifier xmlns:ows="http://www.opengis.net/ows/1.1">retrieve</ows:Identifier>
+    <ows:Title xmlns:ows="http://www.opengis.net/ows/1.1">Retrieves a data</ows:Title>
+    <ows:Abstract xmlns:ows="http://www.opengis.net/ows/1.1">TODO</ows:Abstract>
+    <ows:Metadata xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="store"/>
+    <ows:Metadata xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="data"/>
+    <ows:Metadata xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="metadata"/>
+    <wps:Profile>OGC:WPS:DataArchiving</wps:Profile>
+    <DataInputs>
+      <Input maxOccurs="1" minOccurs="0">
+		<ows:Identifier xmlns:ows="http://www.opengis.net/ows/1.1">DataDuration</ows:Identifier>
+		<ows:Title xmlns:ows="http://www.opengis.net/ows/1.1">TODO</ows:Title>
+		<ows:Abstract xmlns:ows="http://www.opengis.net/ows/1.1">TODO</ows:Abstract>
+		<LiteralData>
+			<ows:DataType xmlns:ows="http://www.opengis.net/ows/1.1" ows:reference="http://www.w3.org/TR/xmlschema-2/#string">string</ows:DataType>
+			<ows:AnyValue xmlns:ows="http://www.opengis.net/ows/1.1"/>			
+		</LiteralData>
+	</Input>
+    </DataInputs>
+    <ProcessOutputs>
+      <Output>
+        <ows:Identifier xmlns:ows="http://www.opengis.net/ows/1.1">OutputMessage</ows:Identifier>
+        <ows:Title xmlns:ows="http://www.opengis.net/ows/1.1">OutputMessage</ows:Title>
+        <ows:Abstract xmlns:ows="http://www.opengis.net/ows/1.1">OutputMessage</ows:Abstract>
+        <LiteralOutput>
+          <ows:DataType xmlns:ows="http://www.opengis.net/ows/1.1" ows:reference="http://www.w3.org/TR/xmlschema-2/#string">string</ows:DataType>
+        </LiteralOutput>
+      </Output>
+    </ProcessOutputs>
+  </ProcessDescription>

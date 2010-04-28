@@ -10,10 +10,10 @@ For conditions, see OGC Software Notice http://www.opengeospatial.org/ogc/softwa
 	<!-- ==============================================================
 		includes
 	============================================================== -->
-	<include schemaLocation="wps/1.0.0/wpsDescribeProcess_request.xsd"/>
-	<include schemaLocation="wps/1.0.0/wpsDescribeProcess_response.xsd"/>
-	<include schemaLocation="wps/1.0.0/wpsExecute_request.xsd"/>
-	<include schemaLocation="wps/1.0.0/wpsExecute_response.xsd"/>
-	<include schemaLocation="wps/1.0.0/wpsGetCapabilities_request.xsd"/>
-	<include schemaLocation="wps/1.0.0/wpsGetCapabilities_response.xsd"/>
+	<include schemaLocation="wpsDescribeProcess_request.xsd"/>
+	<include schemaLocation="wpsDescribeProcess_response.xsd"/>
+	<include schemaLocation="wpsExecute_request.xsd"/>
+	<include schemaLocation="wpsExecute_response.xsd"/>
+	<include schemaLocation="wpsGetCapabilities_request.xsd"/>
+	<include schemaLocation="wpsGetCapabilities_response.xsd"/>
 </schema>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:wps="http://www.opengis.net/wps/1.0.0" elementFormDefault="qualified" targetNamespace="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
-	<xs:import namespace="http://www.opengis.net/wps/1.0.0" schemaLocation="wps/1.0.0/wpsAll.xsd"/>
+	<xs:import namespace="http://www.opengis.net/wps/1.0.0" schemaLocation="../wps/1.0.0/wpsAll.xsd"/>
 	<xs:element name="ExecuteProcess_store">
 		<xs:complexType>
 			<xs:sequence>

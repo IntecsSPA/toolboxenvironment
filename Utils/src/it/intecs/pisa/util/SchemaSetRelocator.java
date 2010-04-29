@@ -320,7 +320,7 @@ public class SchemaSetRelocator {
                 if (uriFile.isAbsolute()) {
                     completeFile = uriFile;
                 } else {
-                    completeFile = new File(subDir, uriFile.getPath());
+                    completeFile = new File(new File(relativeTo), schemaLocation);
                 }
 
                 

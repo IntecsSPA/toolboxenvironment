@@ -23,6 +23,7 @@ public class LifeCycle {
      protected static final String ATTRIBUTE_FROM="from";
      protected static final String ATTRIBUTE_TO="to";
      protected static final String TASK_COPY="copy";
+     protected static final String TASK_COPY_DIRECTORY="copyDirectory";
      protected static final String TASK_DELETE="delete";
      public static final String SCRIPT_BUILD="build";
      public static final String SCRIPT_DELETE="delete";
@@ -131,6 +132,10 @@ public class LifeCycle {
             else if(nodeName.equals(TASK_DELETE))
             {
                 DeleteTask.execute(new File(serviceRootDir,tagEl.getAttribute(ATTRIBUTE_PATH)));
+            }
+            else if(nodeName.equals(TASK_COPY_DIRECTORY))
+            {
+                CopyDirectoryTask.execute(new File(repoRootDir, tagEl.getAttribute(ATTRIBUTE_FROM)),new File(serviceRootDir,tagEl.getAttribute(ATTRIBUTE_TO)));
             }
         }
     }

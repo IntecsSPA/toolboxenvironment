@@ -162,7 +162,7 @@ public abstract class TBXOperation extends Operation{
          errorOutputMessageType=isAsynch==true?InstanceResources.TYPE_INVALID_RESPONSE_BUILDER_MESSAGE:InstanceResources.TYPE_INVALID_OUTPUT_MESSAGE;
              
          updateInstanceStatus(serviceInstanceId,errorInstanceStatus);
-         InstanceResources.storeXMLResource(soapRequest,serviceInstanceId,errorOutputMessageType);
+         InstanceResources.storeXMLResource(response,serviceInstanceId,errorOutputMessageType);
          return processErrorRequest(serviceInstanceId,errorScriptToExecute,"Error while validating output message:"+ecc2.getMessage());
      }
      

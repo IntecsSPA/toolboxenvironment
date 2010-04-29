@@ -7,7 +7,6 @@ package it.intecs.pisa.toolbox.plugins.managerNativePlugins;
 import it.intecs.pisa.common.tbx.Interface;
 import it.intecs.pisa.common.tbx.Operation;
 import it.intecs.pisa.common.tbx.Script;
-import it.intecs.pisa.common.tbx.lifecycle.LifeCycle;
 import it.intecs.pisa.toolbox.service.ServiceManager;
 import it.intecs.pisa.toolbox.service.TBXAsynchronousOperation;
 import it.intecs.pisa.toolbox.service.TBXOperation;
@@ -15,7 +14,6 @@ import it.intecs.pisa.toolbox.service.TBXService;
 import it.intecs.pisa.toolbox.service.TBXSynchronousOperation;
 import it.intecs.pisa.pluginscore.InterfacePluginManager;
 import it.intecs.pisa.pluginscore.exceptions.GenericException;
-import it.intecs.pisa.toolbox.service.tasks.ServiceLifeCycle;
 import it.intecs.pisa.util.DOMUtil;
 import java.io.File;
 import java.util.Hashtable;
@@ -53,8 +51,6 @@ public class CreateOperationFromInterfaceCommand extends NativeCommandsManagerPl
 
             service.addOperation(operation);
             service.dumpService();
-
-            ServiceLifeCycle.executeLifeCycleStep(LifeCycle.SCRIPT_BUILD,service,operation.getName());
 
             redirectUrl = "configureOperation.jsp?serviceName=" + serviceName + "&operationName=" + operationName;
             resp.sendRedirect(redirectUrl);

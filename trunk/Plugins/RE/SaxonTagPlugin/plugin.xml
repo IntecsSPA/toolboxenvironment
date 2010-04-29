@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<plugin name="SaxonTagPlugin" version="1.0">
-     <tagPlugin namespace="http://pisa.intecs.it/mass/toolbox/Saxon" class="it.intecs.pisa.toolbox.plugins.saxonTagPlugin.SaxonTagPlugin"/>
-</plugin>

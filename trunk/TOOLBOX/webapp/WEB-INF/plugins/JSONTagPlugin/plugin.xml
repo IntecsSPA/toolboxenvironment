@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin name="JSONTagPlugin" version="1.0">
+     <tagPlugin namespace="http://pisa.intecs.it/toolbox/json" class="it.intecs.pisa.toolbox.plugins.json.JSONTagPlugin"/>
+</plugin>

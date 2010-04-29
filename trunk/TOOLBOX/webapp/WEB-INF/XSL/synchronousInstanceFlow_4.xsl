@@ -39,9 +39,9 @@
         <xsl:if test="$language = 'en'">Unpushed message(</xsl:if>
         <xsl:if test="$language = 'it'">Messaggio non spedito(</xsl:if>
     </xsl:param>
-    <xsl:param name="outputTxt">
-        <xsl:if test="$language = 'en'">Output message (</xsl:if>
-        <xsl:if test="$language = 'it'">Messaggio di output (</xsl:if>
+    <xsl:param name="invalidOutputTxt">
+        <xsl:if test="$language = 'en'">Invalid utput message (</xsl:if>
+        <xsl:if test="$language = 'it'">Messaggio di output non valido(</xsl:if>
     </xsl:param>
 
          <xsl:template match="/">

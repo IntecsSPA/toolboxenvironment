@@ -10,9 +10,9 @@ For conditions, see OGC Software Notice http://www.opengeospatial.org/ogc/softwa
 	<!-- =============================================================
 		includes and imports
 	============================================================== -->
-	<include schemaLocation="common/RequestBaseType.xsd"/>
-	<import namespace="http://www.opengis.net/ows/1.1" schemaLocation="../../ows/1.1.0/owsAll.xsd"/>
-	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="../../xlink/1.0.0/xlinks.xsd"/>
+	<include schemaLocation="wps/1.0.0/common/RequestBaseType.xsd"/>
+	<import namespace="http://www.opengis.net/ows/1.1" schemaLocation="ows/1.1.0/owsAll.xsd"/>
+	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink/1.0.0/xlinks.xsd"/>
 	<!-- =============================================================
 		elements and types
 	============================================================== -->

@@ -12,17 +12,18 @@
 <xsd:schema  xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript"
              targetNamespace="http://pisa.intecs.it/mass/toolbox/xmlScript"
              xmlns:ebrr="http://pisa.intecs.it/toolbox/ebrr"
-             xmlns:gsr="http://pisa.intecs.it/toolbox/geoserver"
              xmlns:cat="http://pisa.intecs.it/mass/toolbox/xmlScript/catalogues"
              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
              xmlns:com="http://pisa.intecs.it/mass/toolbox/common"
              xmlns:sec="http://pisa.intecs.it/toolbox/security"
+             xmlns:json="http://pisa.intecs.it/toolbox/json"
              elementFormDefault="qualified"
              attributeFormDefault="unqualified">
 
     <xsd:import namespace="http://pisa.intecs.it/toolbox/ebrr" schemaLocation="ebrrTags.xsd"/>
     <xsd:import namespace="http://pisa.intecs.it/toolbox/geoserver" schemaLocation="geoServerTags.xsd"/>
     <xsd:import namespace="http://pisa.intecs.it/toolbox/security" schemaLocation="securityTags.xsd"/>
+    <xsd:import namespace="http://pisa.intecs.it/toolbox/json" schemaLocation="jsonTags.xsd"/>
 
     <xsd:simpleType name="ToolboxTime">
         <xsd:restriction base="xsd:string">
@@ -1792,12 +1793,9 @@
             <xsd:element ref="ebrr:getRecordById"/>
             <xsd:element ref="ebrr:describeRecord"/>
             <xsd:element ref="ebrr:harvest"/>
-            <xsd:element ref="gsr:deployCoverage"/>
-            <xsd:element ref="gsr:deleteCoverage"/>
-            <xsd:element ref="gsr:modifyCoverage"/>
-            <xsd:element ref="gsr:deployVectorData"/>
-            <xsd:element ref="gsr:deleteVectorData"/>
-            <xsd:element ref="gsr:modifyVectorData"/>
+            <xsd:element ref="json:stringToJSON"/>
+            <xsd:element ref="json:RESTPost"/>
+            <xsd:element ref="json:xPath"/>
         </xsd:choice>
     </xsd:group>
     <xsd:group name="DateChoice">

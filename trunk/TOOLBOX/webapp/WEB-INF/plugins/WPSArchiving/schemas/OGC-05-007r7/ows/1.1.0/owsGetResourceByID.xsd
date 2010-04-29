@@ -7,8 +7,8 @@
 	<!-- ==============================================================
 		includes and imports
 	============================================================== -->
-	<include schemaLocation="owsDataIdentification.xsd"/>
-	<include schemaLocation="owsGetCapabilities.xsd"/>
+	<include schemaLocation="ows/1.1.0/owsDataIdentification.xsd"/>
+	<include schemaLocation="ows/1.1.0/owsGetCapabilities.xsd"/>
 	<!-- ==============================================================
 		elements and types
 	============================================================== -->

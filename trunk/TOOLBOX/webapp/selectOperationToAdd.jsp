@@ -14,7 +14,7 @@
  -  Revision Date:     $Date: 2004/09/07 13:24:16 $
  -
  -->
-<%@ page import="it.intecs.pisa.toolbox.service.*,it.intecs.pisa.soap.toolbox.service.util.*,java.io.*,it.intecs.pisa.soap.toolbox.*, java.util.*,it.intecs.pisa.toolbox.plugins.*,it.intecs.pisa.common.tbx.*" errorPage="errorPage.jsp"%>
+<%@ page import="it.intecs.pisa.toolbox.service.*,it.intecs.pisa.toolbox.service.util.*,java.io.*,it.intecs.pisa.toolbox.*, java.util.*,it.intecs.pisa.pluginscore.*,it.intecs.pisa.common.tbx.*" errorPage="errorPage.jsp"%>
 
 <%@ include file="checkSession.jsp" %>
 <%@taglib uri="http://java.sun.com/jstl/core"  prefix="c"%>

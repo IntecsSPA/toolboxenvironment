@@ -14,7 +14,19 @@
  -  Revision Date:     $Date: 2006/10/11 10:18:22 $
  -
  -->
-<%@ page language="java" import="it.intecs.pisa.toolbox.db.*,it.intecs.pisa.toolbox.service.*,it.intecs.pisa.toolbox.service.instances.*,it.intecs.pisa.soap.toolbox.service.*,java.util.*, org.w3c.dom.*, javax.xml.parsers.*, java.io.*, it.intecs.pisa.util.*, javax.xml.transform.*,  javax.xml.transform.dom.*,  javax.xml.transform.stream.*, it.intecs.pisa.soap.toolbox.*"  errorPage="errorPage.jsp" %>
+<%@ page language="java" import="it.intecs.pisa.toolbox.db.*,
+                                 it.intecs.pisa.toolbox.service.*,
+                                 it.intecs.pisa.toolbox.service.instances.*,
+                                 it.intecs.pisa.soap.toolbox.service.*,
+                                 java.util.*,
+                                 org.w3c.dom.*,
+                                 javax.xml.parsers.*,
+                                 java.io.*,
+                                 it.intecs.pisa.util.*,
+                                 javax.xml.transform.*,
+                                 javax.xml.transform.dom.*,
+                                 javax.xml.transform.stream.*,
+                                 it.intecs.pisa.soap.toolbox.*"  errorPage="errorPage.jsp" %>
 
 <%@ include file="checkSession.jsp" %>
 <%@taglib uri="http://java.sun.com/jstl/core"  prefix="c"%>

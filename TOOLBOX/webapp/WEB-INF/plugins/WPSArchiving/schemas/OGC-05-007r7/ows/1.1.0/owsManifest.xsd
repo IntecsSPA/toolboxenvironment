@@ -7,8 +7,8 @@
 	<!-- ==============================================================
 		includes and imports
 	============================================================== -->
-	<include schemaLocation="owsDataIdentification.xsd"/>
-	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="../../xlink/1.0.0/xlinks.xsd"/>
+	<include schemaLocation="ows/1.1.0/owsDataIdentification.xsd"/>
+	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink/1.0.0/xlinks.xsd"/>
 	<!-- ==========================================================
 		Types and elements
 	    ========================================================== -->

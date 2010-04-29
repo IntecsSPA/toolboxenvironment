@@ -8,7 +8,7 @@ For conditions, see OGC Software Notice http://www.opengeospatial.org/ogc/softwa
 		</documentation>
 	</annotation>
 	<!-- ==============================================================-->
-	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="../../../xlink/1.0.0/xlinks.xsd"/>
+	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink/1.0.0/xlinks.xsd"/>
 	<!-- ==============================================================-->
 	<element name="WSDL">
 		<annotation>

@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package it.intecs.pisa.util.json;
 
 import com.google.gson.Gson;
@@ -18,24 +17,31 @@ import java.io.InputStream;
  * @author Massimiliano Fanciulli
  */
 public class JsonUtil {
-     public static JsonObject getInputAsJson(InputStream in) {
+
+    public static JsonObject getStringAsJSON(String str) {
         JsonParser parser;
         JsonObject obj;
 
-        try
-        {
-            parser = new JsonParser();
-            
-            String jsonAsString=IOUtil.inputToString(in);
-            if(jsonAsString==null || jsonAsString.equals(""))
+        parser = new JsonParser();
+
+        JsonElement parsedEl = parser.parse(str);
+        obj = (JsonObject) parsedEl.getAsJsonObject();
+
+        return obj;
+    }
+
+    public static JsonObject getInputAsJson(InputStream in) {
+        JsonObject obj;
+
+        try {
+            String jsonAsString = IOUtil.inputToString(in);
+            if (jsonAsString == null || jsonAsString.equals("")) {
                 return new JsonObject();
-            
-            JsonElement parsedEl = parser.parse(jsonAsString);
-            obj = (JsonObject) parsedEl.getAsJsonObject();
-        }
-        catch(Throwable t)
-        {
-            obj=null;
+            }
+
+            obj = getStringAsJSON(jsonAsString);
+        } catch (Throwable t) {
+            obj = null;
         }
         return obj;
     }
@@ -45,8 +51,7 @@ public class JsonUtil {
         return gson.toJson(outputJson);
     }
 
-    public static InputStream getJsonAsStream(JsonObject obj)
-    {
+    public static InputStream getJsonAsStream(JsonObject obj) {
         return new ByteArrayInputStream(getJsonAsString(obj).getBytes());
     }
 }

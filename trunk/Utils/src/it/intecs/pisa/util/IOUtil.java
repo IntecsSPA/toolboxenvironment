@@ -201,6 +201,8 @@ public class IOUtil {
     }
 
     public static void copyFile(File sourceFile, File targetFile) throws Exception {
+        targetFile.getParentFile().mkdirs();
+        
         FileInputStream in = new FileInputStream(sourceFile);
         FileOutputStream out = new FileOutputStream(targetFile);
         byte[] buffer = new byte[1024];

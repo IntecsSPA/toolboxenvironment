@@ -6,12 +6,14 @@ package it.intecs.pisa.toolbox.service;
 
 import it.intecs.pisa.toolbox.db.ServiceStatuses;
 import it.intecs.pisa.common.tbx.Service;
+import it.intecs.pisa.common.tbx.lifecycle.LifeCycle;
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.soap.toolbox.exceptions.ToolboxException;
 import it.intecs.pisa.toolbox.db.ServiceInfo;
 import it.intecs.pisa.toolbox.db.ToolboxInternalDatabase;
 import it.intecs.pisa.toolbox.security.ToolboxSecurityConfigurator;
 import it.intecs.pisa.toolbox.service.instances.InstanceHandler;
+import it.intecs.pisa.toolbox.service.tasks.ServiceLifeCycle;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.IOUtil;
 import it.intecs.pisa.util.SchemaSetRelocator;
@@ -170,12 +172,14 @@ public class ServiceManager {
         
         newService.attemptToDeployWSDLAndSchemas();
 
+        ServiceLifeCycle.executeLifeCycleStep(LifeCycle.SCRIPT_BUILD,newService);
+
         log("Service " + serviceName + " has been created and started");
     }
 
     public void deleteService(String serviceName) throws Exception {
         File logDir;
-    	TBXService service;
+    	TBXService service=null;
         boolean removewssecurity=false;
 
         try
@@ -242,6 +246,15 @@ public class ServiceManager {
         {
        deleteAllInstances(serviceName);
     }
+        catch(Exception e)
+        {
+
+        }
+
+        try
+        {
+            ServiceLifeCycle.executeLifeCycleStep(LifeCycle.SCRIPT_BUILD,service);
+        }
         catch(Exception e)
         {
 

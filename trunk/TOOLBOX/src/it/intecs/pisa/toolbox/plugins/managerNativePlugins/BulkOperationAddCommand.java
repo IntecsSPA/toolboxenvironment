@@ -92,8 +92,6 @@ public class BulkOperationAddCommand extends NativeCommandsManagerPlugin {
            operToAdd=getOperationToAdd(service,operationName);
            service.addOperation(operToAdd);
            service.dumpService();
-
-           ServiceLifeCycle.executeLifeCycleStep(LifeCycle.SCRIPT_BUILD,service,operationName);
        }
        catch(Exception e)
        {

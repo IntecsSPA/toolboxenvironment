@@ -702,16 +702,6 @@ public class TBXService extends Service {
 
     }
 
-    /**
-     *  Returns a stream directly connected with statusEl file on disk.
-     */
-  /*  public InputStream viewStatus() throws Exception {
-        return new FileInputStream(statusFile);
-    }*/
-
-    
-    // end new insert
-
     public void deleteSynchronousIstance(String key) throws Exception {
         File requestLogDir = new File(new File(getLogDir(), SYNCHRONOUS_INSTANCES), key);
         IOUtil.rmdir(requestLogDir);
@@ -779,16 +769,17 @@ public class TBXService extends Service {
 
             //--------------------now adding the new operation ----------------------
             logger.info("Adding operation " + operationDescriptor.getName() + "...");
-
+            System.out.println("Operation type "+operationDescriptor.getClass().getCanonicalName());
             implementedInterface.addOperations(operationDescriptor);
 
             logger.info("Operation " + operationDescriptor.getName() + " successfully added");
 
             adjustReferences();
 
-
             operationDescriptor.setLogger(logger);
             operationDescriptor.start();
+
+            ServiceLifeCycle.executeLifeCycleStep(LifeCycle.SCRIPT_BUILD,operationDescriptor.getParentService(),operationDescriptor.getName());
 
             try
             {
@@ -798,24 +789,7 @@ public class TBXService extends Service {
             {
                 ecc.printStackTrace();
             }
-            
-            //TODO if the Axis2ToolboxDispatcher is used then the following code is unnecessary
-            /*
-            //if wssecurity is on then add operationDescriptor.getSoapAction()
-            if (hasWSSecurity()){
-            	File serviceDesFile = ToolboxSecurityWrapper.getServicesConfigFile();
-            	Element elem = Axis2ServicesConf.getAxis2ServiceConfigurationElement(this);
-            	if (elem == null)	
-            		throw new ToolboxException("WS-Security configuration not found for Service "+this.getServiceName());
-            	Element opElem = (Element) elem.getElementsByTagName("operation").item(0);
-            	Element newnode = opElem.getOwnerDocument().createElement("actionMapping");
-            	Text text = opElem.getOwnerDocument().createTextNode(operationDescriptor.getSoapAction());
-            	text.setNodeValue(operationDescriptor.getSoapAction());
-            	newnode.appendChild(text);
-            	opElem.appendChild(newnode);
-            	DOMUtil.dumpXML(elem.getOwnerDocument(), serviceDesFile);
-        	}*/
-            
+                      
         }
         catch(Exception e)
         {

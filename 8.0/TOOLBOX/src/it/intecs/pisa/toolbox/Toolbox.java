@@ -58,9 +58,7 @@ import it.intecs.pisa.toolbox.plugins.TagPluginManager;
 import it.intecs.pisa.toolbox.resources.LogResourcesPersistence;
 import it.intecs.pisa.toolbox.resources.XMLResourcesPersistence;
 import it.intecs.pisa.toolbox.db.ServiceStatuses;
-import org.apache.commons.fileupload.DiskFileUpload;
-import org.apache.commons.fileupload.FileItem;
-
+import it.intecs.pisa.toolbox.plugins.managerNativePlugins.DeployServiceCommand;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.soap.SOAP11Constants;
 import org.apache.axiom.soap.SOAP12Constants;
@@ -88,15 +86,12 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     public static final String AXIS2SERVICES = "axis2services";
     public static final String SERVICE = "service";
     public static final String FTP_SERVER = "FTPServer";
-     
     public static final int MAX_BACKUP_INDEX = 9;
-     
     public static final String PORTAL_SSE_NAME = "portalSSE";
     public static final String IMPORT = "import";
     public static final String INCLUDE = "include";
     public static final String SCHEMA_LOCATION = "schemaLocation";
     public static final String WRONG_SERVICE = "Unknown service: ";
-    
     public static final String SOAP_NS_URI = "http://schemas.xmlsoap.org/soap/envelope/";
     public static final String WEB_INF = "WEB-INF";
     public static final String APPS = "apps";
@@ -112,12 +107,11 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     public static final String EXPORT = "export";
     public static final String TMP = "tmp";
     public static final String PUSH = "Push";
-   
     public static final String PROXY_PORT_KEY = "http.proxyPort";
     public static final String PROXY_HOST_KEY = "http.proxyHost";
     public static final String ERROR_REPORT = "errorReport";
     public static final String TOOLBOX_VERSION = "toolboxVersion.xml";
-   public static final String ABSTRACT = "abstract";
+    public static final String ABSTRACT = "abstract";
     public static final String SSL_CERTIFICATE = "sslCertificate";
     public static final String COLON = ":";
     public static final String TOOLBOX = "TOOLBOX";
@@ -125,15 +119,9 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     public static final String WSIL = "WSIL";
     public static final String WSIL_FILE = "index.wsil";
     public static final String WSIL_ABSTRACT = "abstract";
-    public static final String WSIL_DESCRIPTION = "description";
-    
     public static final String WSIL_NAMESPACE = "http://schemas.xmlsoap.org/wsdl/";
-
     public static final String HARVEST = "harvest";
-
-    
     public static final String DOT_WSDL = ".wsdl";
-    
     public static final int MIN_FILE_INDEX = 0;
     public static final int MAX_FILE_INDEX = 9;
     public static final String EXPORT_DESCRIPTOR_SCHEMA = "exportDescriptor.xsd";
@@ -142,17 +130,14 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     public static final String ERROR_SSE = "SSE";
     public static final String ERROR_SP = "SP";
     public static final String ERROR_BOTH = "BOTH";
-    private static final String ZIP_DEPLOY_PACKAGE_MIME_TYPE = "application/x-zip-compressed";
     protected static final String TRANSFORMER_KEY = "javax.xml.transform.TransformerFactory";
     protected static final String TRANSFORMER_XALAN = "org.apache.xalan.xsltc.trax.TransformerFactoryImpl";
     protected static final String REQUEST_PARAMETER_COMMAND = "cmd";
     private static ErrorMailer errorMailer = null;
     private static String mailError = null;
-    private static Document scriptSchema;
     private File rootDir;
     private File logDir;
     private File logFile;
-    private File configurationFile;
     private Logger logger;
     private FTPServerManager ftpServerManager;
     private boolean configurationProcessed;
@@ -317,14 +302,12 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         String errorMsg = null;
         PrintWriter writer = null;
         DOMUtil domUtil = null;
-        Logger logger = null;
         String soapaction = null;
 
         try {
            
             resp.setContentType("text/xml");
             writer = resp.getWriter();
-            logger = logger;
             domUtil = new DOMUtil(true);
 
             try {
@@ -396,7 +379,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             throw new ToolboxException("Error while retrieving SOAP envelope, impossible to execute the service request.");
         }
 
-        String operationName = this.getOperationName(msgCtx);
+        String operationName = Toolbox.getOperationName(msgCtx);
        
         return executeServiceRequest(operationName, soapRequestElement.getOwnerDocument(), requestURI, debugMode);
     }
@@ -620,10 +603,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             managerPluginManager.initManager(tbxPluginDirectory);
 
             logger.info("Plugins started");
-           
 
-
-            scriptSchema = new DOMUtil(true).fileToDocument(new File(new File(new File(getRootDir(), WEB_INF), SCHEMAS), SCRIPT_XSD));
             adjustAllSchemaReferences(); // Adjust the Schema cross references (import and include) paths according to the rootDir
 
            if (tbxConfig.getConfigurationValue(ToolboxConfiguration.MAIL_ERROR).equals("true")) {
@@ -829,7 +809,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
      *  This method invokes the implementation of the super class, unless a "password" parameter is present, in which case it calls the {@link #doGet} method.
      */
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, java.io.IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String requestURI = req.getRequestURI();
 
         logger.info("Received request " + requestURI);
@@ -837,85 +817,25 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         if (req.getParameter("password") != null) {
             doGet(req, resp);
         } else if (requestURI.startsWith("/TOOLBOX/services")) {
-            //if (isSecureServiceRequest(req)) {
-            //let AxisServlet manage the request and so the ws-security information
             super.doPost(req, resp);
             return;
-            //}
-            //executeServiceRequest(resp, req, requestURI, false);
         }
         if (requestURI.startsWith("/TOOLBOX/debug")) {
             //TODO should this pass through axis2?
             debugServiceRequest(resp, req, requestURI);
         } else if (requestURI.startsWith("/TOOLBOX/deploy")) {
-            executeDeploy(req, resp);
+            try {
+                executeDeploy(req, resp);
+            } catch (Exception ex) {
+                java.util.logging.Logger.getLogger(Toolbox.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
         } else if (requestURI.startsWith("/TOOLBOX/manager")) {
             executeManagerCommands(req, resp);
         } //STOP - Deploy a new service remotely
 
     }
 
-    private void executeDeploy(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String contentType = null;
-        File packageFile = null;
-        FileItem item = null;
-        String serviceName = null;
-        String fieldName = null;
-        String token = "";
-        boolean forward = false;
-        
-        try {
-            //checking if uploaded file is a file descriptor
-            DiskFileUpload upload = new DiskFileUpload();
-            List items = upload.parseRequest(req);
-
-            Iterator iter = items.iterator();
-
-            while (iter.hasNext()) {
-                //geting item
-                item = (FileItem) iter.next();
-
-                contentType = item.getContentType();
-
-                fieldName = item.getFieldName();
-                if ((fieldName != null && fieldName.equals("importFile")) || (contentType != null && contentType.contains(ZIP_DEPLOY_PACKAGE_MIME_TYPE))) {
-
-                    packageFile = new File(System.getProperty("java.io.tmpdir"), item.getName());
-                    item.write(packageFile);
-
-                } else if (fieldName.equals("newName")) {
-                    serviceName = item.getString();
-                } else if (fieldName.equals("authToken")) {
-                    token = item.getString();
-                } else if (fieldName.equals("forwardToPage")) {
-                    forward = true;
-                }
-            }
-
-            if (this.deployAdminToken != null && token.equals(this.deployAdminToken) == false) {
-                resp.sendError(500);
-            }
-        } catch (Exception e) {
-            resp.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE);
-            return;
-        }
-
-        if (serviceName == null || serviceName.equals("")) {
-            serviceName = packageFile.getName();
-            serviceName = serviceName.substring(0, serviceName.lastIndexOf('.'));
-        }
-
-        try {
-            serviceManager.deployService(packageFile, serviceName);
-        } catch (Exception e) {
-            resp.sendError(resp.SC_INTERNAL_SERVER_ERROR);
-        }
-        if (forward == true) {
-            resp.sendRedirect("serviceConfiguration.jsp?serviceName=" + serviceName);
-        } else {
-            resp.setStatus(HttpServletResponse.SC_OK);
-        }
-    }
+    
 
      /**
      *  Returns the rootDir directory of the TOOLBOX WEB application
@@ -1319,5 +1239,20 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
      */
     public String getToolboxRevision() {
         return toolboxRevision;
+    }
+
+    private void executeDeploy(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        DeployServiceCommand sc;
+
+        sc=new DeployServiceCommand();
+        sc.executeCommand(req, resp);
+    }
+
+    public String getDeployAdminToken() {
+        return deployAdminToken;
+    }
+
+    public void setDeployAdminToken(String deployAdminToken) {
+        this.deployAdminToken = deployAdminToken;
     }
 }

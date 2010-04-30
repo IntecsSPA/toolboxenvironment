@@ -7,8 +7,8 @@
 	For conditions, see OGC Software Notice http://www.opengeospatial.org/about/?page=ipr</documentation>
 	</annotation>
 	<!-- ================================================================== -->
-	<include schemaLocation="feature.xsd"/>
-	<include schemaLocation="direction.xsd"/>
+	<include schemaLocation="gml/3.1.1/base/feature.xsd"/>
+	<include schemaLocation="gml/3.1.1/base/direction.xsd"/>
 	<!-- ================================================================== -->
 	<element name="dataSource" type="gml:StringOrRefType"/>
 	<element name="status" type="gml:StringOrRefType"/>

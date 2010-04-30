@@ -10,7 +10,7 @@
 	<!-- ==============================================================
        includes and imports
 	============================================================== -->
-	<include schemaLocation="geometryBasic0d1d.xsd"/>
+	<include schemaLocation="gml/3.1.1/base/geometryBasic0d1d.xsd"/>
 	<!-- ============================================================== -->
 	<!--===================================================================  -->
 	<element name="direction" type="gml:DirectionPropertyType"/>

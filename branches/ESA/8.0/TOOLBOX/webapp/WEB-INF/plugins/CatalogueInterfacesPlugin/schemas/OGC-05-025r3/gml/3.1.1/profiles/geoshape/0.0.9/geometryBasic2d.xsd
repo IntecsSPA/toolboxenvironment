@@ -4,7 +4,7 @@
         targetNamespace="http://www.opengis.net/gml"
         version="3.1.1" elementFormDefault="qualified">
 
-  <include schemaLocation="geometryBasic0d1d.xsd"/>
+  <include schemaLocation="gml/3.1.1/profiles/geoshape/0.0.9/geometryBasic0d1d.xsd"/>
 
   <element name="_Surface" type="gml:AbstractSurfaceType"
            abstract="true"

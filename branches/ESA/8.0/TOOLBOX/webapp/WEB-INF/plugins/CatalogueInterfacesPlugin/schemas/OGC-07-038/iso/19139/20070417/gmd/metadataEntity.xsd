@@ -5,15 +5,15 @@
 		<xs:documentation>This file was generated from ISO TC/211 UML class diagrams == 01-26-2005 12:40:00 ====== </xs:documentation>
 	</xs:annotation>
 	<!-- ================================== Imports ================================== -->
-	<xs:import namespace="http://www.isotc211.org/2005/gco" schemaLocation="../gco/gco.xsd"/>
-	<xs:include schemaLocation="../gmd/spatialRepresentation.xsd"/>
-	<xs:include schemaLocation="../gmd/metadataExtension.xsd"/>
-	<xs:include schemaLocation="../gmd/content.xsd"/>
-	<xs:include schemaLocation="../gmd/metadataApplication.xsd"/>
-	<xs:include schemaLocation="../gmd/applicationSchema.xsd"/>
-	<xs:include schemaLocation="../gmd/portrayalCatalogue.xsd"/>
-	<xs:include schemaLocation="../gmd/dataQuality.xsd"/>
-	<xs:include schemaLocation="../gmd/freeText.xsd"/>
+	<xs:import namespace="http://www.isotc211.org/2005/gco" schemaLocation="iso/19139/20070417/gco/gco.xsd"/>
+	<xs:include schemaLocation="iso/19139/20070417/gmd/spatialRepresentation.xsd"/>
+	<xs:include schemaLocation="iso/19139/20070417/gmd/metadataExtension.xsd"/>
+	<xs:include schemaLocation="iso/19139/20070417/gmd/content.xsd"/>
+	<xs:include schemaLocation="iso/19139/20070417/gmd/metadataApplication.xsd"/>
+	<xs:include schemaLocation="iso/19139/20070417/gmd/applicationSchema.xsd"/>
+	<xs:include schemaLocation="iso/19139/20070417/gmd/portrayalCatalogue.xsd"/>
+	<xs:include schemaLocation="iso/19139/20070417/gmd/dataQuality.xsd"/>
+	<xs:include schemaLocation="iso/19139/20070417/gmd/freeText.xsd"/>
 	<!-- ########################################################################### -->
 	<!-- ########################################################################### -->
 	<!-- ================================== Classes ================================= -->

@@ -8,8 +8,8 @@ Some basic types (simpleContent) required in various places in OWS Sensor Web ap
 Copyright (c) 2007 Open Geospatial Consortium - see http://www.opengeospatial.org/about/?page=ipr</xs:documentation>
 	</xs:annotation>
 	<!-- ====================================================================== -->
-	<xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="../../../xlink/1.0.0/xlinks.xsd"/>
-	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="../../../gml/3.1.1/base/gml.xsd"/>
+	<xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink/1.0.0/xlinks.xsd"/>
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="gml/3.1.1/base/gml.xsd"/>
 	<!-- ====================================================================== -->
 	<!-- === Units of Measure === -->
 	<!-- ====================================================================== -->

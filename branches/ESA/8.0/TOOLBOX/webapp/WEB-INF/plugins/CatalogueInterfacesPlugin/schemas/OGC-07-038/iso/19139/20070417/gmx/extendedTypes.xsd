@@ -5,8 +5,8 @@
 		<xs:documentation>This file was generated from ISO TC/211 UML class diagrams == 03-14-2005 12:00:20 ====== Handcrafted</xs:documentation>
 	</xs:annotation>
 	<!-- ================================== Imports ================================== -->
-	<xs:import namespace="http://www.isotc211.org/2005/gco" schemaLocation="../gco/gco.xsd"/>
-	<xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="../../../../xlink/1.0.0/xlinks.xsd"/>
+	<xs:import namespace="http://www.isotc211.org/2005/gco" schemaLocation="iso/19139/20070417/gco/gco.xsd"/>
+	<xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink/1.0.0/xlinks.xsd"/>
 	<!-- ########################################################################### -->
 	<!-- ########################################################################### -->
 	<!-- ================================== Classes ================================= -->

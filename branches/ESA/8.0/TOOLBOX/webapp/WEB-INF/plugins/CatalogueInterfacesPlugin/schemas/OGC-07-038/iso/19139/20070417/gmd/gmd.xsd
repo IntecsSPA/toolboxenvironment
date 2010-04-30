@@ -5,7 +5,7 @@
 		<xs:documentation>This file was generated from ISO TC/211 UML class diagrams == 01-26-2005 12:40:04 ====== </xs:documentation>
 	</xs:annotation>
 	<!-- ================================== Imports ================================== -->
-	<xs:include schemaLocation="../gmd/metadataApplication.xsd"/>
+	<xs:include schemaLocation="iso/19139/20070417/gmd/metadataApplication.xsd"/>
 	<!-- ########################################################################### -->
 	<!-- ########################################################################### -->
 	<!-- ================================== Classes ================================= -->

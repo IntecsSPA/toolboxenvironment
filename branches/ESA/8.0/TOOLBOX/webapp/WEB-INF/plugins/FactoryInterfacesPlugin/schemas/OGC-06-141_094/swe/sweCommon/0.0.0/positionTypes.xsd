@@ -5,8 +5,8 @@
 		<xs:documentation>Schema for defining position data (location, orientation, etc...) based on aggregate data types</xs:documentation>
 	</xs:annotation>
 	<!-- ================================================= -->
-	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="../../../gml/3.1.1/base/gml.xsd"/>
-	<xs:include schemaLocation="./aggregateTypes.xsd"/>
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="gml/3.1.1/base/gml.xsd"/>
+	<xs:include schemaLocation="swe/sweCommon/0.0.0/aggregateTypes.xsd"/>
 	<!-- ================================================= -->
 	<xs:element name="Position" type="swe:PositionType" substitutionGroup="swe:AbstractDataRecord">
 		<xs:annotation>

@@ -5,8 +5,8 @@
 		<xs:documentation>This file was generated from ISO TC/211 UML class diagrams == 03-17-2005 17:21:53 ====== Informative package (concepts are not implementable) - pragmatic approach for encoding</xs:documentation>
 	</xs:annotation>
 	<!-- ================================== Imports ================================== -->
-	<xs:import namespace="http://www.isotc211.org/2005/gco" schemaLocation="../gco/gco.xsd"/>
-	<xs:include schemaLocation="../gmd/identification.xsd"/>
+	<xs:import namespace="http://www.isotc211.org/2005/gco" schemaLocation="iso/19139/20070417/gco/gco.xsd"/>
+	<xs:include schemaLocation="iso/19139/20070417/gmd/identification.xsd"/>
 	<!-- ########################################################################### -->
 	<!-- ########################################################################### -->
 	<!-- ================================== Classes ================================= -->

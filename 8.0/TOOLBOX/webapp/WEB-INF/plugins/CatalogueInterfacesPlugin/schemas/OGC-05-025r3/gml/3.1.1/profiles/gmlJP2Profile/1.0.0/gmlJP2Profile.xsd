@@ -4,9 +4,9 @@
 	<annotation>
 		<documentation>GML Subset schema for gml:_Feature,gml:_FeatureCollection,gml:FeatureCollection,gml:_Coverage,gml:RectifiedGridCoverage,gml:MeasureOrNullListType,gml:Point,gml:LineString,gml:Polygon,gml:LinearRing,gml:Dictionary,gml:_Definition,gml:dictionaryEntry,gml:Dictionary,gml:BaseUnit,gml:ConventionalUnit,gml:DerivedUnit,gml:ProjectedCRS,gml:Conversion,gml:GeographicCRS,gml:centerLineOf,gml:extentOf,gml:QuantityList,gml:GeometryPropertyType,gml:PolygonPropertyType,gml:defaultStyle,gml:MultiSurface,gml:Style,gml:_MetaData, written by gmlSubset.xslt. </documentation>
 	</annotation>
-	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="../../../../../xlink/1.0.0/xlinks.xsd"/>
-	<import namespace="http://www.w3.org/2001/SMIL20/" schemaLocation="../../../smil/smil20.xsd"/>
-	<import namespace="http://www.w3.org/2001/SMIL20/Language" schemaLocation="../../../smil/smil20-language.xsd"/>
+	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink/1.0.0/xlinks.xsd"/>
+	<import namespace="http://www.w3.org/2001/SMIL20/" schemaLocation="smil/smil20.xsd"/>
+	<import namespace="http://www.w3.org/2001/SMIL20/Language" schemaLocation="smil/smil20-language.xsd"/>
 	<!-- ================================================= -->
 	<element name="_Feature" type="gml:AbstractFeatureType" abstract="true" substitutionGroup="gml:_GML"/>
 	<!-- ================================================= -->

@@ -6,7 +6,7 @@
 		<xs:documentation>Defines basic ResponseType definition and commonly used sensor characteristics</xs:documentation>
 	</xs:annotation>
 	<!-- ================================================= -->
-	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="../../../gml/3.1.1/base/gml.xsd"/>
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="gml/3.1.1/base/gml.xsd"/>
 	<!-- ================================================= -->
 	<xs:complexType name="BlockEncodingPropertyType">
 		<xs:choice minOccurs="0">

@@ -5,10 +5,10 @@
 		<xs:documentation>SWE Common schema for aggregate data types</xs:documentation>
 	</xs:annotation>
 	<!-- ================================================= -->
-	<xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="../../../xlink/1.0.0/xlinks.xsd"/>
-	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="../../../gml/3.1.1/base/gml.xsd"/>
-	<xs:include schemaLocation="./simpleTypes.xsd"/>
-	<xs:include schemaLocation="./encoding.xsd"/>
+	<xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink/1.0.0/xlinks.xsd"/>
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="gml/3.1.1/base/gml.xsd"/>
+	<xs:include schemaLocation="swe/sweCommon/0.0.0/simpleTypes.xsd"/>
+	<xs:include schemaLocation="swe/sweCommon/0.0.0/encoding.xsd"/>
 	<!-- ================================================= -->
 	<!--         Composite/Aggregate Components - Records and arrays            -->
 	<!-- ================================================= -->

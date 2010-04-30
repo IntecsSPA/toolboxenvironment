@@ -17,15 +17,15 @@
 
    </xsd:annotation>
 
-   <xsd:include schemaLocation="record.xsd"/>
+   <xsd:include schemaLocation="csw/2.0.2/record.xsd"/>
 
    <xsd:import namespace="http://www.opengis.net/ows"
-               schemaLocation="../../ows/1.0.0/owsAll.xsd"/>
+               schemaLocation="ows/1.0.0/owsAll.xsd"/>
 
    <xsd:import namespace="http://www.opengis.net/ogc"
-               schemaLocation="../../filter/1.1.0/filter.xsd"/>
+               schemaLocation="filter/1.1.0/filter.xsd"/>
    <xsd:import namespace="http://www.opengis.net/cat/wrs/1.0"
-                schemaLocation="../../wrs/1.0.0/wrs.xsd"/>
+                schemaLocation="wrs/1.0.0/wrs.xsd"/>
 
    <xsd:complexType name="RequestBaseType" id="RequestBaseType" abstract="true">
       <xsd:annotation>

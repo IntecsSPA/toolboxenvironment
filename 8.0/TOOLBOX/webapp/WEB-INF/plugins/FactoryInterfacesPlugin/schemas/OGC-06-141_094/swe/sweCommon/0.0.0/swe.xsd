@@ -4,14 +4,14 @@
 		<xs:documentation>Stub schema for swe</xs:documentation>
 	</xs:annotation>
 	<!--========================-->
-	<xs:include schemaLocation="./temporalAggregates.xsd"/>
-   <xs:include schemaLocation="./phenomenon.xsd"/>
-	<xs:include schemaLocation="./xmlData.xsd"/>
+	<xs:include schemaLocation="swe/sweCommon/0.0.0/temporalAggregates.xsd"/>
+   <xs:include schemaLocation="swe/sweCommon/0.0.0/phenomenon.xsd"/>
+	<xs:include schemaLocation="swe/sweCommon/0.0.0/xmlData.xsd"/>
 <!--   <xs:include schemaLocation="./basicTypes.xsd"/>  included by simpleTypes.xsd -->
 <!--   <xs:include schemaLocation="./simpleTypes.xsd"/> included by aggregateTypes.xsd -->
 <!--   <xs:include schemaLocation="./aggregateTypes.xsd"/> included by positionTypes, curveTypes and data -->
-	<xs:include schemaLocation="./positionTypes.xsd"/>
-   <xs:include schemaLocation="./curveTypes.xsd"/>
-   <xs:include schemaLocation="./data.xsd"/>
+	<xs:include schemaLocation="swe/sweCommon/0.0.0/positionTypes.xsd"/>
+   <xs:include schemaLocation="swe/sweCommon/0.0.0/curveTypes.xsd"/>
+   <xs:include schemaLocation="swe/sweCommon/0.0.0/data.xsd"/>
 	<!--========================-->
 </xs:schema>

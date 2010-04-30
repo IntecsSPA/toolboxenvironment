@@ -14,7 +14,7 @@
          CSW-Publication operations specified in clause 10 of OGC-07-066.
       </xsd:documentation>
    </xsd:annotation>
-   <xsd:include schemaLocation="CSW-discovery.xsd"/>
+   <xsd:include schemaLocation="csw/2.0.2/CSW-discovery.xsd"/>
    <xsd:element name="Transaction" type="csw:TransactionType" id="Transaction"/>
    <xsd:complexType name="TransactionType" id="TransactionType">
       <xsd:annotation>

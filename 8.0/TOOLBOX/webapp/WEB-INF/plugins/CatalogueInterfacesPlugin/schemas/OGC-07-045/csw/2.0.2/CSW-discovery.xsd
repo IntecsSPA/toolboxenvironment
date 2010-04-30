@@ -8,9 +8,9 @@
 		<xsd:documentation xml:lang="en">This schema defines the request and response messages for the CSW-Discovery operations specified in clause 10 of OGC-07-066.</xsd:documentation>
 	</xsd:annotation>
 	<xsd:include schemaLocation="record.xsd"/>
-	<xsd:import namespace="http://www.isotc211.org/2005/gmd" schemaLocation="./profiles/apiso/1.0.0/apiso.xsd"/>
-	<xsd:import namespace="http://www.opengis.net/ogc" schemaLocation="../../filter/1.1.0/filter.xsd"/>
-	<xsd:import namespace="http://www.opengis.net/ows" schemaLocation="../../ows/1.0.0/owsAll.xsd"/>
+	<xsd:import namespace="http://www.isotc211.org/2005/gmd" schemaLocation="csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd"/>
+	<xsd:import namespace="http://www.opengis.net/ogc" schemaLocation="filter/1.1.0/filter.xsd"/>
+	<xsd:import namespace="http://www.opengis.net/ows" schemaLocation="ows/1.0.0/owsAll.xsd"/>
 	<xsd:complexType name="RequestBaseType" abstract="true" id="RequestBaseType">
 		<xsd:annotation>
 			<xsd:documentation>

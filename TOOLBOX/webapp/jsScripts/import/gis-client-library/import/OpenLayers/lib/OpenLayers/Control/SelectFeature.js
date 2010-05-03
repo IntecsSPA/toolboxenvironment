@@ -121,7 +121,6 @@ OpenLayers.Control.SelectFeature = OpenLayers.Class(OpenLayers.Control, {
     initialize: function(layer, options) {
         OpenLayers.Control.prototype.initialize.apply(this, [options]);
         this.layer = layer;
-       // alert(this.layer);
         this.callbacks = OpenLayers.Util.extend({
                                                   click: this.clickFeature,
                                                   clickout: this.clickoutFeature,

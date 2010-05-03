@@ -97,7 +97,9 @@
         <script type="text/javascript" src="jsScripts/import/gis-client-library/import/sarissa/sarissa_ieemu_xpath.js"></script>
 
         <link rel="stylesheet" type="text/css" href="jsScripts/import/gis-client-library/widgets/style/css/webgis.css" />
-        
+
+        <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/manager.js"></script>
+        <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/browserDetect.js"></script>
         <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/general.js"></script>
         <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/ext/ExtFormUtils.js"></script>
         <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/ext/RowExpander.js"></script>

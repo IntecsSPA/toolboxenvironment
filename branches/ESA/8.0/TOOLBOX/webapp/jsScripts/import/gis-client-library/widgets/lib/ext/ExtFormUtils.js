@@ -1,6 +1,15 @@
 /******************************************************
  *          EXTJS FORM UTIL                           *  
  * ****************************************************/
+
+// Load extent Ux -- Start Import
+var gcManager= new GisClientManager("eng");
+/*gcManager.loadCSS("import/gisClient/import/ext/ux/css/Spinner.css");
+gcManager.loadScript("import/gisClient/import/ext/ux/Spinner.js");
+gcManager.loadScript("import/gisClient/import/ext/ux/SpinnerField.js");*/
+// Load extent Ux -- End Import
+
+//
 //-- Global
 var utilServlet="Utils";
 var rootFolder="../../";
@@ -42,14 +51,27 @@ function createPanelExjFormByXml(xmlDocument,lang){
   forms= new Array();
   var fieldSetConfValues=new Array();
   var inputInterfaceXml;
-  if(!(xmlDocument instanceof XMLDocument)){ 
-    inputInterfaceXml = Sarissa.getDomDocument();
-    inputInterfaceXml.async=false;
-    inputInterfaceXml.validateOnParse=false;
-    inputInterfaceXml.load(xmlDocument);
-    inputInterfaceXml.setProperty("SelectionLanguage","XPath");
-  }else
-    inputInterfaceXml=xmlDocument;  
+    if(BrowserDetect.browser == "Firefox"){
+    if(!(xmlDocument instanceof XMLDocument)){
+        inputInterfaceXml = Sarissa.getDomDocument();
+        inputInterfaceXml.async=false;
+        inputInterfaceXml.validateOnParse=false;
+        inputInterfaceXml.load(xmlDocument);
+        inputInterfaceXml.setProperty("SelectionLanguage","XPath");
+    }else
+        inputInterfaceXml=xmlDocument;
+  }else{
+     if(BrowserDetect.browser == "Explorer"){
+        if(!(xmlDocument instanceof ActiveXObject)){
+            inputInterfaceXml = Sarissa.getDomDocument();
+            inputInterfaceXml.async=false;
+            inputInterfaceXml.validateOnParse=false;
+            inputInterfaceXml.load(xmlDocument);
+            inputInterfaceXml.setProperty("SelectionLanguage","XPath");
+        }else
+           inputInterfaceXml=xmlDocument;
+     }
+    }
   Sarissa.setXpathNamespaces(inputInterfaceXml,
                        "xmlns:gis='http://gisClient.pisa.intecs.it/gisClient'");   
   
@@ -64,13 +86,13 @@ function createPanelExjFormByXml(xmlDocument,lang){
  }
   var panels;
   var buttonElements= new Array();
-  var requestInformationNodes=inputInterfaceXml.selectNodes("/gis:inputInterface/gis:requestInformation");
+  var requestInformationsNodes=inputInterfaceXml.selectNodes("/gis:inputInterface/gis:requestInformations");
   var backgroundColor;
-  if(requestInformationNodes.length > 0){
-    backgroundColor=requestInformationNodes[0].getAttribute("backgroundColor");  
+  if(requestInformationsNodes.length > 0){
+    backgroundColor=requestInformationsNodes[0].getAttribute("backgroundColor");  
     if(!backgroundColor)
        backgroundColor='#99bbe8';
-    buttonElements=inputInterfaceXml.selectNodes("/gis:inputInterface/gis:requestInformation/gis:buttons/gis:button");     
+    buttonElements=inputInterfaceXml.selectNodes("/gis:inputInterface/gis:requestInformations/gis:buttons/gis:button");     
       var type,onclickFunction,disabled,disableIfNotMandatoryFields;  
       var contentButtonPanel,textButton;
       if(buttonElements.length>0){
@@ -184,7 +206,13 @@ function createPanelExjFormByXml(xmlDocument,lang){
         closable:false});
   }
                       
-
+//  if(this.confValues[this.confValues.length-1][this.confValues[this.confValues.length-1].length-1].name !="idRequest" )
+  fieldSetConfValues[fieldSetConfValues.length-1].push({
+                          name:"idRequest",
+                          id:"idRequest",
+                          type:"text",
+                          value: ""
+                      });
   if(buttonElements.length>0){
     panels=[tabPanel,contentButtonPanel];  
   }else{
@@ -199,7 +227,7 @@ function createPanelExjFormByXml(xmlDocument,lang){
         items: panels
   }); 
   var outputManager;
-  var outputInformationElements=inputInterfaceXml.selectNodes("/gis:inputInterface/gis:outputInformation");
+  var outputInformationElements=inputInterfaceXml.selectNodes("/gis:inputInterface/gis:outputInformations");
   if(outputInformationElements.length>0){  
      outputManager= getOutputMangerByElement(outputInformationElements[0]);
   }   
@@ -264,40 +292,35 @@ function createPanelExjFormByXml(xmlDocument,lang){
                       this.buttonPanel.destroy();
                    this.formsPanel.destroy(); 
                 },
-                render: function(){
-                    var a,b;
+                render: function(){;
                       if(this.formsArray.length > 1){
                         for(var i=0; i<this.formsArray.length;i++){
                           this.formsTab.setActiveTab(i);                
                           this.formsArray[i].render(document.getElementById(this.tabElementsId[i])); 
-                          a=this.formsArray[i].getSize();
-                        // alert("formSize: "+a.heigth);
+              
                         }
                         this.formsTab.setActiveTab(0);
                       }else{
                          this.formsArray[0].render(document.getElementById(this.tabElementsId[0])); 
-                         a=this.formsArray[0].getSize();
-                         
-                      //   alert("formSize: "+a.width);
+                   
+
                       }
                      
                     for(var u=0;u<supportToolbars.length;u++){
                       supportToolbars[u].toolbar.render(supportToolbars[u].id);
-                 
-                     
-                      //var toc2 = new WebGIS.Control.Toc({map: mapTool, parseWMS: false, autoScroll: true});
+
                       for(var j=0; j<supportToolbars[u].buttons.length; j++){
                           if(supportToolbars[u].toolbar.items.length < supportToolbars[u].buttons.length){
                             var button=eval(supportToolbars[u].buttons[j]);
                             supportToolbars[u].toolbar.add(button);
                           }
                       }
-                    //  toc2.update();
+     
                     }
-                    
+                    Ext.QuickTips.init();
                 },
                 resetFormValues: function(){
-                   var xtypeArray=["textfield","combo","datefield","numberfield","checkbox"];
+                   var xtypeArray=["textfield","combo","datefield","numberfield","checkbox","spinnerfield"];
                    var input,i,u,j;
                    for(i=0; i<this.formsArray.length; i++ ){
                       for(u=0; u<xtypeArray.length; u++){
@@ -327,9 +350,6 @@ function createPanelExjFormByXml(xmlDocument,lang){
                       for(u=0; u<this.confValues[i].length; u++){
                          field=this.formsArray[i].getForm().findField(this.confValues[i][u].id); 
                          type=this.confValues[i][u].type;
-                        // alert(this.confValues[i][u].type);
-                       /*/  alert(values[this.confValues[i][u].id]);
-                         alert(field);*/
                            
                          if(this.confValues[i][u].id!="idRequest")   
                            switch(type) {
@@ -342,11 +362,15 @@ function createPanelExjFormByXml(xmlDocument,lang){
                             case "label":
                                       if(values[this.confValues[i][u].id])
                                         field.setValue(values[this.confValues[i][u].id]); 
-                                    break; 
-                                    
+                                    break;   
                             case "numeric":
                                     //alert(this.confValues[i][u].id);
                                     field.setValue(values[this.confValues[i][u].id]); 
+                                    break;
+                            case "spinner":
+                                   /* alert("spinner");
+                                    alert(this.confValues[i][u].id);*/
+                                    field.setValue(values[this.confValues[i][u].id]);
                                     break;
                             case "checkbox":
                                     field.setValue(values[this.confValues[i][u].id]); 
@@ -417,14 +441,14 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                 formPanel.body.highlight();
                         },
                         notifyDrop  : function(ddSource, e, data){
-                            alert("notifyDrop");
+                           // alert("notifyDrop");
                             var selectedRecord = ddSource.dragData.selections[0];
                             var currentField,currentFiledType,fieldLabelValue;
                             for(var i=0; i<fields.length; i++ ){
                                 //alert(formPanel.getForm().findField(fields[i]).storeAttribute);
                                 currentField=formPanel.getForm().findField(fields[i]);
                                 currentFiledType=currentField.getXType();
-                                alert(currentFiledType);
+                               // alert(currentFiledType);
                                 if(currentFiledType == "field"){
                                    fieldLabelValue=currentFiledType.getValue();
                                    fieldLabelValue+="<p><b>"+currentField.storeAttribute+": </b> <br><br> "+selectedRecord.data[currentField.storeAttribute]+"</p></br>";
@@ -468,21 +492,67 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                         currentField=formPanel.getForm().findField(fieldSetsInputs[this.ddGroup][u]);
                                         currentFiledType=currentField.getXType();
                                         if(currentFiledType == "field"){
-                                            var valueStore;
-                                             if(fieldSetsInputValues[this.ddGroup][u])
-                                                 valueStore=fieldSetsInputValues[this.ddGroup][u];
-                                             else
-                                                 valueStore=selectedRecord.data[currentField.storeAttribute];
+                                            var valueStore=new Array();
+                                            var attributeNames=new Array();
+                                             if(fieldSetsInputValues[this.ddGroup][u]){
+                                                 valueStore[0]=fieldSetsInputValues[this.ddGroup][u];
+                                                 attributeNames[0]="setIn_";
+                                             }else
+                                                {
+                                                  var pos=currentField.storeAttribute.indexOf(",");
+                                                 if(pos>0){
+                                                     attributeNames=currentField.storeAttribute.split(",");
+                                                     for(var zz=0; zz<attributeNames.length; zz++){
+                                                         valueStore[zz]=selectedRecord.data[attributeNames[zz]];
+                                                     }
+                                                 }else
+                                                    {
+                                                     attributeNames[0]=currentField.storeAttribute;
+                                                     valueStore[0]=selectedRecord.data[currentField.storeAttribute];
+                                                    }
+
+                                                }
                                              //ANDREA: Vedere come aggiornare la lista dei valori
                                             
                                              var elementLabel=document.getElementById(currentField.divContent);
+                                             var hiddenEl,hiddenInputElement;
+
+                                             for(var kk=0; kk<valueStore.length;kk++){
+                                                hiddenEl=document.getElementById(currentField.id+"_"+
+                                                         replaceAll(attributeNames[kk]," ","_")+"_hiddenList");
+                                                 if(!hiddenEl){
+                                                     hiddenInputElement=document.createElement("input");
+                                                     hiddenInputElement.setAttribute("id", currentField.id+"_"+
+                                                         replaceAll(attributeNames[kk]," ","_")+"_hiddenList");
+                                                     hiddenInputElement.setAttribute("type", "hidden");
+                                                     hiddenInputElement.setAttribute("value", valueStore[kk]+",");
+                                                     elementLabel.appendChild(hiddenInputElement);
+                                                 }else
+                                                    hiddenEl.value+=valueStore[kk]+",";
+                                            }
+                                             //alert(hiddenEl.value);
+
                                              var fieldLabelValueElement=document.createElement("div");
-                                             fieldLabelValueElement.setAttribute("id", valueStore);
-                                             
+                                             fieldLabelValueElement.setAttribute("id", valueStore[0]);
+
                                             elementLabel.appendChild(fieldLabelValueElement);
-                                            fieldLabelValueElement=document.getElementById(valueStore);
-                                            fieldLabelValueElement.innerHTML="<p><b>"+currentField.storeAttribute+": </b>&nbsp;&nbsp;  "+
-                                                                valueStore+"&nbsp;&nbsp;&nbsp; <a href=\"javascript:removeElement(\'"+currentField.divContent+"\',\'"+valueStore+"\');\">remove</a></p></br>";
+                                            fieldLabelValueElement=document.getElementById(valueStore[0]);
+                                           // alert((document.getElementById('modelLabelDrop_Model_Name_hiddenList')).value);
+                                            var innerHtml="<p><b>"+attributeNames[0]+": </b>&nbsp;&nbsp;  "+valueStore[0]+"&nbsp;&nbsp;&nbsp;";
+                                            var innerJavascript="<a href=\"#\" onclick=\"javascript:removeElement(\'"+currentField.divContent+"\',\'"+valueStore[0]+"\');";
+                                            for(kk=0; kk<valueStore.length;kk++){
+                                              //  innerHtml+="<b>"+attributeNames[kk]+": </b>&nbsp;&nbsp;  "+valueStore[kk]+"&nbsp;&nbsp;&nbsp;";
+                                                innerJavascript+="var hiddenEl"+kk+"=document.getElementById(\'"+currentField.id+"_"+
+                                                         replaceAll(attributeNames[kk]," ","_")+"_hiddenList\');hiddenEl"+kk+".value=replaceAll(hiddenEl"+kk+".value, \'"+valueStore[kk]+",\', \'\');"
+                                              //  alert(innerJavascript);
+                                               // alert((document.getElementById('modelLabelDrop_Model_Name_hiddenList')).value);
+                                            }
+
+                                          /*  fieldLabelValueElement.innerHTML="<p><b>"+currentField.storeAttribute+": </b>&nbsp;&nbsp;  "+
+                                                                valueStore+"&nbsp;&nbsp;&nbsp; <a href=\"#\" onclick=\"javascript:removeElement(\'"+currentField.divContent+"\',\'"+valueStore[0]+"\');"
+                                                                    + "var hiddenEl=document.getElementById(\'"+currentField.id+"_hiddenList\');hiddenEl.value=replaceAll(hiddenEl.value, \'"+valueStore+",\', \'\');"
+                                                                    +"\">remove</a></p></br>";*/
+                                            fieldLabelValueElement.innerHTML=innerHtml+innerJavascript+"\">remove</a></p></br>";
                                         }else
                                            if(fieldSetsInputValues[this.ddGroup][u])
                                                 currentField.setValue(fieldSetsInputValues[this.ddGroup][u]);
@@ -496,7 +566,7 @@ function createPanelExjFormByXml(xmlDocument,lang){
                 },
                 getFormValues: function(label){
                   var xtypeArray;  
-                  xtypeArray=["textfield","textarea", "combo","datefield","numberfield","checkbox","field"];
+                  xtypeArray=["textfield","textarea", "combo","datefield","numberfield","checkbox","field","checkboxgroup","spinnerfield"];
                   var input,i,u,j;
                   var idRequest="";
                   var formValues=new Array();
@@ -511,10 +581,34 @@ function createPanelExjFormByXml(xmlDocument,lang){
                              if((xtypeArray[u] == "combo") && label) 
                                  formValues[input[j].getItemId()]={
                                           id: input[j].getItemId(),
-                                          value:input[j].value,
+                                          value:input[j].getValueInformation('value'),
                                           store: input[j].store
                                       };
-                             else     
+                             else
+                                if(xtypeArray[u] == "combo")
+                                  formValues[input[j].getItemId()]={
+                                                  id: input[j].getItemId(),
+                                                  value:input[j].getValueInformation('value')
+                                              };
+                             else
+                               if(xtypeArray[u] == "checkboxgroup") {
+                                    formValues[input[j].getItemId()]={
+                                              id: input[j].getItemId(),
+                                              value:""
+                                    };
+                                   var checkgroupvalue="";
+                                   var control=false;
+                                   for(var kk=0; kk<input[j].items.length; kk++){
+                                       if(input[j].items.items[kk].checked){
+                                           checkgroupvalue+=input[j].items.items[kk].name+",";
+                                           control=true;
+                                       }
+                                   }
+                                    if(control)
+                                        formValues[input[j].getItemId()].value=checkgroupvalue;
+                                    
+                                 }
+                               else
                                  if(xtypeArray[u] == "field") {
                                      if(input[j].fieldType == "editarea")
                                         formValues[input[j].getItemId()]={
@@ -585,10 +679,20 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                   break;
                           case "numeric":
                                   //alert(tempform[u].id);
-                                  if(formValues[tempform[u].id].value){
+                                  if(formValues[tempform[u].id].value || formValues[tempform[u].id].value== 0){
                                       complexValues[tempform[u].id]=formValues[tempform[u].id].value;
                                       idRequest+=formValues[tempform[u].id].value;
                                     }  
+                                  else
+                                      complexValues[tempform[u].id]='0';
+                                  //alert(complexValues[tempform[i].id]);
+                                  break;
+                          case "spinner":
+                               
+                                  if(formValues[tempform[u].id].value || formValues[tempform[u].id].value== 0){
+                                      complexValues[tempform[u].id]=formValues[tempform[u].id].value;
+                                      idRequest+=formValues[tempform[u].id].value;
+                                    }
                                   else
                                       complexValues[tempform[u].id]='0';
                                   //alert(complexValues[tempform[i].id]);
@@ -603,7 +707,21 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                   else
                                       complexValues[tempform[u].id]=null;
                                   //alert(complexValues[tempform[i].id]);
-                                  break;        
+                                  break;
+                          case "checkboxgroup":
+                            
+                                  //alert(tempform[u].id);
+                                  //alert(formValues[tempform[u].id].value);
+
+                                  if(formValues[tempform[u].id].value){
+                                      complexValues[tempform[u].id]=replaceAll(formValues[tempform[u].id].value,"__",',');
+                                      //alert(complexValues[tempform[u].id]);
+                                      idRequest+=formValues[tempform[u].id].value;
+                                    }
+                                  else
+                                      complexValues[tempform[u].id]=null;
+                                  //alert(complexValues[tempform[i].id]);
+                                  break;
                                   
                           case "combo":
                                   //alert(tempform[u].id);
@@ -658,12 +776,14 @@ function createPanelExjFormByXml(xmlDocument,lang){
                            
                           case "numericRange":
                                   //alert(tempform[u].id);
-                                  if(formValues[tempform[u].id+'MinValue'].value &&
-                                      formValues[tempform[u].id+'MaxValue'].value){
+                                  if(formValues[tempform[u].id+'MinValue'].value || formValues[tempform[u].id+'MinValue'].value == 0 &&
+                                      formValues[tempform[u].id+'MaxValue'].value || formValues[tempform[u].id+'MinValue'].value == 0){
                                       complexValues[tempform[u].id]={
                                           minValue: formValues[tempform[u].id+'MinValue'].value,
                                           maxValue: formValues[tempform[u].id+'MaxValue'].value
                                       };
+                                      //alert(complexValues[tempform[u].id].minValue);
+                                      //alert(complexValues[tempform[u].id].maxValue);
                                     idRequest+=complexValues[tempform[u].id].minValue;
                                     idRequest+=complexValues[tempform[u].id].maxValue;
                                   }else
@@ -696,34 +816,37 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                    
                                   break;     
                           case "time":
-                                /*  alert(tempform[u].id);
-                                  alert(formValues['h'+tempform[u].id].value);
-                                  alert(formValues['m'+tempform[u].id].value);
-                                  alert(formValues['s'+tempform[u].id].value);
-                                  alert(formValues['ms'+tempform[u].id].value);*/
-                                                         
-                                      if(!formValues['ms'+tempform[u].id].value)  
-                                         formValues['ms'+tempform[u].id].value="000"; 
                                       if(formValues['h'+tempform[u].id].value &&
-                                         formValues['m'+tempform[u].id].value  && 
-                                         formValues['s'+tempform[u].id].value /*&&
+                                         formValues['m'+tempform[u].id].value  /*&&
+                                         formValues['s'+tempform[u].id].value &&
                                          formValues['ms'+tempform[u].id].value*/){
                                          if(!label){                                
                                               tempFormat=tempform[u].format;
                                               tempTime1=tempFormat.replace("H", formValues['h'+tempform[u].id].value);
                                               tempTime1=tempTime1.replace("h", formValues['h'+tempform[u].id].value);
                                               tempTime1=tempTime1.replace("m", formValues['m'+tempform[u].id].value);
-                                              tempTime1=tempTime1.replace("s", formValues['s'+tempform[u].id].value);
-                                              tempTime1=tempTime1.replace("ms", formValues['ms'+tempform[u].id].value);
+
+                                              if(formValues['s'+tempform[u].id])
+                                                 if(!formValues['s'+tempform[u].id].value){
+                                                     formValues['s'+tempform[u].id].value="00";
+                                                     tempTime1=tempTime1.replace("s", formValues['s'+tempform[u].id].value);
+                                                 }
+                                               if(formValues['ms'+tempform[u].id])
+                                                 if(!formValues['ms'+tempform[u].id].value){
+                                                    formValues['ms'+tempform[u].id].value="000";
+                                                    tempTime1=tempTime1.replace("ms", formValues['ms'+tempform[u].id].value);
+                                                 }
                                               complexValues[tempform[u].id]=tempTime1;
                                               idRequest+=complexValues[tempform[u].id]; 
                                          }else{
-                                              complexValues[tempform[u].id]=formValues['h'+tempform[u].id].value+"-"+
-                                                                  formValues['m'+tempform[u].id].value+"-"+
-                                                                  formValues['s'+tempform[u].id].value+"-"+
-                                                                  formValues['ms'+tempform[u].id].value;
-                                         }       
-                                                                               
+                                             complexValues[tempform[u].id]=formValues['h'+tempform[u].id].value+"-"+
+                                                                  formValues['m'+tempform[u].id].value;
+                                             if(formValues['s'+tempform[u].id])
+                                                complexValues[tempform[u].id]+="-"+formValues['s'+tempform[u].id].value;
+                                             if(formValues['ms'+tempform[u].id])
+                                                complexValues[tempform[u].id]+="-"+formValues['ms'+tempform[u].id].value;
+                                         }
+
                                       }else
                                         complexValues[tempform[u].id]=null;  
                                   
@@ -764,7 +887,10 @@ function createPanelExjFormByXml(xmlDocument,lang){
                         } 
               
                      }
-                  } 
+                  }
+                 
+                  
+         
                  complexValues["idRequest"]=idRequest; 
                  return(complexValues); 
                 },
@@ -813,28 +939,54 @@ function createPanelExjFormByXml(xmlDocument,lang){
                               var startUrl=serviceResponse.indexOf("<"+proxyResponseUrlTag+">")+proxyResponseUrlTag.length+2;
                               var url=serviceResponse.substr(startUrl);
                               url=url.substr(0,url.indexOf("</"+proxyResponseUrlTag+">"));
+
                               if(returnRootPath)
                                   url=returnRootPath+url;
                               switch(outputManager.container){
                                   case "grid":
-
+                                         
+                                             Ext.Ajax.timeout = 900000;
                                               if(eval(outputManager.paging)){
                                                 outputStore=new Ext.data.Store({
                                                                 nocache : true,
                                                                 autoLoad: true,
                                                                 storeId: "store_"+renderObjectId,
+                                                                
                                                                 proxy:new Ext.data.HttpProxy({
                                                                     url : replaceAll(url,"&amp;", "&"),
-                                                                    method : 'GET'
+                                                                    method : 'GET',
+                                                                    listeners: {
+                                                                        "exception": function(){
+                                                                            Ext.Msg.show({
+                                                                               title:'Results WARNING',
+                                                                               msg: outputManager.pagingEmptyMsg,
+                                                                               buttons: Ext.Msg.OK,
+                                                                               icon: Ext.MessageBox.WARNING
+                                                                            });
+                                                                        }
+                                                                     },
+                                                                    timeout: 900000
                                                                     }),
                                                                 reader : outputManager.readerTempalte,
                                                                 remoteSort : false
                                                   });
                                               }else {
+                                             
                                                   outputStore=new Ext.data.Store({
                                                                 nocache : true,
                                                                 storeId: "store_"+renderObjectId,
                                                                 url: url,
+                                                                listeners: {
+                                                                        "exception": function(){
+                                                                            Ext.Msg.show({
+                                                                               title:'Results WARNING',
+                                                                               msg: outputManager.pagingEmptyMsg,
+                                                                               buttons: Ext.Msg.OK,
+                                                                               icon: Ext.MessageBox.WARNING
+                                                                            });
+                                                                        }
+                                                                     },
+                                                               // timeout: 90000000,
                                                                 reader : outputManager.readerTempalte,
                                                                 remoteSort : false
                                                   });
@@ -847,7 +999,8 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                                             barProgress=barProgress.updateProgress(1,  "Processing...", "Response Recived" );
                                                             setTimeout('barProgress.hide()',800);
                                                           }
-                                                          onload(outputPanel.store,outputManager,layerName,styleLayer);
+                                                          if(outputPanel)
+                                                            onload(outputPanel.store,outputManager,layerName,styleLayer);
                                                       }
                                                });
 
@@ -885,7 +1038,7 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                            else
                                               newDDGroup=outputManager.ddGroup;
 
-                                           var barPaging=null;
+                                           var barPaging=null;var outputPanel=null;
                                            if(eval(outputManager.paging)){
                                               // alert("set paging");
                                                barPaging = new Ext.PagingToolbar({
@@ -895,10 +1048,9 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                                       emptyMsg: outputManager.pagingEmptyMsg,/*"Not observations to display",*/
                                                      // width: screen.width,
                                                       width: outputManager.pagingBarWidth,/*600,*/
-                                                      pageSize:10
+                                                      pageSize:outputManager.pageSize
                                                });
-                                           }
-                                              var outputPanel = new Ext.grid.GridPanel({
+                                               outputPanel = new Ext.grid.GridPanel({
                                                       store: outputStore,
                                                       ddGroup: newDDGroup,
                                                       id: "grid_"+renderObjectId,
@@ -915,10 +1067,37 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                                       viewConfig: {
                                                                 forceFit:true
                                                       },
-                                                      split: true,
-                                                      renderTo: renderObjectId
+                                                      split: true
                                               });
+                                           }else
+                                              outputPanel = new Ext.grid.GridPanel({
+                                                      store: outputStore,
+                                                      ddGroup: newDDGroup,
+                                                      id: "grid_"+renderObjectId,
+                                                      stateId: "gridstate_"+renderObjectId,
+                                                      enableDragDrop: true,
+                                                      ddText : '{0} selected row {1}',
+                                                      colModel: outputManager.colMod,
+                                                      autoHeight : true,
+                                                      trackMouseOver:true,
+                                                      sm: smObj,
+                                                      plugins: pluginsObj,
+                                                      loadMask: true,
+                                                      viewConfig: {
+                                                                forceFit:true
+                                                      },
+                                                      split: true
+                                              });
+                                              
+                                              var renderObjEl=document.getElementById(renderObjectId);
+                                              outputPanel.render(renderObjEl);
+                                             
                                               break;
+                                   case "html":
+                                         var renderEl=document.getElementById(renderObjectId);
+                                         renderEl.innerHTML=response;
+
+                                         break;
                               }
                       };
                       var keyValueResponseTimeOut= function(){
@@ -1039,7 +1218,8 @@ function createExjFormByElement(title, formDataElement, numCols, localizationObj
             htmlValue=replaceAll(htmlValue,"&amp;","&");
           }
        }
-        
+
+
        inputArray[i]={
                 localization: localizationObj,
                         name: inputFormElements[i].getAttribute("name"),
@@ -1071,8 +1251,9 @@ function createExjFormByElement(title, formDataElement, numCols, localizationObj
                       format: inputFormElements[i].getAttribute("format"),
                        value: inputFormElements[i].getAttribute("value"),
                   divContent: inputFormElements[i].getAttribute("divContent"),
-                   /* minValue: inputFormElements[i].getAttribute("minValue"),
-                    maxValue: inputFormElements[i].getAttribute("maxValue"),*/
+                         min: inputFormElements[i].getAttribute("min"),
+                         max: inputFormElements[i].getAttribute("max"),
+                         inc: inputFormElements[i].getAttribute("inc"),
                    htmlValue: htmlValue,
                       height: inputFormElements[i].getAttribute("height"),
                    labelList: inputFormElements[i].getAttribute("labelList"),
@@ -1092,6 +1273,8 @@ function createExjFormByElement(title, formDataElement, numCols, localizationObj
                        store: inputFormElements[i].getAttribute("store"),
                       action: inputFormElements[i].getAttribute("action"),
                       target: inputFormElements[i].getAttribute("target"),
+                     tooltip: inputFormElements[i].getAttribute("tooltip"),
+       tooltipDefaultMessage: inputFormElements[i].getAttribute("tooltipDefaultMessage"),
               storeAttribute: inputFormElements[i].getAttribute("storeAttribute"),
                  submitLabel: inputFormElements[i].getAttribute("submitLabel"),
                    storeData: eval(inputFormElements[i].getAttribute("storeData")),
@@ -1108,7 +1291,15 @@ function createExjFormByElement(title, formDataElement, numCols, localizationObj
                 saveCallback: inputFormElements[i].getAttribute("saveCallback"),
                  isMultiFile: eval(inputFormElements[i].getAttribute("isMultiFile")),
                 defaultFiles: inputFormElements[i].getAttribute("defaultFiles"),
-                         map: inputFormElements[i].getAttribute("map")
+              pointSeparator: inputFormElements[i].getAttribute("pointSeparator"),
+                 formatPoint: inputFormElements[i].getAttribute("formatPoint"),
+                   bboxField: inputFormElements[i].getAttribute("bboxField"),
+                         map: inputFormElements[i].getAttribute("map"),
+             remoteValuesURL: inputFormElements[i].getAttribute("remoteValuesURL"),
+            remoteValuesType: inputFormElements[i].getAttribute("remoteValuesType"),
+     remoteValuesDataElement: inputFormElements[i].getAttribute("remoteValuesDataElement"),
+      remoteValuesProperties: inputFormElements[i].getAttribute("remoteValuesProperties"),
+            dataEmptyMessage: inputFormElements[i].getAttribute("dataEmptyMessage")
                   };
                   
        valuesControl.push(inputArray[i]);            
@@ -1123,12 +1314,12 @@ function createExjFormByElement(title, formDataElement, numCols, localizationObj
                  
      inputArray = null;            
    }
-   valuesControl.push({
+   /*valuesControl.push({
                           name:"idRequest",
                           id:"idRequest",
                           type:"text",
                           value: ""
-                      });
+                      });*/
    var formFieldSet=generateFormFieldSet(title, fieldSets, numCols, localizationObj);
    return({
            formFieldSet: formFieldSet.form,
@@ -1153,26 +1344,32 @@ function getOutputMangerByElement(outputInformationElement){
   var totalRecordRow=templateElement[0].getAttribute("totalRecordRow");
   var nameAttributes=templateElement[0].getAttribute("attributeNamesStore");
   var titleAttributes=templateElement[0].getAttribute("attributeTitlesStore");
-  var splitlNameAttributes=nameAttributes.split(",");
-  var splitlTitleAttributes=titleAttributes.split(",");
-  var record= new Array();
-  for(var i=0; i<splitlNameAttributes.length;i++){
-      record.push({name : splitlTitleAttributes[i], mapping: splitlNameAttributes[i]});
-  }
-  if(templateFormat == "json"){
-     var readerOutput = new Ext.data.JsonReader({
-                        root : rootStore,
-                        totalProperty: totalRecordRow
-                        },
-                        Ext.data.Record.create(record));
-     outputManager.readerTempalte=readerOutput;
+  var splitlNameAttributes=null;
+  var splitlTitleAttributes=null;
+  if(nameAttributes && titleAttributes){
+      splitlNameAttributes=nameAttributes.split(",");
+      splitlTitleAttributes=titleAttributes.split(",");
+      var record= new Array();
+      for(var i=0; i<splitlNameAttributes.length;i++){
+          record.push({name : splitlTitleAttributes[i], mapping: splitlNameAttributes[i]});
+      }
+      if(templateFormat == "json"){
+         var readerOutput = new Ext.data.JsonReader({
+                            root : rootStore,
+                            totalProperty: totalRecordRow
+                            },
+                            Ext.data.Record.create(record));
+         outputManager.readerTempalte=readerOutput;
+      }
   }
   switch(templateContainer){
          case "grid":
+                    
                      outputManager.container="grid";
                      outputManager.paging=templateElement[0].getAttribute("paging");
                      outputManager.pagingBarWidth=templateElement[0].getAttribute("pagingBarWidth");
                      outputManager.pagingEmptyMsg=templateElement[0].getAttribute("pagingEmptyMsg");
+                     outputManager.pageSize=eval(templateElement[0].getAttribute("pageSize"));
                      outputManager.pagingMsg=templateElement[0].getAttribute("pagingMsg");
 
                      var gridAttrbutesNode= templateElement[0].selectNodes("gis:gridAttrbutes");
@@ -1259,7 +1456,14 @@ function getOutputMangerByElement(outputInformationElement){
 
 
                      break;
+
+            case "html":
+                    outputManager.container="html";
+                    outputManager.xslt=templateElement[0].getAttribute("xslt");
+
+                  break;
   }
+
   return(outputManager);
 }
 
@@ -1401,14 +1605,24 @@ function createHtmlTemplateOperation(templateOperationElement){
                      imageButton=templateOperationElement.getAttribute("imageButton");
                      imageDimMin=templateOperationElement.getAttribute("imageDimMin");
                      imageDimMax=templateOperationElement.getAttribute("imageDimMax");
+                     var requestAttributes=templateOperationElement.getAttribute("requestAttributes");
                      idAttribute=templateOperationElement.getAttribute("idAttribute");
                      winWidth=eval(templateOperationElement.getAttribute("winWidth"));
                      var xslResponse=templateOperationElement.getAttribute("xslResponse");
                      winHeight=eval(templateOperationElement.getAttribute("winHeight"));
                      var serviceURL=templateOperationElement.getAttribute("serviceURL")
                      //callback: function(){ alert('callback!');
-
-                     var getRequest=serviceURL+"/httpservice?request=GetRepositoryItem&service=CSW-ebRIM&version=2.0.2&id={"+idAttribute +"}";                 
+                     var attributesReq=requestAttributes.split(',');
+                     var currentParamArray;
+                     var getRequest=serviceURL+"?"
+                     for(var zz=0; zz<attributesReq.length; zz++){
+                         currentParamArray=attributesReq[zz].split(':');
+                         if(currentParamArray.length == 2)
+                            getRequest+=currentParamArray[0]+"="+currentParamArray[1]+"&"
+                     }
+                     getRequest=getRequest.substring(0,getRequest.length-1);
+                    // alert(getRequest);
+                  //   var getRequest=serviceURL+"/httpservice?request=GetRepositoryItem&service=CSW-ebRIM&version=2.0.2&id={"+idAttribute +"}";
                      var showpopupWindow="var targetURL='"+getRequest+"&XSLResponse="+xslResponse+"';"+
                                   "var win = new Ext.Window({ "+
                                             "title: '({"+idAttribute +"}) Result Details', "+
@@ -2059,6 +2273,13 @@ function generateListOfField(Fields){
                       j++;
                   }   
                   break;
+          case "spinner":temp= new Array();
+                  temp=generateSpinnerField(Fields[i]);
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k];
+                      j++;
+                  }
+                  break;
           case "numericRange":temp= new Array();
                   temp=generateNumericRangeField(Fields[i]);
                   for(k=0; k<temp.length; k++){
@@ -2072,6 +2293,13 @@ function generateListOfField(Fields){
                       fieldsArray[j]=temp[k]; 
                       j++;
                   }   
+                  break;
+          case "gazetteer":temp= new Array();
+                  temp=generateGazetteerField(Fields[i]);
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k];
+                      j++;
+                  }
                   break;
           case "checkbox":temp= new Array();
                   temp=generateCheckBoxField(Fields[i]);  
@@ -2433,17 +2661,37 @@ function generateCheckBoxGroupField(field){
   }else
    label=field.label;
 
-  var valuesArray=field.valueList.split(",");
-  var itemsArray=new Array();
-  var checkInfo;
-  for(var ii=0; ii<valuesArray.length; ii++){
-      checkInfo=valuesArray[ii].split(":");
-      if(checkInfo.length == 2)
-         itemsArray.push( {boxLabel: checkInfo[0], name: checkInfo[1]});
-      else
-         itemsArray.push({boxLabel: checkInfo[0], name: checkInfo[1], checked: eval(checkInfo[2])});
-  }
-
+   var itemsArray=new Array();
+   var checkInfo;
+   var valuesArray= null;
+  
+  if(field.valueList){
+      valuesArray=field.valueList.split(",");
+      for(var ii=0; ii<valuesArray.length; ii++){
+          checkInfo=valuesArray[ii].split(":");
+          if(checkInfo.length == 2)
+             itemsArray.push( {boxLabel: checkInfo[0], name: checkInfo[1]});
+          else
+             itemsArray.push({boxLabel: checkInfo[0], name: checkInfo[1], checked: eval(checkInfo[2])});
+      }
+  } else
+      if(field.remoteValuesURL && field.remoteValuesDataElement && field.remoteValuesProperties){
+          var remoteStore=getStore(field.remoteValuesType, //storeType
+                                 field.id+"_store", //storeID
+                                 field.remoteValuesURL, //remoteDataURL
+                                 field.remoteValuesProperties,
+                                 field.remoteValuesDataElement,
+                                 null, field.dataEmptyMessage);
+        var rec;
+        
+        for(var zz=0; zz<remoteStore.length; zz++){
+           rec=remoteStore[zz];
+           
+           itemsArray.push( {boxLabel: rec["boxLabel"], name: rec["name"]});
+        }
+       
+      }
+  
   var checkboxGroupField = new Ext.form.CheckboxGroup({
         id:field.id,
         xtype: 'checkboxgroup',
@@ -2529,11 +2777,13 @@ function generateNumericField(field){
   if(field.allowBlank == "false")
      allowBlank=false; 
  
-  var onchange="";
-  if(!allowBlank)
-     onchange+="_formObj_[_formObj_.length-1].onChangeFieldControlMandatory();"; 
+ var onchange="skip";
+  /*if(!allowBlank)
+     onchange+="_formObj_[_formObj_.length-1].onChangeFieldControlMandatory();"; */
   if(field.onChange)
-    onchange+=field.onChange;
+    onchange=field.onChange;
+
+
 
   var label;
   if(field.localization && field.label!="" && field.label){
@@ -2550,9 +2800,13 @@ function generateNumericField(field){
                                     tag: "input", 
                                     id: field.id,
                                     type: "text", 
-                                    onchange: onchange,  
+                                    //onchange: onchange,
                                     size: size, 
                                     autocomplete: "off"
+                                },
+                                baseChars: '0123456789NaN',
+                                listeners: {
+                                    "change": eval(onchange)
                                 },
                                 decimalSeparator: field.decimalSeparator,
                                 decimalPrecision : field.decimalPrecision,
@@ -2570,7 +2824,8 @@ function generateNumericField(field){
                                 vtypeText: field.vtypeText,
                                 allowBlank: allowBlank
 			})]
-  };                  
+  };
+
   return(formField);  
 }
 
@@ -2594,11 +2849,13 @@ function generateNumericRangeField(field){
   if(field.allowBlank == "false")
      allowBlank=false;
 
-  var onchange="";
-  if(!allowBlank)
-     onchange+="_formObj_[_formObj_.length-1].onChangeFieldControlMandatory();";
+ var onchange="skip";
+  /*if(!allowBlank)
+     onchange+="_formObj_[_formObj_.length-1].onChangeFieldControlMandatory();";*/
   if(field.onChange)
-    onchange+=field.onChange;
+    onchange=field.onChange;
+
+
 
   var label;
   if(field.localization && field.label!="" && field.label){
@@ -2652,6 +2909,10 @@ function generateNumericRangeField(field){
                                     size: size,
                                     autocomplete: "off"
                                 },
+                                baseChars: '0123456789NaN',
+                                listeners: {
+                                    "change": eval(onchange)
+                                },
                                 decimalSeparator: field.decimalSeparator,
                                 decimalPrecision : field.decimalPrecision,
                                 value: minValue_value,
@@ -2690,6 +2951,10 @@ function generateNumericRangeField(field){
                                     size: size,
                                     autocomplete: "off"
                                 },
+                                listeners: {
+                                    "change": eval(onchange)
+                                },
+                                baseChars: '0123456789NaN',
                                 decimalSeparator: field.decimalSeparator,
                                 decimalPrecision : field.decimalPrecision,
                                 value: maxValue_value,
@@ -3378,7 +3643,7 @@ function generatePercentageField(field){
                                 hidden: field.hidden,
                                 labelStyle: field.labelStyle,
                                 labelSeparetor: field.labelSeparetor,
-				fieldLabel: label,
+				//fieldLabel: label,
                                 vtypeText: field.vtypeText
                           })]
                   };   
@@ -3411,6 +3676,25 @@ function generateComboField(field){
       colSpan=1;
  if(field.store == 'VALUES')
     var mode='local';
+
+ var tooltip=null;
+
+ if(field.tooltip){
+    tooltip=new Ext.ToolTip({
+        html: field.tooltipDefaultMessage,
+        setHtml: function (newHtml){
+          this.html=newHtml;
+          Ext.QuickTips.init();
+        },
+        //title: "tooltip"+field.id,
+        autoHide: true
+       /* closable: true,*/
+       // draggable:true
+    });
+    onchangeFunct="";
+   
+ }
+ 
  var store;
 
  if(field.storeFields && field.storeData)
@@ -3427,11 +3711,13 @@ function generateComboField(field){
   if(field.allowBlank == "false")
      allowBlank=false; 
  
-  var onchange="";
-  if(!allowBlank)
-     onchange+="_formObj_[_formObj_.length-1].onChangeFieldControlMandatory();"; 
+   var onchange="skip";
+ /* if(!allowBlank)
+     onchange+="_formObj_[_formObj_.length-1].onChangeFieldControlMandatory();"; */
   if(field.onChange)
-    onchange+=field.onChange;
+    onchange=field.onChange;
+
+
   
 
 
@@ -3450,6 +3736,32 @@ function generateComboField(field){
                             name: field.name,
                             msgTarget : 'qtip',
                             typeAhead: true,
+                            tooltip: tooltip,
+                            listeners: {
+                                afterrender: function() {
+                                   if(this.tooltip)
+                                       this.tooltip.initTarget(this.container.id);
+                                },
+                               select: function() {
+                                   //alert(this.getValueInformation("description"));
+                                   if(this.tooltip){
+                                       this.tooltip.destroy();
+                                       this.tooltip=new Ext.ToolTip({
+                                            html: this.getValueInformation("description"),
+                                            setHtml: function (newHtml){
+                                              this.html=newHtml;
+
+                                            },
+                                            //title: "tooltip"+field.id,
+                                            autoHide: true
+                                           /* closable: true,*/
+                                           // draggable:true
+                                        });
+                                        Ext.QuickTips.init();
+                                   }
+                                   
+                                }},
+
                             disabled: field.disabled,
                             mode: mode,
                             colspan: numberColsField,
@@ -3509,13 +3821,280 @@ function generateComboField(field){
              colspan: /*numberColsField*/colSpan*numberColsField,
              layout: "form",
              items: [comboField]
- };     
- 
+ };
+
+ /*if(onRenderFunct)
+ comboField.on('afterrender', eval(onRenderFunct));*/
  if(onchange!="")
     comboField.on('select', eval(onchange));
  if(field.value)
     comboField.setValue(field.value);  
  return(formField);  
+}
+
+function generateGazetteerField(field){
+ var colSpan=0,formField=new Array();
+  if (field.colSpan)
+      colSpan=(parseFloat(field.colSpan)-1)*numberColsField;
+  else
+      colSpan=1;
+ if(field.store == 'VALUES')
+    var mode='local';
+
+ var tooltip=null;
+
+ if(field.tooltip){
+    tooltip=new Ext.ToolTip({
+        html: field.tooltipDefaultMessage,
+        setHtml: function (newHtml){
+          this.html=newHtml;
+          Ext.QuickTips.init();
+        },
+        //title: "tooltip"+field.id,
+        autoHide: true
+       /* closable: true,*/
+       // draggable:true
+    });
+   // onchangeFunct="";
+ }
+
+ var store;
+
+ if(field.storeData)
+    store = new Ext.data.SimpleStore({
+        id: "store"+field.id,
+        fields: ['name','polygon'],
+        data : field.storeData
+      });
+  else
+    if(field.getStoreMethod)
+       store=eval(field.getStoreMethod);
+
+  var allowBlank=true;
+  if(field.allowBlank == "false")
+     allowBlank=false;
+
+
+/*DA CAMBIARE*/
+   var onchange="skip";
+ /* if(!allowBlank)
+     onchange+="_formObj_[_formObj_.length-1].onChangeFieldControlMandatory();"; */
+  if(field.onChange)
+    onchange=field.onChange;
+
+
+
+
+
+  var label;
+  if(field.localization && field.label!="" && field.label){
+    label=field.localization.getLocalMessage(field.label);
+  }else
+   label=field.label;
+
+  var gazetteerField=new Ext.form.ComboBox({
+                            store: store,
+                            autoShow: true,
+                            storeFields: ['name','polygon'],
+                            displayField: 'name',
+                            id: field.id,
+                            name: field.name,
+                            msgTarget : 'qtip',
+                            typeAhead: true,
+                            tooltip: tooltip,
+                            listeners: {
+                                afterrender: function() {
+                                   if(this.tooltip)
+                                       this.tooltip.initTarget(this.container.id);
+                                },
+                               select: function() {
+                                   //alert(this.getValueInformation("description"));
+                                   if(this.tooltip){
+                                       this.tooltip.destroy();
+                                       this.tooltip=new Ext.ToolTip({
+                                            html: this.getValueInformation("description"),
+                                            setHtml: function (newHtml){
+                                              this.html=newHtml;
+
+                                            },
+                                            //title: "tooltip"+field.id,
+                                            autoHide: true
+                                           /* closable: true,*/
+                                           // draggable:true
+                                        });
+                                        Ext.QuickTips.init();
+                                   }
+
+                                }},
+
+                            disabled: field.disabled,
+                            mode: mode,
+                            colspan: numberColsField,
+                            autoCreate: {tag: "input",
+                                         type: "text",
+                                         //onchange: onchange,
+                                         id:field.id,
+                                         size: field.size,
+                                         autocomplete: "on"},
+                            fieldLabel: label,
+                            hideLabel: field.hideLabel,
+                            triggerAction: 'all',
+                            map: field.map,
+                            aoiName: field.aoiName,
+                            
+                            pointSeparator: field.pointSeparator,
+                            formatPoint: field.formatPoint,
+                            stateful: false,
+
+                            emptyText: label,
+                            selectOnFocus:true,
+                            arrayStore: field.storeData,
+                            allowBlank:allowBlank,
+                            getValueInformation: function(infoValue){
+                                var i;
+
+                                for(i=0;i<this.store.getTotalCount();i++){
+                                   // alert("i: "+this.store.getAt(i).get(this.displayField));
+                                    if(this.store.getAt(i).get(this.displayField) == this.value)
+                                       return(this.store.getAt(i).get(infoValue));
+                                }
+                                return(null);
+                            },
+                            setStore: function(newStoreData,newstoreFields,newDisplayField){
+                                var storeF;
+                                if(newstoreFields){
+                                  storeF=newstoreFields;
+                                  this.storeFields=newDisplayField;
+                                }
+                                else
+                                  storeF=this.storeFields;
+                                this.arrayStore=newStoreData;
+                                this.storeFields=storeF;
+                                var newStore = new Ext.data.SimpleStore({
+                                        id: "store"+this.id,
+                                        fields: storeF,
+                                        data : newStoreData
+                                });
+                                this.bindStore(newStore);
+                            }
+
+
+                    });
+   if(field.bboxField)
+     gazetteerField.bboxField=field.bboxField;
+  var u=0;
+ /* if(colSpan>0){
+    formField[0]={
+        colspan: colSpan,
+        html: "&nbsp;"
+    };
+    u++;
+  } */
+
+  formField[u] = {
+             colspan: /*numberColsField*/colSpan*numberColsField,
+             layout: "form",
+             items: [gazetteerField]
+ };
+
+ var generateChange=function(){
+    var pointListString=this.getValueInformation('polygon');
+    
+    var pointsArray=pointListString.split(this.pointSeparator);
+    var tempPointSplit=null;
+    var formatSeparator=this.formatPoint.charAt(3);
+    var olPointsArray=new Array();
+    var i,latIndex,lonIndex;
+    var aoi=new Array();
+    var latFormatPosition=this.formatPoint.indexOf('lat');
+    if(latFormatPosition == 0){
+          latIndex=0;lonIndex=1;
+    }else{
+          latIndex=1;lonIndex=0;
+    }
+    var firstPoint=pointsArray[0].split(formatSeparator);
+
+    aoi[0]=firstPoint[lonIndex];
+    aoi[1]=firstPoint[latIndex];
+    aoi[2]=firstPoint[lonIndex];
+    aoi[3]=firstPoint[latIndex];
+  
+    for(i=0; i<pointsArray.length;i++){
+       tempPointSplit=pointsArray[i].split(formatSeparator);
+
+      
+       olPointsArray.push(new OpenLayers.Geometry.Point(tempPointSplit[lonIndex], tempPointSplit[latIndex]));
+       if(tempPointSplit[lonIndex] < aoi[0])
+           aoi[0]=tempPointSplit[lonIndex];
+       if(tempPointSplit[lonIndex] > aoi[2])
+           aoi[2]=tempPointSplit[lonIndex];
+       if(tempPointSplit[latIndex] < aoi[1])
+           aoi[1]=tempPointSplit[latIndex];
+       if(tempPointSplit[latIndex] > aoi[3])
+           aoi[3]=tempPointSplit[latIndex];
+    }
+    var olStyle = {
+                      fillColor: "#ee9900",
+                      fillOpacity: 0.0,
+                      hoverFillColor: "white",
+                      hoverFillOpacity: 0.0,/*aoiColor="#e76a2d" aoiWidth="3"*/
+                      strokeColor: field.aoiColor,
+                      strokeOpacity: 1,
+                      strokeWidth: field.aoiWidth,
+                      strokeLinecap: "round",
+                      hoverStrokeColor: "red",
+                      hoverStrokeOpacity: 1,
+                      hoverStrokeWidth: 0.2,
+                      pointRadius: 6,
+                      hoverPointRadius: 1,
+                      hoverPointUnit: "%",
+                      pointerEvents: "visiblePainted",
+                      cursor: ""
+                 };
+    
+    var layer_style = OpenLayers.Util.extend({}, OpenLayers.Feature.Vector.style['default']);
+    
+    var linearRing = new OpenLayers.Geometry.LinearRing(olPointsArray);
+   
+    var feature = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Polygon([linearRing]),null,olStyle);
+   
+    var vectorLayerObj=eval(this.map).getLayersByName(this.aoiName)[0];
+
+    if(vectorLayerObj)
+       eval(this.map).removeLayer(vectorLayerObj);
+
+    vectorLayerObj=new OpenLayers.Layer.Vector(this.aoiName, {style: layer_style, displayInLayerSwitcher: true});
+    
+    eval(this.map).addLayer(vectorLayerObj);
+   
+    vectorLayerObj.addFeatures([feature]);
+    
+    vectorLayerObj.maxExtent=new OpenLayers.Bounds(aoi[0], aoi[1], aoi[2], aoi[3]),
+
+    //alert(vectorLayerObj.maxExtent);
+    eval(this.map).zoomToExtent(vectorLayerObj.maxExtent);
+
+    if(this.bboxField){
+      document.getElementById(this.bboxField+'WestBBOX').value=aoi[2];
+      document.getElementById(this.bboxField+'SouthBBOX').value=aoi[1];
+      document.getElementById(this.bboxField+'EastBBOX').value=aoi[0];
+      document.getElementById(this.bboxField+'NorthBBOX').value=aoi[3];
+      document.getElementById(this.bboxField+'WestBBOX').focus();
+      document.getElementById(this.bboxField+'SouthBBOX').focus();
+      document.getElementById(this.bboxField+'EastBBOX').focus();
+      document.getElementById(this.bboxField+'NorthBBOX').focus();
+      document.getElementById(this.bboxField+'SouthBBOX').focus();  
+    }
+     
+                                       
+ };
+ /*if(onRenderFunct)
+ comboField.on('afterrender', eval(onRenderFunct));*/
+ if(onchange!="")
+    gazetteerField.on('select', generateChange);
+ /*if(field.value)
+    comboField.setValue(field.value);*/
+ return(formField);
 }
 
 function generateTimeStepField(field){
@@ -3563,12 +4142,14 @@ function generateTimeField(field){
   var colSpan=numberColsField;
   if (field.colSpan)
       colSpan=(parseFloat(field.colSpan)-1)*numberColsField;
-
+  var maxH;
+  
   var splitFormat=field.format.split(':');
-  if(splitFormat[0].indexOf('H')>0)
+  if(splitFormat[0].indexOf('H')>-1)
      maxH=24;
   else
-     maxH=12; 
+     maxH=12;
+
   for(i=0;i<maxH;i++)
       if(i<10)
         hStore[i]="0"+i;
@@ -3623,17 +4204,23 @@ function generateTimeField(field){
                             value: null,
                             triggerAction: 'all',
                             selectOnFocus:true,
+                            getValueInformation: function(infoValue){
+
+                                return(this.value);
+                            },
                             allowBlank:allowBlank
                     })]
                 };
   timeCombo[u+1]={
                     colspan: 1,
+                    valign:'BOTTOM',
                     layout: "form",
                    
                     items: [new Ext.form.Field({    
                             autoCreate: {tag: 'div', cn:{tag:'div'}},
                             id: 'labelTime'+field.id,
                             hideLabel: true,
+                            height: 10,
                             value: "&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;",
                             setValue:function(val) { 
                                   this.value = val;
@@ -3663,6 +4250,10 @@ function generateTimeField(field){
                             fieldLabel: 'M',
                             triggerAction: 'all',
                             selectOnFocus:true,
+                            getValueInformation: function(infoValue){
+
+                                return(this.value);
+                            },
                             allowBlank:allowBlank
                        })]
                 };
@@ -3704,6 +4295,10 @@ function generateTimeField(field){
                             fieldLabel: 'S',
                             triggerAction: 'all',
                             selectOnFocus:true,
+                            getValueInformation: function(infoValue){
+
+                                return(this.value);
+                            },
                             allowBlank:allowBlank
                        })]
                 };
@@ -3876,6 +4471,10 @@ function generateRangeTimeField(field){
                             selectOnFocus:true,
                             allowBlank:allowBlank,
                             value: null,
+                            getValueInformation: function(infoValue){
+
+                                return(this.value);
+                            },
                             secondsDiv: field.secondsDiv,
                             mStart:'mStart'+field.id,
                             sStart:'sStart'+field.id,
@@ -3927,6 +4526,10 @@ function generateRangeTimeField(field){
                             selectOnFocus:true,
                             allowBlank:allowBlank,
                             value: null,
+                            getValueInformation: function(infoValue){
+
+                                return(this.value);
+                            },
                             hStart:'hStart'+field.id,
                             sStart:'sStart'+field.id,
                             msStart:'msStart'+field.id,
@@ -3976,6 +4579,10 @@ function generateRangeTimeField(field){
                             selectOnFocus:true,
                             allowBlank:allowBlank,
                             value: null,
+                            getValueInformation: function(infoValue){
+
+                                return(this.value);
+                            },
                             labelStyle: 'font-size:8px;',
                             hStart:'hStart'+field.id,
                             mStart:'mStart'+field.id,
@@ -4084,6 +4691,10 @@ function generateRangeTimeField(field){
                             hideLabel: field.hideLabel,
                             triggerAction: 'all',
                             value: null,
+                            getValueInformation: function(infoValue){
+
+                                return(this.value);
+                            },
                             selectOnFocus:true,
                             allowBlank:allowBlank,
                             mStart:'mStart'+field.id,
@@ -4136,6 +4747,10 @@ function generateRangeTimeField(field){
                             triggerAction: 'all',
                             selectOnFocus:true,
                             value: null,
+                            getValueInformation: function(infoValue){
+
+                                return(this.value);
+                            },
                             allowBlank:allowBlank,
                             mStart:'mStart'+field.id,
                             hStart:'hStart'+field.id,
@@ -4187,6 +4802,10 @@ function generateRangeTimeField(field){
                             triggerAction: 'all',
                             selectOnFocus:true,
                             value: null,
+                            getValueInformation: function(infoValue){
+
+                                return(this.value);
+                            },
                             allowBlank:allowBlank,
                             mStart:'mStart'+field.id,
                             hStart:'hStart'+field.id,
@@ -4254,13 +4873,13 @@ function generateDateField(field){
   if (field.colSpan)
       colSpan=(parseFloat(field.colSpan)-1)*numberColsField;
   var u=0;
-  if(colSpan>0){
+  /*if(colSpan>0){
     formField[0]={
         colspan: colSpan,
         html: "&nbsp;"
     };
     u++;
-  }
+  }*/
   if (field.size)
       size=field.size;
   var allowBlank=true;
@@ -4298,6 +4917,7 @@ function generateDateField(field){
                     });
   formField[u]={
              colspan: numberColsField+colSpan,
+             align: 'left',
              layout: "form",
              items:[dateField]
            };      
@@ -4424,9 +5044,9 @@ function generateFileField(field){
   }else
    submitLabel=field.submitLabel;
 
-  var fileHtml="<form name='formFile_"+field.id+"' action='"+field.action+"' method='POST' enctype='multipart/form-data' target='"+field.target+"'>"+
+ /* var fileHtml="<form name='formFile_"+field.id+"' action='"+field.action+"' method='POST' enctype='multipart/form-data' target='"+field.target+"'>"+
             "<input type='file' id='"+field.id+"_file' name='"+field.id+"_file' value='' onchange='javascript:"+onchange+"' width='"+size+"' />"+
-             "<input type='submit' name='buttonSubmit_"+field.id+"' value='"+submitLabel+"'/>"+
+             "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='buttonSubmit_"+field.id+"' value='"+submitLabel+"'/>"+
             "</form>";
      formField[u]={
              colspan: numberColsField,
@@ -4445,9 +5065,90 @@ function generateFileField(field){
                         }
                       }
                    })]
-            };
+            };*/
 
+
+  formField[u]={
+             colspan: numberColsField,
+             layout: "form",
+             items: [new Ext.ux.form.FileUploadField({
+                //xtype: 'fileuploadfield',
+                id: "test",
+                emptyText: 'Select an file',
+                fieldLabel: 'Select an file',
+                name: "test2",
+                buttonText: 'load'
+                /*buttonCfg: {
+                    iconCls: 'upload-icon'
+                }*/
+               })]
+          };
   return(formField);  
+}
+
+function generateSpinnerField(field){
+  var formField=new Array(), size="20";
+  if (field.size)
+      size=field.size;
+  var colSpan=0;
+  if (field.colSpan)
+      colSpan=(parseFloat(field.colSpan)-1)*numberColsField;
+  var u=0;
+  if(colSpan>0){
+    formField[0]={
+        colspan: colSpan,
+        html: "&nbsp;"
+    };
+    u++;
+  }
+
+  var allowBlank=true;
+  if(field.allowBlank == "false")
+     allowBlank=false;
+
+  var onchange="";
+  if(!allowBlank)
+     onchange+="_formObj_[_formObj_.length-1].onChangeFieldControlMandatory();";
+  if(field.onChange)
+    onchange+=field.onChange;
+
+  var label;
+  if(field.localization && field.label!="" && field.label){
+    label=field.localization.getLocalMessage(field.label);
+  }else
+   label=field.label;
+
+  formField[u]={
+             colspan: numberColsField+colSpan,
+             layout: "form",
+             items: [new Ext.ux.form.SpinnerField({
+                                fieldLabel: label,
+                                id: field.id,
+                                hideLabel: field.hideLabel,
+                                name: field.name,
+                                disabled: field.disabled,
+                                labelStyle: field.labelStyle,
+                                labelSeparetor: field.labelSeparetor,
+                                listeners: {
+                                    "onFocus": function(){
+                                        alert("change");
+                                    }//eval(onchange)
+                                },
+                                value: field.value,
+                                vtype: field.vtype,
+                                vtypeText: field.vtypeText,
+                                hidden: field.hidden,
+                                minValue: field.min,
+                                maxValue: field.max,
+                                allowDecimals: true,
+                                decimalSeparator: field.decimalSeparator,
+                                decimalPrecision : field.decimalPrecision,
+                                incrementValue: eval(field.inc),
+                                //alternateIncrementValue: 2.1,
+                                accelerate: true      
+			})]
+  };
+  return(formField);
 }
 
 function generateLabelField(field){
@@ -4458,14 +5159,7 @@ function generateLabelField(field){
   else
       colSpan=1;
   var u=0;
- /* if(colSpan>0){
-    formField[0]={
-        colspan: colSpan,
-        html: "&nbsp;"
-    };
-    u++;
-  }*/
-  
+
   var defaultValue;
   if(field.htmlValue)
      defaultValue=field.htmlValue;
@@ -4475,37 +5169,44 @@ function generateLabelField(field){
       }else
         defaultValue=field.value; 
   }
-      
-     
-  if(field.divContent){
-    
+
+  if(field.divContent){ 
       var tmp="";
       if(defaultValue)
         tmp=defaultValue;
       defaultValue="<div id=\""+field.divContent+"\">"+tmp+"</div>";
-      alert(defaultValue);
   }
+
+  var label=new Ext.form.Field({
+                        autoCreate: {tag: 'div', cn:{tag:'div'}},
+                        id: field.id,
+                        name: field.id,
+                        hideLabel: true,
+                        value: defaultValue,
+                        setValue:function(val) {
+                            this.value = val;
+                            if(this.rendered){
+                                this.el.child('div').update(
+                                '<p>'+this.value+'</p>');
+                        }
+                      }
+                   });
+
+
+  if(field.height)
+     label.height= field.height;
+
+  if(field.divContent)
+     label.divContent= field.divContent;
+
+  if(field.storeAttribute)
+     label.storeAttribute= field.storeAttribute;
+
 
   formField[u]={
              colspan: /*numberColsField*/colSpan*numberColsField,
              layout: "form",
-             items: [new Ext.form.Field({
-                        autoCreate: {tag: 'div', cn:{tag:'div'}},
-                        id: field.id,
-                        name: field.id,
-                        height: field.height,
-                        hideLabel: true,
-                        divContent: field.divContent,
-                        value: defaultValue,
-                        storeAttribute: field.storeAttribute,
-                        setValue:function(val) { 
-                            this.value = val;
-                            if(this.rendered){
-                                this.el.child('div').update(
-                                '<p>'+this.value+'</p>');   
-                        }
-                      }
-                   })]
+             items: [label]
             };
   return(formField);    
 }
@@ -4564,6 +5265,80 @@ function generateButtonField(field){
         
   return(formField);  
 }
+
+
+
+/* ---------------------------- READER UTILS ------------------------------*/
+
+function getStore(storeType,storeId,dataURL,recordProperties, record, totalProperty, emptyMsg){
+
+    switch(storeType){
+        case "xml":
+              return getXMLStore(storeId,dataURL,recordProperties, record, totalProperty, emptyMsg)
+              break;
+         default:
+              return getXMLStore(storeId,dataURL,recordProperties, record, totalProperty, emptyMsg)
+             // break;
+    }
+}
+
+function getXMLStore(storeId,xmlURL,recordProperties, record, totalProperty, emptyMsg){
+       var propArray=recordProperties.split(',');
+       var prop;
+       var records= new Array();
+       for(var zz=0; zz<propArray.length; zz++){
+           prop=propArray[zz].split(":");
+           records.push({name: prop[0] , mapping: prop[1]}); 
+       }
+
+      var xmlStore=new Array();
+      var responseEvent= function(response){
+            //alert(response);
+            var responseDocument= Sarissa.getDomDocument();
+            responseDocument=(new DOMParser()).parseFromString(response, "text/xml");
+            responseDocument.setProperty("SelectionLanguage", "XPath");
+            var allrecords=responseDocument.selectNodes(record);
+            for(var j=0; j<allrecords.length; j++){
+                xmlStore[j]=new Object();
+                for(var z=0; z<records.length; z++){
+                    if(records[z].mapping.substring(0,1) == '@')
+                      xmlStore[j][records[z].name]=allrecords[j].getAttribute(records[z].mapping.substring(1));
+                    else
+                      xmlStore[j][records[z].name]=allrecords[j].selectNodes(records[z].mapping)[0].childNodes[0].nodeValue;
+                } 
+            }
+      };
+      var responseTimeOut= function(){
+          Ext.Msg.show({
+                        title:'Request TIMEOUT',
+                        msg: emptyMsg,
+                        buttons: Ext.Msg.OK,
+                        icon: Ext.MessageBox.ERROR
+                      });
+
+      };
+      var responseError= function(response){
+          Ext.Msg.show({
+                        title:'Request ERROR',
+                        msg: emptyMsg,
+                        buttons: Ext.Msg.OK,
+                        icon: Ext.MessageBox.ERROR
+                      });
+
+      };
+
+       sendXmlHttpRequestTimeOut("GET",
+                                 replaceAll(xmlURL,"&amp;", "&"),
+                                 false, null, 999,
+                                 responseEvent,
+                                 responseTimeOut,
+                                 null, null, responseError);
+        
+      return xmlStore;
+
+}
+
+
 
 
 

@@ -236,8 +236,21 @@ Ext.apply(Ext.form.VTypes, {
   millseconds: function(val){
      return ((val >= 0)&&(val <= 999));
   },
-  millsecondsText: 'The millseconds value is between 0 and 999.'
+  millsecondsText: 'The millseconds value is between 0 and 999.',
 
+  checkboxgroupcontrol: function (val, field){
+    alert(val);
+    if(field.id.indexOf("_selDelAll") != -1){
+        var group=Ext.getCmp(field.chekboxGroupId);
+        alert(group.getValue());
+        /*for(var k=0; k<this.checkBoxGroupDim;k++){
+
+        }*/
+
+    }
+    return false;
+  },
+  checkboxgroupcontrolText: 'Error'
 });
 
 // ----end new vtype definition

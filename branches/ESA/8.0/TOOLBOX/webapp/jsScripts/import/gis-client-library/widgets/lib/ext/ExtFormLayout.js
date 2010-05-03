@@ -96,5 +96,3 @@ function createExtInterfaceByXml(xmlDocument,lang){
 }
 
 
-
-

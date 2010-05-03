@@ -4,6 +4,7 @@
  */
 
 GisClientManager= function(lang, proxyUrl, utilsUrl) {
+
  this.lang="eng";
  this.utilsUrl="Utils";
  this.proxyUrl="ProxyRedirect";
@@ -13,14 +14,12 @@ GisClientManager= function(lang, proxyUrl, utilsUrl) {
  this.init= function(){
      if(lang)
        this.lang=lang;
-
      if(proxyUrl)
        this.proxyUrl=proxyUrl;
-
      if(utilsUrl)
        this.utilsUrl=utilsUrl;
+   //  this.loadScript("import/gisClient/widgets/lib/utils/browserDetect.js");
 
-    
  };
 
  this.loadScript= function(url){
@@ -33,7 +32,7 @@ GisClientManager= function(lang, proxyUrl, utilsUrl) {
                 this.loadScripts.push(script);
             }
 };
-this.insertScript= function(content, id){
+ this.insertScript= function(content, id){
    var script=document.createElement('script');
    script.defer=false;script.type="text/javascript";
    script.innerHTML=content;
@@ -41,7 +40,7 @@ this.insertScript= function(content, id){
    document.getElementsByTagName('head')[0].appendChild(script);
    //this.loadScripts.push(script);
 };
-this.loadCSS= function(url){
+ this.loadCSS= function(url){
             if(!document.getElementById(url)){
                 var link=document.createElement('link');
                 link.defer=false;
@@ -53,7 +52,7 @@ this.loadCSS= function(url){
                // this.loadCSS.push(link);
             }
 };
-this.onloadTest=function(){
+ this.onloadTest=function(){
  // Not yet Implemeted!! Carica le librerie sulla base di un xml delle funzionalità
 };
 

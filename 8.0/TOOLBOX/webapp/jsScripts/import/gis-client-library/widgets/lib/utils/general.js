@@ -7,7 +7,7 @@ function replaceAll(text, strA, strB)
 
 function assignXMLHttpRequest() {
    var XHR = null;
-   var browserUtente = navigator.userAgent.toUpperCase();
+   /*var browserUtente = navigator.userAgent.toUpperCase();
    if(typeof(XMLHttpRequest) === "function" || typeof(XMLHttpRequest) === "object")
       XHR = new XMLHttpRequest();
    else 
@@ -17,43 +17,65 @@ function assignXMLHttpRequest() {
 	    XHR = new ActiveXObject("Msxml2.XMLHTTP");
          else
 	    XHR = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-  return XHR;    
+        }*/
+  try {
+        XHR = new XMLHttpRequest();
+  } catch (trymicrosoft) {
+    try {
+        XHR = new ActiveXObject("Msxml2.XMLHTTP");
+    } catch (othermicrosoft) {
+        try {
+                XHR = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (failed) {
+                XHR = false;
+            }
+    }
+  }
+
+  return XHR;
+
 }
 
  var request=null;
  var timeOutEvent=null;
 // var xhrTimeout=null;
 function sendXmlHttpRequestTimeOut(requestMethod, requestUrl, requestAsync, requestBody, timeOutRequest, eventResponse, eventTimeOut, headers, loading, eventError){
-    request=assignXMLHttpRequest(); 
-    timeOutEvent=eventTimeOut;
-    if(timeOutRequest <1000)
-       timeOutRequest=timeOutRequest*1000; 
-    var message;
-    request.open(requestMethod, requestUrl, requestAsync);
-    request.setRequestHeader("connection", "close");
-    var headSplit;
-    if(headers){
-       for(var i=0;i<headers.length; i++){
-           headSplit=headers[i].split(",");
-           request.setRequestHeader(headSplit[0], headSplit[1]);
-       } 
+    request=assignXMLHttpRequest();
+    //alert(requestAsync);
+    if(request){
+        timeOutEvent=eventTimeOut;
+        if(timeOutRequest <1000)
+           timeOutRequest=timeOutRequest*1000;
+        var message;
+        request.open(requestMethod, requestUrl, requestAsync);
+        request.setRequestHeader("connection", "close");
+        var headSplit;
+        if(headers){
+           for(var i=0;i<headers.length; i++){
+               headSplit=headers[i].split(",");
+               request.setRequestHeader(headSplit[0], headSplit[1]);
+           }
+        }
+        var xhrTimeout=setTimeout("request.abort();timeOutEvent.call();",timeOutRequest);
+        if(requestAsync){
+              request.onreadystatechange= function(){
+                     ajaxResponseManager(request,xhrTimeout,message,eventResponse,eventError);
+              };
+        }
+        if(loading){
+           message=Ext.MessageBox.wait(loading.message,loading.title);
+           //String title, String msg, [String progressText] )
+         }
+         request.send(requestBody);
+         if(!requestAsync){
+             var result=ajaxResponseManager(request,xhrTimeout,message,eventResponse,eventError);
+             return result;
+         }
+         return null;
+    }else{
+
+       return null;
     }
-    var xhrTimeout=setTimeout("request.abort();timeOutEvent.call();",timeOutRequest);
-    if(requestAsync){
-          request.onreadystatechange= function(){
-                 ajaxResponseManager(request,xhrTimeout,message,eventResponse,eventError);
-          };
-    }
-    if(loading){
-       message=Ext.MessageBox.wait(loading.message,loading.title); 
-       //String title, String msg, [String progressText] )
-     }  
-     request.send(requestBody);
-     if(!requestAsync){
-         var result=ajaxResponseManager(request,xhrTimeout,message,eventResponse,eventError);
-         return result;
-     }   
 }
 
 function ajaxResponseManager(request,xhrTimeout,message,eventResponse,eventError){
@@ -63,7 +85,8 @@ function ajaxResponseManager(request,xhrTimeout,message,eventResponse,eventError
          xhrTimeout=null;
          if(request.status == 200){
                     if(message) 
-                       message.hide(); 
+                       message.hide();
+
                      eventResponse(request.responseText);
                      return true;
                 }else{
@@ -91,7 +114,8 @@ function ajaxResponseManager(request,xhrTimeout,message,eventResponse,eventError
         icon: Ext.MessageBox.ERROR
      });    
      return false;
-  }  
+  }
+  return true;
 }
 
     
@@ -204,38 +228,94 @@ function createObjectByString(stringObject) {
 }
 
 
-function randomColor(){
-    //elabora un colore casuale e ne restituisce la stringa esadecimale
-    var rc=new Array(3);
-    for(var i=0;i<3;i++)
-        rc[i]=Math.floor(Math.random() * 255);
-    return HEX(rc);
+function removeElement(groupDiv,divNum) {
+  var d = document.getElementById(groupDiv);
+  var olddiv = document.getElementById(divNum);
+  d.removeChild(olddiv);
 }
 
 
-function RGB(c){
-//restituisce la conversione esadecimale sotto forma di array di interi
-var r=new Array(3);
-if(c.charAt(0)=="#") c=c.substr(1,6); //elimina il cancelletto
-for(i=0;i<3;i++)
-r[i]=HexToDec(c.substr(i*2,2));
-return r;
+Array.prototype.unique =
+  function() {
+    var a = [];
+    var l = this.length;
+    for(var i=0; i<l; i++) {
+      for(var j=i+1; j<l; j++) {
+        // If this[i] is found later in the array
+        if (this[i] === this[j])
+          j = ++i;
+      }
+      a.push(this[i]);
+    }
+    return a;
+  };
+
+// Get the union of n arrays
+Array.prototype.union =
+  function() {
+    var a = [].concat(this);
+    var l = arguments.length;
+    for(var i=0; i<l; i++) {
+      a = a.concat(arguments[i]);
+    }
+    return a.unique();
+  };
+
+function skip(){
+
+
+
+  }
+
+
+
+Array.prototype.find =
+  function(element) {
+    var arr2str = this.toString();
+    var index=arr2str.search(element);
+
+    return index;
+  };
+
+  function skip(){
+
+
+
+  }
+
+function popup(url, windName)
+{
+ var params;
+ if(!windName)
+    windName='';
+ params  = 'width='+screen.width;
+ params += ', height='+screen.height;
+ params += ', top=0, left=0';
+ params += ', fullscreen=yes';
+ params += ',directories=yes, ';
+ params += ',  location=yes, ';
+ params += ',  menubar=yes,';
+ params += ',  resizable=yes';
+ params += ',  toolbar=yes';
+ var newwin=window.open(url, windName , params);
+ if (window.focus) {newwin.focus()}
+ return false;
 }
 
-function HEX(c){
-//riceve un vettore rgb in decimale e lo converte in stringa esadecimale
-return ("#" + DecToHex(c[0])+ DecToHex(c[1]) + DecToHex(c[2]));
+
+function popupPlaseWait(url) {
+   var winl = (screen.width-150)/2;
+   var wint = (screen.height-150)/2;
+
+   var newwindow=window.open(url,'name','height=150,width=150,top='+wint+',left='+winl);
+   if (window.focus) {
+       newwindow.focus()
+    }
+   return newwindow;
 }
 
 
-function DecToHex(n){
-//converte da decimale (0..255) a esadecimale (stringa a due caratteri)
-hex=n.toString(16);
-if(hex.length==1) hex="0"+hex; /*aggiunge lo zero davanti se è un numero con una cifra sola*/
-return hex.toUpperCase();
-}
 
-function HexToDec(s){
-//converte da stringa esadecimale a numero decimale
-return parseInt(s,16);
-} 
+
+  
+  

@@ -66,12 +66,16 @@ function createExtInterfaceByXml(xmlDocument,lang){
                                     layout: layout,
                                     width:  width,
                                     height: height,
+                                    x: 10,
+                                    y: 20,
                                     closeAction: closeAction,
                                     items:[tmpPanel.formsPanel]
                                     }),
                             render:function(){
                                     this.container.show();
                                     this.xmlFormPanel.render();
+                                    alert("ok");
+                                    this.container.setPosition(50,50);
                                   },
                             setFormPanelDDEvent:function(ddGroup,index,fields){
                                     this.xmlFormPanel.setFormPanelDDEvent(ddGroup,index,fields);

@@ -7,9 +7,7 @@
 	<setVariable name="response">
 		<xml attributePrefix="%" textTag="evaluate">
 			<n1:processRFQOutputMsg xmlns:n1="%targetNamespace" xmlns:mass="http://www.esa.int/mass">
-				<mass:commonInput>
-					<mass:orderId><evaluate name="orderId" /></mass:orderId>
-				</mass:commonInput>
+				
 				<n1:getRFQOutput>
 					<mass:statusInfo>
 						<mass:statusId>0</mass:statusId>

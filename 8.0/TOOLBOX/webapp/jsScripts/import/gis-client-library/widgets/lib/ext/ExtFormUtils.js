@@ -35,6 +35,7 @@ function generateFormFieldSet(title, fieldSets, numCol, localizationObj){
         frame: true,
         title: title,
         autoShow : true,
+        fileUpload: true,
         width: '100%',
         items:arrayFieldSet
     });
@@ -1255,12 +1256,15 @@ function createExjFormByElement(title, formDataElement, numCols, localizationObj
                          max: inputFormElements[i].getAttribute("max"),
                          inc: inputFormElements[i].getAttribute("inc"),
                    htmlValue: htmlValue,
+                     columns: eval(inputFormElements[i].getAttribute("columns")),
                       height: inputFormElements[i].getAttribute("height"),
                    labelList: inputFormElements[i].getAttribute("labelList"),
                   labelAlign: inputFormElements[i].getAttribute("labelAlign"),
                   bboxLabels: inputFormElements[i].getAttribute("bboxLabels"),
                    valueList: inputFormElements[i].getAttribute("valueList"),
                  valueCheked: inputFormElements[i].getAttribute("valueCheked"),
+                  selDeslAll: inputFormElements[i].getAttribute("selDeslAll"),
+             selDeslAllLabel: inputFormElements[i].getAttribute("selDeslAllLabel"),
             decimalSeparator: inputFormElements[i].getAttribute("decimalSeparator"),
             decimalPrecision: inputFormElements[i].getAttribute("decimalPrecision"),
                    hideLabel: inputFormElements[i].getAttribute("hideLabel"),
@@ -1299,7 +1303,10 @@ function createExjFormByElement(title, formDataElement, numCols, localizationObj
             remoteValuesType: inputFormElements[i].getAttribute("remoteValuesType"),
      remoteValuesDataElement: inputFormElements[i].getAttribute("remoteValuesDataElement"),
       remoteValuesProperties: inputFormElements[i].getAttribute("remoteValuesProperties"),
-            dataEmptyMessage: inputFormElements[i].getAttribute("dataEmptyMessage")
+            dataEmptyMessage: inputFormElements[i].getAttribute("dataEmptyMessage"),
+                      button: inputFormElements[i].getAttribute("button"),
+               buttonHandler: inputFormElements[i].getAttribute("buttonHandler"),
+                 buttonLabel: inputFormElements[i].getAttribute("buttonLabel")
                   };
                   
        valuesControl.push(inputArray[i]);            
@@ -2230,6 +2237,7 @@ function generateListOfFieldSet(fieldSets, numberColums, localizationObj){
      fieldSetArray[i]= new Ext.form.FieldSet({
                   title: groupName,
                   layout: 'table',
+
                   draggable: fieldSets[i].draggable,
                   ddGroup: fieldSets[i].ddGroup,
                   layoutConfig: {
@@ -2691,25 +2699,101 @@ function generateCheckBoxGroupField(field){
         }
        
       }
-  
-  var checkboxGroupField = new Ext.form.CheckboxGroup({
-        id:field.id,
-        xtype: 'checkboxgroup',
-        fieldLabel: label,
-        itemCls: 'x-check-group-alt',
-        // Put all controls in a single column with width 100%
-        columns: 1,
-        items: itemsArray
-  });
+  var checkboxGroupField=new Array();
+  var i=0;
 
-  formField[u]={
-             colspan: /*numberColsField*/colSpan*numberColsField,
-             layout: "form",
-             items: [checkboxGroupField]
+  checkboxGroupField[i] = {
+                        colspan: 40,
+                        layout: "form",
+                        items: new Array()
   };
+  
+    if(field.button =="true"){
+
+     /* checkboxGroupField[i] = {
+                        colspan: colSpan,
+                        layout: "form",
+                        items: [*/checkboxGroupField[checkboxGroupField.length-1].items.push(
+                                    new Ext.Button({
+                                          id: field.id+"_button",
+                                          name: field.name+"_button",
+                                          text: field.buttonLabel,
+                                          handler: eval(field.buttonHandler)
+                                          //handlerParm: parameters,
+                                          //disabled: field.disabled,
+                                          //icon: field.icon
+                                          })
+                               
+                        );
+                          
+     checkboxGroupField[checkboxGroupField.length-1].items.push(new Ext.form.Field({
+                                    autoCreate: {tag: 'div', cn:{tag:'div'}},
+                                    id: field.id+"label",
+                                    name: field.id+"label",
+                                    hideLabel: true,
+                                    value: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+                           }));
+
+  }
+
+  if(field.selDeslAll=="true"){
+     checkboxGroupField[checkboxGroupField.length-1].items.push(new Ext.form.Checkbox({
+				name: field.id+"_selDelAll",
+                               //vtype: 'checkboxgroupcontrol',
+                                //typeAhead: true,
+                                msgTarget : 'qtip',
+                                boxLabel: field.selDeslAllLabel,
+                                //label: field.label,
+                                checked: field.value,
+                                hideLabel: true,
+                                chekboxGroupId: field.id,
+                                checkBoxGroupDim: itemsArray.length,
+                                listeners: {
+                                    check: function() {
+                                        var group=this.findParentByType("form").getForm().findField(this.chekboxGroupId);
+                                        for(var i=0; i<this.checkBoxGroupDim; i++){
+                                            group.items.items[i].setValue(this.checked);
+                                        }
+                                    }
+
+                                },
+                                id: field.id+"_selDelAll"
+			}));
+          
+  }
+
+  var columns=1;
+  if(field.columns){
+      columns=new Array();
+      for(var kz=0; kz<field.columns;kz++){
+          columns.push(300);
+      }
+
+  }
+
+
+
+  checkboxGroupField[checkboxGroupField.length-1].items.push(new Ext.form.CheckboxGroup({
+                            id:field.id,
+                            colspan: 40,
+                            layout: "form",
+                            msgTarget : 'qtip',
+                            fieldLabel: label,
+                            itemCls: 'x-check-group-alt',
+                            // Put all controls in a single column with width 100%
+                            columns: columns,
+                            items: itemsArray
+                          }));/*]
+                        };*/
+
+ /* formField[u]={
+             colspan: colSpan*numberColsField,
+             layout: "form",
+             items: checkboxGroupField
+  };*/
   if(field.onChange)
-     checkboxGroupField.addListener('check', eval(field.onChange));
-  return(formField);
+     checkboxGroupField[i].addListener('check', eval(field.onChange));
+  return(checkboxGroupField);
 }
 
 function generateRadioGroupField(field){
@@ -5069,20 +5153,41 @@ function generateFileField(field){
 
 
   formField[u]={
-             colspan: numberColsField,
+             colspan: 1,
              layout: "form",
              items: [new Ext.ux.form.FileUploadField({
                 //xtype: 'fileuploadfield',
-                id: "test",
-                emptyText: 'Select an file',
-                fieldLabel: 'Select an file',
-                name: "test2",
-                buttonText: 'load'
-                /*buttonCfg: {
-                    iconCls: 'upload-icon'
-                }*/
-               })]
+                id: field.id,
+                width: eval(field.size),
+                emptyText: field.blankText,
+                fieldLabel: field.label,
+                name: field.id+"_file",
+                buttonText: '',
+                buttonCfg: {
+                    iconCls: field.icon
+                }
+               }),new Ext.Button({
+                text: field.submitLabel,
+              //  renderTo: 'fi-basic-btn',
+                handler: eval(field.action)
+              })]
           };
+
+   /*formField[u+1]={
+      colspan: 1,
+      layout: "form",
+        html: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+   };
+
+   formField[u+2]={
+             colspan: 1,
+             layout: "form",
+             items: [new Ext.Button({
+                text: field.submitLabel,
+              //  renderTo: 'fi-basic-btn',
+                handler: eval(field.action)
+              })]
+       };*/
   return(formField);  
 }
 

@@ -6,6 +6,7 @@ package it.intecs.pisa.toolbox.service;
 
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.resources.XMLResourcesPersistence;
+import java.net.MalformedURLException;
 import org.w3c.dom.Document;
 import org.apache.axiom.soap.SOAPEnvelope;
 import org.apache.axis2.addressing.RelatesTo;
@@ -16,6 +17,7 @@ import it.intecs.pisa.soap.toolbox.AxisSOAPClient;
 import it.intecs.pisa.toolbox.db.InstanceResources;
 import it.intecs.pisa.toolbox.db.InstanceStatuses;
 import it.intecs.pisa.toolbox.db.OperationInfo;
+import java.util.StringTokenizer;
 import org.apache.log4j.Logger;
 
 /**
@@ -58,7 +60,10 @@ public class TBXAsynchronousOperationCommonTasks {
             soapAction = asynchOp.getCallbackSoapAction();
             sslCertificateLocation = service.getSSLcertificate();
 
+            boolean admitted=checkAdmittedHosts(implInterf,replyToAddress);
 
+            if(admitted==true)
+            {
             RelatesTo rel2 = new RelatesTo();
             rel2.setValue(relatesTo);
             RelatesTo[] arrRelatesTo = new RelatesTo[]{rel2};
@@ -82,6 +87,8 @@ public class TBXAsynchronousOperationCommonTasks {
                     soapEnvResp = AxisSOAPClient.sendReceive(new URL(replyToAddress), soapEnv, soapAction, arrRelatesTo);
                 }
             }
+            }
+            else throw new Exception("Push Host is not admitted");
         } catch (Exception e) {
             logger.error(e.getMessage());
             activatePushAttempts(serviceInstanceId);
@@ -106,5 +113,27 @@ public class TBXAsynchronousOperationCommonTasks {
         } else {
             InstanceStatuses.updateInstanceStatus(serviceInstanceId, InstanceStatuses.STATUS_UNPUSHED);
         }
+    }
+
+    private static boolean checkAdmittedHosts(TBXSOAPInterface implInterf, String replyToAddress) throws Exception {
+        String hosts;
+        StringTokenizer tokenizer;
+        boolean res=true;
+        String replyAdd;
+
+        replyAdd=(new URL(replyToAddress)).getHost();
+
+        hosts=implInterf.getAdmittedHosts();
+        tokenizer=new StringTokenizer(hosts," ");
+
+        if(tokenizer.hasMoreElements())
+            res=false;
+
+        while(tokenizer.hasMoreElements())
+        {
+            res|=tokenizer.nextToken().equals(replyAdd);
+        }
+
+        return res;
     }
 }

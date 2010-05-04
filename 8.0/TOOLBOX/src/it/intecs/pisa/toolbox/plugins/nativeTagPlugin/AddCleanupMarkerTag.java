@@ -1,20 +1,19 @@
 package it.intecs.pisa.toolbox.plugins.nativeTagPlugin;
 
-import it.intecs.pisa.soap.toolbox.IToolboxEngineConstants;
 import it.intecs.pisa.soap.toolbox.IVariableStore;
-import java.util.HashSet;
+import it.intecs.pisa.toolbox.db.InstanceMarkers;
+import it.intecs.pisa.toolbox.engine.ToolboxEngineVariablesKeys;
 
 public class AddCleanupMarkerTag extends NativeTagExecutor {
 
     @Override
     public Object executeTag(org.w3c.dom.Element addCleanupMarker) throws Exception {
         IVariableStore confStore;
-        HashSet markers;
         
         confStore=this.engine.getConfigurationVariablesStore();
-        markers=(HashSet) confStore.getVariable(IToolboxEngineConstants.CONFIGURATION_MARKERS);
+        String instanceId=(String) confStore.getVariable(ToolboxEngineVariablesKeys.CONFIGURATION_INSTANCE_ID);
         
-        markers.add(addCleanupMarker.getAttribute(VALUE));
+        InstanceMarkers.store(new Long(instanceId), addCleanupMarker.getAttribute(VALUE), "");
         return null;
     }
     

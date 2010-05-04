@@ -144,6 +144,9 @@ public class TimeoutManager extends Thread {
         InstanceStatuses.updateInstanceStatus(id, InstanceStatuses.STATUS_EXPIRED);
 
         sendResponseToClient(id);
+        InstanceHandler handler;
+        handler=new InstanceHandler(id);
+        handler.executeCleanupMarkers();
     }
 
     private void sendResponseToClient(Long id) throws Exception {
@@ -234,4 +237,6 @@ public class TimeoutManager extends Thread {
             return rs.getLong("TO_WAIT")-now;
         else return operation.getRequestTimeoutInSeconds()*1000;
     }
+
+    
 }

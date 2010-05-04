@@ -417,7 +417,7 @@ public class ToolboxEngine implements IEngine {
                     resPers.deleteXML(rs.getString("VALUE"));
 
                     put(name, document);
-                }
+                } 
             }
 
             InstanceVariable.deleteVarIntoDB(serviceInstanceId);
@@ -474,8 +474,9 @@ public class ToolboxEngine implements IEngine {
 
         }
 
-
     }
+
+  
 
    
 }

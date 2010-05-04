@@ -1,7 +1,6 @@
 package it.intecs.pisa.toolbox.plugins.nativeTagPlugin;
 
 import it.intecs.pisa.pluginscore.toolbox.engine.interfaces.IVariableStore;
-import it.intecs.pisa.toolbox.engine.ToolboxEngineVariablesKeys;
 import java.util.HashSet;
 import org.apache.log4j.Logger;
 
@@ -14,9 +13,9 @@ public class RemoveCleanupMarkerTag extends NativeTagExecutor {
         Logger logger;
         
         confStore = this.engine.getConfigurationVariablesStore();
-        markers = (HashSet) confStore.getVariable(ToolboxEngineVariablesKeys.CONFIGURATION_MARKERS);
+        //markers = (HashSet) confStore.getVariable(ToolboxEngineVariablesKeys.CONFIGURATION_MARKERS);
         
-        markers.remove(removeCleanupMarker.getAttribute(VALUE));
+        //markers.remove(removeCleanupMarker.getAttribute(VALUE));
         return null;
     }
 

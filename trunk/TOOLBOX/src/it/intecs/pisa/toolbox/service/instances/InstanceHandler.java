@@ -18,6 +18,7 @@ package it.intecs.pisa.toolbox.service.instances;
 
 import it.intecs.pisa.common.tbx.Interface;
 import it.intecs.pisa.pluginscore.toolbox.engine.interfaces.IVariableStore;
+import it.intecs.pisa.toolbox.db.InstanceMarkers;
 import it.intecs.pisa.toolbox.engine.ToolboxEngine;
 import it.intecs.pisa.toolbox.engine.ToolboxEngineVariablesKeys;
 import it.intecs.pisa.toolbox.service.ServiceManager;
@@ -38,7 +39,9 @@ import it.intecs.pisa.toolbox.db.InstanceStatuses;
 import it.intecs.pisa.toolbox.db.InstanceVariable;
 import it.intecs.pisa.toolbox.engine.EngineVariablesConstants;
 import it.intecs.pisa.toolbox.service.TBXAsynchronousOperationCommonTasks;
-import java.util.HashSet;
+import java.sql.SQLException;
+import org.apache.log4j.Logger;
+
 
 /**
  *
@@ -131,6 +134,7 @@ public class InstanceHandler {
         Object response;
         String id;
         File resultScriptFile;
+        boolean executeCleanup=false;
 
         service = getService();
 
@@ -151,6 +155,7 @@ public class InstanceHandler {
                 setConfigurationVariables(engine, service, op, scriptType);
             } else {
                 initVariables(engine, op, scriptType);
+                initConfigurationVariables(engine);
             }
 
             long respId;
@@ -160,15 +165,23 @@ public class InstanceHandler {
 
             response = engine.executeScript(script, resultScriptFile);
 
-        } finally {
+        }
+        catch(Exception e)
+        {
+            executeCleanup=true;
+            throw e;
+        }
+        finally {
             if (scriptType.equals(TBXScript.SCRIPT_TYPE_FIRST_SCRIPT) || scriptType.equals(TBXScript.SCRIPT_TYPE_SECOND_SCRIPT) || scriptType.equals(TBXScript.SCRIPT_TYPE_THIRD_SCRIPT)|| scriptType.equals(TBXScript.SCRIPT_TYPE_RESPONSE_BUILDER)) {
                 engine.storeVariableToDB(serviceInstanceId);
+                 if(executeCleanup==true)
+                    executeCleanupMarkers();
             }
         }
         return response;
     }
 
-    protected void setConfigurationVariables(ToolboxEngine toolboxEngine, TBXService service, TBXOperation op, String scriptType) {
+    protected void setConfigurationVariables(ToolboxEngine toolboxEngine, TBXService service, TBXOperation op, String scriptType) throws SQLException {
         File serviceRoot = service.getServiceRoot();
         File serviceResourceDir = new File(serviceRoot, "Resources");
 
@@ -178,7 +191,7 @@ public class InstanceHandler {
 
         IVariableStore confVarStore = toolboxEngine.getConfigurationVariablesStore();
         confVarStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_SERVICE_RESOURCE_DIR, serviceResourceDir.getAbsolutePath());
-        confVarStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_MARKERS, new HashSet());
+        confVarStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_INSTANCE_ID, String.valueOf(serviceInstanceId));
         confVarStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_SCRIPT_IN_EXECUTION, breakpoint);
     }
 
@@ -386,4 +399,35 @@ public class InstanceHandler {
             }
         }
     }
+     private void initConfigurationVariables(ToolboxEngine engine) {
+        IVariableStore confVarStore = engine.getConfigurationVariablesStore();
+
+        confVarStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_INSTANCE_ID, String.valueOf(serviceInstanceId));
+ }
+
+    public void executeCleanupMarkers() throws Exception {
+        Logger logger=null;
+        try {
+            logger=getService().getLogger();
+
+            String[] markers;
+
+            markers=InstanceMarkers.getDefinedMarkers(serviceInstanceId);
+           for(String marker: markers)
+            {
+                Document script=InstanceMarkers.getMarkerScript(serviceInstanceId, marker);
+
+                ToolboxEngine engine;
+                engine=new ToolboxEngine(logger);
+                engine.executeScript(script.getDocumentElement());
+
+                logger.info("Marker "+marker+" executed");
+            }
+
+        } catch(Exception e)
+        {
+            logger.error("CANNOT EXECUTE CLEANUP MARKERS");
+        }
+    }
+
 }

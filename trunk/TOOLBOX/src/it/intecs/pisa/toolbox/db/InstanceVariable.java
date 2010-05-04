@@ -22,6 +22,7 @@ public class InstanceVariable {
     public static final String INT = "int";
     public static final String XML = "xml";
     public static final String STRING = "string";
+    public static final String MARKER="marker";
 
      public static void deleteVarIntoDB(long instanceId) throws Exception {
         ToolboxInternalDatabase db;

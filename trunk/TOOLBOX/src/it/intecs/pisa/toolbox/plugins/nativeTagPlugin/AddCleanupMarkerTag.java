@@ -1,7 +1,8 @@
 package it.intecs.pisa.toolbox.plugins.nativeTagPlugin;
 
-import it.intecs.pisa.pluginscore.toolbox.engine.interfaces.IToolboxEngineConstants;
 import it.intecs.pisa.pluginscore.toolbox.engine.interfaces.IVariableStore;
+import it.intecs.pisa.toolbox.db.InstanceMarkers;
+import it.intecs.pisa.toolbox.engine.ToolboxEngineVariablesKeys;
 import java.util.HashSet;
 
 public class AddCleanupMarkerTag extends NativeTagExecutor {
@@ -12,9 +13,9 @@ public class AddCleanupMarkerTag extends NativeTagExecutor {
         HashSet markers;
         
         confStore=this.engine.getConfigurationVariablesStore();
-        markers=(HashSet) confStore.getVariable(IToolboxEngineConstants.CONFIGURATION_MARKERS);
+        String instanceId=(String) confStore.getVariable(ToolboxEngineVariablesKeys.CONFIGURATION_INSTANCE_ID);
         
-        markers.add(addCleanupMarker.getAttribute(VALUE));
+        InstanceMarkers.store(new Long(instanceId), addCleanupMarker.getAttribute(VALUE), "");
         return null;
     }
     

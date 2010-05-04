@@ -49,6 +49,7 @@ String newVersion=null;
       <script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/adapter/ext/ext-base.js"></script>
       <script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/ext-all.js"></script>-->
       
+      <script type="text/javascript" src="jsScripts/ext-2.0.1/adapter/jquery/jquery.js"></script>
       <script type="text/javascript" src="jsScripts/ext-2.0.1/adapter/jquery/ext-jquery-adapter.js"></script>
       <script type="text/javascript" src="jsScripts/ext-2.0.1/adapter/ext/ext-base.js"></script>
       <script type="text/javascript" src="jsScripts/ext-2.0.1/ext-all.js"></script>

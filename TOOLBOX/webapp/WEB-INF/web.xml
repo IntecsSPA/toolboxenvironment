@@ -21,6 +21,10 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Toolbox</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Toolbox</servlet-name>
         <url-pattern>/debug/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>

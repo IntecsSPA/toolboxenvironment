@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin name="RESTManagerCommandsPlugin" version="1.0">
+    <commandViaRest cmd="/rest/manager/authenticate" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.AuthenticateCommand"/>    
+</plugin>
+

@@ -30,6 +30,7 @@ package it.intecs.pisa.toolbox;
 import it.intecs.pisa.toolbox.util.Util;
 import it.intecs.pisa.soap.toolbox.*;
 import be.kzen.ergorr.service.RepositoryManager;
+import com.google.gson.JsonObject;
 import it.intecs.pisa.common.tbx.Interface;
 import it.intecs.pisa.toolbox.service.TBXOperation;
 import it.intecs.pisa.toolbox.service.TBXService;
@@ -68,6 +69,7 @@ import org.apache.axis2.context.MessageContext;
 import org.apache.axis2.transport.http.AxisServlet;
 import org.apache.axis2.util.XMLUtils;
 import it.intecs.pisa.toolbox.plugins.managerNativePlugins.DeployServiceCommand;
+import it.intecs.pisa.util.json.JsonUtil;
 
 public class Toolbox extends AxisServlet implements ServletContextListener {
 
@@ -775,8 +777,14 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         String request;
         String requestURI;
 
-        try {
-            logger.info("Received request " + req.getRequestURI());
+        try
+        {
+            requestURI=req.getRequestURI();
+            
+            logger.info("Received request " + requestURI);
+
+            if(requestURI.startsWith("/TOOLBOX/rest"))
+                executeRestCommand(req, resp);
 
             id = req.getParameter("id");
             service = req.getParameter("service");
@@ -818,7 +826,9 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
      */
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, java.io.IOException {
-        String requestURI = req.getRequestURI();
+        String requestURI;
+        
+        requestURI=req.getRequestURI();
 
         logger.info("Received request " + requestURI);
 
@@ -830,7 +840,6 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             return;
         }
         if (requestURI.startsWith("/TOOLBOX/debug")) {
-            //TODO should this pass through axis2?
             debugServiceRequest(resp, req, requestURI);
         } else if (requestURI.startsWith("/TOOLBOX/deploy")) {
            try {
@@ -840,7 +849,8 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             }
         } else if (requestURI.startsWith("/TOOLBOX/manager")) {
             executeManagerCommands(req, resp);
-        } //STOP - Deploy a new service remotely
+        } else if(requestURI.startsWith("/rest"))
+            executeRestCommand(req, resp);
 
     }
 
@@ -879,8 +889,6 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     public File getAxis2ServicesRoot(String fileName) {
         return new File(new File(new File(getRootDir(), WEB_INF), AXIS2SERVICES), fileName);
     }
-
-    
 
     /**
      *  Adjusts the Schema cross references (import and include) paths according to the rootDir in every schema file in the rootDir directory
@@ -983,14 +991,9 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         }
     }
 
-    /**
-     *  Returns the log level, as specified in the configuration file.
-     */
     public Level getLogLevel() {
         return Level.toLevel(tbxConfig.getConfigurationValue(ToolboxConfiguration.LOG_LEVEL));
     }
-
-   
 
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
         try {
@@ -1081,13 +1084,6 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         this.logger = logger;
     }
 
-    /*public FIFOMutex getQueueMutex() {
-    return queueMutex;
-    }
-
-    public void setQueueMutex(FIFOMutex queueMutex) {
-    this.queueMutex = queueMutex;
-    }*/
     public static void setMailError(String aMailError) {
         mailError = aMailError;
     }
@@ -1263,5 +1259,28 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
 
     public void setDeployAdminToken(String deployAdminToken) {
         this.deployAdminToken = deployAdminToken;
+    }
+
+    private void executeRestCommand(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String cmd;
+        ManagerPluginManager man;
+        IManagerPlugin commandPlugin;
+        JsonObject inputObj;
+        try {
+            cmd = req.getRequestURI();
+            cmd=cmd.substring(req.getContextPath().length());
+
+            inputObj=JsonUtil.getInputAsJson(req.getInputStream());
+
+            man = ManagerPluginManager.getInstance();
+
+            commandPlugin = man.getRESTCommand(cmd, "REST");
+            JsonObject jsonResp=commandPlugin.executeCommand(cmd, inputObj);
+
+            JsonUtil.writeJsonToStream(jsonResp, resp.getOutputStream());
+            resp.setStatus(resp.SC_OK);
+        } catch (Exception e) {
+            resp.sendError(resp.SC_INTERNAL_SERVER_ERROR);
+        }
     }
 }

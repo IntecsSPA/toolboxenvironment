@@ -4,6 +4,7 @@
  */
 package it.intecs.pisa.toolbox.plugins.managerNativePlugins;
 
+import com.google.gson.JsonObject;
 import it.intecs.pisa.pluginscore.ManagerCommandPlugin;
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.service.ServiceManager;
@@ -142,5 +143,9 @@ public abstract class NativeCommandsManagerPlugin extends ManagerCommandPlugin {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public JsonObject executeCommand(String method, JsonObject request) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

@@ -15,6 +15,7 @@ public class ManagerPluginManager extends ToolboxPluginManager {
 
     public static final String EXTENSION_TYPE_METHOD_GET = "commandViaGet";
     public static final String EXTENSION_TYPE_METHOD_POST = "commandViaPost";
+    public static final String EXTENSION_TYPE_METHOD_REST = "commandViaRest";
     protected String[][] commandClasses = new String[0][3];
     private static ManagerPluginManager manager = new ManagerPluginManager();
 
@@ -44,8 +45,10 @@ public class ManagerPluginManager extends ToolboxPluginManager {
             newCommands[parsedInterfaces][2] = "GET";
         } else if (tagName.equals(EXTENSION_TYPE_METHOD_POST)) {
             newCommands[parsedInterfaces][2] = "POST";
+        } else if(tagName.equals(EXTENSION_TYPE_METHOD_REST)) {
+            newCommands[parsedInterfaces][2] = "REST";
         }
-
+            
         commandClasses = newCommands;
     }
 
@@ -71,9 +74,31 @@ public class ManagerPluginManager extends ToolboxPluginManager {
         }
     }
 
+    public IManagerPlugin getRESTCommand(String cmd, String method) {
+        String className = "";
+        String path="";
+        IManagerPlugin commandPlugin;
+        try {
+            for (String[] command : commandClasses) {
+                if (command[0].startsWith(cmd) && command[2].equals(method)) {
+                    className = command[1];
+                    path=command[3];
+                    break;
+                }
+            }
+
+            commandPlugin=(IManagerPlugin) loader.loadClass(className).newInstance();
+            commandPlugin.setPluginDirectory(new File(path));
+            return commandPlugin;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @Override
     protected boolean isTagHandled(String tagname) {
-        return tagname.equals(EXTENSION_TYPE_METHOD_GET) || tagname.equals(EXTENSION_TYPE_METHOD_POST);
+        return tagname.equals(EXTENSION_TYPE_METHOD_GET) || tagname.equals(EXTENSION_TYPE_METHOD_POST) || tagname.equals(EXTENSION_TYPE_METHOD_REST);
     }
 
     public static ManagerPluginManager getInstance() {

@@ -92,7 +92,7 @@ public class TBXAsynchronousOperationSecondThirdScriptExecutor extends Thread {
                 InstanceStatuses.updateInstanceStatus(serviceInstanceId, InstanceStatuses.STATUS_CANCELLED);
                 handler.deleteAllVariablesDumped();
             } catch (Exception e) {
-                e.printStackTrace();
+               
                 if (debugMode) {
                     sendTDETerminateMsg();
                     closeDebugConsole();

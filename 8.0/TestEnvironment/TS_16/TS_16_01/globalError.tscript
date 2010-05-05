@@ -2,7 +2,7 @@
 <sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript">
 		<xml attributePrefix="a" textTag="eval">
 		<testOperationOutput xmlns="http://intecs/test">
-			<status>Error</status>
+			<output>Error</output>
 		</testOperationOutput>
 	</xml>
 </sequence>

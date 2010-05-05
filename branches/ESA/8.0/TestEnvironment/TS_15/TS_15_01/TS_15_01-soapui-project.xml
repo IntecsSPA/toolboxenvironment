@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project name="TS_15_01" soapui-version="3.0.1" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="ToolboxServiceSOAPBinding" type="wsdl" bindingName="{http://www.intecs.it/TOOLBOX/service/TS_15_01/wsdl}ToolboxServiceSOAPBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/TOOLBOX/WSDL/TS_15_01/TS_15_01.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/TOOLBOX/WSDL/TS_15_01/TS_15_01.wsdl"><con:part><con:url>http://localhost:8080/TOOLBOX/WSDL/TS_15_01/TS_15_01.wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://www.intecs.it/TOOLBOX/service/TS_15_01/wsdl" xmlns:ns3="http://intecs/test" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.intecs.it/TOOLBOX/service/TS_15_01/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+    <xsd:schema>
+      <xsd:import namespace="http://intecs/test" schemaLocation="http://127.0.1.1:8080/TOOLBOX/WSDL/TS_15_01/test.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="TestOperationRequest">
+    <wsdl:part element="ns3:testOperationInput" name="body"/>
+  </wsdl:message>
+  <wsdl:message name="TestOperationResponse">
+    <wsdl:part element="ns3:testOperationOutput" name="body"/>
+  </wsdl:message>
+  <wsdl:portType name="ToolboxSOAPPortForService">
+    <wsdl:operation name="TestOperation">
+      <wsdl:input message="tns:TestOperationRequest"/>
+      <wsdl:output message="tns:TestOperationResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ToolboxServiceSOAPBinding" type="tns:ToolboxSOAPPortForService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="TestOperation">
+      <soap:operation soapAction="test"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ToolboxService">
+    <wsdl:port binding="tns:ToolboxServiceSOAPBinding" name="ToolboxServicePort">
+      <soap:address location="http://127.0.1.1:8080/TOOLBOX/services/TS_15_01"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://127.0.1.1:8080/TOOLBOX/WSDL/TS_15_01/test.xsd</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" targetNamespace="http://intecs/test" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="testOperationInput">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="input" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="testOperationOutput">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="output" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://127.0.1.1:8080/TOOLBOX/services/TS_15_01</con:endpoint></con:endpoints><con:operation isOneWay="false" action="test" name="TestOperation" bindingOperationName="TestOperation" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="TestOperation"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.1.1:8080/TOOLBOX/services/TS_15_01</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:test="http://intecs/test">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <testOperationInput xmlns="http://intecs/test">
+         <input>Input Message</input>
+      </testOperationInput>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="test"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/></con:soapui-project>

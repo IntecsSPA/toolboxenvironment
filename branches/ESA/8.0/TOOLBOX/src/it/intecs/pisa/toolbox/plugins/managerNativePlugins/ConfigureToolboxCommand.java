@@ -116,15 +116,18 @@ public class ConfigureToolboxCommand extends NativeCommandsManagerPlugin {
 
         kfi=mimeparts.get("keystore");
 
-        if(kfi!=null)
+        if(kfi!=null && kfi.getSize() != 0)
         {
              keyStore= new File(tbx.getRootDir(),"WEB-INF/persistence/tbxLevelKeystore.jks");
              kfi.write(keyStore);
-
              toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.TOOLBOX_LEVEL_KEYSTORE,"true");
-             toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.TOOLBOX_LEVEL_KEYSTORE_PASSWORD,getStringFromMimeParts(mimeparts, "keystorePwd"));
         }
 
+
+        if (getStringFromMimeParts(mimeparts, "keystorePwd") != null) {
+            toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.TOOLBOX_LEVEL_KEYSTORE_PASSWORD,getStringFromMimeParts(mimeparts, "keystorePwd"));
+        }
+        
         toolboxConfiguration.saveConfiguration();
 
         TBXService[] services;

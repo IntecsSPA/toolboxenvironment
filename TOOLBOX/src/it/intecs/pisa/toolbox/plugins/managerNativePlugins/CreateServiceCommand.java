@@ -56,7 +56,6 @@ public class CreateServiceCommand extends NativeCommandsManagerPlugin {
             resp.sendRedirect(redirectUrl);
         } catch (Exception ex) {
             ex.printStackTrace();
-
             String errorMsg = "Deploy from interface error: " + CDATA_S + ex.getMessage() + CDATA_E;
             throw new GenericException(errorMsg);
         }

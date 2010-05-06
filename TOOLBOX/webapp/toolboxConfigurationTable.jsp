@@ -239,7 +239,7 @@ PropertyResourceBundle messages = (PropertyResourceBundle)ResourceBundle.getBund
                     <td class=sortable colspan="2" nowrap><fmt:message key="security.tbxlevel.keystore.section" bundle="${lang}"/></td>
                 </tr>
                 <tr><!-- Row 9 -->
-                    <td class="tdItem" nowrap width="50%"><fmt:message key="security.tbxlevel.keystore" bundle="${lang}"/>(
+                    <td class="tdItem" nowrap width="50%"><fmt:message key="security.tbxlevel.keystore" bundle="${lang}"/> (
                         <% if(tbxLevelKeystoreSet==true) { %><fmt:message key="set" bundle="${lang}"/>
                         <% }else{ %><fmt:message key="notset" bundle="${lang}"/><% } %>
                         )</td>

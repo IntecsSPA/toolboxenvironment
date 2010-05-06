@@ -1,84 +1,131 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html><head>
-  
-  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
-  <title>Setting up Tomcat as daemon</title>
-
-  
-</head><body>
-<br>
-
-Tomcat can be set up in order to run as service. This allows Tomcat to
-start as soon as the host is restarted. Setting up Tomcat in such a way
-is a common task for operative hosts. In the following a procedure is
-provide both for Windows and Linux machines.<br>
-<br>
-<h1>Windows</h1>
-Windows installation can be easily set up by simply running a Tomcat
-shell script. It is important to understand that using the same
-procedure multiple times will override the previous setting,
-registering the service with the same name. For further information see
-Apache Tomcat help on <a href="http://tomcat.apache.org">http://tomcat.apache.org</a><br>
-<br>
-To register an installed Tomcat as service open a shell and go to the
-following directory: &lt;APACHE_TOMCAT&gt;/bin where
-&lt;APACHE_TOMCAT&gt; is the directory in which Tomcat is installed. <br>
-Execute the following:<br>
-$&gt; service.bat install<br>
-<br>
-This performs the installation.<br>
-<br>
-<h1>Linux</h1>
-Installing Apache Tomcat as service under Linux shall not be performed
-always in the same manner. Factors like the Linux distribution and
-security constraints shall not allow the following procedure to be
-executed successfully. A common procedure is presented anyway.<br>
-Under /etc/init.d create a file named tomcat55 and put the following content inside:<br>
-<br>
-#!/bin/bash<br>
-#<br>
-# Startup script for the Tomcat server<br>
-#<br>
-# chkconfig: - 83 53<br>
-# description: Starts and stops the Tomcat daemon.<br>
-# processname: tomcat<br>
-# pidfile: /var/run/tomcat.pid<br>
-# See how we were called.<br>
-case $1 in<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; export JAVA_HOME=&lt;JAVA_HOME&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-export CLASSPATH=&lt;TOMCAT_HOME&gt;/conf/lib/servlet-api.jar<br>
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; export JRE_HOME=&lt;JRE_HOME&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "Tomcat is started"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sh &lt;TOMCAT_HOME&gt;/bin/startup.sh<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ;;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stop)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; export JRE_HOME=&lt;JRE_HOME&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-sh &lt;TOMCAT_HOME&gt;/bin/shutdown.sh<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "Tomcat is stopped"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ;;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; restart)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; export JRE_HOME=&lt;JRE_HOME&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-sh &lt;TOMCAT_HOME&gt;/bin/shutdown.sh<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "Tomcat is stopped"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sh &lt;TOMCAT_HOME&gt;/bin/startup.sh<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "Tomcat is started"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ;;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-echo "Usage: /etc/init.d/tomcat start|stop|restart"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ;;<br>
-esac<br>
-exit 0<br>
-<br>
-<br>
-<br>
-Replace &lt;TOMCAT_HOME&gt;, &lt;JAVA_HOME&gt; and &lt;JRE_HOME&gt;
-with the paths under which Tomcat, Java JDK and JRE are installed in
-your host. Save the file.<br>
-Tomcat is started as daemon at next reboot.<br>
-<br>
-</body></html>
+<html>
+    <head>
+        <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+		        <link type="text/css" href="images/page.css" rel="stylesheet">
+        <title>Setting up Tomcat as daemon</title>
+    </head>
+    <body>
+        <div class="content">
+            <h1>Setting up Tomcat as daemon</h1>
+            <br>
+            Tomcat can be set up in order to run as service. This allows Tomcat to
+            start as soon as the host is restarted. Setting up Tomcat in such a way
+            is a common task for operative hosts. In the following a procedure is
+            provide both for Windows and Linux machines.
+            <br>
+            <br>
+            <h1>Windows</h1>
+            Windows installation can be easily set up by simply running a Tomcat
+            shell script. It is important to understand that using the same
+            procedure multiple times will override the previous setting, 
+            registering the service with the same name. For further information see 
+            Apache Tomcat help on <a href="http://tomcat.apache.org">http://tomcat.apache.org</a>
+            <br>
+            <br>
+            To register an installed Tomcat as service open a shell and go to the 
+            following directory: &lt;APACHE_TOMCAT&gt;/bin where 
+            &lt;APACHE_TOMCAT&gt; is the directory in which Tomcat is installed. 
+            <br>
+            Execute the following:
+            <br>
+            $&gt; service.bat install
+            <br>
+            <br>
+            This performs the installation.
+            <br>
+            <br>
+            <h1>Linux</h1>
+            Installing Apache Tomcat as service under Linux shall not be performed
+            always in the same manner. Factors like the Linux distribution and
+            security constraints shall not allow the following procedure to be
+            executed successfully. A common procedure is presented anyway.
+            <br>
+            Under /etc/init.d create a file named tomcat55 and put the following content inside:
+            <br>
+            <br>
+            #!/bin/bash
+            <br>
+            #
+            <br>
+            # Startup script for the Tomcat server
+            <br>
+            #
+            <br>
+            # chkconfig: - 83 53
+            <br>
+            # description: Starts and stops the Tomcat daemon.
+            <br>
+            # processname: tomcat
+            <br>
+            # pidfile: /var/run/tomcat.pid
+            <br>
+            # See how we were called.
+            <br>
+            case $1 in
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start)
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; export JAVA_HOME=&lt;JAVA_HOME&gt;
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            export CLASSPATH=&lt;TOMCAT_HOME&gt;/conf/lib/servlet-api.jar
+            <br>
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; export JRE_HOME=&lt;JRE_HOME&gt;
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "Tomcat is started"
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sh &lt;TOMCAT_HOME&gt;/bin/startup.sh
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ;;
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stop)
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; export JRE_HOME=&lt;JRE_HOME&gt;
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            sh &lt;TOMCAT_HOME&gt;/bin/shutdown.sh
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "Tomcat is stopped"
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ;;
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; restart)
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; export JRE_HOME=&lt;JRE_HOME&gt;
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            sh &lt;TOMCAT_HOME&gt;/bin/shutdown.sh
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "Tomcat is stopped"
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sh &lt;TOMCAT_HOME&gt;/bin/startup.sh
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "Tomcat is started"
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ;;
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *)
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            echo "Usage: /etc/init.d/tomcat start|stop|restart"
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ;;
+            <br>
+            esac
+            <br>
+            exit 0
+            <br>
+            <br>
+            <br>
+            <br>
+            Replace &lt;TOMCAT_HOME&gt;, &lt;JAVA_HOME&gt; and &lt;JRE_HOME&gt;
+            with the paths under which Tomcat, Java JDK and JRE are installed in
+            your host. Save the file.
+            <br>
+            Tomcat is started as daemon at next reboot.
+            <br>
+            <br>
+        </div>
+    </body>
+</html>

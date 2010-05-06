@@ -19,6 +19,7 @@ import org.w3c.dom.Element;
 import it.intecs.pisa.util.Util;
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.db.InstanceVariable;
+import java.util.HashMap;
 
 
 public abstract class TBXOperation extends Operation{
@@ -234,6 +235,9 @@ public abstract class TBXOperation extends Operation{
         catch(Exception e)
         {
             throw new Exception("Cannot execute error script",e);
+        }finally
+        {
+            sendErrorMail(errorMsg);
         }
     }
 
@@ -376,5 +380,16 @@ public abstract class TBXOperation extends Operation{
         return validInputMessage;
     }
 
-   
+   protected void sendErrorMail(String errorMsg) {
+        TBXService parentService;
+
+        parentService = getParentService();
+
+        if (Toolbox.getErrorMailer() != null && Toolbox.getMailError() != null) {
+            HashMap contentParts = new HashMap();
+            contentParts.put("serviceName", parentService.getServiceName());
+            contentParts.put("soapAction", soapAction);
+            Toolbox.getErrorMailer().sendMail(contentParts, errorMsg, Toolbox.getMailError());
+        }
+    }
 }

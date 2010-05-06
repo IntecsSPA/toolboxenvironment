@@ -156,20 +156,7 @@ public class TBXAsynchronousOperation extends TBXOperation {
         return pushRetryManager;
     }
 
-    private void sendErrorMail(String errorMsg) {
-        TBXService parentService;
-
-        parentService = getParentService();
-
-        if (Toolbox.getErrorMailer() != null && Toolbox.getMailError() != null) {
-            HashMap contentParts = new HashMap();
-            contentParts.put("serviceName", parentService.getServiceName());
-            contentParts.put("soapAction", soapAction);
-            Toolbox.getErrorMailer().sendMail(contentParts, errorMsg, Toolbox.getMailError());
-        }
-    }
-
-    private boolean checkIfInstanceKeyUnique(String instanceKey) throws Exception {
+        private boolean checkIfInstanceKeyUnique(String instanceKey) throws Exception {
         ToolboxInternalDatabase db = null;
         Statement stm = null;
         ResultSet rs = null;

@@ -47,30 +47,37 @@ public class InstanceFlow {
 
         instanceEl = doc.createElement("instance");
         instanceEl.setAttribute("key", instanceId);
+        instanceEl.setAttribute("xmlns", "http://pisa.intecs.it/mass/toolbox/log");
         rootEl.appendChild(instanceEl);
 
         el = doc.createElement("invalidInputMessage");
         el.setAttribute("id", getResourceId(instanceId, InstanceResources.TYPE_INVALID_INPUT_MESSAGE));
+        el.setAttribute("xmlns", "http://pisa.intecs.it/mass/toolbox/log");
         rootEl.appendChild(el);
 
         el = doc.createElement("inputMessage");
         el.setAttribute("id", getResourceId(instanceId, InstanceResources.TYPE_INPUT_MESSAGE));
+        el.setAttribute("xmlns", "http://pisa.intecs.it/mass/toolbox/log");
         rootEl.appendChild(el);
                     
         el = doc.createElement("completed");
         el.setAttribute("id", getResourceId(instanceId, InstanceResources.TYPE_FIRST_SCRIPT_EXECUTION));
+        el.setAttribute("xmlns", "http://pisa.intecs.it/mass/toolbox/log");
         rootEl.appendChild(el);
 
         el = doc.createElement("invalidOutputMessage");
         el.setAttribute("id", getResourceId(instanceId, InstanceResources.TYPE_INVALID_OUTPUT_MESSAGE));
+        el.setAttribute("xmlns", "http://pisa.intecs.it/mass/toolbox/log");
         rootEl.appendChild(el);
 
         el = doc.createElement("outputMessage");
         el.setAttribute("id", getResourceId(instanceId, InstanceResources.TYPE_OUTPUT_MESSAGE));
+        el.setAttribute("xmlns", "http://pisa.intecs.it/mass/toolbox/log");
         rootEl.appendChild(el);
 
-         el = doc.createElement("error");
+        el = doc.createElement("error");
         el.setAttribute("id", getResourceId(instanceId, InstanceResources.TYPE_GLOBAL_ERROR_SCRIPT_EXECUTION));
+        el.setAttribute("xmlns", "http://pisa.intecs.it/mass/toolbox/log");
         rootEl.appendChild(el);
 
         return DOMUtil.getDocumentAsInputStream(doc);
@@ -94,6 +101,7 @@ public class InstanceFlow {
 
         instanceEl = doc.createElement("instance");
         instanceEl.setAttribute("key", instanceId);
+        instanceEl.setAttribute("xmlns", "http://pisa.intecs.it/mass/toolbox/log");
         rootEl.appendChild(instanceEl);
 
         instanceStatus = InstanceStatuses.getInstanceStatus(Long.parseLong(instanceId));
@@ -112,42 +120,52 @@ public class InstanceFlow {
         
         el = doc.createElement("inputMessage");
         el.setAttribute("id", getResourceId(instanceId, InstanceResources.TYPE_INPUT_MESSAGE));
+        el.setAttribute("xmlns", "http://pisa.intecs.it/mass/toolbox/log");
         rootEl.appendChild(el);
 
         el = doc.createElement("invalidInputMessage");
         el.setAttribute("id", getResourceId(instanceId, InstanceResources.TYPE_INVALID_INPUT_MESSAGE));
+        el.setAttribute("xmlns", "http://pisa.intecs.it/mass/toolbox/log");
         rootEl.appendChild(el);
 
         el = doc.createElement("responseScriptExecution");
         el.setAttribute("id", getResourceId(instanceId, InstanceResources.TYPE_RESPONSE_BUILDER_EXECUTION));
+        el.setAttribute("xmlns", "http://pisa.intecs.it/mass/toolbox/log");
         rootEl.appendChild(el);
 
         el = doc.createElement("acknowledgeMessage");
         el.setAttribute("id", getResourceId(instanceId, InstanceResources.TYPE_RESPONSE_BUILDER_MESSAGE));
+        el.setAttribute("xmlns", "http://pisa.intecs.it/mass/toolbox/log");
         rootEl.appendChild(el);
 
         el = doc.createElement("firstScriptExecution");
         el.setAttribute("id", getResourceId(instanceId, InstanceResources.TYPE_FIRST_SCRIPT_EXECUTION));
+        el.setAttribute("xmlns", "http://pisa.intecs.it/mass/toolbox/log");
         rootEl.appendChild(el);
 
         el = doc.createElement("secondScriptExecution");
         el.setAttribute("id", getResourceId(instanceId, InstanceResources.TYPE_SECOND_SCRIPT_EXECUTION));
+        el.setAttribute("xmlns", "http://pisa.intecs.it/mass/toolbox/log");
         rootEl.appendChild(el);
 
         el = doc.createElement("thirdScriptExecution");
         el.setAttribute("id", getResourceId(instanceId, InstanceResources.TYPE_THIRD_SCRIPT_EXECUTION));
+        el.setAttribute("xmlns", "http://pisa.intecs.it/mass/toolbox/log");
         rootEl.appendChild(el);
 
         el = doc.createElement("invalidOutputMessage");
         el.setAttribute("id", getResourceId(instanceId, InstanceResources.TYPE_INVALID_OUTPUT_MESSAGE));
+        el.setAttribute("xmlns", "http://pisa.intecs.it/mass/toolbox/log");
         rootEl.appendChild(el);
 
         el = doc.createElement("outputMessage");
         el.setAttribute("id", getResourceId(instanceId, InstanceResources.TYPE_OUTPUT_MESSAGE));
+        el.setAttribute("xmlns", "http://pisa.intecs.it/mass/toolbox/log");
         rootEl.appendChild(el);
 
         el = doc.createElement("error");
         el.setAttribute("id", getResourceId(instanceId, InstanceResources.TYPE_GLOBAL_ERROR_SCRIPT_EXECUTION));
+        el.setAttribute("xmlns", "http://pisa.intecs.it/mass/toolbox/log");
         rootEl.appendChild(el);
 
         return DOMUtil.getDocumentAsInputStream(doc);

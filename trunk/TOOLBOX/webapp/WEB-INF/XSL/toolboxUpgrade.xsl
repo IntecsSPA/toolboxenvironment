@@ -9,7 +9,7 @@
  -
  -->
 <xsl:stylesheet version="1.0" xmlns:tbx="http://pisa.intecs.it/mass/toolbox/toolbox" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ipo="http://www.mass.com/IPO" xmlns:h="http://www.mass.com/toolbox/help">
-	<xsl:output method="html" version="1.0" encoding="ISO-8859-1" omit-xml-declaration="no" indent="no" media-type="text/html"/>
+	<xsl:output method="html" encoding="ISO-8859-1" omit-xml-declaration="no" indent="no" media-type="text/html"/>
 	<xsl:template match="/">
         <TABLE cellSpacing="2" cellPadding="2" width="100%" align="center" valign="top"> 
           <TBODY> 

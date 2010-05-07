@@ -9,7 +9,7 @@
  -
  -->
 <xsl:stylesheet version="1.0" xmlns:tss="http://pisa.intecs.it/mass/toolbox/serviceStatus" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:jsp="http://pisa.intecs.it/mass/toolbox/service" xmlns:ipo="http://www.mass.com/IPO">
-	<xsl:output method="html" version="1.0" encoding="ISO-8859-1" omit-xml-declaration="no" indent="no" media-type="text/html"/>
+	<xsl:output method="html" encoding="ISO-8859-1" omit-xml-declaration="no" indent="no" media-type="text/html"/>
 	<xsl:param name="serviceName"/>
 	<xsl:param name="orderBy"/>
 	<xsl:param name="viewServiceStatusURL"/>

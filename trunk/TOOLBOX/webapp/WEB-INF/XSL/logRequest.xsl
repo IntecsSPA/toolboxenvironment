@@ -9,7 +9,7 @@
  -
  -->
 <xsl:stylesheet version="1.0" xmlns:tss="http://pisa.intecs.it/mass/toolbox/log" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ipo="http://www.mass.com/IPO">
-	<xsl:output method="html" version="1.0" encoding="ISO-8859-1" omit-xml-declaration="no" indent="no" media-type="text/html"/>
+	<xsl:output method="html" encoding="ISO-8859-1" omit-xml-declaration="no" indent="no" media-type="text/html"/>
 	<!--XSL Stylesheet for generating a present response-->
         <xsl:param name="language"/>
         <xsl:param name="operation">

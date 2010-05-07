@@ -8,8 +8,8 @@
  -  Revision Date:     $Date: 2006/10/25 13:46:11 $
  -
 -->
-<xsl:stylesheet version="1.0" xmlns:log="http://pisa.intecs.it/mass/toolbox/log" xmlns:tbx="http://pisa.intecs.it/mass/toolbox/toolbox" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ipo="http://www.mass.com/IPO" xmlns:h="http://www.mass.com/toolbox/help">
-    <xsl:output method="html" version="1.0" encoding="ISO-8859-1" omit-xml-declaration="no" indent="no" media-type="text/html"/>
+<xsl:stylesheet version="2.0" xmlns:log="http://pisa.intecs.it/mass/toolbox/log" xmlns:tbx="http://pisa.intecs.it/mass/toolbox/toolbox" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ipo="http://www.mass.com/IPO" xmlns:h="http://www.mass.com/toolbox/help">
+    <xsl:output method="html" encoding="ISO-8859-1" omit-xml-declaration="no" indent="no" media-type="text/html"/>
     <xsl:param name="serviceName"/>
     <xsl:param name="operationName">aa</xsl:param>
     <xsl:param name="language"></xsl:param>

@@ -9,16 +9,16 @@
  -
  -->
 <xsl:stylesheet version="1.0" xmlns:ts="http://pisa.intecs.it/mass/toolbox/timerStatus" xmlns:sd="http://pisa.intecs.it/mass/toolbox/serviceDescriptor" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:jsp="http://pisa.intecs.it/mass/toolbox/service" xmlns:ipo="http://www.mass.com/IPO">
-	<xsl:output method="html" version="1.0" encoding="ISO-8859-1" omit-xml-declaration="no" indent="no" media-type="text/html"/>
+	<xsl:output method="html" encoding="ISO-8859-1" omit-xml-declaration="no" indent="no" media-type="text/html"/>
         <xsl:param name="language"/>
         <xsl:param name="service"/>
         <xsl:param name="status">
-            <xsl:if test="$language = 'it'">STATO</xsl:if>
-            <xsl:if test="$language = 'en'">STATUS</xsl:if>
-        </xsl:param>   
-        <xsl:param name="status">
-            <xsl:if test="$language = 'it'">LAVORI</xsl:if>
-            <xsl:if test="$language = 'en'">TOOLS</xsl:if>
+            <xsl:if test="$language = 'it'">Stato</xsl:if>
+            <xsl:if test="$language = 'en'">Status</xsl:if>
+        </xsl:param>
+        <xsl:param name="expiration">
+            <xsl:if test="$language = 'it'">Expiration date</xsl:if>
+            <xsl:if test="$language = 'en'">Data di scadenza</xsl:if>
         </xsl:param>                             
 	<xsl:template match="ts:timerStatus">
 		<table width="100%" height="90%" cellpadding="2" cellspacing="2" align="center" valign="middle">
@@ -27,10 +27,10 @@
 					OrderId
 				</td>
 				<td class="sortableHeader" height="50">
-					Expiration date
+                    <xsl:value-of select="$expiration"/>
 				</td>
 				<td class="sortableHeader" height="50" valign="middle" align="center">
-                                    <xsl:value-of select="$status"/>
+                    <xsl:value-of select="$status"/>
 				</td>
 			</tr>
 				<xsl:apply-templates select="ts:timer"/>

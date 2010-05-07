@@ -9,7 +9,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 public class XPathTag extends NativeTagExecutor {
-
     @Override
     public Object executeTag(org.w3c.dom.Element xPath) throws Exception {
         String outputType="";
@@ -23,7 +22,7 @@ public class XPathTag extends NativeTagExecutor {
         String[] outputAsStringArray;
 
         outputType=xPath.getAttribute("outputType");
-        
+       
         if (xPath.getAttributes().getLength() > 0) {
             result = XPathAPI.eval(document, xPathString, xPath);
         } else {

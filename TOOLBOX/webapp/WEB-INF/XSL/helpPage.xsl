@@ -9,7 +9,7 @@
  -
  -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ipo="http://www.mass.com/IPO" xmlns:h="http://www.mass.com/toolbox/help">
-	<xsl:output method="html" version="1.0" encoding="ISO-8859-1" omit-xml-declaration="no" indent="no" media-type="text/html"/>
+	<xsl:output method="html" encoding="ISO-8859-1" omit-xml-declaration="no" indent="no" media-type="text/html"/>
 	<xsl:param name="topic"></xsl:param>
 	<xsl:template match="h:help">
 		<xsl:value-of select="h:key[@value=$topic]/h:sumLink"/>

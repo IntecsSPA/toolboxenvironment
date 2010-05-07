@@ -9,7 +9,7 @@
  -
  -->
 <xsl:stylesheet version="1.0" xmlns:mass="http://www.esa.int/mass" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:oi="http://www.esa.int/oi" xmlns:aoi="http://www.gim.be/xml/schemas/aoifeatures" xmlns:eoli="http://earth.esa.int/XML/eoli" xmlns:gml="http://www.opengis.net/gml" xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/">
-	<xsl:output method="html" version="1.0" encoding="ISO-8859-1" omit-xml-declaration="no" indent="no" media-type="text/html"/>
+	<xsl:output method="html" encoding="ISO-8859-1" omit-xml-declaration="no" indent="no" media-type="text/html"/>
         <xsl:param name="language"/>
         <xsl:param name="nResult">
             <xsl:if test="$language = 'it'">Numero di risultati:</xsl:if>

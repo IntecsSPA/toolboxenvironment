@@ -130,7 +130,7 @@
                                                 transformer.setParameter("hasSSE", Boolean.toString(hasSSE));
                                                 transformer.setParameter("hasGML", Boolean.toString(hasGML));
                                                 transformer.transform(new StreamSource(InstanceFlow.getSynchronousInstanceFlowAsXML(service, instanceId)), new StreamResult(out));
-                                    %>
+%>
                                 </P>
                                 &nbsp; </TD>
                         </TR>

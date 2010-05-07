@@ -50,8 +50,7 @@ public class GetXMLResourcesCommand extends NativeCommandsManagerPlugin{
                 IOUtil.copy(docStream, resp.getOutputStream());
             }
         } catch (Exception ex) {
-            String errorMsg = "Error getting XML resource: " + CDATA_S + ex.getMessage() + CDATA_E;
-           
+            String errorMsg = "Error getting XML resource: " + CDATA_S + ex.getMessage() + CDATA_E;           
             throw new GenericException(errorMsg);
         }
     }

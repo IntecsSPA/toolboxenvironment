@@ -54,6 +54,10 @@ String mailErrorSPChecked = "";
 String currSender = configuration.getConfigurationValue(ToolboxConfiguration.SENDER);
 String currRecipients = configuration.getConfigurationValue(ToolboxConfiguration.RECIPIENTS);
 String currSmtpServer = configuration.getConfigurationValue(ToolboxConfiguration.SMTP_SERVER);
+String currSmtpAuthUsername= configuration.getConfigurationValue(ToolboxConfiguration.SMTP_AUTH_USERNAME);
+String currSmtpAuthPassword= configuration.getConfigurationValue(ToolboxConfiguration.SMTP_AUTH_PASSWORD);
+String currSmtpPort= configuration.getConfigurationValue(ToolboxConfiguration.SMTP_PORT);
+String mailFrom=configuration.getConfigurationValue(ToolboxConfiguration.MAIL_FROM);
 String currCompanyName = configuration.getConfigurationValue(ToolboxConfiguration.COMPANY_NAME);
 String currCompanyContact = configuration.getConfigurationValue(ToolboxConfiguration.COMPANY_CONTACT);
 String ebRRREpoHome=configuration.getConfigurationValue(ToolboxConfiguration.EBRR_REPO_HOME);
@@ -225,6 +229,24 @@ PropertyResourceBundle messages = (PropertyResourceBundle)ResourceBundle.getBund
                 <tr><!-- Row 9 -->
                     <td class="tdItem" nowrap width="50%"><fmt:message key="configureToolboxRequest.SMTP" bundle="${lang}"/><font color="FF0000"><%=warn.equals("missingSmtpServer") ? " - MISSING!" : "" %></td>
                     <td class="tdForm" nowrap><input name="smtpServer" type="text" value="<%= currSmtpServer %>" <%=disabled%>></td>
+                </tr>
+                <tr><!-- Row 9 -->
+                    <td class="tdItem" nowrap width="50%"><fmt:message key="configureToolboxRequest.SMTP.username" bundle="${lang}"/><font color="FF0000"><%=warn.equals("missingSmtpServer") ? " - MISSING!" : "" %></td>
+                    <td class="tdForm" nowrap><input name="smtpServerAuthUsername" type="text" value="<%= currSmtpAuthUsername %>" <%=disabled%>></td>
+                </tr>
+                <tr><!-- Row 9 -->
+                    <td class="tdItem" nowrap width="50%"><fmt:message key="configureToolboxRequest.SMTP.password" bundle="${lang}"/><font color="FF0000"><%=warn.equals("missingSmtpServer") ? " - MISSING!" : "" %></td>
+                    <td class="tdForm" nowrap><input name="smtpServerAuthPassword" type="text" value="<%= currSmtpAuthPassword %>" <%=disabled%>></td>
+                </tr>
+                <tr><!-- Row 9 -->
+                    <td class="tdItem" nowrap width="50%"><fmt:message key="configureToolboxRequest.SMTP.mailFrom" bundle="${lang}"/><font color="FF0000"><%=warn.equals("missingSmtpServer") ? " - MISSING!" : "" %></td>
+                    <td class="tdForm" nowrap><input name="mailFrom" type="text" value="<%= mailFrom %>" <%=disabled%>></td>
+                </tr>
+                mailFrom
+
+                <tr><!-- Row 9 -->
+                    <td class="tdItem" nowrap width="50%"><fmt:message key="configureToolboxRequest.SMTP.port" bundle="${lang}"/><font color="FF0000"><%=warn.equals("missingSmtpServer") ? " - MISSING!" : "" %></td>
+                    <td class="tdForm" nowrap><input name="smtpServerPort" type="text" value="<%= currSmtpPort %>" <%=disabled%>></td>
                 </tr>
 
                 <tr><!-- Row 8 -->

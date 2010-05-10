@@ -28,7 +28,6 @@
 package it.intecs.pisa.toolbox;
 
 import it.intecs.pisa.toolbox.util.Util;
-import it.intecs.pisa.soap.toolbox.*;
 import be.kzen.ergorr.service.RepositoryManager;
 import com.google.gson.JsonObject;
 import it.intecs.pisa.common.tbx.Interface;
@@ -62,6 +61,7 @@ import it.intecs.pisa.toolbox.resources.XMLResourcesPersistence;
 import it.intecs.pisa.toolbox.db.ServiceStatuses;
 import it.intecs.pisa.pluginscore.UIPluginManager;
 import it.intecs.pisa.toolbox.db.StatisticsUtil;
+import it.intecs.pisa.toolbox.log.ErrorMailer;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.soap.SOAP11Constants;
 import org.apache.axiom.soap.SOAP12Constants;
@@ -139,7 +139,6 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     protected static final String TRANSFORMER_KEY = "javax.xml.transform.TransformerFactory";
     protected static final String TRANSFORMER_XALAN = "org.apache.xalan.xsltc.trax.TransformerFactoryImpl";
     protected static final String REQUEST_PARAMETER_COMMAND = "cmd";
-    private static ErrorMailer errorMailer = null;
     private static String mailError = null;
     private File rootDir;
     private File logDir;
@@ -324,9 +323,6 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             } catch (Exception e) {
                 errorMsg = "Error extracting SOAP payload: " + CDATA_S + e.getMessage() + CDATA_E;
                 logger.error(errorMsg);
-                if (getErrorMailer() != null && getMailError() != null) {
-                    getErrorMailer().sendMail(errorMsg, getMailError());
-                }
                 throw new ToolboxException(errorMsg);
             }
 
@@ -342,7 +338,9 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
                 writer.flush();
                 writer.close();
             } catch (Exception e) {
-                errorMsg = logErrorAndSendEmail("Error while serializing response document:: ", e);
+                errorMsg = "Error while serializing response document:: "+ e.getMessage();
+                logger.error(errorMsg);
+                ErrorMailer.send(null, soapaction, null, null,errorMsg);
                 throw new ToolboxException(errorMsg);
             }
 
@@ -413,17 +411,11 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         serviceName = requestURI.substring(requestURI.lastIndexOf("/") + 1);
         service = (TBXService) this.serviceManager.getService(serviceName);
 
-        //TODO per il momento qui utilizzo getOperationBySOAPAction, quindi anche nel caso SOAP1.2
         TBXOperation operation = (TBXOperation) service.getImplementedInterface().getOperationBySOAPAction(operationName);
 
         if (operation == null) {
             logger.error("[" + serviceName + "] " + TBXService.UNKNOWN_SOAP_PORT + operationName);
-            if (Toolbox.getErrorMailer() != null && Toolbox.getMailError() != null) {
-                //toolbox.errorMailer.mail(serviceName, UNKNOWN_SOAP_PORT + soapAction);
-                HashMap contentParts = new HashMap();
-                contentParts.put("serviceName", serviceName);
-                Toolbox.getErrorMailer().sendMail(contentParts, TBXService.UNKNOWN_SOAP_PORT + operationName, Toolbox.getMailError());
-            }
+            ErrorMailer.send(serviceName, operationName, null, null,"[" + serviceName + "] " + TBXService.UNKNOWN_SOAP_PORT + operationName);
             throw new ToolboxException(TBXService.UNKNOWN_SOAP_PORT + operationName + " for service " + serviceName);
         }
       
@@ -480,34 +472,12 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
                     IOUtil.copy(new FileInputStream(file), out);
                 }
                 else response.sendError(404);
-                /*  if (file.exists()) {
-                } else {
-                System.out.println("Repository does not exist");
-                }*/
-
-            } else {
+               } else {
                 System.out.println("ID not provided");
             }
         }
 
 
-    }
-
-    /*
-     *  This method is used to log an error message and send an email to the Support
-     *  e Exception 
-     */
-    private String logErrorAndSendEmail(String startMsg, Exception e) {
-        String errorMsg = null;
-
-        errorMsg = startMsg + CDATA_S + e.getMessage() + CDATA_E;
-
-        logger.error(errorMsg);
-        if (getErrorMailer() != null && getMailError() != null) {
-            //errorMailer.mail(errorMsg);
-            getErrorMailer().sendMail(errorMsg, getMailError());
-        }
-        return errorMsg;
     }
 
     /**
@@ -616,19 +586,6 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
            
             adjustAllSchemaReferences(); // Adjust the Schema cross references (import and include) paths according to the rootDir
 
-           if (tbxConfig.getConfigurationValue(ToolboxConfiguration.MAIL_ERROR).equals("true")) {
-                sender = tbxConfig.getConfigurationValue(ToolboxConfiguration.SENDER);
-                recipients = tbxConfig.getConfigurationValue(ToolboxConfiguration.RECIPIENTS);
-                Element infoRoot;
-                recipientsSSE = (infoRoot = new DOMUtil().fileToDocument(new File(new File(new File(getRootDir(), WEB_INF), XML), "info.xml")).getDocumentElement()).getAttribute("errorReportRecipient");
-                smtp = tbxConfig.getConfigurationValue(ToolboxConfiguration.SMTP_SERVER);
-                tbxVersion = infoRoot.getAttribute("toolboxVersion");
-                companyName = tbxConfig.getConfigurationValue(ToolboxConfiguration.COMPANY_NAME);
-                companyContact = tbxConfig.getConfigurationValue(ToolboxConfiguration.COMPANY_CONTACT);
-                setErrorMailer(ErrorMailer.getInstance(sender, recipients, recipientsSSE, smtp, tbxVersion, companyName, companyContact));
-
-                setMailError(tbxConfig.getConfigurationValue(ToolboxConfiguration.MAIL_ERROR));
-            }
             File wsdlDir;
             if (!(wsdlDir = new File(rootDir, WSDL)).exists()) {
                 wsdlDir.mkdir();
@@ -661,10 +618,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             needsInitialization=false;
 
         } catch (Exception e) {
-            if (getErrorMailer() != null && getMailError() != null) {
-                //errorMailer.mail("Error during the TOOLBOX init " + e.getMessage());
-                getErrorMailer().sendMail("Error during the TOOLBOX init " + e.getMessage(), getMailError());
-            }
+            
             throw new ServletException(e);
         }
 
@@ -1088,16 +1042,9 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         mailError = aMailError;
     }
 
-    public static void setErrorMailer(ErrorMailer aErrorMailer) {
-        errorMailer = aErrorMailer;
-    }
-
+    
     public static String getMailError() {
         return mailError;
-    }
-
-    public static ErrorMailer getErrorMailer() {
-        return errorMailer;
     }
 
     public long getInstanceKeyUnderDebug() {

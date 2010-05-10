@@ -40,6 +40,7 @@ import it.intecs.pisa.common.tbx.ServiceAdditionalParameters;
 import it.intecs.pisa.common.tbx.lifecycle.LifeCycle;
 import it.intecs.pisa.soap.toolbox.exceptions.ToolboxException;
 import it.intecs.pisa.toolbox.db.ToolboxInternalDatabase;
+import it.intecs.pisa.toolbox.log.ErrorMailer;
 import it.intecs.pisa.toolbox.resources.LogResourcesPersistence;
 import java.io.*;
 import java.net.*;
@@ -477,16 +478,12 @@ public class TBXService extends Service {
         {
             operation = (TBXOperation) this.implementedInterface.getOperationBySOAPAction(soapAction);
             if (operation==null) {
-                logger.error("[" + serviceName + "] " + UNKNOWN_SOAP_PORT + soapAction);
-                if (Toolbox.getErrorMailer() != null && Toolbox.getMailError() != null) {
-                    //toolbox.errorMailer.mail(serviceName, UNKNOWN_SOAP_PORT + soapAction);
-                    HashMap contentParts = new HashMap();
-                    contentParts.put("serviceName", serviceName);
-                    Toolbox.getErrorMailer().sendMail(contentParts, UNKNOWN_SOAP_PORT + soapAction, Toolbox.getMailError());
+                errorStr=UNKNOWN_SOAP_PORT+ soapAction;
+                logger.error("[" + serviceName + "] " +errorStr);
+               
+                throw new ToolboxException(errorStr);
                 }
-                throw new ToolboxException(UNKNOWN_SOAP_PORT + soapAction + " for service " + serviceName);
             }
-        }
         catch(Exception ecc)
         {
             logger.error("[" + serviceName + "] Error processing request: " + soapAction);
@@ -509,11 +506,7 @@ public class TBXService extends Service {
         
         /* If the service is stopped, no processing is performed and an exception is thrown */
         if (ServiceStatuses.getStatus(serviceName)==ServiceStatuses.STATUS_STOPPED) {
-            if (Toolbox.getErrorMailer() != null && Toolbox.getMailError() != null) {
-                HashMap contentParts = new HashMap();
-                contentParts.put("serviceName", getServiceName());
-                Toolbox.getErrorMailer().sendMail(contentParts, "Service Stopped", Toolbox.getMailError());
-            }
+            ErrorMailer.send(serviceName, null, null, null,"Service stopped");
             throw new ToolboxException("Service stopped");
         }
 

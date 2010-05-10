@@ -6,7 +6,7 @@ package it.intecs.pisa.toolbox.service;
 
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.resources.XMLResourcesPersistence;
-import java.net.MalformedURLException;
+import it.intecs.pisa.toolbox.log.ErrorMailer;
 import org.w3c.dom.Document;
 import org.apache.axiom.soap.SOAPEnvelope;
 import org.apache.axis2.addressing.RelatesTo;
@@ -17,6 +17,7 @@ import it.intecs.pisa.soap.toolbox.AxisSOAPClient;
 import it.intecs.pisa.toolbox.db.InstanceResources;
 import it.intecs.pisa.toolbox.db.InstanceStatuses;
 import it.intecs.pisa.toolbox.db.OperationInfo;
+import it.intecs.pisa.toolbox.log.ErrorMailer;
 import java.util.StringTokenizer;
 import org.apache.log4j.Logger;
 
@@ -34,12 +35,12 @@ public class TBXAsynchronousOperationCommonTasks {
         Toolbox toolbox;
         TBXSOAPInterface implInterf;
         TBXAsynchronousOperation asynchOp;
-        String soapAction;
+        String soapAction="";
         String sslCertificateLocation;
         SOAPEnvelope soapEnvResp;
         String relatesTo, replyToAddress="";
         SOAPEnvelope soapEnv = null;
-        TBXService service;
+        TBXService service=null;
         Logger logger=null;
 
         try {
@@ -88,9 +89,17 @@ public class TBXAsynchronousOperationCommonTasks {
                 }
             }
             }
-            else throw new Exception("Push Host is not admitted");
+            else
+            {
+                ErrorMailer.send(service.getServiceName(), soapAction, null, null,"URL "+replyToAddress+" is not admitted as Push Host");
+                throw new Exception("Push Host is not admitted");
+            }
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            String error;
+            error="Cannot send message to push host: "+e.getMessage();
+            logger.error(error);
+            ErrorMailer.send(service!=null?service.getServiceName():"unknown", soapAction, null, null,error);
+
             activatePushAttempts(serviceInstanceId);
             throw new Exception("Cannot send message to host "+replyToAddress);
         }

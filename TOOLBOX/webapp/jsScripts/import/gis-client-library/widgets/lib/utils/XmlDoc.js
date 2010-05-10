@@ -2,6 +2,7 @@
 
 XmlDoc = function (XmlURL, namespace){
     var xmlDoc;
+ 
     if(BrowserDetect.browser == "Chrome" || BrowserDetect.browser == "Opera"){
        if(!(XmlURL instanceof XMLDocument)){
 

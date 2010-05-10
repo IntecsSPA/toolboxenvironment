@@ -16,7 +16,10 @@
  */
 package it.intecs.pisa.toolbox.service.instances;
 
+import it.intecs.pisa.common.tbx.Operation;
 import it.intecs.pisa.toolbox.db.ToolboxInternalDatabase;
+import it.intecs.pisa.toolbox.service.ServiceManager;
+import it.intecs.pisa.toolbox.service.TBXService;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -82,6 +85,20 @@ public class InstanceInfo {
         }
         return opName;
     }
+
+     public static String getSOAPActionFromInstanceId(long id) throws Exception {
+         TBXService service;
+         String serviceName;
+         ServiceManager servMan;
+
+         servMan=ServiceManager.getInstance();
+         serviceName=getServiceNameFromInstanceId(id);
+
+         service=servMan.getService(serviceName);
+         Operation operation = service.getImplementedInterface().getOperationByName(getOperationNameFromInstanceId(id));
+
+         return operation.getSoapAction();
+     }
 
     public static int getRemainingAttempts(long id) throws Exception
     {

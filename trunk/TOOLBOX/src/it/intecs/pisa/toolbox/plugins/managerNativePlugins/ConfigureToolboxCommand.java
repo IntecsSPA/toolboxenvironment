@@ -41,11 +41,15 @@ public class ConfigureToolboxCommand extends NativeCommandsManagerPlugin {
         String sender = getStringFromMimeParts(mimeparts, "sender");
         String recipients = getStringFromMimeParts(mimeparts, "recipients");
         String smtpServer = getStringFromMimeParts(mimeparts, "smtpServer");
+        String smtpServerPort = getStringFromMimeParts(mimeparts, "smtpServerPort");
+        String smtpServerAuthUsername = getStringFromMimeParts(mimeparts, "smtpServerAuthUsername");
+        String smtpServerAuthPassword = getStringFromMimeParts(mimeparts, "smtpServerAuthPassword");
         String companyName = getStringFromMimeParts(mimeparts, "companyName");
         String logFileSize = (getStringFromMimeParts(mimeparts, "logFileSize").length() == 0 ? "100KB" : getStringFromMimeParts(mimeparts, "logFileSize"));
         String ebRRRepoHome = getStringFromMimeParts(mimeparts, "ebRRRepoHome");
         String logLevel=getStringFromMimeParts(mimeparts, "logLevel");
         String companyContact=getStringFromMimeParts(mimeparts, "companyContact");
+        String mailFrom=getStringFromMimeParts(mimeparts, "mailFrom");
         boolean mailErrorSSE = (getStringFromMimeParts(mimeparts, "mailErrorSSE") != null);
         boolean mailErrorSP = (getStringFromMimeParts(mimeparts, "mailErrorSP") != null);
 
@@ -91,10 +95,14 @@ public class ConfigureToolboxCommand extends NativeCommandsManagerPlugin {
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.FTP_SERVER_HOST, ftpServerHost);
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.SENDER, sender);
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.RECIPIENTS, recipients);
-
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.COMPANY_NAME, companyName);
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.COMPANY_CONTACT, companyContact);
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.SMTP_SERVER, smtpServer);
+        toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.SMTP_AUTH_USERNAME, smtpServerAuthUsername);
+        toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.SMTP_AUTH_PASSWORD, smtpServerAuthPassword);
+        toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.SMTP_SERVER, smtpServer);
+        toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.SMTP_PORT, smtpServerPort);
+        toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.MAIL_FROM, mailFrom);
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.EBRR_REPO_HOME, ebRRRepoHome);
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.FIRST_TIME_CHECK, "false");
 

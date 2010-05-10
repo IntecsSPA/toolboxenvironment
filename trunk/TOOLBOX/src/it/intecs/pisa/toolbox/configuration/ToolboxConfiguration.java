@@ -56,12 +56,17 @@ public  class ToolboxConfiguration {
     public static final String RECIPIENTS = "recipients";
     public static final String SENDER = "sender";
     public static final String SMTP_SERVER = "smtpServer";
+    public static final String SMTP_AUTH_USERNAME="smtpServerAuthUsername";
+    public static final String SMTP_AUTH_PASSWORD="smtpServerAuthPassword";
     public static final String EBRR_REPO_HOME="repoHomeDir";
     public static final String SSE_PORTAL="portalSSE";
+    public static final String SSE_SUPPORT_TEAM_EMAIL="sseTeamEmail";
     public static final String TOOLBOX_LEVEL_KEYSTORE="tbxLevelKeystore";
     public static final String TOOLBOX_LEVEL_KEYSTORE_PASSWORD="tbxLevelKeystorePwd";
+    public static final String SMTP_PORT="smtpServerPort";
+    public static final String MAIL_FROM="mailFrom";
 
-    protected static final int CONFIG_VALUES_COUNT=32;
+    protected static final int CONFIG_VALUES_COUNT=37;
 
     protected Hashtable<String,String> configValues;
     protected static ToolboxConfiguration instance=new ToolboxConfiguration();
@@ -205,7 +210,12 @@ public  class ToolboxConfiguration {
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+SSE_PORTAL+"','services.eoportal.org')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+TOOLBOX_LEVEL_KEYSTORE+"','false')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+TOOLBOX_LEVEL_KEYSTORE_PASSWORD+"','')");
-
+               stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+SMTP_AUTH_USERNAME+"','')");
+               stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+SMTP_AUTH_PASSWORD+"','')");
+               //stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+SSE_SUPPORT_TEAM_EMAIL+"','Service.Support.Environment.Operations.Team@esa.int')");
+               stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+SSE_SUPPORT_TEAM_EMAIL+"','toolbox@intecs.it')");
+               stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+SMTP_PORT+"','25')");
+               stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+MAIL_FROM+"','')");
             }
 
 

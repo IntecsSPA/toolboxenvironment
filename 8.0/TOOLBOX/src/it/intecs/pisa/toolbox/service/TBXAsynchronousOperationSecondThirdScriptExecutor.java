@@ -22,8 +22,10 @@ import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.db.InstanceResources;
 import it.intecs.pisa.toolbox.db.InstanceStatuses;
 import it.intecs.pisa.toolbox.db.ToolboxInternalDatabase;
+import it.intecs.pisa.toolbox.log.ErrorMailer;
 import it.intecs.pisa.toolbox.service.instances.InstanceHandler;
 import it.intecs.pisa.toolbox.plugins.exceptions.DebugTerminatedException;
+import it.intecs.pisa.toolbox.service.instances.InstanceInfo;
 import it.intecs.pisa.util.SOAPUtil;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -55,7 +57,7 @@ public class TBXAsynchronousOperationSecondThirdScriptExecutor extends Thread {
 
     @Override
     public void run() {
-        Boolean checkResult;
+        Boolean checkResult=null;
         InstanceHandler handler = null;
         String ssExRes;
         Document errorResp;
@@ -65,14 +67,19 @@ public class TBXAsynchronousOperationSecondThirdScriptExecutor extends Thread {
                 {
                     handler = new InstanceHandler(serviceInstanceId);
 
-                    ssExRes = getSecondScriptExecutionResultId();
-                    InstanceStatuses.updateInstanceStatus(serviceInstanceId, InstanceStatuses.STATUS_CHECKING);
+                    try
+                    {
+                        ssExRes = getSecondScriptExecutionResultId();
+                        InstanceStatuses.updateInstanceStatus(serviceInstanceId, InstanceStatuses.STATUS_CHECKING);
 
-                    checkResult = (Boolean) handler.executeScript(TBXScript.SCRIPT_TYPE_SECOND_SCRIPT, debugMode);
-                   /* if (ssExRes != null) {
-                        removeSecondScriptRefFromDb(ssExRes);
-                        XMLResourcesPersistence.getInstance().deleteXML(ssExRes);
-                    }*/
+                        checkResult = (Boolean) handler.executeScript(TBXScript.SCRIPT_TYPE_SECOND_SCRIPT, debugMode);
+                    }
+                    catch(Exception e)
+                    {
+                        logger.error("Error while executing second script.");
+                        ErrorMailer.send(service.getServiceName(), InstanceInfo.getSOAPActionFromInstanceId(serviceInstanceId), null, null,"Error while executing second script.");
+                        throw e;
+                    }
 
                     if (InstanceStatuses.getInstanceStatus(serviceInstanceId) == InstanceStatuses.STATUS_CANCELLED) {
                         return;
@@ -96,7 +103,7 @@ public class TBXAsynchronousOperationSecondThirdScriptExecutor extends Thread {
                     sendTDETerminateMsg();
                     closeDebugConsole();
                 }
-                logger.error("Error while executing second or third script.");
+                
 
                 releaseMutex();
                 InstanceStatuses.updateInstanceStatus(serviceInstanceId, InstanceStatuses.STATUS_ERROR);
@@ -119,7 +126,14 @@ public class TBXAsynchronousOperationSecondThirdScriptExecutor extends Thread {
             try {
                 InstanceStatuses.updateInstanceStatus(serviceInstanceId, InstanceStatuses.STATUS_READY);
                 response = (Document) handler.executeScript(TBXScript.SCRIPT_TYPE_THIRD_SCRIPT, debugMode);
-            } finally {
+            }
+            catch(Exception e)
+            {
+                 logger.error("Error while executing third script.");
+                ErrorMailer.send(service.getServiceName(), InstanceInfo.getSOAPActionFromInstanceId(serviceInstanceId), null, null,"Error while executing third script.");
+                throw e;
+            }
+            finally {
                 releaseMutex();
 
                 if (debugMode) {

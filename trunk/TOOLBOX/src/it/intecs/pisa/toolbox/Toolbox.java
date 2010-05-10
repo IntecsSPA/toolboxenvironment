@@ -554,8 +554,9 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
 
             Boolean usingTempDirectory = false;
             String errorMessage="";
+            configuredLogDir.mkdirs();
 
-             if ( !configuredLogDir.mkdirs())
+            if (!configuredLogDir.canWrite() || !configuredLogDir.canRead())
              {
                 //in case of write permission errors we use thetemporary directory
                 errorMessage = "Unable to create log directory: " + configuredLogDir.getAbsolutePath() + " Check the read/write permissions";

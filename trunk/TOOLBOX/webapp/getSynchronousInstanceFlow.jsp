@@ -36,7 +36,7 @@
     <fmt:setBundle basename="ToolboxBundle" var="lang" scope="page"/>
 </c:if>
 
-<jsp:include page="header.jsp" />
+<jsp:include page="header.jsp?extVers=2.0.1" />
 <script src="jsScripts/import/gis-client-library/import/OpenLayers/lib/OpenLayers.js"></script>
 <script type="text/javascript" src="jsScripts/import/gis-client-library/import/sarissa/Sarissa.js"></script>
 <script type="text/javascript" src="jsScripts/import/gis-client-library/import/sarissa/sarissa_ieemu_xpath.js"></script>

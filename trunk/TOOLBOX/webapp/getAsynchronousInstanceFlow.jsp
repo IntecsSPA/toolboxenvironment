@@ -30,7 +30,7 @@
 
 <%@ include file="checkSession.jsp" %>
 
-<jsp:include page="header.jsp" />
+<jsp:include page="header.jsp?extVers=2.0.1" />
 <%@taglib uri="http://java.sun.com/jstl/core"  prefix="c"%>
 <%@taglib uri="http://java.sun.com/jstl/fmt"  prefix="fmt"%>
 <c:if test="${sessionScope.languageReq!= null}">

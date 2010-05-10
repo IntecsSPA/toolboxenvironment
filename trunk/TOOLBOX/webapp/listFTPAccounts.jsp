@@ -21,7 +21,7 @@
   <fmt:setLocale value="${sessionScope.languageReq}" />
   <fmt:setBundle basename="ToolboxBundle" var="lang" scope="page"/>  
 </c:if>
-<jsp:include page="header.jsp" /> 
+<jsp:include page="header.jsp?firebugControl=true&loadPanel=false&loadDefer=5000" />
 <%		
   PropertyResourceBundle messages = (PropertyResourceBundle)ResourceBundle.getBundle("ToolboxBundle", new Locale((String)session.getAttribute("languageReq")));
   String home = (String)messages.getObject("listFTPAccounts.home");
@@ -82,14 +82,6 @@
       <TD class=pageBody id=main>
         <SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT> 
         <SCRIPT>addHelp("ftpListing");</SCRIPT>
- <!--       <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/jquery/jquery-1.2.6.js"></script>
-        <script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/adapter/jquery/ext-jquery-adapter.js"></script>
-        <script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/adapter/ext/ext-base.js"></script>
-        <script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/ext-all.js"></script>
-        -->
-       <!-- <script src="jsScripts/import/gis-client-library/import/OpenLayers/lib/OpenLayers.js"></script>
-        <script src="jsScripts/import/gis-client-library/import/OpenLayers/lib/OpenLayers.js"></script>
-       -->
        
      
        
@@ -99,6 +91,7 @@
         <link rel="stylesheet" type="text/css" href="jsScripts/import/gis-client-library/widgets/style/css/webgis.css" />
 
         <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/manager.js"></script>
+        <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/XmlDoc.js"></script>
         <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/browserDetect.js"></script>
         <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/general.js"></script>
         <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/ext/ExtFormUtils.js"></script>

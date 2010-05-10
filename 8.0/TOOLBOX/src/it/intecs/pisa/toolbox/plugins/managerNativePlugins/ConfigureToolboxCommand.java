@@ -4,6 +4,7 @@
  */
 package it.intecs.pisa.toolbox.plugins.managerNativePlugins;
 
+import it.intecs.pisa.toolbox.FTPServerManager;
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.configuration.ToolboxConfiguration;
 import it.intecs.pisa.toolbox.service.ServiceManager;
@@ -47,17 +48,23 @@ public class ConfigureToolboxCommand extends NativeCommandsManagerPlugin {
         String companyName = getStringFromMimeParts(mimeparts, "companyName");
         String logFileSize = (getStringFromMimeParts(mimeparts, "logFileSize").length() == 0 ? "100KB" : getStringFromMimeParts(mimeparts, "logFileSize"));
         String ebRRRepoHome = getStringFromMimeParts(mimeparts, "ebRRRepoHome");
-        String logLevel=getStringFromMimeParts(mimeparts, "logLevel");
-        String companyContact=getStringFromMimeParts(mimeparts, "companyContact");
-        String mailFrom=getStringFromMimeParts(mimeparts, "mailFrom");
+        String logLevel = getStringFromMimeParts(mimeparts, "logLevel");
+        String companyContact = getStringFromMimeParts(mimeparts, "companyContact");
+        String mailFrom = getStringFromMimeParts(mimeparts, "mailFrom");
         boolean mailErrorSSE = (getStringFromMimeParts(mimeparts, "mailErrorSSE") != null);
         boolean mailErrorSP = (getStringFromMimeParts(mimeparts, "mailErrorSP") != null);
+
+
+        boolean mustRestartFtpServer;
 
         new File(logDir).mkdirs();
         new File(ftpAdminDir).mkdirs();
 
         ToolboxConfiguration toolboxConfiguration;
         toolboxConfiguration = ToolboxConfiguration.getInstance();
+
+         mustRestartFtpServer=ftpServerHost.equals(toolboxConfiguration.getConfigurationValue(ToolboxConfiguration.FTP_SERVER_HOST))==false ||
+                 ftpPort.equals(toolboxConfiguration.getConfigurationValue(ToolboxConfiguration.FTP_PORT))==false;
 
         if (getStringFromMimeParts(mimeparts, "globalQueuing") != null) {
             toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.QUEUING, "true");
@@ -67,18 +74,18 @@ public class ConfigureToolboxCommand extends NativeCommandsManagerPlugin {
 
         String boolValue;
 
-        boolValue=getStringFromMimeParts(mimeparts, "toolboxVersionCheck") != null ? "true" :"false";
+        boolValue = getStringFromMimeParts(mimeparts, "toolboxVersionCheck") != null ? "true" : "false";
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.TOOLBOX_VERSION_CHECK, boolValue);
 
-        boolValue=getStringFromMimeParts(mimeparts, "schemaVersionCheck") != null ? "true" :"false";
+        boolValue = getStringFromMimeParts(mimeparts, "schemaVersionCheck") != null ? "true" : "false";
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.SCHEMA_VERSION_CHECK, boolValue);
 
-        boolValue=getStringFromMimeParts(mimeparts, "inputMessagesLog") != null ? "true" :"false";
+        boolValue = getStringFromMimeParts(mimeparts, "inputMessagesLog") != null ? "true" : "false";
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.INPUT_MESSAGES_LOG, boolValue);
 
-        boolValue=getStringFromMimeParts(mimeparts, "outputMessagesLog") != null ? "true" :"false";
+        boolValue = getStringFromMimeParts(mimeparts, "outputMessagesLog") != null ? "true" : "false";
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.OUTPUT_MESSAGES_LOG, boolValue);
-     
+
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.APACHE_ADDRESS, apacheAddress);
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.APACHE_PORT, apachePort);
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.PROXY_HOST, proxyHost);
@@ -107,49 +114,63 @@ public class ConfigureToolboxCommand extends NativeCommandsManagerPlugin {
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.FIRST_TIME_CHECK, "false");
 
         if (mailErrorSSE && mailErrorSP) {
-            toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.MAIL_ERROR,"BOTH");
+            toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.MAIL_ERROR, "BOTH");
         } else if (mailErrorSSE) {
-            toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.MAIL_ERROR,"SSE");
+            toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.MAIL_ERROR, "SSE");
         } else if (mailErrorSP) {
-            toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.MAIL_ERROR,"SP");
+            toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.MAIL_ERROR, "SP");
         } else {
-            toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.MAIL_ERROR,"");
+            toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.MAIL_ERROR, "");
         }
 
         File keyStore;
         Toolbox tbx;
         FileItem kfi;
 
-        tbx=Toolbox.getInstance();
+        tbx = Toolbox.getInstance();
 
-        kfi=mimeparts.get("keystore");
+        kfi = mimeparts.get("keystore");
 
-        if(kfi!=null && kfi.getSize() != 0)
-        {
-             keyStore= new File(tbx.getRootDir(),"WEB-INF/persistence/tbxLevelKeystore.jks");
-             kfi.write(keyStore);
-             toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.TOOLBOX_LEVEL_KEYSTORE,"true");
+        if (kfi != null && kfi.getSize() != 0) {
+            keyStore = new File(tbx.getRootDir(), "WEB-INF/persistence/tbxLevelKeystore.jks");
+            kfi.write(keyStore);
+            toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.TOOLBOX_LEVEL_KEYSTORE, "true");
         }
 
 
         if (getStringFromMimeParts(mimeparts, "keystorePwd") != null) {
-            toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.TOOLBOX_LEVEL_KEYSTORE_PASSWORD,getStringFromMimeParts(mimeparts, "keystorePwd"));
+            toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.TOOLBOX_LEVEL_KEYSTORE_PASSWORD, getStringFromMimeParts(mimeparts, "keystorePwd"));
         }
-        
+
         toolboxConfiguration.saveConfiguration();
 
         TBXService[] services;
         ServiceManager servMan;
 
-        servMan=ServiceManager.getInstance();
-        services=servMan.getServicesAsArray();
-        for(TBXService ser:services)
-        {
+        servMan = ServiceManager.getInstance();
+        services = servMan.getServicesAsArray();
+        for (TBXService ser : services) {
             ser.attemptToDeployWSDLAndSchemas();
         }
 
-         setebRRRepoHomeOnPropertyFile(ebRRRepoHome);
-         resp.sendRedirect("configureToolboxRequest.jsp?pageStatus=disabled");
+        setebRRRepoHomeOnPropertyFile(ebRRRepoHome);
+        
+        if(mustRestartFtpServer)
+         restartFTPServer(toolboxConfiguration);
+
+        resp.sendRedirect("configureToolboxRequest.jsp?pageStatus=disabled");
+    }
+
+    private void restartFTPServer(ToolboxConfiguration toolboxConfiguration) throws Exception {
+        FTPServerManager ftpServer;
+        ftpServer = FTPServerManager.getInstance();
+        ftpServer.stopServer();
+        ftpServer.updatePort(toolboxConfiguration.getConfigurationValue(ToolboxConfiguration.FTP_PORT));
+        ftpServer.updatePassiveModePort(toolboxConfiguration.getConfigurationValue(ToolboxConfiguration.FTP_POOL_PORT));
+        ftpServer.updateServerHost(toolboxConfiguration.getConfigurationValue(ToolboxConfiguration.FTP_SERVER_HOST));
+        File workDir;
+        workDir = new File(Toolbox.getInstance().getRootDir(), "WEB-INF/FTPServer");
+        ftpServer.startServer(workDir.getAbsolutePath());
     }
 
     private void setebRRRepoHomeOnPropertyFile(String ebRRRepoHome) {
@@ -159,22 +180,19 @@ public class ConfigureToolboxCommand extends NativeCommandsManagerPlugin {
         File props;
         Toolbox tbxServlet;
 
-        try
-        {
-            tbxServlet=Toolbox.getInstance();
-            props=new File(tbxServlet.getRootDir(),"WEB-INF/plugins/ebRRPlugin/resources/common.properties");
+        try {
+            tbxServlet = Toolbox.getInstance();
+            props = new File(tbxServlet.getRootDir(), "WEB-INF/plugins/ebRRPlugin/resources/common.properties");
 
-            stream=new FileInputStream(props);
-            propfile=new Properties();
+            stream = new FileInputStream(props);
+            propfile = new Properties();
             propfile.load(stream);
 
             propfile.setProperty("repository.root", ebRRRepoHome);
 
-            outstream=new FileOutputStream(props);
-            propfile.store(outstream,"");
-        }
-        catch(Exception e)
-        {
+            outstream = new FileOutputStream(props);
+            propfile.store(outstream, "");
+        } catch (Exception e) {
             logger.warn("Cannot save repository home for ergo");
         }
     }

@@ -603,7 +603,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             logger.info("Toolbox services started");
 
             initFtpServer(new File(rootDir, WEB_INF));
-            ftpServerManager.updatePort(tbxConfig.getConfigurationValue(ToolboxConfiguration.FTP_PORT));
+            //ftpServerManager.updatePort(tbxConfig.getConfigurationValue(ToolboxConfiguration.FTP_PORT));
             logger.info("FTP server started");
 
             needsInitialization=false;

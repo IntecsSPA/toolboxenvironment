@@ -239,9 +239,7 @@ String extImport = (extVers.equalsIgnoreCase("2.0.1") ? extImport2 : extImport3)
               </select> 
             </form></TD> 
 
-          <TD vAlign=center align=right bgColor=#607a92><fmt:message key="revision" bundle="${lang}"/> <%=tbxRevision%><IMG height=13
-                  src="images/directory_bot.gif" width=293 border=0
-                  name=bot> </TD>
+          <TD vAlign=center align=right bgColor=#607a92><fmt:message key="revision" bundle="${lang}"/> <%=tbxRevision%></TD>
  
                   
         </TR> 

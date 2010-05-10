@@ -33,31 +33,37 @@ String newVersion=null;
   tbxServlet=Toolbox.getInstance();
   String tbxVersion=tbxServlet.getToolboxVersion();
   String tbxRevision=tbxServlet.getToolboxRevision();
+
+
+String extVers = (request.getParameter("extVers") == null ? "3": request.getParameter("extVers"));
+int loadDefer= (request.getParameter("loadDefer") == null ? 0: new Integer(request.getParameter("loadDefer")));
+boolean loadPanel= (request.getParameter("loadPanel") == null ? false : new Boolean(request.getParameter("loadPanel")));
+boolean firebugControl= (request.getParameter("firebugControl") == null ? false : new Boolean(request.getParameter("firebugControl")));
+System.out.println("firebugControl: " +firebugControl);
+String extImport3="<link rel=\"stylesheet\" type=\"text/css\" href=\"jsScripts/import/gis-client-library/import/ext/resources/css/ext-all.css\" ></link>\n"
+	     +"<script type=\"text/javascript\" src=\"jsScripts/import/gis-client-library/import/ext/adapter/ext/ext-base.js\"></script>\n"
+             +"<script type=\"text/javascript\" src=\"jsScripts/import/gis-client-library/import/ext/ext-all.js\"></script>\n";
+
+String extImport2="<link rel=\"stylesheet\" type=\"text/css\" href=\"jsScripts/ext-2.0.1/resources/css/ext-all.css\"></link>\n"
+	     +"<script type=\"text/javascript\" src=\"jsScripts/ext-2.0.1/adapter/ext/ext-base.js\"></script>\n"
+             +"<script type=\"text/javascript\" src=\"jsScripts/ext-2.0.1/ext-all.js\"></script>\n";
+
+String extImport = (extVers.equalsIgnoreCase("2.0.1") ? extImport2 : extImport3);
                 
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
 
-    <meta http-equiv="expires" content="now">
- <meta http-equiv="pragma" content="no-cache">
- <meta http-equiv="Cache-Control" content="no-cache">
+   <meta http-equiv="expires" content="now">
+   <meta http-equiv="pragma" content="no-cache">
+   <meta http-equiv="Cache-Control" content="no-cache">
 
     <TITLE>SSE Toolbox</TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <%=extImport%>
     <link rel="stylesheet" href="jsScripts/dhtmlwindow.css" type="text/css" ></link>
-    <link rel="stylesheet" type="text/css" href="jsScripts/import/gis-client-library/import/ext/resources/css/ext-all.css" ></link>
-      
-     <!-- <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/jquery/jquery-1.2.6.js"></script>
-      <script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/adapter/jquery/ext-jquery-adapter.js"></script>
-      <script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/adapter/ext/ext-base.js"></script>
-      <script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/ext-all.js"></script>-->
-      
-      <script type="text/javascript" src="jsScripts/ext-2.0.1/adapter/jquery/ext-jquery-adapter.js"></script>
-      <script type="text/javascript" src="jsScripts/ext-2.0.1/adapter/ext/ext-base.js"></script>
-      <script type="text/javascript" src="jsScripts/ext-2.0.1/ext-all.js"></script>
-
-      <script type="text/javascript" src="jsScripts/DhtmlNew.js"></script>
+    <script type="text/javascript" src="jsScripts/DhtmlNew.js"></script>
     
     <link href="jsScripts/dom.css" rel=stylesheet></link>
     <link href="jsScripts/dom.directory.css" rel=stylesheet></link>
@@ -70,9 +76,103 @@ String newVersion=null;
     <SCRIPT type="text/javascript" src="jsScripts/CommonScript.js"></SCRIPT>
     <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
 
-   
+<script language="Javascript" type="text/javascript">
+
+        function init(){
+            <% if(loadPanel) {%>
+              var firebugWarning = function () {
+            <% } %>
+
+            <% if(firebugControl) { System.out.println("firebugControl: " +firebugControl);%>
+                            var cp = new Ext.state.CookieProvider();
+
+                            if(window.console && window.console.firebug && ! cp.get('hideFBWarning')){
+                                Ext.Msg.show({
+                                   title:'Firebug Warning',
+                                   msg: 'Firebug is known to cause performance issues with the TOOLBOX 7.1 Application.',
+                                   buttons: Ext.Msg.OK,
+                                   icon: Ext.MessageBox.WARNING
+                                });
+                            }
+                  <% } %>
+
+             <% if(loadPanel) {%>
+              }
+
+                        var hideMask = function () {
+                            Ext.get('loading').remove();
+                            Ext.fly('loading-mask').fadeOut({
+                                remove:true,
+                                callback : firebugWarning
+                            });
+                        }
+
+                        hideMask.defer(<%=loadDefer%>);
+            <% } %>
+
+        }
+</script>
+ <% if(loadPanel) {%>
+<style type="text/css">
+    .settings {
+        background-image:url(resources/images/settings.png);
+    }
+    .find {
+        background-image:url(resources/images/find3.gif);
+    }
+    .specificfind {
+        background-image:url(resources/images/find.png);
+    }
+
+
+
+    #loading-mask{
+        position:absolute;
+        left:0;
+        top:0;
+        width:100%;
+        height:100%;
+        z-index:20000;
+
+    }
+    #loading{
+        position:absolute;
+        left:40%;
+        top:40%;
+        padding:2px;
+        z-index:20001;
+        height:auto;
+    }
+    #loading a {
+        color:#225588;
+    }
+    #loading .loading-indicator{
+        background:#617995;
+        color:#444;
+        font:bold 13px tahoma,arial,helvetica;
+        padding:10px;
+        margin:0;
+        height:auto;
+    }
+    #loading-msg {
+        font: normal 10px arial,tahoma,sans-serif;
+        padding:90px;
+        color: white;
+    }
+    #loading-img {
+         padding:120px;
+    }
+</style>
+ <% } %>
 </HEAD>
-<BODY id=body> 
+<BODY id=body onload="init()">
+  <% if(loadPanel) {%>
+     <div id="loading-mask" style=""></div>
+     <div id="loading">
+        <div class="loading-indicator"><img src="images/toolboxLogo.png" width="286" height="64" style="margin-right:8px;float:left;vertical-align:top;"/><br /><span id="loading-img"><img src="images/init_Load.gif"/></span>
+        <br /><span id="loading-msg">Loading... Please Wait...</span></div>
+    </div>
+  <% } %>
 <TABLE cellSpacing=0 cellPadding=0 width="100%">
     <TR> 
         <TD class=headerTemplate> 
@@ -139,9 +239,9 @@ String newVersion=null;
               </select> 
             </form></TD> 
 
-          <TD vAlign=center align=right bgColor=#607a92><fmt:message key="revision" bundle="${lang}"/> <%=tbxRevision%><!--IMG height=13
+          <TD vAlign=center align=right bgColor=#607a92><fmt:message key="revision" bundle="${lang}"/> <%=tbxRevision%><IMG height=13
                   src="images/directory_bot.gif" width=293 border=0
-                  name=bot--> </TD>
+                  name=bot> </TD>
  
                   
         </TR> 

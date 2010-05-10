@@ -28,7 +28,7 @@ xmlInterfaces.Application = function()
 			});
                         
 			catalogueWindow.show();
-                        catalogueWindow.setPosition((Window.width/2)-400,(Window.height/2)-300);
+                        catalogueWindow.setPosition((screen.width/2)-400,(screen.height/2)-300);
                       
                         formsObject.render();     
       

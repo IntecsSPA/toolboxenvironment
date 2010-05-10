@@ -551,6 +551,21 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             tbxConfig.loadConfiguration();
 
             File configuredLogDir = new File(tbxConfig.getConfigurationValue(ToolboxConfiguration.LOG_DIR));
+
+            Boolean usingTempDirectory = false;
+            String errorMessage="";
+
+             if ( !configuredLogDir.mkdirs())
+             {
+                //in case of write permission errors we use thetemporary directory
+                errorMessage = "Unable to create log directory: " + configuredLogDir.getAbsolutePath() + " Check the read/write permissions";
+                System.out.println(errorMessage);
+                tbxConfig.setConfigurationValue(ToolboxConfiguration.LOG_DIR, System.getProperty("java.io.tmpdir"));
+                configuredLogDir = new File(System.getProperty("java.io.tmpdir"));
+                System.out.println("Setting the Log Directory to: " + System.getProperty("java.io.tmpdir"));
+                usingTempDirectory = true;
+             }
+
             File resourcePersistenceDir = new File(configuredLogDir, "XML");
 
             this.xmlResPersistence = XMLResourcesPersistence.getInstance();
@@ -564,6 +579,12 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             logger=logResPersistence.getRollingLogForToolbox();
             logger.info("Core services started");
 
+             if (usingTempDirectory)
+             {
+                logger.error(errorMessage);
+                logger.warn("Using the default temporary directory: " + System.getProperty("java.io.tmpdir"));
+             }
+            
             pluginDirectory = new File(webinfDir, "plugins");
             ebRRpropertiesFile = new File(pluginDirectory, "ebRRPlugin/resources/common.properties");
 

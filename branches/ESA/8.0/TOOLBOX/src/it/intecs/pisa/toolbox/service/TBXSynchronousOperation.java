@@ -14,8 +14,6 @@ import it.intecs.pisa.util.Util;
 import it.intecs.pisa.toolbox.service.instances.InstanceHandler;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.TimeUtil;
-import java.io.File;
-import java.util.HashMap;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -102,27 +100,14 @@ public class TBXSynchronousOperation extends TBXOperation {
         logger.info("Synchronous operation " + this.name + " stopped");
     }
 
-    protected void sendErrorMail(String orderId, String errorMsg, File requestLogDir) {
-
-        if (Toolbox.getErrorMailer() != null && Toolbox.getMailError() != null) {
-            HashMap contentParts = new HashMap();
-            contentParts.put("serviceName", getServiceName());
-            contentParts.put("soapAction", soapAction);
-            contentParts.put("orderId", orderId);
-
-            Toolbox.getErrorMailer().sendMail(contentParts, errorMsg, requestLogDir, Toolbox.getMailError());
-        }
-    }
-
     @Override
     protected void storeInstanceKeys(long seviceInstanceId, Document soapRequest, boolean debugEnabled) throws Exception {
         TBXService parentService;
         String instanceKey;
-        String orderId;
         Document request;
 
         instanceKey = "tbx" + TimeUtil.getDateTime("", "", "");
-        
+        messageId=instanceKey;
         parentService=(TBXService) parentInterf.getParent();
         
         request = Util.removeSOAPElements(soapRequest);

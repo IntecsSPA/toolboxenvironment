@@ -5,18 +5,17 @@
 package it.intecs.pisa.toolbox.service;
 
 import it.intecs.pisa.util.Util;
-import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.common.tbx.Operation;
 import it.intecs.pisa.common.tbx.Script;
 import it.intecs.pisa.toolbox.db.ServiceStatuses;
 import it.intecs.pisa.soap.toolbox.exceptions.OperationExecutionException;
 import it.intecs.pisa.toolbox.db.InstanceStatuses;
 import it.intecs.pisa.toolbox.db.ToolboxInternalDatabase;
+import it.intecs.pisa.toolbox.log.ErrorMailer;
 import it.intecs.pisa.toolbox.service.instances.InstanceHandler;
 import it.intecs.pisa.toolbox.service.instances.SOAPHeaderExtractor;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.HashMap;
 import java.util.StringTokenizer;
 
 import org.w3c.dom.Document;
@@ -81,21 +80,15 @@ public class TBXAsynchronousOperation extends TBXOperation {
 
     @Override
     public Document executeRequestScripts(long instanceId, Document soapRequest, boolean debugMode) throws Exception {
-        Document request;
         String errorMsg;
         Document result;
         String orderIdLogString = "";
-        TBXService parentService;
-        String instanceKey;
-        String orderId;
         InstanceHandler handler;
-        SOAPHeaderExtractor extr;
-        String pushHost;
+ 
         try {
-            parentService = getParentService();
-
             logger.info("New request received: " + soapAction);
             logger.info("Executing response builder script");
+
             handler = new InstanceHandler(instanceId);
             result = (Document) handler.executeScript(TBXScript.SCRIPT_TYPE_RESPONSE_BUILDER, debugMode);
             ((TBXSOAPInterface)this.parentInterf).validateDocument(result);
@@ -120,7 +113,7 @@ public class TBXAsynchronousOperation extends TBXOperation {
             } catch (Exception e) {
                 errorMsg = "Impossible to start executing first script: " + TBXService.CDATA_S + e.getMessage() + TBXService.CDATA_E;
                 logger.error(errorMsg);
-                sendErrorMail(errorMsg);
+                ErrorMailer.send(getServiceName(), soapAction, messageId, orderId,errorMsg);
 
                 throw new OperationExecutionException(errorMsg, Script.SCRIPT_TYPE_ERROR_ON_RESP_BUILDER);
             }
@@ -187,7 +180,6 @@ public class TBXAsynchronousOperation extends TBXOperation {
         Document request;
         TBXService parentService;
         String instanceKey;
-        String orderId;
         SOAPHeaderExtractor extr;
         String pushHost;
 
@@ -201,6 +193,7 @@ public class TBXAsynchronousOperation extends TBXOperation {
         /*if (checkIfInstanceKeyUnique(instanceKey) == false) {
             throw new Exception("A message with this messageId has already been submitted");
         }*/
+        messageId=instanceKey;
 
         parentService=(TBXService) parentInterf.getParent();
 

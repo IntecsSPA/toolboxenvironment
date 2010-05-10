@@ -21,8 +21,10 @@ import it.intecs.pisa.communication.messages.ExecutionCompletedMessage;
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.db.InstanceStatuses;
 import it.intecs.pisa.toolbox.db.ToolboxInternalDatabase;
+import it.intecs.pisa.toolbox.log.ErrorMailer;
 import it.intecs.pisa.toolbox.plugins.exceptions.DebugTerminatedException;
 import it.intecs.pisa.toolbox.service.instances.InstanceHandler;
+import it.intecs.pisa.toolbox.service.instances.InstanceInfo;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import org.apache.log4j.Logger;
@@ -63,8 +65,6 @@ public class TBXAsynchronousOperationFirstScriptExecutor extends Thread {
                 if(InstanceStatuses.getInstanceStatus(serviceInstanceId)==InstanceStatuses.STATUS_CANCELLED)
                     return;
 
-                //InstanceStatuses.updateInstanceStatus(serviceInstanceId, InstanceStatuses.STATUS_PENDING);
-
                 TBXAsynchronousOperationSecondThirdScriptExecutor secondThirdExec;
                 secondThirdExec=new TBXAsynchronousOperationSecondThirdScriptExecutor(serviceInstanceId,debugMode,logger);
                 secondThirdExec.start();
@@ -83,7 +83,13 @@ public class TBXAsynchronousOperationFirstScriptExecutor extends Thread {
                 if(handler!=null)
                     handler.deleteAllVariablesDumped();
                InstanceStatuses.updateInstanceStatus(serviceInstanceId, InstanceStatuses.STATUS_ABORTED);
-               logger.error("Error while executing first script.");
+
+               String errorStr;
+               errorStr="Error while executing first script. Cause:"+e.getMessage();
+               logger.error(errorStr);
+               ErrorMailer.send(InstanceInfo.getServiceNameFromInstanceId(serviceInstanceId),
+                                InstanceInfo.getSOAPActionFromInstanceId(serviceInstanceId),
+                                null, null,errorStr);
 
                releaseMutex();
             }

@@ -27,7 +27,7 @@
  */
 package it.intecs.pisa.toolbox;
 
-import it.intecs.pisa.soap.toolbox.*;
+
 import be.kzen.ergorr.service.RepositoryManager;
 import it.intecs.pisa.common.tbx.Interface;
 import it.intecs.pisa.toolbox.service.TBXOperation;
@@ -60,6 +60,7 @@ import it.intecs.pisa.toolbox.resources.XMLResourcesPersistence;
 import it.intecs.pisa.toolbox.db.ServiceStatuses;
 import it.intecs.pisa.toolbox.log.ErrorMailer;
 import it.intecs.pisa.toolbox.plugins.managerNativePlugins.DeployServiceCommand;
+import it.intecs.pisa.toolbox.resources.TextResourcesPersistence;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.soap.SOAP11Constants;
 import org.apache.axiom.soap.SOAP12Constants;
@@ -572,6 +573,10 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             logger=logResPersistence.getRollingLogForToolbox();
             logger.info("Core services started");
 
+             resourcePersistenceDir = new File(configuredLogDir, "Text");
+             TextResourcesPersistence textPers=TextResourcesPersistence.getInstance();
+             textPers.setDirectory(resourcePersistenceDir);
+             
              if (usingTempDirectory)
              {
                 logger.error(errorMessage);

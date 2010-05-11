@@ -126,4 +126,62 @@ public class InstanceInfo {
             }
         }
     }
+
+    public static String getInstanceKeyFromInstanceId(long instanceId) throws Exception {
+        ToolboxInternalDatabase db;
+        Statement stm = null;
+        String sql;
+        ResultSet rs = null;
+        String id;
+
+
+        try {
+            sql = "SELECT INSTANCE_ID FROM T_SERVICE_INSTANCES WHERE ID=" + instanceId;
+            db = ToolboxInternalDatabase.getInstance();
+            stm = db.getStatement();
+            rs = stm.executeQuery(sql);
+            rs.next();
+
+            id = rs.getString("INSTANCE_ID");
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+
+            if (stm != null) {
+                stm.close();
+            }
+        }
+        return id;
+    }
+
+    public static String getOrderIdFromInstanceId(long instanceId) throws Exception {
+        ToolboxInternalDatabase db;
+        Statement stm = null;
+        String sql;
+        ResultSet rs = null;
+        String id;
+
+
+        try {
+            sql = "SELECT ORDER_ID FROM T_SERVICE_INSTANCES WHERE ID=" + instanceId;
+            db = ToolboxInternalDatabase.getInstance();
+            stm = db.getStatement();
+            rs = stm.executeQuery(sql);
+            rs.next();
+
+            id = rs.getString("ORDER_ID");
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+
+            if (stm != null) {
+                stm.close();
+            }
+        }
+        return id;
+    }
 }

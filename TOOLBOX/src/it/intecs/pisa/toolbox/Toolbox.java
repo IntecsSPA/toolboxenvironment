@@ -69,6 +69,7 @@ import org.apache.axis2.context.MessageContext;
 import org.apache.axis2.transport.http.AxisServlet;
 import org.apache.axis2.util.XMLUtils;
 import it.intecs.pisa.toolbox.plugins.managerNativePlugins.DeployServiceCommand;
+import it.intecs.pisa.toolbox.resources.TextResourcesPersistence;
 import it.intecs.pisa.util.json.JsonUtil;
 
 public class Toolbox extends AxisServlet implements ServletContextListener {
@@ -578,7 +579,12 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             logResPersistence.setDirectory(resourcePersistenceDir);
 
             logger=logResPersistence.getRollingLogForToolbox();
-            logger.info("Core services started");
+            
+            resourcePersistenceDir = new File(configuredLogDir, "Text");
+            TextResourcesPersistence textPers=TextResourcesPersistence.getInstance();
+            textPers.setDirectory(resourcePersistenceDir);
+
+             logger.info("Core services started");
 
              if (usingTempDirectory)
              {

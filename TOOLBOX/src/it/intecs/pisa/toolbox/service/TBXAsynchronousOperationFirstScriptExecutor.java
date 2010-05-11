@@ -88,9 +88,7 @@ public class TBXAsynchronousOperationFirstScriptExecutor extends Thread {
                String errorStr;
                errorStr="Error while executing first script. Cause:"+e.getMessage();
                logger.error(errorStr);
-               ErrorMailer.send(InstanceInfo.getServiceNameFromInstanceId(serviceInstanceId),
-                                InstanceInfo.getSOAPActionFromInstanceId(serviceInstanceId),
-                                null, null,errorStr);
+               ErrorMailer.send(serviceInstanceId,errorStr);
 
                 releaseMutex();
             }

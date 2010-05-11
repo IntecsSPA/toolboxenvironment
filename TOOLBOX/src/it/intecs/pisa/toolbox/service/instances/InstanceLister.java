@@ -311,4 +311,102 @@ public class InstanceLister {
         return rs.getInt("NUM");
         
     }
+
+    public static Document getInstancesByOrderId(String orderId) throws Exception {
+        Document instancesList;
+        TBXService service;
+        DOMUtil util;
+        Statement stm;
+        ResultSet rs=null;
+        int numPages;
+        Element listRoot = null;
+        Element newInstance;
+        Operation op;
+        int instancesCount=0;
+
+        try
+        {
+            util=new DOMUtil();
+            instancesList=util.newDocument();
+
+            Element insanceElement = instancesList.createElement(INSTANCES);
+
+            listRoot = (Element) instancesList.appendChild(insanceElement);
+
+            stm= ToolboxInternalDatabase.getInstance().getStatement();
+            rs=stm.executeQuery("SELECT * FROM T_SERVICE_INSTANCES WHERE ORDER_ID='"+orderId+"'  AND PUSH_HOST=''");
+            while(rs.next())
+            {
+                newInstance = (Element) listRoot.appendChild(instancesList.createElement(INSTANCE));
+
+                newInstance.setAttribute(ID, rs.getString("ID"));
+                newInstance.setAttribute(KEY, rs.getString("INSTANCE_ID"));
+                newInstance.setAttribute(ORDER_ID, rs.getString("ORDER_ID"));
+                newInstance.setAttribute(SOAP_ACTION,InstanceInfo.getSOAPActionFromInstanceId(new Long(rs.getString("ID"))));
+                newInstance.setAttribute(DATE, ToolboxSimpleDateFormatter.format(rs.getLong("ARRIVAL_DATE")));
+                newInstance.setAttribute(STATUS, InstanceStatuses.getStatusAsString(rs.getByte("STATUS")));
+                newInstance.setAttribute(STATUS_AS_BYTE, Byte.toString(rs.getByte("STATUS")));
+                newInstance.setAttribute(TYPE, "S");
+                newInstance.setAttribute(OPERATION, rs.getString("OPERATION_NAME"));
+}
+
+
+
+        }
+        catch(Exception e)
+        {
+            throw new Exception("Cannot retrieve synchronous instances list",e);
+        }
+
+        return instancesList;
+    }
+
+    public static Document getInstancesByOrderIdAndPushHost(String orderId, String pushHost) throws Exception {
+        Document instancesList;
+        TBXService service;
+        DOMUtil util;
+        Statement stm;
+        ResultSet rs=null;
+        int numPages;
+        Element listRoot = null;
+        Element newInstance;
+        Operation op;
+        int instancesCount=0;
+
+        try
+        {
+            util=new DOMUtil();
+            instancesList=util.newDocument();
+
+            Element insanceElement = instancesList.createElement(INSTANCES);
+
+            listRoot = (Element) instancesList.appendChild(insanceElement);
+
+            stm= ToolboxInternalDatabase.getInstance().getStatement();
+            rs=stm.executeQuery("SELECT * FROM T_SERVICE_INSTANCES WHERE ORDER_ID='"+orderId+"' AND PUSH_HOST='"+pushHost+"'");
+            while(rs.next())
+            {
+                newInstance = (Element) listRoot.appendChild(instancesList.createElement(INSTANCE));
+
+                newInstance.setAttribute(ID, rs.getString("ID"));
+                newInstance.setAttribute(KEY, rs.getString("INSTANCE_ID"));
+                newInstance.setAttribute(ORDER_ID, rs.getString("ORDER_ID"));
+                newInstance.setAttribute(SOAP_ACTION,InstanceInfo.getSOAPActionFromInstanceId(new Long(rs.getString("ID"))));
+                newInstance.setAttribute(DATE, ToolboxSimpleDateFormatter.format(rs.getLong("ARRIVAL_DATE")));
+                newInstance.setAttribute(STATUS, InstanceStatuses.getStatusAsString(rs.getByte("STATUS")));
+                newInstance.setAttribute(STATUS_AS_BYTE, Byte.toString(rs.getByte("STATUS")));
+                newInstance.setAttribute(TYPE, "A");
+                newInstance.setAttribute(OPERATION, rs.getString("OPERATION_NAME"));
+            }
+
+
+
+        }
+        catch(Exception e)
+        {
+            throw new Exception("Cannot retrieve synchronous instances list",e);
+        }
+
+        return instancesList;
+    }
 }

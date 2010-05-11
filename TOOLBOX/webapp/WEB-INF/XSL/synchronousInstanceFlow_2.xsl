@@ -87,6 +87,10 @@
                                             <xsl:attribute name="href">javascript:viewResource('text','id=<xsl:value-of select="/log:log//log:invalidInputMessage/@id"/>','Input Message')</xsl:attribute>
                                             <img src="images/tree-icon.jpg" alt="arrow"/>
                                         </a>
+                                            <a>
+                                                <xsl:attribute name="href">javascript:viewResource('email','id=<xsl:value-of select="/log:flow//log:email/@id"/>','Error email')</xsl:attribute>
+                                                <img src="images/email-icon.jpg" alt="Email view"/>
+                                            </a>
 
                                         )
                                     </TD>

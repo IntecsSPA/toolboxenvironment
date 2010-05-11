@@ -115,7 +115,7 @@ public class TBXAsynchronousOperation extends TBXOperation {
             } catch (Exception e) {
                 errorMsg = "Impossible to start executing first script: " + TBXService.CDATA_S + e.getMessage() + TBXService.CDATA_E;
                 logger.error(errorMsg);
-                ErrorMailer.send(getServiceName(), soapAction, messageId, orderId,errorMsg);
+                ErrorMailer.send(instanceId,errorMsg);
 
                 throw new OperationExecutionException(errorMsg, Script.SCRIPT_TYPE_ERROR_ON_RESP_BUILDER);
             }

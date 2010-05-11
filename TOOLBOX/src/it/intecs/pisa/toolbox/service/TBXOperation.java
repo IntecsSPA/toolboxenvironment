@@ -107,7 +107,7 @@ public abstract class TBXOperation extends Operation{
      catch(Exception e)
      {
          processInvalidSOAP(serviceInstanceId);
-         ErrorMailer.send(getServiceName(), soapAction, messageId, orderId,"Error while extracting information from the incomming SOAP message" );
+         ErrorMailer.send(serviceInstanceId,"Error while extracting information from the incomming SOAP message" );
          throw e;
      }
 
@@ -119,7 +119,7 @@ public abstract class TBXOperation extends Operation{
      {
          updateInstanceStatus(serviceInstanceId,InstanceStatuses.STATUS_INVALID_INPUT_MESSAGE);
          InstanceResources.storeXMLResource(soapRequest,serviceInstanceId,InstanceResources.TYPE_INVALID_INPUT_MESSAGE);
-         ErrorMailer.send(getServiceName(), soapAction, messageId, orderId,"Error while checking input message:"+e.getMessage() );
+         ErrorMailer.send(serviceInstanceId,"Error while checking input message:"+e.getMessage() );
 
          return processErrorRequest(serviceInstanceId,errorScriptToExecute,"Error while checking input message:"+e.getMessage());
      }
@@ -138,7 +138,7 @@ public abstract class TBXOperation extends Operation{
          if(isAsynch)
              updateInstanceStatus(serviceInstanceId,InstanceStatuses.STATUS_ERROR_ON_RESP_BUILDER);
          else updateInstanceStatus(serviceInstanceId,InstanceStatuses.STATUS_ERROR);
-         ErrorMailer.send(getServiceName(), soapAction, messageId, orderId,"Error while executing script. Cause"+e.getMessage() );
+         ErrorMailer.send(serviceInstanceId,"Error while executing script. Cause"+e.getMessage() );
          return processErrorRequest(serviceInstanceId,errorScriptToExecute,"Error while executing script");
      }
 
@@ -171,7 +171,7 @@ public abstract class TBXOperation extends Operation{
              
          updateInstanceStatus(serviceInstanceId,errorInstanceStatus);
          InstanceResources.storeXMLResource(response,serviceInstanceId,errorOutputMessageType);
-         ErrorMailer.send(getServiceName(), soapAction, messageId, orderId,"Error while validating output message:"+ecc2.getMessage());
+         ErrorMailer.send(serviceInstanceId,"Error while validating output message:"+ecc2.getMessage());
          return processErrorRequest(serviceInstanceId,errorScriptToExecute,"Error while validating output message:"+ecc2.getMessage());
      }
      

@@ -1,0 +1,1680 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project name="TS_25_11" soapui-version="3.0.1" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="ToolboxServiceSOAPBinding" type="wsdl" bindingName="{http://www.intecs.it/TOOLBOX/service/TS_25_11/wsdl}ToolboxServiceSOAPBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/TOOLBOX/WSDL/TS_25_11/TS_25_11.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/TOOLBOX/WSDL/TS_25_11/TS_25_11.wsdl"><con:part><con:url>http://localhost:8080/TOOLBOX/WSDL/TS_25_11/TS_25_11.wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://www.intecs.it/TOOLBOX/service/TS_25_11/wsdl" xmlns:ns3="http://earth.esa.int/hma/ordering" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.intecs.it/TOOLBOX/service/TS_25_11/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+    <xsd:schema>
+      <xsd:import namespace="http://earth.esa.int/hma/ordering" schemaLocation="http://127.0.1.1:8080/TOOLBOX/WSDL/TS_25_11/Order.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="SubmitRequest">
+    <wsdl:part element="ns3:Submit" name="body"/>
+  </wsdl:message>
+  <wsdl:message name="SubmitResponse">
+    <wsdl:part element="ns3:SubmitResponse" name="body"/>
+  </wsdl:message>
+  <wsdl:message name="SubmitCallbackRequest">
+    <wsdl:part element="ns3:UpdateStatus" name="body"/>
+  </wsdl:message>
+  <wsdl:message name="SubmitCallbackResponse">
+    <wsdl:part element="ns3:UpdateStatus" name="body"/>
+  </wsdl:message>
+  <wsdl:portType name="ToolboxSOAPPortForService">
+    <wsdl:operation name="Submit">
+      <wsdl:input message="tns:SubmitRequest"/>
+      <wsdl:output message="tns:SubmitResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ToolboxServiceSOAPBinding" type="tns:ToolboxSOAPPortForService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="Submit">
+      <soap:operation soapAction="Submit"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ToolboxService">
+    <wsdl:port binding="tns:ToolboxServiceSOAPBinding" name="ToolboxServicePort">
+      <soap:address location="http://127.0.1.1:8080/TOOLBOX/services/TS_25_11"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://127.0.1.1:8080/TOOLBOX/WSDL/TS_25_11/Order.xsd</con:url><con:content><![CDATA[<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://earth.esa.int/hma/ordering" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://earth.esa.int/hma/ordering" xmlns:ows="http://www.opengis.net/ows">
+  <xs:import namespace="http://www.opengis.net/ows" schemaLocation="http://127.0.1.1:8080/TOOLBOX/WSDL/TS_25_11/owsGetCapabilities.xsd"/>
+  <!--======================= Functions root element ============================-->
+  <!--======================================================================-->
+  <xs:element name="GetOptions" type="OrderOptionsRequestType"/>
+  <xs:element name="GetOptionsResponse" type="OrderOptionsResponseType"/>
+  <xs:element name="Submit" type="SubmitPoductOrderRequestType"/>
+  <xs:element name="SubmitResponse" type="SubmitProductOrderResponseType"/>
+  <xs:element name="GetStatus" type="GetStatusRequestType"/>
+  <xs:element name="GetStatusResponse" type="GetStatusResponseType"/>
+  <xs:element name="Cancel" type="CancelRequestType"/>
+  <xs:element name="CancelResponse" type="CancelResponseType"/>
+  <xs:element name="GetQuotation" type="GetQuotationRequestType"/>
+  <xs:element name="GetQuotationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="status"/>
+        <xs:element minOccurs="0" name="errorMessage"/>
+        <xs:element maxOccurs="unbounded" minOccurs="0" name="quotationId" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateStatus" type="OrderMonitorSpecification"/>
+  <xs:element name="UpdateStatusResponse" type="UpdateStatusResponseType"/>
+  <xs:element name="GetCapabilities">
+    <xs:annotation>
+      <xs:documentation>Request to a Order Service to perform the GetCapabilities operation. This operation allows a client to retrieve service metadata (capabilities XML) providing metadata for the specific Order server. In this XML encoding, no "request" parameter is included, since the element name specifies the specific operation.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="ows:GetCapabilitiesType">
+          <xs:attribute fixed="OS" name="service" type="ows:ServiceType" use="required"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Capabilities">
+    <xs:annotation>
+      <xs:documentation>XML encoded Order Service GetCapabilities operation response. This document provides clients with service metadata about a specific service instance. If the server does not implement the updateSequence parameter, the server shall always return the complete Capabilities document, without the updateSequence parameter. When the server implements the updateSequence parameter and the GetCapabilities operation request included the updateSequence parameter with the current value, the server shall return this element with only the "version" and "updateSequence" attributes. Otherwise, all optional elements shall be included or not depending on the actual value of the Sections parameter in the GetCapabilities operation request.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="ows:CapabilitiesBaseType"/>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <!--======================================================================-->
+  <!--======================================================================-->
+  <!--======================================================================-->
+  <!--======================= Elements Definition Section  =========================-->
+  <!--======================================================================-->
+  <xs:element name="sceneCenter">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="coordinates"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="userInformation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="userId" type="NonNullStringType"/>
+        <xs:element name="password" type="NonNullStringType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="orderAccount" nillable="false">
+    <xs:simpleType>
+      <xs:restriction base="NonNullStringType">
+        <xs:maxLength value="20"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="alongGridUnitType">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="A"/>
+        <xs:enumeration value="S"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="alongGrid" type="xs:integer"/>
+  <xs:element name="acrossGrid" type="xs:integer"/>
+  <xs:element name="orderId">
+    <xs:simpleType>
+      <xs:restriction base="NonNullStringType">
+        <xs:maxLength value="16"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <!--<xs:element name="deliveryMedium"> 		<xs:simpleType> 			<xs:restriction base="NonNullStringType"> 				<xs:maxLength value="40"/> 			</xs:restriction> 		</xs:simpleType> 	</xs:element>-->
+  <xs:element name="packageMedium">
+    <xs:simpleType>
+      <xs:restriction base="NonNullStringType">
+        <xs:maxLength value="40"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="deliveryInformation" type="DeliveryInformationType"/>
+  <xs:element name="price" type="PriceType"/>
+  <xs:element name="listPrice" type="PriceType"/>
+  <xs:element name="expectedPrice" type="PriceType"/>
+  <xs:element name="productId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="identifier" type="CodeWithAuthorityType"/>
+        <xs:element minOccurs="0" ref="collectionId"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="orderItemRemark" type="NonNullStringType"/>
+  <xs:element name="options">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="optionName">
+          <xs:simpleType>
+            <xs:restriction base="NonNullStringType">
+              <xs:maxLength value="40"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element maxOccurs="unbounded" name="optionSelectedValues" type="NonNullStringType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="sceneSelection" type="SceneSelectionType"/>
+  <xs:element name="orderRemark">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:maxLength value="255"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="packageRemark" type="NonNullStringType"/>
+  <xs:element name="packageLabel" type="NonNullStringType"/>
+  <xs:element name="packageCopies" type="xs:integer"/>
+  <xs:element name="deliveryUnitRemark" type="NonNullStringType"/>
+  <xs:element name="latestAcceptedDeliveryDate" type="xs:date"/>
+  <xs:element name="priority" type="xs:integer"/>
+  <!--======================  Order Specification Definition =======================-->
+  <!--======================================================================-->
+  <xs:complexType name="ProductOrderSpecification">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="orderAccount"/>
+      <xs:element name="orderReference">
+        <xs:simpleType>
+          <xs:restriction base="NonNullStringType">
+            <xs:maxLength value="30"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" ref="orderRemark"/>
+      <xs:element ref="deliveryInformation"/>
+      <xs:element maxOccurs="unbounded" name="orderItem" type="ProductOrderItemType"/>
+      <xs:element ref="priority"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrderMonitorSpecification">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="orderAccount"/>
+      <xs:element ref="orderId"/>
+      <xs:element name="orderReference"/>
+      <xs:element minOccurs="0" ref="orderRemark"/>
+      <xs:element minOccurs="0" ref="deliveryInformation"/>
+      <xs:element maxOccurs="unbounded" name="orderItem" type="OrderStatusItemType"/>
+      <xs:element name="orderStatusInfo" type="OrderStatusType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!--=========================  Order Item Definition ============================-->
+  <!--=======================================================================-->
+  <xs:complexType name="ProductOrderItemType">
+    <xs:sequence>
+      <xs:element name="productId">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="identifier" type="CodeWithAuthorityType"/>
+            <xs:element minOccurs="0" ref="collectionId"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" ref="options"/>
+      <xs:element minOccurs="0" ref="sceneSelection"/>
+      <xs:element minOccurs="0" name="deliveryMethod">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="mail"/>
+            <xs:enumeration value="ftp-pull"/>
+            <xs:enumeration value="ftp-push"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" ref="packageMedium"/>
+      <xs:element minOccurs="0" name="qualityOfService"/>
+      <xs:element minOccurs="0" name="orderItemRemark" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!--===================== ComplexType  Definition Section =======================-->
+  <!--=======================================================================-->
+  <xs:complexType name="SubmitPoductOrderRequestType">
+    <xs:sequence>
+      <xs:element ref="userInformation"/>
+      <xs:element name="orderSpecification" type="ProductOrderSpecification"/>
+      <xs:element ref="statusNotification">
+        <xs:annotation>
+          <xs:documentation>This element specifies how many status notifications are sent back to the caller of the Submit operation.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProductServiceOptionsType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="productOrderOptions">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="productOrderOptionsId" type="CharacterString"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="option">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="optionName" type="NonNullStringType"/>
+                  <xs:element name="optionValueDefinition">
+                    <xs:complexType>
+                      <xs:choice>
+                        <xs:element name="optionValueRange">
+                          <xs:complexType>
+                            <xs:sequence>
+                              <xs:element name="numericOptionValueMin" type="xs:float"/>
+                              <xs:element name="numericOptionValueMax" type="xs:float"/>
+                              <xs:element name="numericOptionValueStep" type="xs:float"/>
+                            </xs:sequence>
+                          </xs:complexType>
+                        </xs:element>
+                        <xs:element name="optionValueList">
+                          <xs:complexType>
+                            <xs:sequence>
+                              <xs:element maxOccurs="unbounded" name="stringOptionValue" type="NonNullStringType"/>
+                            </xs:sequence>
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:choice>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="sceneSelectionOption">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="sceneType"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" name="productDeliveryOptions">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="deliveryMethod">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:enumeration value="ftp-push"/>
+                        <xs:enumeration value="ftp-pull"/>
+                        <xs:enumeration value="mail"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element maxOccurs="unbounded" ref="packageMedium"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="qualityOfService" type="CharacterString"/>
+            <xs:element minOccurs="0" name="orderOptionInfoURL" type="CharacterString"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HorizontalSceneSelectionDefinitionType">
+    <xs:choice>
+      <xs:element name="rectangleSceneSelectionOption">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element ref="acrossGrid"/>
+            <xs:element ref="alongGridUnitType"/>
+            <xs:element ref="alongGrid"/>
+            <xs:element name="acrossSizeLimitation">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="acrossSizeMin" type="xs:integer"/>
+                  <xs:element name="acrossSizeMax" type="xs:integer"/>
+                  <xs:element name="acrossSizeStep" type="xs:integer"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="acrossPositionLimitation">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="acrossStart" type="xs:integer"/>
+                  <xs:element name="acrossStop" type="xs:integer"/>
+                  <xs:element name="acrossStep" type="xs:integer"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="alongSizeLimitation">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="alongSizeMin" type="xs:integer"/>
+                  <xs:element name="alongSizeMax" type="xs:integer"/>
+                  <xs:element name="alongSizeStep" type="xs:integer"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="alongPositionLimitation">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="alongStart" type="xs:integer"/>
+                  <xs:element name="alongStop" type="xs:integer"/>
+                  <xs:element name="alongStep" type="xs:integer"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="OrderStatusType">
+    <xs:sequence>
+      <xs:element name="orderState">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="BeingEstimated"/>
+            <xs:enumeration value="Estimated"/>
+            <xs:enumeration value="BeingQuoted"/>
+            <xs:enumeration value="NotValid"/>
+            <xs:enumeration value="BeingProcessed"/>
+            <xs:enumeration value="Cancelled"/>
+            <xs:enumeration value="BeingCancelled"/>
+            <xs:enumeration value="Deleted"/>
+            <xs:enumeration value="BeingDeleted"/>
+            <xs:enumeration value="Completed"/>
+            <xs:enumeration value="BeingOnHold"/>
+            <xs:enumeration value="Terminated"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="additionalStatusInfo" type="NonNullStringType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrderItemStatusType">
+    <xs:sequence>
+      <xs:element name="orderState" type="xs:string"/>
+      <xs:element minOccurs="0" name="additionalStatusInfo" type="NonNullStringType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PackagePriceType">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="price"/>
+      <xs:element minOccurs="0" ref="listPrice"/>
+      <xs:element minOccurs="0" ref="expectedPrice"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PriceType">
+    <xs:sequence>
+      <xs:element name="refCurrency">
+        <xs:simpleType>
+          <xs:restriction base="NonNullStringType">
+            <xs:maxLength value="3"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="refAmount">
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedLong">
+            <xs:maxInclusive value="4294967296"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="userCurrency">
+        <xs:simpleType>
+          <xs:restriction base="NonNullStringType">
+            <xs:maxLength value="3"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="userAmount">
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedLong">
+            <xs:maxInclusive value="4294967296"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProductDeliveryOptionsType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="productByteSize" type="xs:integer"/>
+      <xs:element minOccurs="0" name="productFormat" type="NonNullStringType"/>
+      <xs:element minOccurs="0" name="productCompression" type="NonNullStringType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SceneSelectionType">
+    <xs:sequence>
+      <xs:element name="sceneType">
+        <xs:simpleType>
+          <xs:restriction base="NonNullStringType">
+            <xs:maxLength value="20"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" ref="sceneCenter"/>
+      <xs:element minOccurs="0" name="temporalSelection">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="startDateTime"/>
+            <xs:element name="endDateTime"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="scenePosition" type="CharacterString"/>
+      <xs:element minOccurs="0" name="sceneSize" type="CharacterString"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeliveryUnitType">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="DeliveryInformationType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ftp-push"/>
+      <xs:element minOccurs="0" name="ftp-pull"/>
+      <xs:element minOccurs="0" name="mail" type="DeliveryAddressType"/>
+      <xs:element minOccurs="0" name="receiverAddress" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeliveryAddressType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="recipient">
+        <xs:simpleType>
+          <xs:restriction base="NonNullStringType">
+            <xs:maxLength value="40"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="companyRef" type="CharacterString"/>
+      <xs:element minOccurs="0" name="postalAddress">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="streetAddress" type="xs:string"/>
+            <xs:element name="city" type="xs:string"/>
+            <xs:element name="state" type="xs:string"/>
+            <xs:element name="postalCode" type="xs:string"/>
+            <xs:element name="country" type="xs:string"/>
+            <xs:element name="postBox" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="telNumber">
+        <xs:simpleType>
+          <xs:restriction base="NonNullStringType">
+            <xs:maxLength value="18"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrderStatusItemType">
+    <xs:sequence>
+      <xs:element name="productId">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="identifier" type="CodeWithAuthorityType"/>
+            <xs:element ref="collectionId"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" ref="sceneCenter">
+        <xs:annotation>
+          <xs:documentation>This is an option for acquisition orders</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" ref="options">
+        <xs:annotation>
+          <xs:documentation>This is an options for products requests</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" ref="sceneSelection">
+        <xs:annotation>
+          <xs:documentation>This is an option for products requests</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="deliveryMethod">
+        <xs:annotation>
+          <xs:documentation>This is an options for products requests</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" ref="packageMedium">
+        <xs:annotation>
+          <xs:documentation>This is an option for product requests</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="qualityOfService"/>
+      <xs:element minOccurs="0" name="orderItemStatusInfo" type="OrderItemStatusType"/>
+      <xs:element minOccurs="0" name="orderItemRemark" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CancelRequestType">
+    <xs:sequence>
+      <xs:element ref="orderId"/>
+      <xs:element ref="userInformation"/>
+      <xs:element ref="statusNotification"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CancelResponseType">
+    <xs:sequence>
+      <xs:element ref="status"/>
+      <xs:element minOccurs="0" name="errorMessage" type="NonNullStringType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetQuotationRequestType">
+    <xs:sequence>
+      <xs:element ref="userInformation"/>
+      <xs:element name="orderQuotationDeliveryInformation" type="OrderQuotationDeliveryInformationType"/>
+      <xs:element name="orderSpecification" type="ProductOrderSpecification"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrderQuotationDeliveryInformationType">
+    <xs:choice>
+      <xs:element name="e-mail" type="xs:string"/>
+      <xs:element name="mail" type="DeliveryAddressType"/>
+    </xs:choice>
+  </xs:complexType>
+  <!--======================================================================-->
+  <!--New definitions due to HMA-->
+  <!--======================================================================-->
+  <xs:complexType name="OrderOptionsRequestType">
+    <xs:sequence>
+      <xs:element ref="collectionId"/>
+      <xs:element minOccurs="0" ref="userInformation"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrderOptionsResponseType">
+    <xs:sequence>
+      <xs:element name="productServiceOptions" type="ProductServiceOptionsType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SubmitProductOrderResponseType">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="orderId"/>
+      <xs:element minOccurs="0" name="orderReference"/>
+      <xs:element ref="status"/>
+      <xs:element minOccurs="0" name="errorMessage" type="NonNullStringType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetStatusRequestType">
+    <xs:sequence>
+      <xs:choice>
+        <xs:element ref="orderId"/>
+        <xs:element name="lastUpdate" type="DateTimeTypes"/>
+      </xs:choice>
+      <xs:element ref="userInformation"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetStatusResponseType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="orderSpecification" type="OrderMonitorSpecification"/>
+      <xs:element name="status" type="ExtendedStatusType"/>
+      <xs:element minOccurs="0" name="errorMessage" type="NonNullStringType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UpdateStatusResponseType">
+    <xs:sequence>
+      <xs:element ref="status"/>
+      <xs:element minOccurs="0" name="errorMessage" type="NonNullStringType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!--=========================== Simple Types-->
+  <xs:simpleType name="ExtendedStatusType">
+    <xs:restriction base="CharacterString">
+      <xs:enumeration value="success"/>
+      <xs:enumeration value="failure"/>
+      <xs:enumeration value="incomplete"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--======================================================================-->
+  <!--======================================================================-->
+  <!--Types & Elements taken from Eoli.xsd-->
+  <!--======================================================================-->
+  <!--======================================================================-->
+  <xs:element name="coordinates" nillable="false" type="CoordinatesType"/>
+  <xs:element name="collectionId" type="NonNullStringType"/>
+  <xs:element name="status" nillable="false" type="StatusType"/>
+  <xs:simpleType name="CoordinatesType">
+    <xs:restriction base="NonNullStringType"/>
+  </xs:simpleType>
+  <xs:simpleType name="NonNullStringType">
+    <xs:restriction base="CharacterString">
+      <xs:minLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CharacterString">
+    <xs:restriction base="xs:string">
+      <xs:minLength fixed="false" value="0"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DateTimeTypes">
+    <xs:union memberTypes="xs:date xs:dateTime"/>
+  </xs:simpleType>
+  <xs:simpleType name="StatusType">
+    <xs:restriction base="CharacterString">
+      <xs:enumeration value="success"/>
+      <xs:enumeration value="partial"/>
+      <xs:enumeration value="failure"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--======================================================================-->
+  <!--======================================================================-->
+  <!--Types & Elements taken from hma.xsd-->
+  <!--======================================================================-->
+  <!--======================================================================-->
+  <xs:complexType name="CodeWithAuthorityType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="codeSpace" type="xs:anyURI" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:element name="statusNotification">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="None"/>
+        <xs:enumeration value="Final"/>
+        <xs:enumeration value="All"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://127.0.1.1:8080/TOOLBOX/WSDL/TS_25_11/owsGetCapabilities.xsd</con:url><con:content><![CDATA[<schema elementFormDefault="qualified" targetNamespace="http://www.opengis.net/ows" version="1.0.0" xml:lang="en" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ows="http://www.opengis.net/ows">
+  <annotation>
+    <appinfo>owsGetCapabilities.xsd 2005-11-21</appinfo>
+    <documentation>This XML Schema Document defines the GetCapabilities operation request and response XML elements and types, which are common to all OWSs. This XML Schema shall be edited by each OWS, for example, to specify a specific value for the "service" attribute.
+		Copyright Â© 2005 Open Geospatial Consortium, Inc. All Rights Reserved.</documentation>
+  </annotation>
+  <!--==============================================================
+		includes and imports
+	==============================================================-->
+  <include schemaLocation="http://127.0.1.1:8080/TOOLBOX/WSDL/TS_25_11/owsServiceIdentification.xsd"/>
+  <include schemaLocation="http://127.0.1.1:8080/TOOLBOX/WSDL/TS_25_11/owsServiceProvider.xsd"/>
+  <include schemaLocation="http://127.0.1.1:8080/TOOLBOX/WSDL/TS_25_11/owsOperationsMetadata.xsd"/>
+  <!--==============================================================
+		elements and types
+	==============================================================-->
+  <complexType name="CapabilitiesBaseType">
+    <annotation>
+      <documentation>XML encoded GetCapabilities operation response. This document provides clients with service metadata about a specific service instance, usually including metadata about the tightly-coupled data served. If the server does not implement the updateSequence parameter, the server shall always return the complete Capabilities document, without the updateSequence parameter. When the server implements the updateSequence parameter and the GetCapabilities operation request included the updateSequence parameter with the current value, the server shall return this element with only the "version" and "updateSequence" attributes. Otherwise, all optional elements shall be included or not depending on the actual value of the Contents parameter in the GetCapabilities operation request. This base type shall be extended by each specific OWS to include the additional contents needed.</documentation>
+    </annotation>
+    <sequence>
+      <element minOccurs="0" ref="ows:ServiceIdentification"/>
+      <element minOccurs="0" ref="ows:ServiceProvider"/>
+      <element minOccurs="0" ref="ows:OperationsMetadata"/>
+    </sequence>
+    <attribute name="version" type="ows:VersionType" use="required"/>
+    <attribute name="updateSequence" type="ows:UpdateSequenceType" use="optional"/>
+  </complexType>
+  <!--===========================================================-->
+  <element name="GetCapabilities" type="ows:GetCapabilitiesType"/>
+  <!--===========================================================-->
+  <complexType name="GetCapabilitiesType">
+    <annotation>
+      <documentation>XML encoded GetCapabilities operation request. This operation allows clients to retrieve service metadata about a specific service instance. In this XML encoding, no "request" parameter is included, since the element name specifies the specific operation. This base type shall be extended by each specific OWS to include the additional required "service" attribute, with the correct value for that OWS.</documentation>
+    </annotation>
+    <sequence>
+      <element minOccurs="0" name="AcceptVersions" type="ows:AcceptVersionsType">
+        <annotation>
+          <documentation>When omitted, server shall return latest supported version.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="Sections" type="ows:SectionsType">
+        <annotation>
+          <documentation>When omitted or not supported by server, server shall return complete service metadata (Capabilities) document.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="AcceptFormats" type="ows:AcceptFormatsType">
+        <annotation>
+          <documentation>When omitted or not supported by server, server shall return service metadata document using the MIME type "text/xml".</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute name="updateSequence" type="ows:UpdateSequenceType" use="optional">
+      <annotation>
+        <documentation>When omitted or not supported by server, server shall return latest complete service metadata document.</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <!--===========================================================-->
+  <!--===========================================================-->
+  <simpleType name="ServiceType">
+    <annotation>
+      <documentation>Service type identifier, where the string value is the OWS type abbreviation, such as "WMS" or "WFS".</documentation>
+    </annotation>
+    <restriction base="string"/>
+  </simpleType>
+  <!--=========================================================-->
+  <complexType name="AcceptVersionsType">
+    <annotation>
+      <documentation>Prioritized sequence of one or more specification versions accepted by client, with preferred versions listed first. See Version negotiation subclause for more information.</documentation>
+    </annotation>
+    <sequence>
+      <element maxOccurs="unbounded" name="Version" type="ows:VersionType"/>
+    </sequence>
+  </complexType>
+  <!--===========================================================-->
+  <complexType name="SectionsType">
+    <annotation>
+      <documentation>Unordered list of zero or more names of requested sections in complete service metadata document. Each Section value shall contain an allowed section name as specified by each OWS specification. See Sections parameter subclause for more information.</documentation>
+    </annotation>
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="Section" type="string"/>
+    </sequence>
+  </complexType>
+  <!--===========================================================-->
+  <simpleType name="UpdateSequenceType">
+    <annotation>
+      <documentation>Service metadata document version, having values that are "increased" whenever any change is made in service metadata document. Values are selected by each server, and are always opaque to clients. See updateSequence parameter use subclause for more information.</documentation>
+    </annotation>
+    <restriction base="string"/>
+  </simpleType>
+  <!--===========================================================-->
+  <complexType name="AcceptFormatsType">
+    <annotation>
+      <documentation>Prioritized sequence of zero or more GetCapabilities operation response formats desired by client, with preferred formats listed first. Each response format shall be identified by its MIME type. See AcceptFormats parameter use subclause for more information.</documentation>
+    </annotation>
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="OutputFormat" type="ows:MimeType"/>
+    </sequence>
+  </complexType>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://127.0.1.1:8080/TOOLBOX/WSDL/TS_25_11/owsServiceIdentification.xsd</con:url><con:content><![CDATA[<schema elementFormDefault="qualified" targetNamespace="http://www.opengis.net/ows" version="1.0.0" xml:lang="en" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ows="http://www.opengis.net/ows">
+  <annotation>
+    <appinfo>owsServiceIdentification.xsd 2005-11-21</appinfo>
+    <documentation>This XML Schema Document encodes the common "ServiceIdentification" section of the GetCapabilities operation response, known as the Capabilities XML document. This section encodes the SV_ServiceIdentification class of ISO 19119 (OGC Abstract Specification Topic 12).
+		Copyright Â© 2005 Open Geospatial Consortium, Inc. All Rights Reserved.</documentation>
+  </annotation>
+  <!--==============================================================
+		includes and imports
+	==============================================================-->
+  <include schemaLocation="http://127.0.1.1:8080/TOOLBOX/WSDL/TS_25_11/owsDataIdentification.xsd"/>
+  <!--==============================================================
+		elements and types
+	==============================================================-->
+  <element name="ServiceIdentification">
+    <annotation>
+      <documentation>General metadata for this specific server. This XML Schema of this section shall be the same for all OWS.</documentation>
+    </annotation>
+    <complexType>
+      <complexContent>
+        <extension base="ows:DescriptionType">
+          <sequence>
+            <element name="ServiceType" type="ows:CodeType">
+              <annotation>
+                <documentation>A service type name from a registry of services. For example, the values of the codeSpace URI and name and code string may be "OGC" and "catalogue." This type name is normally used for machine-to-machine communication.</documentation>
+              </annotation>
+            </element>
+            <element maxOccurs="unbounded" name="ServiceTypeVersion" type="ows:VersionType">
+              <annotation>
+                <documentation>Unordered list of one or more versions of this service type implemented by this server. This information is not adequate for version negotiation, and shall not be used for that purpose.</documentation>
+              </annotation>
+            </element>
+            <element minOccurs="0" ref="ows:Fees">
+              <annotation>
+                <documentation>If this element is omitted, no meaning is implied.</documentation>
+              </annotation>
+            </element>
+            <element maxOccurs="unbounded" minOccurs="0" ref="ows:AccessConstraints">
+              <annotation>
+                <documentation>Unordered list of access constraints applied to assure the protection of privacy or intellectual property, and any other restrictions on retrieving or using data from or otherwise using this server. The reserved value NONE (case insensitive) shall be used to mean no access constraints are imposed. If this element is omitted, no meaning is implied.</documentation>
+              </annotation>
+            </element>
+          </sequence>
+        </extension>
+      </complexContent>
+    </complexType>
+  </element>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://127.0.1.1:8080/TOOLBOX/WSDL/TS_25_11/owsDataIdentification.xsd</con:url><con:content><![CDATA[<schema elementFormDefault="qualified" targetNamespace="http://www.opengis.net/ows" version="1.0.0" xml:lang="en" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ows="http://www.opengis.net/ows">
+  <annotation>
+    <appinfo>owsDataIdentification.xsd 2005-11-21</appinfo>
+    <documentation>This XML Schema Document encodes the parts of the MD_DataIdentification class of ISO 19115 (OGC Abstract Specification Topic 11) which are expected to be used for most datasets. This Schema also encodes the parts of this class that are expected to be useful for other metadata. Both are expected to be used within the Contents section of OWS service metadata (Capabilities) documents.
+		Copyright Â© 2005 Open Geospatial Consortium, Inc. All Rights Reserved.</documentation>
+  </annotation>
+  <!--==============================================================
+		includes and imports
+	==============================================================-->
+  <include schemaLocation="http://127.0.1.1:8080/TOOLBOX/WSDL/TS_25_11/owsCommon.xsd"/>
+  <include schemaLocation="http://127.0.1.1:8080/TOOLBOX/WSDL/TS_25_11/ows19115subset.xsd"/>
+  <!--==============================================================
+		elements and types
+	==============================================================-->
+  <complexType name="DescriptionType">
+    <annotation>
+      <documentation>Human-readable descriptive information for the object it is included within.
+This type shall be extended if needed for specific OWS use to include additional metadata for each type of information. This type shall not be restricted for a specific OWS to change the multiplicity (or optionality) of some elements.</documentation>
+    </annotation>
+    <sequence>
+      <element minOccurs="0" ref="ows:Title"/>
+      <element minOccurs="0" ref="ows:Abstract"/>
+      <element maxOccurs="unbounded" minOccurs="0" ref="ows:Keywords"/>
+    </sequence>
+  </complexType>
+  <!--=========================================================-->
+  <complexType name="IdentificationType">
+    <annotation>
+      <documentation>General metadata identifying and describing a set of data. This type shall be extended if needed for each specific OWS to include additional metadata for each type of dataset. If needed, this type should first be restricted for each specific OWS to change the multiplicity (or optionality) of some elements.</documentation>
+    </annotation>
+    <complexContent>
+      <extension base="ows:DescriptionType">
+        <sequence>
+          <element minOccurs="0" ref="ows:Identifier">
+            <annotation>
+              <documentation>Optional unique identifier or name of this dataset.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" ref="ows:BoundingBox">
+            <annotation>
+              <documentation>Unordered list of zero or more bounding boxes whose union describes the extent of this dataset.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" ref="ows:OutputFormat">
+            <annotation>
+              <documentation>Unordered list of zero or more references to data formats supported for server outputs.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" ref="ows:AvailableCRS">
+            <annotation>
+              <documentation>Unordered list of zero or more available coordinate reference systems.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" ref="ows:Metadata">
+            <annotation>
+              <documentation>Optional unordered list of additional metadata about this data(set). A list of optional metadata elements for this data identification could be specified in the Implementation Specification for this service.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <!--===========================================================-->
+  <element name="Identifier" type="ows:CodeType">
+    <annotation>
+      <documentation>Unique identifier or name of this dataset.</documentation>
+    </annotation>
+  </element>
+  <!--===========================================================-->
+  <element name="OutputFormat" type="ows:MimeType">
+    <annotation>
+      <documentation>Reference to a format in which this data can be encoded and transferred. More specific parameter names should be used by specific OWS specifications wherever applicable. More than one such parameter can be included for different purposes.</documentation>
+    </annotation>
+  </element>
+  <!--===========================================================-->
+  <element name="AvailableCRS" type="anyURI"/>
+  <element name="SupportedCRS" substitutionGroup="ows:AvailableCRS" type="anyURI">
+    <annotation>
+      <documentation>Coordinate reference system in which data from this data(set) or resource is available or supported. More specific parameter names should be used by specific OWS specifications wherever applicable. More than one such parameter can be included for different purposes.</documentation>
+    </annotation>
+  </element>
+  <!--==========================================================
+	The following elements could be added to the IdentificationType when useful for a 
+	specific OWS. In addition the PointOfContact element in ows19115subset.xsd could 
+	be added.
+	=============================================================-->
+  <element name="AccessConstraints" type="string">
+    <annotation>
+      <documentation>Access constraint applied to assure the protection of privacy or intellectual property, or any other restrictions on retrieving or using data from or otherwise using this server. The reserved value NONE (case insensitive) shall be used to mean no access constraints are imposed.</documentation>
+    </annotation>
+  </element>
+  <!--==========================================================-->
+  <element name="Fees" type="string">
+    <annotation>
+      <documentation>Fees and terms for retrieving data from or otherwise using this server, including the monetary units as specified in ISO 4217. The reserved value NONE (case insensitive) shall be used to mean no fees or terms.</documentation>
+    </annotation>
+  </element>
+  <!--==========================================================-->
+  <element name="Language" type="language">
+    <annotation>
+      <documentation>Identifier of a language used by the data(set) contents. This language identifier shall be as specified in IETF RFC 1766. When this element is omitted, the language used is not identified.</documentation>
+    </annotation>
+  </element>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://127.0.1.1:8080/TOOLBOX/WSDL/TS_25_11/owsCommon.xsd</con:url><con:content><![CDATA[<schema elementFormDefault="qualified" targetNamespace="http://www.opengis.net/ows" version="1.0.0" xml:lang="en" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ows="http://www.opengis.net/ows" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <annotation>
+    <appinfo>owsCommon.xsd 2005-11-21</appinfo>
+    <documentation>This XML Schema Document encodes various parameters and parameter types that can be used in OWS operation requests and responses.
+		Copyright Â© 2005 Open Geospatial Consortium, Inc. All Rights Reserved.</documentation>
+  </annotation>
+  <!--==============================================================
+		includes and imports
+	==============================================================-->
+  <import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://127.0.1.1:8080/TOOLBOX/WSDL/TS_25_11/xlinks.xsd"/>
+  <!--==============================================================
+		elements and types
+	==============================================================-->
+  <simpleType name="MimeType">
+    <annotation>
+      <documentation>XML encoded identifier of a standard MIME type, possibly a parameterized MIME type.</documentation>
+    </annotation>
+    <restriction base="string">
+      <pattern value="(application|audio|image|text|video|message|multipart|model)/.+(;\s*.+=.+)*"/>
+    </restriction>
+  </simpleType>
+  <!--=========================================================-->
+  <simpleType name="VersionType">
+    <annotation>
+      <documentation>Specification version for OWS operation. The string value shall contain one x.y.z "version" value (e.g., "2.1.3"). A version number shall contain three non-negative integers separated by decimal points, in the form "x.y.z". The integers y and z shall not exceed 99. Each version shall be for the Implementation Specification (document) and the associated XML Schemas to which requested operations will conform. An Implementation Specification version normally specifies XML Schemas against which an XML encoded operation response must conform and should be validated. See Version negotiation subclause for more information.</documentation>
+    </annotation>
+    <restriction base="string"/>
+  </simpleType>
+  <!--==========================================================-->
+  <element name="Metadata" type="ows:MetadataType"/>
+  <!--==========================================================-->
+  <complexType name="MetadataType">
+    <annotation>
+      <documentation>This element either references or contains more metadata about the element that includes this element. To reference metadata stored remotely, at least the xlinks:href attribute in xlink:simpleLink shall be included. Either at least one of the attributes in xlink:simpleLink or a substitute for the AbstractMetaData element shall be included, but not both. An Implementation Specification can restrict the contents of this element to always be a reference or always contain metadata. (Informative: This element was adapted from the metaDataProperty element in GML 3.0.)</documentation>
+    </annotation>
+    <sequence>
+      <element minOccurs="0" ref="ows:AbstractMetaData"/>
+    </sequence>
+    <attributeGroup ref="xlink:simpleLink">
+      <annotation>
+        <documentation>Reference to metadata recorded elsewhere, either external to this XML document or within it. Whenever practical, the xlink:href attribute with type anyURI should include a URL from which this metadata can be electronically retrieved.</documentation>
+      </annotation>
+    </attributeGroup>
+    <attribute name="about" type="anyURI" use="optional">
+      <annotation>
+        <documentation>Optional reference to the aspect of the element which includes this "metadata" element that this metadata provides more information about.</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <!--==========================================================-->
+  <element abstract="true" name="AbstractMetaData">
+    <annotation>
+      <documentation>Abstract element containing more metadata about the element that includes the containing "metadata" element. A specific server implementation, or an Implementation Specification, can define concrete elements in the AbstractMetaData substitution group.</documentation>
+    </annotation>
+  </element>
+  <!--==========================================================-->
+  <!--==========================================================-->
+  <element name="BoundingBox" type="ows:BoundingBoxType"/>
+  <!--===========================================================-->
+  <complexType name="BoundingBoxType">
+    <annotation>
+      <documentation>XML encoded minimum rectangular bounding box (or region) parameter, surrounding all the associated data.</documentation>
+      <documentation>This type is adapted from the EnvelopeType of GML 3.1, with modified contents and documentation for encoding a MINIMUM size box SURROUNDING all associated data.</documentation>
+    </annotation>
+    <sequence>
+      <element name="LowerCorner" type="ows:PositionType">
+        <annotation>
+          <documentation>Position of the bounding box corner at which the value of each coordinate normally is the algebraic minimum within this bounding box. In some cases, this position is normally displayed at the top, such as the top left for some image coordinates. For more information, see Subclauses 10.2.5 and C.13.</documentation>
+        </annotation>
+      </element>
+      <element name="UpperCorner" type="ows:PositionType">
+        <annotation>
+          <documentation>Position of the bounding box corner at which the value of each coordinate normally is the algebraic maximum within this bounding box. In some cases, this position is normally displayed at the bottom, such as the bottom right for some image coordinates. For more information, see Subclauses 10.2.5 and C.13.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute name="crs" type="anyURI" use="optional">
+      <annotation>
+        <documentation>Usually references the definition of a CRS, as specified in [OGC Topic 2]. Such a CRS definition can be XML encoded using the gml:CoordinateReferenceSystemType in [GML 3.1]. For well known references, it is not required that a CRS definition exist at the location the URI points to. If no anyURI value is included, the applicable CRS must be either:
+a)	Specified outside the bounding box, but inside a data structure that includes this bounding box, as specified for a specific OWS use of this bounding box type.
+b)	Fixed and specified in the Implementation Specification for a specific OWS use of the bounding box type.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="dimensions" type="positiveInteger" use="optional">
+      <annotation>
+        <documentation>The number of dimensions in this CRS (the length of a coordinate sequence in this use of the PositionType). This number is specified by the CRS definition, but can also be specified here.</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <!--===========================================================-->
+  <simpleType name="PositionType">
+    <annotation>
+      <documentation>Position instances hold the coordinates of a position in a coordinate reference system (CRS) referenced by the related "crs" attribute or elsewhere. For an angular coordinate axis that is physically continuous for multiple revolutions, but whose recorded values can be discontinuous, special conditions apply when the bounding box is continuous across the value discontinuity:
+a)  If the bounding box is continuous clear around this angular axis, then ordinate values of minus and plus infinity shall be used.
+b)  If the bounding box is continuous across the value discontinuity but is not continuous clear around this angular axis, then some non-normal value can be used if specified for a specific OWS use of the BoundingBoxType. For more information, see Subclauses 10.2.5 and C.13.</documentation>
+      <documentation>This type is adapted from DirectPositionType and doubleList of GML 3.1. The adaptations include omission of all the attributes, since the needed information is included in the BoundingBoxType.</documentation>
+    </annotation>
+    <list itemType="double"/>
+  </simpleType>
+  <!--===========================================================-->
+  <element name="WGS84BoundingBox" substitutionGroup="ows:BoundingBox" type="ows:WGS84BoundingBoxType"/>
+  <!--===========================================================-->
+  <complexType name="WGS84BoundingBoxType">
+    <annotation>
+      <documentation>XML encoded minimum rectangular bounding box (or region) parameter, surrounding all the associated data. This box is specialized for use with the 2D WGS 84 coordinate reference system with decimal values of longitude and latitude.</documentation>
+      <documentation>This type is adapted from the general BoundingBoxType, with modified contents and documentation for use with the 2D WGS 84 coordinate reference system.</documentation>
+    </annotation>
+    <complexContent>
+      <restriction base="ows:BoundingBoxType">
+        <sequence>
+          <element name="LowerCorner" type="ows:PositionType2D">
+            <annotation>
+              <documentation>Position of the bounding box corner at which the values of longitude and latitude normally are the algebraic minimums within this bounding box. For more information, see Subclauses 10.4.5 and C.13.</documentation>
+            </annotation>
+          </element>
+          <element name="UpperCorner" type="ows:PositionType2D">
+            <annotation>
+              <documentation>Position of the bounding box corner at which the values of longitude and latitude normally are the algebraic minimums within this bounding box. For more information, see Subclauses 10.4.5 and C.13.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+        <attribute fixed="urn:ogc:def:crs:OGC:2:84" name="crs" type="anyURI" use="optional">
+          <annotation>
+            <documentation>This attribute can be included when considered useful. When included, this attribute shall reference the 2D WGS 84 coordinate reference system with longitude before latitude and decimal values of longitude and latitude.</documentation>
+          </annotation>
+        </attribute>
+        <attribute fixed="2" name="dimensions" type="positiveInteger" use="optional">
+          <annotation>
+            <documentation>The number of dimensions in this CRS (the length of a coordinate sequence in this use of the PositionType). This number is specified by the CRS definition, but can also be specified here.</documentation>
+          </annotation>
+        </attribute>
+      </restriction>
+    </complexContent>
+  </complexType>
+  <!--===========================================================-->
+  <simpleType name="PositionType2D">
+    <annotation>
+      <documentation>Two-dimensional position instances hold the longitude and latitude coordinates of a position in the 2D WGS 84 coordinate reference system. The longitude value shall be listed first, followed by the latitude value, both in decimal degrees. Latitude values shall range from -90 to +90 degrees, and longitude values shall normally range from -180 to +180 degrees. For the longitude axis, special conditions apply when the bounding box is continuous across the +/- 180 degrees meridian longitude value discontinuity:
+a)  If the bounding box is continuous clear around the Earth, then longitude values of minus and plus infinity shall be used.
+b)  If the bounding box is continuous across the value discontinuity but is not continuous clear around the Earth, then some non-normal value can be used if specified for a specific OWS use of the WGS84BoundingBoxType. For more information, see Subclauses 10.4.5 and C.13.</documentation>
+    </annotation>
+    <restriction base="ows:PositionType">
+      <length value="2"/>
+    </restriction>
+  </simpleType>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://127.0.1.1:8080/TOOLBOX/WSDL/TS_25_11/xlinks.xsd</con:url><con:content><![CDATA[<schema targetNamespace="http://www.w3.org/1999/xlink" version="3.2.0" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <annotation>
+    <appinfo source="urn:opengis:specification:gml:schema-xlinks:v3.2.0">xlinks.xsd</appinfo>
+    <documentation>see GML 7.2</documentation>
+  </annotation>
+  <!--==============================================================
+       global declarations
+  	===============================================================-->
+  <!--locator attribute-->
+  <attribute name="href" type="anyURI"/>
+  <!--semantic attributes-->
+  <attribute name="role" type="anyURI"/>
+  <attribute name="arcrole" type="anyURI"/>
+  <attribute name="title" type="string"/>
+  <!--behavior attributes-->
+  <attribute name="show">
+    <annotation>
+      <documentation>The 'show' attribute is used to communicate the desired presentation 
+        of the ending resource on traversal from the starting resource; it's 
+        value should be treated as follows: 
+        new - load ending resource in a new window, frame, pane, or other 
+              presentation context
+        replace - load the resource in the same window, frame, pane, or 
+                  other presentation context
+        embed - load ending resource in place of the presentation of the 
+                starting resource
+        other - behavior is unconstrained; examine other markup in the 
+                link for hints 
+        none - behavior is unconstrained</documentation>
+    </annotation>
+    <simpleType>
+      <restriction base="string">
+        <enumeration value="new"/>
+        <enumeration value="replace"/>
+        <enumeration value="embed"/>
+        <enumeration value="other"/>
+        <enumeration value="none"/>
+      </restriction>
+    </simpleType>
+  </attribute>
+  <attribute name="actuate">
+    <annotation>
+      <documentation>The 'actuate' attribute is used to communicate the desired timing 
+        of traversal from the starting resource to the ending resource; 
+        it's value should be treated as follows:
+        onLoad - traverse to the ending resource immediately on loading 
+                 the starting resource 
+        onRequest - traverse from the starting resource to the ending 
+                    resource only on a post-loading event triggered for 
+                    this purpose 
+        other - behavior is unconstrained; examine other markup in link 
+                for hints 
+        none - behavior is unconstrained</documentation>
+    </annotation>
+    <simpleType>
+      <restriction base="string">
+        <enumeration value="onLoad"/>
+        <enumeration value="onRequest"/>
+        <enumeration value="other"/>
+        <enumeration value="none"/>
+      </restriction>
+    </simpleType>
+  </attribute>
+  <!--traversal attributes-->
+  <attribute name="label" type="string"/>
+  <attribute name="from" type="string"/>
+  <attribute name="to" type="string"/>
+  <!--==============================================================
+       Attributes grouped by XLink type, as specified in the W3C Recommendation
+	==============================================================-->
+  <attributeGroup name="simpleLink">
+    <attribute fixed="simple" form="qualified" name="type" type="string"/>
+    <attribute ref="xlink:href" use="optional"/>
+    <attribute ref="xlink:role" use="optional"/>
+    <attribute ref="xlink:arcrole" use="optional"/>
+    <attribute ref="xlink:title" use="optional"/>
+    <attribute ref="xlink:show" use="optional"/>
+    <attribute ref="xlink:actuate" use="optional"/>
+  </attributeGroup>
+  <attributeGroup name="extendedLink">
+    <attribute fixed="extended" form="qualified" name="type" type="string"/>
+    <attribute ref="xlink:role" use="optional"/>
+    <attribute ref="xlink:title" use="optional"/>
+  </attributeGroup>
+  <attributeGroup name="locatorLink">
+    <attribute fixed="locator" form="qualified" name="type" type="string"/>
+    <attribute ref="xlink:href" use="required"/>
+    <attribute ref="xlink:role" use="optional"/>
+    <attribute ref="xlink:title" use="optional"/>
+    <attribute ref="xlink:label" use="optional"/>
+  </attributeGroup>
+  <attributeGroup name="arcLink">
+    <attribute fixed="arc" form="qualified" name="type" type="string"/>
+    <attribute ref="xlink:arcrole" use="optional"/>
+    <attribute ref="xlink:title" use="optional"/>
+    <attribute ref="xlink:show" use="optional"/>
+    <attribute ref="xlink:actuate" use="optional"/>
+    <attribute ref="xlink:from" use="optional"/>
+    <attribute ref="xlink:to" use="optional"/>
+  </attributeGroup>
+  <attributeGroup name="resourceLink">
+    <attribute fixed="resource" form="qualified" name="type" type="string"/>
+    <attribute ref="xlink:role" use="optional"/>
+    <attribute ref="xlink:title" use="optional"/>
+    <attribute ref="xlink:label" use="optional"/>
+  </attributeGroup>
+  <attributeGroup name="titleLink">
+    <attribute fixed="title" form="qualified" name="type" type="string"/>
+  </attributeGroup>
+  <attributeGroup name="emptyLink">
+    <attribute fixed="none" form="qualified" name="type" type="string"/>
+  </attributeGroup>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://127.0.1.1:8080/TOOLBOX/WSDL/TS_25_11/ows19115subset.xsd</con:url><con:content><![CDATA[<schema elementFormDefault="qualified" targetNamespace="http://www.opengis.net/ows" version="1.0.0" xml:lang="en" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ows="http://www.opengis.net/ows" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <annotation>
+    <appinfo>ows19115subset.xsd 2005-11-21</appinfo>
+    <documentation>This XML Schema Document encodes the parts of ISO 19115 used by the common "ServiceIdentification" and "ServiceProvider" sections of the GetCapabilities operation response, known as the service metadata XML document. The parts encoded here are the MD_Keywords, CI_ResponsibleParty, and related classes. This XML Schema largely follows the current draft for ISO 19139, with the addition of documentation text extracted and edited from Annex B of ISO 19115. The UML package prefixes were omitted from XML names, and the XML element names were all capitalized, for consistency with other OWS Schemas. Also, the optional smXML:id attributes were omitted, as not being useful in a service metadata document.
+		Copyright Â© 2005 Open Geospatial Consortium, Inc. All Rights Reserved.</documentation>
+  </annotation>
+  <!--==============================================================
+		includes and imports
+	==============================================================-->
+  <import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://127.0.1.1:8080/TOOLBOX/WSDL/TS_25_11/xlinks.xsd"/>
+  <!--==============================================================
+		elements and types
+	==============================================================-->
+  <element name="Title" type="string">
+    <annotation>
+      <documentation>Title of this resource, normally used for display to a human.</documentation>
+    </annotation>
+  </element>
+  <!--===========================================================-->
+  <element name="Abstract" type="string">
+    <annotation>
+      <documentation>Brief narrative description of this resource, normally used for display to a human.</documentation>
+    </annotation>
+  </element>
+  <!--===========================================================-->
+  <element name="Keywords" type="ows:KeywordsType"/>
+  <!--===========================================================-->
+  <complexType name="KeywordsType">
+    <annotation>
+      <documentation>Unordered list of one or more commonly used or formalised word(s) or phrase(s) used to describe the subject. When needed, the optional "type" can name the type of the associated list of keywords that shall all have the same type. Also when needed, the codeSpace attribute of that "type" can reference the type name authority and/or thesaurus.</documentation>
+      <documentation>For OWS use, the optional thesaurusName element was omitted as being complex information that could be referenced by the codeSpace attribute of the Type element.</documentation>
+    </annotation>
+    <sequence>
+      <element maxOccurs="unbounded" name="Keyword" type="string"/>
+      <element minOccurs="0" name="Type" type="ows:CodeType"/>
+    </sequence>
+  </complexType>
+  <!--===========================================================-->
+  <complexType name="CodeType">
+    <annotation>
+      <documentation>Name or code with an (optional) authority. If the codeSpace attribute is present, its value should reference a dictionary, thesaurus, or authority for the name or code, such as the organisation who assigned the value, or the dictionary from which it is taken.</documentation>
+      <documentation>Type copied from basicTypes.xsd of GML 3 with documentation edited, for possible use outside the ServiceIdentification section of a service metadata document.</documentation>
+    </annotation>
+    <simpleContent>
+      <extension base="string">
+        <attribute name="codeSpace" type="anyURI" use="optional"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <!--===========================================================-->
+  <element name="PointOfContact" type="ows:ResponsiblePartyType">
+    <annotation>
+      <documentation>Identification of, and means of communication with, person(s) responsible for the resource(s).</documentation>
+      <documentation>For OWS use in the ServiceProvider section of a service metadata document, the optional organizationName element was removed, since this type is always used with the ProviderName element which provides that information. The optional individualName element was made mandatory, since either the organizationName or individualName element is mandatory. The mandatory "role" element was changed to optional, since no clear use of this information is known in the ServiceProvider section.</documentation>
+    </annotation>
+  </element>
+  <!--===========================================================-->
+  <complexType name="ResponsiblePartyType">
+    <annotation>
+      <documentation>Identification of, and means of communication with, person responsible for the server. At least one of IndividualName, OrganisationName, or PositionName shall be included.</documentation>
+    </annotation>
+    <sequence>
+      <element minOccurs="0" ref="ows:IndividualName"/>
+      <element minOccurs="0" ref="ows:OrganisationName"/>
+      <element minOccurs="0" ref="ows:PositionName"/>
+      <element minOccurs="0" ref="ows:ContactInfo"/>
+      <element ref="ows:Role"/>
+    </sequence>
+  </complexType>
+  <!--===========================================================-->
+  <!--===========================================================-->
+  <complexType name="ResponsiblePartySubsetType">
+    <annotation>
+      <documentation>Identification of, and means of communication with, person responsible for the server.</documentation>
+      <documentation>For OWS use in the ServiceProvider section of a service metadata document, the optional organizationName element was removed, since this type is always used with the ProviderName element which provides that information. The mandatory "role" element was changed to optional, since no clear use of this information is known in the ServiceProvider section.</documentation>
+    </annotation>
+    <sequence>
+      <element minOccurs="0" ref="ows:IndividualName"/>
+      <element minOccurs="0" ref="ows:PositionName"/>
+      <element minOccurs="0" ref="ows:ContactInfo"/>
+      <element minOccurs="0" ref="ows:Role"/>
+    </sequence>
+  </complexType>
+  <!--===========================================================-->
+  <element name="IndividualName" type="string">
+    <annotation>
+      <documentation>Name of the responsible person: surname, given name, title separated by a delimiter.</documentation>
+    </annotation>
+  </element>
+  <!--===========================================================-->
+  <element name="OrganisationName" type="string">
+    <annotation>
+      <documentation>Name of the responsible organization.</documentation>
+    </annotation>
+  </element>
+  <!--===========================================================-->
+  <element name="PositionName" type="string">
+    <annotation>
+      <documentation>Role or position of the responsible person.</documentation>
+    </annotation>
+  </element>
+  <!--===========================================================-->
+  <element name="Role" type="ows:CodeType">
+    <annotation>
+      <documentation>Function performed by the responsible party. Possible values of this Role shall include the values and the meanings listed in Subclause B.5.5 of ISO 19115:2003.</documentation>
+    </annotation>
+  </element>
+  <!--===========================================================-->
+  <element name="ContactInfo" type="ows:ContactType">
+    <annotation>
+      <documentation>Address of the responsible party.</documentation>
+    </annotation>
+  </element>
+  <!--===========================================================-->
+  <complexType name="ContactType">
+    <annotation>
+      <documentation>Information required to enable contact with the responsible person and/or organization.</documentation>
+      <documentation>For OWS use in the service metadata document, the optional hoursOfService and contactInstructions elements were retained, as possibly being useful in the ServiceProvider section.</documentation>
+    </annotation>
+    <sequence>
+      <element minOccurs="0" name="Phone" type="ows:TelephoneType">
+        <annotation>
+          <documentation>Telephone numbers at which the organization or individual may be contacted.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="Address" type="ows:AddressType">
+        <annotation>
+          <documentation>Physical and email address at which the organization or individual may be contacted.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="OnlineResource" type="ows:OnlineResourceType">
+        <annotation>
+          <documentation>On-line information that can be used to contact the individual or organization. OWS specifics: The xlink:href attribute in the xlink:simpleLink attribute group shall be used to reference this resource. Whenever practical, the xlink:href attribute with type anyURI should be a URL from which more contact information can be electronically retrieved. The xlink:title attribute with type "string" can be used to name this set of information. The other attributes in the xlink:simpleLink attribute group should not be used.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="HoursOfService" type="string">
+        <annotation>
+          <documentation>Time period (including time zone) when individuals can contact the organization or individual.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="ContactInstructions" type="string">
+        <annotation>
+          <documentation>Supplemental instructions on how or when to contact the individual or organization.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <!--===========================================================-->
+  <complexType name="OnlineResourceType">
+    <annotation>
+      <documentation>Reference to on-line resource from which data can be obtained.</documentation>
+      <documentation>For OWS use in the service metadata document, the CI_OnlineResource class was XML encoded as the attributeGroup "xlink:simpleLink", as used in GML.</documentation>
+    </annotation>
+    <attributeGroup ref="xlink:simpleLink"/>
+  </complexType>
+  <!--==========================================================-->
+  <complexType name="TelephoneType">
+    <annotation>
+      <documentation>Telephone numbers for contacting the responsible individual or organization.</documentation>
+    </annotation>
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="Voice" type="string">
+        <annotation>
+          <documentation>Telephone number by which individuals can speak to the responsible organization or individual.</documentation>
+        </annotation>
+      </element>
+      <element maxOccurs="unbounded" minOccurs="0" name="Facsimile" type="string">
+        <annotation>
+          <documentation>Telephone number of a facsimile machine for the responsible
+organization or individual.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <!--===========================================================-->
+  <complexType name="AddressType">
+    <annotation>
+      <documentation>Location of the responsible individual or organization.</documentation>
+    </annotation>
+    <sequence>
+      <element maxOccurs="unbounded" minOccurs="0" name="DeliveryPoint" type="string">
+        <annotation>
+          <documentation>Address line for the location.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="City" type="string">
+        <annotation>
+          <documentation>City of the location.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="AdministrativeArea" type="string">
+        <annotation>
+          <documentation>State or province of the location.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="PostalCode" type="string">
+        <annotation>
+          <documentation>ZIP or other postal code.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="Country" type="string">
+        <annotation>
+          <documentation>Country of the physical address.</documentation>
+        </annotation>
+      </element>
+      <element maxOccurs="unbounded" minOccurs="0" name="ElectronicMailAddress" type="string">
+        <annotation>
+          <documentation>Address of the electronic mailbox of the responsible organization or individual.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://127.0.1.1:8080/TOOLBOX/WSDL/TS_25_11/owsServiceProvider.xsd</con:url><con:content><![CDATA[<schema elementFormDefault="qualified" targetNamespace="http://www.opengis.net/ows" version="1.0.0" xml:lang="en" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ows="http://www.opengis.net/ows">
+  <annotation>
+    <appinfo>owsServiceProvider.xsd 2005-11-21</appinfo>
+    <documentation>This XML Schema Document encodes the common "ServiceProvider" section of the GetCapabilities operation response, known as the Capabilities XML document. This section encodes the SV_ServiceProvider class of ISO 19119 (OGC Abstract Specification Topic 12).
+		Copyright Â© 2005 Open Geospatial Consortium, Inc. All Rights Reserved.</documentation>
+  </annotation>
+  <!--==============================================================
+		includes and imports
+	==============================================================-->
+  <include schemaLocation="http://127.0.1.1:8080/TOOLBOX/WSDL/TS_25_11/ows19115subset.xsd"/>
+  <!--==============================================================
+		elements and types
+	==============================================================-->
+  <element name="ServiceProvider">
+    <annotation>
+      <documentation>Metadata about the organization that provides this specific service instance or server.</documentation>
+    </annotation>
+    <complexType>
+      <sequence>
+        <element name="ProviderName" type="string">
+          <annotation>
+            <documentation>A unique identifier for the service provider organization.</documentation>
+          </annotation>
+        </element>
+        <element minOccurs="0" name="ProviderSite" type="ows:OnlineResourceType">
+          <annotation>
+            <documentation>Reference to the most relevant web site of the service provider.</documentation>
+          </annotation>
+        </element>
+        <element name="ServiceContact" type="ows:ResponsiblePartySubsetType">
+          <annotation>
+            <documentation>Information for contacting the service provider. The OnlineResource element within this ServiceContact element should not be used to reference a web site of the service provider.</documentation>
+          </annotation>
+        </element>
+      </sequence>
+    </complexType>
+  </element>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://127.0.1.1:8080/TOOLBOX/WSDL/TS_25_11/owsOperationsMetadata.xsd</con:url><con:content><![CDATA[<schema elementFormDefault="qualified" targetNamespace="http://www.opengis.net/ows" version="1.0.0" xml:lang="en" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ows="http://www.opengis.net/ows">
+  <annotation>
+    <appinfo>owsOperationsMetadata.xsd 2005-11-21</appinfo>
+    <documentation>This XML Schema Document encodes the basic contents of the "OperationsMetadata" section of the GetCapabilities operation response, also known as the Capabilities XML document.
+		Copyright Â© 2005 Open Geospatial Consortium, Inc. All Rights Reserved.</documentation>
+  </annotation>
+  <!--==============================================================
+		includes and imports
+	==============================================================-->
+  <include schemaLocation="http://127.0.1.1:8080/TOOLBOX/WSDL/TS_25_11/owsCommon.xsd"/>
+  <include schemaLocation="http://127.0.1.1:8080/TOOLBOX/WSDL/TS_25_11/ows19115subset.xsd"/>
+  <!--==============================================================
+		elements and types
+	==============================================================-->
+  <element name="OperationsMetadata">
+    <annotation>
+      <documentation>Metadata about the operations and related abilities specified by this service and implemented by this server, including the URLs for operation requests. The basic contents of this section shall be the same for all OWS types, but individual services can add elements and/or change the optionality of optional elements.</documentation>
+    </annotation>
+    <complexType>
+      <sequence>
+        <element maxOccurs="unbounded" minOccurs="2" ref="ows:Operation">
+          <annotation>
+            <documentation>Metadata for unordered list of all the (requests for) operations that this server interface implements. The list of required and optional operations implemented shall be specified in the Implementation Specification for this service.</documentation>
+          </annotation>
+        </element>
+        <element maxOccurs="unbounded" minOccurs="0" name="Parameter" type="ows:DomainType">
+          <annotation>
+            <documentation>Optional unordered list of parameter valid domains that each apply to one or more operations which this server interface implements. The list of required and optional parameter domain limitations shall be specified in the Implementation Specification for this service.</documentation>
+          </annotation>
+        </element>
+        <element maxOccurs="unbounded" minOccurs="0" name="Constraint" type="ows:DomainType">
+          <annotation>
+            <documentation>Optional unordered list of valid domain constraints on non-parameter quantities that each apply to this server. The list of required and optional constraints shall be specified in the Implementation Specification for this service.</documentation>
+          </annotation>
+        </element>
+        <element minOccurs="0" ref="ows:ExtendedCapabilities"/>
+      </sequence>
+    </complexType>
+  </element>
+  <!--==========================================================-->
+  <element name="ExtendedCapabilities" type="anyType">
+    <annotation>
+      <documentation>Individual software vendors and servers can use this element to provide metadata about any additional server abilities.</documentation>
+    </annotation>
+  </element>
+  <!--==========================================================-->
+  <element name="Operation">
+    <annotation>
+      <documentation>Metadata for one operation that this server implements.</documentation>
+    </annotation>
+    <complexType>
+      <sequence>
+        <element maxOccurs="unbounded" ref="ows:DCP">
+          <annotation>
+            <documentation>Unordered list of Distributed Computing Platforms (DCPs) supported for this operation. At present, only the HTTP DCP is defined, so this element will appear only once.</documentation>
+          </annotation>
+        </element>
+        <element maxOccurs="unbounded" minOccurs="0" name="Parameter" type="ows:DomainType">
+          <annotation>
+            <documentation>Optional unordered list of parameter domains that each apply to this operation which this server implements. If one of these Parameter elements has the same "name" attribute as a Parameter element in the OperationsMetadata element, this Parameter element shall override the other one for this operation. The list of required and optional parameter domain limitations for this operation shall be specified in the Implementation Specification for this service.</documentation>
+          </annotation>
+        </element>
+        <element maxOccurs="unbounded" minOccurs="0" name="Constraint" type="ows:DomainType">
+          <annotation>
+            <documentation>Optional unordered list of valid domain constraints on non-parameter quantities that each apply to this operation. If one of these Constraint elements has the same "name" attribute as a Constraint element in the OperationsMetadata element, this Constraint element shall override the other one for this operation. The list of required and optional constraints for this operation shall be specified in the Implementation Specification for this service.</documentation>
+          </annotation>
+        </element>
+        <element maxOccurs="unbounded" minOccurs="0" ref="ows:Metadata">
+          <annotation>
+            <documentation>Optional unordered list of additional metadata about this operation and its' implementation. A list of required and optional metadata elements for this operation should be specified in the Implementation Specification for this service. (Informative: This metadata might specify the operation request parameters or provide the XML Schemas for the operation request.)</documentation>
+          </annotation>
+        </element>
+      </sequence>
+      <attribute name="name" type="string" use="required">
+        <annotation>
+          <documentation>Name or identifier of this operation (request) (for example, GetCapabilities). The list of required and optional operations implemented shall be specified in the Implementation Specification for this service.</documentation>
+        </annotation>
+      </attribute>
+    </complexType>
+  </element>
+  <!--==========================================================-->
+  <element name="DCP">
+    <annotation>
+      <documentation>Information for one distributed Computing Platform (DCP) supported for this operation. At present, only the HTTP DCP is defined, so this element only includes the HTTP element.</documentation>
+    </annotation>
+    <complexType>
+      <choice>
+        <element ref="ows:HTTP"/>
+      </choice>
+    </complexType>
+  </element>
+  <!--==========================================================-->
+  <element name="HTTP">
+    <annotation>
+      <documentation>Connect point URLs for the HTTP Distributed Computing Platform (DCP). Normally, only one Get and/or one Post is included in this element. More than one Get and/or Post is allowed to support including alternative URLs for uses such as load balancing or backup.</documentation>
+    </annotation>
+    <complexType>
+      <choice maxOccurs="unbounded">
+        <element name="Get" type="ows:RequestMethodType">
+          <annotation>
+            <documentation>Connect point URL prefix and any constraints for the HTTP "Get" request method for this operation request.</documentation>
+          </annotation>
+        </element>
+        <element name="Post" type="ows:RequestMethodType">
+          <annotation>
+            <documentation>Connect point URL and any constraints for the HTTP "Post" request method for this operation request.</documentation>
+          </annotation>
+        </element>
+      </choice>
+    </complexType>
+  </element>
+  <!--==========================================================-->
+  <complexType name="RequestMethodType">
+    <annotation>
+      <documentation>Connect point URL and any constraints for this HTTP request method for this operation request. In the OnlineResourceType, the xlink:href attribute in the xlink:simpleLink attribute group shall be used to contain this URL. The other attributes in the xlink:simpleLink attribute group should not be used.</documentation>
+    </annotation>
+    <complexContent>
+      <extension base="ows:OnlineResourceType">
+        <sequence>
+          <element maxOccurs="unbounded" minOccurs="0" name="Constraint" type="ows:DomainType">
+            <annotation>
+              <documentation>Optional unordered list of valid domain constraints on non-parameter quantities that each apply to this request method for this operation. If one of these Constraint elements has the same "name" attribute as a Constraint element in the OperationsMetadata or Operation element, this Constraint element shall override the other one for this operation. The list of required and optional constraints for this request method for this operation shall be specified in the Implementation Specification for this service.</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <!--==========================================================-->
+  <complexType name="DomainType">
+    <annotation>
+      <documentation>Valid domain (or set of values) of one parameter or other quantity used by this server. A non-parameter quantity may not be explicitly represented in the server software. (Informative: An example is the outputFormat parameter of a WFS. Each WFS server should provide a Parameter element for the outputFormat parameter that lists the supported output formats, such as GML2, GML3, etc. as the allowed "Value" elements.)</documentation>
+    </annotation>
+    <sequence>
+      <element maxOccurs="unbounded" name="Value" type="string">
+        <annotation>
+          <documentation>Unordered list of all the valid values for this parameter or other quantity. For those parameters that contain a list or sequence of values, these values shall be for individual values in the list. The allowed set of values and the allowed server restrictions on that set of values shall be specified in the Implementation Specification for this service.</documentation>
+        </annotation>
+      </element>
+      <element maxOccurs="unbounded" minOccurs="0" ref="ows:Metadata">
+        <annotation>
+          <documentation>Optional unordered list of additional metadata about this parameter. A list of required and optional metadata elements for this domain should be specified in the Implementation Specification for this service. (Informative: This metadata might specify the meanings of the valid values.)</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute name="name" type="string" use="required">
+      <annotation>
+        <documentation>Name or identifier of this parameter or other quantity.</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://127.0.1.1:8080/TOOLBOX/services/TS_25_11</con:endpoint></con:endpoints><con:operation isOneWay="false" action="Submit" name="Submit" bindingOperationName="Submit" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Submit_1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.1.1:8080/TOOLBOX/services/TS_25_11</con:endpoint><con:request><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soapaddr="http://schemas.xmlsoap.org/ws/2003/03/addressing" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.xmlsoap.org/soap/envelope/ bundleentry://388/schemas/envelope.xsd http://schemas.xmlsoap.org/ws/2004/08/addressing bundleentry://388/schemas/addressing.xsd">
+	<soapenv:Header>
+		<soapaddr:MessageID>TS_25_11_01</soapaddr:MessageID>
+		<soapaddr:ReplyTo>
+			<soapaddr:Address>http://localhost:8080/TOOLBOX/Push</soapaddr:Address>
+			<soapenv:PortType>ServicePortType</soapenv:PortType>
+			<soapenv:ServiceName>ServiceName</soapenv:ServiceName>
+		</soapaddr:ReplyTo>
+	</soapenv:Header>
+	<soapenv:Body>
+		<Submit xmlns="http://earth.esa.int/hma/ordering">
+			<userInformation>
+				<userId>intecs</userId>
+				<password>intecs</password>
+			</userInformation>
+			<orderSpecification>
+				<orderAccount>intecsAccount</orderAccount>
+				<orderReference>0001</orderReference>
+				<orderRemark>Remark:</orderRemark>
+				<deliveryInformation>
+					<mail>
+						<recipient>Intecs</recipient>
+						<companyRef>Intecs SPA</companyRef>
+						<postalAddress>
+							<streetAddress/>
+							<city>Roma</city>
+							<state>Roma</state>
+							<postalCode>00155</postalCode>
+							<country>ITA</country>
+							<postBox>-</postBox>
+						</postalAddress>
+						<telNumber>+39 06 40 69 42 22</telNumber>
+					</mail>
+				</deliveryInformation>
+				<orderItem>
+					<productId>
+						<identifier codeSpace="ID">ID</identifier>
+						<collectionId>COLLECTION.ID</collectionId>
+					</productId>
+					<deliveryMethod>ftp-pull</deliveryMethod>
+					<packageMedium>file</packageMedium>
+					<orderItemRemark>test product</orderItemRemark>
+				</orderItem>
+				<priority>1</priority>
+			</orderSpecification>
+			<statusNotification>Final</statusNotification>
+		</Submit>
+	</soapenv:Body>
+</soapenv:Envelope>
+]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="Submit"/><con:wsrmConfig version="1.2"/></con:call><con:call name="Submit_2"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.1.1:8080/TOOLBOX/services/TS_25_11</con:endpoint><con:request><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soapaddr="http://schemas.xmlsoap.org/ws/2003/03/addressing" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.xmlsoap.org/soap/envelope/ bundleentry://388/schemas/envelope.xsd http://schemas.xmlsoap.org/ws/2004/08/addressing bundleentry://388/schemas/addressing.xsd">
+	<soapenv:Header>
+		<soapaddr:MessageID/>
+		<soapaddr:ReplyTo>
+			<soapaddr:Address>http://localhost:8080/TOOLBOX/Push</soapaddr:Address>
+			<soapenv:PortType>ServicePortType</soapenv:PortType>
+			<soapenv:ServiceName>ServiceName</soapenv:ServiceName>
+		</soapaddr:ReplyTo>
+	</soapenv:Header>
+	<soapenv:Body>
+		<Submit xmlns="http://earth.esa.int/hma/ordering">
+			<userInformations>
+				<userId>intecs</userId>
+				<password>intecs</password>
+			</userInformations>
+			<orderSpecification>
+				<orderAccount>intecsAccount</orderAccount>
+				<orderReference>0001</orderReference>
+				<orderRemark>Remark:</orderRemark>
+				<deliveryInformation>
+					<mail>
+						<recipient>Intecs</recipient>
+						<companyRef>Intecs SPA</companyRef>
+						<postalAddress>
+							<streetAddress/>
+							<city>Roma</city>
+							<state>Roma</state>
+							<postalCode>00155</postalCode>
+							<country>ITA</country>
+							<postBox>-</postBox>
+						</postalAddress>
+						<telNumber>+39 06 40 69 42 22</telNumber>
+					</mail>
+				</deliveryInformation>
+				<orderItem>
+					<productId>
+						<identifier codeSpace="ID">ID</identifier>
+						<collectionId>COLLECTION.ID</collectionId>
+					</productId>
+					<deliveryMethod>ftp-pull</deliveryMethod>
+					<packageMedium>file</packageMedium>
+					<orderItemRemark>test product</orderItemRemark>
+				</orderItem>
+				<priority>1</priority>
+			</orderSpecification>
+			<statusNotification>Final</statusNotification>
+		</Submit>
+	</soapenv:Body>
+</soapenv:Envelope>
+]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="Submit"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/></con:soapui-project>

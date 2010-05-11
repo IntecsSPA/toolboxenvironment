@@ -22,7 +22,6 @@ import it.intecs.pisa.pluginscore.exceptions.DebugTerminatedException;
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.db.InstanceResources;
 import it.intecs.pisa.toolbox.db.InstanceStatuses;
-import it.intecs.pisa.toolbox.db.StatisticsUtil;
 import it.intecs.pisa.toolbox.db.ToolboxInternalDatabase;
 import it.intecs.pisa.toolbox.log.ErrorMailer;
 import it.intecs.pisa.toolbox.service.instances.InstanceHandler;
@@ -74,11 +73,11 @@ public class TBXAsynchronousOperationSecondThirdScriptExecutor extends Thread {
                         InstanceStatuses.updateInstanceStatus(serviceInstanceId, InstanceStatuses.STATUS_CHECKING);
 
                         checkResult = (Boolean) handler.executeScript(TBXScript.SCRIPT_TYPE_SECOND_SCRIPT, debugMode);
-                   }
+                    }
                     catch(Exception e)
                     {
                         logger.error("Error while executing second script.");
-                        ErrorMailer.send(service.getServiceName(), InstanceInfo.getSOAPActionFromInstanceId(serviceInstanceId), null, null,"Error while executing second script.");
+                        ErrorMailer.send(serviceInstanceId,"Error while executing second script.");
                         throw e;
                     }
 
@@ -104,7 +103,7 @@ public class TBXAsynchronousOperationSecondThirdScriptExecutor extends Thread {
                     sendTDETerminateMsg();
                     closeDebugConsole();
                 }
-                logger.error("Error while executing second or third script.");
+                
 
                 releaseMutex();
                 InstanceStatuses.updateInstanceStatus(serviceInstanceId, InstanceStatuses.STATUS_ERROR);
@@ -127,7 +126,14 @@ public class TBXAsynchronousOperationSecondThirdScriptExecutor extends Thread {
             try {
                 InstanceStatuses.updateInstanceStatus(serviceInstanceId, InstanceStatuses.STATUS_READY);
                 response = (Document) handler.executeScript(TBXScript.SCRIPT_TYPE_THIRD_SCRIPT, debugMode);
-            } finally {
+            }
+            catch(Exception e)
+            {
+                 logger.error("Error while executing third script.");
+                ErrorMailer.send(serviceInstanceId,"Error while executing third script.");
+                throw e;
+            }
+            finally {
                 releaseMutex();
 
                 if (debugMode) {
@@ -169,7 +175,6 @@ public class TBXAsynchronousOperationSecondThirdScriptExecutor extends Thread {
             try {
                 TBXAsynchronousOperationCommonTasks.sendResponseToClient(serviceInstanceId, response);
                 InstanceStatuses.updateInstanceStatus(serviceInstanceId, InstanceStatuses.STATUS_COMPLETED);
-                StatisticsUtil.incrementStatistic(StatisticsUtil.STAT_COMPLETED);
             } catch (Exception ecc) {}
         } finally {
             handler.deleteAllVariablesDumped();

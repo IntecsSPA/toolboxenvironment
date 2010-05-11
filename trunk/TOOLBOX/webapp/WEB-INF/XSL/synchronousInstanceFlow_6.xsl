@@ -109,12 +109,11 @@
                                                         <xsl:attribute name="href">javascript:viewResource('tree','id=<xsl:value-of select="/log:log//log:error/@id"/>','Operation Script')</xsl:attribute>
                                                         <img src="images/tree-icon.jpg" alt="arrow"/>
                                                     </a>
-                                                    )<xsl:if test='/log:log/log:log/log:errorEmail/@sent != "" '> - <xsl:value-of select="$mailTxt"/>
                                                         <a>
-                                                            <xsl:attribute name="href">javascript:viewResource('xml','id=<xsl:value-of select="/log:log//log:error/@id"/>','Operation Script')</xsl:attribute>
-                                                            <img src="images/xml-icon.gif" alt="error email"/>
+                    <xsl:attribute name="href">javascript:viewResource('email','id=<xsl:value-of select="/log:flow//log:email/@id"/>','Error email')</xsl:attribute>
+                    <img src="images/email-icon.jpg" alt="Email view"/>
                                                         </a>
-                                                    )</xsl:if>                                              
+                                                    )                                             
                                         </TD>
                                     </TR>
                                     <TR>

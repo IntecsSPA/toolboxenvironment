@@ -75,6 +75,8 @@ function viewResource(type,parameters,label)
      openTab('tree','Tab', "manager?cmd=getXMLResource&output=xml&" + parameters, 'TREE '+label);
    if(type == 'text')
      downloadPopup ("manager?cmd=getXMLResource&output=xml&" + parameters);
+   if(type=='email')
+      openTab('xml','Tab', "manager?cmd=getTextResource&" + parameters, 'Error email');
  if(type=='SSEOutput')
       openTab('xml','Tab', "manager?cmd=getOpTestOutputPage&" + parameters, 'SSE Output ');  
    if(type=='GMLOutput')

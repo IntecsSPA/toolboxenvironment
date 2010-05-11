@@ -80,6 +80,11 @@ public class InstanceFlow {
         el.setAttribute("xmlns", "http://pisa.intecs.it/mass/toolbox/log");
         rootEl.appendChild(el);
 
+        el = doc.createElement("email");
+        el.setAttribute("id", getResourceId(instanceId, InstanceResources.TYPE_ERROR_EMAIL));
+        el.setAttribute("xmlns", "http://pisa.intecs.it/mass/toolbox/log");
+        rootEl.appendChild(el);
+
         return DOMUtil.getDocumentAsInputStream(doc);
     }
 
@@ -165,6 +170,11 @@ public class InstanceFlow {
 
         el = doc.createElement("error");
         el.setAttribute("id", getResourceId(instanceId, InstanceResources.TYPE_GLOBAL_ERROR_SCRIPT_EXECUTION));
+        el.setAttribute("xmlns", "http://pisa.intecs.it/mass/toolbox/log");
+        rootEl.appendChild(el);
+
+        el = doc.createElement("email");
+        el.setAttribute("id", getResourceId(instanceId, InstanceResources.TYPE_ERROR_EMAIL));
         el.setAttribute("xmlns", "http://pisa.intecs.it/mass/toolbox/log");
         rootEl.appendChild(el);
 

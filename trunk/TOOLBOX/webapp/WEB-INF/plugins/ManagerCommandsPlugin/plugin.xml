@@ -57,5 +57,7 @@
     <commandViaGet cmd="isSoapActionAvailable" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.IsSoapActionAvailableCommand"/>
     <commandViaPost cmd="validateToolboxScript" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.ValidateToolboxScriptCommand"/>
     <commandViaGet cmd="delPushedMsg" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.DeletePushedMessageCommand"/>
+    <commandViaGet cmd="getTextResource" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.GetTextResourceCommand"/>
+    <commandViaGet cmd="getAllServiceInstances" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.GetAllServiceInstancesCommand"/>
 </plugin>
 

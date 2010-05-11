@@ -192,6 +192,12 @@
                     <xsl:attribute name="href">javascript:viewResource('text','id=<xsl:value-of select="/log:flow/log:firstScriptExecution/@id"/>','Operation First Script')</xsl:attribute>
                     <img src="images/download-icon.gif" alt="XML view"/>
                 </a>
+                <xsl:if test="/log:flow//log:email/@id !=''">
+                    <a>
+                        <xsl:attribute name="href">javascript:viewResource('email','id=<xsl:value-of select="/log:flow//log:email/@id"/>','Error email')</xsl:attribute>
+                        <img src="images/email-icon.jpg" alt="Email view"/>
+                    </a>
+                </xsl:if>
                 )
             </TD>
         </TR>

@@ -41,6 +41,7 @@ public class InstanceResources {
     public static final String TYPE_SECOND_SCRIPT_EXECUTION="SECOND_SCRIPT_EXECUTION";
     public static final String TYPE_THIRD_SCRIPT_EXECUTION="THIRD_SCRIPT_EXECUTION";
     public static final String TYPE_GLOBAL_ERROR_SCRIPT_EXECUTION="GLOBAL_ERROR_SCRIPT_EXECUTION";
+    public static final String TYPE_ERROR_EMAIL="ERROR_EMAIL";
     public static final String VARIABLE_SOAP_REQUEST="VARIABLE_SOAP_REQUEST";
     public static final String VARIABLE_BODY_REQUEST="VARIABLE_BODY_REQUEST";
 

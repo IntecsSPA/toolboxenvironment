@@ -69,8 +69,12 @@ public class InstanceFlow {
         el.setAttribute("id", getResourceId(instanceId, InstanceResources.TYPE_OUTPUT_MESSAGE));
         rootEl.appendChild(el);
 
-         el = doc.createElement("error");
+        el = doc.createElement("error");
         el.setAttribute("id", getResourceId(instanceId, InstanceResources.TYPE_GLOBAL_ERROR_SCRIPT_EXECUTION));
+        rootEl.appendChild(el);
+
+        el = doc.createElement("email");
+        el.setAttribute("id", getResourceId(instanceId, InstanceResources.TYPE_ERROR_EMAIL));
         rootEl.appendChild(el);
 
         return DOMUtil.getDocumentAsInputStream(doc);
@@ -148,6 +152,10 @@ public class InstanceFlow {
 
         el = doc.createElement("error");
         el.setAttribute("id", getResourceId(instanceId, InstanceResources.TYPE_GLOBAL_ERROR_SCRIPT_EXECUTION));
+        rootEl.appendChild(el);
+
+        el = doc.createElement("email");
+        el.setAttribute("id", getResourceId(instanceId, InstanceResources.TYPE_ERROR_EMAIL));
         rootEl.appendChild(el);
 
         return DOMUtil.getDocumentAsInputStream(doc);

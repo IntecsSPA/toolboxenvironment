@@ -98,7 +98,7 @@ public class TBXAsynchronousOperationCommonTasks {
             String error;
             error="Cannot send message to push host: "+e.getMessage();
             logger.error(error);
-            ErrorMailer.send(service!=null?service.getServiceName():"unknown", soapAction, null, null,error);
+            ErrorMailer.send(serviceInstanceId,error);
 
             activatePushAttempts(serviceInstanceId);
             throw new Exception("Cannot send message to host "+replyToAddress);

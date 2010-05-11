@@ -77,7 +77,7 @@ public class TBXAsynchronousOperationSecondThirdScriptExecutor extends Thread {
                     catch(Exception e)
                     {
                         logger.error("Error while executing second script.");
-                        ErrorMailer.send(service.getServiceName(), InstanceInfo.getSOAPActionFromInstanceId(serviceInstanceId), null, null,"Error while executing second script.");
+                        ErrorMailer.send(serviceInstanceId,"Error while executing second script.");
                         throw e;
                     }
 
@@ -130,7 +130,7 @@ public class TBXAsynchronousOperationSecondThirdScriptExecutor extends Thread {
             catch(Exception e)
             {
                  logger.error("Error while executing third script.");
-                ErrorMailer.send(service.getServiceName(), InstanceInfo.getSOAPActionFromInstanceId(serviceInstanceId), null, null,"Error while executing third script.");
+                ErrorMailer.send(serviceInstanceId,"Error while executing third script.");
                 throw e;
             }
             finally {

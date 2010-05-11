@@ -44,91 +44,95 @@
         <xsl:if test="$language = 'it'">Messaggio di output (</xsl:if>
     </xsl:param>
 
- <xsl:template match="/">
-    <script>
-        var serviceName= '<xsl:value-of select="$serviceName"/>';
-        var instanceType= 'S';
-        var instanceID='<xsl:value-of select="/log:log/log:instance/@key"/>';
-    </script>
-    <TABLE cellSpacing="0" cellPadding="0" width="100%" align="center">
-        <TBODY>
-            <TR>
-                <TD class="pageBody" id="main">
-                    <p>
-                        <TABLE bgcolor="#FFFFFF" cellSpacing="0" cellPadding="0" width="100%" align="center" valign="top">
-                            <TBODY>
-                                <!-- START -->
-                                <TR>
-                                    <TD id="main" align="middle">
-                                        <img src="images/start.default.jpg" alt="start"/>
-                                    </TD>
-                                </TR>
-                                <TR>
-                                    <TD id="main" align="middle">
-                                        <img src="images/garrow.jpg" alt="start"/>
-                                    </TD>
-                                </TR>
-                                <TR>
-                                    <TD id="main" align="middle">
+    <xsl:template match="/">
+        <script>
+            var serviceName= '<xsl:value-of select="$serviceName"/>';
+            var instanceType= 'S';
+            var instanceID='<xsl:value-of select="/log:log/log:instance/@key"/>';
+        </script>
+        <TABLE cellSpacing="0" cellPadding="0" width="100%" align="center">
+            <TBODY>
+                <TR>
+                    <TD class="pageBody" id="main">
+                        <p>
+                            <TABLE bgcolor="#FFFFFF" cellSpacing="0" cellPadding="0" width="100%" align="center" valign="top">
+                                <TBODY>
+                                    <!-- START -->
+                                    <TR>
+                                        <TD id="main" align="middle">
+                                            <img src="images/start.default.jpg" alt="start"/>
+                                        </TD>
+                                    </TR>
+                                    <TR>
+                                        <TD id="main" align="middle">
+                                            <img src="images/garrow.jpg" alt="start"/>
+                                        </TD>
+                                    </TR>
+                                    <TR>
+                                        <TD id="main" align="middle">
 
-                                        <img src="images/receive.faulted.jpg" alt="receive"/>
-                                        <br/>
-                                        <xsl:value-of select="$inputTxt"/>
-                                        <a>
-                                            <xsl:attribute name="href">javascript:viewResource('xml','id=<xsl:value-of select="/log:log//log:invalidInputMessage/@id"/>','Input Message')</xsl:attribute>
-                                            <img src="images/xml-icon.jpg" alt="arrow"/>
+                                            <img src="images/receive.faulted.jpg" alt="receive"/>
+                                            <br/>
+                                            <xsl:value-of select="$inputTxt"/>
+                                            <a>
+                                                <xsl:attribute name="href">javascript:viewResource('xml','id=<xsl:value-of select="/log:log//log:invalidInputMessage/@id"/>','Input Message')</xsl:attribute>
+                                                <img src="images/xml-icon.jpg" alt="arrow"/>
 
-                                        </a>
-                                        <a>
-                                            <xsl:attribute name="href">javascript:viewResource('tree','id=<xsl:value-of select="/log:log//log:invalidInputMessage/@id"/>','Input Message')</xsl:attribute>
-                                            <img src="images/tree-icon.jpg" alt="arrow"/>
-                                        </a>
-                                        <a>
-                                            <xsl:attribute name="href">javascript:viewResource('text','id=<xsl:value-of select="/log:log//log:invalidInputMessage/@id"/>','Input Message')</xsl:attribute>
-                                            <img src="images/tree-icon.jpg" alt="arrow"/>
-                                        </a>
+                                            </a>
+                                            <a>
+                                                <xsl:attribute name="href">javascript:viewResource('tree','id=<xsl:value-of select="/log:log//log:invalidInputMessage/@id"/>','Input Message')</xsl:attribute>
+                                                <img src="images/tree-icon.jpg" alt="arrow"/>
+                                            </a>
+                                            <a>
+                                                <xsl:attribute name="href">javascript:viewResource('text','id=<xsl:value-of select="/log:log//log:invalidInputMessage/@id"/>','Input Message')</xsl:attribute>
+                                                <img src="images/tree-icon.jpg" alt="arrow"/>
+                                            </a>
+                                            <a>
+                                                <xsl:attribute name="href">javascript:viewResource('email','id=<xsl:value-of select="/log:flow//log:email/@id"/>','Error email')</xsl:attribute>
+                                                <img src="images/email-icon.jpg" alt="Email view"/>
+                                            </a>
 
-                                        )
-                                    </TD>
-                                </TR>
-                                <TR>
-                                    <TD id="main" align="middle">
-                                        <img src="images/garrow.jpg" alt="arrow"/>
-                                    </TD>
-                                </TR>
-                                <TR>
-                                    <!-- execution image -->
-                                    <TD id="main" align="middle">
-                                        <img src="images/execute.disabled.jpg" alt="execute"/>
-                                    </TD>
-                                </TR>
-                                <TR>
-                                    <TD id="main" align="middle">
-                                        <img src="images/garrow.jpg" alt="arrow"/>
-                                    </TD>
-                                </TR>
-                                <TR>
-                                    <TD id="main" align="middle">
-                                        <img src="images/send.disabled.jpg" alt="send"/>
-                                    </TD>
-                                </TR>
-                                <TR>
-                                    <TD id="main" align="middle">
-                                        <img src="images/garrow.jpg" alt="arrow"/>
-                                    </TD>
-                                </TR>
-                                <TR>
-                                    <TD id="main" align="middle">
-                                        <img src="images/end.default.jpg" alt="start"/>
-                                    </TD>
-                                </TR>
-                                <!-- STOP -->
-                            </TBODY>
-                        </TABLE>
-                    </p>
-                </TD>
-            </TR>
-        </TBODY>
-    </TABLE>
+                                            )
+                                        </TD>
+                                    </TR>
+                                    <TR>
+                                        <TD id="main" align="middle">
+                                            <img src="images/garrow.jpg" alt="arrow"/>
+                                        </TD>
+                                    </TR>
+                                    <TR>
+                                        <!-- execution image -->
+                                        <TD id="main" align="middle">
+                                            <img src="images/execute.disabled.jpg" alt="execute"/>
+                                        </TD>
+                                    </TR>
+                                    <TR>
+                                        <TD id="main" align="middle">
+                                            <img src="images/garrow.jpg" alt="arrow"/>
+                                        </TD>
+                                    </TR>
+                                    <TR>
+                                        <TD id="main" align="middle">
+                                            <img src="images/send.disabled.jpg" alt="send"/>
+                                        </TD>
+                                    </TR>
+                                    <TR>
+                                        <TD id="main" align="middle">
+                                            <img src="images/garrow.jpg" alt="arrow"/>
+                                        </TD>
+                                    </TR>
+                                    <TR>
+                                        <TD id="main" align="middle">
+                                            <img src="images/end.default.jpg" alt="start"/>
+                                        </TD>
+                                    </TR>
+                                    <!-- STOP -->
+                                </TBODY>
+                            </TABLE>
+                        </p>
+                    </TD>
+                </TR>
+            </TBODY>
+        </TABLE>
     </xsl:template>
 </xsl:stylesheet>

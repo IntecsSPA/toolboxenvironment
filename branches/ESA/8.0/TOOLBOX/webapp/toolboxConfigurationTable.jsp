@@ -242,8 +242,7 @@ PropertyResourceBundle messages = (PropertyResourceBundle)ResourceBundle.getBund
                     <td class="tdItem" nowrap width="50%"><fmt:message key="configureToolboxRequest.SMTP.mailFrom" bundle="${lang}"/><font color="FF0000"><%=warn.equals("missingSmtpServer") ? " - MISSING!" : "" %></td>
                     <td class="tdForm" nowrap><input name="mailFrom" type="text" value="<%= mailFrom %>" <%=disabled%>></td>
                 </tr>
-                mailFrom
-
+               
                 <tr><!-- Row 9 -->
                     <td class="tdItem" nowrap width="50%"><fmt:message key="configureToolboxRequest.SMTP.port" bundle="${lang}"/><font color="FF0000"><%=warn.equals("missingSmtpServer") ? " - MISSING!" : "" %></td>
                     <td class="tdForm" nowrap><input name="smtpServerPort" type="text" value="<%= currSmtpPort %>" <%=disabled%>></td>

@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mass:getRFQOutput xmlns:mass="http://www.esa.int/mass">
-	<mass:statusInfo>
-		<mass:statusId>0</mass:statusId>
-		<mass:statusMsg>Successful</mass:statusMsg>
-	</mass:statusInfo>
-	<mass:helloWorld>Persistence of Variables Succeeded</mass:helloWorld>
-</mass:getRFQOutput>
+<mass:returnRFQResultInputMsg xmlns:mass="http://www.esa.int/mass">
+	<mass:commonInput>
+		<mass:orderId>AAOAOA</mass:orderId>
+	</mass:commonInput>
+	<mass:getRFQOutput>
+		<mass:statusInfo>
+			<mass:statusId>0</mass:statusId>
+			<mass:statusMsg>Successful</mass:statusMsg>
+		</mass:statusInfo>
+		<mass:rfqOutput>
+			<mass:productSize>100</mass:productSize>
+			<mass:userQuota>1000</mass:userQuota>
+		</mass:rfqOutput>
+	</mass:getRFQOutput>
+</mass:returnRFQResultInputMsg>

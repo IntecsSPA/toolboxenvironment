@@ -40,8 +40,8 @@
     </section>
     <section name="Protocol Parameters">
         <group label="Soap Parameters">
-            <input type="text" name="ServiceUrl" label="Catalogue Url" id="ServiceUrl" optional="false" value="http://muiscx3.eo.esa.int:8090/" grow="true"/>
-            <input type="text" name="catalogueOperation" label="Operation" id="catalogueOperation" disabled="true" optional="false" value="http://earth.esa.int/SOAP/searchRequest"/>
+            <input type="text" name="ServiceUrl" label="Catalogue Url" id="ServiceUrl" optional="false" value="http://hma1.eo.esa.int/ws/services/M2CS_catalogue" grow="true"/>
+            <input type="text" name="SoapAction" label="Operation" id="SoapAction" disabled="true" optional="false" value="http://earth.esa.int/SOAP/searchRequest"/>
             <input type="combo" name="soapVersion" label="SOAP Version" size="16" id="soapVersion" optional="true" store="VALUES" storeFields="['value']"
             storeData="[['1.1'],['1.2']]"/>
         </group>
@@ -55,7 +55,7 @@
             <input type="text" name="outputMod" id="outputMod" hidden="true" hideLabel="true" optional="false" value="REFERENCE"/>
             <input type="text" name="XSLRequest" id="XSLRequest" hidden="true" hideLabel="true" optional="false" value="resources/xsl/EoliCatalogueSearch2_6/searchMessageTransformer.xsl"/>
             <input type="text" name="XSLResponse" id="XSLResponse" hidden="true" hideLabel="true" optional="false" value="resources/xsl/EoliCatalogueSearch2_6/searchOutputNormalize.xsl"/>
-            <input type="text" name="SoapAction" id="SoapAction" hidden="true" hideLabel="true" optional="false" value="SoapActionTest"/>
+            <!--input type="text" name="SoapAction" id="SoapAction" hidden="true" hideLabel="true" optional="false" value="http://earth.esa.int/SOAP/searchRequest"/-->
             <input type="text" name="LogFolder" id="LogFolder" hidden="true" hideLabel="true" optional="false" value="EoliSearch2_6"/>
 
         </group>

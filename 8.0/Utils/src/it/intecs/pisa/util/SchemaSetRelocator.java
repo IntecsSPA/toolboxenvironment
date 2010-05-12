@@ -200,6 +200,7 @@ public class SchemaSetRelocator {
             importNode = (Element) importNodes.item(i);
 
             schemaLocation = importNode.getAttribute(ATTRIBUTE_SCHEMA_LOCATION);
+            schemaLocation=schemaLocation.replace('\\', '/');
             fileURI = new URI(schemaLocation);
 
             uriScheme = fileURI.getScheme();
@@ -207,7 +208,7 @@ public class SchemaSetRelocator {
             if (uriScheme == null || uriScheme.startsWith(URI_SCHEME_FILE)) {
                 //update only uri that point to local file..
                 path = fileURI.getPath();
-
+                path=path.replace('\\', '/');
                 importNode.setAttribute(ATTRIBUTE_SCHEMA_LOCATION, path.substring(path.lastIndexOf("/") + 1));
             }
         }
@@ -251,6 +252,7 @@ public class SchemaSetRelocator {
             importNode = (Element) importNodes.item(i);
 
             schemaLocation = importNode.getAttribute(ATTRIBUTE_SCHEMA_LOCATION);
+            schemaLocation=schemaLocation.replace('\\', '/');
             fileURI = new URI(schemaLocation);
 
             uriScheme = fileURI.getScheme();
@@ -264,6 +266,7 @@ public class SchemaSetRelocator {
                     relocatedUri = addUriScheme + ":" + relocatedUri;
                 }
 
+                relocatedUri=relocatedUri.replace('\\', '/');
                 importNode.setAttribute(ATTRIBUTE_SCHEMA_LOCATION, relocatedUri);
             }
         }
@@ -311,6 +314,8 @@ public class SchemaSetRelocator {
             importNode = (Element) importNodes.item(i);
 
             schemaLocation = importNode.getAttribute(ATTRIBUTE_SCHEMA_LOCATION);
+            schemaLocation=schemaLocation.replace('\\', '/');
+
             fileURI = new URI(schemaLocation);
 
             uriScheme = relativeTo.getScheme();
@@ -336,6 +341,7 @@ public class SchemaSetRelocator {
                 newURI=relativeTo.toASCIIString()+"/"+schemaLocation;
             }
 
+            newURI=newURI.replace('\\', '/');
             importNode.setAttribute(ATTRIBUTE_SCHEMA_LOCATION, newURI);
         }
     }

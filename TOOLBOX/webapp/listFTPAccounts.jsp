@@ -21,7 +21,7 @@
   <fmt:setLocale value="${sessionScope.languageReq}" />
   <fmt:setBundle basename="ToolboxBundle" var="lang" scope="page"/>  
 </c:if>
-<jsp:include page="header.jsp?firebugControl=true&loadPanel=false&loadDefer=5000" />
+<jsp:include page="header.jsp?firebugControl=true&loadPanel=false&loadDefer=5000&extVers=3" />
 <%		
   PropertyResourceBundle messages = (PropertyResourceBundle)ResourceBundle.getBundle("ToolboxBundle", new Locale((String)session.getAttribute("languageReq")));
   String home = (String)messages.getObject("listFTPAccounts.home");

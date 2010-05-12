@@ -26,6 +26,21 @@
 <%
 TBXService[] services = ServiceManager.getInstance().getServicesAsArray();
 boolean isEnabled = services.length>0;
+
+Boolean warnFTP = (FTPServerManager.getInstance() == null);
+
+Boolean warnAddress = false;
+String toolboxUrl="";
+String warnAddressError="";
+
+       try {
+            toolboxUrl = Toolbox.getInstance().getPublicAddress();
+        } catch (Exception e) {
+            warnAddress = true;
+            warnAddressError = e.getMessage();
+        }
+
+
 %>
 <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center> 
     <TBODY> 
@@ -39,7 +54,33 @@ boolean isEnabled = services.length>0;
                         <A href="main.jsp"><IMG class=labelHomePage title=Toolbox alt=Toolbox src="images/toolbox.png" align=middle border=0></A>
                         <fmt:message key="main.welcome" bundle="${lang}"/>
                     </P> 
-                </DIV> 
+
+<%
+if (warnFTP)
+{
+    %>
+                            <P>
+                                <IMG src="images/warn.png"><fmt:message key="main.warnFTP" bundle="${lang}"/>
+                            </P>
+
+ <%
+                    }
+%>
+<%
+if (warnAddress)
+{
+    %>
+                            <P>
+                                <IMG src="images/warn.png"><fmt:message key="main.warnAddress" bundle="${lang}"/><%=warnAddressError%>
+                            </P>
+
+ <%
+                    }
+%>
+
+
+
+                </DIV>
                 <DIV class=portletItem id=02> 
                     <DIV> 
                         <A href="main.jsp"><fmt:message key="main.howTo" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 

@@ -35,7 +35,7 @@ String newVersion=null;
   String tbxRevision=tbxServlet.getToolboxRevision();
 
 
-String extVers = (request.getParameter("extVers") == null ? "3": request.getParameter("extVers"));
+String extVers = (request.getParameter("extVers") == null ? "2.0.1": request.getParameter("extVers"));
 int loadDefer= (request.getParameter("loadDefer") == null ? 0: new Integer(request.getParameter("loadDefer")));
 boolean loadPanel= (request.getParameter("loadPanel") == null ? false : new Boolean(request.getParameter("loadPanel")));
 boolean firebugControl= (request.getParameter("firebugControl") == null ? false : new Boolean(request.getParameter("firebugControl")));

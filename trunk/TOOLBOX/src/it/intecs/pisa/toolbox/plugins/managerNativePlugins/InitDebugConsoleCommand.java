@@ -48,7 +48,7 @@ public class InitDebugConsoleCommand extends NativeCommandsManagerPlugin{
             if (consoleStarted) {
                 bindAddress = console.getListeningAddress();
 
-                rootEl.setAttribute("listeningAtAddress", bindAddress.getHostAddress());
+                rootEl.setAttribute("listeningAtAddress", bindAddress.getHostName());
                 rootEl.setAttribute("listeningOnPort", Integer.toString(port));
             } else {
                 rootEl.setAttribute("errorMsg", "Cannot initialize Debug Console");

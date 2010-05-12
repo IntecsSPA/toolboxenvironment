@@ -51,8 +51,12 @@ public class GetPortalLikeOutputHTMLCommand extends NativeCommandsManagerPlugin{
           
             util = new DOMUtil();
 
-            service = req.getParameter("serviceName");
-            operation = req.getParameter("operationName");
+            String id = req.getParameter("id");
+            long serviceInstanceId;
+
+            serviceInstanceId=InstanceResources.getResourceAssociatedInstanceId(new Long(id));
+            service=InstanceInfo.getServiceNameFromInstanceId(serviceInstanceId);
+            operation=InstanceInfo.getOperationNameFromInstanceId(serviceInstanceId);
 
             resourceStream = getResource(req);
 

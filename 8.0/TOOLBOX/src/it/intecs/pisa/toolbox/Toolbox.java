@@ -549,7 +549,8 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             Boolean usingTempDirectory = false;
             String errorMessage="";
 
-             if ( !configuredLogDir.mkdirs())
+             configuredLogDir.mkdirs();
+             if (!configuredLogDir.canWrite() || !configuredLogDir.canRead())
              {
                 //in case of write permission errors we use thetemporary directory
                 errorMessage = "Unable to create log directory: " + configuredLogDir.getAbsolutePath() + " Check the read/write permissions";
@@ -628,9 +629,11 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             //serviceManager.startServices();
             logger.info("Toolbox services started");
 
-            initFtpServer(new File(rootDir, WEB_INF));
-            //ftpServerManager.updatePort(tbxConfig.getConfigurationValue(ToolboxConfiguration.FTP_PORT));
-            logger.info("FTP server started");
+            if (ftpServerManager != null) {
+                initFtpServer(new File(rootDir, WEB_INF));
+                ftpServerManager.updatePort(tbxConfig.getConfigurationValue(ToolboxConfiguration.FTP_PORT));
+                logger.info("FTP server started");
+            }
 
             needsInitialization=false;
 
@@ -671,7 +674,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         }
         catch(Exception ecc)
         {
-
+            logger.error("Error while deploying the WSDL files. Error: " + ecc.getMessage());
         }
 
         try
@@ -684,7 +687,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             this.toolboxVersion="8.0";
         }
 
-        System.out.println("Initialization completed");
+        logger.info("Initialization completed");
     }
 
     /**
@@ -698,7 +701,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             return;
         }
 
-        logger = LogResourcesPersistence.getInstance().getRollingLogForToolbox();
+        //logger = LogResourcesPersistence.getInstance().getRollingLogForToolbox();
 
         logger.info("TOOLBOX START");
         logger.info("configuration validated and loaded");
@@ -726,9 +729,16 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         }
 
         if (getFtpServerManager() == null) {
-            //(ftpServerManager = new FTPServerManager(new File(new File(new File(getServletContext().getRealPath(ROOT)), WEB_INF), FTP_SERVER).getAbsolutePath())).start();
-            setFtpServerManager(FTPServerManager.getInstance(new File(new File(new File(getServletContext().getRealPath(ROOT)), WEB_INF), FTP_SERVER).getAbsolutePath()));
-        }
+            // We try to activate the FTP server.
+            try {
+                setFtpServerManager(FTPServerManager.getInstance(new File(new File(new File(getServletContext().getRealPath(ROOT)), WEB_INF), FTP_SERVER).getAbsolutePath()));
+            } catch (Exception e) {
+                setFtpServerManager(null);
+                logger.error("Unable to create the FTP server. Error details: " + e.getMessage());
+                logger.error("The FTP server functionalities will be disabled.");
+            }
+
+         }
 
         /* This flag is to avoid doing this process more than once */
         setConfigurationProcessed(true);

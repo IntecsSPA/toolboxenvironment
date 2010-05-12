@@ -37,6 +37,15 @@ public class CreateEbRRDBCommand extends NativeCommandsManagerPlugin {
         String host, port, username, password, schema, template;
         Hashtable<String, FileItem> mimeparts;
         try {
+            try
+            {
+                Class.forName("org.postgresql.Driver");
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+
             mimeparts = parseMultiMime(req);
 
             host = getStringFromMimeParts(mimeparts, "host");

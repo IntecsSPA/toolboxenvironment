@@ -8,6 +8,8 @@ package it.intecs.pisa.toolbox.plugins.managerNativePlugins;
 
 import it.intecs.pisa.common.tbx.ServiceAdditionalParameters;
 import it.intecs.pisa.pluginscore.exceptions.GenericException;
+import it.intecs.pisa.toolbox.db.InstanceResources;
+import it.intecs.pisa.toolbox.service.instances.InstanceInfo;
 import it.intecs.pisa.toolbox.sseportal.simulation.PortalXSLTransformer;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.IOUtil;

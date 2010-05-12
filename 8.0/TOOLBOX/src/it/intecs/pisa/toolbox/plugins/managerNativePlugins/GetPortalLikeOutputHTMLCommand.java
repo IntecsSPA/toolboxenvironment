@@ -7,7 +7,9 @@ package it.intecs.pisa.toolbox.plugins.managerNativePlugins;
 
 
 import it.intecs.pisa.common.tbx.ServiceAdditionalParameters;
+import it.intecs.pisa.toolbox.db.InstanceResources;
 import it.intecs.pisa.toolbox.plugins.managerCommandPlugins.exceptions.GenericException;
+import it.intecs.pisa.toolbox.service.instances.InstanceInfo;
 import it.intecs.pisa.toolbox.sseportal.simulation.PortalXSLTransformer;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.IOUtil;
@@ -51,8 +53,12 @@ public class GetPortalLikeOutputHTMLCommand extends NativeCommandsManagerPlugin{
           
             util = new DOMUtil();
 
-            service = req.getParameter("serviceName");
-            operation = req.getParameter("operationName");
+            String id = req.getParameter("id");
+            long serviceInstanceId;
+
+            serviceInstanceId=InstanceResources.getResourceAssociatedInstanceId(new Long(id));
+            service=InstanceInfo.getServiceNameFromInstanceId(serviceInstanceId);
+            operation=InstanceInfo.getOperationNameFromInstanceId(serviceInstanceId);
 
             resourceStream = getResource(req);
 

@@ -10,7 +10,7 @@ public class ClassLiteralTag extends NativeTagExecutor{
                 String className;
                 
                 className=this.engine.evaluateString(classLiteral.getAttribute(CLASS),IEngine.EngineStringType.ATTRIBUTE);
-                    return Class.forName(className);
+                  return Class.forName(className);
     }
 
    

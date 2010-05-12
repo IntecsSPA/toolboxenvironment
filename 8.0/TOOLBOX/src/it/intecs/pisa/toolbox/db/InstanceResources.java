@@ -83,6 +83,30 @@ public class InstanceResources {
         }
 
     }
+
+     public static long getResourceAssociatedInstanceId(long id) throws Exception {
+        Statement stm=null;
+        ResultSet rs=null;
+
+        try
+        {
+            stm = ToolboxInternalDatabase.getInstance().getStatement();
+
+            rs = stm.executeQuery("SELECT INSTANCE_ID FROM T_INSTANCES_RESOURCES WHERE ID='" + id+"'");
+            rs.next();
+
+            return rs.getLong("INSTANCE_ID");
+        }
+        finally
+        {
+            if(rs!=null)
+                rs.close();
+
+            if(stm!=null)
+                stm.close();
+        }
+
+    }
     
      public static void storeXMLResource(Document doc,long seviceInstanceId, String type) throws SQLException, Exception {
         String id;

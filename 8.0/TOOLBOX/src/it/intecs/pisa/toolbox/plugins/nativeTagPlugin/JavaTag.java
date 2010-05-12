@@ -99,12 +99,13 @@ public class JavaTag extends NativeTagExecutor {
        rootDir=tbx.getServletContext().getRealPath("/");
        libDir=new File(rootDir,"WEB-INF/lib/toolbox.jar");
        nativeTagsLibs=new File(rootDir,"WEB-INF/plugins/ToolboxNativeTagPlugin/libs/");
-      /* classesJar=new File(rootDir,"WEB-INF/classes");
-       toBeRemoved=new File(rootDir,"../../../PluginsCore/dist/PluginsCore.jar");*/
+       classesJar=new File(rootDir,"WEB-INF/classes");
+       /*toBeRemoved=new File(rootDir,"../../../PluginsCore/dist/PluginsCore.jar");*/
        
        classpath =System.getProperty("java.class.path");
        classpath+=File.pathSeparator+libDir.getAbsolutePath();
        classpath+=File.pathSeparator+nativeTagsLibs.getAbsolutePath();
+       classpath+=File.pathSeparator+classesJar.getAbsolutePath();
   /*     classpath+=File.pathSeparator+classesJar.getAbsolutePath();
        if(toBeRemoved.exists())
            classpath+=File.pathSeparator+toBeRemoved.getAbsolutePath();*/

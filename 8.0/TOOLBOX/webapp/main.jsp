@@ -37,7 +37,7 @@ String warnAddressError="";
             toolboxUrl = Toolbox.getInstance().getPublicAddress();
         } catch (Exception e) {
             warnAddress = true;
-            warnAddressError = e.getMessage();
+            warnAddressError = e.getClass() + " : "+e.getMessage();
         }
 
 

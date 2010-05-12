@@ -1,8 +1,6 @@
 package it.intecs.pisa.toolbox.plugins.nativeTagPlugin;
 
-import it.intecs.pisa.toolbox.engine.ToolboxEngine;
 import it.intecs.pisa.soap.toolbox.TypesValues;
-import it.intecs.pisa.toolbox.plugins.TagExecutor;
 import it.intecs.pisa.util.DOMUtil;
 
 public class NewObjectTag extends NativeTagExecutor {

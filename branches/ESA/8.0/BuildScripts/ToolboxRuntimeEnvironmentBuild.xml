@@ -112,7 +112,7 @@
 		</copy>
 
 
-		<zip file="TOOLBOXGISCLIENT.zip">
+		<zip file="ToolboxGisClient.zip">
 			<fileset dir="${temp}"/>
 		</zip>
 		
@@ -133,7 +133,7 @@
 		</copy>
 
 
-		<jar file="TOOLBOXGISCLIENT.war">
+		<jar file="ToolboxGisClient.war">
 			<fileset dir="${temp}/ToolboxGisClient"/>
 		</jar>
 

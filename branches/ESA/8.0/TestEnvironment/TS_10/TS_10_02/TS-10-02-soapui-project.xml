@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project name="TS_10_02" soapui-version="3.5" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="ToolboxServiceSOAPBinding" type="wsdl" bindingName="{http://www.intecs.it/TOOLBOX/service/TS_10_02/wsdl}ToolboxServiceSOAPBinding" soapVersion="1_1" anonymous="optional" definition="http://as4.rosa-rc.ro:8080/TOOLBOX/WSDL/TS_10_02/TS_10_02.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://as4.rosa-rc.ro:8080/TOOLBOX/WSDL/TS_10_02/TS_10_02.wsdl"><con:part><con:url>http://as4.rosa-rc.ro:8080/TOOLBOX/WSDL/TS_10_02/TS_10_02.wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://www.intecs.it/TOOLBOX/service/TS_10_02/wsdl" xmlns:ns3="http://www.esa.int/mass" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.intecs.it/TOOLBOX/service/TS_10_02/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+    <xsd:schema>
+      <xsd:import namespace="http://www.esa.int/mass" schemaLocation="http://as4.rosa-rc.ro:8080/TOOLBOX/WSDL/TS_10_02/VITO_S10.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="RFQRequest">
+    <wsdl:part element="ns3:sendRFQInputMsg" name="body"/>
+  </wsdl:message>
+  <wsdl:message name="RFQResponse">
+    <wsdl:part element="ns3:sendRFQOutputMsg" name="body"/>
+  </wsdl:message>
+  <wsdl:message name="RFQCallbackRequest">
+    <wsdl:part element="ns3:returnRFQResultInputMsg" name="body"/>
+  </wsdl:message>
+  <wsdl:message name="RFQCallbackResponse">
+    <wsdl:part element="ns3:returnRFQResultOutputMsg" name="body"/>
+  </wsdl:message>
+  <wsdl:portType name="ToolboxSOAPPortForService">
+    <wsdl:operation name="RFQ">
+      <wsdl:input message="tns:RFQRequest"/>
+      <wsdl:output message="tns:RFQResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ToolboxServiceSOAPBinding" type="tns:ToolboxSOAPPortForService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="RFQ">
+      <soap:operation soapAction="sendRFQ"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ToolboxService">
+    <wsdl:port binding="tns:ToolboxServiceSOAPBinding" name="ToolboxServicePort">
+      <soap:address location="http://as4.rosa-rc.ro:8080/TOOLBOX/services/TS_10_02"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://as4.rosa-rc.ro:8080/TOOLBOX/WSDL/TS_10_02/VITO_S10.xsd</con:url><con:content><![CDATA[<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.esa.int/mass" version="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.esa.int/mass" xmlns:aoi="http://www.esa.int/xml/schemas/mass/aoifeatures" xmlns:oi="http://www.esa.int/oi">
+  <xsd:redefine schemaLocation="http://as4.rosa-rc.ro:8080/TOOLBOX/WSDL/TS_10_02/mass.xsd">
+    <xsd:complexType name="RFQInputType">
+      <xsd:annotation>
+        <xsd:documentation>overrides the predefined RFQInputType in mass.xsd to add more service-specific data</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+        <xsd:extension base="RFQInputType">
+          <xsd:sequence>
+            <xsd:element name="userId" type="xsd:string">
+              <xsd:annotation>
+                <xsd:documentation>This represent the name of the mass user.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="date" type="restrictedDateType">
+              <xsd:annotation>
+                <xsd:documentation>This represents a date of the product. It allows to represent dates from 01-04-1998 to 21-12-2009, The valid values for a day are only 01, 11 and 21.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="instrument">
+              <xsd:annotation>
+                <xsd:documentation>This represents an instrument carrying the sensor. The valid values are VGT1 and VGT2.</xsd:documentation>
+              </xsd:annotation>
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:enumeration value="VGT1"/>
+                  <xsd:enumeration value="VGT2"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="format">
+              <xsd:annotation>
+                <xsd:documentation>This represents the format of the S10 product. The valid values are NDVI or RADIOMETRY.</xsd:documentation>
+              </xsd:annotation>
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:enumeration value="NDVI"/>
+                  <xsd:enumeration value="Radio"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="RFQOutputType">
+      <xsd:annotation>
+        <xsd:documentation>overrides the predefined RFQOutputType in mass.xsd to add more service-specific data</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+        <xsd:extension base="RFQOutputType">
+          <xsd:sequence minOccurs="0">
+            <xsd:element name="productSize" type="xsd:float">
+              <xsd:annotation>
+                <xsd:documentation>This represents the size of a product required expressed in MB.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="userQuota" type="xsd:float">
+              <xsd:annotation>
+                <xsd:documentation>This represents the free space into the user download directory. The value is expressed in MB. The maximum quota is 10240 MB.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="OrderInputType">
+      <xsd:annotation>
+        <xsd:documentation>overrides the predefined OrderInputTypein mass.xsd to add more service-specific data</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+        <xsd:extension base="OrderInputType">
+          <xsd:sequence>
+            <xsd:element name="userId" type="xsd:string">
+              <xsd:annotation>
+                <xsd:documentation>This represent the name of the mass user.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="date" type="restrictedDateType">
+              <xsd:annotation>
+                <xsd:documentation>This represents a date of the product. It allows to represent dates from 01-04-1998 to 21-12-2009, The valid values for a day are only 01, 11 and 21.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="instrument">
+              <xsd:annotation>
+                <xsd:documentation>This represents an instrument carrying the sensor. The valid values are VGT1 and VGT2.</xsd:documentation>
+              </xsd:annotation>
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:enumeration value="VGT1"/>
+                  <xsd:enumeration value="VGT2"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="format">
+              <xsd:annotation>
+                <xsd:documentation>This represents the format of the S10 product. The valid values are NDVI or RADIOMETRY.</xsd:documentation>
+              </xsd:annotation>
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:enumeration value="NDVI"/>
+                  <xsd:enumeration value="Radio"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="OrderOutputType">
+      <xsd:annotation>
+        <xsd:documentation>overrides the predefined OrderOutputType in mass.xsd to add more service-specific data</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+        <xsd:extension base="OrderOutputType">
+          <xsd:sequence minOccurs="0">
+            <xsd:element name="orderResultURL" type="xsd:anyURI">
+              <xsd:annotation>
+                <xsd:documentation>URL to be used for the data download.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="userName">
+              <xsd:annotation>
+                <xsd:documentation>User name to be used for the download.</xsd:documentation>
+              </xsd:annotation>
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:minLength value="3"/>
+                  <xsd:maxLength value="100"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="password">
+              <xsd:annotation>
+                <xsd:documentation>Password to be used for the download.</xsd:documentation>
+              </xsd:annotation>
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:minLength value="8"/>
+                  <xsd:maxLength value="20"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="timePeriodOfService" type="xsd:positiveInteger">
+              <xsd:annotation>
+                <xsd:documentation>Period in which the User will be able to download the ordered product.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="productSize" type="xsd:float">
+              <xsd:annotation>
+                <xsd:documentation>This represents the size of a product required expressed in MB.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="userQuota" type="xsd:float">
+              <xsd:annotation>
+                <xsd:documentation>This represents the free space remaining,  into the user download directory, after that the product ordered has been added into the active product list. The value is expressed in MB. The maximum quota is 10240 MB.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:redefine>
+  <!--Custom types-->
+  <xsd:simpleType name="restrictedDateType">
+    <xsd:restriction base="xsd:date">
+      <xsd:pattern value="(((1998|1999|(200[0-9])))-((0[1-9])|(1[0-2]))-([0-2]1))"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://as4.rosa-rc.ro:8080/TOOLBOX/services/TS_10_02</con:endpoint></con:endpoints><con:operation isOneWay="false" action="sendRFQ" name="RFQ" bindingOperationName="RFQ" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://as4.rosa-rc.ro:8080/TOOLBOX/services/TS_10_02</con:endpoint><con:request><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing">
+	<soapenv:Header>
+		<wsa:MessageID>TS_10_02</wsa:MessageID>
+		<wsa:ReplyTo>
+			<wsa:Address>http://pisa007.pisa.intecs.it/TOOLBOX/Push</wsa:Address>
+			<wsa:PortType xmlns:ns3="http://www.vito.be/wsdl/S10Basic">ns3:S10BasicServiceCallback</wsa:PortType>
+			<wsa:ServiceName xmlns:ns4="http://www.vito.be/wsdl/S10Basic">ns4:S10BasicServiceCallbackService</wsa:ServiceName>
+		</wsa:ReplyTo>
+	</soapenv:Header>
+	<soapenv:Body>
+		<sendRFQInputMsg xmlns:aoi="http://www.esa.int/xml/schemas/mass/aoifeatures" xmlns:gml="http://www.opengis.net/gml" xmlns:oi="http://www.esa.int/oi" xmlns="http://www.esa.int/mass">
+			<commonInput>
+				<orderId>AAOAOA</orderId>
+			</commonInput>
+			<sendRFQInput>
+				<aoi:areaOfInterest>
+					<gml:boundedBy>
+						<gml:null>unavailable</gml:null>
+					</gml:boundedBy>
+					<!-- EUROPE -->
+					<gml:featureMember>
+						<aoi:Feature>
+							<gml:boundedBy>
+								<gml:Box srsName="EPSG:4326">
+									<gml:coordinates>-20,34.9305 40,81.8519</gml:coordinates>
+								</gml:Box>
+							</gml:boundedBy>
+							<aoi:Code>EU</aoi:Code>
+							<aoi:Label>Europe</aoi:Label>
+							<aoi:Geometry>
+								<gml:Polygon srsName="EPSG:4326">
+									<gml:outerBoundaryIs>
+										<gml:LinearRing>
+											<gml:coordinates>-20,34.9305 -20,81.8519 40,81.8519 40,34.9305 -20,34.9305</gml:coordinates>
+										</gml:LinearRing>
+									</gml:outerBoundaryIs>
+								</gml:Polygon>
+							</aoi:Geometry>
+						</aoi:Feature>
+					</gml:featureMember>
+				</aoi:areaOfInterest>
+				<userId>mass</userId>
+				<date>2001-07-21</date>
+				<instrument>VGT1</instrument>
+				<format>Radio</format>
+			</sendRFQInput>
+		</sendRFQInputMsg>
+	</soapenv:Body>
+</soapenv:Envelope>
+]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="sendRFQ"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/></con:soapui-project>

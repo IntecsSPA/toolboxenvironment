@@ -72,7 +72,7 @@ public class ErrorMailer {
                 SMTPAuthenticator auth=SMTPAuthenticator.getInstance();
                 Session session = Session.getInstance(properties, auth);
                 MimeMessage message = new MimeMessage(session);
-                message.setFrom(new InternetAddress("massimiliano.fanciulli@intecs.it"));
+                message.setFrom(new InternetAddress(toolboxConfiguration.getConfigurationValue(ToolboxConfiguration.MAIL_FROM)));
 
                 setRecipients(message);
 

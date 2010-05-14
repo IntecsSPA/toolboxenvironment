@@ -51,6 +51,7 @@ public class ConfigureToolboxCommand extends NativeCommandsManagerPlugin {
         String logLevel = getStringFromMimeParts(mimeparts, "logLevel");
         String companyContact = getStringFromMimeParts(mimeparts, "companyContact");
         String mailFrom = getStringFromMimeParts(mimeparts, "mailFrom");
+        String sseOpTeamEmail = getStringFromMimeParts(mimeparts, "sseOpTeamEmail");
         boolean mailErrorSSE = (getStringFromMimeParts(mimeparts, "mailErrorSSE") != null);
         boolean mailErrorSP = (getStringFromMimeParts(mimeparts, "mailErrorSP") != null);
 
@@ -112,6 +113,7 @@ public class ConfigureToolboxCommand extends NativeCommandsManagerPlugin {
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.MAIL_FROM, mailFrom);
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.EBRR_REPO_HOME, ebRRRepoHome);
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.FIRST_TIME_CHECK, "false");
+        toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.SSE_SUPPORT_TEAM_EMAIL, sseOpTeamEmail);
 
         if (mailErrorSSE && mailErrorSP) {
             toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.MAIL_ERROR, "BOTH");

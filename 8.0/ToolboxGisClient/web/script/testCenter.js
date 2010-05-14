@@ -529,6 +529,9 @@ ToolboxTestCenter.Application = function()
          xslServiceRequestInformations: function(toolboxUrl, toolboxService, toolboxOperation){ 
             var loading="<table width='100%'><tr><td align='center'><img src='style/img/loader/loader1.gif'></td></tr><tr><td align='center'>Please Wait...</td></tr></table>";
             formsToolboxInfo.formsArray[0].getForm().findField("operationsInformations").setValue(loading);
+            var last = toolboxUrl.charAt(toolboxUrl.length - 1);
+            if(last != '/')
+               toolboxUrl+="/";
             var eventResponseSSE=function(response){
                 if(response){
                   var sseResponse = (new DOMParser()).parseFromString(response, "text/xml");
@@ -567,8 +570,8 @@ ToolboxTestCenter.Application = function()
                           formsToolboxInfo.formsArray[0].getForm().findField("operationsInformations").setValue(htmlResponse);
                       };
                       sendXmlHttpRequestTimeOut("GET", 
-                        proxyRedirect+"?url="+toolboxUrl+"/manager?cmd=hasGMLOnMapStylesheet&serviceName="+toolboxService, 
-                        true, null, 15, eventResponseGML, eventTimeOutGML);
+                        proxyRedirect+"?url="+toolboxUrl+"manager?cmd=hasGMLOnMapStylesheet&serviceName="+toolboxService, 
+                        true, null, 99999999, eventResponseGML, eventTimeOutGML);
                     } 
                 }else{
                    mapWindow.hide(); 
@@ -580,7 +583,7 @@ ToolboxTestCenter.Application = function()
                 var htmlResponse="<b>HasXslSSE Request: Time-out Exception</b>";
                 formsToolboxInfo.formsArray[0].getForm().findField("operationsInformations").setValue(htmlResponse);
             };
-           sendXmlHttpRequestTimeOut("GET", proxyRedirect+"?url="+toolboxUrl+"/manager?cmd=hasSSEStylesheet%26serviceName="+toolboxService+"%26operationName="+toolboxOperation, true, null, 15, eventResponseSSE, eventTimeOutSSE);        
+           sendXmlHttpRequestTimeOut("GET", proxyRedirect+"?url="+toolboxUrl+"manager?cmd=hasSSEStylesheet%26serviceName="+toolboxService+"%26operationName="+toolboxOperation, true, null, 15, eventResponseSSE, eventTimeOutSSE);        
          },
          desktopChange: function(desktopType){
              if(desktopPanel) 
@@ -700,6 +703,7 @@ ToolboxTestCenter.Application = function()
           }
         }, 
          addToolboxOperationOutputTab: function (toolboxUrl, service, operation, tabContent){
+             
               var tabId="tabOutput_"+toolboxUrl+service+operation;
               if (!toolboxOperationTabPanel.findById(tabId)){
                   var sseTabCenter;
@@ -821,6 +825,9 @@ ToolboxTestCenter.Application = function()
             Ext.Msg.alert('Error', 'Please insert the TOOLBOX URL');   
          },
          sseManager: function(toolboxUrl,service,operation,aoi){
+             var last = toolboxUrl.charAt(toolboxUrl.length - 1);
+             if(last != '/')
+               toolboxUrl+="/";
              var nameFrame="inputHtmlSSE"+toolboxUrl+service+operation;
              var massFormObj=parent[nameFrame].document.getElementById("MASSFORM");
              if(!aoi)
@@ -947,7 +954,7 @@ ToolboxTestCenter.Application = function()
                      };
                      sendXmlHttpRequestTimeOut("POST", 
                                 proxyRedirect, 
-                                true, xmlKeyValueString, 15, eventSSEResponse, eventSSETimeOut);
+                                true, xmlKeyValueString, 9999999, eventSSEResponse, eventSSETimeOut);
                 } 
                 else{
                     Ext.Msg.alert('Info', 'Please draw the Area of Interest polygon');
@@ -1033,7 +1040,7 @@ ToolboxTestCenter.Application = function()
              };
              sendXmlHttpRequestTimeOut("POST", 
                                 tools, 
-                                true, valueData, 15, renderingResp, renderingTimeOut);
+                                true, valueData, 99999999, renderingResp, renderingTimeOut);
          },
          insertSSEAsyncronousResponse: function (toolboxUrl, service, operation, responseUrl, renderObjId){
              var insertObj=document.getElementById(renderObjId);
@@ -1085,7 +1092,7 @@ ToolboxTestCenter.Application = function()
              };
              sendXmlHttpRequestTimeOut("GET", 
                                 proxyRedirect+"?url="+responseUrl, 
-                                true, null, 15, eventSSEAsyncResponse, eventSSEAsyncTimeOut); 
+                                true, null, 999999999, eventSSEAsyncResponse, eventSSEAsyncTimeOut);
          },
          /*INIZIO: Da rimpiazzare con una funzione*/
          sendToolboxGenericRequest : function(messageMode,req,toolboxURL,service,soapAction,operation,messageID){
@@ -1097,12 +1104,17 @@ ToolboxTestCenter.Application = function()
                    mode=messageMode[u].value;
           }else
            mode=messageMode; 
-            
+
+
+            var last = toolboxURL.charAt(toolboxURL.length - 1);
+            if(last != '/')
+               toolboxURL+="/";
+
           if(mode){
             if(req !=""){
                 var newRequest=removeXmlDiterctive(req);
                 var headers=null;
-                var xmlRequest="<xmlRequest><ServiceUrl>"+toolboxURL+"/services/"+service+"</ServiceUrl>";
+                var xmlRequest="<xmlRequest><ServiceUrl>"+toolboxURL+"services/"+service+"</ServiceUrl>";
                 xmlRequest+="<SoapAction>"+soapAction+"</SoapAction>";
                 xmlRequest+="<idRequest>"+messageID+"</idRequest>";
                 xmlRequest+="<LogFolder>/TOOLBOXGeneric</LogFolder>";
@@ -1163,7 +1175,7 @@ ToolboxTestCenter.Application = function()
 
               sendXmlHttpRequestTimeOut("POST", 
                                 proxyRedirect, 
-                                true, xmlRequest, 15, genericToolboxResponse, genericToolboxTimeOut,headers,null,eventError);
+                                true, xmlRequest, 99999999, genericToolboxResponse, genericToolboxTimeOut,headers,null,eventError);
             }else
                Ext.Msg.alert('Error', 'Please insert a soap meassage or a soap Payload');                       
           }else
@@ -1219,10 +1231,10 @@ ToolboxTestCenter.Application = function()
                       genericOutputTabPanel.setActiveTab(0);
                       var loadingHtml="<br><br><br><br><table align='center'><tr><td align='center'><img src='style/img/loader/loader1.gif'></td></tr><tr><td align='center'>Please Wait ...</td></tr></table>";
                       document.getElementById("genericOutputInformation").innerHTML=loadingHtml;
-                      alert(xmlRequest);
+                      //alert(xmlRequest);
                       sendXmlHttpRequestTimeOut("POST", 
                                 proxyRedirect, 
-                                true, xmlRequest, 800, genericResponse, genericTimeOut,headers, null, eventError);
+                                true, xmlRequest, 9999999, genericResponse, genericTimeOut,headers, null, eventError);
                   }else
                     Ext.Msg.alert('Error', 'Please insert the SoapAction');
               } else

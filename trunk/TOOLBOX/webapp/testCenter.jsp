@@ -26,7 +26,7 @@ String toolboxUrl=Toolbox.getInstance().getPublicAddress();
                         <A href="javascript:fullScreenPopup ('../ToolboxGisClient/clientTest.jsp?tbxUrl=<%=toolboxUrl%>&service=<%=serviceName%>', 'Toolbox Test Client');"><fmt:message key="testCenter.sendSOAP" bundle="${lang}"/> &nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
                     </DIV> 
                     <P> 
-                        <A href="javascript:fullScreenPopup ('../ToolboxGisClient/clientTest.jsp?tbxUrl=<%=toolboxUrl%>&service=<%=serviceName%>', 'Toolbox Test Client');"><IMG class=labelHomePage title=Toolbox alt="Send a SOAP message" src="images/sendSOAP.jpg" align=middle border=0></A>
+                        <A href="javascript:fullScreenPopup ('../ToolboxGisClient/clientTest.jsp?tbxUrl=<%=toolboxUrl%>&service=<%=serviceName%>', 'Toolbox Test Client');"><IMG class=labelHomePage title=Toolbox alt="Send a SOAP message" src="images/sendSOAP.png" align=middle border=0></A>
                         <fmt:message key="testCenter.sendSOAPDescr" bundle="${lang}"/>
                     </P> 
                 </DIV> 
@@ -34,7 +34,7 @@ String toolboxUrl=Toolbox.getInstance().getPublicAddress();
                     <DIV> <!-- <!-- %= response.encodeURL("catalogueSelection.jsp") % --> 
                         <A href="javascript:fullScreenPopup ('../ToolboxGisClient/catalogues.html', 'Toolbox Catalogues Client');"><fmt:message key="testCenter.testCatalogue" bundle="${lang}"/> &nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
                     </DIV> 
-                    <P><A href="javascript:fullScreenPopup ('../ToolboxGisClient/catalogues.html', 'Toolbox Catalogues Client');"><IMG class=labelHomePage title="catalogue" alt="Test a catalogue" src="images/catalogueSearch.jpg" align=middle border=0></A><fmt:message key="testCenter.testCatalogueDescr" bundle="${lang}"/>
+                    <P><A href="javascript:fullScreenPopup ('../ToolboxGisClient/catalogues.html', 'Toolbox Catalogues Client');"><IMG class=labelHomePage title="catalogue" alt="Test a catalogue" src="images/catalogueSearch.png" align=middle border=0></A><fmt:message key="testCenter.testCatalogueDescr" bundle="${lang}"/>
                     </P> 
                 </DIV> 
                 <DIV class=portletItem id=03> 
@@ -42,7 +42,7 @@ String toolboxUrl=Toolbox.getInstance().getPublicAddress();
                         <A href="<%= response.encodeURL("validateScriptRequest.jsp") %>"><fmt:message key="testCenter.validate" bundle="${lang}"/> &nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
                     </DIV> 
                     <P> 
-                        <A href="<%= response.encodeURL("validateScriptRequest.jsp") %>"><IMG class=labelHomePage title=validate alt="Validate a script" src="images/validateXML.jpg" align=middle border=0></A> 
+                        <A href="<%= response.encodeURL("validateScriptRequest.jsp") %>"><IMG class=labelHomePage title=validate alt="Validate a script" src="images/validateXML.png" align=middle border=0></A>
                     <fmt:message key="testCenter.validateDescr" bundle="${lang}"/> </P> 
                 </DIV> 
                 <DIV class=portletItem id=04> 
@@ -50,7 +50,7 @@ String toolboxUrl=Toolbox.getInstance().getPublicAddress();
                         <A href="<%= response.encodeURL("viewPushedMsg.jsp") %>"><fmt:message key="testCenter.Push" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
                     </DIV> 
                     <P> 
-                        <A href="<%= response.encodeURL("viewPushedMsg.jsp") %>"><IMG class=labelHomePage title=validate alt="Validate a script" src="images/pushServer.jpg" align=middle border=0></A>
+                        <A href="<%= response.encodeURL("viewPushedMsg.jsp") %>"><IMG class=labelHomePage title=validate alt="Validate a script" src="images/pushServer.png" align=middle border=0></A>
                     <fmt:message key="testCenter.PushDescr" bundle="${lang}"/></P> 
                 </DIV>
  </TD>

@@ -149,7 +149,7 @@ public class ConfigureToolboxCommand extends NativeCommandsManagerPlugin {
         }
 
          setebRRRepoHomeOnPropertyFile(ebRRRepoHome);
-         resp.sendRedirect("configureToolboxRequest.jsp?pageStatus=disabled");
+         resp.sendRedirect("configureToolboxRequest.jsp?pageStatus=disabled&configurationChanged=true");
     }
 
     private void setebRRRepoHomeOnPropertyFile(String ebRRRepoHome) {

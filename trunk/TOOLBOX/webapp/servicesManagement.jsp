@@ -91,7 +91,7 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;&nbsp;" + serviceManag;
                         <A href="<%= response.encodeURL("selectImportOrCreate.jsp") %>"><fmt:message key="servicesManagement.createNew" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
                     </DIV> 
                     <P> 
-                        <A href="<%= response.encodeURL("selectImportOrCreate.jsp") %>"><IMG class=labelHomePage title=create alt="Create a new service" src="images/createService.jpg" align=middle border=0></A>
+                        <A href="<%= response.encodeURL("selectImportOrCreate.jsp") %>"><IMG class=labelHomePage title=create alt="Create a new service" src="images/createService.png" align=middle border=0></A>
                     <fmt:message key="servicesManagement.selection" bundle="${lang}"/></P> 
                 </DIV> 
                 <DIV class="portletItem" id="02"> 
@@ -99,7 +99,7 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;&nbsp;" + serviceManag;
                         <A href="<%= response.encodeURL(showAllServicesStatus) %>"><fmt:message key="servicesManagement.display" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
                     </DIV> 
                     <P> 
-                        <A href="<%= response.encodeURL(showAllServicesStatus) %>"> <IMG class=labelHomePage title=serviceStatus alt="Display the service status" src="images/status.jpg" align=middle border=0> </a>
+                        <A href="<%= response.encodeURL(showAllServicesStatus) %>"> <IMG class=labelHomePage title=serviceStatus alt="Display the service status" src="images/status.png" align=middle border=0> </a>
                     <fmt:message key="servicesManagement.displayDescr" bundle="${lang}"/></P> 
                 </DIV> 
                 <DIV class="portletItem" id="03">                     
@@ -107,7 +107,7 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;&nbsp;" + serviceManag;
                         <A href=# onclick="javascript: assign('stopAllServices');"><fmt:message key="servicesManagement.stopAll" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
                     </DIV> 
                     <P>
-                        <A href=# onclick="javascript: assign('stopAllServices');"><IMG class=labelHomePage title="stopAllServices" alt="stopAllServices" src="images/stopAll.jpg" align=middle border=0></A>
+                        <A href=# onclick="javascript: assign('stopAllServices');"><IMG class=labelHomePage title="stopAllServices" alt="stopAllServices" src="images/stopAll.png" align=middle border=0></A>
                         <fmt:message key="servicesManagement.stopDescr" bundle="${lang}"/>
                     </P>
                     
@@ -117,7 +117,7 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;&nbsp;" + serviceManag;
                         <a href=# onclick="javascript: assign('startAllServices');"><fmt:message key="servicesManagement.startAll" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
                     </DIV>
                     <P>                        
-                        <A href=# ONCLICK="javascript: assign('startAllServices');"><IMG class=labelHomePage title="startAllServices" alt="startAllServices" src="images/startAll.jpg" align=middle border=0> </a>
+                        <A href=# ONCLICK="javascript: assign('startAllServices');"><IMG class=labelHomePage title="startAllServices" alt="startAllServices" src="images/startAll.png" align=middle border=0> </a>
                         <fmt:message key="servicesManagement.startDescr" bundle="${lang}"/>
                     </P>
                 </DIV> 
@@ -187,7 +187,7 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;&nbsp;" + serviceManag;
                     <DIV> 
                         <A href=# onclick="javascript: assign('startService');"><fmt:message key="servicesManagement.Start" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
                     </DIV> 
-                    <P> <a href=# onclick="javascript: assign('startService');"><IMG class=labelHomePage title="start" alt="Start the service" src="images/start.jpg" align=middle border=0></A>
+                    <P> <a href=# onclick="javascript: assign('startService');"><IMG class=labelHomePage title="start" alt="Start the service" src="images/start.png" align=middle border=0></A>
                         <fmt:message key="servicesManagement.The" bundle="${lang}"/> <%=service%> <fmt:message key="servicesManagement.servCurrent" bundle="${lang}"/> <span style="color: #FF0000"><fmt:message key="servicesManagement.STOPPED" bundle="${lang}"/></span>. <fmt:message key="servicesManagement.Click" bundle="${lang}"/> <span style="color: #00FF00"><fmt:message key="servicesManagement.RUNNING" bundle="${lang}"/></span> <fmt:message key="servicesManagement.mode" bundle="${lang}"/>.
                     </P>
                     
@@ -199,7 +199,7 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;&nbsp;" + serviceManag;
                     <DIV> 
                         <A href=# onclick="javascript: assign('resumeService');"><fmt:message key="servicesManagement.Resume" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
                     </DIV> 
-                    <P> <A href=# onclick="javascript: assign('resumeService');"><IMG class=labelHomePage title="resume" alt="Resume a Service" src="images/start.jpg" align=middle border=0></A>
+                    <P> <A href=# onclick="javascript: assign('resumeService');"><IMG class=labelHomePage title="resume" alt="Resume a Service" src="images/start.png" align=middle border=0></A>
                         <fmt:message key="servicesManagement.The" bundle="${lang}"/> <%=service%> <fmt:message key="servicesManagement.servCurrent" bundle="${lang}"/> <span style="color: #FF9900"><fmt:message key="servicesManagement.SUSPENDED" bundle="${lang}"/></span>. <fmt:message key="servicesManagement.Click" bundle="${lang}"/> <span style="color: #00FF00"><fmt:message key="servicesManagement.RUNNING" bundle="${lang}"/></span> <fmt:message key="servicesManagement.modeAllows" bundle="${lang}"/>
                     </P>                    
                 </DIV>                 
@@ -210,7 +210,7 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;&nbsp;" + serviceManag;
                     <DIV> 
                         <A href=# onclick="javascript: assign('stopService');"><fmt:message key="servicesManagement.Stop" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
                     </DIV> 
-                    <P> <a href=# onclick="javascript: assign('stopService');"><IMG class=labelHomePage title="stop" alt="Stop a service" src="images/stop.jpg" align=middle border=0></A>
+                    <P> <a href=# onclick="javascript: assign('stopService');"><IMG class=labelHomePage title="stop" alt="Stop a service" src="images/stop.png" align=middle border=0></A>
                         <fmt:message key="servicesManagement.The" bundle="${lang}"/> <%=service%> <fmt:message key="servicesManagement.servCurrent" bundle="${lang}"/> <span style="color: #00FF00"><fmt:message key="servicesManagement.RUNNING" bundle="${lang}"/></span>. <fmt:message key="servicesManagement.clickToStop" bundle="${lang}"/>
                         <br>
                         <fmt:message key="servicesManagement.Stopping" bundle="${lang}"/> 
@@ -221,7 +221,7 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;&nbsp;" + serviceManag;
                         <A href="#" onclick="javascript: assign('suspendService');"><fmt:message key="servicesManagement.Suspend" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
                     </DIV> 
                     <P>
-                        <a href="#" onclick="javascript: assign('suspendService');"><IMG class=labelHomePage title="suspend" alt="Suspend a Service" src="images/suspend.jpg" align=middle border=0></A>
+                        <a href="#" onclick="javascript: assign('suspendService');"><IMG class=labelHomePage title="suspend" alt="Suspend a Service" src="images/suspend.png" align=middle border=0></A>
                         <fmt:message key="servicesManagement.The" bundle="${lang}"/> <%=service%> <fmt:message key="servicesManagement.servCurrent" bundle="${lang}"/> <span style="color: #00FF00"><fmt:message key="servicesManagement.RUNNING" bundle="${lang}"/></span>. <fmt:message key="servicesManagement.clickToSuspend" bundle="${lang}"/><br>
                         <fmt:message key="servicesManagement.suspendDescr" bundle="${lang}"/> <span style="color: #FF0000"><fmt:message key="servicesManagement.HARD" bundle="${lang}"/></span> <fmt:message key="servicesManagement.and" bundle="${lang}"/> <span style="color: #FFCC00"><fmt:message key="servicesManagement.SOFT" bundle="${lang}"/></span>.<br>
                         <span style="color: #FF0000"><fmt:message key="servicesManagement.HARD" bundle="${lang}"/></span> <fmt:message key="servicesManagement.HARDDescr" bundle="${lang}"/> <span style="color: #FFCC00"><fmt:message key="servicesManagement.SOFT" bundle="${lang}"/></span> <fmt:message key="servicesManagement.SOFTDescr" bundle="${lang}"/>
@@ -238,7 +238,7 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;&nbsp;" + serviceManag;
                         <A href="#" onclick="javascript: assign('resetServiceFile');">Errore nei files di stato!<!--<fmt:message key="servicesManagement.resetService" bundle="${lang}"/>-->&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
                     </DIV> 
                     <P>
-                        <a href="#" onclick="javascript: assign('resetServiceFile');"><IMG class=labelHomePage title="suspend" alt="Reset  Service's status files" src="images/resetFiles.jpg" align=middle border=0></A>
+                        <a href="#" onclick="javascript: assign('resetServiceFile');"><IMG class=labelHomePage title="suspend" alt="Reset  Service's status files" src="images/resetFiles.png" align=middle border=0></A>
                         <fmt:message key="servicesManagement.resetService.description" bundle="${lang}"/> 
                     </P>                     
                 </DIV> 
@@ -253,7 +253,7 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;&nbsp;" + serviceManag;
                         <A href="#" onclick="javascript: assign('resetServiceFile');"><fmt:message key="servicesManagement.resetService" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
                     </DIV> 
                     <P>
-                        <a href="#" onclick="javascript: assign('resetServiceFile');"><IMG class=labelHomePage title="suspend" alt="Reset  Service's status files" src="images/resetFiles.jpg" align=middle border=0></A>
+                        <a href="#" onclick="javascript: assign('resetServiceFile');"><IMG class=labelHomePage title="suspend" alt="Reset  Service's status files" src="images/resetFiles.png" align=middle border=0></A>
                         <fmt:message key="servicesManagement.resetService.description" bundle="${lang}"/> 
                     </P>                     
                 </DIV> 

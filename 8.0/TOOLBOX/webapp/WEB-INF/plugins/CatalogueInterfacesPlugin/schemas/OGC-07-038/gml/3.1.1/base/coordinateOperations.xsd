@@ -10,8 +10,8 @@
 	<!-- ======================================================
        includes and imports
 	====================================================== -->
-	<include schemaLocation="referenceSystems.xsd"/>
-	<include schemaLocation="dataQuality.xsd"/>
+	<include schemaLocation="gml/3.1.1/base/referenceSystems.xsd"/>
+	<include schemaLocation="gml/3.1.1/base/dataQuality.xsd"/>
 	<!-- ======================================================
        elements and types
 	====================================================== -->

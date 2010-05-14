@@ -20,7 +20,7 @@
    <xsd:import namespace="http://purl.org/dc/terms/"
                schemaLocation="csw/2.0.2/rec-dcterms.xsd"/>
    <xsd:import namespace="http://purl.org/dc/elements/1.1/"
-               schemaLocation="rec-dcmes.xsd"/>
+               schemaLocation="csw/2.0.2/rec-dcmes.xsd"/>
    <xsd:import namespace="http://www.opengis.net/ows"
                schemaLocation="ows/1.0.0/owsAll.xsd"/>
 

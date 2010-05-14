@@ -11,9 +11,9 @@ elementFormDefault="qualified" version="1.0.0" xml:lang="en">
 	<!-- ==============================================================
 		includes and imports
 	============================================================== -->
-	<include schemaLocation="owsServiceIdentification.xsd"/>
-	<include schemaLocation="owsServiceProvider.xsd"/>
-	<include schemaLocation="owsOperationsMetadata.xsd"/>
+	<include schemaLocation="ows/1.0.0/owsServiceIdentification.xsd"/>
+	<include schemaLocation="ows/1.0.0/owsServiceProvider.xsd"/>
+	<include schemaLocation="ows/1.0.0/owsOperationsMetadata.xsd"/>
 	<!-- ==============================================================
 		elements and types
 	============================================================== -->

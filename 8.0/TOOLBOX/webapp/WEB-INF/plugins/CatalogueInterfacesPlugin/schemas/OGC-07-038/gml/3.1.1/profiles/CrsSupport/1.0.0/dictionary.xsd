@@ -8,7 +8,7 @@
 	<!-- ========================================================
        includes and imports
 	======================================================== -->
-	<include schemaLocation="gmlBase.xsd"/>
+	<include schemaLocation="gml/3.1.1/profiles/CrsSupport/1.0.0/gmlBase.xsd"/>
 	<!-- ===================================================== -->
 	<!-- ===================================================== -->
 	<!-- === Dictionary and Definition components === -->

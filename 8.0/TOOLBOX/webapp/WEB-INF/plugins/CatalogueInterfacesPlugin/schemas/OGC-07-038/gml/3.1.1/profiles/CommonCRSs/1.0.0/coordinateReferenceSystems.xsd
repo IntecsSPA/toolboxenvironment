@@ -11,9 +11,9 @@ elementFormDefault="qualified" version="3.1.1" xml:lang="en">
 	<!-- ======================================================
        includes and imports
 	====================================================== -->
-	<include schemaLocation="coordinateSystems.xsd"/>
-	<include schemaLocation="datums.xsd"/>
-	<include schemaLocation="coordinateOperations.xsd"/>
+	<include schemaLocation="gml/3.1.1/profiles/CommonCRSs/1.0.0/coordinateSystems.xsd"/>
+	<include schemaLocation="gml/3.1.1/profiles/CommonCRSs/1.0.0/datums.xsd"/>
+	<include schemaLocation="gml/3.1.1/profiles/CommonCRSs/1.0.0/coordinateOperations.xsd"/>
 	<!-- ======================================================
        elements and types
 	====================================================== -->

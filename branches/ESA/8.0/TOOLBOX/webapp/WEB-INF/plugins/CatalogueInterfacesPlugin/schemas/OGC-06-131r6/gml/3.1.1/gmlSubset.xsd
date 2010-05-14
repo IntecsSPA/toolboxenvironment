@@ -4,7 +4,7 @@
 		<documentation>GML Subset schema for gml:metaDataProperty,gml:Polygon,gml:Point,gml:LineString,gml:LinearRing,gml:exterior,gml:interior,gml:surfaceProperty,gml:multiSurfacePropertyType,gml:_Feature,gml:featureMember,gml:CodeListType,gml:AngleType,gml:MeasureListType,gml:centerOf,gml:extentOf,gml:_MetaData,gml:Observation,gml:validTime,gml:beginPosition,gml:endPosition,gml:TimePeriod,gml:multiExtentOf,gml:_FeatureCollection,gml:CircleByCenterPoint,gml:Curve, written by gmlSubset.xslt.
 </documentation>
 	</annotation>
-	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="../../xlink/1.0.0/xlinks.xsd"/>
+	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink/1.0.0/xlinks.xsd"/>
 	<!-- ================================================= -->
 	<element name="metaDataProperty" type="gml:MetaDataPropertyType">
 		<annotation>

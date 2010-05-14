@@ -11,6 +11,6 @@ elementFormDefault="qualified" version="1.0.0" xml:lang="en">
 	<!-- ==============================================================
 		includes and imports
 	============================================================== -->
-	<include schemaLocation="owsGetCapabilities.xsd"/>
-	<include schemaLocation="owsExceptionReport.xsd"/>
+	<include schemaLocation="ows/1.0.0/owsGetCapabilities.xsd"/>
+	<include schemaLocation="ows/1.0.0/owsExceptionReport.xsd"/>
 </schema>

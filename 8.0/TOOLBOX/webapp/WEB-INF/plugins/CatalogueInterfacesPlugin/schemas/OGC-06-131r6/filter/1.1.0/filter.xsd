@@ -5,10 +5,10 @@
    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
    elementFormDefault="qualified"
    version="1.1.0">
-    <xsd:include schemaLocation="expr.xsd"/>
-    <xsd:include schemaLocation="sort.xsd"/>
-    <xsd:include schemaLocation="filterCapabilities.xsd"/>
-    <xsd:import namespace="http://www.opengis.net/gml" schemaLocation="../../gml/3.1.1/gmlSubset.xsd"/>
+    <xsd:include schemaLocation="filter/1.1.0/expr.xsd"/>
+    <xsd:include schemaLocation="filter/1.1.0/sort.xsd"/>
+    <xsd:include schemaLocation="filter/1.1.0/filterCapabilities.xsd"/>
+    <xsd:import namespace="http://www.opengis.net/gml" schemaLocation="gml/3.1.1/gmlSubset.xsd"/>
     <xsd:element name="_Id" type="ogc:AbstractIdType" abstract="true"/>
     <xsd:element name="FeatureId"
                 type="ogc:FeatureIdType"

@@ -20,7 +20,7 @@
   </xs:annotation>
 
   <xs:import namespace="http://www.opengis.net/gml"
-             schemaLocation="geometryPrimitives.xsd"/>
+             schemaLocation="gml/3.1.1/profiles/geoshape/0.0.9/geometryPrimitives.xsd"/>
 
   <xs:element name="Circle" type="gs:CircleType"
               substitutionGroup="gml:_Surface"/>

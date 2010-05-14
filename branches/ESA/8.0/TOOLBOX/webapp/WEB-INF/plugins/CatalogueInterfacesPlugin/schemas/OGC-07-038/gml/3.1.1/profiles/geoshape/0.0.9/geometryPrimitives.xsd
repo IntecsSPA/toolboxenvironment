@@ -4,7 +4,7 @@
         targetNamespace="http://www.opengis.net/gml"
         version="3.1.1" elementFormDefault="qualified">
 
-  <include schemaLocation="geometryBasic2d.xsd"/>
+  <include schemaLocation="gml/3.1.1/profiles/geoshape/0.0.9/geometryBasic2d.xsd"/>
 
   <element name="Curve" type="gml:CurveType"
            substitutionGroup="gml:_Curve"/>

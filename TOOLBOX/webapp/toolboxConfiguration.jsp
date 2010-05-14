@@ -23,7 +23,7 @@
             <A href="<%= response.encodeURL("configureToolboxRequest.jsp") %>?pageStatus=disabled"><fmt:message key="toolboxConfiguration.view" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
           </DIV> 
           <P> 
-              <A href="<%= response.encodeURL("configureToolboxRequest.jsp") %>?pageStatus=disabled"><IMG class=labelHomePage title="view" alt="View the TOOLBOX configuration" src="images/configureView.jpg" align=middle border=0></A> 
+              <A href="<%= response.encodeURL("configureToolboxRequest.jsp") %>?pageStatus=disabled"><IMG class=labelHomePage title="view" alt="View the TOOLBOX configuration" src="images/configureView.png" align=middle border=0></A>
             <fmt:message key="toolboxConfiguration.viewDescr" bundle="${lang}"/>
           </P> 
         </DIV> 
@@ -32,7 +32,7 @@
             <A href="<%= response.encodeURL("configureToolboxRequest.jsp") %>?pageStatus=enabled"><fmt:message key="toolboxConfiguration.changeConf" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
           </DIV> 
              <P> <A href="<%= response.encodeURL("configureToolboxRequest.jsp") %>?pageStatus=enabled"><IMG 
-                     class=labelHomePage title="change" alt="Change the TOOLBOX configuration" src="images/configure.jpg" align=middle border=0></A><fmt:message key="toolboxConfiguration.changeConfDescr" bundle="${lang}"/>
+                     class=labelHomePage title="change" alt="Change the TOOLBOX configuration" src="images/configure.png" align=middle border=0></A><fmt:message key="toolboxConfiguration.changeConfDescr" bundle="${lang}"/>
 	     </P> 
         </DIV> 
 	  </TD>

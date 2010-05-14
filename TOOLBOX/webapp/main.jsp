@@ -85,7 +85,7 @@ if (warnAddress)
                     <DIV> 
                         <A href="main.jsp"><fmt:message key="main.howTo" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
                     </DIV> 
-                    <P> <A href="main.jsp"><IMG class=labelHomePage title="HowTo" alt="HowTo" src="images/howTo.jpg" align=middle border=0></A>
+                    <P> <A href="main.jsp"><IMG class=labelHomePage title="HowTo" alt="HowTo" src="images/howTo.png" align=middle border=0></A>
                         
                                  <IMG src="images/arrow.gif"> <A target="_blank" href="Documentation/docsExplorer/RE/toolboxConfiguring.html"><fmt:message key="main.configure" bundle="${lang}"/></A><br>
                     <IMG src="images/arrow.gif"> <A target="_blank" href="Documentation/docsExplorer/RE/serviceCreating.html"><fmt:message key="main.create" bundle="${lang}"/></A><br>

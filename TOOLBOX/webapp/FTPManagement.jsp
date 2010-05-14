@@ -37,7 +37,7 @@ if (disabled)
                                 <fmt:message key="FTPManagement.accountList" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"><SPAN><IMG src="images/tt_square2.gif"></SPAN>
                             </DIV>
                             <P>
-                                <IMG class=labelHomePage title=list alt="FTP account list" src="images/ftpList.jpg" align=middle border=0>
+                                <IMG class=labelHomePage title=list alt="FTP account list" src="images/ftpList.png" align=middle border=0>
                                 <fmt:message key="FTPManagement.pageDescr" bundle="${lang}"/>
                             </P>
                             <P>
@@ -49,7 +49,7 @@ if (disabled)
                                 <fmt:message key="FTPManagement.newAccount" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"><SPAN><IMG src="images/tt_square2.gif"></SPAN>
                             </DIV>
                             <P>
-                                <IMG class=labelHomePage title="addFTP" alt="Add an FTP account" src="images/ftpCreate.jpg" align=middle border=0>
+                                <IMG class=labelHomePage title="addFTP" alt="Add an FTP account" src="images/ftpCreate.png" align=middle border=0>
                                 <fmt:message key="FTPManagement.pageAllows" bundle="${lang}"/>
                             </P>
                             <P>
@@ -66,7 +66,7 @@ if (disabled)
                                 <A href="<%= response.encodeURL("listFTPAccounts.jsp")%>"><fmt:message key="FTPManagement.accountList" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
                             </DIV>
                             <P>
-                                <A href="<%= response.encodeURL("listFTPAccounts.jsp")%>"><IMG class=labelHomePage title=list alt="FTP account list" src="images/ftpList.jpg" align=middle border=0></A>
+                                <A href="<%= response.encodeURL("listFTPAccounts.jsp")%>"><IMG class=labelHomePage title=list alt="FTP account list" src="images/ftpList.png" align=middle border=0></A>
                                 <fmt:message key="FTPManagement.pageDescr" bundle="${lang}"/>
                             </P>
                         </DIV>
@@ -74,7 +74,7 @@ if (disabled)
                             <DIV>
                                 <A href="<%= response.encodeURL("addFTPAccountRequest.jsp")%>"><fmt:message key="FTPManagement.newAccount" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
                             </DIV>
-                            <P> <A href="<%= response.encodeURL("addFTPAccountRequest.jsp")%>"><IMG class=labelHomePage title="addFTP" alt="Add an FTP account" src="images/ftpCreate.jpg" align=middle border=0></A><fmt:message key="FTPManagement.pageAllows" bundle="${lang}"/>
+                            <P> <A href="<%= response.encodeURL("addFTPAccountRequest.jsp")%>"><IMG class=labelHomePage title="addFTP" alt="Add an FTP account" src="images/ftpCreate.png" align=middle border=0></A><fmt:message key="FTPManagement.pageAllows" bundle="${lang}"/>
                             </P>
                         </DIV>
 <%        }    

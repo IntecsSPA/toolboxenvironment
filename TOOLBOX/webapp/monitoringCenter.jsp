@@ -49,7 +49,7 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;" +
                      <A href="javascript:view('manager?cmd=getTbxLog&serviceName=<%=service%>', 'Toolbox Log');"><fmt:message key="monitoringCenter.logDisplay" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
                         </DIV> 
                     <P> 
-                   <A href="javascript:view('manager?cmd=getTbxLog&serviceName=<%=service%>', 'Toolbox Log');"><IMG class=labelHomePage title=create alt="TOOLBOX log" src="images/log.jpg" align=middle border=0></A> 
+                   <A href="javascript:view('manager?cmd=getTbxLog&serviceName=<%=service%>', 'Toolbox Log');"><IMG class=labelHomePage title=create alt="TOOLBOX log" src="images/log.png" align=middle border=0></A>
                         <fmt:message key="monitoringCenter.logDescr" bundle="${lang}"/></P> 
                 </DIV> 
                 <c:choose>
@@ -93,7 +93,7 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;" +
                                 <A href="javascript:view('manager?cmd=getSrvLog&serviceName=<%=service%>', 'Service Log');"><fmt:message key="monitoringCenter.serviceDisplay" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
                             </DIV> 
                             <P>
-                                 <A href="javascript:view('manager?cmd=getSrvLog&serviceName=<%=service%>', 'Service Log');"><IMG class=labelHomePage title=create alt="Service log" src="images/tbxlog.jpg" align=middle border=0></A> 
+                                 <A href="javascript:view('manager?cmd=getSrvLog&serviceName=<%=service%>', 'Service Log');"><IMG class=labelHomePage title=create alt="Service log" src="images/tbxlog.png" align=middle border=0></A>
                                 <fmt:message key="monitoringCenter.serviceDescr1" bundle="${lang}"/> <%=service%> <fmt:message key="monitoringCenter.serviceDescr2" bundle="${lang}"/></P> 
                         </DIV>
                         <DIV class=portletItem id=01> 
@@ -101,7 +101,7 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;" +
                                 <A href="<%= response.encodeURL(viewSServiceInstances) %>"><fmt:message key="monitoringCenter.synchDisplay" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
                             </DIV> 
                             <P> 
-                                <A href="<%= response.encodeURL(viewSServiceInstances) %>"><IMG class=labelHomePage title=create alt="Synchronous instances" src="images/asynchronousInstances.jpg" align=middle border=0></A> 
+                                <A href="<%= response.encodeURL(viewSServiceInstances) %>"><IMG class=labelHomePage title=create alt="Synchronous instances" src="images/synchronousInstances.png" align=middle border=0></A>
                             <fmt:message key="monitoringCenter.descrSynch1" bundle="${lang}"/> <%=service%> <fmt:message key="monitoringCenter.descrSynch2" bundle="${lang}"/></P> 
                         </DIV>
                         <DIV class=portletItem id=01> 
@@ -109,7 +109,7 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;" +
                                 <A href="<%= response.encodeURL(viewAServiceInstances) %>"><fmt:message key="monitoringCenter.asynchDisplay" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
                             </DIV> 
                             <P> 
-                                <A href="<%= response.encodeURL(viewAServiceInstances) %>"><IMG class=labelHomePage title=create alt="Asynchronous instances" src="images/asynchronousInstances.jpg" align=middle border=0></A> 
+                                <A href="<%= response.encodeURL(viewAServiceInstances) %>"><IMG class=labelHomePage title=create alt="Asynchronous instances" src="images/asynchronousInstances.png" align=middle border=0></A>
                             <fmt:message key="monitoringCenter.asynchDescr1" bundle="${lang}"/> <%=service%> <fmt:message key="monitoringCenter.asynchDescr2" bundle="${lang}"/></P> 
                         </DIV>
                         <DIV class=portletItem id=01> 
@@ -117,7 +117,7 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;" +
                                 <A href="<%= response.encodeURL(viewServiceTimers) %>"><fmt:message key="monitoringCenter.view" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
                             </DIV> 
                             <P> 
-                                <A href="<%= response.encodeURL(viewServiceTimers) %>"><IMG class=labelHomePage title=create alt="Create a new service" src="images/timer.jpg" align=middle border=0></A> 
+                                <A href="<%= response.encodeURL(viewServiceTimers) %>"><IMG class=labelHomePage title=create alt="Create a new service" src="images/timer.png" align=middle border=0></A>
                             <fmt:message key="monitoringCenter.viewDescr" bundle="${lang}"/> <%=service%> <fmt:message key="monitoringCenter.service" bundle="${lang}"/>.</P> 
                         </DIV>          
                         <DIV class=portletItem id=01> 
@@ -125,7 +125,7 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;" +
                                 <A href="<%= response.encodeURL(viewOrdersConfirmation) %>"><fmt:message key="monitoringCenter.ordersConfirmation" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
                             </DIV> 
                             <P> 
-                                <A href="<%= response.encodeURL(viewOrdersConfirmation) %>"><IMG class=labelHomePage title=create alt="Monitor orders" src="images/orders.jpg" align=middle border=0></A> 
+                                <A href="<%= response.encodeURL(viewOrdersConfirmation) %>"><IMG class=labelHomePage title=create alt="Monitor orders" src="images/orders.png" align=middle border=0></A>
                             <fmt:message key="monitoringCenter.orderConfirmationDescr" bundle="${lang}"/> <%=service%> <fmt:message key="monitoringCenter.service" bundle="${lang}"/>.</P> 
                         </DIV>                        
                     </c:otherwise>

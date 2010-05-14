@@ -34,6 +34,7 @@ ToolboxConfiguration configuration;
 configuration=ToolboxConfiguration.getInstance();
 
 String warn = (request.getParameter("warn") == null ? "" : request.getParameter("warn"));
+Boolean configurationChanged = (request.getParameter("configurationChanged") == null ? false : true);
 
 boolean firstTimeCheck=Boolean.getBoolean(configuration.getConfigurationValue(ToolboxConfiguration.FIRST_TIME_CHECK));
      
@@ -62,9 +63,30 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;" +
 <TD class=pageBody id=main>
     <SCRIPT>addHelp("toolboxConfiguration");</SCRIPT>		
     <SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT>		
+
     <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center valign="top">
     <TBODY>
     <TR>
+
+
+<% if (configurationChanged) {
+						String reloadTOOLBOX = "/manager/reload?path=/TOOLBOX";
+					%>
+					    <form method="get" action="<%=reloadTOOLBOX%>" target="reload">
+						<input type="hidden" name="path" value="/TOOLBOX" />
+						<font color="FF0000"><strong><fmt:message key="viewToolboxConfiguration.WARNING" bundle="${lang}"/>! </strong></font>
+                        <strong>
+                        <p>
+                        <fmt:message key="viewToolboxConfiguration.inOrder" bundle="${lang}"/>
+						<fmt:message key="viewToolboxConfiguration.toReload" bundle="${lang}"/>
+                        <input type="submit" value="<fmt:message key="viewToolboxConfiguration.HERE" bundle="${lang}"/>">
+                        <fmt:message key="viewToolboxConfiguration.orPoint" bundle="${lang}"/> http://TOMCAT_HOST:TOMCAT_PORT/manager/reload?path=/TOOLBOX
+                        </strong></p>
+						</form>
+                     <%}%>
+
+
+
         <TD id=main>
             <c:choose>
                 <c:when test="${pageStatus=='disabled'}">
@@ -85,7 +107,6 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;" +
                 </c:otherwise>
                     
             </c:choose>
-            
             <jsp:include page="toolboxConfigurationTable.jsp"/>
           
          

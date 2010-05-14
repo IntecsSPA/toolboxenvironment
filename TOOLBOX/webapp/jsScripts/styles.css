@@ -260,7 +260,7 @@ H2 {
 	MARGIN-TOP: 1em; FONT-WEIGHT: bold; FLOAT: left; MARGIN-LEFT: 1px; WIDTH: 130px; COLOR: #336699; TEXT-ALIGN: left
 }
 .labelHomePage {
-	BORDER-RIGHT: gray 3px double; BORDER-TOP: gray 3px double; FLOAT: left; MARGIN-BOTTOM: 7px; MARGIN-LEFT: 0px; VERTICAL-ALIGN: middle; BORDER-LEFT: gray 3px double; WIDTH: 104px; MARGIN-RIGHT: 7px; BORDER-BOTTOM: gray 3px double; HEIGHT: 69px
+	FLOAT: left; MARGIN-BOTTOM: 7px; MARGIN-LEFT: 0px; VERTICAL-ALIGN: middle;  MARGIN-RIGHT: 7px
 }
 .portletItem {
 	FLOAT: left; MARGIN: 0.15%; WIDTH: 49.5%

@@ -53,6 +53,8 @@ public class ProxyRedirect extends HttpServlet
   
   private final static String JSON_XSLT_PATH ="resources/xsl/xml2json.xslt";
   private final static String JAVASCRIPT_XSLT_PATH ="resources/xsl/xml2js.xslt";
+
+  private final static String SOAP_NAMESPACE="http://schemas.xmlsoap.org/soap/envelope/";
 //---------------------------------------------------------------------------
 // Public Methods
 //----------------------------------------------------------------------------
@@ -182,8 +184,10 @@ public class ProxyRedirect extends HttpServlet
    TransformerFactory tfactory=null;     
    Document docProxy=null;
    InputStream resp = null;
+   InputStream err= null;
    Transformer transformer=null;
    Boolean soapFault=false;
+   Boolean error=false;
         try {
            // XmlTools.copyInputStreamToOutputStream(request.getInputStream(), new FileOutputStream("/home/maro/Desktop/ProxyGeoserverWPS.txt"));
             docProxy = XmlTools.docGenerate(request.getInputStream());
@@ -195,7 +199,7 @@ public class ProxyRedirect extends HttpServlet
             java.util.logging.Logger.getLogger(ProxyRedirect.class.getName()).log(Level.SEVERE, null, ex);
         }
        String serviceUrl=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"ServiceUrl");
-       System.out.println("Service URL: " + serviceUrl);
+      // System.out.println("Service URL: " + serviceUrl);
        String protocol=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"Protocol");
         if (protocol== null)
            protocol="HTTPPOST";
@@ -215,13 +219,8 @@ public class ProxyRedirect extends HttpServlet
 
        String seviceLogFolder=getServletContext().getRealPath(ProxyRedirect.LOG_SERVICES+logService);
 
-       
-       System.out.println("Log Folder:  " + seviceLogFolder);
- 
        File logDir=new File(seviceLogFolder);
        boolean b=logDir.mkdir();
-       
-       System.out.println("Create Log Folder : " + b);
        
        String pathIdRequest="/Request_"+XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"idRequest").hashCode();
        File requestDir;
@@ -243,14 +242,7 @@ public class ProxyRedirect extends HttpServlet
 
        
       File test=xmlRequestNamePath;
-          if(test.exists())
-              test=new File(xmlRequestNamePath+"2");
-        try {
-            XmlTools.dumpXML(docProxy, test, true);
-        } catch (Exception ex) {
-            log.debug("GisClient Exception: " + ex.getMessage());
-            ex.printStackTrace();
-        }
+   
        HttpURLConnection connection=null;
        if(protocol.equalsIgnoreCase("HTTPPOST")){  
            System.out.println("HTTP-POST");
@@ -259,32 +251,38 @@ public class ProxyRedirect extends HttpServlet
                connection = (HttpURLConnection) new URL(serviceUrl).openConnection();
                connection.setDoOutput(true); 
                connection.setAllowUserInteraction(false);
-                if(soapAction!= null)
-                    connection.setRequestProperty( "SOAPAction", soapAction);  
+               if(soapAction!= null)
+                     connection.setRequestProperty( "SOAPAction", soapAction);
                connection.setRequestMethod("POST");
                connection.setRequestProperty( "Content-type", "text/xml" );
                
               } catch (Exception ex) {
                  log.debug("GisClient Exception: " + ex.getMessage());
-                 ex.printStackTrace();
+                 response.setStatus(500);
+                 ex.printStackTrace(new PrintStream(new FileOutputStream(serviceResponsePath)));
+                 error=true;
               }
 
           tfactory = TransformerFactory.newInstance();
          
-          
+       if(!error){
           if(xslRequest!=null){
                 try {
                     transformer = tfactory.newTransformer(new StreamSource(new File(getServletContext().getRealPath(xslRequest))));
                 } catch (Exception ex) {
                     log.debug("GisClient Exception: " + ex.getMessage());
-                    ex.printStackTrace();
+                    response.setStatus(500);
+                    ex.printStackTrace(new PrintStream(new FileOutputStream(serviceResponsePath)));
+                    error=true;
                 }
                 try {
                     transformer.transform(new StreamSource(xmlRequestNamePath), new StreamResult(serviceRequestPath));
                     transformer.transform(new StreamSource(xmlRequestNamePath), new StreamResult(connection.getOutputStream()));
                 } catch (Exception ex) {
                     log.debug("GisClient Exception: " + ex.getMessage());
-                    ex.printStackTrace();
+                    response.setStatus(500);
+                    ex.printStackTrace(new PrintStream(new FileOutputStream(serviceResponsePath)));
+                    error=true;
                 }
           }else{
              Node processingRequest=XmlTools.getElementChild(docProxy.getDocumentElement(),"Request"); 
@@ -300,12 +298,31 @@ public class ProxyRedirect extends HttpServlet
                             
                             connection.setRequestProperty( "Content-length",  Long.toString(reqTag.length()));
                             connOut=connection.getOutputStream();
-                            XmlTools.copyInputStreamToOutputStream(new FileInputStream(reqTag), connOut);
-                            connOut.close();
-                           // transformer.transform(new DOMSource(documentReq), new StreamResult(connection.getOutputStream()));
+                            if(soapAction!= null){
+                                Document requestTag=XmlTools.docGenerate(new FileInputStream(reqTag));
+                               // String reqNameSpace=((Node)requestTag.getDocumentElement()).getNamespaceURI();
+                                String reqNameSpace=(((Node)requestTag.getDocumentElement()).getNamespaceURI() == null ?
+                                    "": ((Node)requestTag.getDocumentElement()).getNamespaceURI());
+                                if(!reqNameSpace.equalsIgnoreCase(SOAP_NAMESPACE)){
+                                   response.setStatus(500);
+                                   XmlTools.copyInputStreamToOutputStream(
+                                        new ByteArrayInputStream("<Error>The request is not a SOAP Request</Error>".getBytes()),
+                                        new FileOutputStream(serviceResponsePath));
+                                   error=true;
+
+                                }
+                            }
+
+                            if(!error){
+                                XmlTools.copyInputStreamToOutputStream(new FileInputStream(reqTag), connOut);
+                                connOut.close();
+                            }
+                         
                         } catch (Exception ex) {
                             log.debug("GisClient Exception: " + ex.getMessage());
-                            ex.printStackTrace();
+                            response.setStatus(500);
+                            ex.printStackTrace(new PrintStream(new FileOutputStream(serviceResponsePath)));
+                            error=true;
                         }
                     }     
              }else{
@@ -317,18 +334,29 @@ public class ProxyRedirect extends HttpServlet
                     connOut.close();
                 } catch (Exception ex) {
                    log.debug("GisClient Exception: " + ex.getMessage());
-                   ex.printStackTrace();
+                   response.setStatus(500);
+                   ex.printStackTrace(new PrintStream(new FileOutputStream(serviceResponsePath)));
+                   error=true;
                 }
              }
              
-          }  
+          }
+       }
+          if(!error){
             try {
+                
                 resp = connection.getInputStream();
+              
                 XmlTools.copyInputStreamToOutputStream(resp, new FileOutputStream(serviceResponsePath));
             } catch (IOException ex) {
                 log.debug("GisClient Exception: " + ex.getMessage());
-                ex.printStackTrace();
+                //err= connection.getErrorStream();
+                response.setStatus(400);
+                new FileOutputStream(serviceResponsePath).write(ex.getMessage().getBytes());
+               // XmlTools.copyInputStreamToOutputStream(err, new FileOutputStream(serviceResponsePath));
+                error=true;
             }
+          }
        }else{   
           System.out.println("SOAP Request...");
 
@@ -354,13 +382,15 @@ public class ProxyRedirect extends HttpServlet
                     transformer = tfactory.newTransformer(new StreamSource(new File(getServletContext().getRealPath(xslRequest))));
                 } catch (TransformerConfigurationException ex) {
                     log.fatal("GisClient Exception: " + ex.getMessage(), ex);
-                    ex.printStackTrace();
+                    ex.printStackTrace(new PrintStream(new FileOutputStream(serviceResponsePath)));
+                    //ex.printStackTrace();
                 }
                 try {
                     transformer.transform(new StreamSource(xmlRequestNamePath), new StreamResult(serviceRequestPath));
                 } catch (Exception ex) {
                     log.fatal("GisClient Exception: " + ex.getMessage(), ex);
-                    ex.printStackTrace();
+                    ex.printStackTrace(new PrintStream(new FileOutputStream(serviceResponsePath)));
+                    //ex.printStackTrace();
                 }
              try {
                   if(security)
@@ -369,7 +399,8 @@ public class ProxyRedirect extends HttpServlet
                     docResp=spt.getSoapCall(serviceUrl,soapAction,XmlTools.docGenerate(new FileInputStream(serviceRequestPath))/*,soapVersion*/);
                  } catch (Exception ex){
                    log.fatal("GisClient Exception: " + ex.getMessage(), ex);
-                   ex.printStackTrace();
+                   //ex.printStackTrace();
+                   ex.printStackTrace(new PrintStream(new FileOutputStream(serviceResponsePath)));
                    response.setStatus(400);
                    new FileOutputStream(serviceResponsePath).write(ex.getMessage().getBytes());
                    soapFault=true;
@@ -389,7 +420,8 @@ public class ProxyRedirect extends HttpServlet
                                docResp=spt.getSoapCall(serviceUrl,soapAction, documentReq/*, soapVersion*/);
                        } catch (Exception ex){
                            log.fatal("GisClient Exception: " + ex.getMessage(), ex);
-                           ex.printStackTrace();
+                           //ex.printStackTrace();
+                           ex.printStackTrace(new PrintStream(new FileOutputStream(serviceResponsePath)));
                            response.setStatus(400);
                            new FileOutputStream(serviceResponsePath).write(ex.getMessage().getBytes());
                            soapFault=true;
@@ -404,6 +436,7 @@ public class ProxyRedirect extends HttpServlet
                         } catch (Exception ex){
                            log.fatal("GisClient Exception: " + ex.getMessage(), ex);
                            ex.printStackTrace();
+                           ex.printStackTrace(new PrintStream(new FileOutputStream(serviceResponsePath)));
                            response.setStatus(400);
                            new FileOutputStream(serviceResponsePath).write(ex.getMessage().getBytes());
                            soapFault=true;
@@ -417,6 +450,7 @@ public class ProxyRedirect extends HttpServlet
             } catch (Exception ex) {
                 log.fatal("GisClient Exception: " + ex.getMessage(), ex);
                 ex.printStackTrace();
+                ex.printStackTrace(new PrintStream(new FileOutputStream(serviceResponsePath)));
             }
        }
        if(soapFault){
@@ -430,6 +464,7 @@ public class ProxyRedirect extends HttpServlet
                     } catch (TransformerConfigurationException ex) {
                         log.fatal("GisClient Exception: " + ex.getMessage(), ex);
                         ex.printStackTrace();
+                        ex.printStackTrace(new PrintStream(new FileOutputStream(serviceResponsePath)));
                     }
                     try {
                         transformer.transform(new StreamSource(serviceResponsePath), new StreamResult(proxyResponsePath));
@@ -437,6 +472,7 @@ public class ProxyRedirect extends HttpServlet
                     } catch (Exception ex) {
                         log.fatal("GisClient Exception: " + ex.getMessage(), ex);
                         ex.printStackTrace();
+                        ex.printStackTrace(new PrintStream(new FileOutputStream(serviceResponsePath)));
                     }
            }else{
               proxyResponsePath=serviceResponsePath;
@@ -449,6 +485,7 @@ public class ProxyRedirect extends HttpServlet
                             } catch (TransformerConfigurationException ex) {
                                 log.fatal("GisClient Exception: " + ex.getMessage(), ex);
                                 ex.printStackTrace();
+                                ex.printStackTrace(new PrintStream(new FileOutputStream(serviceResponsePath)));
                             }
                             try {
                                 transformer.transform(new StreamSource(proxyResponsePath), new StreamResult(proxyResponseJSONPath));
@@ -458,6 +495,7 @@ public class ProxyRedirect extends HttpServlet
                             } catch (Exception ex) {
                                 log.fatal("GisClient Exception: " + ex.getMessage(), ex);
                                 ex.printStackTrace();
+                                ex.printStackTrace(new PrintStream(new FileOutputStream(serviceResponsePath)));
                             }
                        }else{
                           if(outputFormat.equalsIgnoreCase("JAVASCRIPT")){
@@ -466,6 +504,7 @@ public class ProxyRedirect extends HttpServlet
                                  } catch (TransformerConfigurationException ex) {
                                   log.fatal("GisClient Exception: " + ex.getMessage(), ex);
                                   ex.printStackTrace();
+                                  ex.printStackTrace(new PrintStream(new FileOutputStream(serviceResponsePath)));
                                  }
                             try  {
                                   transformer.transform(new StreamSource(proxyResponsePath), new StreamResult(proxyResponseJSPath));
@@ -475,6 +514,7 @@ public class ProxyRedirect extends HttpServlet
                                  } catch (Exception ex) {
                                   log.fatal("GisClient Exception: " + ex.getMessage(), ex);
                                   ex.printStackTrace();
+                                  ex.printStackTrace(new PrintStream(new FileOutputStream(serviceResponsePath)));
                                  }
                           }else{
                                 pathResult=proxyResponsePath.getAbsolutePath();
@@ -493,9 +533,10 @@ public class ProxyRedirect extends HttpServlet
                     } catch (IOException ex) {
                         log.fatal("GisClient Exception: " + ex.getMessage(), ex);
                         ex.printStackTrace();
+                        ex.printStackTrace(new PrintStream(new FileOutputStream(serviceResponsePath)));
                     }
               }else{
-                    if (ident!= null)
+                    if (ident!= null && !error)
                         if(ident.equalsIgnoreCase("true"))
                             try {
                                 Document docIdent = XmlTools.docGenerate(new FileInputStream(pathResult));
@@ -512,6 +553,7 @@ public class ProxyRedirect extends HttpServlet
                     } catch (IOException ex) {
                         log.fatal("GisClient Exception: " + ex.getMessage(), ex);
                         ex.printStackTrace();
+                        ex.printStackTrace(new PrintStream(new FileOutputStream(serviceResponsePath)));
                     }
               }
        

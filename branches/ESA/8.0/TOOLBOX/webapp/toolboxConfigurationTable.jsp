@@ -62,7 +62,7 @@ String currCompanyName = configuration.getConfigurationValue(ToolboxConfiguratio
 String currCompanyContact = configuration.getConfigurationValue(ToolboxConfiguration.COMPANY_CONTACT);
 String ebRRREpoHome=configuration.getConfigurationValue(ToolboxConfiguration.EBRR_REPO_HOME);
 String tbxKeystorePwd= configuration.getConfigurationValue(ToolboxConfiguration.TOOLBOX_LEVEL_KEYSTORE_PASSWORD);
-
+String sseOpTeamEmail=configuration.getConfigurationValue(ToolboxConfiguration.SSE_SUPPORT_TEAM_EMAIL);
 
     if (Boolean.parseBoolean(configuration.getConfigurationValue(ToolboxConfiguration.FIRST_TIME_CHECK))) {
         firstTimeChecked = "checked";
@@ -217,6 +217,10 @@ PropertyResourceBundle messages = (PropertyResourceBundle)ResourceBundle.getBund
                 <tr><!-- Row 9 -->
                     <td class="tdItem" nowrap width="50%"><fmt:message key="configureToolboxRequest.mailErrSSE" bundle="${lang}"/></td>
                     <td class="tdForm" nowrap><input name="mailErrorSSE" type="checkbox" <%=mailErrorSSEChecked%> <%=disabled%>></td>
+                </tr>
+                 <tr><!-- Row 9 -->
+                    <td class="tdItem" nowrap width="50%"><fmt:message key="configureToolboxRequest.other" bundle="${lang}"/><font color="FF0000"><%=warn.equals("missingTo") ? " - MISSING!" : "" %></td>
+                    <td class="tdForm" nowrap><input name="sseOpTeamEmail" type="text" value="<%= sseOpTeamEmail %>" size="40" <%=disabled%>></td>
                 </tr>
                 <tr><!-- Row 9 -->
                     <td class="tdItem" nowrap width="50%"><fmt:message key="configureToolboxRequest.mailErr" bundle="${lang}"/></td>

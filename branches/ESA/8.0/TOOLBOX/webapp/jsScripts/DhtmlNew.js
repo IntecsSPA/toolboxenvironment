@@ -402,8 +402,9 @@ function addGrid(file, titleTab){
         var but = new Ext.Button({
             text:'Clear',
             handler:function(){
+                var http = new XMLHttpRequest();
                 var c = file.replace("get","clear");
-                //alert(c);
+     
                 http.open("GET", c, true);
                 http.onreadystatechange = ResponseClear;
                 if ( !callInProgress(http) ) {

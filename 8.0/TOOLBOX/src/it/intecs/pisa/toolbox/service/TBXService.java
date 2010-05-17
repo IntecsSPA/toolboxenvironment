@@ -789,7 +789,9 @@ public class TBXService extends Service {
             {
                 ecc.printStackTrace();
             }
-            
+
+             ServiceLifeCycle.executeLifeCycleStep(LifeCycle.SCRIPT_BUILD,this,operationDescriptor.getName());
+             
             //TODO if the Axis2ToolboxDispatcher is used then the following code is unnecessary
             /*
             //if wssecurity is on then add operationDescriptor.getSoapAction()

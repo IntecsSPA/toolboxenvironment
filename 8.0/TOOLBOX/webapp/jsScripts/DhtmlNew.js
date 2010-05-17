@@ -351,6 +351,8 @@ function view(file, title){
     win.show();
 }
 
+var http = new XMLHttpRequest();
+
 function addGrid(file, titleTab){
     
     if (!tabs.findById(titleTab)){
@@ -402,7 +404,7 @@ function addGrid(file, titleTab){
         var but = new Ext.Button({
             text:'Clear',
             handler:function(){
-                var http = new XMLHttpRequest();
+                
                 var c = file.replace("get","clear");
      
                 http.open("GET", c, true);

@@ -782,6 +782,8 @@ public class TBXService extends Service {
             {
                 ecc.printStackTrace();
             }
+
+            ServiceLifeCycle.executeLifeCycleStep(LifeCycle.SCRIPT_BUILD,this,operationDescriptor.getName());
                       
         }
         catch(Exception e)

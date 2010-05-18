@@ -39,7 +39,6 @@ String extVers = (request.getParameter("extVers") == null ? "2.0.1": request.get
 int loadDefer= (request.getParameter("loadDefer") == null ? 0: new Integer(request.getParameter("loadDefer")));
 boolean loadPanel= (request.getParameter("loadPanel") == null ? false : new Boolean(request.getParameter("loadPanel")));
 boolean firebugControl= (request.getParameter("firebugControl") == null ? false : new Boolean(request.getParameter("firebugControl")));
-System.out.println("firebugControl: " +firebugControl);
 String extImport3="<link rel=\"stylesheet\" type=\"text/css\" href=\"jsScripts/import/gis-client-library/import/ext/resources/css/ext-all.css\" ></link>\n"
 	     +"<script type=\"text/javascript\" src=\"jsScripts/import/gis-client-library/import/ext/adapter/ext/ext-base.js\"></script>\n"
              +"<script type=\"text/javascript\" src=\"jsScripts/import/gis-client-library/import/ext/ext-all.js\"></script>\n";
@@ -83,7 +82,7 @@ String extImport = (extVers.equalsIgnoreCase("2.0.1") ? extImport2 : extImport3)
               var firebugWarning = function () {
             <% } %>
 
-            <% if(firebugControl) { System.out.println("firebugControl: " +firebugControl);%>
+            <% if(firebugControl) { %>
                             var cp = new Ext.state.CookieProvider();
 
                             if(window.console && window.console.firebug && ! cp.get('hideFBWarning')){

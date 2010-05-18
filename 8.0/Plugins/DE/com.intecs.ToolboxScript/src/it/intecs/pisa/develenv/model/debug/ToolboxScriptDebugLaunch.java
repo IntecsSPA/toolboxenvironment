@@ -1,8 +1,8 @@
 package it.intecs.pisa.develenv.model.debug;
 
-import it.intecs.pisa.common.communication.ClientDebugConsole;
 import it.intecs.pisa.common.tbx.Operation;
 import it.intecs.pisa.common.tbx.Service;
+import it.intecs.pisa.communication.ClientDebugConsole;
 import it.intecs.pisa.develenv.model.asynchJobs.AsynchInfoDialogs;
 import it.intecs.pisa.develenv.model.launch.ToolboxScriptLaunchConfiguration;
 import it.intecs.pisa.develenv.model.launch.ToolboxScriptRunLaunch;
@@ -33,8 +33,6 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.IBreakpoint;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import com.sun.xml.internal.ws.api.wsdl.parser.ServiceDescriptor;
 
 public class ToolboxScriptDebugLaunch extends ToolboxScriptRunLaunch {
 

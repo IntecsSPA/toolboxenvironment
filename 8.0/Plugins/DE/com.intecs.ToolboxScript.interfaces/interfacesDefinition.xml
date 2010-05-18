@@ -39,7 +39,7 @@
                 <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="HarvestResponse"/>
                 <scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-131r6_Gateway/Harvest/script.tscript" overrideByUser="true"/>
                 <scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-131r6_Gateway/Harvest/globalError.tscript" overrideByUser="false"/>
-                <testFiles>testFiles/OGC-06-131r6_Gateway/Harvest/test.xml</testFiles>
+                <testFiles>testFiles/OGC-06-131r6/Harvest/test.xml</testFiles>
             </operation>
         </operations>
     <variables>

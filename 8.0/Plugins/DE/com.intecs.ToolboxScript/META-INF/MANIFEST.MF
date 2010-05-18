@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: TOOLBOX Development Environment Core Code Plug-in
 Bundle-SymbolicName:  com.intecs.ToolboxScript.model;singleton:=true
-Bundle-Version: 1.2.0
+Bundle-Version: 1.3.2
 Bundle-Vendor: Intecs Informatica e Tecnologia del Software
 Bundle-Localization: plugin
 Bundle-Activator: it.intecs.pisa.develenv.ModelActivator

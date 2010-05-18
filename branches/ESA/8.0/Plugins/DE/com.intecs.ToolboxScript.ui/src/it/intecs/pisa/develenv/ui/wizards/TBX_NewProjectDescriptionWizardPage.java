@@ -161,13 +161,20 @@ public class TBX_NewProjectDescriptionWizardPage extends WizardPage {
 		String newPath=null;
 		
 		newPath=this.abstractFilePath.getText();
+		
+		if(newPath==null || newPath.equals(""))
+		{
+			this.updateStatus(null);
+		}
+		else
+		{
 		final File pathFile=new File(newPath);
 		
 		if(pathFile.exists()==false) {
 			this.updateStatus("The abstract file path is not valid.");
 		} else {
 			this.updateStatus(null);
-		}
+		}}
 	}
 
 	/**
@@ -241,12 +248,17 @@ public class TBX_NewProjectDescriptionWizardPage extends WizardPage {
 		String newPath=null;
 		
 		newPath=this.descriptionFilePath.getText();
-		final File pathFile=new File(newPath);
-		
-		if(pathFile.exists()==false) {
-			this.updateStatus("The description file path is not valid.");
-		} else {
+		if(newPath==null || newPath.equals(""))
 			this.updateStatus(null);
+		else
+		{
+			final File pathFile=new File(newPath);
+			
+			if(pathFile.exists()==false) {
+				this.updateStatus("The description file path is not valid.");
+			} else {
+				this.updateStatus(null);
+			}
 		}
 		
 	}

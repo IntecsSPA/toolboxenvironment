@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: TDE_libs Plug-in
 Bundle-SymbolicName: com.intecs.ToolboxScript.libraries;singleton:=true
-Bundle-Version: 1.2.0
+Bundle-Version: 1.3.2
 Bundle-Localization: plugin
 Bundle-ClassPath: .,
  jars/commons-httpclient-2.0.2.jar,
@@ -20,17 +20,15 @@ Bundle-ClassPath: .,
  jars/slf4j-log4j12-1.5.2.jar,
  bin/
 Bundle-Vendor: Intecs
-Export-Package: it.intecs.pisa.common.communication,
- it.intecs.pisa.common.communication.messages,
- it.intecs.pisa.common.communication.sockets,
- it.intecs.pisa.common.stream,
+Export-Package: it.intecs.pisa.common.stream,
  it.intecs.pisa.common.tbx,
  it.intecs.pisa.common.tbx.exceptions,
  it.intecs.pisa.common.tbx.lifecycle,
  it.intecs.pisa.common.tbx.schemas,
+ it.intecs.pisa.communication,
+ it.intecs.pisa.communication.messages,
+ it.intecs.pisa.communication.sockets,
  it.intecs.pisa.util,
- it.intecs.pisa.util.compiler,
- it.intecs.pisa.util.compiler.exceptions,
  it.intecs.pisa.util.rss,
  it.intecs.pisa.util.wsdl,
  java_cup.runtime,

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript">
+ <xml attributePrefix="%" textTag="evaluate">
+        <csw:ServiceExceptionReport xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" version="2.0.2">
+                <csw:exceptionCode>500</csw:exceptionCode>
+        </csw:ServiceExceptionReport>
+    </xml>
+</sequence>

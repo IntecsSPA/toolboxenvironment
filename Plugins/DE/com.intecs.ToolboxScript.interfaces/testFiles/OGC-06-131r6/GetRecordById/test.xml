@@ -1,2 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?> 
- 
+<?xml version="1.0" encoding="UTF-8"?>
+<csw:GetRecordById xmlns:csw="http://www.opengis.net/cat/csw/2.0.2"
+	xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" service="CSW"
+	version="2.0.2"
+	outputSchema="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0">
+	<csw:Id></csw:Id>
+	<csw:ElementSetName typeNames="rim:ExtrinsicObject">full</csw:ElementSetName>
+</csw:GetRecordById>

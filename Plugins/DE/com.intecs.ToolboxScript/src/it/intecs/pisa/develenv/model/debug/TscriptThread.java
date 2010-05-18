@@ -11,7 +11,7 @@ package it.intecs.pisa.develenv.model.debug;
 
 import java.util.StringTokenizer;
 
-import it.intecs.pisa.common.communication.messages.BreakpointHitMessage;
+import it.intecs.pisa.communication.messages.BreakpointHitMessage;
 import it.intecs.pisa.develenv.model.debug.TscriptDebugTarget;
 import it.intecs.pisa.develenv.model.debug.TscriptStackframe;
 

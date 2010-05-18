@@ -9,7 +9,7 @@
  ------------------------------------------------------------------------------------------*/
 package it.intecs.pisa.develenv.model.debug;
 
-import it.intecs.pisa.common.communication.messages.VariableDescriptionMessage;
+import it.intecs.pisa.communication.messages.VariableDescriptionMessage;
 
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.debug.core.DebugEvent;

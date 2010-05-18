@@ -1,12 +1,14 @@
 package it.intecs.pisa.develenv.model.utils;
 
+import it.intecs.pisa.util.IOUtil;
+
+import java.io.File;
 import java.net.URI;
 
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileInfo;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.filesystem.URIUtil;
-import org.eclipse.core.resources.IResource;
 
 public class FileSystemUtil {
 
@@ -29,12 +31,14 @@ public class FileSystemUtil {
 	
 	public static void delete(URI toDelete)
 	{
-		IFileStore deleteStore=null;
-		
+		//IFileStore deleteStore=null;
+		File fileToDelete;
 		try
 		{	
-			deleteStore=EFS.getStore(toDelete);
-			deleteStore.delete(IResource.NONE, null);
+			//deleteStore=EFS.getStore(toDelete);
+			//deleteStore.delete(IResource.NONE, null);
+			fileToDelete=new File(toDelete);
+			fileToDelete.delete();
 		}
 		catch(Exception e)
 		{
@@ -65,20 +69,22 @@ public class FileSystemUtil {
 	
 	public static void copyFile(URI source,URI destination)
 	{
-		IFileStore sourceStore=null;
+		/*IFileStore sourceStore=null;
 		IFileStore destStore=null;	
-		IFileStore parentStore=null;
+		IFileStore parentStore=null;*/
 		
 		try
 		{	
-			sourceStore=EFS.getStore(source);
+			/*sourceStore=EFS.getStore(source);
 			
 			destStore=EFS.getStore(destination);
 			parentStore=destStore.getParent();
 			
 			parentStore.mkdir(IResource.NONE, null);
-		
-			sourceStore.copy(destStore, EFS.OVERWRITE, null);
+		    
+			sourceStore.copy(destStore, EFS.OVERWRITE, null);*/
+			
+			IOUtil.copyFile(new File(source), new File(destination));
 		}
 		catch(Exception e)
 		{
@@ -94,11 +100,12 @@ public class FileSystemUtil {
 		
 		try
 		{	
-			sourceStore=EFS.getStore(source);
+			/*sourceStore=EFS.getStore(source);
 			
 			destStore=EFS.getStore(destination);
 			
-			sourceStore.copy(destStore, EFS.OVERWRITE, null);
+			sourceStore.copy(destStore, EFS.OVERWRITE, null);*/
+			IOUtil.copyDirectory(new File(source), new File(destination));
 		}
 		catch(Exception e)
 		{

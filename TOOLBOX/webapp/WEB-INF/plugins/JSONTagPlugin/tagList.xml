@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tagList>
     <tag name="stringToJSON" class="it.intecs.pisa.toolbox.plugins.json.StringToJSONTag"/>
+    <tag name="xmlToJSON" class="it.intecs.pisa.toolbox.plugins.json.XmlToJSONTag"/>
     <tag name="RESTPost" class="it.intecs.pisa.toolbox.plugins.json.RESTPostTag"/>
     <tag name="xPath" class="it.intecs.pisa.toolbox.plugins.json.xPathTag"/>
 </tagList>

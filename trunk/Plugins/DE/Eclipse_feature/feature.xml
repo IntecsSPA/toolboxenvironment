@@ -2,7 +2,7 @@
 <feature
       id="Toolbox.Develop.Plugin"
       label="Toolbox Develop Plugin"
-      version="1.3.0"
+      version="1.3.5"
       provider-name="Intecs Informatica e Tecnologia del Software"
       os="linux,macosx,win32"
       ws="gtk,win32"
@@ -11,8 +11,13 @@
       image="images/intecslogo.jpg">
 
    <description url="http://toolbox.pisa.intecs.it/download/editorVersionInfo.jsp">
-      The TOOLBOX development environment is an Eclipse plugin that
-let the user develop and debug a toolbox script files.
+      New in 1.3.5
+Fixed the interface definition in OGC06-131r6. No all operation scripts are copied.
+
+New in v1.3.4
+Fixed issue #311 http://sse-wiki.spacebel.be/tracsvn/sse-operation/ticket/311
+Fixes issue when entering a invalid path for abstract or description
+Fixes missing documentation
    </description>
 
    <copyright>
@@ -496,32 +501,32 @@ Public License instead of this License.
          id="com.intecs.ToolboxScript.model"
          download-size="0"
          install-size="0"
-         version="1.3.0"
+         version="1.3.2"
          unpack="false"/>
 
    <plugin
          id="com.intecs.ToolboxScript.ui"
          download-size="0"
          install-size="0"
-         version="1.3.0"
+         version="1.3.3"
          unpack="false"/>
 
    <plugin
          id="com.intecs.ToolboxScript.libraries"
          download-size="0"
          install-size="0"
-         version="1.3.0"/>
+         version="1.3.2"/>
 
    <plugin
          id="com.intecs.ToolboxScript.editorFiles"
          download-size="0"
          install-size="0"
-         version="1.3.0"/>
+         version="1.3.2"/>
 
    <plugin
          id="com.intecs.ToolboxScript.interfaces"
          download-size="0"
          install-size="0"
-         version="1.3.0"/>
+         version="1.3.2"/>
 
 </feature>

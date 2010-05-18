@@ -3,14 +3,13 @@
    xmlns:xs="http://www.w3.org/2001/XMLSchema"
    xmlns:dct="http://purl.org/dc/terms/"
    xmlns:dc="http://purl.org/dc/elements/1.1/" elementFormDefault="qualified"
-   attributeFormDefault="unqualified" version="2.0.2">
+   attributeFormDefault="unqualified" version="2.0.2 2010-01-22">
    <xs:annotation>
       <xs:documentation xml:lang="en"
          source="http://dublincore.org/documents/dcmi-terms/">This schema declares additional DCMI elements and element refinements 
     in the "http://purl.org/dc/terms/" namespace.</xs:documentation>
    </xs:annotation>
-   <xs:import namespace="http://purl.org/dc/elements/1.1/"
-      schemaLocation="csw/2.0.2/rec-dcmes.xsd"/>
+   <xs:import namespace="http://purl.org/dc/elements/1.1/" schemaLocation="csw/2.0.2/rec-dcmes.xsd"/>
    <xs:element name="abstract" type="dc:SimpleLiteral"
       substitutionGroup="dc:description"/>
    <xs:element name="accessRights" type="dc:SimpleLiteral"

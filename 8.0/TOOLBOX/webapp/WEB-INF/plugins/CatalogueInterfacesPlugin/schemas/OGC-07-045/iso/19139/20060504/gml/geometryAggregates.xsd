@@ -5,7 +5,7 @@
 		<documentation>See ISO/DIS 19136 12.3.
 Geometric aggregates (i.e. instances of a subtype of gml:AbstractGeometricAggregateType) are arbitrary aggregations of geometry elements. They are not assumed to have any additional internal structure and are used to "collect" pieces of geometry of a specified type. Application schemas may use aggregates for features that use multiple geometric objects in their representations.</documentation>
 	</annotation>
-	<include schemaLocation="geometryPrimitives.xsd"/>
+	<include schemaLocation="iso/19139/20060504/gml/geometryPrimitives.xsd"/>
 	<complexType name="AbstractGeometricAggregateType" abstract="true">
 		<complexContent>
 			<extension base="gml:AbstractGeometryType">

@@ -7,6 +7,6 @@
     <interfacePlugin name="OGC-07-038" version="0.0" descriptionFile="OGC-07-038_proxy.xml" />
     <interfacePlugin name="OGC-05-025r3" version="0.0" descriptionFile="OGC-05-025r3_gateway.xml" />
     <interfacePlugin name="OGC-05-025r3" version="0.0" descriptionFile="OGC-05-025r3_proxy.xml" />
-    <!--interfacePlugin name="OGC-07-045" version="1.0" descriptionFile="OGC-07-045_proxy.xml" />
-    <interfacePlugin name="OGC-07-045" version="1.0" descriptionFile="OGC-07-045_gateway.xml" /-->
+    <interfacePlugin name="OGC-07-045" version="1.0" descriptionFile="OGC-07-045_proxy.xml" />
+    <interfacePlugin name="OGC-07-045" version="1.0" descriptionFile="OGC-07-045_gateway.xml" />
 </plugin>

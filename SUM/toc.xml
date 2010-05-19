@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <toc label="TOOLBOX User Manual">
   <topic label="Getting started" href="main.html">
     <topic label="Overview" href="overview.html"/>
@@ -7,9 +7,9 @@
   </topic>
   <topic label="Run-time environment" href="RE/main.html">
     <topic label="Getting started" href="RE/main.html">
-      <topic label="Installation" href="blankpage.html">
+      <topic label="Installation" href="RE/blankpage.html">
         <topic label="Component configuration" href="RE/configuration.html"/>
-        <topic label="TOOLBOX" href="blankpage.html">
+        <topic label="TOOLBOX" href="RE/blankpage.html">
           <topic label="System requirements" href="RE/toolboxSystemRequirements.html"/>
           <topic label="Installing the TOOLBOX" href="RE/toolboxInstallation.html">
             <topic label="Installing the TOOLBOX from scratch" href="RE/toolboxInstallationNew.html"/>
@@ -31,8 +31,8 @@
         </topic>
       </topic>
     </topic>
-    <topic label="tasks" href="blankpage.html">
-      <topic label="TOOLBOX management" href="blankpage.html">
+    <topic label="tasks" href="RE/blankpage.html">
+      <topic label="TOOLBOX management" href="RE/blankpage.html">
         <topic label="Logging in" href="RE/toolboxLoggingIn.html"/>
         <topic label="Configuring the TOOLBOX" href="RE/toolboxConfiguring.html"/>
         <topic label="Viewing the TOOLBOX configuration" href="RE/toolboxViewingConfiguration.html"/>
@@ -77,7 +77,7 @@
         <topic label="Listing and deleting an FTP account" href="RE/ftpListing.html"/>
         <topic label="Adding an FTP account" href="RE/ftpAdding.html"/>
       </topic>
-      <topic label="Test Center" href="blankpage.html">
+      <topic label="Test Center" href="RE/blankpage.html">
         <topic label="Sending a SOAP message" href="RE/sendingSoapMessage.html"/>
         <topic label="Testing a Catalogue" href="RE/testingACatalogue.html"/>
         <topic label="Validating a script" href="RE/validatingAScript.html"/>
@@ -98,7 +98,7 @@
         <topic label="View the timers status" href="RE/timerStatus.html"/>
       </topic>
     </topic>
-    <topic label="Reference" href="blankpage.html">
+    <topic label="Reference" href="RE/blankpage.html">
       <topic label="Tutorial" href="RE/tutorial.html">
         <topic label="File exchange based service" href="RE/vito.html"/>
         <topic label="JDBC based service(1)" href="RE/acs.html"/>
@@ -153,33 +153,33 @@
 			<topic label="Known bugs" href="DE/known_bugs.html"/>
       </topic>
     </topic>
-    <topic label="tasks" href="blankpage.html">
-      <topic label="Upgrade the Environment" href="blankpage.html">
+    <topic label="tasks" href="DE/blankpage.html">
+      <topic label="Upgrade the Environment" href="DE/blankpage.html">
         <topic label="Upgrade an Online installation" href="DE/tasks/upgrade_plugin_online.html"/>
         <topic label="Upgrade an Offline installation" href="DE/tasks/upgrade_plugin_offline.html"/>
       </topic>
-      <topic label="Project management" href="blankpage.html">
+      <topic label="Project management" href="DE/blankpage.html">
         <topic label="Create a new service project" href="DE/tasks/newproject.html"/>
         <topic label="Create a new service operation" href="DE/tasks/newoperation.html"/>
         <topic label="Create a new Input test file" href="DE/tasks/newXMLrequest.html"/>
         <topic label="Update the service configuration" href="DE/tasks/updateServiceConf.html"/>
       </topic>
-      <topic label="Launch configurations" href="blankpage.html">
+      <topic label="Launch configurations" href="DE/blankpage.html">
         <topic label="Create a new launch configuration" href="DE/tasks/addlaunchconfig.html"/>
         <topic label="Delete a launch configuration" href="DE/tasks/deletelaunchconfiguration.html"/>
         <topic label="Duplicate a launch configuration" href="DE/tasks/duplicatelaunchconfiguration.html"/>
       </topic>
-      <topic label="Open and edit a Toolbox script" href="blankpage.html">
+      <topic label="Open and edit a Toolbox script" href="DE/blankpage.html">
         <topic label="Open a Toolbox script file" href="DE/tasks/openfile.html"/>
         <topic label="Change visualization of a Toolbox script file" href="DE/tasks/changevisualization.html"/>
-        <topic label="Add, copy, move and delete a tag" href="blankpage.html">
-          <topic label="Textual view" href="blankpage.html">
+        <topic label="Add, copy, move and delete a tag" href="DE/blankpage.html">
+          <topic label="Textual view" href="DE/blankpage.html">
             <topic label="Add a tag" href="DE/tasks/addtags_textual.html"/>
             <topic label="Copy a tag" href="DE/tasks/copytag_textual.html"/>
             <topic label="Move a tag" href="DE/tasks/movetag_textual.html"/>
             <topic label="Delete a tag" href="DE/tasks/deletetag_textual.html"/>
           </topic>
-          <topic label="Tree view" href="blankpage.html">
+          <topic label="Tree view" href="DE/blankpage.html">
             <topic label="Add a tag" href="DE/tasks/addtags_tree.html"/>
             <topic label="Move a tag" href="DE/tasks/movetag_tree.html"/>
             <topic label="Delete a tag" href="DE/tasks/deletetag_tree.html"/>
@@ -188,11 +188,11 @@
       </topic>
       <topic label="Show tag description" href="DE/tasks/showtagdescription.html"/>
       <topic label="Show information about validation errors" href="DE/tasks/showvalidationerrors.html"/>
-      <topic label="Deploy/Undeploy a service" href="blankpage.html">
+      <topic label="Deploy/Undeploy a service" href="DE/blankpage.html">
         <topic label="Deploy a service" href="DE/tasks/deploy.html"/>
         <topic label="Undeploy a service" href="DE/tasks/undeploy.html"/>
       </topic>
-      <topic label="Run/debug" href="blankpage.html">
+      <topic label="Run/debug" href="DE/blankpage.html">
         <topic label="Running an operation" href="DE/tasks/runoperation.html"/>
         <topic label="Debugging an operation" href="DE/tasks/debugOperation.html"/>
         <topic label="Add/Remove a breakpoint" href="DE/tasks/addbreakpoint.html"/>
@@ -202,19 +202,19 @@
         <topic label="Stopping the execution" href="DE/tasks/stoppingexecution.html"/>
         <topic label="Viewing the execution result" href="DE/tasks/view_execution_result.html"/>
       </topic>
-      <topic label="Import/Export functionalities" href="blankpage.html">
+      <topic label="Import/Export functionalities" href="DE/blankpage.html">
         <topic label="Import a 6.0 and 6.0.1 service" href="DE/tasks/importOldDescriptor.html"/>
         <topic label="Import of a service" href="DE/tasks/importService.html"/>
         <topic label="Import of an SSE stylesheet" href="DE/tasks/importSSEStylesheet.html"/>
         <topic label="Import of a service result-&gt; GML stylesheet" href="DE/tasks/importGMLStylesheet.html"/>
         <topic label="Export of a service" href="DE/tasks/exportService.html"/>
       </topic>
-      <topic label="Interface Repository" href="blankpage.html">
+      <topic label="Interface Repository" href="DE/blankpage.html">
         <topic label="Add an interface to the Interface Repository" href="DE/tasks/addInterfaceToRepository.html"/>
         <topic label="Remove an interface from the Interface Repository" href="DE/tasks/removeInterfaceFromRepository.html"/>
       </topic>
     </topic>
-    <topic label="Reference" href="blankpage.html">
+    <topic label="Reference" href="DE/blankpage.html">
       <topic label="XML Scripting reference" href="RE/XMLScript/scripting.html">
         <topic label="Alphabetical list" href="RE/XMLScript/tocAZ.html"/>
         <topic label="New tags from version 7.0" href="RE/XMLScript/newTags.html"/>
@@ -247,7 +247,7 @@
         <topic label="Java" href="RE/XMLScript/Java.html"/>
       </topic>
       <topic label="Tutorials" href="DE/Tutorial_home.html">
-        <topic label="howto" href="blankpage.html">
+        <topic label="howto" href="DE/blankpage.html">
           <topic label="Install the Development Environment" href="DE/howto/installation.html"/>
           <topic label="Upgrade the Development Environment" href="DE/howto/upgrade_installation.html"/>
           <topic label="Create a new service" href="DE/howto/newservice.html"/>
@@ -257,16 +257,16 @@
           <!--<topic label="Debug a Toolbox script file" href="DE/howto/debugfile.html"/>-->
         </topic>
       </topic>
-      <topic label="Case studies" href="blankpage.html">
+      <topic label="Case studies" href="DE/blankpage.html">
         <topic label="Integrating the HMAEOLI service">
           <topic label="Introduction" href="DE/CASESTUDIES/hma2eoli/introduction.html"/>
           <topic label="getRecords" href="DE/CASESTUDIES/hma2eoli/getRecords.html"/>
           <topic label="getRecordById" href="DE/CASESTUDIES/hma2eoli/getRecordById.html"/>
-          <topic label="scripts" href="blankpage.html">
+          <topic label="scripts" href="DE/blankpage.html">
             <topic label="eoli2hmaGetRecordById.xml" href="DE/CASESTUDIES/hma2eoli/scripts/eoli2hmaGetRecordById.xml"/>
             <topic label="eoli2hmagetRecords.xml" href="DE/CASESTUDIES/hma2eoli/scripts/eoli2hmagetRecords.xml"/>
           </topic>
-          <topic label="XSL" href="blankpage.html">
+          <topic label="XSL" href="DE/blankpage.html">
             <topic label="datasetfull.xsl" href="DE/CASESTUDIES/hma2eoli/xsl/datasetfull.xsl"/>
             <topic label="full.xsl" href="DE/CASESTUDIES/hma2eoli/xsl/full.xsl"/>
             <topic label="GetRecord_queryBuilder.xsl" href="DE/CASESTUDIES/hma2eoli/xsl/GetRecord_queryBuilder.xsl"/>
@@ -280,7 +280,7 @@
             <topic label="SarRecordsummary.xsl" href="DE/CASESTUDIES/hma2eoli/xsl/SarRecordsummary.xsl"/>
             <topic label="summary.xsl" href="DE/CASESTUDIES/hma2eoli/xsl/summary.xsl"/>
           </topic>
-          <topic label="XML" href="blankpage.html">
+          <topic label="XML" href="DE/blankpage.html">
             <topic label="request4eoli.xml" href="DE/CASESTUDIES/hma2eoli/xml/request4eoli.xml"/>
             <topic label="response4hma.xml" href="DE/CASESTUDIES/hma2eoli/xml/response4hma.xml"/>
             <topic label="eoliResponse.xml" href="DE/CASESTUDIES/hma2eoli/xml/eoliResponse.xml"/>

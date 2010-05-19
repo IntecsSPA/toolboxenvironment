@@ -56,7 +56,7 @@ function viewResource(parameters)
     <TR> 
       <TD class=pageBody id=main>
         <SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT> 
-        <SCRIPT>addHelp("timerStatus");</SCRIPT> 
+        <SCRIPT>addHelp("RE/main.html_Run-time_environment*blankpage.html_tasks*RE/monitoringCenter.html_Monitoring_center*RE/timerStatus.html_View_the_timers_status*");</SCRIPT>
         <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center valign="top"> 
           <TBODY> 
             <TR> 

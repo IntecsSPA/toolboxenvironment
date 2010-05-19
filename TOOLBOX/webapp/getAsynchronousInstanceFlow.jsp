@@ -90,7 +90,7 @@ function viewResource(type,parameters,label)
     <TR> 
       <TD class=pageBody id=main>
         <SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT> 
-        <SCRIPT>addHelp("asynchronousInstances");</SCRIPT>         
+        <SCRIPT>addHelp("RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/monitoringCenter.html_Monitoring_center*RE/asynchronousInstances.html_Listing_asynchronous_instances*");</SCRIPT>
         <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center valign="top"> 
           <TBODY> 
             <TR> 

@@ -61,7 +61,7 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;" +
 <TBODY> 
 <TR> 
 <TD class=pageBody id=main>
-    <SCRIPT>addHelp("toolboxConfiguration");</SCRIPT>		
+    <SCRIPT>addHelp("RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/blankpage.html_TOOLBOX_management*RE/toolboxViewingConfiguration.html_Viewing_the_TOOLBOX_configuration*");</SCRIPT>
     <SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT>		
 
     <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center valign="top">

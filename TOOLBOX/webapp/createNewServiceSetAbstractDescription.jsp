@@ -43,7 +43,7 @@
 <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center>
     <TD class=pageBody id=main> 
         <SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT> 
-        <SCRIPT>addHelp("serviceCreation");</SCRIPT>
+        <SCRIPT>addHelp("RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceCreation.html_Service_creation*");</SCRIPT>
         <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center valign="top"> 
             <TBODY> <TR> 
                     <TD id=main> 

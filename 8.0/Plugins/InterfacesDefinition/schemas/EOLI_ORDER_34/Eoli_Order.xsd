@@ -1,0 +1,790 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 rel. 3 U (http://www.altova.com) by INTECS (SOFTWARE ADVISORS SRL) -->
+<!-- 	
+	File			:	EOLI_Order.xsd 	 
+	File Type	:	W3C Schema 	 	
+	Date		:	23 November 2007	 	
+	Abstract	:	MUIS Schema 	
+	Uses		:	 	
+	Author		:	INTECS	 	
+	Issue		:	V3.X 
+-->
+<xsd:schema xmlns="http://earth.esa.int/XML/eoli" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://earth.esa.int/XML/eoli" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!-- ====================== Elements RE-Definition Section  ========================= -->
+	<!-- ====================================================================== -->
+	<xsd:redefine schemaLocation="eoli.xsd">
+		<xsd:complexType name="MetadataType">
+			<xsd:complexContent>
+				<xsd:extension base="MetadataType">
+					<xsd:sequence minOccurs="0">
+						<xsd:element name="productServiceOptions" type="ProductServiceOptionsType" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="PresentRequestType">
+			<xsd:complexContent>
+				<xsd:extension base="PresentRequestType">
+					<xsd:sequence>
+						<xsd:element ref="userInformation" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="SearchRequestType">
+			<xsd:complexContent>
+				<xsd:extension base="SearchRequestType">
+					<xsd:sequence>
+						<xsd:element ref="userInformation" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:redefine>
+	<!-- ======================= Functions root element ============================-->
+	<!-- ====================================================================== -->
+	<xsd:element name="acquisitionOrderRequest" type="AcquisitionOrderRequestType"/>
+	<xsd:element name="productOrderRequest" type="ProductOrderRequestType"/>
+	<xsd:element name="orderMonitorRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="userInformation"/>
+				<xsd:element name="orderSpecification" minOccurs="0">
+					<xsd:complexType>
+						<xsd:choice>
+							<xsd:element ref="orderId"/>
+							<xsd:sequence>
+								<xsd:element ref="orderAccount" minOccurs="0"/>
+								<xsd:element ref="orderReference" minOccurs="0"/>
+								<xsd:element ref="orderType" minOccurs="0"/>
+								<xsd:element ref="orderState" minOccurs="0" maxOccurs="unbounded"/>
+								<xsd:element name="lastUpdate" type="xsd:date" minOccurs="0"/>
+							</xsd:sequence>
+						</xsd:choice>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="presentation">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:enumeration value="brief"/>
+							<xsd:enumeration value="full"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="dataAccessRequest" type="DataAccessRequestType"/>
+	<xsd:element name="orderResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="orderId" minOccurs="0"/>
+				<xsd:element ref="orderReference" minOccurs="0"/>
+				<xsd:element ref="status"/>
+				<xsd:element name="errorMessage" type="NonNullStringType" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="orderMonitorResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="orderSpecification" type="OrderMonitorSpecification" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="status" type="ExtendedStatusType"/>
+				<xsd:element name="errorMessage" type="NonNullStringType" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="dataAccessResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="ftpURL" type="CharacterString" minOccurs="0"/>
+				<xsd:element name="ftpUserName" type="CharacterString" minOccurs="0"/>
+				<xsd:element name="ftpPassword" type="CharacterString" minOccurs="0"/>
+				<xsd:element ref="status"/>
+				<xsd:element name="errorMessage" type="NonNullStringType" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="eoaDataAccessRequest" type="EOADataAccessRequestType"/>
+	<xsd:element name="eoaDataAccessResponse" type="EOADataAccessResponseType"/>
+	<xsd:element name="eoaMonitorRequest" type="EOAMonitorRequestType"/>
+	<xsd:element name="eoaMonitorResponse" type="EOAMonitorResponseType"/>
+	<xsd:element name="eoaOutputRequest" type="EOAOutputRequestType"/>
+	<xsd:element name="eoaOutputResponse" type="EOAOutputResponseType"/>
+	<xsd:element name="eoaAbortRequest" type="EOAAbortRequestType"/>
+	<xsd:element name="eoaAbortResponse" type="EOAAbortResponseType"/>
+	<xsd:element name="eoaUpdateRequestStatus" type="EOAUpdateRequestStatusType"/>
+	<!-- ====================== Elements Definition Section  ========================= -->
+	<!-- ====================================================================== -->
+	<xsd:element name="sceneCenter">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="coordinates"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="programming">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="optionName">
+					<xsd:simpleType>
+						<xsd:restriction base="NonNullStringType">
+							<xsd:maxLength value="40"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="optionSelectedValues" type="NonNullStringType" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="userInformation">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="userId" type="NonNullStringType"/>
+				<xsd:element name="password" type="NonNullStringType" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="orderAccount">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:minLength value="1"/>
+				<xsd:maxLength value="20"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="orderId">
+		<xsd:simpleType>
+			<xsd:restriction base="NonNullStringType">
+				<xsd:maxLength value="16"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="packageMedium">
+		<xsd:simpleType>
+			<xsd:restriction base="NonNullStringType">
+				<xsd:maxLength value="40"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="deliveryInformation" type="DeliveryInformationType"/>
+	<xsd:element name="orderItemRemark">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:maxLength value="255"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="processing">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="optionName">
+					<xsd:simpleType>
+						<xsd:restriction base="NonNullStringType">
+							<xsd:maxLength value="40"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="optionSelectedValues" type="NonNullStringType" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="qualityOfService" type="CharacterString"/>
+	<xsd:element name="sceneSelection" type="SceneSelectionType"/>
+	<xsd:element name="orderRemark">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:maxLength value="255"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="orderType">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:pattern value="Product Order"/>
+				<xsd:pattern value="Planning Request"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="orderReference">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:minLength value="1"/>
+				<xsd:maxLength value="20"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="deliveryMethod">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="ftp-push"/>
+				<xsd:enumeration value="ftp-pull"/>
+				<xsd:enumeration value="ftp-pickup"/>
+				<xsd:enumeration value="mail"/>
+				<xsd:enumeration value=""/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="orderState">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="BeingQuoted"/>
+				<xsd:enumeration value="BeingProcessed"/>
+				<xsd:enumeration value="Completed"/>
+				<xsd:enumeration value="Cancelled"/>
+				<xsd:enumeration value="Deleted"/>
+				<xsd:enumeration value="NotValid"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<!-- ======================  Order Specification Definition ======================= -->
+	<!-- ====================================================================== -->
+	<xsd:complexType name="AcquisitionOrderSpecification">
+		<xsd:sequence>
+			<xsd:element ref="orderAccount" minOccurs="0"/>
+			<xsd:element ref="orderReference"/>
+			<xsd:element ref="orderRemark" minOccurs="0"/>
+			<xsd:element name="orderItem" type="AcquisitionOrderItemType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProductOrderSpecification">
+		<xsd:sequence>
+			<xsd:element ref="orderAccount" minOccurs="0"/>
+			<xsd:element ref="orderReference"/>
+			<xsd:element ref="orderRemark" minOccurs="0"/>
+			<xsd:element ref="deliveryInformation" minOccurs="0"/>
+			<xsd:element name="orderItem" type="ProductOrderItemType" maxOccurs="unbounded"/>
+			<xsd:element name="orderOption" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="orderOptionName">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:minLength value="1"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="orderOptionValue" maxOccurs="unbounded">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:minLength value="1"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrderDataAccessSpecification">
+		<xsd:sequence>
+			<xsd:element ref="orderReference"/>
+			<xsd:element name="orderItem" type="ProductOrderItemType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrderMonitorSpecification">
+		<xsd:sequence>
+			<xsd:element ref="orderAccount" minOccurs="0"/>
+			<xsd:element ref="orderId"/>
+			<xsd:element ref="orderReference"/>
+			<xsd:element name="orderDateTime" type="xsd:dateTime" minOccurs="0"/>
+			<xsd:element ref="orderRemark" minOccurs="0"/>
+			<xsd:element ref="orderType" minOccurs="0"/>
+			<xsd:element ref="deliveryInformation" minOccurs="0"/>
+			<xsd:element name="orderItem" type="OrderMonitorItemType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="orderStatusInfo" type="OrderStatusType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--=========================  Order Item Definition ============================ -->
+	<!--======================================================================= -->
+	<xsd:complexType name="AcquisitionOrderItemType">
+		<xsd:sequence>
+			<xsd:element name="orderItemId" type="NonNullStringType" minOccurs="0"/>
+			<xsd:element name="productId">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="idCitation">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element ref="resTitle"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element ref="collectionId" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element ref="programming" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="sceneSelection" minOccurs="0"/>
+			<xsd:element ref="orderItemRemark" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProductOrderItemType">
+		<xsd:sequence>
+			<xsd:element name="orderItemId" type="NonNullStringType" minOccurs="0"/>
+			<xsd:element name="productId">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="idCitation">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element ref="resTitle"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="MMMCciteIdIdentCode" minOccurs="0">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:minLength value="1"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="platformName" minOccurs="0">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:minLength value="1"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="sensorName" minOccurs="0">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:minLength value="1"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="acquisitionStationName" minOccurs="0">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:minLength value="1"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="archivingLocationName" minOccurs="0">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:minLength value="1"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="productCodeId" minOccurs="0">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:minLength value="1"/>
+									<xsd:maxLength value="20"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element ref="collectionId" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element ref="processing" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="programming" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="sceneSelection" minOccurs="0"/>
+			<xsd:element ref="deliveryMethod" minOccurs="0"/>
+			<xsd:element ref="packageMedium" minOccurs="0"/>
+			<xsd:element ref="qualityOfService" minOccurs="0"/>
+			<xsd:element ref="orderItemRemark" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--===================== ComplexType  Definition Section ======================= -->
+	<!--======================================================================= -->
+	<xsd:complexType name="AcquisitionOrderRequestType">
+		<xsd:sequence>
+			<xsd:element ref="userInformation"/>
+			<xsd:element name="orderSpecification" type="AcquisitionOrderSpecification"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProductOrderRequestType">
+		<xsd:sequence>
+			<xsd:element ref="userInformation" minOccurs="0"/>
+			<xsd:element name="orderSpecification" type="ProductOrderSpecification"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DataAccessRequestType">
+		<xsd:sequence>
+			<xsd:element ref="userInformation"/>
+			<xsd:element name="orderSpecification" type="OrderDataAccessSpecification"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProductServiceOptionsType">
+		<xsd:sequence>
+			<xsd:element name="productOrderOptions" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="productOrderOptionsId" type="CharacterString"/>
+						<xsd:element name="processingOption" minOccurs="0" maxOccurs="unbounded">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="optionName" type="NonNullStringType"/>
+									<xsd:element name="optionValueDefinition">
+										<xsd:complexType>
+											<xsd:choice>
+												<xsd:element name="optionValueRange">
+													<xsd:complexType>
+														<xsd:sequence>
+															<xsd:element name="numericOptionValueMin" type="xsd:float"/>
+															<xsd:element name="numericOptionValueMax" type="xsd:float"/>
+															<xsd:element name="numericOptionValueStep" type="xsd:float"/>
+														</xsd:sequence>
+													</xsd:complexType>
+												</xsd:element>
+												<xsd:element name="optionValueList">
+													<xsd:complexType>
+														<xsd:sequence>
+															<xsd:element name="stringOptionValue" type="NonNullStringType" maxOccurs="unbounded"/>
+														</xsd:sequence>
+													</xsd:complexType>
+												</xsd:element>
+											</xsd:choice>
+										</xsd:complexType>
+									</xsd:element>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="programmingOption" minOccurs="0" maxOccurs="unbounded">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="optionName" type="NonNullStringType"/>
+									<xsd:element name="optionValueDefinition">
+										<xsd:complexType>
+											<xsd:choice>
+												<xsd:element name="optionValueRange">
+													<xsd:complexType>
+														<xsd:sequence>
+															<xsd:element name="numericOptionValueMin" type="xsd:float"/>
+															<xsd:element name="numericOptionValueMax" type="xsd:float"/>
+															<xsd:element name="numericOptionValueStep" type="xsd:float"/>
+														</xsd:sequence>
+													</xsd:complexType>
+												</xsd:element>
+												<xsd:element name="optionValueList">
+													<xsd:complexType>
+														<xsd:sequence>
+															<xsd:element name="stringOptionValue" type="NonNullStringType" maxOccurs="unbounded"/>
+														</xsd:sequence>
+													</xsd:complexType>
+												</xsd:element>
+											</xsd:choice>
+										</xsd:complexType>
+									</xsd:element>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="sceneSelectionOption" minOccurs="0" maxOccurs="unbounded">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="sceneType"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="productDeliveryOptions" maxOccurs="unbounded">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element ref="deliveryMethod"/>
+									<xsd:element ref="packageMedium" maxOccurs="unbounded"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element ref="qualityOfService" minOccurs="0" maxOccurs="unbounded"/>
+						<xsd:element name="orderOptionInfoURL" type="HTTPURLType" minOccurs="0"/>
+						<xsd:element name="priceInformationURL" type="HTTPURLType" minOccurs="0"/>
+						<xsd:element name="purchaseConditionURL" type="HTTPURLType" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrderStatusType">
+		<xsd:sequence>
+			<xsd:element ref="orderState"/>
+			<xsd:element name="additionalStatusInfo" type="NonNullStringType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrderItemStatusType">
+		<xsd:sequence>
+			<xsd:element ref="orderState"/>
+			<xsd:element name="additionalStatusInfo" type="NonNullStringType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SceneSelectionType">
+		<xsd:sequence>
+			<xsd:element name="sceneType">
+				<xsd:simpleType>
+					<xsd:restriction base="NonNullStringType">
+						<xsd:maxLength value="20"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element ref="sceneCenter" minOccurs="0"/>
+			<xsd:element name="temporalSelection" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="startDateTime" type="xsd:dateTime"/>
+						<xsd:element name="endDateTime" type="xsd:dateTime"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="scenePosition" type="CharacterString" minOccurs="0"/>
+			<xsd:element name="sceneSize" type="CharacterString" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DeliveryInformationType">
+		<xsd:sequence>
+			<xsd:element name="ftp" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="ftp-push" minOccurs="0">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:minLength value="10"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:choice minOccurs="0">
+							<xsd:element name="ftp-pickup" type="xsd:string"/>
+							<xsd:element name="ftp-pull" type="xsd:string"/>
+						</xsd:choice>
+						<xsd:element name="emailNotificationAddress" type="xsd:string" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="mail" type="DeliveryAddressType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DeliveryAddressType">
+		<xsd:sequence>
+			<xsd:element name="recipient" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="NonNullStringType">
+						<xsd:maxLength value="40"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="companyRef" type="CharacterString" minOccurs="0"/>
+			<xsd:element name="postalAddress" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="streetAddress" type="xsd:string"/>
+						<xsd:element name="city" type="xsd:string"/>
+						<xsd:element name="state" type="xsd:string"/>
+						<xsd:element name="postalCode" type="xsd:string"/>
+						<xsd:element name="country" type="xsd:string"/>
+						<xsd:element name="postBox" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="telNumber" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="NonNullStringType">
+						<xsd:maxLength value="18"/>
+						<xsd:pattern value="\+?[0-9\(\)\-\s]+"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrderMonitorItemType" abstract="true">
+		<xsd:sequence>
+			<xsd:element name="metadata" type="MetadataType" minOccurs="0"/>
+			<xsd:element name="orderItemId" type="NonNullStringType" minOccurs="0"/>
+			<xsd:element name="productId">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="idCitation">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element ref="resTitle"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element ref="collectionId"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrderMonitorAcquisitionItemType">
+		<xsd:complexContent>
+			<xsd:extension base="OrderMonitorItemType">
+				<xsd:sequence>
+					<xsd:element ref="programming" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="sceneSelection" minOccurs="0"/>
+					<xsd:element name="orderItemStatusInfo" type="OrderItemStatusType" minOccurs="0"/>
+					<xsd:element ref="orderItemRemark" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="OrderMonitorProductItemType">
+		<xsd:complexContent>
+			<xsd:extension base="OrderMonitorItemType">
+				<xsd:sequence>
+					<xsd:element ref="processing" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="programming" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="sceneSelection" minOccurs="0"/>
+					<xsd:element ref="deliveryMethod"/>
+					<xsd:element ref="packageMedium" minOccurs="0"/>
+					<xsd:element ref="qualityOfService" minOccurs="0"/>
+					<xsd:element name="orderItemStatusInfo" type="OrderItemStatusType" minOccurs="0"/>
+					<xsd:element ref="orderItemRemark" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="EOADataAccessRequestType">
+		<xsd:sequence>
+			<xsd:element ref="productOrderRequest"/>
+			<xsd:element name="callback" type="xsd:anyURI"/>
+			<xsd:element name="packaging" type="EOAPackagingType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EOADataAccessResponseType">
+		<xsd:sequence>
+			<xsd:element name="onlineDataToken" type="xsd:string"/>
+			<xsd:element name="status" type="xsd:string"/>
+			<xsd:element name="errorMessage" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EOAMonitorRequestType">
+		<xsd:sequence>
+			<xsd:element name="onlineDataToken" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EOASummaryStatusType">
+		<xsd:sequence>
+			<xsd:element name="total" type="xsd:int"/>
+			<xsd:element name="completed" type="xsd:int"/>
+			<xsd:element name="failed" type="xsd:int"/>
+			<xsd:element name="production" type="xsd:int"/>
+			<xsd:element name="downloaded" type="xsd:int"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EOAItemType">
+		<xsd:sequence>
+			<xsd:element name="orderItemId" type="xsd:string"/>
+			<xsd:element name="itemStatus" type="itemStatusType"/>
+			<xsd:element name="additionalStatusInfo" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EOAItemStatusType">
+		<xsd:sequence>
+			<xsd:element name="item" type="EOAItemType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EOAOrderStatusType">
+		<xsd:sequence>
+			<xsd:element name="orderStatus" type="itemStatusType"/>
+			<xsd:element name="additionalStatusInfo" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EOAOutputRequestType">
+		<xsd:sequence>
+			<xsd:sequence>
+				<xsd:element name="onlineDataToken" type="xsd:string"/>
+				<xsd:choice>
+					<xsd:element name="allReady" type="xsd:boolean"/>
+					<xsd:element name="nextReady" type="xsd:boolean"/>
+				</xsd:choice>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EOAMonitorResponseType">
+		<xsd:sequence>
+			<xsd:element name="order" type="EOAOrderStatusType" minOccurs="0"/>
+			<xsd:element name="summary" type="EOASummaryStatusType"/>
+			<xsd:element name="items" type="EOAItemStatusType"/>
+			<xsd:element name="status" type="xsd:string"/>
+			<xsd:element name="errorMessage" nillable="true"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EOAOutputResponseType">
+		<xsd:sequence>
+			<xsd:element name="orderURLs" type="EOAOrderURLType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="URLs" type="EOAItemURLType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="status" type="xsd:string"/>
+			<xsd:element name="errorMessage" nillable="true"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EOAOrderURLType">
+		<xsd:choice>
+			<xsd:element name="url" type="xsd:anyURI"/>
+			<xsd:element name="urlAndPath" type="EOAURLandPathType"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="EOAItemURLType">
+		<xsd:sequence>
+			<xsd:element name="orderItemId" type="xsd:string" maxOccurs="unbounded"/>
+			<xsd:choice maxOccurs="unbounded">
+				<xsd:element name="url" type="xsd:anyURI"/>
+				<xsd:element name="urlAndPath" type="EOAURLandPathType"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EOAURLandPathType">
+		<xsd:sequence>
+			<xsd:element name="url" type="xsd:anyURI"/>
+			<xsd:element name="filePath" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EOAAbortRequestType">
+		<xsd:sequence>
+			<xsd:element name="onlineDataToken" type="xsd:string" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EOAAbortResponseType">
+		<xsd:sequence>
+			<xsd:element name="onlineDataTokens" type="EOAAbortItemsType"/>
+			<xsd:element name="status" type="xsd:string"/>
+			<xsd:element name="errorMessage" nillable="true"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EOAAbortItemsType">
+		<xsd:sequence>
+			<xsd:element name="onlineDataToken" type="xsd:string"/>
+			<xsd:element name="status" type="xsd:string"/>
+			<xsd:element name="errorMessage" nillable="true"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EOAUpdateRequestStatusType">
+		<xsd:sequence>
+			<xsd:element name="onlineDataToken" type="xsd:string"/>
+			<xsd:element name="status" type="EOARequestStatusType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="EOARequestStatusType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="accepted"/>
+			<xsd:enumeration value="processing"/>
+			<xsd:enumeration value="failed"/>
+			<xsd:enumeration value="completed"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--=========================== Simple Types-->
+	<xsd:simpleType name="ExtendedStatusType">
+		<xsd:restriction base="CharacterString">
+			<xsd:enumeration value="success"/>
+			<xsd:enumeration value="failure"/>
+			<xsd:enumeration value="incomplete"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="HTTPURLType">
+		<xsd:restriction base="CharacterString"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="EOAPackagingType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="none"/>
+			<xsd:enumeration value="zip"/>
+			<xsd:enumeration value="tar"/>
+			<xsd:enumeration value="tgz"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="itemStatusType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Completed"/>
+			<xsd:enumeration value="Failed"/>
+			<xsd:enumeration value="Waiting"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

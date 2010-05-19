@@ -194,7 +194,7 @@
         <TR>
             <TD class=pageBody id=main>
                 <SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT>
-                <SCRIPT>addHelp("serviceConfiguring");</SCRIPT>
+                <SCRIPT>addHelp("RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceViewingConfiguration.html_Viewing_a_service_configuration*");</SCRIPT>
                 <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center valign="top">
                     <TBODY>
                         <TR>

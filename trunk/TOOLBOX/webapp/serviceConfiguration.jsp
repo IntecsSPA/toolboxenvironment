@@ -32,7 +32,8 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;" +
     <TBODY> 
         <TR>
             <TD class=pageBody id=main><SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT>
-                <DIV class=portletItem id=01> 
+            <SCRIPT>addHelp("RE/main.html_Run-time_environment*blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceConfiguring.html_Configuring_a_Service*");</SCRIPT>
+                <DIV class=portletItem id=01>
                     <!-- TITLE part --> 
                     <DIV> 
                         <A href="<%= response.encodeURL(viewServiceConfiguration) %>"><fmt:message key="serviceConfiguration.view" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 

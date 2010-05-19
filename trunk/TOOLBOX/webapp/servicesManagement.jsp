@@ -85,7 +85,7 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;&nbsp;" + serviceManag;
         <TR>
             <TD class=pageBody id=main>
                 <SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT>
-                <SCRIPT>addHelp("serviceManagement");</SCRIPT>        
+                <SCRIPT>addHelp("RE/main.html_Run-time_environment*blankpage.html_tasks*RE/serviceManagement.html_Service_management*");</SCRIPT>
                 <DIV class="portletItem" id="01"> 
                     <DIV> 
                         <A href="<%= response.encodeURL("selectImportOrCreate.jsp") %>"><fmt:message key="servicesManagement.createNew" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>

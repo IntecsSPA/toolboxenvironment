@@ -57,7 +57,7 @@ function deleteOp(service, operation)
     <TR> 
       <TD class=pageBody id=main>
         <SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT> 
-        <SCRIPT>addHelp("operationManagement");</SCRIPT>         
+        <SCRIPT>addHelp("RE/main.html_Run-time_environment*blankpage.html_tasks*RE/operationManagement.html_Operations_management*");</SCRIPT>
         <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center valign="top"> 
           <TBODY> 
             <TR> 

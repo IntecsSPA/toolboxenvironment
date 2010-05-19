@@ -51,7 +51,7 @@ function back()
                 <TR>
                     <TD class=pageBody id=main>
                         <SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT>
-                        <SCRIPT>addHelp("serviceCreation");</SCRIPT>
+                        <SCRIPT>addHelp("RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/tools.html_Tools_center*RE/createebRRDBinstance.html_Creating_an_EOP_catalogue_database*");</SCRIPT>
                         <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center valign="top">
                             <TBODY>
                                 <TR>

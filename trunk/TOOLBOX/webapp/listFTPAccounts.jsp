@@ -81,7 +81,7 @@
     <TR> 
       <TD class=pageBody id=main>
         <SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT> 
-        <SCRIPT>addHelp("ftpListing");</SCRIPT>
+        <SCRIPT>addHelp("RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/ftpManagement.html_FTP_management*RE/ftpListing.html_Listing_and_deleting_an_FTP_account*");</SCRIPT>
        
      
        

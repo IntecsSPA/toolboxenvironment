@@ -8,7 +8,7 @@
 	For conditions, see OGC Software Notice http://www.opengeospatial.org/about/?page=ipr</documentation>
 	</annotation>
 	<!-- ================================================================== -->
-	<include schemaLocation="gmlBase.xsd"/>
+	<include schemaLocation="cat/gml3.1.1/base/gmlBase.xsd"/>
 	<!-- ================================================================== -->
 	<!-- ==== Time Object ===== -->
 	<!-- ================================================================== -->

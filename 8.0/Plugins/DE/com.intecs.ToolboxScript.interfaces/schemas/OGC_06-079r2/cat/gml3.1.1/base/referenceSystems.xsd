@@ -15,8 +15,8 @@
 	<!-- ======================================================
        includes and imports
 	====================================================== -->
-	<include schemaLocation="geometryBasic2d.xsd"/>
-	<include schemaLocation="temporal.xsd"/>
+	<include schemaLocation="cat/gml3.1.1/base/geometryBasic2d.xsd"/>
+	<include schemaLocation="cat/gml3.1.1/base/temporal.xsd"/>
 	<!-- ======================================================
        elements and types
 	====================================================== -->

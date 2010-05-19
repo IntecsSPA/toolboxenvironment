@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by jrom (CNES) -->
 <xs:schema targetNamespace="http://earth.esa.int/hma" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml" xmlns:hma="http://earth.esa.int/hma" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.92">
-	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="../../cat/gml3.1.1/base/feature.xsd"/>
-	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="../../cat/gml3.1.1/base/measures.xsd"/>
-	<xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="../../cat/gml3.1.1/xlink/xlinks.xsd"/>
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="cat/gml3.1.1/base/feature.xsd"/>
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="cat/gml3.1.1/base/measures.xsd"/>
+	<xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="cat/gml3.1.1/xlink/xlinks.xsd"/>
 	<!-- ===================================================================== -->
 	<!--   EarthObservationProduct feature -->
 	<!-- ===================================================================== -->

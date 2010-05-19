@@ -9,10 +9,10 @@
 	<!-- ==============================================================
        includes and imports
 	============================================================== -->
-	<include schemaLocation="feature.xsd"/>
-	<include schemaLocation="valueObjects.xsd"/>
-	<include schemaLocation="grids.xsd"/>
-	<include schemaLocation="geometryAggregates.xsd"/>
+	<include schemaLocation="cat/gml3.1.1/base/feature.xsd"/>
+	<include schemaLocation="cat/gml3.1.1/base/valueObjects.xsd"/>
+	<include schemaLocation="cat/gml3.1.1/base/grids.xsd"/>
+	<include schemaLocation="cat/gml3.1.1/base/geometryAggregates.xsd"/>
 	<!-- ==============================================================
        global types and elements
 	============================================================== -->

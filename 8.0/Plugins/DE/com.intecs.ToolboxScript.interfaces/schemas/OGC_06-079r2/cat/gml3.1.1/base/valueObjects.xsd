@@ -11,8 +11,8 @@
 	</annotation>
 	<!-- ====================================================================== -->
 	<!-- geometry and temporal included so that _Geometry and _TimeObject can be added to Value choice group -->
-	<include schemaLocation="geometryBasic0d1d.xsd"/>
-	<include schemaLocation="temporal.xsd"/>
+	<include schemaLocation="cat/gml3.1.1/base/geometryBasic0d1d.xsd"/>
+	<include schemaLocation="cat/gml3.1.1/base/temporal.xsd"/>
 	<!-- ====================================================================== -->
 	<group name="Value">
 		<annotation>

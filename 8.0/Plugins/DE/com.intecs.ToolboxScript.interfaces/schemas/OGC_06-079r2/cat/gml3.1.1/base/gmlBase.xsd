@@ -24,12 +24,12 @@
 	<!-- ==============================================================
        includes and imports
 	============================================================== -->
-	<include schemaLocation="basicTypes.xsd"/>
+	<include schemaLocation="cat/gml3.1.1/base/basicTypes.xsd"/>
 		<!--
 	CHANGED temporarely
 	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://schemas.opengeospatial.net/gml/3.0.0/xlink/xlinks.xsd"/>
 	-->
-	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="../../../xlink/xlinks.xsd"/>
+	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink/xlinks.xsd"/>
 	<!-- =========================================================== -->
 	<!-- ==================== Objects ================================ -->
 	<!-- =========================================================== -->

@@ -10,6 +10,6 @@
 	<!-- ==============================================================
 		includes and imports
 	============================================================== -->
-	<include schemaLocation="owsGetCapabilities.xsd"/>
-	<include schemaLocation="owsExceptionReport.xsd"/>
+	<include schemaLocation="ows1.0.0/owsGetCapabilities.xsd"/>
+	<include schemaLocation="ows1.0.0/owsExceptionReport.xsd"/>
 </schema>

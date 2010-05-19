@@ -10,8 +10,8 @@
 	<!-- ==============================================================
 		includes and imports
 	============================================================== -->
-	<include schemaLocation="owsCommon.xsd"/>
-	<include schemaLocation="ows19115subset.xsd"/>
+	<include schemaLocation="ows1.0.0/owsCommon.xsd"/>
+	<include schemaLocation="ows1.0.0/ows19115subset.xsd"/>
 	<!-- ==============================================================
 		elements and types
 	============================================================== -->

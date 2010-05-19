@@ -18,7 +18,7 @@
 	<!-- ======================================================
        includes and imports
 	====================================================== -->
-	<include schemaLocation="referenceSystems.xsd"/>
+	<include schemaLocation="cat/gml3.1.1/base/referenceSystems.xsd"/>
 	<!-- ======================================================
        elements and types
 	====================================================== -->

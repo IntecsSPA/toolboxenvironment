@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="">
+		<!-- **********************************
+				Creating the response message 
+				********************************** -->
+
+			<if>
+				<not>
+					<existsVariable name="errorMessage"/>
+				</not>
+				<setVariable name="errorMessage">
+					<string>failure</string>
+				</setVariable>
+			</if>
+			
+			
+			<xml attributePrefix="%" textTag="evaluate">
+					<n1:processRFQOutputMsg xmlns:n1="%targetNamespace"  xmlns:mass="http://www.esa.int/mass">
+						<n1:getRFQOutput>	
+							<mass:statusInfo>
+								<mass:statusId>100</mass:statusId>
+								<mass:statusMsg><evaluate name="errorMessage"/></mass:statusMsg>
+							</mass:statusInfo>
+						</n1:getRFQOutput>
+					</n1:processRFQOutputMsg>
+			</xml>
+</sequence>

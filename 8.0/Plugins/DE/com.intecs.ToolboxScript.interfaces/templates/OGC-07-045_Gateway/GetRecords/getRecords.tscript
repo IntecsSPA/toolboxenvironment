@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+    <!-- Translating variable to Integer. You may remove this if not necessary -->
+    <setVariable name="maxRecords">
+        <atoi>
+            <variable name="maxRecords"/>
+        </atoi>
+    </setVariable>
+
+    <!-- ADD implementation logic here -->
+</sequence>

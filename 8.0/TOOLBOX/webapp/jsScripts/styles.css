@@ -1,6 +1,13 @@
 A {
 	COLOR: #336699; TEXT-DECORATION: none
 }
+
+.jsAction {
+    cursor: pointer;
+	COLOR: #336699;
+    TEXT-DECORATION: none
+}
+
 IMG {
 	BORDER-RIGHT: medium none; BORDER-TOP: medium none; BORDER-LEFT: medium none; BORDER-BOTTOM: medium none
 }

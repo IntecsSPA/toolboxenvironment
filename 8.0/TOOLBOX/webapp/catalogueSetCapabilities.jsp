@@ -87,7 +87,6 @@ function back()
                 <TR>
                     <TD class=pageBody id=main>
                         <SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT>
-                        <SCRIPT>addHelp("serviceCreation");</SCRIPT>
                         <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center valign="top">
                             <TBODY>
                                 <TR>

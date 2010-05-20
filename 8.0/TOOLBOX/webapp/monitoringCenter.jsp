@@ -44,7 +44,9 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;" +
     <TBODY> 
         <TR>
             <TD class=pageBody id=main><SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT>
-                <DIV class=portletItem id=01> 
+            <SCRIPT>addHelp("RE/main.html_Run-time_environment*blankpage.html_tasks*RE/monitoringCenter.html_Monitoring_center*");</SCRIPT>
+
+                <DIV class=portletItem id=01>
                     <DIV> 
                      <A href="javascript:view('manager?cmd=getTbxLog&serviceName=<%=service%>', 'Toolbox Log');"><fmt:message key="monitoringCenter.logDisplay" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
                         </DIV> 

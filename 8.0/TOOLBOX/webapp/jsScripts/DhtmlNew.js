@@ -173,7 +173,7 @@ function addTab(url, titleTab){
  * treePanel is load from an xml document
  */
 function addTree(url, titleTab){
-    if (!tabs.findById(titleTab)){
+    if (!tabs.findById(titleTab)){     
         var tree = new Ext.tree.TreePanel({
             id:titleTab,
             root:createXmlTree(url),
@@ -195,7 +195,6 @@ function addTree(url, titleTab){
             }
             ],
             closable:true});
-
             tabs.add(tree).show();
             tabs.setActiveTab(titleTab);
     }else{
@@ -207,16 +206,16 @@ function addTree(url, titleTab){
 function createXmlTree(url, callback) {
     var nodo = new Ext.tree.TreeNode();
     var p = new Ext.data.HttpProxy({url:url});
-   /* p.on("loadexception", function(o, response, e) {
+    p.on("loadexception", function(o, response, e) {
         try {
             if (e) throw e;
         }catch (e){
             window.alert("Error: "+e.message);
         }
-    });*/
+    });
     p.load(null, {
         read: function(response) {
-                      var doc = response.responseXML;
+            var doc = response.responseXML;
             nodo.appendChild(treeNodeFromXml(doc.documentElement || doc));
         }
     }, callback || nodo.getDepth, null);
@@ -246,10 +245,9 @@ function treeNodeFromXml(XmlEl) {
             var newHref="";
             var nodename;
             var imageLink;
-
-
+                       
             nodename=a.nodeName + ': ' + a.nodeValue;
-            imageLink='jsScripts/ext-2.0.1/resources/images/default/tree/attribute.png';
+            imageLink='jsScripts/import/gis-client-library/import/ext/resources/images/default/tree/attribute.png';
                  
 	    if(a.nodeName == 'schemaLocation'  || a.nodeName == 'xsi:schemaLocation' )
               {
@@ -260,14 +258,13 @@ function treeNodeFromXml(XmlEl) {
               }  
                if(a.nodeName == 'resourceKey')
               {
-               var tableName=a.nodeValue.substr(a.nodeValue.lastIndexOf('/')+1,a.nodeValue.length);
-
-	       newHref="javascript: openTab('tree','Tab', 'manager?cmd=getResource&id="+a.nodeValue+"', 'Tree: "+a.nodeValue+"');";
+               var tableName=a.nodeValue.substr(a.nodeValue.lastIndexOf('/')+1,a.nodeValue.length);  
+	       newHref="javascript: openTab('tree','Tab', 'manager?cmd=getResource&serviceName="+serviceName+"&instanceType="+instanceType+"&instanceId="+instanceID+"&resourceKey="+a.nodeValue+"', 'Tree: "+a.nodeValue+"');";
             }  
               if(a.nodeName == 'resourceLink')
               {
                var tableName=a.nodeValue.substr(a.nodeValue.lastIndexOf('/')+1,a.nodeValue.length);  
-	       newHref="javascript: openTab('tree','Tab', 'manager?cmd=getResource&resourceKey="+a.nodeValue+"', 'Tree: "+a.nodeValue+"');";
+	       newHref="javascript: openTab('tree','Tab', 'manager?cmd=getResource&serviceName="+serviceName+"&instanceType="+instanceType+"&instanceId="+instanceID+"&resourceKey="+a.nodeValue+"', 'Tree: "+a.nodeValue+"');";
                
                  nodename='Resource overview available. Click here';
                  imageLink='jsScripts/ext-2.0.1/resources/images/default/tree/page_white_text.png';

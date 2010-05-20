@@ -87,9 +87,9 @@ if (warnAddress)
                     </DIV> 
                     <P> <A href="main.jsp"><IMG class=labelHomePage title="HowTo" alt="HowTo" src="images/howTo.jpg" align=middle border=0></A>
                         
-                                 <IMG src="images/arrow.gif"> <A target="_blank" href="Documentation/docsExplorer/RE/toolboxConfiguring.html"><fmt:message key="main.configure" bundle="${lang}"/></A><br>
-                    <IMG src="images/arrow.gif"> <A target="_blank" href="Documentation/docsExplorer/RE/serviceCreating.html"><fmt:message key="main.create" bundle="${lang}"/></A><br>
-                    <IMG src="images/arrow.gif"> <A target="_blank" href="Documentation/docsExplorer/RE/operationManagement.html"><fmt:message key="main.add" bundle="${lang}"/></A>
+                                 <IMG src="images/arrow.gif"> <span class="jsAction" onclick="javascript:helpPopup(docUrl, 'RE/main.html_Run-time_environment*blankpage.html_tasks*blankpage.html_TOOLBOX_management*RE/toolboxConfiguring.html_Configuring_the_TOOLBOX*')"><fmt:message key="main.configure" bundle="${lang}"/></span><br>
+                    <IMG src="images/arrow.gif"> <span class="jsAction" onclick="javascript:helpPopup(docUrl, 'RE/main.html_Run-time_environment*blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceCreation.html_Service_creation*')"><fmt:message key="main.create" bundle="${lang}"/></span><br>
+                    <IMG src="images/arrow.gif"> <span class="jsAction" onclick="javascript:helpPopup(docUrl, 'RE/main.html_Run-time_environment*blankpage.html_tasks*RE/operationManagement.html_Operations_management*RE/createOperation.html_Add_an_operation*')"><fmt:message key="main.add" bundle="${lang}"/></span>
                     </P> 
                 </DIV>
 

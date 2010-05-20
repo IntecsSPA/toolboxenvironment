@@ -18,6 +18,7 @@
   <TBODY> 
     <TR> 
       <TD class=pageBody id=main><SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT>
+        <SCRIPT>addHelp("RE/main.html_Run-time_environment*blankpage.html_tasks*blankpage.html_TOOLBOX_management*RE/toolboxConfiguring.html_Configuring_the_TOOLBOX*");</SCRIPT>
         <DIV class=portletItem id=01> 
           <DIV> 
             <A href="<%= response.encodeURL("configureToolboxRequest.jsp") %>?pageStatus=disabled"><fmt:message key="toolboxConfiguration.view" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 

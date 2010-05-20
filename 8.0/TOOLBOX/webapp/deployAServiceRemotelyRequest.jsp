@@ -44,7 +44,6 @@ String bc ="<a href='main.jsp'>"+home+"</a>&nbsp;&gt;" + deploy;
         <TR> 
             <TD class=pageBody id=main>
                 <SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT>
-                <SCRIPT>addHelp("ftpAdding");</SCRIPT>
                 <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center valign="top">
                     <TBODY>
                         <TR>

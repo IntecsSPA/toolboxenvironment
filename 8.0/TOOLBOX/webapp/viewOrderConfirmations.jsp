@@ -59,8 +59,6 @@
     <TR> 
       <TD class=pageBody id=main>
         <SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT> 
-        <SCRIPT>addHelp("monitoringCenter");</SCRIPT>         
-        
         <sql:setDataSource   user="TOOLBOX" password="intecs" url="${dbStr}" driver="org.hsqldb.jdbcDriver" />
         <sql:query  var="confirmations">select id,mnemonicid,creationdate,operation,instancekey  from t_sync_points where service=? <sql:param value="${serviceName}"/> and purpose='ORDER' and status='NO_SYNC'</sql:query>
 

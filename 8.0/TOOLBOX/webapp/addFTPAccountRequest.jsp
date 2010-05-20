@@ -47,7 +47,7 @@
     <TR> 
       <TD class=pageBody id=main>
         <SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT>
-        <SCRIPT>addHelp("ftpAdding");</SCRIPT>
+        <SCRIPT>addHelp("RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/ftpManagement.html_FTP_management*RE/ftpAdding.html_Adding_an_FTP_account*");</SCRIPT>
        <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center valign="top">
 	   <TBODY>
         <TR>

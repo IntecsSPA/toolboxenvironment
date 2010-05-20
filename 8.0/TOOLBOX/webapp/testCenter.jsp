@@ -20,7 +20,10 @@ String toolboxUrl=Toolbox.getInstance().getPublicAddress();
 <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center> 
     <TBODY> 
         <TR> 
-            <TD class=pageBody id=main><SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT>
+            <TD class=pageBody id=main>
+                <SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT>
+                <SCRIPT>addHelp("RE/main.html_Run-time_environment*blankpage.html_tasks*blankpage.html_Test_Center*");</SCRIPT>
+
                 <DIV class=portletItem id=01> 
                     <DIV> <!--%= response.encodeURL("../ToolboxGisClient/testCenter.html")  %-->
                         <A href="javascript:fullScreenPopup ('../ToolboxGisClient/clientTest.jsp?tbxUrl=<%=toolboxUrl%>&service=<%=serviceName%>', 'Toolbox Test Client');"><fmt:message key="testCenter.sendSOAP" bundle="${lang}"/> &nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 

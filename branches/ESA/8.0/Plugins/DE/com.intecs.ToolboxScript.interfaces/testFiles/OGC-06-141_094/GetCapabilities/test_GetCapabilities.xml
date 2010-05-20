@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<GetCapabilities service="OS" updateSequence="" xmlns="http://earth.esa.int/hma/ordering" xmlns:m0="http://www.opengis.net/ows" xmlns:ows="http://www.opengeospatial.net/ows"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="">
-	<m0:AcceptVersions>
-		<m0:Version>1.0.0</m0:Version>
-	</m0:AcceptVersions>
-</GetCapabilities>

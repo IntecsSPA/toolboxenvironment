@@ -1151,10 +1151,12 @@ public class TBXService extends Service {
     public void initializeFromXMLDescriptor(Element serviceEl) throws Exception {
     	super.initializeFromXMLDescriptor(serviceEl);
     	if (this.hasWSSecurity()){
+
                 if(ToolboxSecurityConfigurator.getAxis2ServiceConfigurationElement(this)==null)
                     ToolboxSecurityConfigurator.addWSSecurityLayerForService(this);
 
-	    	this.setJKSlocation(ToolboxSecurityConfigurator.getJKSlocation(this));
+                this.setJKSlocation(serviceRoot+File.separator+"Resources"+File.separator+"Security"+File.separator+"service.jks");
+	    	//this.setJKSlocation(ToolboxSecurityConfigurator.getJKSlocation(this));
 	    	this.setJKSpasswd(ToolboxSecurityConfigurator.getJKSpassword(this));
 	    	this.setJKSuser(ToolboxSecurityConfigurator.getJKSuser(this));
 	    	this.setKeyPasswd(ToolboxSecurityConfigurator.getKeyPassword(this));

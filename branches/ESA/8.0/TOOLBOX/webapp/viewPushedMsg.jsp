@@ -90,7 +90,7 @@ function closeggg()
     <TR> 
       <TD class=pageBody id=main>
         <SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT>
-        <SCRIPT>addHelp("pushServer");</SCRIPT>
+        <SCRIPT>addHelp("RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/blankpage.html_Test_Center*RE/pushServer.html_Displaying_the_messages_pushed_to_the_server*");</SCRIPT>
         <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center valign="top"> 
           <TBODY> 
             <TR> 

@@ -61,7 +61,7 @@
     <TR> 
       <TD class=pageBody id=main>
         <SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT> 
-        <SCRIPT>addHelp("monitoringCenter");</SCRIPT>         
+        <SCRIPT>addHelp("RE/main.html_Run-time_environment*blankpage.html_tasks*RE/monitoringCenter.html_Monitoring_center*");</SCRIPT>
         <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center valign="top"> 
           <TBODY> 
             <TR> 

@@ -35,7 +35,7 @@
                 <TR>
                     <TD class=pageBody id=main>
                         <SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT>
-                        <SCRIPT>addHelp("serviceCreation");</SCRIPT>
+                        <SCRIPT>addHelp("RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/tools.html_Tools_center*RE/ebRRmetadata.html_Harvesting_metadata*");</SCRIPT>
                         <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center valign="top">
                             <TBODY>
                                 <TR>

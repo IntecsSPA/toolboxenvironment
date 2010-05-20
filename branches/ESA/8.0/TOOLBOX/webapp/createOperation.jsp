@@ -234,7 +234,7 @@
         <tr>
             <td class=pageBody id=main>
                 <script>addBreadCrumb("<%=bc%>");</script>
-                <script>addHelp("operationManagement");</script>
+                <script>addHelp("RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/operationManagement.html_Operations_management*");</script>
 
                 <form NAME="newOperation" onsubmit="return controlNewOperation()" action="<%= response.encodeURL("manager?cmd=CreateOperationFromInterface")%>" method="post" ENCTYPE="multipart/form-data">
                     <input type="hidden" name="serviceName" value="<%= serviceName%>">

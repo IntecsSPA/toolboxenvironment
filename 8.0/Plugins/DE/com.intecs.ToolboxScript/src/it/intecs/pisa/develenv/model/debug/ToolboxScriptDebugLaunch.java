@@ -47,6 +47,7 @@ public class ToolboxScriptDebugLaunch extends ToolboxScriptRunLaunch {
 		String pollingRate;
 		IProject project;
 		IFile testFile;
+		IFile outputFile;
 		IFile pushedMessageFile;
 		IFile serviceDescriptorFile;
 		IPath serviceDescriptorPath;
@@ -188,14 +189,14 @@ public class ToolboxScriptDebugLaunch extends ToolboxScriptRunLaunch {
 					fileName="InputAck.xml";
 				else fileName="Output.xml";
 					
-				testFile=testFolder.getFile(fileName);
-				saveFile(responseStream,testFile);
+				outputFile=testFolder.getFile(fileName);
+				saveFile(responseStream,outputFile);
 				
 				responseStream.close();
 				project.refreshLocal(IResource.DEPTH_INFINITE, monitor);
 				monitor.worked(1);
 				
-				if(checkIfSOAPFault(testFile))
+				if(checkIfSOAPFault(outputFile))
 				{
 					AsynchInfoDialogs.showErrorDialog("Error while debugging operation","Toolbox returned a SOAP fault");
 					
@@ -217,11 +218,13 @@ public class ToolboxScriptDebugLaunch extends ToolboxScriptRunLaunch {
 						project.refreshLocal(IResource.DEPTH_INFINITE, monitor);
 						monitor.worked(1);
 						
-						//AsynchEditorOpener.openFileOnEditorWhenSizeGreaterThanZero(pushedMessageFile);
+						outputFile=pushedMessageFile;
 					}
 				}
 		
-			//	AsynchInfoDialogs.showInfoDialog("Debugging operation","Debug successfully performed.");
+				if(checkIfSOAPFault(outputFile))
+					AsynchInfoDialogs.showErrorDialog("Error while debugging operation","Toolbox returned a SOAP fault");
+				else AsynchInfoDialogs.showInfoDialog("Debugging operation","Test successfully performed.");
 				
 				
 			} else

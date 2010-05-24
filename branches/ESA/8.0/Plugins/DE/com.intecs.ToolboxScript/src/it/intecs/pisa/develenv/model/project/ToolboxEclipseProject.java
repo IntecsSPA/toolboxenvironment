@@ -11,6 +11,7 @@ import it.intecs.pisa.develenv.model.utils.FileSystemUtil;
 import it.intecs.pisa.develenv.model.utils.InterfaceDescriptionLoader;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.IOUtil;
+import it.intecs.pisa.util.SchemaSetRelocator;
 import it.intecs.pisa.util.XmlRootSchemaUtil;
 
 import java.io.File;
@@ -449,91 +450,14 @@ public class ToolboxEclipseProject {
 				// relocating import for each schema
 				destStore = EFS.getStore(destFolderURI);
 
-				relocateSchemas(destStore, folder.getParent().getLocation()
-						.toOSString());
+				SchemaSetRelocator.updateSchemaLocationToAbsolute(new File(destFolderURI), destFolderURI);
+				//relocateSchemas(destStore, folder.getParent().getLocation()
+						//.toOSString());
 			}
 
 		} catch (final Exception e) {
 
 		}
-	}
-
-	private void relocateSchemas(IFileStore schemaDirStore, String startPath)
-			throws CoreException {
-		IFileStore[] subDirs = null;
-		InputStream input = null;
-		OutputStream output = null;
-		Document doc = null;
-
-		if (schemaDirStore.fetchInfo().isDirectory()) {
-			subDirs = schemaDirStore.childStores(0, null);
-			for (final IFileStore st : subDirs) {
-				final File newSubPath = new File(startPath, schemaDirStore
-						.fetchInfo().getName());
-				this.relocateSchemas(st, newSubPath.getAbsolutePath());
-			}
-
-		} else {
-			// it is a file, must relocate
-			try {
-				input = schemaDirStore.openInputStream(0, null);
-				doc = this.domutil.inputStreamToDocument(input);
-
-				this.relocateSchema(doc, startPath);
-
-				output = schemaDirStore.openOutputStream(0, null);
-				DOMUtil.dumpXML(doc, output, true);
-
-				output.close();
-
-			} catch (final Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	private void relocateSchema(final Document doc, final String path) {
-		Element root = null;
-		NodeList importNodes = null;
-		String schemaLocation = null;
-		String newSchemaLocation = null;
-		Element importNode = null;
-		File filePath = null;
-
-		root = doc.getDocumentElement();
-		importNodes = root.getElementsByTagNameNS(
-				"http://www.w3.org/2001/XMLSchema", "import");
-		// importNodes=root.getElementsByTagName("import");
-		for (int i = 0; i < importNodes.getLength(); i++) {
-			importNode = (Element) importNodes.item(i);
-
-			schemaLocation = importNode.getAttribute(ATTRIBUTE_SCHEMA_LOCATION);
-
-			filePath = new File(path, schemaLocation);
-			newSchemaLocation = filePath.getAbsolutePath();
-
-			// TODO: Modify with URI
-			importNode
-					.setAttribute(ATTRIBUTE_SCHEMA_LOCATION, filePath.toURI()
-							.toString()/* "file:/"+newSchemaLocation.replace('\\','/') */);
-		}
-
-		importNodes = root.getElementsByTagNameNS(
-				"http://www.w3.org/2001/XMLSchema", "include");
-		// importNodes=root.getElementsByTagName("include");
-		for (int i = 0; i < importNodes.getLength(); i++) {
-			importNode = (Element) importNodes.item(i);
-
-			schemaLocation = importNode.getAttribute(ATTRIBUTE_SCHEMA_LOCATION);
-
-			filePath = new File(path, schemaLocation);
-			newSchemaLocation = filePath.getAbsolutePath();
-
-			importNode
-					.setAttribute(ATTRIBUTE_SCHEMA_LOCATION, filePath.toURI()
-							.toString()/* "file:/"+newSchemaLocation.replace('\\','/') */);
-		}
-
 	}
 
 	private void addOperations(IFolder folder, Interface implementedInterf,Interface updateInterf) throws CoreException {

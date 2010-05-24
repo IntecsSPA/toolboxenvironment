@@ -330,7 +330,7 @@
 	</interface>
 	<interface name="SSE" version="1.6">
 		<rootSchemaFile>SSE_main_template.xsd</rootSchemaFile>
-		<schemaSetLocation>schemas\SSE_16</schemaSetLocation>
+		<schemaSetLocation>schemas/SSE_16</schemaSetLocation>
 		<wsdlFile>wsdl\SSE_16.wsdl</wsdlFile>
 		<targetNameSpace>http://www.mycompanyname.com/ws/mynamespace</targetNameSpace>
 		<operations>
@@ -407,7 +407,7 @@
 	
 	<interface name="Eoli_Order" version="3.4" type="Standard" mode="Standard">
 		<rootSchemaFile>SSE_main_template.xsd</rootSchemaFile>
-		<schemaSetLocation>schemas\EOLI_ORDER_34</schemaSetLocation>
+		<schemaSetLocation>schemas/EOLI_ORDER_34</schemaSetLocation>
 		<wsdlFile>wsdl\Eoli_Order_34.wsdl</wsdlFile>
 		<targetNameSpace>http://earth.esa.int/XML/eoli</targetNameSpace>
 		<operations>

@@ -29,6 +29,7 @@ import it.intecs.pisa.develenv.model.project.ToolboxEclipseProjectPreferences;
 import it.intecs.pisa.develenv.model.project.ToolboxEclipseProjectUtil;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.SOAPMessageBuilder;
+import it.intecs.pisa.util.SOAPUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -81,6 +82,7 @@ public class ToolboxScriptRunLaunch {
 		String pollingRate;
 		IProject project;
 		IFile testFile;
+		IFile outputFile;
 		IFile pushedMessageFile;
 		IFile serviceDescriptorFile;
 		IPath serviceDescriptorPath;
@@ -194,35 +196,28 @@ public class ToolboxScriptRunLaunch {
 			project.refreshLocal(IResource.DEPTH_INFINITE, monitor);
 			monitor.worked(1);
 			
-			
-			
 			monitor.setTaskName("Saving operation response");
 			
 			if(isAsynchronous)
 				fileName="InputAck.xml";
 			else fileName="Output.xml";
 				
-			testFile=testFolder.getFile(fileName);
-			saveFile(responseStream,testFile);
+			outputFile=testFolder.getFile(fileName);
+			saveFile(responseStream,outputFile);
 			
 			responseStream.close();
 			project.refreshLocal(IResource.DEPTH_INFINITE, monitor);
 			monitor.worked(1);
 			
+			if(checkIfSOAPFault(outputFile))
+			{
+				AsynchInfoDialogs.showErrorDialog("Error while running operation","Toolbox returned a SOAP fault");
+				return false;
+			}
+			
 			if(isAsynchronous)
 				retrieveExecutionTree(project,serviceName,"A", messageId,"executionResult_responseBuilder.xml", testFolder);
 			else retrieveExecutionTree(project,serviceName,"S", messageId,"executionResult.xml", testFolder);
-			
-			
-			//AsynchEditorOpener.openFileOnEditorWhenSizeGreaterThanZero(testFile);
-			
-			//checking if ack/response is a SOAP fault
-			if(checkIfSOAPFault(testFile))
-			{
-				AsynchInfoDialogs.showErrorDialog("Error while running operation","Toolbox returned a SOAP fault");
-				
-				return false;
-			}
 			
 			if(isAsynchronous)
 			{
@@ -235,11 +230,11 @@ public class ToolboxScriptRunLaunch {
 					pushedMessageFile=testFolder.getFile("Output.xml");
 					saveFile(pushedMessageStream,pushedMessageFile);
 					pushedMessageStream.close();
-					
+										
 					project.refreshLocal(IResource.DEPTH_INFINITE, monitor);
 					monitor.worked(1);
 					
-					//AsynchEditorOpener.openFileOnEditorWhenSizeGreaterThanZero(pushedMessageFile);
+					outputFile=pushedMessageFile;
 				}
 			}
 			
@@ -247,7 +242,10 @@ public class ToolboxScriptRunLaunch {
 			retrieveExecutionTree(project,serviceName,"A", messageId,"executionResult_secondScript.xml", testFolder);
 			retrieveExecutionTree(project,serviceName,"A", messageId,"executionResult_thirdScript.xml", testFolder);
 			
-			AsynchInfoDialogs.showInfoDialog("Running operation","Test successfully performed.");
+			
+			if(checkIfSOAPFault(outputFile))
+				AsynchInfoDialogs.showErrorDialog("Error while running operation","Toolbox returned a SOAP fault");
+			else AsynchInfoDialogs.showInfoDialog("Running operation","Test successfully performed.");
 			
 		}
 		catch(Exception e)
@@ -401,8 +399,20 @@ public class ToolboxScriptRunLaunch {
 	}
 
 	protected static boolean checkIfSOAPFault(IFile testFile) {
-
-		return false;
+		try {
+			InputStream fileContent=testFile.getContents();
+			
+			DOMUtil util;
+			
+			util=new DOMUtil();
+			Document doc;
+		
+			doc = util.inputStreamToDocument(fileContent);
+			
+			return SOAPUtil.isSOAPFault(doc);
+		} catch (Exception e) {
+			return true;
+		} 
 	}
 
 	protected static boolean checkIfDeployed(IProject project,String serviceName, String operationName) {

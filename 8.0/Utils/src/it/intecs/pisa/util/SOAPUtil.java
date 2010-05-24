@@ -15,6 +15,9 @@ import org.w3c.dom.Element;
 public class SOAPUtil {
     public static final String FAULT_NAMESPACE = "http://schemas.xmlsoap.org/soap/envelope/";
     public static final String FAULT_ROOT_NODE = "Fault";
+    public static final String ENVELOPE_ROOT_NODE = "Envelope";
+    public static final String BODY_NODE = "Body";
+    
     public static boolean isSOAPFault(Document doc)
     {
         Element rootEl;
@@ -28,12 +31,34 @@ public class SOAPUtil {
             name=rootEl.getNodeName();
 
             if(namespace.equals(FAULT_NAMESPACE) && name.endsWith(FAULT_ROOT_NODE))
-                return true;
+                return isBosySOAPFault(rootEl);
+            else if(namespace.equals(FAULT_NAMESPACE) && name.endsWith(ENVELOPE_ROOT_NODE))
+            {
+            	Element bodyEl;
+            	Element faultEl;
+            	
+            	bodyEl=DOMUtil.getChildByLocalName(rootEl,BODY_NODE);
+            	faultEl=DOMUtil.getFirstChild(bodyEl);
+            	return isBosySOAPFault(faultEl);
+            }
             else return false;
         }
         catch(Exception e)
         {
             return false;
         }
+    }
+    
+    protected static boolean isBosySOAPFault(Element el)
+    {
+    	String namespace;
+        String name;
+        
+    	namespace=el.getNamespaceURI();
+        name=el.getNodeName();
+
+        if(namespace.equals(FAULT_NAMESPACE) && name.endsWith(FAULT_ROOT_NODE))
+            return true;
+        else return false;
     }
 }

@@ -1794,6 +1794,7 @@
             <xsd:element ref="ebrr:describeRecord"/>
             <xsd:element ref="ebrr:harvest"/>
             <xsd:element ref="json:stringToJSON"/>
+            <xsd:element ref="json:xmlToJSON"/>
             <xsd:element ref="json:RESTPost"/>
             <xsd:element ref="json:xPath"/>
         </xsd:choice>

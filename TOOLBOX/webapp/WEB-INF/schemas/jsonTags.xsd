@@ -16,6 +16,17 @@
         </xsd:complexType>
     </xsd:element>
 
+    <xsd:element name="xmlToJSON">
+        <xsd:annotation>
+            <xsd:documentation>This tag converts a string to a JSON object</xsd:documentation>
+        </xsd:annotation>
+         <xsd:complexType>
+            <xsd:sequence>
+                 <xsd:any namespace="##other" processContents="strict"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
      <xsd:element name="RESTPost">
         <xsd:annotation>
             <xsd:documentation>This tag executes a POST request to a REST interface</xsd:documentation>

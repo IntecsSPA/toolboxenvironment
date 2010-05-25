@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GetQuotation xmlns="http://earth.esa.int/hma/ordering" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="">
+	<userInformation>
+		<userId></userId>
+		<password></password>
+	</userInformation>
+	<orderQuotationDeliveryInformation>
+		<mail>
+			<recipient></recipient>
+			<companyRef></companyRef>
+			<postalAddress>
+				<streetAddress />
+				<city></city>
+				<state></state>
+				<postalCode></postalCode>
+				<country></country>
+				<postBox></postBox>
+			</postalAddress>
+			<telNumber></telNumber>
+		</mail>
+	</orderQuotationDeliveryInformation>
+	<orderSpecification>
+		<orderAccount></orderAccount>
+		<orderReference></orderReference>
+		<orderRemark></orderRemark>
+		<deliveryInformation>
+			<mail>
+				<recipient></recipient>
+				<companyRef></companyRef>
+				<postalAddress>
+					<streetAddress />
+					<city></city>
+					<state></state>
+					<postalCode></postalCode>
+					<country></country>
+					<postBox></postBox>
+				</postalAddress>
+				<telNumber></telNumber>
+			</mail>
+		</deliveryInformation>
+		<orderItem>
+			<productId>
+				<identifier codeSpace=""></identifier>
+				<collectionId></collectionId>
+			</productId>
+			<options>
+				<optionName></optionName>
+				<optionSelectedValues></optionSelectedValues>
+			</options>
+			<deliveryMethod></deliveryMethod>
+			<packageMedium></packageMedium>
+			<orderItemRemark></orderItemRemark>
+		</orderItem>
+		<priority></priority>
+	</orderSpecification>
+</GetQuotation>

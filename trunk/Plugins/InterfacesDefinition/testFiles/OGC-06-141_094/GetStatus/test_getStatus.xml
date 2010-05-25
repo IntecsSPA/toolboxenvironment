@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="">
+
+	<!-- *************************************
+				Configuration loading 
+		************************************* -->
+	<setVariable name="installationDirectory">
+		<path>
+			<string>/home/toolbox/LandsatDataProvision</string>
+		</path>
+	</setVariable>
+	
+	<execute>
+		<procedure>
+			<path>
+				<string>${installationDirectory}/Scripts/customizeScript.tscript</string>
+			</path>
+		</procedure>
+	</execute>
+		
+	<!-- *************************************
+			Loading response from disk 
+		************************************* -->
+	<setVariable name="response">
+		<loadXML>
+			<path>
+				<string>${installationDirectory}/resources/CapabilitiesResponse.xml</string>
+			</path>
+		</loadXML>
+	</setVariable>
+	
+	<!-- *************************************
+			Sending back response message 
+		************************************* -->
+	<variable name="response"/>
+</sequence>

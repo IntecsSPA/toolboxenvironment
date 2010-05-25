@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GetRecords xmlns="http://www.opengis.net/cat/csw" startPosition="1" maxRecords="20" resultType="results">
+	<Query typeNames="rim:Service rim:Slot=s" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc">
+		<ElementSetName typeNames="rim:Service">summary</ElementSetName>
+		<Constraint version="1.1">
+			<ogc:Filter>
+				<ogc:And>
+					<ogc:PropertyIsEqualTo>
+						<ogc:PropertyName>rim:Service/$s/@name</ogc:PropertyName>
+						<ogc:Literal>http://purl.org/dc/terms/spatial</ogc:Literal>
+					</ogc:PropertyIsEqualTo>
+					<ogc:BBOX>
+						<ogc:PropertyName>
+            rim:Service/$s/wrs:ValueList/wrs:AnyValue
+            </ogc:PropertyName>
+						<gml:Envelope>
+							<gml:lowerCorner>48.86 -124.18</gml:lowerCorner>
+							<gml:upperCorner>49.98 -122.32</gml:upperCorner>
+						</gml:Envelope>
+					</ogc:BBOX>
+				</ogc:And>
+			</ogc:Filter>
+		</Constraint>
+	</Query>
+</GetRecords>

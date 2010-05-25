@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:sec="http://pisa.intecs.it/toolbox/security">
+
+
+    <if>
+        <oeq>
+            <variable name="forwardMessageWithCryptedToken"/>
+            <literal type="boolean" value="true"/>
+        </oeq>
+
+        <sequence>
+            <setVariable name="jksPath">
+                <sec:serviceKeyStorePath/>
+            </setVariable>
+
+            <setVariable name="jksPwd">
+                <sec:serviceKeyStorePwd/>
+            </setVariable>
+
+               <setVariable name="token">
+                    <sec:encrypt keyStorePath="$serviceKeyStorePath" alias="$keyAlias" keyStorePwd="$jksPwd" >
+                        <xPath outputType="xml" xmlns:ass="urn:oasis:names:tc:SAML:1.0:assertion">
+                            <soapRequest/>
+                            <string>//ass:Assertion</string>
+                        </xPath>
+                    </sec:encrypt>
+               </setVariable>
+
+               <setVariable name="xslDoc">
+                    <xml textTag="evaluate" attributePrefix="x">
+                        <xsl:stylesheet version="1.0" xmlns:tss="http://pisa.intecs.it/mass/toolbox/log" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ipo="http://www.mass.com/IPO">
+                            <xsl:output method="html" version="1.0" encoding="ISO-8859-1" omit-xml-declaration="no" indent="no" media-type="text/html"/>
+                            <xsl:template match="/">
+                                <wsse:Security xmlns="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:saml="urn:oasis:names:tc:SAML:1.0:assertion" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <xsl:copy-of select="."/>
+                                </wsse:Security>
+                            </xsl:template>
+                        </xsl:stylesheet>
+                    </xml>
+                </setVariable>
+
+                <setVariable name="encryptedResponse">
+                    <soapCall operation="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecordById">
+                        <variable name="remoteUrl"/>
+                        <soapHeaders>
+                            <xslt xmlOutput="true">
+                                <variable name="token"/>
+                                <variable name="xslDoc"/>
+                            </xslt>
+                        </soapHeaders>
+                        <xmlRequest/>
+                    </soapCall>
+                </setVariable>
+
+                <sec:decrypt keyStorePath="$serviceKeyStorePath" alias="$keyAlias" keyStorePwd="$jksPwd" >
+                        <variable name="encryptedResponse"/>
+                </sec:decrypt>
+        </sequence>
+
+        <sequence>
+             <if>
+                <oeq>
+                    <variable name="forwardMessageWithClearToken"/>
+                    <literal type="boolean" value="true"/>
+                </oeq>
+
+                <sequence>
+                    <setVariable name="token">
+                        <xPath outputType="xml" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+                            <soapRequest/>
+                            <string>//wsse:Security</string>
+                        </xPath>
+                    </setVariable>
+
+                    <soapCall operation="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecordById">
+                        <variable name="remoteUrl"/>
+                        <soapHeaders>
+                            <variable name="token"/>
+                        </soapHeaders>
+                        <xmlRequest/>
+                    </soapCall>
+                </sequence>
+
+                <sequence>
+                     <soapCall operation="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecordById">
+                        <variable name="remoteUrl"/>
+                        <xmlRequest/>
+                    </soapCall>
+                </sequence>
+            </if>
+
+        </sequence>
+    </if>
+</sequence>

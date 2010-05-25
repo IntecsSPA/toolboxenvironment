@@ -714,123 +714,123 @@
 		<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*-->
 		<item text="Reference" id="DE/blankpage.html_Reference" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 			<userdata name="thisurl">DE/blankpage.html</userdata>
-			<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*-->
-			<item text="XML Scripting reference" id="RE/XMLScript/scripting.html_XML_Scripting_reference" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+			<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*-->
+			<item text="XML Scripting reference" id="_RE/XMLScript/scripting.html_XML_Scripting_reference" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 				<userdata name="thisurl">RE/XMLScript/scripting.html</userdata>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/tocAZ.html_Alphabetical_list*-->
-				<item text="Alphabetical list" id="RE/XMLScript/tocAZ.html_Alphabetical_list" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/tocAZ.html_Alphabetical_list*-->
+				<item text="Alphabetical list" id="_RE/XMLScript/tocAZ.html_Alphabetical_list" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/tocAZ.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/newTags.html_New_tags_from_version_7.0*-->
-				<item text="New tags from version 7.0" id="RE/XMLScript/newTags.html_New_tags_from_version_7.0" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/newTags.html_New_tags_from_version_7.0*-->
+				<item text="New tags from version 7.0" id="_RE/XMLScript/newTags.html_New_tags_from_version_7.0" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/newTags.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/aritmetic.html_Arithmetic_Operators*-->
-				<item text="Arithmetic Operators" id="RE/XMLScript/aritmetic.html_Arithmetic_Operators" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/aritmetic.html_Arithmetic_Operators*-->
+				<item text="Arithmetic Operators" id="_RE/XMLScript/aritmetic.html_Arithmetic_Operators" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/aritmetic.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/relational.html_Relational_Operators*-->
-				<item text="Relational Operators" id="RE/XMLScript/relational.html_Relational_Operators" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/relational.html_Relational_Operators*-->
+				<item text="Relational Operators" id="_RE/XMLScript/relational.html_Relational_Operators" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/relational.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/conditional.html_Conditional_Operators*-->
-				<item text="Conditional Operators" id="RE/XMLScript/conditional.html_Conditional_Operators" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/conditional.html_Conditional_Operators*-->
+				<item text="Conditional Operators" id="_RE/XMLScript/conditional.html_Conditional_Operators" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/conditional.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/shift.html_Shift_Operators*-->
-				<item text="Shift Operators" id="RE/XMLScript/shift.html_Shift_Operators" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/shift.html_Shift_Operators*-->
+				<item text="Shift Operators" id="_RE/XMLScript/shift.html_Shift_Operators" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/shift.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/logical.html_Logical_Operators*-->
-				<item text="Logical Operators" id="RE/XMLScript/logical.html_Logical_Operators" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/logical.html_Logical_Operators*-->
+				<item text="Logical Operators" id="_RE/XMLScript/logical.html_Logical_Operators" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/logical.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/assignment.html_Assignment_Operators*-->
-				<item text="Assignment Operators" id="RE/XMLScript/assignment.html_Assignment_Operators" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/assignment.html_Assignment_Operators*-->
+				<item text="Assignment Operators" id="_RE/XMLScript/assignment.html_Assignment_Operators" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/assignment.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/operatorsCommands.html_Other_Operators_and_Commands*-->
-				<item text="Other Operators and Commands" id="RE/XMLScript/operatorsCommands.html_Other_Operators_and_Commands" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/operatorsCommands.html_Other_Operators_and_Commands*-->
+				<item text="Other Operators and Commands" id="_RE/XMLScript/operatorsCommands.html_Other_Operators_and_Commands" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/operatorsCommands.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/flow.html_Control_Flow_Statements*-->
-				<item text="Control Flow Statements" id="RE/XMLScript/flow.html_Control_Flow_Statements" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/flow.html_Control_Flow_Statements*-->
+				<item text="Control Flow Statements" id="_RE/XMLScript/flow.html_Control_Flow_Statements" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/flow.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/arrays.html_Arrays*-->
-				<item text="Arrays" id="RE/XMLScript/arrays.html_Arrays" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/arrays.html_Arrays*-->
+				<item text="Arrays" id="_RE/XMLScript/arrays.html_Arrays" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/arrays.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/strings.html_Strings*-->
-				<item text="Strings" id="RE/XMLScript/strings.html_Strings" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/strings.html_Strings*-->
+				<item text="Strings" id="_RE/XMLScript/strings.html_Strings" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/strings.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/text.html_Text_Handling*-->
-				<item text="Text Handling" id="RE/XMLScript/text.html_Text_Handling" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/text.html_Text_Handling*-->
+				<item text="Text Handling" id="_RE/XMLScript/text.html_Text_Handling" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/text.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/file.html_File_Handling*-->
-				<item text="File Handling" id="RE/XMLScript/file.html_File_Handling" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/file.html_File_Handling*-->
+				<item text="File Handling" id="_RE/XMLScript/file.html_File_Handling" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/file.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/soap.html_SOAP*-->
-				<item text="SOAP" id="RE/XMLScript/soap.html_SOAP" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/soap.html_SOAP*-->
+				<item text="SOAP" id="_RE/XMLScript/soap.html_SOAP" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/soap.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/http.html_HTTP*-->
-				<item text="HTTP" id="RE/XMLScript/http.html_HTTP" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/http.html_HTTP*-->
+				<item text="HTTP" id="_RE/XMLScript/http.html_HTTP" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/http.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/ftp.html_FTP*-->
-				<item text="FTP" id="RE/XMLScript/ftp.html_FTP" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/ftp.html_FTP*-->
+				<item text="FTP" id="_RE/XMLScript/ftp.html_FTP" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/ftp.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/jdbc.html_JDBC*-->
-				<item text="JDBC" id="RE/XMLScript/jdbc.html_JDBC" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/jdbc.html_JDBC*-->
+				<item text="JDBC" id="_RE/XMLScript/jdbc.html_JDBC" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/jdbc.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/xmlXsl.html_XML/XSL*-->
-				<item text="XML/XSL" id="RE/XMLScript/xmlXsl.html_XML/XSL" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/xmlXsl.html_XML/XSL*-->
+				<item text="XML/XSL" id="_RE/XMLScript/xmlXsl.html_XML/XSL" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/xmlXsl.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/xmlScripting.html_XML_Scripting*-->
-				<item text="XML Scripting" id="RE/XMLScript/xmlScripting.html_XML_Scripting" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/xmlScripting.html_XML_Scripting*-->
+				<item text="XML Scripting" id="_RE/XMLScript/xmlScripting.html_XML_Scripting" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/xmlScripting.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/email.html_email*-->
-				<item text="email" id="RE/XMLScript/email.html_email" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/email.html_email*-->
+				<item text="email" id="_RE/XMLScript/email.html_email" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/email.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/thread.html_Threading*-->
-				<item text="Threading" id="RE/XMLScript/thread.html_Threading" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/thread.html_Threading*-->
+				<item text="Threading" id="_RE/XMLScript/thread.html_Threading" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/thread.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/archiving.html_Archiving*-->
-				<item text="Archiving" id="RE/XMLScript/archiving.html_Archiving" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/archiving.html_Archiving*-->
+				<item text="Archiving" id="_RE/XMLScript/archiving.html_Archiving" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/archiving.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/dateTime.html_Date*-->
-				<item text="Date" id="RE/XMLScript/dateTime.html_Date" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/dateTime.html_Date*-->
+				<item text="Date" id="_RE/XMLScript/dateTime.html_Date" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/dateTime.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/cleanup.html_Clean_up*-->
-				<item text="Clean up" id="RE/XMLScript/cleanup.html_Clean_up" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/cleanup.html_Clean_up*-->
+				<item text="Clean up" id="_RE/XMLScript/cleanup.html_Clean_up" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/cleanup.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/sse.html_SSE_utils*-->
-				<item text="SSE utils" id="RE/XMLScript/sse.html_SSE_utils" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/sse.html_SSE_utils*-->
+				<item text="SSE utils" id="_RE/XMLScript/sse.html_SSE_utils" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/sse.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/jelly.html_Jelly_script*-->
-				<item text="Jelly script" id="RE/XMLScript/jelly.html_Jelly_script" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/jelly.html_Jelly_script*-->
+				<item text="Jelly script" id="_RE/XMLScript/jelly.html_Jelly_script" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/jelly.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/orderManagement.html_Orders_Management*-->
-				<item text="Orders Management" id="RE/XMLScript/orderManagement.html_Orders_Management" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/orderManagement.html_Orders_Management*-->
+				<item text="Orders Management" id="_RE/XMLScript/orderManagement.html_Orders_Management" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/orderManagement.html</userdata>
 				</item>
-				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/Java.html_Java*-->
-				<item text="Java" id="RE/XMLScript/Java.html_Java" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/Java.html_Java*-->
+				<item text="Java" id="_RE/XMLScript/Java.html_Java" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/XMLScript/Java.html</userdata>
 				</item>
 			</item>
@@ -871,6 +871,7 @@
 				<userdata name="thisurl">DE/blankpage.html</userdata>
 				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*-->
 				<item text="Integrating the HMAEOLI service" id="_Integrating_the_HMAEOLI_service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/blankpage.html</userdata>
 					<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/CASESTUDIES/hma2eoli/introduction.html_Introduction*-->
 					<item text="Introduction" id="DE/CASESTUDIES/hma2eoli/introduction.html_Introduction" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 						<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/introduction.html</userdata>

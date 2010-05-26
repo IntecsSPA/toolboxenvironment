@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Fault  xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+			<faultcode>soapenv:Server</faultcode>
+			<faultstring>TOOLBOX was not able to send a response back to the client</faultstring>
+			<detail>
+				<soap-env:Fault xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/">
+					<soap-env:faultcode>code</soap-env:faultcode>
+					<soap-env:faultstring>TOOLBOX was not able to send a response back to the client</soap-env:faultstring>
+					<soap-env:faultactor>TOOLBOX</soap-env:faultactor>
+					<soap-env:detail>No Additional details</soap-env:detail>
+				</soap-env:Fault>
+			</detail>
+		</soapenv:Fault>

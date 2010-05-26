@@ -15,6 +15,7 @@
     <xsl:param name="language"></xsl:param>
     <xsl:param name="hasSSE"></xsl:param>
     <xsl:param name="hasGML"></xsl:param>
+    <xsl:param name="showEmail">false</xsl:param>
     <xsl:param name="inputTxt">
         <xsl:if test="$language = 'en'">Input message (</xsl:if>
         <xsl:if test="$language = 'it'">Messaggio di input (</xsl:if>

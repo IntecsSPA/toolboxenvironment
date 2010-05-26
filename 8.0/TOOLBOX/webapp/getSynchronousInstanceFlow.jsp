@@ -14,7 +14,7 @@
  -  Revision Date:     $Date: 2006/10/11 10:18:22 $
  -
  -->
-<%@ page language="java" import="it.intecs.pisa.toolbox.db.*,it.intecs.pisa.toolbox.service.*,it.intecs.pisa.toolbox.service.instances.*,it.intecs.pisa.soap.toolbox.service.*,java.util.*, org.w3c.dom.*, javax.xml.parsers.*, java.io.*, it.intecs.pisa.util.*, javax.xml.transform.*,  javax.xml.transform.dom.*,  javax.xml.transform.stream.*, it.intecs.pisa.soap.toolbox.*"  errorPage="errorPage.jsp" %>
+<%@ page language="java" import="it.intecs.pisa.toolbox.configuration.*,it.intecs.pisa.toolbox.db.*,it.intecs.pisa.toolbox.service.*,it.intecs.pisa.toolbox.service.instances.*,it.intecs.pisa.soap.toolbox.service.*,java.util.*, org.w3c.dom.*, javax.xml.parsers.*, java.io.*, it.intecs.pisa.util.*, javax.xml.transform.*,  javax.xml.transform.dom.*,  javax.xml.transform.stream.*, it.intecs.pisa.soap.toolbox.*"  errorPage="errorPage.jsp" %>
 
 <%@ include file="checkSession.jsp" %>
 <%@taglib uri="http://java.sun.com/jstl/core"  prefix="c"%>
@@ -70,6 +70,16 @@
             String monitoring = (String) messages.getObject("getSynchronousInstanceFlow.monitoring");
             String synch = (String) messages.getObject("getSynchronousInstanceFlow.synch");
             String flow = (String) messages.getObject("getSynchronousInstanceFlow.flow");
+            String showEmail="false";
+
+            ToolboxConfiguration toolboxConfiguration;
+            toolboxConfiguration = ToolboxConfiguration.getInstance();
+
+            String destinations=toolboxConfiguration.getConfigurationValue(ToolboxConfiguration.MAIL_ERROR);
+            if(destinations!=null && destinations.equals("")==false)
+            {
+                showEmail="true";
+            }
 
             String bc = "<a href='main.jsp'>" + home + "</a>&nbsp;&gt;" + "<a href='monitoringCenter.jsp?serviceName="
                     + service + "'>&nbsp;" + monitoring + "</a>&nbsp;&gt;<a href='viewServiceInstances.jsp?instanceType=S&serviceName="
@@ -120,6 +130,7 @@
                                                 transformer.setParameter("language", session.getAttribute("languageReq"));
                                                 transformer.setParameter("hasSSE", Boolean.toString(hasSSE));
                                                 transformer.setParameter("hasGML", Boolean.toString(hasGML));
+                                                transformer.setParameter("showEmail", showEmail);
                                                 transformer.transform(new StreamSource(InstanceFlow.getSynchronousInstanceFlowAsXML(service, instanceId)), new StreamResult(out));
                                     %>
                                 </P>

@@ -16,6 +16,7 @@
     <xsl:param name="hasSSE"></xsl:param>
     <xsl:param name="hasGML"></xsl:param>
     <xsl:param name="language"></xsl:param>
+    <xsl:param name="showEmail">false</xsl:param>
     <xsl:param name="inputTxt">
         <xsl:if test="$language = 'en'">Input message (</xsl:if>
         <xsl:if test="$language = 'it'">Messaggio di input (</xsl:if>
@@ -273,10 +274,12 @@
                     <xsl:attribute name="href">javascript:viewResource('text','id=<xsl:value-of select="/log:flow/log:outputMessage/@id"/>','Output Message')</xsl:attribute>
                     <img src="images/download-icon.gif" alt="XML view"/>
                 </a>
-                <a>
-                    <xsl:attribute name="href">javascript:viewResource('email','id=<xsl:value-of select="/log:flow//log:email/@id"/>','Error email')</xsl:attribute>
-                    <img src="images/email-icon.jpg" alt="Email view"/>
-                </a>
+                <xsl:if test="$showEmail ='true'">
+                    <a>
+                        <xsl:attribute name="href">javascript:viewResource('email','id=<xsl:value-of select="/log:flow//log:email/@id"/>','Error email')</xsl:attribute>
+                        <img src="images/email-icon.jpg" alt="Email view"/>
+                    </a>
+                </xsl:if>
                 )
             </TD>
         </TR>

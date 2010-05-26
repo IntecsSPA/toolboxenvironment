@@ -12,6 +12,7 @@
     <xsl:output method="html" version="1.0" encoding="ISO-8859-1" omit-xml-declaration="no" indent="no" media-type="text/html"/>
     <xsl:param name="serviceName"/>
     <xsl:param name="operationName">aa</xsl:param>
+    <xsl:param name="showEmail">false</xsl:param>
     <xsl:param name="language"></xsl:param>
      <xsl:param name="hasSSE"></xsl:param>
       <xsl:param name="hasGML"></xsl:param>
@@ -102,17 +103,19 @@
                                                     <br/>
                                                     <xsl:value-of select="$execTxt"/>
                                                     <a>
-                                                        <xsl:attribute name="href">javascript:viewResource('xml','id=<xsl:value-of select="/log:log//log:error/@id"/>','Operation Script')</xsl:attribute>
+                                                        <xsl:attribute name="href">javascript:viewResource('xml','id=<xsl:value-of select="/log:log//log:completed/@id"/>','Operation Script')</xsl:attribute>
                                                         <img src="images/xml-icon.jpg" alt="arrow"/>
                                                     </a>
                                                     <a>
-                                                        <xsl:attribute name="href">javascript:viewResource('tree','id=<xsl:value-of select="/log:log//log:error/@id"/>','Operation Script')</xsl:attribute>
+                                                        <xsl:attribute name="href">javascript:viewResource('tree','id=<xsl:value-of select="/log:log//log:completed/@id"/>','Operation Script')</xsl:attribute>
                                                         <img src="images/tree-icon.jpg" alt="arrow"/>
                                                     </a>
-                                                    <a>
-                    <xsl:attribute name="href">javascript:viewResource('email','id=<xsl:value-of select="/log:flow//log:email/@id"/>','Error email')</xsl:attribute>
-                    <img src="images/email-icon.jpg" alt="Email view"/>
-                </a>
+                                                    <xsl:if test="$showEmail ='true'">
+                                                        <a>
+                                                            <xsl:attribute name="href">javascript:viewResource('email','id=<xsl:value-of select="/log:flow//log:email/@id"/>','Error email')</xsl:attribute>
+                                                            <img src="images/email-icon.jpg" alt="Email view"/>
+                                                        </a>
+                                                    </xsl:if>
                                                     )                                             
                                         </TD>
                                     </TR>

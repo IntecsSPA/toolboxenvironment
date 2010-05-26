@@ -26,7 +26,8 @@
                                 javax.xml.transform.*,
                                 javax.xml.transform.dom.*,
                                 javax.xml.transform.stream.*,
-                                it.intecs.pisa.soap.toolbox.*"  errorPage="errorPage.jsp" %>
+                                it.intecs.pisa.soap.toolbox.*,
+                                it.intecs.pisa.toolbox.configuration.*"  errorPage="errorPage.jsp" %>
 
 <%@ include file="checkSession.jsp" %>
 
@@ -55,6 +56,16 @@
     String monitor = (String)messages.getObject("getAsynchronousInstanceFlow.monitor");
     String asynch= (String)messages.getObject("getAsynchronousInstanceFlow.asynch");
     String flow = (String)messages.getObject("getAsynchronousInstanceFlow.flow");
+    String showEmail="false";
+
+    ToolboxConfiguration toolboxConfiguration;
+    toolboxConfiguration = ToolboxConfiguration.getInstance();
+
+    String destinations=toolboxConfiguration.getConfigurationValue(ToolboxConfiguration.MAIL_ERROR);
+    if(destinations!=null && destinations.equals("")==false)
+    {
+        showEmail="true";
+    }
 
     String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;" + "<a href='monitoringCenter.jsp?serviceName="
                 +service+"'>&nbsp;"+monitor+"</a>&nbsp;&gt;<a href='viewServiceInstances.jsp?instanceType=A&serviceName="
@@ -109,7 +120,8 @@ function viewResource(type,parameters,label)
             transformer.setParameter("instanceKey", instanceId);
             transformer.setParameter("language", session.getAttribute("languageReq"));
             transformer.setParameter("hasSSE", Boolean.toString(hasSSE));
-              transformer.setParameter("hasGML", Boolean.toString(hasGML));
+            transformer.setParameter("hasGML", Boolean.toString(hasGML));
+            transformer.setParameter("showEmail", showEmail);
             transformer.transform(new StreamSource(InstanceFlow.getAsynchronousInstanceFlowAsXML(service,instanceId)), new StreamResult(out));
 %>
                </P> 

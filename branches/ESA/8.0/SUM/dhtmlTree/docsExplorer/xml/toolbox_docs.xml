@@ -1,758 +1,1007 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<tree xmlns:txsl="http://www.w3.org/1999/XSL/Transform/target" xmlns:ctl="http://www.occamlab.com/ctl" id="0">
-  <item text="Getting started" id="main.html_id2360212" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-    <userdata name="thisurl">main.html</userdata>
-    <item text="Overview" id="overview.html_id2314853" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-      <userdata name="thisurl">overview.html</userdata>
-    </item>
-    <item text="Conventions" id="conventions.html_id2361963" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-      <userdata name="thisurl">conventions.html</userdata>
-    </item>
-    <item text="Contact points" id="contacts.html_id2363379" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-      <userdata name="thisurl">contacts.html</userdata>
-    </item>
-  </item>
-  <item text="Run-time environment" id="RE/main.html_id2361893" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-    <userdata name="thisurl">RE/main.html</userdata>
-    <item text="Getting started" id="RE/main.html_id2336917" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-      <userdata name="thisurl">RE/main.html</userdata>
-      <item text="Installation" id="_id2365062" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-	<userdata name="thisurl">blankpage.html</userdata>
-        <item text="Component configuration" id="RE/configuration.html_id2315033" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/configuration.html</userdata>
-        </item>
-        <item text="TOOLBOX" id="_id2314804" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-	  <userdata name="thisurl">blankpage.html</userdata>
-          <item text="System requirements" id="RE/toolboxSystemRequirements.html_id2265117" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">RE/toolboxSystemRequirements.html</userdata>
-          </item>
-          <item text="Installing the TOOLBOX" id="RE/toolboxInstallation.html_id2265124" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">RE/toolboxInstallation.html</userdata>
-            <item text="Installing the TOOLBOX from scratch" id="RE/toolboxInstallationNew.html_id2363071" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">RE/toolboxInstallationNew.html</userdata>
-            </item>
-            <item text="Installing the TOOLBOX on an installed TOMCAT" id="RE/toolboxInstallationTomcat.html_id2364886" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">RE/toolboxInstallationTomcat.html</userdata>
-            </item>
-            <item text="Upgrading the TOOLBOX" id="RE/toolboxUpgrade.html_id2361782" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">RE/toolboxUpgrade.html</userdata>
-            </item>
-            <item text="Setup Tomcat as daemon" id="RE/setTomcatAsDaemon.html_id2361782" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">RE/setTomcatAsDaemon.html</userdata>
-            </item>
-          </item>
-          <item text="Creating the administration account" id="RE/toolboxAdministratorAccount.html_id2361788" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">RE/toolboxAdministratorAccount.html</userdata>
-          </item>
-          <item text="Starting the TOOLBOX" id="RE/toolboxStart.html_id2367910" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">RE/toolboxStart.html</userdata>
-          </item>
-          <item text="Stopping the TOOLBOX" id="RE/toolboxStop.html_id2361608" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">RE/toolboxStop.html</userdata>
-          </item>
-        </item>
-       
-        <item text="JDK" id="RE/jdk.html_id2314836" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/jdk.html</userdata>
-          <item text="Windows platform" id="RE/jdkWindows.html_id2367766" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">RE/jdkWindows.html</userdata>
-          </item>
-          <item text="Linux platform" id="RE/jdkLinux.html_id2315104" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">RE/jdkLinux.html</userdata>
-          </item>
-        </item>
-        <item text="Apache" id="RE/apache.html_id2315111" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/apache.html</userdata>
-          <item text="Apache Web Server for Windows" id="RE/apacheWindows.html_id2358148" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">RE/apacheWindows.html</userdata>
-          </item>
-          <item text="Apache Web Server for Unix and Unix-like platforms" id="RE/apacheLinux.html_id2358153" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">RE/apacheLinux.html</userdata>
-          </item>
-        </item>
-      </item>
-    </item>
-    <item text="tasks" id="_id2314433" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-	<userdata name="thisurl">blankpage.html</userdata>      
-	<item text="TOOLBOX management" id="_id2314437" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-	<userdata name="thisurl">blankpage.html</userdata>
-        <item text="Logging in" id="RE/toolboxLoggingIn.html_id2364975" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/toolboxLoggingIn.html</userdata>
-        </item>
-        <item text="Configuring the TOOLBOX" id="RE/toolboxConfiguring.html_id2364982" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/toolboxConfiguring.html</userdata>
-        </item>
-        <item text="Viewing the TOOLBOX configuration" id="RE/toolboxViewingConfiguration.html_id2347827" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/toolboxViewingConfiguration.html</userdata>
-        </item>
-        <item text="Testing the TOOLBOX installation" id="RE/toolboxTesting.html_id2347833" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/toolboxTesting.html</userdata>
-        </item>
-        <item text="Logging out" id="RE/toolboxLogout.html_id2360351" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/toolboxLogout.html</userdata>
-        </item>
-      </item>
-      <item text="Service management" id="RE/serviceManagement.html_id2363106" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-        <userdata name="thisurl">RE/serviceManagement.html</userdata>
-        <item text="Service creation" id="RE/serviceCreation.html_id2363112" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/serviceCreation.html</userdata>
-          <item text="Creating a Service" id="RE/serviceCreating.html_id2362043" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">RE/serviceCreating.html</userdata>
-          </item>
-          <item text="Importing a Service" id="RE/serviceImporting.html_id2362050" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">RE/serviceImporting.html</userdata>
-          </item>
-          <item text="Importing a Schema set from a zip file" id="RE/importASchemaSet.html_id2315064" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">RE/importASchemaSet.html</userdata>
-          </item>
-          <item text="Importing a Schema set from the SSE portal" id="RE/downloadSchemaSetFromSSE.html_id2315070" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">RE/downloadSchemaSetFromSSE.html</userdata>
-          </item>
-        </item>
-        <item text="Exporting a Service" id="RE/serviceExporting.html_id2361718" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/serviceExporting.html</userdata>
-        </item>
-        <item text="Starting all services" id="RE/serviceStartingAll.html_id2361725" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/serviceStartingAll.html</userdata>
-        </item>
-        <item text="Stopping all services" id="RE/serviceStoppingAll.html_id2367574" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/serviceStoppingAll.html</userdata>
-        </item>
-        <item text="Manager all services status" id="RE/managerServiceStatusAll.html_id2367581" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/managerServiceStatusAll.html</userdata>
-        </item>
-        <item text="Selecting a Service" id="RE/serviceSelecting.html_id2363264" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/serviceSelecting.html</userdata>
-        </item>
-        <item text="Viewing a service configuration" id="RE/serviceViewingConfiguration.html_id2363270" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/serviceViewingConfiguration.html</userdata>
-        </item>
-        <item text="Configuring a Service" id="RE/serviceConfiguring.html_id2363278" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/serviceConfiguring.html</userdata>
-        </item>
-	<item text="Configuring service security enforcement" id="RE/serviceSecurityConfiguration.html_id2363278" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/serviceSecurityConfiguration.html</userdata>
-        </item>
-        <item text="Starting a service" id="RE/serviceStarting.html_id2358211" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/serviceStarting.html</userdata>
-        </item>
-        <item text="Stopping a service" id="RE/serviceStopping.html_id2358218" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/serviceStopping.html</userdata>
-        </item>
-        <item text="Suspending a service" id="RE/serviceSuspending.html_id2361931" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/serviceSuspending.html</userdata>
-        </item>
-        <item text="Resuming a service" id="RE/serviceResuming.html_id2361938" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/serviceResuming.html</userdata>
-        </item>
-        <item text="Deleting a service" id="RE/serviceDeleting.html_id2364366" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/serviceDeleting.html</userdata>
-        </item>
-      </item>
-      <item text="Operations management" id="RE/operationManagement.html_id2364373" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-        <userdata name="thisurl">RE/operationManagement.html</userdata>
-        <item text="Listing the service operations" id="RE/operationListing.html_id2364380" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/operationListing.html</userdata>
-        </item>
-        <item text="Add an operation" id="RE/createOperation.html_id2359540" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/createOperation.html</userdata>
-        </item>
-        <item text="Re-configuring an operation" id="RE/operationReconfiguring.html_id2359547" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/operationReconfiguring.html</userdata>
-        </item>
-        <item text="Deleting an operation" id="RE/operationDeleting.html_id2359708" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/operationDeleting.html</userdata>
-        </item>
-        <item text="WSDL" id="RE/operationWSDL.html_id2359715" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/operationWSDL.html</userdata>
-          <item text="Adding an operation to the WSDL file" id="RE/operationWSDLAdding.html_id2361866" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">RE/operationWSDLAdding.html</userdata>
-          </item>
-          <item text="Displaying the WSDL information" id="RE/operationWSDLDisplayingInfo.html_id2361872" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">RE/operationWSDLDisplayingInfo.html</userdata>
-          </item>
-          <item text="Changing the WSDL information" id="RE/operationWSDLChanging.html_id2361879" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">RE/operationWSDLChanging.html</userdata>
-          </item>
-        </item>
-        <item text="Update GetCapabilities information" id="RE/updateGetCapabilities.html_id2364990" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/updateGetCapabilities.html</userdata>
-        </item>
-      </item>
-      <item text="Secure communication" id="RE/secure.html_id2364997" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-        <userdata name="thisurl">RE/secure.html</userdata>
-      </item>
-      <item text="FTP management" id="RE/ftpManagement.html_id2365004" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-        <userdata name="thisurl">RE/ftpManagement.html</userdata>
-        <item text="Listing and deleting an FTP account" id="RE/ftpListing.html_id2365033" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/ftpListing.html</userdata>
-        </item>
-        <item text="Adding an FTP account" id="RE/ftpAdding.html_id2365040" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/ftpAdding.html</userdata>
-        </item>
-      </item>
-      <item text="Test Center" id="_id2365047" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-	<userdata name="thisurl">blankpage.html</userdata>
-        <item text="Sending a SOAP message" id="RE/sendingSoapMessage.html_id2314967" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/sendingSoapMessage.html</userdata>
-        </item>
-        <item text="Testing a Catalogue" id="RE/testingACatalogue.html_id2314974" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/testingACatalogue.html</userdata>
-        </item>
-        <item text="Validating a script" id="RE/validatingAScript.html_id2314981" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/validatingAScript.html</userdata>
-        </item>
-        <item text="Displaying the messages pushed to the server" id="RE/pushServer.html_id2360907" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/pushServer.html</userdata>
-        </item>  
-      </item>
-
-<item text="Tools center" id="_id23650471" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-	<userdata name="thisurl">RE/tools.html</userdata>
-        <item text="Creating an EOP catalogue database" id="RE/createebRRDBinstance.html" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/createebRRDBinstance.html</userdata>
-        </item>
-        <item text="Harvesting metadata" id="RE/ebRRmetadata.html_id2360914" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/ebRRmetadata.html</userdata>
-        </item>
-      </item>
-
-      <item text="Monitoring center" id="RE/monitoringCenter.html_id2360921" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-        <userdata name="thisurl">RE/monitoringCenter.html</userdata>
-        <item text="Displaying the TOOLBOX log" id="RE/toolboxLogging.html_id2363283" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/toolboxLogging.html</userdata>
-        </item>
-        <item text="Displaying the Service log" id="RE/serviceLogging.html_id2363290" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/serviceLogging.html</userdata>
-        </item>
-        <item text="Listing synchronous instances" id="RE/synchronousInstances.html_id2363297" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/synchronousInstances.html</userdata>
-        </item>
-        <item text="Listing asynchronous instances" id="RE/asynchronousInstances.html_id2361810" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/asynchronousInstances.html</userdata>
-        </item>
-        <item text="Displaying a synchronous instances flow" id="RE/displaySynchronousInstances.html_id2361817" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/displaySynchronousInstances.html</userdata>
-        </item>
-        <item text="Displaying an asynchronous instances flow" id="RE/displayAsynchronousInstances.html_id2361823" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/displayAsynchronousInstances.html</userdata>
-        </item>
-        <item text="Flow icons description" id="RE/flowIcons.html_id2358058" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/flowIcons.html</userdata>
-        </item>
-        <item text="View the timers status" id="RE/timerStatus.html_id2358064" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/timerStatus.html</userdata>
-        </item>
-      </item>
-    </item>
-    <item text="Reference" id="_id2358071" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-	<userdata name="thisurl">blankpage.html</userdata>
-      <item text="Tutorial" id="RE/tutorial.html_id2358074" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-        <userdata name="thisurl">RE/tutorial.html</userdata>
-        <item text="File exchange based service" id="RE/vito.html_id2367883" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/vito.html</userdata>
-        </item>
-        <item text="JDBC based service(1)" id="RE/acs.html_id2367889" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/acs.html</userdata>
-        </item>
-        <item text="JDBC based service(2)" id="RE/acs2.html_id2367896" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/acs2.html</userdata>
-        </item>
-        <item text="Real HTTP based service" id="RE/gim.html_id2367903" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/gim.html</userdata>
-        </item>
-        <item text="Dummy HTTP based service" id="RE/http.html_id2362215" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/http.html</userdata>
-        </item>
-      </item>
-      <item text="Using Jelly" id="RE/jelly.html_id2362222" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-        <userdata name="thisurl">RE/jelly.html</userdata>
-      </item>
-      <item text="FAQ" id="RE/faq.html_id2362228" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-        <userdata name="thisurl">RE/faq.html</userdata>
-      </item>
-      <item text="XML Scripting reference" id="RE/XMLScript/scripting.html_id2361900" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-        <userdata name="thisurl">RE/XMLScript/scripting.html</userdata>
-        <item text="Alphabetical list" id="RE/XMLScript/tocAZ.html_id2361906" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/tocAZ.html</userdata>
-        </item>
-        <item text="New tags from version 7.0" id="RE/XMLScript/newTags.html_id2361913" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/newTags.html</userdata>
-        </item>
-        <item text="Arithmetic Operators" id="RE/XMLScript/aritmetic.html_id2361920" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/aritmetic.html</userdata>
-        </item>
-        <item text="Relational Operators" id="RE/XMLScript/relational.html_id2368514" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/relational.html</userdata>
-        </item>
-        <item text="Conditional Operators" id="RE/XMLScript/conditional.html_id2368521" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/conditional.html</userdata>
-        </item>
-        <item text="Shift Operators" id="RE/XMLScript/shift.html_id2368528" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/shift.html</userdata>
-        </item>
-        <item text="Logical Operators" id="RE/XMLScript/logical.html_id2368535" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/logical.html</userdata>
-        </item>
-        <item text="Assignment Operators" id="RE/XMLScript/assignment.html_id2357068" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/assignment.html</userdata>
-        </item>
-        <item text="Other Operators and Commands" id="RE/XMLScript/operatorsCommands.html_id2357075" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/operatorsCommands.html</userdata>
-        </item>
-        <item text="Control Flow Statements" id="RE/XMLScript/flow.html_id2357083" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/flow.html</userdata>
-        </item>
-        <item text="Arrays" id="RE/XMLScript/arrays.html_id2357090" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/arrays.html</userdata>
-        </item>
-        <item text="Strings" id="RE/XMLScript/strings.html_id2361629" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/strings.html</userdata>
-        </item>
-        <item text="Text Handling" id="RE/XMLScript/text.html_id2361636" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/text.html</userdata>
-        </item>
-        <item text="File Handling" id="RE/XMLScript/file.html_id2361643" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/file.html</userdata>
-        </item>
-        <item text="SOAP" id="RE/XMLScript/soap.html_id2361649" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/soap.html</userdata>
-        </item>
-        <item text="HTTP" id="RE/XMLScript/http.html_id2357270" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/http.html</userdata>
-        </item>
-        <item text="FTP" id="RE/XMLScript/ftp.html_id2357277" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/ftp.html</userdata>
-        </item>
-        <item text="JDBC" id="RE/XMLScript/jdbc.html_id2357283" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/jdbc.html</userdata>
-        </item>
-        <item text="XML/XSL" id="RE/XMLScript/xmlXsl.html_id2357290" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/xmlXsl.html</userdata>
-        </item>
-        <item text="XML Scripting" id="RE/XMLScript/xmlScripting.html_id2314526" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/xmlScripting.html</userdata>
-        </item>
-        <item text="email" id="RE/XMLScript/email.html_id2314533" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/email.html</userdata>
-        </item>
-        <item text="Threading" id="RE/XMLScript/thread.html_id2314540" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/thread.html</userdata>
-        </item>
-        <item text="Archiving" id="RE/XMLScript/archiving.html_id2314546" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/archiving.html</userdata>
-        </item>
-        <item text="Date" id="RE/XMLScript/dateTime.html_id2368449" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/dateTime.html</userdata>
-        </item>
-        <item text="Clean up" id="RE/XMLScript/cleanup.html_id2368455" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/cleanup.html</userdata>
-        </item>
-        <item text="SSE utils" id="RE/XMLScript/sse.html_id2368462" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/sse.html</userdata>
-        </item>
-        <item text="Jelly script" id="RE/XMLScript/jelly.html_id2368469" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/jelly.html</userdata>
-        </item>
-        <item text="Orders Management" id="RE/XMLScript/orderManagement.html_id2363604" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/orderManagement.html</userdata>
-        </item>
-        <item text="Java" id="RE/XMLScript/Java.html_id2363610" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/Java.html</userdata>
-        </item>
-      </item>
-      <item text="Error messages" id="RE/errorMsg.html_id2363617" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-        <userdata name="thisurl">RE/errorMsg.html</userdata>
-      </item>
-    </item>
-  </item>
-  <item text="Development environment" id="DE/main.html_id2363624" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-    <userdata name="thisurl">DE/main.html</userdata>
-    <item text="Getting started" id="DE/main.html_id2364697" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-      <userdata name="thisurl">DE/main.html</userdata>
-      <item text="Installation" id="DE/installation.html_id2364704" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-        <userdata name="thisurl">DE/installation.html</userdata>
-	<item text="System requirements" id="DE/system_requirements.html_id2333952" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-<userdata name="thisurl">DE/system_requirements.html</userdata>
-</item>
-        <item text="Development Environment Online Installation" id="DE/installation_online.html_id2364711" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/installation_online.html</userdata>
-        </item>
-        <item text="Development Environment Offline Installation" id="DE/installation_offline.html_id2364718" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/installation_offline.html</userdata>
-        </item>
-        <item text="Development Environment Upgrade (Online installation)" id="DE/upgrade_installation_online.html_id2364725" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/upgrade_installation_online.html</userdata>
-        </item>
-        <item text="Development Environment Upgrade (Offline installation)" id="DE/upgrade_installation_offline.html_id2362107" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/upgrade_installation_offline.html</userdata>
-        </item>
-	<item text="Known bugs" id="DE/known_bugs.html_id2333952" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-<userdata name="thisurl">DE/known_bugs.html</userdata>
-</item>
-      </item>
-    </item>
-    <item text="tasks" id="_id2362115" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-	<userdata name="thisurl">blankpage.html</userdata>
-      <item text="Upgrade the Environment" id="_id2362119" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-	<userdata name="thisurl">blankpage.html</userdata>
-        <item text="Upgrade an Online installation" id="DE/tasks/upgrade_plugin_online.html_id2362122" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/upgrade_plugin_online.html</userdata>
-        </item>
-        <item text="Upgrade an Offline installation" id="DE/tasks/upgrade_plugin_offline.html_id2362129" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/upgrade_plugin_offline.html</userdata>
-        </item>
-      </item>
-      <item text="Project management" id="_id2368902" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-	<userdata name="thisurl">blankpage.html</userdata>
-        <item text="Create a new service project" id="DE/tasks/newproject.html_id2368906" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/newproject.html</userdata>
-        </item>
-        <item text="Create a new service operation" id="DE/tasks/newoperation.html_id2368913" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/newoperation.html</userdata>
-        </item>
-        <item text="Create a new Input test file" id="DE/tasks/newXMLrequest.html_id2368920" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/newXMLrequest.html</userdata>
-        </item>
-        <item text="Update the service configuration" id="DE/tasks/updateServiceConf.html_id2368927" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/updateServiceConf.html</userdata>
-        </item>
-      </item>
-      <item text="Launch configurations" id="_id2368934" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-	<userdata name="thisurl">blankpage.html</userdata>
-        <item text="Create a new launch configuration" id="DE/tasks/addlaunchconfig.html_id2368938" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/addlaunchconfig.html</userdata>
-        </item>
-        <item text="Delete a launch configuration" id="DE/tasks/deletelaunchconfiguration.html_id2368946" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/deletelaunchconfiguration.html</userdata>
-        </item>
-        <item text="Duplicate a launch configuration" id="DE/tasks/duplicatelaunchconfiguration.html_id2362148" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/duplicatelaunchconfiguration.html</userdata>
-        </item>
-      </item>
-      <item text="Open and edit a Toolbox script" id="_id2362155" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-	<userdata name="thisurl">blankpage.html</userdata>
-        <item text="Open a Toolbox script file" id="DE/tasks/openfile.html_id2362159" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/openfile.html</userdata>
-        </item>
-        <item text="Change visualization of a Toolbox script file" id="DE/tasks/changevisualization.html_id2362166" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/changevisualization.html</userdata>
-        </item>
-        <item text="Add, copy, move and delete a tag" id="_id2362174" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<tree xmlns:ctl="http://www.occamlab.com/ctl" xmlns:txsl="http://www.w3.org/1999/XSL/Transform/target" id="0">
+	<!--main.html_Getting_started*-->
+	<item text="Getting started" id="main.html_Getting_started" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+		<userdata name="thisurl">main.html</userdata>
+		<!--main.html_Getting_started*overview.html_Overview*-->
+		<item text="Overview" id="overview.html_Overview" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+			<userdata name="thisurl">overview.html</userdata>
+		</item>
+		<!--main.html_Getting_started*conventions.html_Conventions*-->
+		<item text="Conventions" id="conventions.html_Conventions" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+			<userdata name="thisurl">conventions.html</userdata>
+		</item>
+		<!--main.html_Getting_started*contacts.html_Contact_points*-->
+		<item text="Contact points" id="contacts.html_Contact_points" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+			<userdata name="thisurl">contacts.html</userdata>
+		</item>
+	</item>
+	<!--RE/main.html_Run-time_environment*-->
+	<item text="Run-time environment" id="RE/main.html_Run-time_environment" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+		<userdata name="thisurl">RE/main.html</userdata>
+		<!--RE/main.html_Run-time_environment*RE/main.html_Getting_started*-->
+		<item text="Getting started" id="RE/main.html_Getting_started" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+			<userdata name="thisurl">RE/main.html</userdata>
+			<!--RE/main.html_Run-time_environment*RE/main.html_Getting_started*RE/blankpage.html_Installation*-->
+			<item text="Installation" id="RE/blankpage.html_Installation" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">RE/blankpage.html</userdata>
+				<!--RE/main.html_Run-time_environment*RE/main.html_Getting_started*RE/blankpage.html_Installation*RE/configuration.html_Component_configuration*-->
+				<item text="Component configuration" id="RE/configuration.html_Component_configuration" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/configuration.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/main.html_Getting_started*RE/blankpage.html_Installation*RE/blankpage.html_TOOLBOX*-->
+				<item text="TOOLBOX" id="RE/blankpage.html_TOOLBOX" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/blankpage.html</userdata>
+					<!--RE/main.html_Run-time_environment*RE/main.html_Getting_started*RE/blankpage.html_Installation*RE/blankpage.html_TOOLBOX*RE/toolboxSystemRequirements.html_System_requirements*-->
+					<item text="System requirements" id="RE/toolboxSystemRequirements.html_System_requirements" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">RE/toolboxSystemRequirements.html</userdata>
+					</item>
+					<!--RE/main.html_Run-time_environment*RE/main.html_Getting_started*RE/blankpage.html_Installation*RE/blankpage.html_TOOLBOX*RE/toolboxInstallation.html_Installing_the_TOOLBOX*-->
+					<item text="Installing the TOOLBOX" id="RE/toolboxInstallation.html_Installing_the_TOOLBOX" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">RE/toolboxInstallation.html</userdata>
+						<!--RE/main.html_Run-time_environment*RE/main.html_Getting_started*RE/blankpage.html_Installation*RE/blankpage.html_TOOLBOX*RE/toolboxInstallation.html_Installing_the_TOOLBOX*RE/toolboxInstallationNew.html_Installing_the_TOOLBOX_from_scratch*-->
+						<item text="Installing the TOOLBOX from scratch" id="RE/toolboxInstallationNew.html_Installing_the_TOOLBOX_from_scratch" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">RE/toolboxInstallationNew.html</userdata>
+						</item>
+						<!--RE/main.html_Run-time_environment*RE/main.html_Getting_started*RE/blankpage.html_Installation*RE/blankpage.html_TOOLBOX*RE/toolboxInstallation.html_Installing_the_TOOLBOX*RE/toolboxInstallationTomcat.html_Installing_the_TOOLBOX_on_an_installed_TOMCAT*-->
+						<item text="Installing the TOOLBOX on an installed TOMCAT" id="RE/toolboxInstallationTomcat.html_Installing_the_TOOLBOX_on_an_installed_TOMCAT" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">RE/toolboxInstallationTomcat.html</userdata>
+						</item>
+						<!--RE/main.html_Run-time_environment*RE/main.html_Getting_started*RE/blankpage.html_Installation*RE/blankpage.html_TOOLBOX*RE/toolboxInstallation.html_Installing_the_TOOLBOX*RE/toolboxUpgrade.html_Upgrading_the_TOOLBOX*-->
+						<item text="Upgrading the TOOLBOX" id="RE/toolboxUpgrade.html_Upgrading_the_TOOLBOX" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">RE/toolboxUpgrade.html</userdata>
+						</item>
+						<!--RE/main.html_Run-time_environment*RE/main.html_Getting_started*RE/blankpage.html_Installation*RE/blankpage.html_TOOLBOX*RE/toolboxInstallation.html_Installing_the_TOOLBOX*RE/setTomcatAsDaemon.html_Setup_Tomcat_as_daemon*-->
+						<item text="Setup Tomcat as daemon" id="RE/setTomcatAsDaemon.html_Setup_Tomcat_as_daemon" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">RE/setTomcatAsDaemon.html</userdata>
+						</item>
+					</item>
+					<!--RE/main.html_Run-time_environment*RE/main.html_Getting_started*RE/blankpage.html_Installation*RE/blankpage.html_TOOLBOX*RE/toolboxAdministratorAccount.html_Creating_the_administration_account*-->
+					<item text="Creating the administration account" id="RE/toolboxAdministratorAccount.html_Creating_the_administration_account" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">RE/toolboxAdministratorAccount.html</userdata>
+					</item>
+					<!--RE/main.html_Run-time_environment*RE/main.html_Getting_started*RE/blankpage.html_Installation*RE/blankpage.html_TOOLBOX*RE/toolboxStart.html_Starting_the_TOOLBOX*-->
+					<item text="Starting the TOOLBOX" id="RE/toolboxStart.html_Starting_the_TOOLBOX" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">RE/toolboxStart.html</userdata>
+					</item>
+					<!--RE/main.html_Run-time_environment*RE/main.html_Getting_started*RE/blankpage.html_Installation*RE/blankpage.html_TOOLBOX*RE/toolboxStop.html_Stopping_the_TOOLBOX*-->
+					<item text="Stopping the TOOLBOX" id="RE/toolboxStop.html_Stopping_the_TOOLBOX" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">RE/toolboxStop.html</userdata>
+					</item>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/main.html_Getting_started*RE/blankpage.html_Installation*RE/jdk.html_JDK*-->
+				<item text="JDK" id="RE/jdk.html_JDK" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/jdk.html</userdata>
+					<!--RE/main.html_Run-time_environment*RE/main.html_Getting_started*RE/blankpage.html_Installation*RE/jdk.html_JDK*RE/jdkWindows.html_Windows_platform*-->
+					<item text="Windows platform" id="RE/jdkWindows.html_Windows_platform" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">RE/jdkWindows.html</userdata>
+					</item>
+					<!--RE/main.html_Run-time_environment*RE/main.html_Getting_started*RE/blankpage.html_Installation*RE/jdk.html_JDK*RE/jdkLinux.html_Linux_platform*-->
+					<item text="Linux platform" id="RE/jdkLinux.html_Linux_platform" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">RE/jdkLinux.html</userdata>
+					</item>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/main.html_Getting_started*RE/blankpage.html_Installation*RE/apache.html_Apache*-->
+				<item text="Apache" id="RE/apache.html_Apache" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/apache.html</userdata>
+					<!--RE/main.html_Run-time_environment*RE/main.html_Getting_started*RE/blankpage.html_Installation*RE/apache.html_Apache*RE/apacheWindows.html_Apache_Web_Server_for_Windows*-->
+					<item text="Apache Web Server for Windows" id="RE/apacheWindows.html_Apache_Web_Server_for_Windows" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">RE/apacheWindows.html</userdata>
+					</item>
+					<!--RE/main.html_Run-time_environment*RE/main.html_Getting_started*RE/blankpage.html_Installation*RE/apache.html_Apache*RE/apacheLinux.html_Apache_Web_Server_for_Unix_and_Unix-like_platforms*-->
+					<item text="Apache Web Server for Unix and Unix-like platforms" id="RE/apacheLinux.html_Apache_Web_Server_for_Unix_and_Unix-like_platforms" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">RE/apacheLinux.html</userdata>
+					</item>
+				</item>
+			</item>
+		</item>
+		<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*-->
+		<item text="tasks" id="RE/blankpage.html_tasks" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+			<userdata name="thisurl">RE/blankpage.html</userdata>
+			<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/blankpage.html_TOOLBOX_management*-->
+			<item text="TOOLBOX management" id="RE/blankpage.html_TOOLBOX_management" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">RE/blankpage.html</userdata>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/blankpage.html_TOOLBOX_management*RE/toolboxLoggingIn.html_Logging_in*-->
+				<item text="Logging in" id="RE/toolboxLoggingIn.html_Logging_in" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/toolboxLoggingIn.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/blankpage.html_TOOLBOX_management*RE/toolboxConfiguring.html_Configuring_the_TOOLBOX*-->
+				<item text="Configuring the TOOLBOX" id="RE/toolboxConfiguring.html_Configuring_the_TOOLBOX" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/toolboxConfiguring.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/blankpage.html_TOOLBOX_management*RE/toolboxViewingConfiguration.html_Viewing_the_TOOLBOX_configuration*-->
+				<item text="Viewing the TOOLBOX configuration" id="RE/toolboxViewingConfiguration.html_Viewing_the_TOOLBOX_configuration" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/toolboxViewingConfiguration.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/blankpage.html_TOOLBOX_management*RE/toolboxTesting.html_Testing_the_TOOLBOX_installation*-->
+				<item text="Testing the TOOLBOX installation" id="RE/toolboxTesting.html_Testing_the_TOOLBOX_installation" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/toolboxTesting.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/blankpage.html_TOOLBOX_management*RE/toolboxLogout.html_Logging_out*-->
+				<item text="Logging out" id="RE/toolboxLogout.html_Logging_out" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/toolboxLogout.html</userdata>
+				</item>
+			</item>
+			<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*-->
+			<item text="Service management" id="RE/serviceManagement.html_Service_management" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">RE/serviceManagement.html</userdata>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceCreation.html_Service_creation*-->
+				<item text="Service creation" id="RE/serviceCreation.html_Service_creation" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/serviceCreation.html</userdata>
+					<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceCreation.html_Service_creation*RE/serviceCreating.html_Creating_a_Service*-->
+					<item text="Creating a Service" id="RE/serviceCreating.html_Creating_a_Service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">RE/serviceCreating.html</userdata>
+					</item>
+					<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceCreation.html_Service_creation*RE/serviceImporting.html_Importing_a_Service*-->
+					<item text="Importing a Service" id="RE/serviceImporting.html_Importing_a_Service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">RE/serviceImporting.html</userdata>
+					</item>
+					<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceCreation.html_Service_creation*RE/importASchemaSet.html_Importing_a_Schema_set_from_a_zip_file*-->
+					<item text="Importing a Schema set from a zip file" id="RE/importASchemaSet.html_Importing_a_Schema_set_from_a_zip_file" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">RE/importASchemaSet.html</userdata>
+					</item>
+					<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceCreation.html_Service_creation*RE/downloadSchemaSetFromSSE.html_Importing_a_Schema_set_from_the_SSE_portal*-->
+					<item text="Importing a Schema set from the SSE portal" id="RE/downloadSchemaSetFromSSE.html_Importing_a_Schema_set_from_the_SSE_portal" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">RE/downloadSchemaSetFromSSE.html</userdata>
+					</item>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceExporting.html_Exporting_a_Service*-->
+				<item text="Exporting a Service" id="RE/serviceExporting.html_Exporting_a_Service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/serviceExporting.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceStartingAll.html_Starting_all_services*-->
+				<item text="Starting all services" id="RE/serviceStartingAll.html_Starting_all_services" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/serviceStartingAll.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceStoppingAll.html_Stopping_all_services*-->
+				<item text="Stopping all services" id="RE/serviceStoppingAll.html_Stopping_all_services" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/serviceStoppingAll.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/managerServiceStatusAll.html_Manager_all_services_status*-->
+				<item text="Manager all services status" id="RE/managerServiceStatusAll.html_Manager_all_services_status" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/managerServiceStatusAll.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceSelecting.html_Selecting_a_Service*-->
+				<item text="Selecting a Service" id="RE/serviceSelecting.html_Selecting_a_Service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/serviceSelecting.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceViewingConfiguration.html_Viewing_a_service_configuration*-->
+				<item text="Viewing a service configuration" id="RE/serviceViewingConfiguration.html_Viewing_a_service_configuration" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/serviceViewingConfiguration.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceConfiguring.html_Configuring_a_Service*-->
+				<item text="Configuring a Service" id="RE/serviceConfiguring.html_Configuring_a_Service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/serviceConfiguring.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceSecurityConfiguration.html_Configuring_service_security_enforcement*-->
+				<item text="Configuring service security enforcement" id="RE/serviceSecurityConfiguration.html_Configuring_service_security_enforcement" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/serviceSecurityConfiguration.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceStarting.html_Starting_a_service*-->
+				<item text="Starting a service" id="RE/serviceStarting.html_Starting_a_service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/serviceStarting.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceStopping.html_Stopping_a_service*-->
+				<item text="Stopping a service" id="RE/serviceStopping.html_Stopping_a_service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/serviceStopping.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceSuspending.html_Suspending_a_service*-->
+				<item text="Suspending a service" id="RE/serviceSuspending.html_Suspending_a_service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/serviceSuspending.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceResuming.html_Resuming_a_service*-->
+				<item text="Resuming a service" id="RE/serviceResuming.html_Resuming_a_service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/serviceResuming.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceDeleting.html_Deleting_a_service*-->
+				<item text="Deleting a service" id="RE/serviceDeleting.html_Deleting_a_service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/serviceDeleting.html</userdata>
+				</item>
+			</item>
+			<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/operationManagement.html_Operations_management*-->
+			<item text="Operations management" id="RE/operationManagement.html_Operations_management" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">RE/operationManagement.html</userdata>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/operationManagement.html_Operations_management*RE/operationListing.html_Listing_the_service_operations*-->
+				<item text="Listing the service operations" id="RE/operationListing.html_Listing_the_service_operations" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/operationListing.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/operationManagement.html_Operations_management*RE/createOperation.html_Add_an_operation*-->
+				<item text="Add an operation" id="RE/createOperation.html_Add_an_operation" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/createOperation.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/operationManagement.html_Operations_management*RE/operationReconfiguring.html_Re-configuring_an_operation*-->
+				<item text="Re-configuring an operation" id="RE/operationReconfiguring.html_Re-configuring_an_operation" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/operationReconfiguring.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/operationManagement.html_Operations_management*RE/operationDeleting.html_Deleting_an_operation*-->
+				<item text="Deleting an operation" id="RE/operationDeleting.html_Deleting_an_operation" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/operationDeleting.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/operationManagement.html_Operations_management*RE/operationWSDL.html_WSDL*-->
+				<item text="WSDL" id="RE/operationWSDL.html_WSDL" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/operationWSDL.html</userdata>
+					<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/operationManagement.html_Operations_management*RE/operationWSDL.html_WSDL*RE/operationWSDLAdding.html_Adding_an_operation_to_the_WSDL_file*-->
+					<item text="Adding an operation to the WSDL file" id="RE/operationWSDLAdding.html_Adding_an_operation_to_the_WSDL_file" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">RE/operationWSDLAdding.html</userdata>
+					</item>
+					<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/operationManagement.html_Operations_management*RE/operationWSDL.html_WSDL*RE/operationWSDLDisplayingInfo.html_Displaying_the_WSDL_information*-->
+					<item text="Displaying the WSDL information" id="RE/operationWSDLDisplayingInfo.html_Displaying_the_WSDL_information" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">RE/operationWSDLDisplayingInfo.html</userdata>
+					</item>
+					<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/operationManagement.html_Operations_management*RE/operationWSDL.html_WSDL*RE/operationWSDLChanging.html_Changing_the_WSDL_information*-->
+					<item text="Changing the WSDL information" id="RE/operationWSDLChanging.html_Changing_the_WSDL_information" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">RE/operationWSDLChanging.html</userdata>
+					</item>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/operationManagement.html_Operations_management*RE/updateGetCapabilities.html_Update_GetCapabilities_information*-->
+				<item text="Update GetCapabilities information" id="RE/updateGetCapabilities.html_Update_GetCapabilities_information" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/updateGetCapabilities.html</userdata>
+				</item>
+			</item>
+			<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/secure.html_Secure_communication*-->
+			<item text="Secure communication" id="RE/secure.html_Secure_communication" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">RE/secure.html</userdata>
+			</item>
+			<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/ftpManagement.html_FTP_management*-->
+			<item text="FTP management" id="RE/ftpManagement.html_FTP_management" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">RE/ftpManagement.html</userdata>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/ftpManagement.html_FTP_management*RE/ftpListing.html_Listing_and_deleting_an_FTP_account*-->
+				<item text="Listing and deleting an FTP account" id="RE/ftpListing.html_Listing_and_deleting_an_FTP_account" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/ftpListing.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/ftpManagement.html_FTP_management*RE/ftpAdding.html_Adding_an_FTP_account*-->
+				<item text="Adding an FTP account" id="RE/ftpAdding.html_Adding_an_FTP_account" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/ftpAdding.html</userdata>
+				</item>
+			</item>
+			<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/blankpage.html_Test_Center*-->
+			<item text="Test Center" id="RE/blankpage.html_Test_Center" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">RE/blankpage.html</userdata>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/blankpage.html_Test_Center*RE/sendingSoapMessage.html_Sending_a_SOAP_message*-->
+				<item text="Sending a SOAP message" id="RE/sendingSoapMessage.html_Sending_a_SOAP_message" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/sendingSoapMessage.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/blankpage.html_Test_Center*RE/testingACatalogue.html_Testing_a_Catalogue*-->
+				<item text="Testing a Catalogue" id="RE/testingACatalogue.html_Testing_a_Catalogue" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/testingACatalogue.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/blankpage.html_Test_Center*RE/validatingAScript.html_Validating_a_script*-->
+				<item text="Validating a script" id="RE/validatingAScript.html_Validating_a_script" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/validatingAScript.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/blankpage.html_Test_Center*RE/pushServer.html_Displaying_the_messages_pushed_to_the_server*-->
+				<item text="Displaying the messages pushed to the server" id="RE/pushServer.html_Displaying_the_messages_pushed_to_the_server" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/pushServer.html</userdata>
+				</item>
+			</item>
+			<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/tools.html_Tools_center*-->
+			<item text="Tools center" id="RE/tools.html_Tools_center" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">RE/tools.html</userdata>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/tools.html_Tools_center*RE/createebRRDBinstance.html_Creating_an_EOP_catalogue_database*-->
+				<item text="Creating an EOP catalogue database" id="RE/createebRRDBinstance.html_Creating_an_EOP_catalogue_database" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/createebRRDBinstance.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/tools.html_Tools_center*RE/ebRRmetadata.html_Harvesting_metadata*-->
+				<item text="Harvesting metadata" id="RE/ebRRmetadata.html_Harvesting_metadata" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/ebRRmetadata.html</userdata>
+				</item>
+			</item>
+			<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/monitoringCenter.html_Monitoring_center*-->
+			<item text="Monitoring center" id="RE/monitoringCenter.html_Monitoring_center" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">RE/monitoringCenter.html</userdata>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/monitoringCenter.html_Monitoring_center*RE/toolboxLogging.html_Displaying_the_TOOLBOX_log*-->
+				<item text="Displaying the TOOLBOX log" id="RE/toolboxLogging.html_Displaying_the_TOOLBOX_log" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/toolboxLogging.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/monitoringCenter.html_Monitoring_center*RE/serviceLogging.html_Displaying_the_Service_log*-->
+				<item text="Displaying the Service log" id="RE/serviceLogging.html_Displaying_the_Service_log" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/serviceLogging.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/monitoringCenter.html_Monitoring_center*RE/synchronousInstances.html_Listing_synchronous_instances*-->
+				<item text="Listing synchronous instances" id="RE/synchronousInstances.html_Listing_synchronous_instances" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/synchronousInstances.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/monitoringCenter.html_Monitoring_center*RE/asynchronousInstances.html_Listing_asynchronous_instances*-->
+				<item text="Listing asynchronous instances" id="RE/asynchronousInstances.html_Listing_asynchronous_instances" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/asynchronousInstances.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/monitoringCenter.html_Monitoring_center*RE/displaySynchronousInstances.html_Displaying_a_synchronous_instances_flow*-->
+				<item text="Displaying a synchronous instances flow" id="RE/displaySynchronousInstances.html_Displaying_a_synchronous_instances_flow" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/displaySynchronousInstances.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/monitoringCenter.html_Monitoring_center*RE/displayAsynchronousInstances.html_Displaying_an_asynchronous_instances_flow*-->
+				<item text="Displaying an asynchronous instances flow" id="RE/displayAsynchronousInstances.html_Displaying_an_asynchronous_instances_flow" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/displayAsynchronousInstances.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/monitoringCenter.html_Monitoring_center*RE/flowIcons.html_Flow_icons_description*-->
+				<item text="Flow icons description" id="RE/flowIcons.html_Flow_icons_description" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/flowIcons.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/monitoringCenter.html_Monitoring_center*RE/timerStatus.html_View_the_timers_status*-->
+				<item text="View the timers status" id="RE/timerStatus.html_View_the_timers_status" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/timerStatus.html</userdata>
+				</item>
+			</item>
+		</item>
+		<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*-->
+		<item text="Reference" id="RE/blankpage.html_Reference" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+			<userdata name="thisurl">RE/blankpage.html</userdata>
+			<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/tutorial.html_Tutorial*-->
+			<item text="Tutorial" id="RE/tutorial.html_Tutorial" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">RE/tutorial.html</userdata>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/tutorial.html_Tutorial*RE/vito.html_File_exchange_based_service*-->
+				<item text="File exchange based service" id="RE/vito.html_File_exchange_based_service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/vito.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/tutorial.html_Tutorial*RE/acs.html_JDBC_based_service(1)*-->
+				<item text="JDBC based service(1)" id="RE/acs.html_JDBC_based_service(1)" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/acs.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/tutorial.html_Tutorial*RE/acs2.html_JDBC_based_service(2)*-->
+				<item text="JDBC based service(2)" id="RE/acs2.html_JDBC_based_service(2)" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/acs2.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/tutorial.html_Tutorial*RE/gim.html_Real_HTTP_based_service*-->
+				<item text="Real HTTP based service" id="RE/gim.html_Real_HTTP_based_service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/gim.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/tutorial.html_Tutorial*RE/http.html_Dummy_HTTP_based_service*-->
+				<item text="Dummy HTTP based service" id="RE/http.html_Dummy_HTTP_based_service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/http.html</userdata>
+				</item>
+			</item>
+			<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/jelly.html_Using_Jelly*-->
+			<item text="Using Jelly" id="RE/jelly.html_Using_Jelly" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">RE/jelly.html</userdata>
+			</item>
+			<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/faq.html_FAQ*-->
+			<item text="FAQ" id="RE/faq.html_FAQ" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">RE/faq.html</userdata>
+			</item>
+			<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*-->
+			<item text="XML Scripting reference" id="RE/XMLScript/scripting.html_XML_Scripting_reference" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">RE/XMLScript/scripting.html</userdata>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/tocAZ.html_Alphabetical_list*-->
+				<item text="Alphabetical list" id="RE/XMLScript/tocAZ.html_Alphabetical_list" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/tocAZ.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/newTags.html_New_tags_from_version_7.0*-->
+				<item text="New tags from version 7.0" id="RE/XMLScript/newTags.html_New_tags_from_version_7.0" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/newTags.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/aritmetic.html_Arithmetic_Operators*-->
+				<item text="Arithmetic Operators" id="RE/XMLScript/aritmetic.html_Arithmetic_Operators" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/aritmetic.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/relational.html_Relational_Operators*-->
+				<item text="Relational Operators" id="RE/XMLScript/relational.html_Relational_Operators" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/relational.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/conditional.html_Conditional_Operators*-->
+				<item text="Conditional Operators" id="RE/XMLScript/conditional.html_Conditional_Operators" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/conditional.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/shift.html_Shift_Operators*-->
+				<item text="Shift Operators" id="RE/XMLScript/shift.html_Shift_Operators" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/shift.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/logical.html_Logical_Operators*-->
+				<item text="Logical Operators" id="RE/XMLScript/logical.html_Logical_Operators" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/logical.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/assignment.html_Assignment_Operators*-->
+				<item text="Assignment Operators" id="RE/XMLScript/assignment.html_Assignment_Operators" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/assignment.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/operatorsCommands.html_Other_Operators_and_Commands*-->
+				<item text="Other Operators and Commands" id="RE/XMLScript/operatorsCommands.html_Other_Operators_and_Commands" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/operatorsCommands.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/flow.html_Control_Flow_Statements*-->
+				<item text="Control Flow Statements" id="RE/XMLScript/flow.html_Control_Flow_Statements" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/flow.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/arrays.html_Arrays*-->
+				<item text="Arrays" id="RE/XMLScript/arrays.html_Arrays" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/arrays.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/strings.html_Strings*-->
+				<item text="Strings" id="RE/XMLScript/strings.html_Strings" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/strings.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/text.html_Text_Handling*-->
+				<item text="Text Handling" id="RE/XMLScript/text.html_Text_Handling" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/text.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/file.html_File_Handling*-->
+				<item text="File Handling" id="RE/XMLScript/file.html_File_Handling" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/file.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/soap.html_SOAP*-->
+				<item text="SOAP" id="RE/XMLScript/soap.html_SOAP" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/soap.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/http.html_HTTP*-->
+				<item text="HTTP" id="RE/XMLScript/http.html_HTTP" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/http.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/ftp.html_FTP*-->
+				<item text="FTP" id="RE/XMLScript/ftp.html_FTP" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/ftp.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/jdbc.html_JDBC*-->
+				<item text="JDBC" id="RE/XMLScript/jdbc.html_JDBC" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/jdbc.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/xmlXsl.html_XML/XSL*-->
+				<item text="XML/XSL" id="RE/XMLScript/xmlXsl.html_XML/XSL" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/xmlXsl.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/xmlScripting.html_XML_Scripting*-->
+				<item text="XML Scripting" id="RE/XMLScript/xmlScripting.html_XML_Scripting" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/xmlScripting.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/email.html_email*-->
+				<item text="email" id="RE/XMLScript/email.html_email" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/email.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/thread.html_Threading*-->
+				<item text="Threading" id="RE/XMLScript/thread.html_Threading" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/thread.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/archiving.html_Archiving*-->
+				<item text="Archiving" id="RE/XMLScript/archiving.html_Archiving" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/archiving.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/dateTime.html_Date*-->
+				<item text="Date" id="RE/XMLScript/dateTime.html_Date" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/dateTime.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/cleanup.html_Clean_up*-->
+				<item text="Clean up" id="RE/XMLScript/cleanup.html_Clean_up" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/cleanup.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/sse.html_SSE_utils*-->
+				<item text="SSE utils" id="RE/XMLScript/sse.html_SSE_utils" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/sse.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/jelly.html_Jelly_script*-->
+				<item text="Jelly script" id="RE/XMLScript/jelly.html_Jelly_script" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/jelly.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/orderManagement.html_Orders_Management*-->
+				<item text="Orders Management" id="RE/XMLScript/orderManagement.html_Orders_Management" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/orderManagement.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/Java.html_Java*-->
+				<item text="Java" id="RE/XMLScript/Java.html_Java" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/Java.html</userdata>
+				</item>
+			</item>
+			<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/errorMsg.html_Error_messages*-->
+			<item text="Error messages" id="RE/errorMsg.html_Error_messages" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">RE/errorMsg.html</userdata>
+			</item>
+		</item>
+	</item>
+	<!--DE/main.html_Development_environment*-->
+	<item text="Development environment" id="DE/main.html_Development_environment" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+		<userdata name="thisurl">DE/main.html</userdata>
+		<!--DE/main.html_Development_environment*DE/main.html_Getting_started*-->
+		<item text="Getting started" id="DE/main.html_Getting_started" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+			<userdata name="thisurl">DE/main.html</userdata>
+			<!--DE/main.html_Development_environment*DE/main.html_Getting_started*DE/installation.html_Installation*-->
+			<item text="Installation" id="DE/installation.html_Installation" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">DE/installation.html</userdata>
+				<!--DE/main.html_Development_environment*DE/main.html_Getting_started*DE/installation.html_Installation*DE/system_requirements.html_System_Requirements*-->
+				<item text="System Requirements" id="DE/system_requirements.html_System_Requirements" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/system_requirements.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/main.html_Getting_started*DE/installation.html_Installation*DE/installation_online.html_Development_Environment_Online_Installation*-->
+				<item text="Development Environment Online Installation" id="DE/installation_online.html_Development_Environment_Online_Installation" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/installation_online.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/main.html_Getting_started*DE/installation.html_Installation*DE/installation_offline.html_Development_Environment_Offline_Installation*-->
+				<item text="Development Environment Offline Installation" id="DE/installation_offline.html_Development_Environment_Offline_Installation" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/installation_offline.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/main.html_Getting_started*DE/installation.html_Installation*DE/upgrade_installation_online.html_Development_Environment_Upgrade_(Online_installation)*-->
+				<item text="Development Environment Upgrade (Online installation)" id="DE/upgrade_installation_online.html_Development_Environment_Upgrade_(Online_installation)" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/upgrade_installation_online.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/main.html_Getting_started*DE/installation.html_Installation*DE/upgrade_installation_offline.html_Development_Environment_Upgrade_(Offline_installation)*-->
+				<item text="Development Environment Upgrade (Offline installation)" id="DE/upgrade_installation_offline.html_Development_Environment_Upgrade_(Offline_installation)" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/upgrade_installation_offline.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/main.html_Getting_started*DE/installation.html_Installation*DE/known_bugs.html_Known_bugs*-->
+				<item text="Known bugs" id="DE/known_bugs.html_Known_bugs" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/known_bugs.html</userdata>
+				</item>
+			</item>
+		</item>
+		<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*-->
+		<item text="tasks" id="DE/blankpage.html_tasks" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+			<userdata name="thisurl">DE/blankpage.html</userdata>
+			<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Upgrade_the_Environment*-->
+			<item text="Upgrade the Environment" id="DE/blankpage.html_Upgrade_the_Environment" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">DE/blankpage.html</userdata>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Upgrade_the_Environment*DE/tasks/upgrade_plugin_online.html_Upgrade_an_Online_installation*-->
+				<item text="Upgrade an Online installation" id="DE/tasks/upgrade_plugin_online.html_Upgrade_an_Online_installation" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/upgrade_plugin_online.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Upgrade_the_Environment*DE/tasks/upgrade_plugin_offline.html_Upgrade_an_Offline_installation*-->
+				<item text="Upgrade an Offline installation" id="DE/tasks/upgrade_plugin_offline.html_Upgrade_an_Offline_installation" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/upgrade_plugin_offline.html</userdata>
+				</item>
+			</item>
+			<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Project_management*-->
+			<item text="Project management" id="DE/blankpage.html_Project_management" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">DE/blankpage.html</userdata>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Project_management*DE/tasks/newproject.html_Create_a_new_service_project*-->
+				<item text="Create a new service project" id="DE/tasks/newproject.html_Create_a_new_service_project" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/newproject.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Project_management*DE/tasks/newoperation.html_Create_a_new_service_operation*-->
+				<item text="Create a new service operation" id="DE/tasks/newoperation.html_Create_a_new_service_operation" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/newoperation.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Project_management*DE/tasks/newXMLrequest.html_Create_a_new_Input_test_file*-->
+				<item text="Create a new Input test file" id="DE/tasks/newXMLrequest.html_Create_a_new_Input_test_file" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/newXMLrequest.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Project_management*DE/tasks/updateServiceConf.html_Update_the_service_configuration*-->
+				<item text="Update the service configuration" id="DE/tasks/updateServiceConf.html_Update_the_service_configuration" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/updateServiceConf.html</userdata>
+				</item>
+			</item>
+			<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Launch_configurations*-->
+			<item text="Launch configurations" id="DE/blankpage.html_Launch_configurations" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">DE/blankpage.html</userdata>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Launch_configurations*DE/tasks/addlaunchconfig.html_Create_a_new_launch_configuration*-->
+				<item text="Create a new launch configuration" id="DE/tasks/addlaunchconfig.html_Create_a_new_launch_configuration" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/addlaunchconfig.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Launch_configurations*DE/tasks/deletelaunchconfiguration.html_Delete_a_launch_configuration*-->
+				<item text="Delete a launch configuration" id="DE/tasks/deletelaunchconfiguration.html_Delete_a_launch_configuration" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/deletelaunchconfiguration.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Launch_configurations*DE/tasks/duplicatelaunchconfiguration.html_Duplicate_a_launch_configuration*-->
+				<item text="Duplicate a launch configuration" id="DE/tasks/duplicatelaunchconfiguration.html_Duplicate_a_launch_configuration" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/duplicatelaunchconfiguration.html</userdata>
+				</item>
+			</item>
+			<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Open_and_edit_a_Toolbox_script*-->
+			<item text="Open and edit a Toolbox script" id="DE/blankpage.html_Open_and_edit_a_Toolbox_script" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">DE/blankpage.html</userdata>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Open_and_edit_a_Toolbox_script*DE/tasks/openfile.html_Open_a_Toolbox_script_file*-->
+				<item text="Open a Toolbox script file" id="DE/tasks/openfile.html_Open_a_Toolbox_script_file" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/openfile.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Open_and_edit_a_Toolbox_script*DE/tasks/changevisualization.html_Change_visualization_of_a_Toolbox_script_file*-->
+				<item text="Change visualization of a Toolbox script file" id="DE/tasks/changevisualization.html_Change_visualization_of_a_Toolbox_script_file" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/changevisualization.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Open_and_edit_a_Toolbox_script*DE/blankpage.html_Add,_copy,_move_and_delete_a_tag*-->
+				<item text="Add, copy, move and delete a tag" id="DE/blankpage.html_Add,_copy,_move_and_delete_a_tag" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/blankpage.html</userdata>
+					<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Open_and_edit_a_Toolbox_script*DE/blankpage.html_Add,_copy,_move_and_delete_a_tag*DE/blankpage.html_Textual_view*-->
+					<item text="Textual view" id="DE/blankpage.html_Textual_view" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">DE/blankpage.html</userdata>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Open_and_edit_a_Toolbox_script*DE/blankpage.html_Add,_copy,_move_and_delete_a_tag*DE/blankpage.html_Textual_view*DE/tasks/addtags_textual.html_Add_a_tag*-->
+						<item text="Add a tag" id="DE/tasks/addtags_textual.html_Add_a_tag" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/tasks/addtags_textual.html</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Open_and_edit_a_Toolbox_script*DE/blankpage.html_Add,_copy,_move_and_delete_a_tag*DE/blankpage.html_Textual_view*DE/tasks/copytag_textual.html_Copy_a_tag*-->
+						<item text="Copy a tag" id="DE/tasks/copytag_textual.html_Copy_a_tag" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/tasks/copytag_textual.html</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Open_and_edit_a_Toolbox_script*DE/blankpage.html_Add,_copy,_move_and_delete_a_tag*DE/blankpage.html_Textual_view*DE/tasks/movetag_textual.html_Move_a_tag*-->
+						<item text="Move a tag" id="DE/tasks/movetag_textual.html_Move_a_tag" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/tasks/movetag_textual.html</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Open_and_edit_a_Toolbox_script*DE/blankpage.html_Add,_copy,_move_and_delete_a_tag*DE/blankpage.html_Textual_view*DE/tasks/deletetag_textual.html_Delete_a_tag*-->
+						<item text="Delete a tag" id="DE/tasks/deletetag_textual.html_Delete_a_tag" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/tasks/deletetag_textual.html</userdata>
+						</item>
+					</item>
+					<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Open_and_edit_a_Toolbox_script*DE/blankpage.html_Add,_copy,_move_and_delete_a_tag*DE/blankpage.html_Tree_view*-->
+					<item text="Tree view" id="DE/blankpage.html_Tree_view" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">DE/blankpage.html</userdata>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Open_and_edit_a_Toolbox_script*DE/blankpage.html_Add,_copy,_move_and_delete_a_tag*DE/blankpage.html_Tree_view*DE/tasks/addtags_tree.html_Add_a_tag*-->
+						<item text="Add a tag" id="DE/tasks/addtags_tree.html_Add_a_tag" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/tasks/addtags_tree.html</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Open_and_edit_a_Toolbox_script*DE/blankpage.html_Add,_copy,_move_and_delete_a_tag*DE/blankpage.html_Tree_view*DE/tasks/movetag_tree.html_Move_a_tag*-->
+						<item text="Move a tag" id="DE/tasks/movetag_tree.html_Move_a_tag" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/tasks/movetag_tree.html</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Open_and_edit_a_Toolbox_script*DE/blankpage.html_Add,_copy,_move_and_delete_a_tag*DE/blankpage.html_Tree_view*DE/tasks/deletetag_tree.html_Delete_a_tag*-->
+						<item text="Delete a tag" id="DE/tasks/deletetag_tree.html_Delete_a_tag" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/tasks/deletetag_tree.html</userdata>
+						</item>
+					</item>
+				</item>
+			</item>
+			<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/tasks/showtagdescription.html_Show_tag_description*-->
+			<item text="Show tag description" id="DE/tasks/showtagdescription.html_Show_tag_description" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">DE/tasks/showtagdescription.html</userdata>
+			</item>
+			<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/tasks/showvalidationerrors.html_Show_information_about_validation_errors*-->
+			<item text="Show information about validation errors" id="DE/tasks/showvalidationerrors.html_Show_information_about_validation_errors" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">DE/tasks/showvalidationerrors.html</userdata>
+			</item>
+			<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Deploy/Undeploy_a_service*-->
+			<item text="Deploy/Undeploy a service" id="DE/blankpage.html_Deploy/Undeploy_a_service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">DE/blankpage.html</userdata>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Deploy/Undeploy_a_service*DE/tasks/deploy.html_Deploy_a_service*-->
+				<item text="Deploy a service" id="DE/tasks/deploy.html_Deploy_a_service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/deploy.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Deploy/Undeploy_a_service*DE/tasks/undeploy.html_Undeploy_a_service*-->
+				<item text="Undeploy a service" id="DE/tasks/undeploy.html_Undeploy_a_service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/undeploy.html</userdata>
+				</item>
+			</item>
+			<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Run/debug*-->
+			<item text="Run/debug" id="DE/blankpage.html_Run/debug" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">DE/blankpage.html</userdata>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Run/debug*DE/tasks/runoperation.html_Running_an_operation*-->
+				<item text="Running an operation" id="DE/tasks/runoperation.html_Running_an_operation" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/runoperation.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Run/debug*DE/tasks/debugOperation.html_Debugging_an_operation*-->
+				<item text="Debugging an operation" id="DE/tasks/debugOperation.html_Debugging_an_operation" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/debugOperation.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Run/debug*DE/tasks/addbreakpoint.html_Add/Remove_a_breakpoint*-->
+				<item text="Add/Remove a breakpoint" id="DE/tasks/addbreakpoint.html_Add/Remove_a_breakpoint" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/addbreakpoint.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Run/debug*DE/tasks/chanegvariablevalue.html_Change_variable_value*-->
+				<item text="Change variable value" id="DE/tasks/chanegvariablevalue.html_Change_variable_value" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/chanegvariablevalue.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Run/debug*DE/tasks/resumeexecution.html_Resume_the_execution*-->
+				<item text="Resume the execution" id="DE/tasks/resumeexecution.html_Resume_the_execution" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/resumeexecution.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Run/debug*DE/tasks/stoppingexecution.html_Stopping_the_execution*-->
+				<item text="Stopping the execution" id="DE/tasks/stoppingexecution.html_Stopping_the_execution" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/stoppingexecution.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Run/debug*DE/tasks/view_execution_result.html_Viewing_the_execution_result*-->
+				<item text="Viewing the execution result" id="DE/tasks/view_execution_result.html_Viewing_the_execution_result" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/view_execution_result.html</userdata>
+				</item>
+			</item>
+			<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Import/Export_functionalities*-->
+			<item text="Import/Export functionalities" id="DE/blankpage.html_Import/Export_functionalities" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">DE/blankpage.html</userdata>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Import/Export_functionalities*DE/tasks/importOldDescriptor.html_Import_a_6.0_and_6.0.1_service*-->
+				<item text="Import a 6.0 and 6.0.1 service" id="DE/tasks/importOldDescriptor.html_Import_a_6.0_and_6.0.1_service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/importOldDescriptor.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Import/Export_functionalities*DE/tasks/importService.html_Import_of_a_service*-->
+				<item text="Import of a service" id="DE/tasks/importService.html_Import_of_a_service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/importService.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Import/Export_functionalities*DE/tasks/importSSEStylesheet.html_Import_of_an_SSE_stylesheet*-->
+				<item text="Import of an SSE stylesheet" id="DE/tasks/importSSEStylesheet.html_Import_of_an_SSE_stylesheet" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/importSSEStylesheet.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Import/Export_functionalities*DE/tasks/importGMLStylesheet.html_Import_of_a_service_result-&gt;_GML_stylesheet*-->
+				<item text="Import of a service result-&gt; GML stylesheet" id="DE/tasks/importGMLStylesheet.html_Import_of_a_service_result-&gt;_GML_stylesheet" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/importGMLStylesheet.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Import/Export_functionalities*DE/tasks/exportService.html_Export_of_a_service*-->
+				<item text="Export of a service" id="DE/tasks/exportService.html_Export_of_a_service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/exportService.html</userdata>
+				</item>
+			</item>
+			<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Interface_Repository*-->
+			<item text="Interface Repository" id="DE/blankpage.html_Interface_Repository" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">DE/blankpage.html</userdata>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Interface_Repository*DE/tasks/addInterfaceToRepository.html_Add_an_interface_to_the_Interface_Repository*-->
+				<item text="Add an interface to the Interface Repository" id="DE/tasks/addInterfaceToRepository.html_Add_an_interface_to_the_Interface_Repository" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/addInterfaceToRepository.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_tasks*DE/blankpage.html_Interface_Repository*DE/tasks/removeInterfaceFromRepository.html_Remove_an_interface_from_the_Interface_Repository*-->
+				<item text="Remove an interface from the Interface Repository" id="DE/tasks/removeInterfaceFromRepository.html_Remove_an_interface_from_the_Interface_Repository" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/tasks/removeInterfaceFromRepository.html</userdata>
+				</item>
+			</item>
+		</item>
+		<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*-->
+		<item text="Reference" id="DE/blankpage.html_Reference" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+			<userdata name="thisurl">DE/blankpage.html</userdata>
+			<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*-->
+			<item text="XML Scripting reference" id="_RE/XMLScript/scripting.html_XML_Scripting_reference" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">RE/XMLScript/scripting.html</userdata>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/tocAZ.html_Alphabetical_list*-->
+				<item text="Alphabetical list" id="_RE/XMLScript/tocAZ.html_Alphabetical_list" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/tocAZ.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/newTags.html_New_tags_from_version_7.0*-->
+				<item text="New tags from version 7.0" id="_RE/XMLScript/newTags.html_New_tags_from_version_7.0" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/newTags.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/aritmetic.html_Arithmetic_Operators*-->
+				<item text="Arithmetic Operators" id="_RE/XMLScript/aritmetic.html_Arithmetic_Operators" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/aritmetic.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/relational.html_Relational_Operators*-->
+				<item text="Relational Operators" id="_RE/XMLScript/relational.html_Relational_Operators" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/relational.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/conditional.html_Conditional_Operators*-->
+				<item text="Conditional Operators" id="_RE/XMLScript/conditional.html_Conditional_Operators" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/conditional.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/shift.html_Shift_Operators*-->
+				<item text="Shift Operators" id="_RE/XMLScript/shift.html_Shift_Operators" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/shift.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/logical.html_Logical_Operators*-->
+				<item text="Logical Operators" id="_RE/XMLScript/logical.html_Logical_Operators" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/logical.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/assignment.html_Assignment_Operators*-->
+				<item text="Assignment Operators" id="_RE/XMLScript/assignment.html_Assignment_Operators" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/assignment.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/operatorsCommands.html_Other_Operators_and_Commands*-->
+				<item text="Other Operators and Commands" id="_RE/XMLScript/operatorsCommands.html_Other_Operators_and_Commands" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/operatorsCommands.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/flow.html_Control_Flow_Statements*-->
+				<item text="Control Flow Statements" id="_RE/XMLScript/flow.html_Control_Flow_Statements" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/flow.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/arrays.html_Arrays*-->
+				<item text="Arrays" id="_RE/XMLScript/arrays.html_Arrays" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/arrays.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/strings.html_Strings*-->
+				<item text="Strings" id="_RE/XMLScript/strings.html_Strings" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/strings.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/text.html_Text_Handling*-->
+				<item text="Text Handling" id="_RE/XMLScript/text.html_Text_Handling" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/text.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/file.html_File_Handling*-->
+				<item text="File Handling" id="_RE/XMLScript/file.html_File_Handling" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/file.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/soap.html_SOAP*-->
+				<item text="SOAP" id="_RE/XMLScript/soap.html_SOAP" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/soap.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/http.html_HTTP*-->
+				<item text="HTTP" id="_RE/XMLScript/http.html_HTTP" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/http.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/ftp.html_FTP*-->
+				<item text="FTP" id="_RE/XMLScript/ftp.html_FTP" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/ftp.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/jdbc.html_JDBC*-->
+				<item text="JDBC" id="_RE/XMLScript/jdbc.html_JDBC" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/jdbc.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/xmlXsl.html_XML/XSL*-->
+				<item text="XML/XSL" id="_RE/XMLScript/xmlXsl.html_XML/XSL" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/xmlXsl.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/xmlScripting.html_XML_Scripting*-->
+				<item text="XML Scripting" id="_RE/XMLScript/xmlScripting.html_XML_Scripting" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/xmlScripting.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/email.html_email*-->
+				<item text="email" id="_RE/XMLScript/email.html_email" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/email.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/thread.html_Threading*-->
+				<item text="Threading" id="_RE/XMLScript/thread.html_Threading" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/thread.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/archiving.html_Archiving*-->
+				<item text="Archiving" id="_RE/XMLScript/archiving.html_Archiving" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/archiving.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/dateTime.html_Date*-->
+				<item text="Date" id="_RE/XMLScript/dateTime.html_Date" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/dateTime.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/cleanup.html_Clean_up*-->
+				<item text="Clean up" id="_RE/XMLScript/cleanup.html_Clean_up" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/cleanup.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/sse.html_SSE_utils*-->
+				<item text="SSE utils" id="_RE/XMLScript/sse.html_SSE_utils" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/sse.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/jelly.html_Jelly_script*-->
+				<item text="Jelly script" id="_RE/XMLScript/jelly.html_Jelly_script" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/jelly.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/orderManagement.html_Orders_Management*-->
+				<item text="Orders Management" id="_RE/XMLScript/orderManagement.html_Orders_Management" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/orderManagement.html</userdata>
+				</item>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*_RE/XMLScript/scripting.html_XML_Scripting_reference*RE/XMLScript/Java.html_Java*-->
+				<item text="Java" id="_RE/XMLScript/Java.html_Java" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/XMLScript/Java.html</userdata>
+				</item>
+			</item>
+			<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/Tutorial_home.html_Tutorials*-->
+			<item text="Tutorials" id="DE/Tutorial_home.html_Tutorials" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">DE/Tutorial_home.html</userdata>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/Tutorial_home.html_Tutorials*DE/blankpage.html_howto*-->
+				<item text="howto" id="DE/blankpage.html_howto" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/blankpage.html</userdata>
+					<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/Tutorial_home.html_Tutorials*DE/blankpage.html_howto*DE/howto/installation.html_Install_the_Development_Environment*-->
+					<item text="Install the Development Environment" id="DE/howto/installation.html_Install_the_Development_Environment" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">DE/howto/installation.html</userdata>
+					</item>
+					<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/Tutorial_home.html_Tutorials*DE/blankpage.html_howto*DE/howto/upgrade_installation.html_Upgrade_the_Development_Environment*-->
+					<item text="Upgrade the Development Environment" id="DE/howto/upgrade_installation.html_Upgrade_the_Development_Environment" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">DE/howto/upgrade_installation.html</userdata>
+					</item>
+					<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/Tutorial_home.html_Tutorials*DE/blankpage.html_howto*DE/howto/newservice.html_Create_a_new_service*-->
+					<item text="Create a new service" id="DE/howto/newservice.html_Create_a_new_service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">DE/howto/newservice.html</userdata>
+					</item>
+					<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/Tutorial_home.html_Tutorials*DE/blankpage.html_howto*DE/howto/editfile.html_Edit_a_file*-->
+					<item text="Edit a file" id="DE/howto/editfile.html_Edit_a_file" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">DE/howto/editfile.html</userdata>
+					</item>
+					<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/Tutorial_home.html_Tutorials*DE/blankpage.html_howto*DE/howto/createlaunchconfig.html_Create_new_launch_configuration*-->
+					<item text="Create new launch configuration" id="DE/howto/createlaunchconfig.html_Create_new_launch_configuration" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">DE/howto/createlaunchconfig.html</userdata>
+					</item>
+					<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/Tutorial_home.html_Tutorials*DE/blankpage.html_howto*DE/howto/runfile.html_Execute_an_operation*-->
+					<item text="Execute an operation" id="DE/howto/runfile.html_Execute_an_operation" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">DE/howto/runfile.html</userdata>
+					</item>
+				</item>
+			</item>
+			<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*-->
+			<item text="Case studies" id="DE/blankpage.html_Case_studies" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">DE/blankpage.html</userdata>
+				<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*-->
+				<item text="Integrating the HMAEOLI service" id="_Integrating_the_HMAEOLI_service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">DE/blankpage.html</userdata>
+					<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/CASESTUDIES/hma2eoli/introduction.html_Introduction*-->
+					<item text="Introduction" id="DE/CASESTUDIES/hma2eoli/introduction.html_Introduction" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/introduction.html</userdata>
+					</item>
+					<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/CASESTUDIES/hma2eoli/getRecords.html_getRecords*-->
+					<item text="getRecords" id="DE/CASESTUDIES/hma2eoli/getRecords.html_getRecords" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/getRecords.html</userdata>
+					</item>
+					<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/CASESTUDIES/hma2eoli/getRecordById.html_getRecordById*-->
+					<item text="getRecordById" id="DE/CASESTUDIES/hma2eoli/getRecordById.html_getRecordById" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/getRecordById.html</userdata>
+					</item>
+					<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_scripts*-->
+					<item text="scripts" id="DE/blankpage.html_scripts" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">DE/blankpage.html</userdata>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_scripts*DE/CASESTUDIES/hma2eoli/scripts/eoli2hmaGetRecordById.xml_eoli2hmaGetRecordById.xml*-->
+						<item text="eoli2hmaGetRecordById.xml" id="DE/CASESTUDIES/hma2eoli/scripts/eoli2hmaGetRecordById.xml_eoli2hmaGetRecordById.xml" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/scripts/eoli2hmaGetRecordById.xml</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_scripts*DE/CASESTUDIES/hma2eoli/scripts/eoli2hmagetRecords.xml_eoli2hmagetRecords.xml*-->
+						<item text="eoli2hmagetRecords.xml" id="DE/CASESTUDIES/hma2eoli/scripts/eoli2hmagetRecords.xml_eoli2hmagetRecords.xml" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/scripts/eoli2hmagetRecords.xml</userdata>
+						</item>
+					</item>
+					<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_XSL*-->
+					<item text="XSL" id="DE/blankpage.html_XSL" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">DE/blankpage.html</userdata>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_XSL*DE/CASESTUDIES/hma2eoli/xsl/datasetfull.xsl_datasetfull.xsl*-->
+						<item text="datasetfull.xsl" id="DE/CASESTUDIES/hma2eoli/xsl/datasetfull.xsl_datasetfull.xsl" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xsl/datasetfull.xsl</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_XSL*DE/CASESTUDIES/hma2eoli/xsl/full.xsl_full.xsl*-->
+						<item text="full.xsl" id="DE/CASESTUDIES/hma2eoli/xsl/full.xsl_full.xsl" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xsl/full.xsl</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_XSL*DE/CASESTUDIES/hma2eoli/xsl/GetRecord_queryBuilder.xsl_GetRecord_queryBuilder.xsl*-->
+						<item text="GetRecord_queryBuilder.xsl" id="DE/CASESTUDIES/hma2eoli/xsl/GetRecord_queryBuilder.xsl_GetRecord_queryBuilder.xsl" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xsl/GetRecord_queryBuilder.xsl</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_XSL*DE/CASESTUDIES/hma2eoli/xsl/GetrecordById_queryBuilder.xsl_GetrecordById_queryBuilder.xsl*-->
+						<item text="GetrecordById_queryBuilder.xsl" id="DE/CASESTUDIES/hma2eoli/xsl/GetrecordById_queryBuilder.xsl_GetrecordById_queryBuilder.xsl" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xsl/GetrecordById_queryBuilder.xsl</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_XSL*DE/CASESTUDIES/hma2eoli/xsl/HmaRecordfull.xsl_HmaRecordfull.xsl*-->
+						<item text="HmaRecordfull.xsl" id="DE/CASESTUDIES/hma2eoli/xsl/HmaRecordfull.xsl_HmaRecordfull.xsl" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xsl/HmaRecordfull.xsl</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_XSL*DE/CASESTUDIES/hma2eoli/xsl/HmaRecordsummary.xsl_HmaRecordsummary.xsl*-->
+						<item text="HmaRecordsummary.xsl" id="DE/CASESTUDIES/hma2eoli/xsl/HmaRecordsummary.xsl_HmaRecordsummary.xsl" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xsl/HmaRecordsummary.xsl</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_XSL*DE/CASESTUDIES/hma2eoli/xsl/old.HmaRecordfull.xsl_old.HmaRecordfull.xsl*-->
+						<item text="old.HmaRecordfull.xsl" id="DE/CASESTUDIES/hma2eoli/xsl/old.HmaRecordfull.xsl_old.HmaRecordfull.xsl" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xsl/old.HmaRecordfull.xsl</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_XSL*DE/CASESTUDIES/hma2eoli/xsl/old.HmaRecordsummary.xsl_old.HmaRecordsummary.xsl*-->
+						<item text="old.HmaRecordsummary.xsl" id="DE/CASESTUDIES/hma2eoli/xsl/old.HmaRecordsummary.xsl_old.HmaRecordsummary.xsl" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xsl/old.HmaRecordsummary.xsl</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_XSL*DE/CASESTUDIES/hma2eoli/xsl/sar-datasetfull.xsl_sar-datasetfull.xsl*-->
+						<item text="sar-datasetfull.xsl" id="DE/CASESTUDIES/hma2eoli/xsl/sar-datasetfull.xsl_sar-datasetfull.xsl" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xsl/sar-datasetfull.xsl</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_XSL*DE/CASESTUDIES/hma2eoli/xsl/SarRecordfull.xsl_SarRecordfull.xsl*-->
+						<item text="SarRecordfull.xsl" id="DE/CASESTUDIES/hma2eoli/xsl/SarRecordfull.xsl_SarRecordfull.xsl" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xsl/SarRecordfull.xsl</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_XSL*DE/CASESTUDIES/hma2eoli/xsl/SarRecordsummary.xsl_SarRecordsummary.xsl*-->
+						<item text="SarRecordsummary.xsl" id="DE/CASESTUDIES/hma2eoli/xsl/SarRecordsummary.xsl_SarRecordsummary.xsl" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xsl/SarRecordsummary.xsl</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_XSL*DE/CASESTUDIES/hma2eoli/xsl/summary.xsl_summary.xsl*-->
+						<item text="summary.xsl" id="DE/CASESTUDIES/hma2eoli/xsl/summary.xsl_summary.xsl" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xsl/summary.xsl</userdata>
+						</item>
+					</item>
+					<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_XML*-->
+					<item text="XML" id="DE/blankpage.html_XML" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">DE/blankpage.html</userdata>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_XML*DE/CASESTUDIES/hma2eoli/xml/request4eoli.xml_request4eoli.xml*-->
+						<item text="request4eoli.xml" id="DE/CASESTUDIES/hma2eoli/xml/request4eoli.xml_request4eoli.xml" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xml/request4eoli.xml</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_XML*DE/CASESTUDIES/hma2eoli/xml/response4hma.xml_response4hma.xml*-->
+						<item text="response4hma.xml" id="DE/CASESTUDIES/hma2eoli/xml/response4hma.xml_response4hma.xml" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xml/response4hma.xml</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_XML*DE/CASESTUDIES/hma2eoli/xml/eoliResponse.xml_eoliResponse.xml*-->
+						<item text="eoliResponse.xml" id="DE/CASESTUDIES/hma2eoli/xml/eoliResponse.xml_eoliResponse.xml" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xml/eoliResponse.xml</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_XML*DE/CASESTUDIES/hma2eoli/xml/eoliResponse_swapped.xml_eoliResponse_swapped.xml*-->
+						<item text="eoliResponse_swapped.xml" id="DE/CASESTUDIES/hma2eoli/xml/eoliResponse_swapped.xml_eoliResponse_swapped.xml" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xml/eoliResponse_swapped.xml</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_XML*DE/CASESTUDIES/hma2eoli/xml/getRecordById_eoliResponse.xml_getRecordById_eoliResponse.xml*-->
+						<item text="getRecordById_eoliResponse.xml" id="DE/CASESTUDIES/hma2eoli/xml/getRecordById_eoliResponse.xml_getRecordById_eoliResponse.xml" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xml/getRecordById_eoliResponse.xml</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_XML*DE/CASESTUDIES/hma2eoli/xml/getRecordById_eoliResponse_SAR.xml_getRecordById_eoliResponse_SAR.xml*-->
+						<item text="getRecordById_eoliResponse_SAR.xml" id="DE/CASESTUDIES/hma2eoli/xml/getRecordById_eoliResponse_SAR.xml_getRecordById_eoliResponse_SAR.xml" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xml/getRecordById_eoliResponse_SAR.xml</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_XML*DE/CASESTUDIES/hma2eoli/xml/getRecordById_inputMessage.xml_getRecordById_inputMessage.xml*-->
+						<item text="getRecordById_inputMessage.xml" id="DE/CASESTUDIES/hma2eoli/xml/getRecordById_inputMessage.xml_getRecordById_inputMessage.xml" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xml/getRecordById_inputMessage.xml</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_XML*DE/CASESTUDIES/hma2eoli/xml/getRecordById_request4eoli.xml_getRecordById_request4eoli.xml*-->
+						<item text="getRecordById_request4eoli.xml" id="DE/CASESTUDIES/hma2eoli/xml/getRecordById_request4eoli.xml_getRecordById_request4eoli.xml" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xml/getRecordById_request4eoli.xml</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_XML*DE/CASESTUDIES/hma2eoli/xml/getRecordById_response4hma.xml_getRecordById_response4hma.xml*-->
+						<item text="getRecordById_response4hma.xml" id="DE/CASESTUDIES/hma2eoli/xml/getRecordById_response4hma.xml_getRecordById_response4hma.xml" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xml/getRecordById_response4hma.xml</userdata>
+						</item>
+						<!--DE/main.html_Development_environment*DE/blankpage.html_Reference*DE/blankpage.html_Case_studies*_Integrating_the_HMAEOLI_service*DE/blankpage.html_XML*DE/CASESTUDIES/hma2eoli/xml/inputMessage.xml_inputMessage.xml*-->
+						<item text="inputMessage.xml" id="DE/CASESTUDIES/hma2eoli/xml/inputMessage.xml_inputMessage.xml" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xml/inputMessage.xml</userdata>
+						</item>
+					</item>
+				</item>
+			</item>
+		</item>
+	</item>
+	<!--blankpage.html_Video_Tutorials*-->
+	<item text="Video Tutorials" id="blankpage.html_Video_Tutorials" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 		<userdata name="thisurl">blankpage.html</userdata>
-          <item text="Textual view" id="_id2362178" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-		<userdata name="thisurl">blankpage.html</userdata>
-            <item text="Add a tag" id="DE/tasks/addtags_textual.html_id2362182" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/tasks/addtags_textual.html</userdata>
-            </item>
-            <item text="Copy a tag" id="DE/tasks/copytag_textual.html_id2358420" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/tasks/copytag_textual.html</userdata>
-            </item>
-            <item text="Move a tag" id="DE/tasks/movetag_textual.html_id2358426" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/tasks/movetag_textual.html</userdata>
-            </item>
-            <item text="Delete a tag" id="DE/tasks/deletetag_textual.html_id2358433" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/tasks/deletetag_textual.html</userdata>
-            </item>
-          </item>
-          <item text="Tree view" id="_id2358440" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-		<userdata name="thisurl">blankpage.html</userdata>
-            <item text="Add a tag" id="DE/tasks/addtags_tree.html_id2358444" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/tasks/addtags_tree.html</userdata>
-            </item>
-            <item text="Move a tag" id="DE/tasks/movetag_tree.html_id2358451" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/tasks/movetag_tree.html</userdata>
-            </item>
-            <item text="Delete a tag" id="DE/tasks/deletetag_tree.html_id2358457" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/tasks/deletetag_tree.html</userdata>
-            </item>
-          </item>
-        </item>
-      </item>
-      <item text="Show tag description" id="DE/tasks/showtagdescription.html_id2358464" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-        <userdata name="thisurl">DE/tasks/showtagdescription.html</userdata>
-      </item>
-      <item text="Show information about validation errors" id="DE/tasks/showvalidationerrors.html_id2357640" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-        <userdata name="thisurl">DE/tasks/showvalidationerrors.html</userdata>
-      </item>
-      <item text="Deploy/Undeploy a service" id="_id2357647" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-	<userdata name="thisurl">blankpage.html</userdata>
-        <item text="Deploy a service" id="DE/tasks/deploy.html_id2357651" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/deploy.html</userdata>
-        </item>
-        <item text="Undeploy a service" id="DE/tasks/undeploy.html_id2357658" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/undeploy.html</userdata>
-        </item>
-      </item>
-      <item text="Run/debug" id="_id2357665" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-	<userdata name="thisurl">blankpage.html</userdata>
-        <item text="Running an operation" id="DE/tasks/runoperation.html_id2357669" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/runoperation.html</userdata>
-        </item>
-        <item text="Debugging an operation" id="DE/tasks/debugOperation.html_id2357676" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/debugOperation.html</userdata>
-        </item>
-        <item text="Add/Remove a breakpoint" id="DE/tasks/addbreakpoint.html_id2357683" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/addbreakpoint.html</userdata>
-        </item>
-        <item text="Change variable value" id="DE/tasks/chanegvariablevalue.html_id2357690" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/chanegvariablevalue.html</userdata>
-        </item>
-        <item text="Resume the execution" id="DE/tasks/resumeexecution.html_id2357697" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/resumeexecution.html</userdata>
-        </item>
-        <item text="Stopping the execution" id="DE/tasks/stoppingexecution.html_id2369699" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/stoppingexecution.html</userdata>
-        </item>
-        <item text="Viewing the execution result" id="DE/tasks/view_execution_result.html_id2369709" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/view_execution_result.html</userdata>
-        </item>
-      </item>
-      <item text="Import/Export functionalities" id="_id2369716" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-	<userdata name="thisurl">blankpage.html</userdata>
-        <item text="Import a 6.0 and 6.0.1 service" id="DE/tasks/importOldDescriptor.html_id2369720" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/importOldDescriptor.html</userdata>
-        </item>
-        <item text="Import of a service" id="DE/tasks/importService.html_id2369727" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/importService.html</userdata>
-        </item>
-        <item text="Import of an SSE stylesheet" id="DE/tasks/importSSEStylesheet.html_id2369734" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/importSSEStylesheet.html</userdata>
-        </item>
-        <item text="Import of a service result-&gt; GML stylesheet" id="DE/tasks/importGMLStylesheet.html_id2369743" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/importGMLStylesheet.html</userdata>
-        </item>
-        <item text="Export of a service" id="DE/tasks/exportService.html_id2369741" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/exportService.html</userdata>
-        </item>
-      </item>
-      <item text="Interface Repository" id="_id2369755" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-	<userdata name="thisurl">blankpage.html</userdata>
-        <item text="Add an interface to the Interface Repository" id="DE/tasks/addInterfaceToRepository.html_id2369760" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/addInterfaceToRepository.html</userdata>
-        </item>
-        <item text="Remove an interface from the Interface Repository" id="DE/tasks/removeInterfaceFromRepository.html_id2369767" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">DE/tasks/removeInterfaceFromRepository.html</userdata>
-        </item>
-      </item>
-    </item>
-    <item text="Reference" id="_id2369775" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-	<userdata name="thisurl">blankpage.html</userdata>
-      <item text="XML Scripting reference" id="RE/XMLScript/scripting.html_id2369779" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-        <userdata name="thisurl">RE/XMLScript/scripting.html</userdata>
-        <item text="Alphabetical list" id="RE/XMLScript/tocAZ.html_id2369786" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/tocAZ.html</userdata>
-        </item>
-        <item text="New tags from version 7.0" id="RE/XMLScript/newTags.html_id2369792" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/newTags.html</userdata>
-        </item>
-        <item text="Arithmetic Operators" id="RE/XMLScript/aritmetic.html_id2369799" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/aritmetic.html</userdata>
-        </item>
-        <item text="Relational Operators" id="RE/XMLScript/relational.html_id2369806" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/relational.html</userdata>
-        </item>
-        <item text="Conditional Operators" id="RE/XMLScript/conditional.html_id2369813" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/conditional.html</userdata>
-        </item>
-        <item text="Shift Operators" id="RE/XMLScript/shift.html_id2369820" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/shift.html</userdata>
-        </item>
-        <item text="Logical Operators" id="RE/XMLScript/logical.html_id2369827" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/logical.html</userdata>
-        </item>
-        <item text="Assignment Operators" id="RE/XMLScript/assignment.html_id2369834" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/assignment.html</userdata>
-        </item>
-        <item text="Other Operators and Commands" id="RE/XMLScript/operatorsCommands.html_id2369841" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/operatorsCommands.html</userdata>
-        </item>
-        <item text="Control Flow Statements" id="RE/XMLScript/flow.html_id2369848" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/flow.html</userdata>
-        </item>
-        <item text="Arrays" id="RE/XMLScript/arrays.html_id2369855" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/arrays.html</userdata>
-        </item>
-        <item text="Strings" id="RE/XMLScript/strings.html_id2369862" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/strings.html</userdata>
-        </item>
-        <item text="Text Handling" id="RE/XMLScript/text.html_id2369868" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/text.html</userdata>
-        </item>
-        <item text="File Handling" id="RE/XMLScript/file.html_id2369875" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/file.html</userdata>
-        </item>
-        <item text="SOAP" id="RE/XMLScript/soap.html_id2369882" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/soap.html</userdata>
-        </item>
-        <item text="HTTP" id="RE/XMLScript/http.html_id2369889" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/http.html</userdata>
-        </item>
-        <item text="FTP" id="RE/XMLScript/ftp.html_id2369895" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/ftp.html</userdata>
-        </item>
-        <item text="JDBC" id="RE/XMLScript/jdbc.html_id2369902" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/jdbc.html</userdata>
-        </item>
-        <item text="XML/XSL" id="RE/XMLScript/xmlXsl.html_id2369909" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/xmlXsl.html</userdata>
-        </item>
-        <item text="XML Scripting" id="RE/XMLScript/xmlScripting.html_id2369915" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/xmlScripting.html</userdata>
-        </item>
-        <item text="email" id="RE/XMLScript/email.html_id2369922" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/email.html</userdata>
-        </item>
-        <item text="Threading" id="RE/XMLScript/thread.html_id2369929" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/thread.html</userdata>
-        </item>
-        <item text="Archiving" id="RE/XMLScript/archiving.html_id2369936" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/archiving.html</userdata>
-        </item>
-        <item text="Date" id="RE/XMLScript/dateTime.html_id2369942" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/dateTime.html</userdata>
-        </item>
-        <item text="Clean up" id="RE/XMLScript/cleanup.html_id2369949" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/cleanup.html</userdata>
-        </item>
-        <item text="SSE utils" id="RE/XMLScript/sse.html_id2369956" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/sse.html</userdata>
-        </item>
-        <item text="Jelly script" id="RE/XMLScript/jelly.html_id2369962" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/jelly.html</userdata>
-        </item>
-        <item text="Orders Management" id="RE/XMLScript/orderManagement.html_id2369969" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/orderManagement.html</userdata>
-        </item>
-        <item text="Java" id="RE/XMLScript/Java.html_id2369976" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <userdata name="thisurl">RE/XMLScript/Java.html</userdata>
-        </item>
-      </item>
-      <item text="Tutorials" id="DE/Tutorial_home.html_id2369983" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-        <userdata name="thisurl">DE/Tutorial_home.html</userdata>
-        <item text="howto" id="_id2369989" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-	  <userdata name="thisurl">blankpage.html</userdata>
-          <item text="Install the Development Environment" id="DE/howto/installation.html_id2369993" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">DE/howto/installation.html</userdata>
-          </item>
-          <item text="Upgrade the Development Environment" id="DE/howto/upgrade_installation.html_id2370000" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">DE/howto/upgrade_installation.html</userdata>
-          </item>
-          <item text="Create a new service" id="DE/howto/newservice.html_id2370008" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">DE/howto/newservice.html</userdata>
-          </item>
-          <item text="Edit a file" id="DE/howto/editfile.html_id2370014" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">DE/howto/editfile.html</userdata>
-          </item>
-          <item text="Create new launch configuration" id="DE/howto/createlaunchconfig.html_id2370021" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">DE/howto/createlaunchconfig.html</userdata>
-          </item>
-          <item text="Execute an operation" id="DE/howto/runfile.html_id2370028" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">DE/howto/runfile.html</userdata>
-          </item>
-        </item>
-      </item>
-      <item text="Case studies" id="_id2370035" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-	<userdata name="thisurl">blankpage.html</userdata>
-        <item text="Integrating the HMAEOLI service" id="_id2370042" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-          <item text="Introduction" id="DE/CASESTUDIES/hma2eoli/introduction.html_id2370046" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/introduction.html</userdata>
-          </item>
-          <item text="getRecords" id="DE/CASESTUDIES/hma2eoli/getRecords.html_id2370053" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/getRecords.html</userdata>
-          </item>
-          <item text="getRecordById" id="DE/CASESTUDIES/hma2eoli/getRecordById.html_id2370060" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-            <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/getRecordById.html</userdata>
-          </item>
-          <item text="scripts" id="_id2370067" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-	<userdata name="thisurl">blankpage.html</userdata>
-            <item text="eoli2hmaGetRecordById.xml" id="DE/CASESTUDIES/hma2eoli/scripts/eoli2hmaGetRecordById.xml_id2370071" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/scripts/eoli2hmaGetRecordById.xml</userdata>
-            </item>
-            <item text="eoli2hmagetRecords.xml" id="DE/CASESTUDIES/hma2eoli/scripts/eoli2hmagetRecords.xml_id2370078" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/scripts/eoli2hmagetRecords.xml</userdata>
-            </item>
-          </item>
-          <item text="XSL" id="_id2370086" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-		<userdata name="thisurl">blankpage.html</userdata>
-            <item text="datasetfull.xsl" id="DE/CASESTUDIES/hma2eoli/xsl/datasetfull.xsl_id2370090" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xsl/datasetfull.xsl</userdata>
-            </item>
-            <item text="full.xsl" id="DE/CASESTUDIES/hma2eoli/xsl/full.xsl_id2370097" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xsl/full.xsl</userdata>
-            </item>
-            <item text="GetRecord_queryBuilder.xsl" id="DE/CASESTUDIES/hma2eoli/xsl/GetRecord_queryBuilder.xsl_id2370104" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xsl/GetRecord_queryBuilder.xsl</userdata>
-            </item>
-            <item text="GetrecordById_queryBuilder.xsl" id="DE/CASESTUDIES/hma2eoli/xsl/GetrecordById_queryBuilder.xsl_id2370111" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xsl/GetrecordById_queryBuilder.xsl</userdata>
-            </item>
-            <item text="HmaRecordfull.xsl" id="DE/CASESTUDIES/hma2eoli/xsl/HmaRecordfull.xsl_id2370119" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xsl/HmaRecordfull.xsl</userdata>
-            </item>
-            <item text="HmaRecordsummary.xsl" id="DE/CASESTUDIES/hma2eoli/xsl/HmaRecordsummary.xsl_id2370126" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xsl/HmaRecordsummary.xsl</userdata>
-            </item>
-            <item text="old.HmaRecordfull.xsl" id="DE/CASESTUDIES/hma2eoli/xsl/old.HmaRecordfull.xsl_id2370133" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xsl/old.HmaRecordfull.xsl</userdata>
-            </item>
-            <item text="old.HmaRecordsummary.xsl" id="DE/CASESTUDIES/hma2eoli/xsl/old.HmaRecordsummary.xsl_id2370141" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xsl/old.HmaRecordsummary.xsl</userdata>
-            </item>
-            <item text="sar-datasetfull.xsl" id="DE/CASESTUDIES/hma2eoli/xsl/sar-datasetfull.xsl_id2370148" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xsl/sar-datasetfull.xsl</userdata>
-            </item>
-            <item text="SarRecordfull.xsl" id="DE/CASESTUDIES/hma2eoli/xsl/SarRecordfull.xsl_id2370155" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xsl/SarRecordfull.xsl</userdata>
-            </item>
-            <item text="SarRecordsummary.xsl" id="DE/CASESTUDIES/hma2eoli/xsl/SarRecordsummary.xsl_id2370162" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xsl/SarRecordsummary.xsl</userdata>
-            </item>
-            <item text="summary.xsl" id="DE/CASESTUDIES/hma2eoli/xsl/summary.xsl_id2370170" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xsl/summary.xsl</userdata>
-            </item>
-          </item>
-          <item text="XML" id="_id2370177" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-		<userdata name="thisurl">blankpage.html</userdata>
-            <item text="request4eoli.xml" id="DE/CASESTUDIES/hma2eoli/xml/request4eoli.xml_id2370181" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xml/request4eoli.xml</userdata>
-            </item>
-            <item text="response4hma.xml" id="DE/CASESTUDIES/hma2eoli/xml/response4hma.xml_id2370188" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xml/response4hma.xml</userdata>
-            </item>
-            <item text="eoliResponse.xml" id="DE/CASESTUDIES/hma2eoli/xml/eoliResponse.xml_id2370195" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xml/eoliResponse.xml</userdata>
-            </item>
-            <item text="eoliResponse_swapped.xml" id="DE/CASESTUDIES/hma2eoli/xml/eoliResponse_swapped.xml_id2370202" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xml/eoliResponse_swapped.xml</userdata>
-            </item>
-            <item text="getRecordById_eoliResponse.xml" id="DE/CASESTUDIES/hma2eoli/xml/getRecordById_eoliResponse.xml_id2370210" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xml/getRecordById_eoliResponse.xml</userdata>
-            </item>
-            <item text="getRecordById_eoliResponse_SAR.xml" id="DE/CASESTUDIES/hma2eoli/xml/getRecordById_eoliResponse_SAR.xml_id2370217" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xml/getRecordById_eoliResponse_SAR.xml</userdata>
-            </item>
-            <item text="getRecordById_inputMessage.xml" id="DE/CASESTUDIES/hma2eoli/xml/getRecordById_inputMessage.xml_id2370225" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xml/getRecordById_inputMessage.xml</userdata>
-            </item>
-            <item text="getRecordById_request4eoli.xml" id="DE/CASESTUDIES/hma2eoli/xml/getRecordById_request4eoli.xml_id2370233" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xml/getRecordById_request4eoli.xml</userdata>
-            </item>
-            <item text="getRecordById_response4hma.xml" id="DE/CASESTUDIES/hma2eoli/xml/getRecordById_response4hma.xml_id2370240" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xml/getRecordById_response4hma.xml</userdata>
-            </item>
-            <item text="inputMessage.xml" id="DE/CASESTUDIES/hma2eoli/xml/inputMessage.xml_id2370248" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-              <userdata name="thisurl">DE/CASESTUDIES/hma2eoli/xml/inputMessage.xml</userdata>
-            </item>
-          </item>
-        </item>
-      </item>
-    </item>
-  </item>
-  <item text="Video Tutorials" id="_id2370258" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-	<userdata name="thisurl">blankpage.html</userdata>
-    <item text="Video Tutorials" id="http://wiki.services.eoportal.org/tiki-index.php?page=Toolbox+Video+Tutorial_id2370262" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-      <userdata name="thisurl">http://wiki.services.eoportal.org/tiki-index.php?page=Toolbox+Video+Tutorial</userdata>
-    </item>
-  </item>
+		<!--blankpage.html_Video_Tutorials*http://wiki.services.eoportal.org/tiki-index.php?page=Toolbox+Video+Tutorial_Video_Tutorials*-->
+		<item text="Video Tutorials" id="http://wiki.services.eoportal.org/tiki-index.php?page=Toolbox+Video+Tutorial_Video_Tutorials" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+			<userdata name="thisurl">http://wiki.services.eoportal.org/tiki-index.php?page=Toolbox+Video+Tutorial</userdata>
+		</item>
+	</item>
 </tree>

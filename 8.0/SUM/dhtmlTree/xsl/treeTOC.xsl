@@ -1,4 +1,4 @@
-﻿<xsl:transform xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:txsl="http://www.w3.org/1999/XSL/Transform/target" xmlns:ctl="http://www.occamlab.com/ctl" version="1.0" >
+<xsl:transform xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:txsl="http://www.w3.org/1999/XSL/Transform/target" xmlns:ctl="http://www.occamlab.com/ctl" version="1.0" >
 <xsl:output method="xml" version="1.0" encoding="ISO-8859-1"/>
      <xsl:variable name="imageNode0">dhtmlxtree_icon.gif</xsl:variable>
      <xsl:variable name="imageNode1">dhtmlxtree_icon.gif</xsl:variable>
@@ -22,6 +22,7 @@
             <xsl:for-each select="topic">
                     <xsl:call-template name="parseNode">
                         <xsl:with-param name="node" select="."/>
+                        <xsl:with-param name="nodePath"></xsl:with-param>
                     </xsl:call-template>
             </xsl:for-each>
             </tree>
@@ -29,19 +30,19 @@
 
         <xsl:template name="parseNode">
             <xsl:param name="node"></xsl:param>
-            <item text="{$node/@label}" id="{$node/@href}_{generate-id()}" im0="{$imageNode0}" im1="{$imageNode1}" im2="{$imageNode2}">
+             <xsl:param name="nodePath"></xsl:param>
+			<xsl:variable name="currentPath" select="concat($nodePath,$node/@href,'_',translate($node/@label,' ', '_'),'*')"/>
+
+			<xsl:comment> <xsl:value-of select="$currentPath"/></xsl:comment>
+
+            <item text="{$node/@label}" id="{$node/@href}_{translate($node/@label,' ', '_')}" im0="{$imageNode0}" im1="{$imageNode1}" im2="{$imageNode2}">
               <xsl:if test="$node/@href">
               <userdata name="thisurl"><xsl:value-of select="$node/@href"></xsl:value-of></userdata>
             </xsl:if>  
-                <!--xsl:for-each select="$node/namespace::*">
-                  <item text="xmlns:{name()} = {.}" id="{name()}_{.}" im0="{$imageNameSapce0}" im1="{$imageNameSapce1}" im2="{$imageNameSapce2}"/> 
-                </xsl:for-each>
-                <xsl:for-each select="$node/@*">
-                        <item text="{name()} = {.}" id="{name()}_{.}" im0="{$imageAttribute0}" im1="{$imageAttribute1}" im2="{$imageAttribute2}"></item>
-                </xsl:for-each-->
                 <xsl:for-each select="$node/*">
                     <xsl:call-template name="parseNode">
                         <xsl:with-param name="node" select="."/>
+                        <xsl:with-param name="nodePath" select="$currentPath"></xsl:with-param>
                     </xsl:call-template>
                </xsl:for-each>     
             </item>

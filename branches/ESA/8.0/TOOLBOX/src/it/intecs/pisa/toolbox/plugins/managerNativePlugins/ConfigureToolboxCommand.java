@@ -160,7 +160,7 @@ public class ConfigureToolboxCommand extends NativeCommandsManagerPlugin {
         if(mustRestartFtpServer)
          restartFTPServer(toolboxConfiguration);
 
-        resp.sendRedirect("configureToolboxRequest.jsp?pageStatus=disabled");
+        resp.sendRedirect("configureToolboxRequest.jsp?pageStatus=disabled&configurationChanged=true");
     }
 
     private void restartFTPServer(ToolboxConfiguration toolboxConfiguration) throws Exception {

@@ -1,6 +1,6 @@
 <!--
  -
- -  Copyright 2003-2004 Intecs
+ -  Copyright 2003-2010 Intecs
  -
  -  This file is part of TOOLBOX.
  -  TOOLBOX is free software; you can redistribute it andOr modify
@@ -31,13 +31,22 @@
 
  configuration= ToolboxConfiguration.getInstance();
  String tomcatPort =configuration.getConfigurationValue(ToolboxConfiguration.TOMCAT_PORT);
-
+String responseMessageString="";
  SOAPUtils soapUtils = new SOAPUtils();
  Document message = domUtil.fileToDocument(application.getRealPath("WEB-INF/xml/testMsg.xml"));
- responseElement = AxisSOAPClient.sendReceive(new URL("http://localhost:" + tomcatPort + "/TOOLBOX/services/testService"), message.getDocumentElement(), "test");
- responseMessage=responseElement.getOwnerDocument();
 
- DOMUtil.indent(responseMessage);
+
+   try
+        {
+           responseElement = AxisSOAPClient.sendReceive(new URL("http://localhost:" + tomcatPort + "/TOOLBOX/services/testService"), message.getDocumentElement(), "test");
+           responseMessage=responseElement.getOwnerDocument();
+           DOMUtil.indent(responseMessage);
+           responseMessageString = DOMUtil.getDocumentAsString(responseMessage);
+        }
+        catch(Exception ecc)
+        {
+            responseMessageString="The test returned an error. Check the configuration parameters (e.g Tomcat Installation, Apache Installation or Proxy settings) and try again.";
+        }
 
  String bc = "<a href='main.jsp'>Home</a>&nbsp;&gt; Installation test page";
 
@@ -57,7 +66,7 @@
 										<form>
 								<tr>
 									<td align="center" nowrap>
-											<textarea rows="10" cols="90" readonly><% XSLT.serialize(responseMessage, new StreamResult(out));%></textarea>
+											<textarea rows="10" cols="90" readonly><%=responseMessageString%></textarea>
 									</td>
 								</tr>
 								<tr>

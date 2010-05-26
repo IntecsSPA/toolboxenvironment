@@ -266,7 +266,7 @@ public class SchemaSetRelocator {
                     relocatedUri = addUriScheme + ":" + relocatedUri;
                 }
 
-                System.out.println("Relocating "+schemaLocation+" to "+relocatedUri);
+                //System.out.println("Relocating "+schemaLocation+" to "+relocatedUri);
                 relocatedUri=relocatedUri.replace('\\', '/');
                 importNode.setAttribute(ATTRIBUTE_SCHEMA_LOCATION, relocatedUri);
             }

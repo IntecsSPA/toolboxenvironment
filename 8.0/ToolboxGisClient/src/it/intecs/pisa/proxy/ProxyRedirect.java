@@ -113,7 +113,7 @@ public class ProxyRedirect extends HttpServlet
       
       if (serverUrl.startsWith("http://")) {
         log.info("GET param serverUrl:" + serverUrl);
-          System.out.println("GET REQUEST= " + serverUrl);
+   
          // System.out.println("GET param serverUrl:" + serverUrl);
         HttpClient client = new HttpClient();
         if(type!=null)
@@ -188,42 +188,49 @@ public class ProxyRedirect extends HttpServlet
    Transformer transformer=null;
    Boolean soapFault=false;
    Boolean error=false;
+   File logDir=null;
+   File requestDir=null;
+   String serviceUrl=null,outputFormat=null, pathIdRequest=null;
+   String protocol=null,outputMod= null,soapAction=null,seviceLogFolder;
+   String xslRequest=null,xslResponse=null,logService=null,ident=null;
+   File xmlRequestNamePath=null,xmlTagRequestPath=null,serviceRequestPath=null;
+   File serviceResponsePath=null,proxyResponsePath=null,proxyResponseJSONPath=null;
+   File proxyResponseJSPath=null;
         try {
            // XmlTools.copyInputStreamToOutputStream(request.getInputStream(), new FileOutputStream("/home/maro/Desktop/ProxyGeoserverWPS.txt"));
             docProxy = XmlTools.docGenerate(request.getInputStream());
-        } catch (ParserConfigurationException ex) {
+        } catch (Exception ex) {
             java.util.logging.Logger.getLogger(ProxyRedirect.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SAXException ex) {
-            java.util.logging.Logger.getLogger(ProxyRedirect.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            java.util.logging.Logger.getLogger(ProxyRedirect.class.getName()).log(Level.SEVERE, null, ex);
+            error=true;
+            outputMod="VALUE";
+            protocol="";
+            outputFormat="XML";
         }
-       String serviceUrl=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"ServiceUrl");
-      // System.out.println("Service URL: " + serviceUrl);
-       String protocol=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"Protocol");
+
+    if(!error){
+       serviceUrl=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"ServiceUrl");
+       protocol=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"Protocol");
         if (protocol== null)
            protocol="HTTPPOST";
-       String xslRequest=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"XSLRequest");
-       String xslResponse=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"XSLResponse");
-       String logService=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"LogFolder");
-       String ident=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"Ident");
+       xslRequest=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"XSLRequest");
+       xslResponse=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"XSLResponse");
+       logService=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"LogFolder");
+       ident=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"Ident");
        
-       String soapAction=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"SoapAction");
-       String outputFormat=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"outputFormat");
+       soapAction=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"SoapAction");
+       outputFormat=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"outputFormat");
        if (outputFormat== null)
            outputFormat="XML";
        
-       String outputMod=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"outputMod");
+       outputMod=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"outputMod");
        if (outputMod== null)
            outputMod="VALUE";
 
-       String seviceLogFolder=getServletContext().getRealPath(ProxyRedirect.LOG_SERVICES+logService);
-
-       File logDir=new File(seviceLogFolder);
+       seviceLogFolder=getServletContext().getRealPath(ProxyRedirect.LOG_SERVICES+logService);
+       logDir=new File(seviceLogFolder);
        boolean b=logDir.mkdir();
        
-       String pathIdRequest="/Request_"+XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"idRequest").hashCode();
-       File requestDir;
+       pathIdRequest="/Request_"+XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"idRequest").hashCode();
        requestDir=new File(logDir,pathIdRequest);
        
        //seviceLogFolder+=pathIdRequest;
@@ -232,20 +239,23 @@ public class ProxyRedirect extends HttpServlet
  
       
        seviceLogFolder+="/";
-       File xmlRequestNamePath=new File(requestDir, ProxyRedirect.CLIENT_REQUEST_PRFX + ".xml");
-       File xmlTagRequestPath=new File(requestDir,  ProxyRedirect.CLIENT_TAG_REQUEST_PRFX + ".xml");
-       File serviceRequestPath=new File(requestDir, ProxyRedirect.SERVICE_REQUEST_PRFX +  ".xml");
-       File serviceResponsePath=new File(requestDir,  ProxyRedirect.SERVICE_RESPONSE_PRFX +  ".xml");
-       File proxyResponsePath=new File(requestDir,  ProxyRedirect.PROXY_RESPONSE_PRFX + ".xml");
-       File proxyResponseJSONPath=new File(requestDir,  ProxyRedirect.JSON_RESPONSE_PRFX +  ".txt");
-       File proxyResponseJSPath=new File(requestDir,  ProxyRedirect.JS_RESPONSE_PRFX +  ".js");
-
-       
-      File test=xmlRequestNamePath;
-   
+       xmlRequestNamePath=new File(requestDir, ProxyRedirect.CLIENT_REQUEST_PRFX + ".xml");
+       xmlTagRequestPath=new File(requestDir,  ProxyRedirect.CLIENT_TAG_REQUEST_PRFX + ".xml");
+       serviceRequestPath=new File(requestDir, ProxyRedirect.SERVICE_REQUEST_PRFX +  ".xml");
+       serviceResponsePath=new File(requestDir,  ProxyRedirect.SERVICE_RESPONSE_PRFX +  ".xml");
+       proxyResponsePath=new File(requestDir,  ProxyRedirect.PROXY_RESPONSE_PRFX + ".xml");
+       proxyResponseJSONPath=new File(requestDir,  ProxyRedirect.JSON_RESPONSE_PRFX +  ".txt");
+       proxyResponseJSPath=new File(requestDir,  ProxyRedirect.JS_RESPONSE_PRFX +  ".js");
+            try {
+                XmlTools.copyInputStreamToOutputStream(XmlTools.getDocumentAsInputStream(docProxy), new FileOutputStream(xmlRequestNamePath));
+            } catch (Exception ex) {
+                java.util.logging.Logger.getLogger(ProxyRedirect.class.getName()).log(Level.SEVERE, null, ex);
+                error=true;
+            }
+      }
        HttpURLConnection connection=null;
-       if(protocol.equalsIgnoreCase("HTTPPOST")){  
-           System.out.println("HTTP-POST");
+       if(protocol.equalsIgnoreCase("HTTPPOST") && !error){
+          // System.out.println("HTTP-POST");
            OutputStream connOut=null;
           try {
                connection = (HttpURLConnection) new URL(serviceUrl).openConnection();
@@ -257,7 +267,7 @@ public class ProxyRedirect extends HttpServlet
                connection.setRequestProperty( "Content-type", "text/xml" );
                
               } catch (Exception ex) {
-                 log.debug("GisClient Exception: " + ex.getMessage());
+                 log.error("GisClient Exception: " + ex.getMessage());
                  response.setStatus(500);
                  ex.printStackTrace(new PrintStream(new FileOutputStream(serviceResponsePath)));
                  error=true;
@@ -357,12 +367,13 @@ public class ProxyRedirect extends HttpServlet
                 error=true;
             }
           }
-       }else{   
-          System.out.println("SOAP Request...");
+       }else{
+        if(!error){
+          //System.out.println("SOAP Request...");
 
           PrintWriter outWriter;
           String soapVersion=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"soapVersion");
-          boolean security=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"Security") == null ? false : true;
+          boolean security=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"Security") == null ? false : Boolean.valueOf(XmlTools.getElementTextChildValue(docProxy.getDocumentElement(), "Security"));
           String userAuthentication=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"UserAutentication");
           String passwordAuthentication=XmlTools.getElementTextChildValue(docProxy.getDocumentElement(),"PasswordAutentication");
           if(security){
@@ -412,7 +423,7 @@ public class ProxyRedirect extends HttpServlet
                         Document documentReq=XmlTools.newDocument();
                         Node payload = documentReq.importNode(XmlTools.getFirstChild((Element) processingRequest),true);
                         documentReq.appendChild(payload);
-                        System.out.println("SOAP ACTION: " +soapAction);
+                    //    System.out.println("SOAP ACTION: " +soapAction);
                         try{
                             if(security)
                                docResp=spt.getSoapCall(serviceUrl,soapAction,documentReq,userAuthentication,passwordAuthentication);
@@ -452,6 +463,7 @@ public class ProxyRedirect extends HttpServlet
                 ex.printStackTrace();
                 ex.printStackTrace(new PrintStream(new FileOutputStream(serviceResponsePath)));
             }
+        }
        }
        if(soapFault){
           XmlTools.copyInputStreamToOutputStream(new FileInputStream(serviceResponsePath), response.getOutputStream());
@@ -477,6 +489,8 @@ public class ProxyRedirect extends HttpServlet
            }else{
               proxyResponsePath=serviceResponsePath;
            }
+
+       
            String pathResult="";
            tfactory = TransformerFactory.newInstance();
                    if(outputFormat.equalsIgnoreCase("JSON")){
@@ -517,8 +531,10 @@ public class ProxyRedirect extends HttpServlet
                                   ex.printStackTrace(new PrintStream(new FileOutputStream(serviceResponsePath)));
                                  }
                           }else{
-                                pathResult=proxyResponsePath.getAbsolutePath();
-                                response.setContentType("text/xml;charset=UTF-8");
+                                if(!error){
+                                    pathResult=proxyResponsePath.getAbsolutePath();
+                                    response.setContentType("text/xml;charset=UTF-8");
+                                }
 
                                 }
                      }
@@ -551,9 +567,13 @@ public class ProxyRedirect extends HttpServlet
                     try {
                         XmlTools.copyInputStreamToOutputStream(new FileInputStream(pathResult), response.getOutputStream());
                     } catch (IOException ex) {
-                        log.fatal("GisClient Exception: " + ex.getMessage(), ex);
-                        ex.printStackTrace();
-                        ex.printStackTrace(new PrintStream(new FileOutputStream(serviceResponsePath)));
+                        /*log.fatal("GisClient Exception: " + ex.getMessage(), ex);
+                        ex.printStackTrace();*/
+                        response.setStatus(500);
+                        XmlTools.copyInputStreamToOutputStream(
+                        new ByteArrayInputStream("<Error>The XML request is not well formed</Error>".getBytes()),
+                               response.getOutputStream());
+                       
                     }
               }
        

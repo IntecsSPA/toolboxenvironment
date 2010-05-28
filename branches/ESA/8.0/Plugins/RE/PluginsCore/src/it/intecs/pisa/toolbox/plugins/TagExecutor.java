@@ -175,6 +175,23 @@ public class TagExecutor implements ITagExecutor {
 
             throw new TagException(this.getClass());
         }
+        catch(Throwable t)
+        {
+            if (offlineDbgTag != null) {
+                excTag = offlineDbgTag;
+            } else {
+                excTag = debugTag;
+            }
+            if (excTag != null) {
+                doc = excTag.getOwnerDocument();
+                excDetailsTag = doc.createElement("ThrownExceptionDetails");
+                DOMUtil.setTextToElement(doc, excDetailsTag, t.toString());
+
+                excTag.appendChild(excDetailsTag);
+            }
+
+            throw new TagException(this.getClass());
+        }
 
         return returnValue;
     }
@@ -522,13 +539,13 @@ public class TagExecutor implements ITagExecutor {
     }
     
       protected void addScriptLinkToDebugTree(long id) {
-        if (this.logLevel.equals(Level.DEBUG)) {
+        if (this.logLevel.equals(Level.DEBUG) && offlineDbgTag!=null) {
             this.offlineDbgTag.setAttribute("resourceKey", Long.toString(id));
         }
     }
 
        protected void addResourceLinkToDebugTree(File file) {
-        if (this.logLevel.equals(Level.DEBUG)) {
+        if (this.logLevel.equals(Level.DEBUG)&& offlineDbgTag!=null) {
             this.offlineDbgTag.setAttribute("resourceLink",file.toURI().toString());
         }
     }

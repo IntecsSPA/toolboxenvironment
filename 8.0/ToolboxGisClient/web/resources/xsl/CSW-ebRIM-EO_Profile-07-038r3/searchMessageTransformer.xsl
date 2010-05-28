@@ -22,7 +22,6 @@ maxRecords="20">
     <xsl:attribute name="maxRecords"><xsl:value-of select="gc:iteratorSize"/></xsl:attribute>
     <csw:Query typeNames="rim:ExtrinsicObject rim:ExtrinsicObject_ACQPLAT rim:Association">
         <csw:ElementSetName typeNames="rim:ExtrinsicObject"><xsl:value-of select="gc:presentation"/></csw:ElementSetName>
-        <csw:ElementName>/Service/</csw:ElementName>
         <csw:Constraint version="1.1.0">
             <ogc:Filter>
                 <ogc:And>

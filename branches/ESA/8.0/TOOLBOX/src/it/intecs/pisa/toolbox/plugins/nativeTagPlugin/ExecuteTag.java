@@ -37,7 +37,7 @@ public class ExecuteTag extends NativeTagExecutor {
             externalFile=new File(externalFilePath);
             externalScriptDoc = domUtil.fileToDocument(externalFilePath);
 
-            this.offlineDbgTag.setAttribute("", externalFilePath);
+            addResourceLinkToDebugTree(externalFile);
             
             argumentIterator = DOMUtil.getChildrenByLocalName(tagEl, ARGUMENT).iterator();
             setArguments(argumentIterator);

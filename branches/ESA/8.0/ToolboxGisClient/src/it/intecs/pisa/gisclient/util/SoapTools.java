@@ -55,12 +55,12 @@ public class SoapTools {
    
     //    LinkedList soapParams = DOMUtil.getChildren(soapCall);
       URL url = new URL(UrlService);
-      System.out.println("URL: " + UrlService);
+      //System.out.println("URL: " + UrlService);
       org.apache.axis.Message payload = null;
       //System.out.println("Document da trasformare in Message: ");
       //DomUtil.writeXml(messageBody, System.out);
       payload = getMessageFromBody(messageBody);
-      System.out.println("SOAP: " + payload.getSOAPBody().toString());
+      //System.out.println("SOAP: " + payload.getSOAPBody().toString());
      // String res=SoapTools.exchange(url, payload,operation).getSOAPBody().toString();
      // System.out.println("RISPOSTA: " +res);
       return this.getContent(SoapTools.exchange(url, payload,operation));

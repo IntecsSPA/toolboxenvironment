@@ -25,11 +25,13 @@ import it.intecs.pisa.toolbox.db.ToolboxInternalDatabase;
 import it.intecs.pisa.toolbox.log.ErrorMailer;
 import it.intecs.pisa.toolbox.service.instances.InstanceHandler;
 import it.intecs.pisa.toolbox.plugins.exceptions.DebugTerminatedException;
-import it.intecs.pisa.toolbox.service.instances.InstanceInfo;
+import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.SOAPUtil;
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 
@@ -115,7 +117,23 @@ public class TBXAsynchronousOperationSecondThirdScriptExecutor extends Thread {
                 handler.deleteAllVariablesDumped();
             }
         } catch (Exception ex) {
+            sendSOAPFault();
             releaseMutex();
+        }
+
+    }
+
+    protected void sendSOAPFault() {
+        try {
+            Document doc;
+            Toolbox tbx;
+            DOMUtil util;
+            util = new DOMUtil();
+            tbx = Toolbox.getInstance();
+            doc = util.fileToDocument(new File(tbx.getRootDir(), "WEB-INF/xml/scriptErrorSOAPFault.xml"));
+            TBXAsynchronousOperationCommonTasks.sendResponseToClient(serviceInstanceId, doc);
+        } catch (Exception ex1) {
+            java.util.logging.Logger.getLogger(TBXAsynchronousOperationSecondThirdScriptExecutor.class.getName()).log(Level.SEVERE, null, ex1);
         }
     }
 
@@ -147,10 +165,6 @@ public class TBXAsynchronousOperationSecondThirdScriptExecutor extends Thread {
             }
 
             try {
-                //TBXService service;
-
-                //service = ServiceManager.getService(serviceInstanceId);
-
                 if (SOAPUtil.isSOAPFault(response) == false && service.getImplementedInterface().isValidationActive()) {
                     response = validateResponse(response);
                 }
@@ -164,19 +178,24 @@ public class TBXAsynchronousOperationSecondThirdScriptExecutor extends Thread {
                 InstanceResources.storeXMLResource(response, serviceInstanceId, InstanceResources.TYPE_INVALID_OUTPUT_MESSAGE);
                 InstanceStatuses.updateInstanceStatus(serviceInstanceId, InstanceStatuses.STATUS_INVALID_OUTPUT_MESSAGE);
 
-                try{
-                    errorResp = TBXOperationOnErrorActions.processErrorRequest(serviceInstanceId, TBXScript.SCRIPT_TYPE_GLOBAL_ERROR, "An error occurred while executing the service logic");
-                    InstanceResources.storeXMLResource(errorResp, serviceInstanceId, InstanceResources.TYPE_OUTPUT_MESSAGE);
-                    TBXAsynchronousOperationCommonTasks.sendResponseToClient(serviceInstanceId, errorResp);
-                }catch(Exception ecc){}
+                
+                errorResp = TBXOperationOnErrorActions.processErrorRequest(serviceInstanceId, TBXScript.SCRIPT_TYPE_GLOBAL_ERROR, "An error occurred while executing the service logic");
+                InstanceResources.storeXMLResource(errorResp, serviceInstanceId, InstanceResources.TYPE_OUTPUT_MESSAGE);
+                TBXAsynchronousOperationCommonTasks.sendResponseToClient(serviceInstanceId, errorResp);
+                
                 return;
             }
 
-            try {
-                TBXAsynchronousOperationCommonTasks.sendResponseToClient(serviceInstanceId, response);
-                InstanceStatuses.updateInstanceStatus(serviceInstanceId, InstanceStatuses.STATUS_COMPLETED);
-            } catch (Exception ecc) {}
-        } finally {
+            
+            TBXAsynchronousOperationCommonTasks.sendResponseToClient(serviceInstanceId, response);
+            InstanceStatuses.updateInstanceStatus(serviceInstanceId, InstanceStatuses.STATUS_COMPLETED);
+           
+        }
+        catch(Exception e)
+        {
+            sendSOAPFault();
+        }
+        finally {
             handler.deleteAllVariablesDumped();
         }
     }

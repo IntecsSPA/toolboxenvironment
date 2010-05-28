@@ -798,7 +798,10 @@ ToolboxTestCenter.Application = function()
                         tbxTCenter.addToolboxOperationInputTab(toolboxUrl, service, operation, {html:sseHtmlResponse}); 
                     }else{
                         numberToolboxInput++;
+                        
+
                         var id=/*/toolboxUrl+*/service+operation+numberToolboxInput;
+                        id=replaceAll(id, "-", "_");
                         var radioSelect="<br><table align='center'><tr><td><form name='formModeGenericToolbox"+id+"' id='formModeGenericToolbox"+id+"'><table width='100%'><tr width='100%'rowspan='2' BGCOLOR='#325e8f'><td><b style='color: #ffffff;'>SOAP message content Type: </b><br></td></tr>"+
                                   "<tr><td><input type='radio' name='requestMode' value='SyncPayload'/>&nbsp;&nbsp;&nbsp;Synchronous Payload</td></tr>"+
                                   "<tr><td><input type='radio' name='requestMode' value='AsyncPayload'/>&nbsp;&nbsp;&nbsp;Asynchronous Payload</td></tr>"+
@@ -808,7 +811,7 @@ ToolboxTestCenter.Application = function()
                                      "<form name='formFile_"+id+"' action='"+toolsServlet+"?cmd=putFile&type=multipart&modality=edit&editAreaPath="+editAreaPath+"&cols="+textAreaWToolbox+"&rows="+textAreaHToolbox+"' method='POST' enctype='multipart/form-data' target='iframeRequest_"+id+"'>"+
                                         "<input type='file' id='FILE' name='FILE' value='' width='50' />"+
                                         "<input type='submit' name='buttonSubmit_"+id+"' value='Load Request'/>"+
-                                        "<input type='button' name='buttonSendToolboxGenericRequest_"+id+"' value='Send Request' onclick='tbxTCenter.sendToolboxGenericRequest( document.getElementById(\"formModeGenericToolbox"+id+"\").requestMode , parent.iframeRequest_"+id+".window.getEditAreaValue(), \""+toolboxUrl+"\",\""+service+"\",\""+soapAction+"\",\""+operation+"\",\"test\");'/>"+
+                                        "<input type='button' name='buttonSendToolboxGenericRequest_"+id+"' value='Send Request' onclick=\"javascript:alert(parent.iframeRequest_"+id+".window.getEditAreaValue());tbxTCenter.sendToolboxGenericRequest(document.getElementById('formModeGenericToolbox"+id+"').requestMode , parent.iframeRequest_"+id+".window.getEditAreaValue(), '"+toolboxUrl+"','"+service+"','"+soapAction+"','"+operation+"','test')\"/>"+//document.getElementById('formModeGenericToolbox"+id+"').requestMode , parent.iframeRequest_"+id+".window.getEditAreaValue(), '"+toolboxUrl+"','"+service+"','"+soapAction+"','"+operation+"','test'
                                     "</form></td></tr><tr align='center'><td>"+
                                     "<iframe scrolling='no' FRAMEBORDER='0' src='"+toolsServlet+"?cmd=putFile&type=nomultipart&modality=edit&editAreaPath="+editAreaPath+"&cols="+textAreaWToolbox+"&rows="+textAreaHToolbox+"' name='iframeRequest_"+id+"' width='"+textAreaFrameWToolbox+"' height='"+textAreaFrameHToolbox+"' marginwidth='0' marginheight='0'></iframe>"+
                                  //   "<tr><td><input type='button' name='buttonSendToolboxGenericRequest_"+id+"' value='Send Request' onclick='tbxTCenter.sendToolboxGenericRequest( document.getElementById(\"formModeGenericToolbox"+id+"\").requestMode , parent.iframeRequest_"+id+".window.getEditAreaValue(), \""+toolboxUrl+"\",\""+service+"\",\""+soapAction+"\",\""+operation+"\",\"test\");'/></td></tr>"+

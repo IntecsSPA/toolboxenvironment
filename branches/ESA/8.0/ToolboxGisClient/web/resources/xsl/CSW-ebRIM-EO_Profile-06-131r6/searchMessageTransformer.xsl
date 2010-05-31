@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet
 xmlns:gc="http://gisclient.pisa.intecs.it"
 xmlns:csw="http://www.opengis.net/cat/csw/2.0.2"

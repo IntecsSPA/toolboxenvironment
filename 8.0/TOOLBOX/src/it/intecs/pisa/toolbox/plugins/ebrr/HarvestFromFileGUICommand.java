@@ -11,10 +11,13 @@ import it.intecs.pisa.toolbox.service.ServiceManager;
 import it.intecs.pisa.toolbox.plugins.managerNativePlugins.*;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.IOUtil;
+import it.intecs.pisa.util.XSLT;
 import java.io.File;
 import java.util.Hashtable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import org.apache.commons.fileupload.FileItem;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -26,36 +29,41 @@ import org.w3c.dom.Element;
 public class HarvestFromFileGUICommand extends NativeCommandsManagerPlugin {
 
     public void executeCommand(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-        Hashtable<String, FileItem> mimeparts;
-        FileItem harvestFile;
-        mimeparts = parseMultiMime(req);
-        harvestFile = mimeparts.get("filepath");
-        DOMUtil domutil = new DOMUtil();
-        Toolbox toolboxServlet = Toolbox.getInstance();
-        logger = toolboxServlet.getLogger();
+
+        File harvestDir = null;
+        File harvest = null;
+
+        try {
+            Hashtable<String, FileItem> mimeparts;
+            FileItem harvestFile;
+            mimeparts = parseMultiMime(req);
+            harvestFile = mimeparts.get("filepath");
+            DOMUtil domutil = new DOMUtil();
+            Toolbox toolboxServlet = Toolbox.getInstance();
+            logger = toolboxServlet.getLogger();
 
 // Dump message on a public directory
-        Document harvestDoc = domutil.inputStreamToDocument(harvestFile.getInputStream());
-        String filename = java.util.UUID.randomUUID().toString() + ".xml";
-        File harvestDir = new File(toolboxServlet.getRootDir(), Toolbox.HARVEST);
-        File harvest = new File(harvestDir, filename);
-        DOMUtil.dumpXML(harvestDoc, harvest);
+            Document harvestDoc = domutil.inputStreamToDocument(harvestFile.getInputStream());
+            String filename = java.util.UUID.randomUUID().toString() + ".xml";
+            harvestDir = new File(toolboxServlet.getRootDir(), Toolbox.HARVEST);
+            harvest = new File(harvestDir, filename);
+            DOMUtil.dumpXML(harvestDoc, harvest);
 
 
 // Calculate the URL
-        String source = toolboxServlet.getPublicAddress()+Toolbox.SLASH+Toolbox.HARVEST+Toolbox.SLASH+filename;
+            String source = toolboxServlet.getPublicAddress() + Toolbox.SLASH + Toolbox.HARVEST + Toolbox.SLASH + filename;
 
-        String servicename = "";
-        TBXService service;
-        Document message;
-        Document soapMessage;
-        DOMUtil util;
-        Element rootEl;
-        Element sourceEl;
-        Element resourceTypeEl;
-        ServiceManager serviceManager;
+            String servicename = "";
+            TBXService service;
+            Document message;
+            Document soapMessage;
+            DOMUtil util;
+            Element rootEl;
+            Element sourceEl;
+            Element resourceTypeEl;
+            ServiceManager serviceManager;
 
-        try {
+
             util = new DOMUtil();
             servicename = getStringFromMimeParts(mimeparts, "serviceName");
             serviceManager = ServiceManager.getInstance();
@@ -86,19 +94,26 @@ public class HarvestFromFileGUICommand extends NativeCommandsManagerPlugin {
             tmpFile = IOUtil.getTemporaryFile();
             DOMUtil.dumpXML(soapMessage, tmpFile);
 
-            service.processRequest("http://www.opengis.net/cat/csw/2.0.2/requests#Harvest", util.fileToDocument(tmpFile), false);
+            Document response = service.processRequest("http://www.opengis.net/cat/csw/2.0.2/requests#Harvest", util.fileToDocument(tmpFile), false);
 
             // clean the HARVEST directory
-            if(harvest.exists())
+            if (harvest.exists()) {
                 harvest.delete();
+            }
 
-            resp.sendRedirect("ebrrHarvestFromDisk_showresult.jsp");
+            File xsltFile=new File(tbxServlet.getRootDir(),"WEB-INF/XSL/resourceDisplay.xsl");
+            resp.setContentType("text/html");
+
+            XSLT.transform(new StreamSource(xsltFile), new StreamSource(DOMUtil.getDocumentAsInputStream(response)), new StreamResult(resp.getOutputStream()));
+            //resp.sendRedirect("ebrrHarvestFromDisk_showresult.jsp");
         } catch (Exception ex) {
-            
-            if(harvest.exists())
-                harvest.delete();
 
-            resp.sendRedirect("ebrrHarvestFromDisk_showresult.jsp?error="+resp.encodeRedirectURL("An error occurred while harvesting data from disk"));
+            if (harvest.exists()) {
+                harvest.delete();
+            }
+
+            resp.sendError(500, "Harvest raised an error");
+//            resp.sendRedirect("ebrrHarvestFromDisk_showresult.jsp?error=" + resp.encodeRedirectURL("An error occurred while harvesting data from disk"));
         }
     }
 }

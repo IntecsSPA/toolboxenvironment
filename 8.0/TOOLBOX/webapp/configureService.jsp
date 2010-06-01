@@ -240,11 +240,11 @@
 
                                           }
             
-    for(String ss:schemas)
+    for(String ss1:schemas)
        {
            boolean isRootSchema=false;
            String isMainSchema;
-
+           String ss = ss1.replace('\\','/');
            isRootSchema=serviceSchemaName!=null && serviceSchemaName.equals(ss);
 
            if(isRootSchema)

@@ -14,7 +14,6 @@
                 <scriptFile path="Operations/testOperation/first_script.tscript" type="FIRST_SCRIPT" overrideByUser="true"/>
                 <scriptFile path="Operations/testOperation/globalError.tscript" type="GLOBAL_ERROR" overrideByUser="true"/>
             </operation>
-           
         </operations>
         <admittedHosts/>
     </interface>

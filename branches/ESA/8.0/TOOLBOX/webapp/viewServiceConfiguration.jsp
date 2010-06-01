@@ -1,6 +1,6 @@
 <!-- 
  -
- -  Copyright 2003-2004 Intecs
+ -  Copyright 2003-2010 Intecs
  -
  -  This file is part of TOOLBOX.
  -  TOOLBOX is free software; you can redistribute it andOr modify
@@ -118,10 +118,10 @@
 
                                           }
 
-    for(String ss:serviceSchemas)
+    for(String ss1:serviceSchemas)
        {
            boolean isRootSchema=false;
-
+           String ss = ss1.replace('\\','/');
            isRootSchema=serviceSchemaName!=null && serviceSchemaName.equals(ss);
        
            if(isRootSchema)
@@ -129,10 +129,11 @@
 %>
 						<tr>
                             
-							<td class="sortable" nowrap ><fmt:message key="viewConfiguration.rootSchema" bundle="${lang}"/></td>
-                            <td class="sortable" nowrap width="50%"><%=service+"/Schemas/"+ss%></td>
+							<td class="sortable" nowrap ><font color="FF0B0B"><fmt:message key="viewConfiguration.rootSchema" bundle="${lang}"/></font></td>
+                            <td class="sortable" nowrap width="50%"><font color="FF0B0B"><%=ss%></font></td>
+
 <%
- }
+            }
            else
                {
        
@@ -140,7 +141,7 @@
                         <tr>
                            
 							<td class="sortable" nowrap ><fmt:message key="viewConfiguration.schema" bundle="${lang}"/></td>
-                             <td class="sortable" nowrap width="50%"><%=service+"/Schemas/"+ss%></td>
+                             <td class="sortable" nowrap width="50%"><%=ss%></td>
 <%
 }
            }

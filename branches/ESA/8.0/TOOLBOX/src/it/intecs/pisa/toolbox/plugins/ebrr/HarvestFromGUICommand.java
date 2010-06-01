@@ -10,9 +10,12 @@ import it.intecs.pisa.toolbox.service.ServiceManager;
 import it.intecs.pisa.toolbox.plugins.managerNativePlugins.*;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.IOUtil;
+import it.intecs.pisa.util.XSLT;
 import java.io.File;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -26,6 +29,7 @@ public class HarvestFromGUICommand extends NativeCommandsManagerPlugin {
         String servicename="";
         TBXService service;
         Document message;
+        Document response;
         Document soapMessage;
         DOMUtil util;
         Element rootEl;
@@ -68,7 +72,17 @@ public class HarvestFromGUICommand extends NativeCommandsManagerPlugin {
             tmpFile=IOUtil.getTemporaryFile();
             DOMUtil.dumpXML(soapMessage, tmpFile);
 
-            service.processRequest("http://www.opengis.net/cat/csw/2.0.2/requests#Harvest", util.fileToDocument(tmpFile), false);
+            response = service.processRequest("http://www.opengis.net/cat/csw/2.0.2/requests#Harvest", util.fileToDocument(tmpFile), false);
+
+            File xsltFile=new File(tbxServlet.getRootDir(),"WEB-INF/XSL/resourceDisplay.xsl");
+            resp.setContentType("text/html");
+
+            XSLT.transform(new StreamSource(xsltFile), new StreamSource(DOMUtil.getDocumentAsInputStream(response)), new StreamResult(resp.getOutputStream()));
+
+
+//            IOUtil.copy(DOMUtil.getDocumentAsInputStream(response), resp.getOutputStream());
+
+
         } catch (Exception ex) {
              /*ex.printStackTrace();
              

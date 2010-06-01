@@ -10,98 +10,40 @@
 
 <%
         PropertyResourceBundle messages = (PropertyResourceBundle) ResourceBundle.getBundle("ToolboxBundle", new Locale((String) session.getAttribute("languageReq")));
-        
+
         String bc = "<a href='main.jsp'>Home</a>&nbsp;&gt;" +
-                    "&nbsp;<a href='servicesManagement.jsp'>" +
-                    (String) messages.getObject("ebrr.harvest") +
-                    "</a>";
+                "&nbsp;<a href='servicesManagement.jsp'>" +
+                (String) messages.getObject("ebrr.harvest") +
+                "</a>";
 
         String serviceName = "";
 
         serviceName = request.getParameter("serviceName");
-     
+
 %>
 <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/general.js"></script>
 <script type="text/javascript" src="jsScripts/import/gis-client-library/import/sarissa/Sarissa.js"></script>
 <script type="text/javascript" src="jsScripts/import/gis-client-library/import/sarissa/sarissa_ieemu_xpath.js"></script>
 <SCRIPT language="JavaScript">
-<!--
-function back()
-{
-  window.location="<%= response.encodeURL("manageOperations.jsp?serviceName=" + serviceName)%>";
-}
-//-->
+    function harvestFile()
+    {
+        var events={
+            "hide": function (){
+                window.location.reload();
+            }
 
- function harvest(){
-    var serviceName=document.harvestForm.serviceName.value;
-    var resUrl=document.harvestForm.source.value;
-    var resType=document.harvestForm.resourceType.value;
+        };
 
-          if(resUrl.length <= 0){
-               Ext.Msg.show({
-                    title:'Error',
-                    buttons: Ext.Msg.OK,
-                    msg: '<%= response.encodeURL("ebrr.harvest.resurlnotset")%>',
-                    animEl: 'elId',
-                    icon: Ext.MessageBox.ERROR
-                });
-               return false;
-          }else{
-              if(resType.length <= 0){
-               Ext.Msg.show({
-                    title:'Error',
-                    buttons: Ext.Msg.OK,
-                    msg: '<%= response.encodeURL("ebrr.harvest.resTypenotset")%>',
-                    animEl: 'elId',
-                    icon: Ext.MessageBox.ERROR
-                });
-               return false;
-          }
+            var button = [{
+                    text: 'Close',
+                    handler: function(){
+                    window.location.reload();
+                    }
+                }]
+        openWindowFrame('harvest','Response',null,50,50,button,events);
 
-
-
-             try{
-             var harvestResponseFunction=function(response){
-                            Ext.Msg.show({
-                                title:'Harvesting',
-                                buttons: Ext.Msg.OK,
-                                msg: 'Harvesting successfully completed',
-                                animEl: 'elId',
-                                icon: Ext.MessageBox.INFO,
-                                fn: function(){location.reload();}
-                            });
-                                        
-             };
-
-             var harvestResponseFunctionTimeOut=function(){
-                 Ext.Msg.show({
-                title:'Error',
-                    buttons: Ext.Msg.OK,
-                    msg: 'Request TIME-OUT!',
-                    animEl: 'elId',
-                    icon: Ext.MessageBox.ERROR
-                });
-             };
-             var headers= new Array();
-             var param="serviceName="+serviceName+"&source="+resUrl+"&resourceType="+resType;
-             headers.push("Content-type,application/x-www-form-urlencoded");
-             headers.push("Content-length,"+param.length);
-
-
-       
-             var onSubmit=sendXmlHttpRequestTimeOut("POST",
-                         "manager?cmd=ebRRHarvest",
-                         false, param,
-                         60000, harvestResponseFunction, harvestResponseFunctionTimeOut,headers);
-                        
-                return false;
-              }catch(e){
-                    return false;
-              }
-         }
-
-       return false;
     }
+
 </SCRIPT>
 
 <html>
@@ -121,12 +63,12 @@ function back()
                                 <TR>
                                     <TD id=main> <P class=arbloc><FONT class=arttl></FONT></P>
                                         <P>
-                                        <form name="harvestForm" enctype="multipart/form-data" method="post" action="manager?cmd=ebRRHarvestFile">
+                                            <form name="harvestForm" onSubmit="harvestFile()" target="windowFrame_harvest" enctype="multipart/form-data" method="post" action="manager?cmd=ebRRHarvestFile">
                                                 <!-- Page contents table-->
                                                 <input type="hidden" name="serviceName" value="<%= serviceName%>">
                                                 <table width="450" cellspacing="2" cellpadding="2" align="center">
-                                                   <tr>                        
-                                                       <td class="sortable"  colspan=1 nowrap>    <input type="file" name="filepath" size="60"/></td>
+                                                    <tr>
+                                                        <td class="sortable"  colspan=1 nowrap>    <input type="file" name="filepath" size="60"/></td>
                                                     </tr>
                                                     <tr><!-- Row 5 -->
                                                         <td colspan="2" rowspan="2" nowrap align="right" class="sortable"><div align="right">
@@ -136,7 +78,7 @@ function back()
                                                 </table>
                                             </form>
                                         </P>
-                                   </TD>
+                                    </TD>
                                 </TR>
                             </TBODY>
                     </TABLE></TD>

@@ -470,14 +470,20 @@ function addGrid(file, titleTab){
 }
 
 
-function openWindowFrame (id,title,url,perc_width,perc_height){
-  var width,height;  
+function openWindowFrame (id,title,url,perc_width,perc_height,buttons,listeners){
+  var width,height,htmlFrame;
   if(pageWindowFrame[id]) {
      pageWindowFrame[id].close();  
      pageWindowFrame[id].destroy();
      pageWindowFrame[id]=null;
-  } 
-  if(perc_width)
+  }
+
+  if(url)
+    htmlFrame="<iframe scrolling='auto' src='"+url+"' name='windowFrame_"+id+"' width='98%' height='98%' marginwidth='0' marginheight='0'></iframe>";
+  else
+    htmlFrame= "<iframe scrolling='auto' name='windowFrame_"+id+"' width='98%' height='98%' marginwidth='0' marginheight='0'></iframe>";
+
+if(perc_width)
      width=Math.floor((screen.width/100)*perc_width); 
   else
      width=Math.floor((screen.width/100)*50); 
@@ -496,7 +502,9 @@ function openWindowFrame (id,title,url,perc_width,perc_height){
 	width: width,
 	height: height,
         closeAction:'hide',
-        html:"<iframe scrolling='auto' src='"+url+"' name='windowFrame_"+id+"' width='98%' height='98%' marginwidth='0' marginheight='0'></iframe>"
+        html: htmlFrame,
+        buttons: buttons,
+        listeners: listeners
    });  
    pageWindowFrame[id].show();
 }

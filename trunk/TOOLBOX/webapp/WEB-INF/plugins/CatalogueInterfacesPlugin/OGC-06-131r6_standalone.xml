@@ -29,6 +29,10 @@
                 <scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-131r6_StandAlone/GetRecords/getRecords.tscript" overrideByUser="false"/>
                 <scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-131r6_StandAlone/GetRecords/getRecords_globalError.tscript" overrideByUser="false"/>
                 <testFiles>testFiles/OGC-06-131r6_StandAlone/GetRecords/test_getRecords.xml</testFiles>
+                <lifeCycleScripts>
+                    <build path="lifecycleScripts/OGC-06-131r6/build_getRecords.xml"/>
+                    <delete path="lifecycleScripts/OGC-06-131r6/delete_getRecords.xml"/>
+                </lifeCycleScripts>
             </operation>
             <operation name="GetRecordById" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecordById">
                 <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordByIdRequest"/>

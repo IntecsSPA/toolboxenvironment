@@ -165,6 +165,7 @@ public class InstanceHandler {
 
             response = engine.executeScript(script, resultScriptFile);
 
+            InstanceResources.storeResourceEntry(respId, serviceInstanceId, scriptType);
         }
         catch(Exception e)
         {

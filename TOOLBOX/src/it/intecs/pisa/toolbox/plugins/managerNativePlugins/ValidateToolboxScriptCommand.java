@@ -39,6 +39,7 @@ public class ValidateToolboxScriptCommand extends NativeCommandsManagerPlugin {
             }
             catch(Exception e)
             {
+                e.printStackTrace();
                 valid=false;
             }
             resp.sendRedirect("validateScriptResult.jsp?valid="+valid);

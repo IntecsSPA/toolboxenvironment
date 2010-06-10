@@ -119,7 +119,6 @@ public class ToolboxSecurityWrapper {
 	                    		denyMsg += "\n" + elem.getNodeValue();
 	                    }
                     }else{
-                    	System.out.println("PEP: impossible to retrieve information about the deny decision.");
                     	denyMsg = "Access denied";
                     }
                     //throw AxisFault exception

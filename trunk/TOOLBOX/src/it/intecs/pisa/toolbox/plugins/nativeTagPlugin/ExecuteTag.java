@@ -37,7 +37,7 @@ public class ExecuteTag extends NativeTagExecutor {
             externalFile=new File(externalFilePath);
             externalScriptDoc = domUtil.fileToDocument(externalFilePath);
 
-            this.offlineDbgTag.setAttribute("", externalFilePath);
+            this.offlineDbgTag.setAttribute("externalLink", externalFilePath);
             
             argumentIterator = DOMUtil.getChildrenByLocalName(tagEl, ARGUMENT).iterator();
             setArguments(argumentIterator);
@@ -62,11 +62,14 @@ public class ExecuteTag extends NativeTagExecutor {
         }
         finally
         {
-            externalDebugFileName=externalFile.getName();
-            externalDebugFileName=externalDebugFileName.substring(0,externalDebugFileName.indexOf('.'));
-            externalDebugFileName+=".xml";
-            dumpExternalFileExecutionTree(externalDebugFileName,externalFileDebugEl.getOwnerDocument());
-             addResourceLinkToDebugTree(new File(externalDebugFileName));
+            if(externalFileDebugEl!=null)
+            {
+                externalDebugFileName=externalFile.getName();
+                externalDebugFileName=externalDebugFileName.substring(0,externalDebugFileName.indexOf('.'));
+                externalDebugFileName+=".xml";
+                dumpExternalFileExecutionTree(externalDebugFileName,externalFileDebugEl.getOwnerDocument());
+                addResourceLinkToDebugTree(new File(externalDebugFileName));
+            }
         }
         return result;
     }

@@ -353,10 +353,28 @@ public class ServiceManager {
 
     protected void initService(String serviceName) throws Exception {
         TBXService service;
-        
-        service=new TBXService(getServiceRoot(serviceName), getWSDLDir(serviceName));
-        service.init();
-        services.put(serviceName, service);
+        File serviceRoot=null;
+
+        try
+        {
+            serviceRoot=getServiceRoot(serviceName);
+        }
+        catch(Exception e)
+        {
+            logger.error("Cannot find root directory for service "+serviceName);
+        }
+
+        try
+        {
+            service=new TBXService(serviceRoot, getWSDLDir(serviceName));
+            service.init();
+            services.put(serviceName, service);
+        }
+        catch(Exception e)
+        {
+            logger.error("Cannot startup service "+serviceName+". The service directory has been deleted.");
+            IOUtil.rmdir(serviceRoot);
+        }
     }
 
     public void initServices() throws Exception {
@@ -369,7 +387,7 @@ public class ServiceManager {
                 serviceName = ser.getName();
 
                 //if(ServiceStatuses.getStatus(serviceName)==ServiceStatuses.STATUS_RUNNING)
-                    initService(serviceName);
+                initService(serviceName);
             }
         }
     }

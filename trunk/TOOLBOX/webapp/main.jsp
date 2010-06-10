@@ -102,8 +102,8 @@ if (warnAddress)
                           type: 'profile',
                           rpp: 4,
                           interval: 6000,
-                          width: screen.width/2.1,
-                          height:screen.height/4,
+                          width: screen.width/2.2,
+                          height:screen.height/5,
                           theme: {
                             shell: {
                               background: '#b6cee7',

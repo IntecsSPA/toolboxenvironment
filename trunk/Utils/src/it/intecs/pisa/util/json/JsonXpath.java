@@ -5,6 +5,8 @@
 
 package it.intecs.pisa.util.json;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import java.util.StringTokenizer;
@@ -33,10 +35,47 @@ public class JsonXpath {
         String tok;
 
         tok=tokenizer.nextToken();
+        JsonArray array;
+        JsonObject focusedObj;
 
-        if(tokenizer.hasMoreTokens())
-            return get(obj.get(tok).getAsJsonObject(),tokenizer);
-        else return obj.get(tok);
+        String token;
+        if(tok.endsWith("]"))
+        {
+            String index;
+            index=tok.substring(tok.indexOf("[")+1,tok.indexOf("]"));
+
+            String tokenName;
+            tokenName=tok.substring(0,tok.indexOf("["));
+
+            array=obj.getAsJsonArray(tokenName);
+            JsonElement a = array.get(Integer.valueOf(index) - 1);
+            if(a instanceof JsonPrimitive)
+                return a;
+            else focusedObj=a.getAsJsonObject();
+        }
+        else focusedObj=obj;
+
+        return focusedObj.get(tok);
   
+    }
+
+    public static boolean exists(JsonObject obj,String xpath)
+    {
+        try
+        {
+            StringTokenizer tokenizer;
+
+            tokenizer=new StringTokenizer(xpath,"/");
+
+            Object selectedObject;
+            selectedObject=get(obj,tokenizer);
+            if(selectedObject==null)
+                return false;
+            else return true;
+        }
+        catch(Exception e)
+        {
+            return false;
+        }
     }
 }

@@ -1,6 +1,5 @@
 package it.intecs.pisa.toolbox.plugins.nativeTagPlugin;
 
-import it.intecs.pisa.pluginscore.toolbox.engine.interfaces.IVariableStore;
 import it.intecs.pisa.util.DOMUtil;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -9,7 +8,6 @@ import java.util.LinkedList;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 public class XmlDocumentTag extends NativeTagExecutor {
 

@@ -49,36 +49,120 @@
       </setVariable>
     </sequence>
   </if>
-  <dumpXML>
-    <path>
-      	<string>${wpsLogFolder}/${wpsProcessingInstance}/ProcessedRequest.xml</string>
-    </path>
-    <variable name="processRequest"/>
-  </dumpXML>
-  
-  		<!-- Generate ExecuteProcess Operation Toolbox script-->
-		  <setVariable name="executeProcessScript">
-		    <xslt xmlOutput="true">
-		      <variable name="processRequest"/>
-		      <path startFrom="SERVICE_RESOURCE_DIR">
-		        <string>../AdditionalResources/WPS/XSL/GenerateShellExecuteScript.xsl</string>
-		      </path>
-		    </xslt>
-		  </setVariable>
-		  <dumpXML>
-		    <path>
-		      <string>${wpsScriptFolder}executeProcessScript.tscript</string>
-		    </path>
-		    <variable name="executeProcessScript"/>
-		  </dumpXML>
-		
-		  <loadProcedure name="ExecuteProcedure">
-		    <string>${wpsScriptFolder}executeProcessScript.tscript</string>
-		  </loadProcedure>
-		  <call procedure="ExecuteProcedure">
-		  </call>
+ 
+ <setVariable name="Identifier">
+ 	<xPath xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+ 		<xmlRequest/>
+ 		<string>//wps:Identifier</string>
+ 	</xPath>
+ 	
+ </setVariable>
+ 
+ <!-- setVariable name="MetadataUrl">
+ 	<string>http://ergo.pisa.intecs.it/geotiff.tiff</string>
+ </setVariable-->
+ 
+ <!-- MODIFIED FROM ORIGINAL SERVICE LOGIC -->
+	<execute>
+	<procedure>
+		<path startFrom="SERVICE_RESOURCE_DIR">
+			<string>retrievelogic.tscript</string>
+		</path>
+	</procedure>
+	
+</execute>
 
+
+
+	
+
+	<setVariable name="response">
+		<xml attributePrefix="%" textTag="evaluate">
+		  	<wps:ExecuteResponse xmlns:wps="http://www.opengis.net/wps/1.0.0"
+			xmlns:fo="http://www.w3.org/1999/XSL/Format"
+			xmlns:ows="http://www.opengis.net/ows/1.1"
+			xmlns:xlink="http://www.w3.org/1999/xlink"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			serviceInstance="http://localhost:8080/TOOLBOX/services/WPSexample/GetCapabilities.xml"
+			statusLocation="http://192.168.24.223:8083/TOOLBOX/manager?cmd=getServiceResource&amp;serviceName=wpsAndError&amp;relativePath=Log/24052010183618606/status/executeResponseStatus.xml"
+			service="WPS" version="1.0.0" xml:lang="en">
+			<wps:Process wps:processVersion="0.1">
+				<ows:Identifier>TestOperation</ows:Identifier>
+				<ows:Title>Convert raster to another format</ows:Title>
+				<ows:Abstract>			Convert a raster to another file format and stores the			resulting raster file.		</ows:Abstract>
+				<wps:Profile>OGC:WPS:RasterFormatConversion</wps:Profile>
+			</wps:Process>
+			<wps:Status creationTime="2010-05-24T18:36:18Z">
+				<wps:ProcessAccepted />
+			</wps:Status>
+			<wps:ProcessOutputs>
+				<wps:Output>
+					<ows:Identifier>DownloadStatus</ows:Identifier>
+					<ows:Title>downloadStatus</ows:Title>
+					<ows:Abstract>downloadStatus</ows:Abstract>
+					<wps:Data>
+						<wps:LiteralData><evaluate name="DownloadStatus"/></wps:LiteralData>
+					</wps:Data>
+				</wps:Output>
+			</wps:ProcessOutputs>
+		</wps:ExecuteResponse>
+	  </xml>
+  </setVariable>
+  
+  	<if>
+		<existsVariable name="HttpLink"/>
+		<setXMLValue xmlns:wps="http://www.opengis.net/wps/1.0.0">
+	       	<variable name="response"/>
+	       	<string>/wps:ExecuteResponse/wps:ProcessOutputs</string>
+			<xml attributePrefix="%" textTag="evaluate">
+				<wps:Output xmlns:ows="http://www.opengis.net/ows/1.1">
+					<ows:Identifier>HttpLink</ows:Identifier>
+					<ows:Title>downloadStatus</ows:Title>
+					<ows:Abstract>downloadStatus</ows:Abstract>
+					<wps:Data>
+						<wps:LiteralData><evaluate name="HttpLink"/></wps:LiteralData>
+					</wps:Data>
+				</wps:Output>
+			</xml>
+		</setXMLValue>
+	</if>
+	
+	<if>
+		<existsVariable name="FtpLink"/>
+		<setXMLValue xmlns:wps="http://www.opengis.net/wps/1.0.0">
+	       	<variable name="response"/>
+	       	<string>/wps:ExecuteResponse/wps:ProcessOutputs</string>
+			<xml attributePrefix="%" textTag="evaluate">
+				<wps:Output xmlns:ows="http://www.opengis.net/ows/1.1">
+					<ows:Identifier>FtpLink</ows:Identifier>
+					<ows:Title>downloadStatus</ows:Title>
+					<ows:Abstract>downloadStatus</ows:Abstract>
+					<wps:Data>
+						<wps:LiteralData><evaluate name="FtpLink"/></wps:LiteralData>
+					</wps:Data>
+				</wps:Output>
+			</xml>
+		</setXMLValue>
+	</if>
+	
+	<if>
+		<existsVariable name="CatalogueLink"/>
+		<setXMLValue xmlns:wps="http://www.opengis.net/wps/1.0.0">
+	       	<variable name="response"/>
+	       	<string>/wps:ExecuteResponse/wps:ProcessOutputs</string>
+			<xml attributePrefix="%" textTag="evaluate">
+				<wps:Output xmlns:ows="http://www.opengis.net/ows/1.1">
+					<ows:Identifier>CatalogueLink</ows:Identifier>
+					<ows:Title>downloadStatus</ows:Title>
+					<ows:Abstract>downloadStatus</ows:Abstract>
+					<wps:Data>
+						<wps:LiteralData><evaluate name="CatalogueLink"/></wps:LiteralData>
+					</wps:Data>
+				</wps:Output>
+			</xml>
+		</setXMLValue>
+	</if>
   
   
-  <!-- End ExecuteProcess -->
+  <variable name="response"/>
 </sequence>

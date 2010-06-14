@@ -6,6 +6,7 @@ import org.apache.xpath.XPathAPI;
 //import net.sf.saxon.xpath.XPathEvaluator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 public class SetXMLValueTag extends NativeTagExecutor {
     protected String tagName="setXMLValue";
@@ -14,16 +15,32 @@ public class SetXMLValueTag extends NativeTagExecutor {
     public Object executeTag(org.w3c.dom.Element setXMLValue) throws Exception {
         Iterator children = DOMUtil.getChildren(setXMLValue).iterator();
         Document document = (Document) this.executeChildTag((Element) children.next());
+
+        Element selectedNode;
         if (setXMLValue.getAttributes().getLength() > 0) {
-            XPathAPI.selectSingleNode(document,
+            selectedNode=(Element) XPathAPI.selectSingleNode(document,
                     (String) executeChildTag((Element) children.next()),
-                    setXMLValue).setNodeValue(String.valueOf(executeChildTag((Element) children.next())));
+                    setXMLValue);
         } else {
-            XPathAPI.selectSingleNode(document,
+            selectedNode=(Element) XPathAPI.selectSingleNode(document,
                     (String) executeChildTag((Element) children.next()),
-                    document.getDocumentElement()).setNodeValue(String.valueOf(executeChildTag((Element) children.next())));
+                    document.getDocumentElement());
         }
-        
+
+        Object objToAdd;
+
+        objToAdd=executeChildTag((Element) children.next());
+        if(objToAdd instanceof String)
+        {
+            selectedNode.setNodeValue((String)objToAdd);
+        }
+        else if(objToAdd instanceof Document)
+        {
+            Element elToAdd=((Document)objToAdd).getDocumentElement();
+            Element importedNode=(Element) document.importNode(elToAdd, true);
+            selectedNode.appendChild(importedNode);
+        }
+
         dumpResourceAndAddToDebugTree(document);
         return null;
     }

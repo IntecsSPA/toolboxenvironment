@@ -4,7 +4,7 @@
  */
 package it.intecs.pisa.archivingserver.chain.commands;
 
-import it.intecs.pisa.archivingserver.db.DownloadsDB;
+import it.intecs.pisa.archivingserver.log.Log;
 import it.intecs.pisa.archivingserver.prefs.Prefs;
 import java.io.File;
 import java.util.Properties;
@@ -28,6 +28,7 @@ public class CleanupTemporaryDownload implements Command {
         File itemDir;
         Properties prop;
         try {
+            Log.log("Executing class "+this.getClass().getCanonicalName());
             appDir=(File) cc.getAttribute(CommandsConstants.APP_DIR);
             itemId=(String) cc.getAttribute(CommandsConstants.ITEM_ID);
 
@@ -37,6 +38,7 @@ public class CleanupTemporaryDownload implements Command {
             downloadedFile=new File(prop.getProperty("download.dir"),itemId);
             downloadedFile.delete();
         } catch (Exception e) {
+            Log.log(e.getMessage());
             return new Result(Result.FAIL);
         }
         return new Result(Result.SUCCESS);

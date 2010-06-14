@@ -6,6 +6,7 @@ package it.intecs.pisa.archivingserver.chain.commands;
 
 import it.intecs.pisa.archivingserver.db.FTPAccessible;
 import it.intecs.pisa.archivingserver.db.HttpAccessible;
+import it.intecs.pisa.archivingserver.log.Log;
 import it.intecs.pisa.archivingserver.prefs.Prefs;
 import it.intecs.pisa.archivingserver.services.FTPService;
 import it.intecs.pisa.util.IOUtil;
@@ -32,6 +33,7 @@ public class DeleteFromInternalFTP implements Command {
         File itemDir;
 
         try {
+            Log.log("Executing class "+this.getClass().getCanonicalName());
             itemId=(String) cc.getAttribute(CommandsConstants.ITEM_ID);
             File appDir = (File) cc.getAttribute(CommandsConstants.APP_DIR);
 
@@ -50,6 +52,7 @@ public class DeleteFromInternalFTP implements Command {
 
             HttpAccessible.delete(itemId);
         } catch (Exception e) {
+            Log.log(e.getMessage());
             return new Result(Result.FAIL);
         }
         return new Result(Result.SUCCESS);

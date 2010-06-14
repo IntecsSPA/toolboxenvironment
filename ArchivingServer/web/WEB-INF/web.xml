@@ -6,12 +6,22 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet>
-        <servlet-name>RESTServlet</servlet-name>
-        <servlet-class>it.intecs.pisa.archivingserver.rest.RESTServlet</servlet-class>
+        <servlet-name>ArchivingServerServlet</servlet-name>
+        <servlet-class>it.intecs.pisa.archivingserver.rest.ArchivingServerServlet</servlet-class>
+        <load-on-startup>3</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>FTPServerServlet</servlet-name>
+        <servlet-class>it.intecs.pisa.archivingserver.rest.FTPServerServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>RESTServlet</servlet-name>
+        <servlet-name>ArchivingServerServlet</servlet-name>
         <url-pattern>/service/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FTPServerServlet</servlet-name>
+        <url-pattern>/ftp/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

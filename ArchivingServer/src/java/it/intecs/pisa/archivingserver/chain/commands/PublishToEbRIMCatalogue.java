@@ -9,6 +9,7 @@ import com.sun.org.apache.xpath.internal.objects.XObject;
 import it.intecs.pisa.archivingserver.data.StoreItem;
 import it.intecs.pisa.archivingserver.db.CatalogueCorrespondence;
 import it.intecs.pisa.archivingserver.db.SOAPCatalogueAccessible;
+import it.intecs.pisa.archivingserver.log.Log;
 import it.intecs.pisa.archivingserver.prefs.Prefs;
 import it.intecs.pisa.archivingserver.soap.SOAPNamespacePrefixResolver;
 import it.intecs.pisa.archivingserver.soap.SimpleSOAPClient;
@@ -47,6 +48,7 @@ public class PublishToEbRIMCatalogue implements Command {
         String itemId;
 
         try {
+            Log.log("Executing class "+this.getClass().getCanonicalName());
             storeItem = (StoreItem) cc.getAttribute(CommandsConstants.STORE_ITEM);
             id = (String) cc.getAttribute(CommandsConstants.ITEM_ID);
             webappDir = (File) cc.getAttribute(CommandsConstants.APP_DIR);
@@ -88,7 +90,7 @@ public class PublishToEbRIMCatalogue implements Command {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.log(e.getMessage());
             return new Result(Result.FAIL);
         }
         return new Result(Result.SUCCESS);
@@ -125,6 +127,7 @@ public class PublishToEbRIMCatalogue implements Command {
         DOMUtil util;
         Element rootEl;
         Element sourceEl;
+        Element resourceTypeEl;
         Properties prop;
 
         util=new DOMUtil();
@@ -142,8 +145,11 @@ public class PublishToEbRIMCatalogue implements Command {
 
         sourceEl=doc.createElement("csw:Source");
         sourceEl.setTextContent(fullUrl);
-
         rootEl.appendChild(sourceEl);
+
+        resourceTypeEl=doc.createElement("csw:ResourceType");
+        resourceTypeEl.setTextContent("urn:x-ogc:specification:csw-ebrim:ObjectType:EO:EOProduct");
+        rootEl.appendChild(resourceTypeEl);
         return doc;
     }
 

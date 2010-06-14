@@ -7,6 +7,7 @@ package it.intecs.pisa.archivingserver.chain.commands;
 
 import it.intecs.pisa.archivingserver.data.StoreItem;
 import it.intecs.pisa.archivingserver.db.FTPAccessible;
+import it.intecs.pisa.archivingserver.log.Log;
 import it.intecs.pisa.archivingserver.prefs.Prefs;
 import it.intecs.pisa.archivingserver.services.FTPService;
 import it.intecs.pisa.util.IOUtil;
@@ -35,6 +36,7 @@ public class PublishToInternalFTP implements Command{
 
     public Result execute(ChainContext cc) {
         try {
+            Log.log("Executing class "+this.getClass().getCanonicalName());
             StoreItem storeItem = (StoreItem) cc.getAttribute(CommandsConstants.STORE_ITEM);
             File appDir = (File) cc.getAttribute(CommandsConstants.APP_DIR);
             String itemId = (String) cc.getAttribute(CommandsConstants.ITEM_ID);
@@ -64,6 +66,7 @@ public class PublishToInternalFTP implements Command{
                 FTPAccessible.add(itemId, url);
             }
         } catch (Exception e) {
+            Log.log(e.getMessage());
             return new Result(Result.FAIL);
         }
         return new Result(Result.SUCCESS);

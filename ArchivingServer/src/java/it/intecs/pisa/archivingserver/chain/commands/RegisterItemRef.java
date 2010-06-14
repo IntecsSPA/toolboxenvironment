@@ -6,6 +6,7 @@ package it.intecs.pisa.archivingserver.chain.commands;
 
 import it.intecs.pisa.archivingserver.data.StoreItem;
 import it.intecs.pisa.archivingserver.db.ItemRefDB;
+import it.intecs.pisa.archivingserver.log.Log;
 import it.intecs.pisa.archivingserver.services.AutomaticItemDeleteService;
 import java.util.Date;
 import javawebparts.misc.chain.ChainContext;
@@ -27,6 +28,7 @@ public class RegisterItemRef implements Command {
         long expireDate=0;
         long arrivalDate=0;
         try {
+            Log.log("Executing class "+this.getClass().getCanonicalName());
             itemId=(String) cc.getAttribute(CommandsConstants.ITEM_ID);
             StoreItem storeItem = (StoreItem) cc.getAttribute(CommandsConstants.STORE_ITEM);
 
@@ -44,6 +46,7 @@ public class RegisterItemRef implements Command {
             
             ItemRefDB.register(itemId,arrivalDate,expireDate);
         } catch (Exception e) {
+            Log.log(e.getMessage());
             return new Result(Result.FAIL);
         }
         return new Result(Result.SUCCESS);

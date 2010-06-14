@@ -26,6 +26,7 @@ public class ItemStatusSerializer implements JsonSerializer<ItemStatus>{
         JsonArray array;
 
         obj=new JsonObject();
+        obj.addProperty("success", "true");
         obj.addProperty("id", t.id);
         obj.addProperty("downloadStatus", t.downloadStatus);
         

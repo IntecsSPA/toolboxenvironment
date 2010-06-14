@@ -5,6 +5,7 @@
 package it.intecs.pisa.archivingserver.chain.commands;
 
 import it.intecs.pisa.archivingserver.db.GeoServerAccessible;
+import it.intecs.pisa.archivingserver.log.Log;
 import java.io.File;
 import javawebparts.misc.chain.ChainContext;
 import javawebparts.misc.chain.Command;
@@ -25,6 +26,7 @@ public class DeleteFromGeoServer implements Command {
         File appDir;
         File itemDir;
         try {
+            Log.log("Executing class "+this.getClass().getCanonicalName());
             appDir=(File) cc.getAttribute(CommandsConstants.APP_DIR);
             itemId=(String) cc.getAttribute(CommandsConstants.ITEM_ID);
             
@@ -36,6 +38,7 @@ public class DeleteFromGeoServer implements Command {
 
             GeoServerAccessible.delete(itemId);
         } catch (Exception e) {
+            Log.log(e.getMessage());
             return new Result(Result.FAIL);
         }
         return new Result(Result.SUCCESS);

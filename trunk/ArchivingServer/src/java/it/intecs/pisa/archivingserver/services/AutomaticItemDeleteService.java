@@ -7,6 +7,7 @@ package it.intecs.pisa.archivingserver.services;
 
 import it.intecs.pisa.archivingserver.chain.commands.CommandsConstants;
 import it.intecs.pisa.archivingserver.db.InternalDatabase;
+import it.intecs.pisa.archivingserver.log.Log;
 import it.intecs.pisa.archivingserver.prefs.Prefs;
 import it.intecs.pisa.util.datetime.TimeInterval;
 import java.io.File;
@@ -57,11 +58,12 @@ public class AutomaticItemDeleteService extends Thread{
                 try
                 {
                     long maxExpires;
-
+                    Log.log("Automatic item deletion");
                     maxExpires=(new Date()).getTime()-waitInterval;
                     items = getItemsToDelete(maxExpires);
 
                     for (String item : items) {
+                        Log.log("Automatically delete item "+item);
                         deleteItem(item);
                     }
 
@@ -100,7 +102,8 @@ public class AutomaticItemDeleteService extends Thread{
             db = InternalDatabase.getInstance();
             stm = db.getStatement();
 
-            rs = stm.executeQuery("SELECT ID FROM T_ITEMS WHERE EXPIRES=0 AND ARRIVAL_DATE<=" + maxExpires);
+            rs = stm.executeQuery("SELECT I.ID FROM T_ITEMS AS I,T_DOWNLOADS AS D WHERE I.EXPIRES=0 AND I.ARRIVAL_DATE<=" + maxExpires+
+                    " AND D.ID=I.ID AND D.STATUS!='DOWNLOADING'");
 
             Vector<String> ids;
 

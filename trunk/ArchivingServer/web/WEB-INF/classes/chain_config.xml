@@ -26,6 +26,7 @@
             <command id="publishToFtp" className="it.intecs.pisa.archivingserver.chain.commands.PublishToFTP" />
             <command id="publishToCatalogue" className="it.intecs.pisa.archivingserver.chain.commands.PublishToEbRIMCatalogue" />
             <command id="publishToGeoServer" className="it.intecs.pisa.archivingserver.chain.commands.PublishToGeoServer" />
+            <command id="changeStatusToPublished" className="it.intecs.pisa.archivingserver.chain.commands.ChangeStatusToPublished" />
         </chain>
 
         <chain id="storeCleanUpChain">

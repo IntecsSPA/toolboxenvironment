@@ -54,10 +54,27 @@ and open the template in the editor.
 
             var request=new XMLHttpRequest();
 
-            request.open("DELETE", 'service/delete');
+            request.open("DELETE", 'service/delete/'+itemId);
             request.setRequestHeader('Accept','application/json');
             request.setRequestHeader('Cache-Control','no-cache');
             request.send(JSON.stringify(json));
+            request.onreadystatechange=function() {
+            if(request.readyState == 4) {
+                if(request.status!=200){
+
+
+                    Ext.Msg.show({
+                        title:'Error',
+                        msg: 'An error occurred while reloading settings',
+                        buttons: Ext.Msg.OK,
+                        animEl: 'elId',
+                        icon: Ext.MessageBox.INFO
+                    });}
+                else {
+                    document.getElementById("txtArea").value=request.responseText;
+                }
+            }
+        }
             return request.responseBody;
         }
 
@@ -65,7 +82,7 @@ and open the template in the editor.
          function testGetStatus(){
            var request=new XMLHttpRequest();
 
-            request.open("GET", 'service/getstatus?id='+itemId);
+            request.open("GET", 'service/getstatus/'+itemId);
             request.setRequestHeader('Accept','application/json');
             request.setRequestHeader('Cache-Control','no-cache');
             request.send();

@@ -4,10 +4,11 @@
  */
 package it.intecs.pisa.archivingserver.chain.commands;
 
-import it.intecs.pisa.archivingserver.db.CatalogueCorrespondence;
-import it.intecs.pisa.archivingserver.db.SOAPCatalogueAccessible;
+import it.intecs.pisa.archivingserver.db.DownloadsDB;
 import it.intecs.pisa.archivingserver.log.Log;
+import it.intecs.pisa.archivingserver.prefs.Prefs;
 import java.io.File;
+import java.util.Properties;
 import javawebparts.misc.chain.ChainContext;
 import javawebparts.misc.chain.Command;
 import javawebparts.misc.chain.Result;
@@ -16,7 +17,7 @@ import javawebparts.misc.chain.Result;
  *
  * @author Massimiliano Fanciulli
  */
-public class DeleteFromEbRIMCatalogue implements Command {
+public class ChangeStatusToPublished implements Command {
 
     public Result init(ChainContext cc) {
         return new Result(Result.SUCCESS);
@@ -26,14 +27,11 @@ public class DeleteFromEbRIMCatalogue implements Command {
         String itemId;
         File appDir;
         File itemDir;
+        Properties prop;
         try {
-            Log.log("Executing class "+this.getClass().getCanonicalName());
-            appDir=(File) cc.getAttribute(CommandsConstants.APP_DIR);
             itemId=(String) cc.getAttribute(CommandsConstants.ITEM_ID);
 
-            //Add deletion of item from catalogue
-            SOAPCatalogueAccessible.delete(itemId);
-            CatalogueCorrespondence.delete(itemId);
+            DownloadsDB.updateStatus(itemId, "PUBLISHED");
         } catch (Exception e) {
             Log.log(e.getMessage());
             return new Result(Result.FAIL);

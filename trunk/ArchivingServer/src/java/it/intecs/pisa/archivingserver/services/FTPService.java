@@ -27,6 +27,7 @@
  */
 package it.intecs.pisa.archivingserver.services;
 
+import it.intecs.pisa.archivingserver.log.Log;
 import it.intecs.pisa.archivingserver.prefs.Prefs;
 import java.io.File;
 import java.io.IOException;
@@ -110,6 +111,7 @@ public class FTPService {
             }
             catch(Exception e)
             {
+                Log.log("Cannot get FTP server instance");
                 self=null;
             }
         }

@@ -1,84 +1,89 @@
-<?xml version="1.0" encoding="UTF-8"?><sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pisa.intecs.it/mass/toolbox/xmlScript file:/C:/TBXTraining/eclipse/plugins/com.intecs.ToolboxScript.editorFiles_1.1.0/schemas/xmlScript.xsd">
-  <setVariable name="wpsLogFolder">
-    <path startFrom="SERVICE_RESOURCE_DIR">
-      <string>../Log</string>
-    </path>
-  </setVariable>
-  <setVariable name="wpsProcessingInstance">
-    <dateStringFormatter format="ddMMyyyyHHmmssSSS">
-      <now/>
-    </dateStringFormatter>
-  </setVariable>
-  <setVariable name="wpsScriptFolder">
-    <string>${wpsLogFolder}/${wpsProcessingInstance}/script/</string>
-  </setVariable>
-  <mkdir>
-    <variable name="wpsScriptFolder"/>
-  </mkdir>
-  <!-- POST Request Control -->
-  <setVariable name="rootRequestName">
-    <xPath>
-      <xmlRequest/>
-      <string>local-name(/*[1])</string>
-    </xPath>
-  </setVariable>
-  <if>
-    <oeq>
-      <variable name="rootRequestName"/>
-      <string>Execute</string>
-    </oeq>
-    <sequence>
-       <setVariable name="processRequest">
-          <xslt xmlOutput="true">
-            <xmlRequest/>
-            <path startFrom="SERVICE_RESOURCE_DIR">
-              <string>../AdditionalResources/WPS/XSL/WPSPost2WPSSoap.xsl</string>
-            </path>
-          </xslt>
-      </setVariable> 
-    </sequence>
-    <sequence>
-      <setVariable name="processRequest">
-      	<xmlRequest/>
-          <!-- xslt xmlOutput="true">
-            <xmlRequest/>
-            <path startFrom="SERVICE_RESOURCE_DIR">
-              <string>../AdditionalResources/WPS/XSL/WPSSoapNormalize.xsl</string>
-            </path>
-          </xslt -->
-      </setVariable>
-    </sequence>
-  </if>
-  <dumpXML>
-    <path>
-      	<string>${wpsLogFolder}/${wpsProcessingInstance}/ProcessedRequest.xml</string>
-    </path>
-    <variable name="processRequest"/>
-  </dumpXML>
-  
-  		<!-- Generate ExecuteProcess Operation Toolbox script-->
-		  <setVariable name="executeProcessScript">
-		    <xslt xmlOutput="true">
-		      <variable name="processRequest"/>
-		      <path startFrom="SERVICE_RESOURCE_DIR">
-		        <string>../AdditionalResources/WPS/XSL/GenerateShellExecuteScript.xsl</string>
-		      </path>
-		    </xslt>
-		  </setVariable>
-		  <dumpXML>
-		    <path>
-		      <string>${wpsScriptFolder}executeProcessScript.tscript</string>
-		    </path>
-		    <variable name="executeProcessScript"/>
-		  </dumpXML>
-		
-		  <loadProcedure name="ExecuteProcedure">
-		    <string>${wpsScriptFolder}executeProcessScript.tscript</string>
-		  </loadProcedure>
-		  <call procedure="ExecuteProcedure">
-		  </call>
-
-  
-  
-  <!-- End ExecuteProcess -->
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pisa.intecs.it/mass/toolbox/xmlScript file:/C:/TBXTraining/eclipse/plugins/com.intecs.ToolboxScript.editorFiles_1.1.0/schemas/xmlScript.xsd">
+	<!-- 
+ 			DataUrl
+  -->
+	<setVariable name="DataUrl">
+		<xPath xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:wpstbx="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" xmlns:xlink="http://www.w3.org/1999/xlink">
+			<xmlRequest/>
+			<string>/wpstbx:ExecuteProcess_store/wpstbx:DataUrl/wps:Reference/@xlink:href</string>
+		</xPath>
+	</setVariable>
+	
+	
+	<!-- 
+ 			MetadataUrl
+  -->
+	<if>
+		<oeq>
+			<xPath xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:wpstbx="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<xmlRequest/>
+				<string>count(/wpstbx:ExecuteProcess_store/wpstbx:MetadataUrl/wps:Reference)</string>
+			</xPath>
+			<string>1</string>
+		</oeq>
+		<setVariable name="MetadataUrl">
+			<xPath xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:wpstbx="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<xmlRequest/>
+				<string>/wpstbx:ExecuteProcess_store/wpstbx:MetadataUrl/wps:Reference/@xlink:href</string>
+			</xPath>
+		</setVariable>
+	</if>
+	
+	
+	<!-- 
+ 			DataDuration
+  -->
+	<if>
+		<oeq>
+			<xPath xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:wpstbx="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<xmlRequest/>
+				<string>count(/wpstbx:ExecuteProcess_store/wpstbx:DataDuration/wps:Reference)</string>
+			</xPath>
+			<string>1</string>
+		</oeq>
+		<setVariable name="DataDuration">
+			<atoi>
+				<xPath xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:wpstbx="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" xmlns:xlink="http://www.w3.org/1999/xlink">
+					<xmlRequest/>
+					<string>/wpstbx:ExecuteProcess_store/wpstbx:DataDuration/text()</string>
+				</xPath>
+			</atoi>
+		</setVariable>
+	</if>
+	
+	<!-- MODIFIED FROM ORIGINAL SERVICE LOGIC -->
+	<execute>
+		<procedure>
+			<path startFrom="SERVICE_RESOURCE_DIR">
+				<string>storelogic.tscript</string>
+			</path>
+		</procedure>
+	</execute>
+	
+	<xml attributePrefix="%" textTag="evaluate">
+		<wps:ExecuteResponse xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xlink="http://www.w3.org/1999/xlink" service="WPS" serviceInstance="http://localhost:8080/TOOLBOX/services/WPSexample/GetCapabilities.xml" statusLocation="http://192.168.24.223:8083/TOOLBOX/manager?cmd=getServiceResource&amp;serviceName=wpsAndError&amp;relativePath=Log/24052010183618606/status/executeResponseStatus.xml" version="1.0.0" xml:lang="en" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<wps:Process wps:processVersion="0.1">
+				<ows:Identifier>TestOperation</ows:Identifier>
+				<ows:Title>Convert raster to another format</ows:Title>
+				<ows:Abstract>			Convert a raster to another file format and stores the			resulting raster file.		</ows:Abstract>
+				<wps:Profile>OGC:WPS:RasterFormatConversion</wps:Profile>
+			</wps:Process>
+			<wps:Status creationTime="2010-05-24T18:36:18Z">
+				<wps:ProcessAccepted/>
+			</wps:Status>
+			<wps:ProcessOutputs>
+				<wps:Output>
+					<ows:Identifier>Identifier</ows:Identifier>
+					<ows:Title>Identifier</ows:Title>
+					<ows:Abstract>Identifier</ows:Abstract>
+					<wps:Data>
+						<wps:LiteralData>
+							<evaluate name="Identifier"/>
+						</wps:LiteralData>
+					</wps:Data>
+				</wps:Output>
+			</wps:ProcessOutputs>
+		</wps:ExecuteResponse>
+	</xml>
 </sequence>

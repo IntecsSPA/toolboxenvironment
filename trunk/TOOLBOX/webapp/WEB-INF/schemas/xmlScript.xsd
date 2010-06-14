@@ -1797,6 +1797,7 @@
             <xsd:element ref="json:xmlToJSON"/>
             <xsd:element ref="json:RESTPost"/>
             <xsd:element ref="json:RESTGet"/>
+            <xsd:element ref="json:RESTDelete"/>
             <xsd:element ref="json:xPath"/>
             <xsd:element ref="json:xPathExists"/>
         </xsd:choice>

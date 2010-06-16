@@ -110,7 +110,7 @@ public class Script {
         Element scriptEl;
 
         doc = operationEl.getOwnerDocument();
-        scriptEl = doc.createElement(TAG_SCRIPT);
+        scriptEl = doc.createElementNS(Service.DESCRIPTOR_NAMESPACE,TAG_SCRIPT);
         scriptEl.setAttribute(ATTRIBUTE_TYPE, type);
         scriptEl.setAttribute(ATTRIBUTE_PATH, path);
         scriptEl.setAttribute(ATTRIBUTE_OVERRIDE_BY_USER, Boolean.toString(overrideByUser));

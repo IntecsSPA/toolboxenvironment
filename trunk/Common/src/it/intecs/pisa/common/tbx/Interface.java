@@ -324,7 +324,7 @@ public class Interface {
             doc = parent.getOwnerDocument();
 
             //		creating interface node
-            newInterface = doc.createElement(TAG_INTERFACE);
+            newInterface = doc.createElementNS(Service.DESCRIPTOR_NAMESPACE,TAG_INTERFACE);
             newInterface.setAttribute(ATTRIBUTE_NAME, name);
             newInterface.setAttribute(ATTRIBUTE_VERSION, version);
             newInterface.setAttribute(ATTRIBUTE_TYPE, type);
@@ -333,35 +333,35 @@ public class Interface {
 
             parent.appendChild(newInterface);
 
-            rootSchemaFileEl = doc.createElement(TAG_ROOT_SCHEMA_FILE);
+            rootSchemaFileEl = doc.createElementNS(Service.DESCRIPTOR_NAMESPACE,TAG_ROOT_SCHEMA_FILE);
             rootSchemaFileEl.setTextContent(schemaRoot);
             newInterface.appendChild(rootSchemaFileEl);
 
-            schemaSetLocationEl = doc.createElement(TAG_SCHEMA_SET_LOCATION);
+            schemaSetLocationEl = doc.createElementNS(Service.DESCRIPTOR_NAMESPACE,TAG_SCHEMA_SET_LOCATION);
             schemaSetLocationEl.setTextContent(schemaDir);
             newInterface.appendChild(schemaSetLocationEl);
 
-            wsdlFileEl = doc.createElement(TAG_WSDL_FILE);
+            wsdlFileEl = doc.createElementNS(Service.DESCRIPTOR_NAMESPACE,TAG_WSDL_FILE);
             wsdlFileEl.setTextContent(wsdlpath);
             newInterface.appendChild(wsdlFileEl);
 
-            targetNameSpaceEL = doc.createElement(TAG_TARGET_NAME_SPACE);
+            targetNameSpaceEL = doc.createElementNS(Service.DESCRIPTOR_NAMESPACE,TAG_TARGET_NAME_SPACE);
             targetNameSpaceEL.setTextContent(targetNameSpace);
             newInterface.appendChild(targetNameSpaceEL);
 
-            operationsEl = doc.createElement(TAG_OPERATIONS);
+            operationsEl = doc.createElementNS(Service.DESCRIPTOR_NAMESPACE,TAG_OPERATIONS);
             newInterface.appendChild(operationsEl);
 
             for (Operation op : operations) {
                 op.appendToDoc(operationsEl);
             }
 
-            userVarsEl = doc.createElement(TAG_VARIABLES);
+            userVarsEl = doc.createElementNS(Service.DESCRIPTOR_NAMESPACE,TAG_VARIABLES);
             newInterface.appendChild(userVarsEl);
 
             userVarsKeys = userVariables.keys();
             while (userVarsKeys.hasMoreElements()) {
-                userVarEl = doc.createElement(TAG_VARIABLE);
+                userVarEl = doc.createElementNS(Service.DESCRIPTOR_NAMESPACE,TAG_VARIABLE);
 
                 userVarKey = userVarsKeys.nextElement();
                 userVarEl.setAttribute("name", userVarKey);
@@ -375,7 +375,7 @@ public class Interface {
                 userVarsEl.appendChild(userVarEl);
             }
 
-            admittedHostsEl = doc.createElement(TAG_ADMITTED_HOSTS);
+            admittedHostsEl = doc.createElementNS(Service.DESCRIPTOR_NAMESPACE,TAG_ADMITTED_HOSTS);
             newInterface.appendChild(admittedHostsEl);
             admittedHostsEl.setTextContent(admittedHosts);
 

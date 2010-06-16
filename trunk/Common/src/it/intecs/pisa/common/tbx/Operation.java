@@ -314,24 +314,24 @@ public class Operation {
             isAsynchronous = type.equals(Operation.OPERATION_TYPE_ASYNCHRONOUS);
             doc = parent.getOwnerDocument();
 
-            operationEl = doc.createElement(TAG_OPERATION);
+            operationEl = doc.createElementNS(Service.DESCRIPTOR_NAMESPACE,TAG_OPERATION);
             operationEl.setAttribute(ATTRIBUTE_NAME, name);
             operationEl.setAttribute(ATTRIBUTE_TYPE, type);
             operationEl.setAttribute(ATTRIBUTE_SOAPACTION, soapAction);
             operationEl.setAttribute(ATTRIBUTE_REQUEST_TIMEOUT, requestTimeout);
 
             //addimng admitted hosts
-            admittedHostEl = doc.createElement(TAG_ADMITTED_HOSTS);
+            admittedHostEl = doc.createElementNS(Service.DESCRIPTOR_NAMESPACE,TAG_ADMITTED_HOSTS);
             admittedHostEl.setTextContent(this.admittedHosts);
             operationEl.appendChild(admittedHostEl);
 
             //	adding input and output type and namespace
-            typeEl = doc.createElement(TAG_INPUT_TYPE);
+            typeEl = doc.createElementNS(Service.DESCRIPTOR_NAMESPACE,TAG_INPUT_TYPE);
             typeEl.setAttribute(ATTRIBUTE_TYPE, inputType);
             typeEl.setAttribute(ATTRIBUTE_NAMESPACE, inputTypeNameSpace);
             operationEl.appendChild(typeEl);
 
-            typeEl = doc.createElement(TAG_OUTPUT_TYPE);
+            typeEl = doc.createElementNS(Service.DESCRIPTOR_NAMESPACE,TAG_OUTPUT_TYPE);
             typeEl.setAttribute(ATTRIBUTE_TYPE, outputType);
             typeEl.setAttribute(ATTRIBUTE_NAMESPACE, outputTypeNameSpace);
             operationEl.appendChild(typeEl);
@@ -349,12 +349,12 @@ public class Operation {
                 }
 
                 //	adding input and output type and namespace for callback message
-                typeEl = doc.createElement(TAG_CALLBACK_INPUT_TYPE);
+                typeEl = doc.createElementNS(Service.DESCRIPTOR_NAMESPACE,TAG_CALLBACK_INPUT_TYPE);
                 typeEl.setAttribute(ATTRIBUTE_TYPE, callbackInputType);
                 typeEl.setAttribute(ATTRIBUTE_NAMESPACE, callbackInputTypeNameSpace);
                 operationEl.appendChild(typeEl);
 
-                typeEl = doc.createElement(TAG_CALLBACK_OUTPUT_TYPE);
+                typeEl = doc.createElementNS(Service.DESCRIPTOR_NAMESPACE,TAG_CALLBACK_OUTPUT_TYPE);
                 typeEl.setAttribute(ATTRIBUTE_TYPE, callbackOutputType);
                 typeEl.setAttribute(ATTRIBUTE_NAMESPACE, callbackOutputTypeNameSpace);
                 operationEl.appendChild(typeEl);

@@ -23,7 +23,7 @@ public class Service {
     private static final String ATTRIBUTE_VERSION = "version";
     private static final String TAG_INTERFACE = "interface";
     private static final String TAG_SCHEMA_SET_LOCATION = "schemaSetLocation";
-    private static final String DESCRIPTOR_NAMESPACE = "http://pisa.intecs.it/mass/toolbox/serviceDescriptor";
+    public static final String DESCRIPTOR_NAMESPACE = "http://pisa.intecs.it/mass/toolbox/serviceDescriptor";
     private static final String TAG_SERVICE = "service";
     private static final String ATTRIBUTE_SSL_CERTIFICATE = "sslCertificate";
     private static final String ATTRIBUTE_SUSPEND_MODE = "suspendMode";

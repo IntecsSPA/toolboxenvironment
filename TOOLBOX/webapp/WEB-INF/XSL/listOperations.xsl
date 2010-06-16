@@ -8,7 +8,7 @@
  -  Revision Date:     $Date: 2004/05/21 15:11:58 $
  -
  -->
-<xsl:stylesheet version="1.0" xmlns:sd="http://pisa.intecs.it/mass/toolbox/serviceDescriptor" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:jsp="http://pisa.intecs.it/mass/toolbox/service" xmlns:ipo="http://www.mass.com/IPO">
+<xsl:stylesheet version="2.0" xmlns:sd="http://pisa.intecs.it/mass/toolbox/serviceDescriptor" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:jsp="http://pisa.intecs.it/mass/toolbox/service" xmlns:ipo="http://www.mass.com/IPO">
 	<xsl:output method="html" encoding="ISO-8859-1" omit-xml-declaration="no" indent="no" media-type="text/html"/>
 	<xsl:param name="orderBy">operation</xsl:param>
 	<xsl:param name="serviceName"/>
@@ -35,7 +35,7 @@
         </xsl:param>
         
         <xsl:template match="/">
-        	<xsl:apply-templates select="sd:service/sd:interface/sd:operations"/>
+        	<xsl:apply-templates select="//*:operations"/>
         </xsl:template>
         
 	<xsl:template match="sd:operations">

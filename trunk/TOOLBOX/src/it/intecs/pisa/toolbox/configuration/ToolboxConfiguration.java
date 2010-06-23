@@ -185,7 +185,7 @@ public  class ToolboxConfiguration {
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+LOG_DIR+"','/tmp')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+LOG_LEVEL+"','ALL')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+LOG_FILE_SIZE+"','100')");
-               stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+LOG_PATTERN+"','<log level=\"%p\" thread=\"%t\" date=\"%d{yyyy-MMM-dd HH:mm:ss}\">%m</log>%n')");
+               stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+LOG_PATTERN+"','<log level=\"%p\" thread=\"%t\" date=\"%d{yyyy-MM-dd HH:mm:ss}\">%m</log>%n')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+PROXY_HOST+"','')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+PROXY_PORT+"','')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+QUEUING+"','false')");

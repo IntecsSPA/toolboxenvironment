@@ -610,7 +610,7 @@ public class ToolboxEclipseProject {
 		try {
 			interfacesPlugin = Platform.getBundle(BUNDLE_INTERFACES);
 			entry = interfacesPlugin.getEntry(path);
-			return FileLocator.toFileURL(entry).toURI();
+			return new URI(FileLocator.toFileURL(entry).toString().replaceAll(" ", "%20"));
 		} catch (Exception e) {
 			try {
 				userHome = System.getProperty("user.home");

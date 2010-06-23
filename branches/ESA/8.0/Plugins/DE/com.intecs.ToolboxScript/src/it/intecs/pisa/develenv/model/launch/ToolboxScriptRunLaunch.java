@@ -219,11 +219,11 @@ public class ToolboxScriptRunLaunch {
 				retrieveExecutionTree(project,serviceName,"A", messageId,"executionResult_responseBuilder.xml", testFolder);
 			else retrieveExecutionTree(project,serviceName,"S", messageId,"executionResult.xml", testFolder);
 			
-			if(isAsynchronous)
+			if(isAsynchronous && monitor.isCanceled()==false)
 			{
 				monitor.setTaskName("Checking for pushed message");
 				//performing wait until pushed message arrives
-				pushedMessageStream=performCheckForPushedMessage(project,messageId,checkEach,monitor);
+				pushedMessageStream=performCheckForPushedMessage(project,messageId,checkEach,monitor,launch);
 				
 				if(pushedMessageStream!=null)
 				{
@@ -242,10 +242,11 @@ public class ToolboxScriptRunLaunch {
 			retrieveExecutionTree(project,serviceName,"A", messageId,"executionResult_secondScript.xml", testFolder);
 			retrieveExecutionTree(project,serviceName,"A", messageId,"executionResult_thirdScript.xml", testFolder);
 			
-			
-			if(checkIfSOAPFault(outputFile))
+			if(monitor.isCanceled())
+				AsynchInfoDialogs.showInfoDialog("Running operation","Execution terminated by the user.");
+			else if(checkIfSOAPFault(outputFile))
 				AsynchInfoDialogs.showErrorDialog("Error while running operation","Toolbox returned a SOAP fault");
-			else AsynchInfoDialogs.showInfoDialog("Running operation","Test successfully performed.");
+			else AsynchInfoDialogs.showInfoDialog("Running operation","Test completed.");
 			
 		}
 		catch(Exception e)
@@ -304,6 +305,9 @@ public class ToolboxScriptRunLaunch {
 		
 		try
 		{
+			if(operation.isAsynchronous()==false)
+				return 10000;
+							
 			pollingRateStr=configuration.getAttribute(ToolboxScriptLaunchConfiguration.CONFIGURATION_POLLING_RATE, "");
 			
 			if(pollingRateStr.equals(""))
@@ -315,7 +319,7 @@ public class ToolboxScriptRunLaunch {
 		}
 		catch(Exception e)
 		{
-			return 60000;
+			return 10000;
 		}
 	}
 	
@@ -479,7 +483,7 @@ public class ToolboxScriptRunLaunch {
 		} 
 	}
 
-	protected static InputStream performCheckForPushedMessage(IProject project,String messageId, long checkEach, IProgressMonitor monitor) {
+	protected static InputStream performCheckForPushedMessage(IProject project,String messageId, long checkEach, IProgressMonitor monitor, ILaunch launch) {
 		String pushedMessageUrl;
 		int loopCount=0;
 		int maxLoops=10; //should be configurable
@@ -496,7 +500,7 @@ public class ToolboxScriptRunLaunch {
 			    
 				method = new GetMethod(pushedMessageUrl);
 				
-				while(statusCode==404 && loopCount<maxLoops)
+				while(monitor.isCanceled()==false && statusCode==404 && loopCount<maxLoops)
 				{
 					statusCode=client.executeMethod(method);
 					if(statusCode==404)

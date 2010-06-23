@@ -145,7 +145,7 @@ public abstract class NativeCommandsManagerPlugin extends ManagerCommandPlugin {
         }
     }
 
-    public JsonObject executeCommand(String method, JsonObject request) throws Exception {
+    public JsonObject executeCommand(String method, JsonObject request)  {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

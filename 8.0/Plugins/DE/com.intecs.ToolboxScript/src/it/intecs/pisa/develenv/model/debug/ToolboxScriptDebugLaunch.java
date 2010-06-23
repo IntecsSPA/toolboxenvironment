@@ -207,7 +207,7 @@ public class ToolboxScriptDebugLaunch extends ToolboxScriptRunLaunch {
 				{
 					monitor.setTaskName("Checking for pushed message");
 					//performing wait until pushed message arrives
-					pushedMessageStream=performCheckForPushedMessage(project,messageId,checkEach,monitor);
+					pushedMessageStream=performCheckForPushedMessage(project,messageId,checkEach,monitor,launch);
 					
 					if(pushedMessageStream!=null)
 					{
@@ -222,9 +222,11 @@ public class ToolboxScriptDebugLaunch extends ToolboxScriptRunLaunch {
 					}
 				}
 		
-				if(checkIfSOAPFault(outputFile))
+				if(monitor.isCanceled())
+					AsynchInfoDialogs.showInfoDialog("Running operation","Execution terminated by user.");
+				else if(checkIfSOAPFault(outputFile))
 					AsynchInfoDialogs.showErrorDialog("Error while debugging operation","Toolbox returned a SOAP fault");
-				else AsynchInfoDialogs.showInfoDialog("Debugging operation","Test successfully performed.");
+				else AsynchInfoDialogs.showInfoDialog("Debugging operation","Test completed.");
 				
 				
 			} else

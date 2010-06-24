@@ -35,6 +35,7 @@
 
         <chain id="metadataProductionChain">
             <command id="downloadMetadataFromHttp" className="it.intecs.pisa.archivingserver.chain.commands.DownloadMetadataFromHttp" />
+            <command id="extractdMetadata" className="it.intecs.pisa.archivingserver.chain.commands.ExtractMetadataFromData" />
         </chain>
 
 

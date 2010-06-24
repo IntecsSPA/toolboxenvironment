@@ -21,8 +21,8 @@ public class Prefs {
     public static final String DOWNLOAD_DIR="download.dir";
     public static final String PUBLISH_LOCAL_HTTP_URL="http.public.url";
     public static final String DELETE_AFTER="delete.after";
-    public static final String PUBLISH_LOCAL_HTTP_ENABLE="publish.local.http";
-    public static final String PUBLISH_LOCAL_FTP_IENABLE="publish.local.ftp.enable";
+    public static final String PUBLISH_LOCAL_HTTP_ENABLE="publish.local.http.enable";
+    public static final String PUBLISH_LOCAL_FTP_ENABLE="publish.local.ftp.enable";
     public static final String PUBLISH_LOCAL_FTP_ROOT_DIR="publish.local.ftp.rootdir";
     public static final String PUBLISH_LOCAL_FOLDER_DIR="publish.local.folder.dir";
     public static final String PUBLISH_LOCAL_FOLDER_INTERVAL="publish.local.folder.interval";

@@ -4,6 +4,7 @@
  */
 package it.intecs.pisa.archivingserver.chain.commands;
 
+import it.intecs.pisa.archivingserver.data.StoreItem;
 import it.intecs.pisa.archivingserver.db.HttpAccessible;
 import it.intecs.pisa.archivingserver.log.Log;
 import it.intecs.pisa.archivingserver.prefs.Prefs;
@@ -29,16 +30,19 @@ public class PublishToInternalHttp implements Command {
         String downloadFileName;
         String itemId;
         Properties prop;
+        StoreItem storeItem;
+
         try {
             Log.log("Executing class "+this.getClass().getCanonicalName());
             appDir=(File) cc.getAttribute(CommandsConstants.APP_DIR);
             downloadFileName=(String) cc.getAttribute(CommandsConstants.DOWNLOADED_FILE_NAME);
             itemId=(String) cc.getAttribute(CommandsConstants.ITEM_ID);
+            storeItem=(StoreItem) cc.getAttribute(CommandsConstants.STORE_ITEM);
 
             prop=Prefs.load(appDir);
             fromFile=new File(prop.getProperty("download.dir"),itemId);
 
-            if(prop.getProperty("publish.local.http").equals("true"))
+            if(prop.getProperty(Prefs.PUBLISH_LOCAL_HTTP_ENABLE).equals("true") || storeItem.publishHttp==true )
             {
                 toDir=new File(appDir,"storagearea/"+itemId);
                 toDir.mkdirs();

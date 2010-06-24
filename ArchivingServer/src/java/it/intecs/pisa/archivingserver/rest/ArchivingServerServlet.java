@@ -17,6 +17,7 @@ import it.intecs.pisa.archivingserver.db.ItemRefDB;
 import it.intecs.pisa.archivingserver.db.ItemStatusDB;
 import it.intecs.pisa.archivingserver.db.ReverseCatalogueId;
 import it.intecs.pisa.archivingserver.log.Log;
+import it.intecs.pisa.archivingserver.prefs.Prefs;
 import it.intecs.pisa.archivingserver.services.AutomaticFolderPublishingService;
 import it.intecs.pisa.archivingserver.services.AutomaticItemDeleteService;
 import it.intecs.pisa.archivingserver.services.FTPService;
@@ -26,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLDecoder;
+import java.util.Properties;
 import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,7 +51,9 @@ public class ArchivingServerServlet extends HttpServlet {
     protected static final String METHOD_DELETE = "delete";
 
     protected Timer timer;
-    protected  FTPService ftpService;
+    protected FTPService ftpService;
+    protected String rootDirStr;
+    protected File rootDir;
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -210,11 +214,8 @@ public class ArchivingServerServlet extends HttpServlet {
     }
 
     private void deleteItem(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        InputStream in;
-        JsonObject inputJson = null;
         String itemId=null;
         boolean success=false;
-        JsonObject outputJson=null;
 
         try {
             String requestURI;
@@ -272,8 +273,13 @@ public class ArchivingServerServlet extends HttpServlet {
         id=DateUtil.getCurrentDateAsUniqueId();
 
         ChainExecutor exec;
+        String rollbackChain=null;
 
-        exec=new ChainExecutor("Catalogue/storeChain",item,id,new File(getServletContext().getRealPath("/")));
+        Properties props = Prefs.load(rootDir);
+        if(props.getProperty("fail.dorollback").equals("true"))
+            rollbackChain="Catalogue/deleteChain";
+
+        exec=new ChainExecutor("Catalogue/storeChain",rollbackChain,item,id,rootDir);
         exec.start();
 
         return id;
@@ -330,7 +336,8 @@ public class ArchivingServerServlet extends HttpServlet {
 
         Log.log("Initing ArchivingServer Servlet");
 
-        File rootDir = new File(getServletContext().getRealPath("/"));
+        rootDirStr=getServletContext().getRealPath("/");
+        rootDir = new File(rootDirStr);
         File webinfDir = new File(rootDir, "WEB-INF");
         File dbDir = new File(webinfDir, "db");
         File dblock = new File(dbDir, "database.lck");

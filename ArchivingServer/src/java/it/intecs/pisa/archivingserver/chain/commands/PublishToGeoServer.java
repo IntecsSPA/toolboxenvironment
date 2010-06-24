@@ -88,7 +88,7 @@ public class PublishToGeoServer implements Command {
         JsonObject responseObj=null;
         
         HTTPLinkTokenizer tokenizer;
-
+        System.out.println("PUBLISHING TO GEOSERVER");
         tokenizer = new HTTPLinkTokenizer(url);
         geoserverUrl = "http://" + tokenizer.getHost();
 

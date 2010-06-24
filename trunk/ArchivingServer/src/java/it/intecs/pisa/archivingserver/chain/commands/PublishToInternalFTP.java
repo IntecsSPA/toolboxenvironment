@@ -46,7 +46,15 @@ public class PublishToInternalFTP implements Command{
 
             Properties prop = Prefs.load(appDir);
 
-            if(prop.getProperty("publish.local.ftp.enable").equals("true"))
+            boolean internalDeployRequested=false;
+
+            for(String ftp:storeItem.publishFtp)
+            {
+                if(ftp.equals("ftp:"))
+                    internalDeployRequested=true;
+            }
+
+            if(prop.getProperty("publish.local.ftp.enable").equals("true") || internalDeployRequested==true)
             {
                 File fromFile = new File(prop.getProperty("download.dir"), itemId);
                 File userRoot=new File(prop.getProperty("publish.local.ftp.rootdir"), username);

@@ -33,6 +33,10 @@ public class StoreItemDeserializer implements JsonDeserializer<StoreItem> {
             item.metadataUrl=obj.get("metadataUrl").getAsString();
         else item.metadataUrl="";
 
+        if(obj.get("type")!=null)
+            item.type=obj.get("type").getAsString();
+        else item.type="eo";
+
         if(obj.get("deleteAfter")!=null)
             item.deleteAfter=obj.get("deleteAfter").getAsLong();
         else item.deleteAfter=0;
@@ -40,7 +44,7 @@ public class StoreItemDeserializer implements JsonDeserializer<StoreItem> {
         publishObj = obj.getAsJsonObject("publish");
 
         if (publishObj != null) {
-            array = publishObj.getAsJsonArray("publishFtp");
+            array = publishObj.getAsJsonArray("Ftp");
 
             if (array != null) {
                 item.publishFtp = new String[array.size()];
@@ -49,7 +53,7 @@ public class StoreItemDeserializer implements JsonDeserializer<StoreItem> {
                 }
             } else item.publishFtp = new String[0];
 
-            array = publishObj.getAsJsonArray("publishCatalogue");
+            array = publishObj.getAsJsonArray("ebRIMCatalogue");
 
             if (array != null) {
                 item.publishCatalogue = new String[array.size()];
@@ -58,7 +62,7 @@ public class StoreItemDeserializer implements JsonDeserializer<StoreItem> {
                 }
             } else item.publishCatalogue = new String[0];
 
-            array = publishObj.getAsJsonArray("publishGeoServer");
+            array = publishObj.getAsJsonArray("GeoServer");
 
             if (array != null) {
                 item.publishGeoserver = new String[array.size()];
@@ -67,6 +71,9 @@ public class StoreItemDeserializer implements JsonDeserializer<StoreItem> {
                 }
             } else item.publishGeoserver = new String[0];
 
+            if(publishObj.has("Http") && publishObj.get("Http").getAsBoolean()==true)
+                item.publishHttp=true;
+            else item.publishHttp=false;
         } 
         else
         {

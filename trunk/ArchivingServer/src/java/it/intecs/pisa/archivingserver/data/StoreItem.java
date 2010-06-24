@@ -21,10 +21,11 @@ package it.intecs.pisa.archivingserver.data;
  */
 public class StoreItem {
     public long deleteAfter=0;
+    public String type;
     public String downloadUrl;
     public String metadataUrl;
     public String[] publishFtp;
     public String[] publishGeoserver;
     public String[] publishCatalogue;
-
+    public boolean publishHttp;
 }

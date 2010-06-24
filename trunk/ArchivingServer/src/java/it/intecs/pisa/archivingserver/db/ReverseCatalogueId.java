@@ -34,4 +34,26 @@ public class ReverseCatalogueId {
                 stm.close();
         }
     }
+
+    public static String getCatalogueId(String url,String itemId) throws Exception
+    {
+        InternalDatabase db;
+        Statement stm=null;
+
+        try
+        {
+            db=InternalDatabase.getInstance();
+            stm=db.getStatement();
+
+            ResultSet res=stm.executeQuery("SELECT RIM_ID FROM T_CATALOGUE_ID_CORRESPONDENCE WHERE ID='"+itemId+"' AND URL='"+url+"'");
+            res.next();
+
+            return res.getString("RIM_ID");
+        }
+        finally
+        {
+            if(stm!=null)
+                stm.close();
+        }
+    }
 }

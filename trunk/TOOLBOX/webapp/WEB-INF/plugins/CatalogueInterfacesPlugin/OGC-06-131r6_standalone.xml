@@ -48,6 +48,13 @@
                 <scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-131r6_StandAlone/Harvest/harvest_globalError.tscript" overrideByUser="false"/>
                 <testFiles>testFiles/OGC-06-131r6_StandAlone/Harvest/test_harvest.xml</testFiles>
             </operation>
+            <operation name="Transaction" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#Transaction">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="TransactionRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="TransactionResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-131r6_StandAlone/Transaction/transaction.tscript" overrideByUser="false"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-131r6_StandAlone/Transaction/transaction_globalError.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-06-131r6_StandAlone/Transaction/test_transaction.xml</testFiles>
+            </operation>
         </operations>
     <variables>
         <variable name="maxRecords" value="10" type="integer" displayedText="Maximum number of records returned"/>

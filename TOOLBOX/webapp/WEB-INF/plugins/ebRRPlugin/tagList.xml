@@ -8,4 +8,5 @@
     <tag name="getCapabilities" class="it.intecs.pisa.toolbox.plugins.ebrr.GetCapabilitiesTag"/>
     <tag name="describeRecord" class="it.intecs.pisa.toolbox.plugins.ebrr.DescribeRecordTag"/>
     <tag name="harvest" class="it.intecs.pisa.toolbox.plugins.ebrr.HarvestTag"/>
+    <tag name="transaction" class="it.intecs.pisa.toolbox.plugins.ebrr.TransactionTag"/>
 </tagList>

@@ -217,7 +217,7 @@ public class TBXProjectTree extends Composite {
 					interfaceName=interfaceEl.getAttribute(ATTRIBUTE_NAME);
 					interfaceVersion=interfaceEl.getAttribute(ATTRIBUTE_VERSION);
 					
-					if(isInterfaceStillInRepository(interfaceName,interfaceVersion)==true)
+					//if(isInterfaceStillInRepository(interfaceName,interfaceVersion)==true)
 					{
 						tbxProjectVector.add(project);
 					}

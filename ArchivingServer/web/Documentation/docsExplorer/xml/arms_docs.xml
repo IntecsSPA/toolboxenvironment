@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<tree xmlns:ctl="http://www.occamlab.com/ctl" xmlns:txsl="http://www.w3.org/1999/XSL/Transform/target" id="0">
+	<!--main.html_Getting_started*-->
+	<item text="Getting started" id="main.html_Getting_started" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+		<userdata name="thisurl">html/gettingstarted/index.html</userdata>
+		<!--main.html_Getting_started*overview.html_Overview*-->
+		<item text="Overview" id="overview.html_Overview" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+			<userdata name="thisurl">html/gettingstarted/overview.html</userdata>
+		</item>
+		<!--main.html_Getting_started*conventions.html_Conventions*-->
+		<item text="Conventions" id="conventions.html_Conventions" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+			<userdata name="thisurl">html/gettingstarted/conventions.html</userdata>
+		</item>
+		<!--main.html_Getting_started*contacts.html_Contact_points*-->
+		<item text="Contact points" id="contacts.html_Contact_points" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+			<userdata name="thisurl">html/gettingstarted/contact_points.html</userdata>
+		</item>
+	</item>
+</tree>

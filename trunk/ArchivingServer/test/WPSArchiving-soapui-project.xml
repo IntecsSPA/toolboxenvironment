@@ -3988,7 +3988,44 @@ declare namespace ns1='http://www.opengis.net/cat/csw/2.0.2';
 declare namespace ns2='http://purl.org/dc/elements/1.1/';
 declare namespace ns8='http://www.opengis.net/cat/wrs/1.0';
 declare namespace ns6='http://www.opengis.net/ogc';
-//ns1:SearchResults/@numberOfRecordsMatched</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TS_02_04" searchProperties="true"><con:description>This test case checks that metadata can be extracted from input data and successfully stored into a catalogue</con:description><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.panels.testcase.JTestRunLog$OptionsForm@max_rows">1000</con:setting><con:setting id="com.eviware.soapui.impl.wsdl.panels.testcase.JTestRunLog$OptionsForm@errors_only">false</con:setting></con:settings><con:testStep type="request" name="Store"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ToolboxServiceSOAPBinding</con:interface><con:operation>ExecuteProcess_store</con:operation><con:request name="Store"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.1.1:8080/TOOLBOX/services/WPSArchiving</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+//ns1:SearchResults/@numberOfRecordsMatched</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TS_02_04" searchProperties="true" id="7639cda9-d100-4bc4-9b3b-cf53997f9b3a"><con:description>This test case checks that metadata can be extracted from input data and successfully stored into a catalogue</con:description><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.panels.testcase.JTestRunLog$OptionsForm@max_rows">1000</con:setting><con:setting id="com.eviware.soapui.impl.wsdl.panels.testcase.JTestRunLog$OptionsForm@errors_only">false</con:setting></con:settings><con:testStep type="httprequest" name="Check on Catalogue before extraction" disabled="true"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" name="Check on Catalogue before extraction" postQueryString="false" mediaType="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="SOAPAction" value="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecords" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>http://localhost:8080/TOOLBOX/services/cat_eo</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.opengis.net/cat/csw/2.0.2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <csw:GetRecords service="CSW" version="2.0.2" resultType="hits" outputFormat="application/xml" outputSchema="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" startPosition="1" maxRecords="10" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" xmlns:ogc="http://www.opengis.net/ogc">
+         <csw:Query typeNames="rim:ExtrinsicObject">
+            <csw:ElementSetName typeNames="rim:ExtrinsicObject">summary</csw:ElementSetName>
+            <csw:Constraint version="1.1.0">
+               <ogc:Filter>
+                  <ogc:And>
+                     <ogc:PropertyIsEqualTo>
+                        <ogc:PropertyName>/rim:ExtrinsicObject[@objectType='urn:x-ogc:specification:csw-ebrim:ObjectType:EO:EOProduct']/rim:Slot[@name='urn:ogc:def:ebRIM-Slot:OGC-06-131:parentIdentifier']/rim:ValueList/rim:Value[1]</ogc:PropertyName>
+                        <ogc:Literal>urn:ogc:def:EOP:ESA.EECF.ARCHIVING</ogc:Literal>
+                     </ogc:PropertyIsEqualTo>
+                     <ogc:PropertyIsEqualTo>
+                        <ogc:PropertyName>/rim:ExtrinsicObject[@objectType='urn:x-ogc:specification:csw-ebrim:ObjectType:EO:EOProduct']/rim:Slot[@name='urn:ogc:def:ebRIM-Slot:OGC-06-131:productType']/rim:ValueList/rim:Value[1]</ogc:PropertyName>
+                        <ogc:Literal>HRI1_X__1P</ogc:Literal>
+                     </ogc:PropertyIsEqualTo>
+                  </ogc:And>
+               </ogc:Filter>
+            </csw:Constraint>
+         </csw:Query>
+      </csw:GetRecords>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="XPath Match"><con:configuration><path>declare namespace ns5='http://www.w3.org/1999/xlink';
+declare namespace ns7='http://www.opengis.net/gml';
+declare namespace ns12='http://earth.esa.int/sar';
+declare namespace ns4='http://purl.org/dc/terms/';
+declare namespace ns3='http://www.opengis.net/ows';
+declare namespace ns13='urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0';
+declare namespace ns10='http://earth.esa.int/atm';
+declare namespace ns11='http://earth.esa.int/opt';
+declare namespace ns9='http://earth.esa.int/eop';
+declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace ns1='http://www.opengis.net/cat/csw/2.0.2';
+declare namespace ns2='http://purl.org/dc/elements/1.1/';
+declare namespace ns8='http://www.opengis.net/cat/wrs/1.0';
+declare namespace ns6='http://www.opengis.net/ogc';
+//ns1:SearchResults/@numberOfRecordsMatched</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:testStep type="request" name="Store"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ToolboxServiceSOAPBinding</con:interface><con:operation>ExecuteProcess_store</con:operation><con:request name="Store"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.1.1:8080/TOOLBOX/services/WPSArchiving</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_store lineage="true" storeExecuteResponse="true" status="true">
@@ -4007,7 +4044,7 @@ declare namespace ns3='http://www.opengis.net/ows/1.1';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20100622093805877</wps:Identifier>
+         <wps:Identifier>20100624152644847</wps:Identifier>
 	 <wps:DownloadStatus/>
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
@@ -4032,7 +4069,7 @@ declare namespace ns3='http://www.opengis.net/ows/1.1';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20100616172253334</wps:Identifier>
+         <wps:Identifier>20100624152644847</wps:Identifier>
 	 <wps:DownloadStatus/>
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
@@ -4063,7 +4100,7 @@ declare namespace ows='http://www.opengis.net/ows/1.1';
 //wps:Output[ows:Identifier='CatalogueLink']/wps:Data/wps:LiteralData/text()</con:sourcePath><con:targetType>Endpoint</con:targetType><con:targetStep>Check on Catalogue</con:targetStep></con:transfers></con:config></con:testStep><con:testStep type="httprequest" name="Check on Catalogue"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" name="Check on Catalogue" postQueryString="false" mediaType="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="SOAPAction" value="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecords" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>http://localhost:8080/TOOLBOX/services/cat_eo</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.opengis.net/cat/csw/2.0.2">
    <soapenv:Header/>
    <soapenv:Body>
-      <csw:GetRecords xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" service="CSW" version="2.0.2" resultType="hits" outputFormat="application/xml" outputSchema="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" startPosition="1" maxRecords="10" xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" xmlns:ogc="http://www.opengis.net/ogc">
+      <csw:GetRecords service="CSW" version="2.0.2" resultType="hits" outputFormat="application/xml" outputSchema="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" startPosition="1" maxRecords="10" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" xmlns:ogc="http://www.opengis.net/ogc">
          <csw:Query typeNames="rim:ExtrinsicObject">
             <csw:ElementSetName typeNames="rim:ExtrinsicObject">summary</csw:ElementSetName>
             <csw:Constraint version="1.1.0">
@@ -4071,7 +4108,7 @@ declare namespace ows='http://www.opengis.net/ows/1.1';
                   <ogc:And>
                      <ogc:PropertyIsEqualTo>
                         <ogc:PropertyName>/rim:ExtrinsicObject[@objectType='urn:x-ogc:specification:csw-ebrim:ObjectType:EO:EOProduct']/rim:Slot[@name='urn:ogc:def:ebRIM-Slot:OGC-06-131:parentIdentifier']/rim:ValueList/rim:Value[1]</ogc:PropertyName>
-                        <ogc:Literal>urn:ogc:def:EOP:ESA.EECF.SPOT_ESA_MULTI</ogc:Literal>
+                        <ogc:Literal>urn:ogc:def:EOP:ESA.EECF.ARCHIVING</ogc:Literal>
                      </ogc:PropertyIsEqualTo>
                      <ogc:PropertyIsEqualTo>
                         <ogc:PropertyName>/rim:ExtrinsicObject[@objectType='urn:x-ogc:specification:csw-ebrim:ObjectType:EO:EOProduct']/rim:Slot[@name='urn:ogc:def:ebRIM-Slot:OGC-06-131:productType']/rim:ValueList/rim:Value[1]</ogc:PropertyName>
@@ -4106,7 +4143,7 @@ declare namespace ns3='http://www.opengis.net/ows/1.1';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_delete lineage="true" storeExecuteResponse="true" status="true">
-		<wps:Identifier>20100616172253334</wps:Identifier>
+		<wps:Identifier>20100624152644847</wps:Identifier>
 	</wps:ExecuteProcess_delete>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="XPath Match"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -4123,7 +4160,7 @@ declare namespace ns3='http://www.opengis.net/ows/1.1';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20100616172253334</wps:Identifier>
+         <wps:Identifier>20100624152644847</wps:Identifier>
 	 <wps:DownloadStatus/>
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
@@ -4139,7 +4176,7 @@ declare namespace ows='http://www.opengis.net/ows/1.1';
 //wps:Output[ows:Identifier='CatalogueLink']/wps:Data/wps:LiteralData/text()</con:sourcePath><con:targetType>Endpoint</con:targetType><con:targetStep>Check on Catalogue</con:targetStep></con:transfers></con:config></con:testStep><con:testStep type="httprequest" name="Check on Catalogue for deletion"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" name="Check on Catalogue for deletion" postQueryString="false" mediaType="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="SOAPAction" value="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecords" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>http://localhost:8080/TOOLBOX/services/cat_eo</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.opengis.net/cat/csw/2.0.2">
    <soapenv:Header/>
    <soapenv:Body>
-      <csw:GetRecords xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" service="CSW" version="2.0.2" resultType="hits" outputFormat="application/xml" outputSchema="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" startPosition="1" maxRecords="10" xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" xmlns:ogc="http://www.opengis.net/ogc">
+      <csw:GetRecords service="CSW" version="2.0.2" resultType="hits" outputFormat="application/xml" outputSchema="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" startPosition="1" maxRecords="10" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" xmlns:ogc="http://www.opengis.net/ogc">
          <csw:Query typeNames="rim:ExtrinsicObject">
             <csw:ElementSetName typeNames="rim:ExtrinsicObject">summary</csw:ElementSetName>
             <csw:Constraint version="1.1.0">
@@ -4147,7 +4184,7 @@ declare namespace ows='http://www.opengis.net/ows/1.1';
                   <ogc:And>
                      <ogc:PropertyIsEqualTo>
                         <ogc:PropertyName>/rim:ExtrinsicObject[@objectType='urn:x-ogc:specification:csw-ebrim:ObjectType:EO:EOProduct']/rim:Slot[@name='urn:ogc:def:ebRIM-Slot:OGC-06-131:parentIdentifier']/rim:ValueList/rim:Value[1]</ogc:PropertyName>
-                        <ogc:Literal>urn:ogc:def:EOP:ESA.EECF.SPOT_ESA_MULTI</ogc:Literal>
+                        <ogc:Literal>urn:ogc:def:EOP:ESA.EECF.ARCHIVING</ogc:Literal>
                      </ogc:PropertyIsEqualTo>
                      <ogc:PropertyIsEqualTo>
                         <ogc:PropertyName>/rim:ExtrinsicObject[@objectType='urn:x-ogc:specification:csw-ebrim:ObjectType:EO:EOProduct']/rim:Slot[@name='urn:ogc:def:ebRIM-Slot:OGC-06-131:productType']/rim:ValueList/rim:Value[1]</ogc:PropertyName>

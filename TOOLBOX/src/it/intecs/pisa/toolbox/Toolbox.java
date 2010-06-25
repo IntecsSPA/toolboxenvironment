@@ -60,6 +60,7 @@ import it.intecs.pisa.toolbox.resources.LogResourcesPersistence;
 import it.intecs.pisa.toolbox.resources.XMLResourcesPersistence;
 import it.intecs.pisa.toolbox.db.ServiceStatuses;
 import it.intecs.pisa.pluginscore.UIPluginManager;
+import it.intecs.pisa.toolbox.cleanup.AutomaticCleanup;
 import it.intecs.pisa.toolbox.db.StatisticsUtil;
 import it.intecs.pisa.toolbox.log.ErrorMailer;
 import org.apache.axiom.om.OMElement;
@@ -70,6 +71,7 @@ import org.apache.axis2.transport.http.AxisServlet;
 import org.apache.axis2.util.XMLUtils;
 import it.intecs.pisa.toolbox.plugins.managerNativePlugins.DeployServiceCommand;
 import it.intecs.pisa.toolbox.resources.TextResourcesPersistence;
+import it.intecs.pisa.toolbox.cleanup.DeleteOldInstancesAutomaticallyTask;
 import it.intecs.pisa.util.json.JsonUtil;
 
 public class Toolbox extends AxisServlet implements ServletContextListener {
@@ -699,6 +701,15 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             this.toolboxVersion="8.0";
         }
 
+        try
+        {
+            AutomaticCleanup.start();
+        }
+        catch(Exception e)
+        {
+            logger.info("Cannot start automatic cleanup service");
+        }
+
         logger.info("Initialization completed");
     }
 
@@ -971,6 +982,15 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             if (dbgConsole != null) {
                 dbgConsole.close();
 
+            }
+
+            try
+            {
+                AutomaticCleanup.stop();
+            }
+            catch(Exception e)
+            {
+                
             }
 
             serviceManager = null;

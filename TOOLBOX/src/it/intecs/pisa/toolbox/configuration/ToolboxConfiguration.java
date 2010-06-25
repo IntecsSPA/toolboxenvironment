@@ -65,8 +65,9 @@ public  class ToolboxConfiguration {
     public static final String TOOLBOX_LEVEL_KEYSTORE_PASSWORD="tbxLevelKeystorePwd";
     public static final String SMTP_PORT="smtpServerPort";
     public static final String MAIL_FROM="mailFrom";
+    public static final String CLEANUP_EVERY="cleanupEvery";
 
-    protected static final int CONFIG_VALUES_COUNT=37;
+    protected static final int CONFIG_VALUES_COUNT=38;
 
     protected Hashtable<String,String> configValues;
     protected static ToolboxConfiguration instance=new ToolboxConfiguration();
@@ -216,6 +217,7 @@ public  class ToolboxConfiguration {
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+SSE_SUPPORT_TEAM_EMAIL+"','toolbox@intecs.it')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+SMTP_PORT+"','25')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+MAIL_FROM+"','')");
+               stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+CLEANUP_EVERY+"','1w')");
             }
 
 

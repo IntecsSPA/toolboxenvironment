@@ -22,6 +22,7 @@ import it.intecs.pisa.util.DOMUtil;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.util.Date;
 import org.w3c.dom.Document;
 
 /**
@@ -68,26 +69,6 @@ public class TextResourcesPersistence {
 
         return Long.toString(id);
     }
-
-  /*  public String retrieveText(String id) throws Exception
-    {
-        File resFile;
-        Document doc=null;
-        DOMUtil util;
-
-        try
-        {
-            util=new DOMUtil();
-
-            resFile=getSubDirForId(Long.parseLong(id));
-            doc=util.fileToDocument(resFile);
-        }
-        catch(Exception e)
-        {
-            throw new Exception("Cannot retrieve XML resource",e);
-        }
-        return doc;
-    }*/
 
     public long getNewResourceFile() throws Exception
     {
@@ -140,6 +121,35 @@ public class TextResourcesPersistence {
 
     public File getTextFile(long forkedId) {
         return getSubDirForId(forkedId);
+    }
+
+     public void deleteOlderThan(Date treshold)
+    {
+        if(storeDirectory!=null && storeDirectory.exists())
+        {
+            for(File f:storeDirectory.listFiles())
+            {
+                if(f.isDirectory())
+                    removeOldFilesFromSubdir(f,treshold);
+            }
+        }
+    }
+
+    private void removeOldFilesFromSubdir(File f, Date treshold) {
+        for(File subFile:f.listFiles())
+        {
+            try
+            {
+                if(subFile.lastModified()<treshold.getTime())
+                {
+                    subFile.delete();
+                }
+            }
+            catch(Exception e)
+            {
+                System.out.println("Cannot delete file "+subFile.getAbsolutePath());
+            }
+        }
     }
 
 }

@@ -20,6 +20,7 @@ package it.intecs.pisa.toolbox.resources;
 import it.intecs.pisa.toolbox.db.ResourceSequence;
 import it.intecs.pisa.util.DOMUtil;
 import java.io.File;
+import java.util.Date;
 import org.w3c.dom.Document;
 
 /**
@@ -27,6 +28,8 @@ import org.w3c.dom.Document;
  * @author massi
  */
 public class XMLResourcesPersistence {
+
+
     protected File storeDirectory;
     protected static final XMLResourcesPersistence instance=new XMLResourcesPersistence();
 
@@ -137,4 +140,32 @@ public class XMLResourcesPersistence {
         return getSubDirForId(forkedId);
     }
 
+    public void deleteOlderThan(Date treshold)
+    {
+        if(storeDirectory!=null && storeDirectory.exists())
+        {
+            for(File f:storeDirectory.listFiles())
+            {
+                if(f.isDirectory())
+                    removeOldFilesFromSubdir(f,treshold);
+            }
+        }
+    }
+
+    private void removeOldFilesFromSubdir(File f, Date treshold) {
+        for(File subFile:f.listFiles())
+        {
+            try
+            {
+                if(subFile.lastModified()<treshold.getTime())
+                {
+                    subFile.delete();
+                }
+            }
+            catch(Exception e)
+            {
+                System.out.println("Cannot delete file "+subFile.getAbsolutePath());
+            }
+        }
+    }
 }

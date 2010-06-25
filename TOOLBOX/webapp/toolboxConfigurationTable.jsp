@@ -62,7 +62,7 @@ String currCompanyName = configuration.getConfigurationValue(ToolboxConfiguratio
 String currCompanyContact = configuration.getConfigurationValue(ToolboxConfiguration.COMPANY_CONTACT);
 String ebRRREpoHome=configuration.getConfigurationValue(ToolboxConfiguration.EBRR_REPO_HOME);
 String tbxKeystorePwd= configuration.getConfigurationValue(ToolboxConfiguration.TOOLBOX_LEVEL_KEYSTORE_PASSWORD);
-
+String cleanupEvery=configuration.getConfigurationValue(ToolboxConfiguration.CLEANUP_EVERY);
 
     if (Boolean.parseBoolean(configuration.getConfigurationValue(ToolboxConfiguration.FIRST_TIME_CHECK))) {
         firstTimeChecked = "checked";
@@ -272,6 +272,16 @@ PropertyResourceBundle messages = (PropertyResourceBundle)ResourceBundle.getBund
                 </tr>
 
        
+                <!--Cleanup section -->
+                <tr>
+                    <td class=sortable colspan="2" nowrap><fmt:message key="cleanup.section" bundle="${lang}"/></td>
+                </tr>
+                <tr><!-- Row 9 -->
+                    <td class="tdItem" nowrap width="50%"><fmt:message key="cleanup.executeevery" bundle="${lang}"/></td>
+                    <td class="tdForm" nowrap><input name="cleanupEvery" type="text" value="<%= cleanupEvery %>" <%=disabled%>></td>
+                </tr>
+
+
                 <tr><!-- Row 13 -->
                     <td colspan="2" rowspan="2" nowrap align="right">
                         <c:choose>

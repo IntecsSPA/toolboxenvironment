@@ -24,13 +24,11 @@ import it.intecs.pisa.toolbox.service.ServiceManager;
 import it.intecs.pisa.toolbox.service.TBXService;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.toolbox.util.ToolboxSimpleDateFormatter;
-import java.io.File;
 import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.LinkedList;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
+import java.util.Date;
+import java.util.Vector;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -156,13 +154,7 @@ public class InstanceLister {
         return rs.getInt("NUM");
     }
 
-    public static InputStream getAsynchronousInstances(String serviceName) throws Exception {
-        return getAsynchronousInstances(serviceName,0, -1);
-    }
-
-
-
-     public static Document getAsynchronousInstancesAsDocument(String serviceName,int cursor, int pageSize) throws Exception {
+    public static Document getAsynchronousInstancesAsDocument(String serviceName,int cursor, int pageSize) throws Exception {
         Document instancesList;
         TBXService service;
         DOMUtil util;
@@ -235,70 +227,6 @@ public class InstanceLister {
 
         return instancesList;
     }
-
-
-    public static InputStream getAsynchronousInstances(String serviceName,int cursor, int pageSize) throws Exception {
-        Document xslDoc;
-        Document statusDoc;
-        DOMUtil util;
-        LinkedList instances;
-        int instancesCount = 0;
-        File stylesheetFile;
-        File tmpFile;
-        Source source;
-        Source xsl;
-        Result output;
-        int startIndex = 1;
-        int itemCount = 0;
-
-        /*util = new DOMUtil();
-
-        statusDoc = util.fileToDocument(statusFile);
-        instances = DOMUtil.getChildren(statusDoc.getDocumentElement());
-        instancesCount = instances.size();
-
-        if (cursor <= 0) {
-            startIndex = 1;
-        } else {
-            startIndex = cursor;
-        }
-
-        if (pageSize <= 0) {
-            itemCount = instancesCount;
-        } else {
-            itemCount = pageSize;
-        }
-
-        //applying transformation
-        stylesheetFile = new File(new File(new File(this.root, TBXService.WEB_INF), TBXService.XSL), "asynchInstancesPager.xsl");
-        xslDoc = util.fileToDocument(stylesheetFile);
-
-        XSLT.addParameter(xslDoc, "startIndex", String.valueOf(startIndex));
-        XSLT.addParameter(xslDoc, "pageSize", String.valueOf(itemCount));
-
-        xsl = new StreamSource(new FileInputStream(stylesheetFile));
-        source = new StreamSource(new FileInputStream(statusFile));
-        tmpFile = new File(System.getProperty("java.io.tmpdir"), "outputTempFile.xml");
-
-        output = new StreamResult(new FileOutputStream(tmpFile));
-        XSLT.transform(xsl, source, output);
-
-        return new FileInputStream(tmpFile);*/
-        return null;
-    }
-
-
-
-   /* public static int getAsynchronousInstancesNum(String orderId, String pushHost) throws Exception {
-        Statement stm;
-        ResultSet rs;
-
-        stm= ToolboxInternalDatabase.getInstance().getStatement();
-
-        rs=stm.executeQuery("SELECT COUNT(ID) AS NUM FROM T_SERVICE_INSTANCES WHERE MODE='S' AND SERVICE_NAME='"+serviceName+"'");
-        rs.next();
-        return rs.getInt("NUM");
-    }*/
 
     public static int getAsynchronousInstancesNum(String serviceName) throws Exception {
     Statement stm;
@@ -408,5 +336,23 @@ public class InstanceLister {
         }
 
         return instancesList;
+    }
+
+    public static Long[] getInstancesOlderThan(Date date) throws Exception
+    {
+        String query;
+        Vector<Long> vector;
+
+        vector=new Vector<Long>();
+        query="SELECT ID FROM T_SERVICE_INSTANCES WHERE ARRIVAL_DATE<"+date.getTime();
+
+        Statement stm = ToolboxInternalDatabase.getInstance().getStatement();
+        ResultSet rs = stm.executeQuery(query);
+        while(rs.next())
+        {
+          vector.add(new Long(rs.getLong("ID")));
+        }
+
+        return vector.toArray(new Long[0]);
     }
 }

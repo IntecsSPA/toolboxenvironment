@@ -1,15 +1,14 @@
 package it.intecs.pisa.gis.geoserver.rest;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import it.intecs.pisa.gis.geoserver.util.GISGeoserverDOM;
 import it.intecs.pisa.gis.util.VectorUtil;
-import it.intecs.pisa.rest.util.RESTService;
+import it.intecs.pisa.util.rest.RESTService;
 import java.io.File;
-import java.lang.Exception;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 /**
  *
@@ -25,16 +24,16 @@ public class RestUtil {
         int i;
         boolean result = true;
 
-        JSONObject resp = null;
+        JsonObject resp = null;
         try {
-            resp = (JSONObject) RESTService.getInformation(
+            resp =  (JsonObject) RESTService.getInformation(
                     geoserverRestAPI.getWorkspacesURL(),
                     "text/json", geoserverUsername, geoserverPassword);
-            JSONObject workspaces = resp.getJSONObject("workspaces");
-            JSONArray workArr = workspaces.getJSONArray("workspace");
+            JsonObject workspaces = resp.getAsJsonObject("workspaces");
+            JsonArray workArr = workspaces.getAsJsonArray("workspace");
             String currName;
-            for (i = 0; i < workArr.length(); i++) {
-                currName = ((JSONObject) workArr.get(i)).getString("name");
+            for (i = 0; i < workArr.size(); i++) {
+                currName = ((JsonObject) workArr.get(i)).get("name").getAsString();
                 if (currName.equals(newWorkspaceName)) {
                     return false;
 

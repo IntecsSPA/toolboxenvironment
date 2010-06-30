@@ -61,6 +61,7 @@ import it.intecs.pisa.toolbox.resources.XMLResourcesPersistence;
 import it.intecs.pisa.toolbox.db.ServiceStatuses;
 import it.intecs.pisa.pluginscore.UIPluginManager;
 import it.intecs.pisa.toolbox.cleanup.AutomaticCleanup;
+import it.intecs.pisa.toolbox.constants.MiscConstants;
 import it.intecs.pisa.toolbox.db.StatisticsUtil;
 import it.intecs.pisa.toolbox.log.ErrorMailer;
 import org.apache.axiom.om.OMElement;
@@ -71,7 +72,6 @@ import org.apache.axis2.transport.http.AxisServlet;
 import org.apache.axis2.util.XMLUtils;
 import it.intecs.pisa.toolbox.plugins.managerNativePlugins.DeployServiceCommand;
 import it.intecs.pisa.toolbox.resources.TextResourcesPersistence;
-import it.intecs.pisa.toolbox.cleanup.DeleteOldInstancesAutomaticallyTask;
 import it.intecs.pisa.util.json.JsonUtil;
 
 public class Toolbox extends AxisServlet implements ServletContextListener {
@@ -79,7 +79,6 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     public static final String CDATA_S = "<![CDATA[";
     public static final String CDATA_E = "]]>";
     public static final String ROOT = "/";
-    public static final String SLASH = "/";
     public static final String XSD = ".xsd";
     public static final String TOOLBOX_CONFIGURATION = "toolboxConfiguration.xml";
     public static final String TOOLBOX_LOG = "toolbox.log";
@@ -129,7 +128,6 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     public static final String WSIL_ABSTRACT = "abstract";
     public static final String WSIL_DESCRIPTION = "description"; 
     public static final String WSIL_NAMESPACE = "http://schemas.xmlsoap.org/wsdl/";
-    public static final String HARVEST = "harvest";
     public static final String DOT_WSDL = ".wsdl"; 
     public static final int MIN_FILE_INDEX = 0;
     public static final int MAX_FILE_INDEX = 9;
@@ -947,7 +945,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
      *  Builds the correct schema location, based on the old value and the current rootDir directory. It uses {@link Util#getURI}.
      */
     private String getSchemaLocation(String oldSchemaLocation) {
-        int slashIndex = oldSchemaLocation.lastIndexOf(SLASH); // It is correct to search for SLASH since it is an URI
+        int slashIndex = oldSchemaLocation.lastIndexOf(MiscConstants.SLASH); // It is correct to search for SLASH since it is an URI
 
         return Util.getURI(new File(new File(new File(getRootDir(), WEB_INF), SCHEMAS), oldSchemaLocation.substring(slashIndex + 1)).getAbsolutePath());
     }
@@ -1119,30 +1117,6 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
 
     public void setDeployAdministrationToken(String token) {
         this.deployAdminToken = token;
-    }
-
-    public String getPublicAddress() throws UnknownHostException {
-        String publicAddress = "";
-        InetAddress addr;
-        Toolbox tbx;
-        String host, port;
-        Element configurationRoot;
-
-        tbx = Toolbox.getInstance();
-
-        host = tbxConfig.getConfigurationValue(ToolboxConfiguration.APACHE_ADDRESS);
-        port = tbxConfig.getConfigurationValue(ToolboxConfiguration.APACHE_PORT);
-
-        if (host == null || port == null || host.equals("") || port.equals("")) {
-            addr = InetAddress.getLocalHost();
-
-            host = addr.getHostAddress();
-
-            port = tbxConfig.getConfigurationValue(ToolboxConfiguration.TOMCAT_PORT);
-        }
-
-        publicAddress = "http://" + host + ":" + port + "/TOOLBOX";
-        return publicAddress;
     }
 
     public String getToolboxScriptSchemaLocation() {

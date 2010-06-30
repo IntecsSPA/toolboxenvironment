@@ -9,6 +9,7 @@ import it.intecs.pisa.toolbox.service.ServiceManager;
 import it.intecs.pisa.toolbox.service.TBXOperation;
 import it.intecs.pisa.toolbox.service.TBXService;
 import it.intecs.pisa.pluginscore.exceptions.GenericException;
+import it.intecs.pisa.toolbox.configuration.ToolboxNetwork;
 import it.intecs.pisa.toolbox.sseportal.simulation.MessageForXSLCreator;
 import it.intecs.pisa.toolbox.sseportal.simulation.PortalXSLTransformer;
 import it.intecs.pisa.util.DOMUtil;
@@ -89,7 +90,7 @@ public class ExecutePortalLikeCommand extends NativeCommandsManagerPlugin {
             messageId = serviceName + "_" + operationName + "_";
             formatter = new SimpleDateFormat("yyMMddHHmmssSSS");
             messageId += formatter.format(new Date());
-            soapRequestDocument = SOAPMessageBuilder.buildSOAPMessage(inputDoc, messageId, tbxServlet.getPublicAddress() + "/Push");
+            soapRequestDocument = SOAPMessageBuilder.buildSOAPMessage(inputDoc, messageId, ToolboxNetwork.getEndpointURL() + "/Push");
 
             responseDocument = service.processRequest(soapAction, soapRequestDocument, false);
 

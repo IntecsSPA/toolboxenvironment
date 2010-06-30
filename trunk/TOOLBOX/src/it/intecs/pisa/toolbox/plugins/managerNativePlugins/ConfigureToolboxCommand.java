@@ -24,6 +24,8 @@ import org.apache.commons.fileupload.FileItem;
 public class ConfigureToolboxCommand extends NativeCommandsManagerPlugin {
 
     public void executeCommand(HttpServletRequest request, HttpServletResponse resp) throws Exception {
+        try
+        {
         Hashtable<String, FileItem> mimeparts = this.parseMultiMime(request);
 
         String ftpAdminDir = getStringFromMimeParts(mimeparts, "ftpAdminDir");
@@ -32,12 +34,11 @@ public class ConfigureToolboxCommand extends NativeCommandsManagerPlugin {
         String ftpPoolPort = getStringFromMimeParts(mimeparts, "ftpPoolPort");
         String ftpServerHost = getStringFromMimeParts(mimeparts, "ftpServerHost");
         String logDir = getStringFromMimeParts(mimeparts, "logDir");
-        String apacheAddress = getStringFromMimeParts(mimeparts, "apacheAddress");
+        String endpointAddress = getStringFromMimeParts(mimeparts, "endpointAddress");
         String proxyHost = getStringFromMimeParts(mimeparts, "proxyHost");
-        String tomcatPort = (getStringFromMimeParts(mimeparts, "tomcatPort").length() == 0 ? "8080" : getStringFromMimeParts(mimeparts, "tomcatPort"));
-        String apachePort = (apacheAddress.length() == 0 ? "" : (getStringFromMimeParts(mimeparts, "apachePort").length() == 0 ? "80" : getStringFromMimeParts(mimeparts, "apachePort")));
+        String endpointPort = getStringFromMimeParts(mimeparts, "endpointPort");
         String proxyPort = (proxyHost.length() == 0 ? "" : (getStringFromMimeParts(mimeparts, "proxyPort").length() == 0 ? "80" : getStringFromMimeParts(mimeparts, "proxyPort")));
-        String tomcatSSLPort = (getStringFromMimeParts(mimeparts, "tomcatSSLPort").length() == 0 ? "" : getStringFromMimeParts(mimeparts, "tomcatSSLPort"));
+        String endpointSSLPort = getStringFromMimeParts(mimeparts, "endpointSSLPort");
         String sender = getStringFromMimeParts(mimeparts, "sender");
         String recipients = getStringFromMimeParts(mimeparts, "recipients");
         String smtpServer = getStringFromMimeParts(mimeparts, "smtpServer");
@@ -80,12 +81,12 @@ public class ConfigureToolboxCommand extends NativeCommandsManagerPlugin {
         boolValue=getStringFromMimeParts(mimeparts, "outputMessagesLog") != null ? "true" :"false";
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.OUTPUT_MESSAGES_LOG, boolValue);
      
-        toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.APACHE_ADDRESS, apacheAddress);
-        toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.APACHE_PORT, apachePort);
+        toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.ENDPOINT_ADDRESS, endpointAddress);
+        toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.ENDPOINT_PORT, endpointPort);
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.PROXY_HOST, proxyHost);
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.PROXY_PORT, proxyPort);
-        toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.TOMCAT_PORT, tomcatPort);
-        toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.TOMCAT_SSL_PORT, tomcatSSLPort);
+        toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.ENDPOINT_PORT, endpointPort);
+        toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.ENDPOINT_SSL_PORT, endpointSSLPort);
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.LOG_DIR, logDir);
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.LOG_LEVEL, logLevel);
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.LOG_FILE_SIZE, logFileSize);
@@ -152,6 +153,11 @@ public class ConfigureToolboxCommand extends NativeCommandsManagerPlugin {
 
          setebRRRepoHomeOnPropertyFile(ebRRRepoHome);
          resp.sendRedirect("configureToolboxRequest.jsp?pageStatus=disabled&configurationChanged=true");
+        }
+        catch(Exception e)
+        {
+            resp.sendRedirect("configureToolboxRequest.jsp?pageStatus=enabled&error=true");
+        }
     }
 
     private void setebRRRepoHomeOnPropertyFile(String ebRRRepoHome) {

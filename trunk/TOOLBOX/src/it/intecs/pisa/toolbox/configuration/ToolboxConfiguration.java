@@ -28,8 +28,9 @@ import java.util.Hashtable;
  * @author Massimiliano Fanciulli
  */
 public  class ToolboxConfiguration {
-    public static final String APACHE_ADDRESS = "apacheAddress";
-    public static final String APACHE_PORT = "apachePort";
+    public static final String ENDPOINT_ADDRESS = "Address";
+    public static final String ENDPOINT_PORT = "Port";
+    public static final String ENDPOINT_SSL_PORT = "SSLPort";
     public static final String INPUT_MESSAGES_LOG = "inputMessagesLog";
     public static final String OUTPUT_MESSAGES_LOG = "outputMessagesLog";
     public static final String LOG_LEVEL = "logLevel";
@@ -39,8 +40,6 @@ public  class ToolboxConfiguration {
     public static final String PROXY_HOST = "proxyHost";
     public static final String PROXY_PORT = "proxyPort";
     public static final String QUEUING = "queuing";
-    public static final String TOMCAT_PORT = "tomcatPort";
-    public static final String TOMCAT_SSL_PORT = "tomcatSSLPort";
     public static final String TOOLBOX_VERSION_CHECK = "toolboxVersionCheck";
     public static final String SCHEMA_VERSION_CHECK = "schemaVersionCheck";
     public static final String GLOBAL_KEYSTORE="globalKeyStore";
@@ -67,7 +66,7 @@ public  class ToolboxConfiguration {
     public static final String MAIL_FROM="mailFrom";
     public static final String CLEANUP_EVERY="cleanupEvery";
 
-    protected static final int CONFIG_VALUES_COUNT=38;
+    protected static final int CONFIG_VALUES_COUNT=37;
 
     protected Hashtable<String,String> configValues;
     protected static ToolboxConfiguration instance=new ToolboxConfiguration();
@@ -179,8 +178,9 @@ public  class ToolboxConfiguration {
             if(rs.getInt("C")!=CONFIG_VALUES_COUNT)
             {
                stm.executeUpdate("DELETE FROM T_TOOLBOX_CONFIGURATION");
-               stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+APACHE_ADDRESS+"','')");
-               stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+APACHE_PORT+"','')");
+               stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+ENDPOINT_ADDRESS+"','"+java.net.InetAddress.getLocalHost().getHostAddress()+"')");
+               stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+ENDPOINT_PORT+"','8080')");
+               stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+ENDPOINT_SSL_PORT+"','8443')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+INPUT_MESSAGES_LOG+"','false')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+OUTPUT_MESSAGES_LOG+"','true')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+LOG_DIR+"','/tmp')");
@@ -190,8 +190,6 @@ public  class ToolboxConfiguration {
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+PROXY_HOST+"','')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+PROXY_PORT+"','')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+QUEUING+"','false')");
-               stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+TOMCAT_PORT+"','8080')");
-               stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+TOMCAT_SSL_PORT+"','8443')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+TOOLBOX_VERSION_CHECK+"','false')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+SCHEMA_VERSION_CHECK+"','false')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+GLOBAL_KEYSTORE+"','')");

@@ -14,7 +14,7 @@
  -  Revision Date:     $Date: 2004/09/23 10:51:27 $
  -
 -->
-<%@ page language="java" import="it.intecs.pisa.toolbox.service.*" errorPage="errorPage.jsp" %>
+<%@ page language="java" import="it.intecs.pisa.toolbox.service.*, it.intecs.pisa.toolbox.configuration.*" errorPage="errorPage.jsp" %>
 <%@ include file="checkAccount.jsp" %>
 <jsp:include page="header.jsp" /> 
 <%@taglib uri="http://java.sun.com/jstl/core"  prefix="c"%>
@@ -34,7 +34,7 @@ String toolboxUrl="";
 String warnAddressError="";
 
        try {
-            toolboxUrl = Toolbox.getInstance().getPublicAddress();
+            toolboxUrl = ToolboxNetwork.getEndpointURL();
         } catch (Exception e) {
             warnAddress = true;
             warnAddressError = e.getMessage();

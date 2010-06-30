@@ -8,6 +8,7 @@ import it.intecs.pisa.common.tbx.Operation;
 import it.intecs.pisa.pluginscore.TagExecutor;
 import it.intecs.pisa.pluginscore.toolbox.engine.interfaces.IVariableStore;
 import it.intecs.pisa.toolbox.Toolbox;
+import it.intecs.pisa.toolbox.configuration.ToolboxConfiguration;
 import it.intecs.pisa.toolbox.engine.EngineVariablesConstants;
 import it.intecs.pisa.toolbox.service.ServiceManager;
 import it.intecs.pisa.toolbox.service.TBXService;
@@ -177,7 +178,7 @@ public class GetCapabilitiesTag extends TagExecutor {
             extendedCapabilities = doc.createElement("ows:ExtendedCapabilities");
             extendedCapabilities.setAttribute("xmlns:wsdi", "http://www.w3.org/ns/wsdl-instance");
 
-            String wsdlString = Toolbox.getInstance().getPublicAddress() + "/WSDL/" + service.getServiceName() + "/" + service.getServiceName() + ".wsdl";
+            String wsdlString = getHostUrl() + "/WSDL/" + service.getServiceName() + "/" + service.getServiceName() + ".wsdl";
             extendedCapabilities.setAttribute("wsdi:wsdlLocation", wsdlString);
             opMetadataEl.appendChild(extendedCapabilities);
 
@@ -275,7 +276,7 @@ public class GetCapabilitiesTag extends TagExecutor {
         dcpEl.appendChild(httpEl);
         postEl = doc.createElement("ows:Post");
 
-        postEl.setAttribute("xlink:href", Toolbox.getInstance().getPublicAddress() + "/services/" + service.getServiceName());
+        postEl.setAttribute("xlink:href", getHostUrl() + "/services/" + service.getServiceName());
         httpEl.appendChild(postEl);
 
         addValueList(opEl, "AcceptVersions", new String[]{"1.0.0"});
@@ -314,7 +315,7 @@ public class GetCapabilitiesTag extends TagExecutor {
         dcpEl.appendChild(httpEl);
         postEl = doc.createElement("ows:Post");
 
-        postEl.setAttribute("xlink:href", Toolbox.getInstance().getPublicAddress() + "/services/" + service.getServiceName());
+        postEl.setAttribute("xlink:href", getHostUrl() + "/services/" + service.getServiceName());
         httpEl.appendChild(postEl);
 
         addValueList(opEl, "resultType", new String[]{"hits", "results","validate"});
@@ -340,7 +341,7 @@ public class GetCapabilitiesTag extends TagExecutor {
         dcpEl.appendChild(httpEl);
         postEl = doc.createElement("ows:Post");
 
-        postEl.setAttribute("xlink:href", Toolbox.getInstance().getPublicAddress() + "/services/" + service.getServiceName());
+        postEl.setAttribute("xlink:href", getHostUrl() + "/services/" + service.getServiceName());
         httpEl.appendChild(postEl);
 
         addValueList(opEl, "outputFormat", new String[]{"application/xml", "text/xml"});
@@ -364,7 +365,7 @@ public class GetCapabilitiesTag extends TagExecutor {
         dcpEl.appendChild(httpEl);
         postEl = doc.createElement("ows:Post");
 
-        postEl.setAttribute("xlink:href", Toolbox.getInstance().getPublicAddress() + "/services/" + service.getServiceName());
+        postEl.setAttribute("xlink:href", getHostUrl() + "/services/" + service.getServiceName());
         httpEl.appendChild(postEl);
 
         addValueList(opEl, "TypeNames", new String[]{"rim:RegistryObject"});
@@ -386,7 +387,7 @@ public class GetCapabilitiesTag extends TagExecutor {
         dcpEl.appendChild(httpEl);
         postEl = doc.createElement("ows:Get");
 
-        postEl.setAttribute("xlink:href", Toolbox.getInstance().getPublicAddress() + "/services/" + service.getServiceName());
+        postEl.setAttribute("xlink:href", getHostUrl() + "/services/" + service.getServiceName());
         httpEl.appendChild(postEl);
     }
 
@@ -403,7 +404,7 @@ public class GetCapabilitiesTag extends TagExecutor {
         dcpEl.appendChild(httpEl);
         postEl = doc.createElement("ows:Post");
 
-        postEl.setAttribute("xlink:href", Toolbox.getInstance().getPublicAddress() + "/services/" + service.getServiceName());
+        postEl.setAttribute("xlink:href", getHostUrl() + "/services/" + service.getServiceName());
         httpEl.appendChild(postEl);
 
         addValueList(opEl, "resourceType", new String[]{"eop:EarthObservation","sar:EarthObservation","atm:EarthObservation","opt:EarthObservation","rim:RegistryObjectList"});
@@ -483,4 +484,13 @@ public class GetCapabilitiesTag extends TagExecutor {
 
     }
 
+    private String getHostUrl()
+    {
+        ToolboxConfiguration tbxConf;
+
+        tbxConf=ToolboxConfiguration.getInstance();
+        return "http://"+
+                tbxConf.getConfigurationValue(ToolboxConfiguration.ENDPOINT_ADDRESS)+":"+
+                tbxConf.getConfigurationValue(ToolboxConfiguration.ENDPOINT_PORT);
+    }
 }

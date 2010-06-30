@@ -35,7 +35,7 @@ configuration=ToolboxConfiguration.getInstance();
 
 String warn = (request.getParameter("warn") == null ? "" : request.getParameter("warn"));
 Boolean configurationChanged = (request.getParameter("configurationChanged") == null ? false : true);
-
+Boolean hasError=(request.getParameter("error") == null ? false : true);
 boolean firstTimeCheck=Boolean.getBoolean(configuration.getConfigurationValue(ToolboxConfiguration.FIRST_TIME_CHECK));
      
 String status=request.getParameter("pageStatus");
@@ -69,7 +69,16 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;" +
     <TR>
 
 
-<% if (configurationChanged) {
+<%
+if(hasError)
+    {
+        %>
+        <fmt:message key="configureToolboxRequest.error" bundle="${lang}"/>
+    <%
+    }
+
+
+if (configurationChanged) {
 						String reloadTOOLBOX = "/manager/reload?path=/TOOLBOX";
 					%>
 					    <form method="get" action="<%=reloadTOOLBOX%>" target="reload">

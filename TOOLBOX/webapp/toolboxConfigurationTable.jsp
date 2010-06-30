@@ -43,12 +43,11 @@ String currFtpAdminPassword = configuration.getConfigurationValue(ToolboxConfigu
 String currFtpPort = configuration.getConfigurationValue(ToolboxConfiguration.FTP_PORT);
 String currFtpPoolPort = configuration.getConfigurationValue(ToolboxConfiguration.FTP_POOL_PORT);
 String currFtpServerHost = configuration.getConfigurationValue(ToolboxConfiguration.FTP_SERVER_HOST);
-String currApacheAddress = configuration.getConfigurationValue(ToolboxConfiguration.APACHE_ADDRESS);
-String currApachePort = configuration.getConfigurationValue(ToolboxConfiguration.APACHE_PORT);
 String currProxyHost = configuration.getConfigurationValue(ToolboxConfiguration.PROXY_HOST);
 String currProxyPort = configuration.getConfigurationValue(ToolboxConfiguration.PROXY_PORT);
-String currTomcatPort = configuration.getConfigurationValue(ToolboxConfiguration.TOMCAT_PORT);
-String currTomcatSSLPort = configuration.getConfigurationValue(ToolboxConfiguration.TOMCAT_SSL_PORT);
+String currAddress =configuration.getConfigurationValue(ToolboxConfiguration.ENDPOINT_ADDRESS);
+String currPort =configuration.getConfigurationValue(ToolboxConfiguration.ENDPOINT_PORT);
+String currSSLPort =configuration.getConfigurationValue(ToolboxConfiguration.ENDPOINT_SSL_PORT);
 String mailErrorSSEChecked = "";
 String mailErrorSPChecked = "";
 String currSender = configuration.getConfigurationValue(ToolboxConfiguration.SENDER);
@@ -164,27 +163,21 @@ PropertyResourceBundle messages = (PropertyResourceBundle)ResourceBundle.getBund
                 </tr>
                 
                 <tr><!-- Row 8 -->
-                    <td class=sortable colspan="2" nowrap><fmt:message key="configureToolboxRequest.tomcat" bundle="${lang}"/></td>
+                    <td class=sortable colspan="2" nowrap><fmt:message key="configureToolboxRequest.endpoint" bundle="${lang}"/></td>
+                </tr>
+                <tr><!-- Row 9 -->
+                    <td class="tdItem" nowrap width="50%"><fmt:message key="configureToolboxRequest.address" bundle="${lang}"/><font color="FF0000"><%=warn.equals("wrongFormatTomcatPort") ? " - WRONG FORMAT!" : "" %></td>
+                    <td class="tdForm" nowrap><input name="endpointAddress" type="text" value="<%= currAddress %>" size="30" maxlength="256" <%=disabled%>></td>
                 </tr>
                 <tr><!-- Row 9 -->
                     <td class="tdItem" nowrap width="50%"><fmt:message key="configureToolboxRequest.portn" bundle="${lang}"/><font color="FF0000"><%=warn.equals("wrongFormatTomcatPort") ? " - WRONG FORMAT!" : "" %></td>
-                    <td class="tdForm" nowrap><input name="tomcatPort" type="text" value="<%= currTomcatPort %>" size="5" maxlength="5" <%=disabled%>></td>
+                    <td class="tdForm" nowrap><input name="endpointPort" type="text" value="<%= currPort %>" size="5" maxlength="5" <%=disabled%>></td>
                 </tr>
                 <tr><!-- Row 9 -->
                     <td class="tdItem" nowrap width="50%"><fmt:message key="configureToolboxRequest.portSSL" bundle="${lang}"/><font color="FF0000"><%=warn.equals("wrongFormatTomcatSSLPort") ? " - WRONG FORMAT!" : "" %></td>
-                    <td class="tdForm" nowrap><input name="tomcatSSLPort" type="text" value="<%= currTomcatSSLPort %>" size="5" maxlength="5" <%=disabled%>></td>
+                    <td class="tdForm" nowrap><input name="endpointSSLPort" type="text" value="<%= currSSLPort %>" size="5" maxlength="5" <%=disabled%>></td>
                 </tr>
-                <tr><!-- Row 8 -->
-                    <td class=sortable colspan="2" nowrap><fmt:message key="configureToolboxRequest.apache" bundle="${lang}"/></td>
-                </tr>
-                <tr><!-- Row 9 -->
-                    <td class="tdItem" nowrap width="50%"><fmt:message key="configureToolboxRequest.hostName" bundle="${lang}"/></td>
-                    <td class="tdForm" nowrap><input name="apacheAddress" type="text" value="<%= currApacheAddress %>" <%=disabled%> ></td>
-                </tr>
-                <tr><!-- Row 9 -->
-                    <td class="tdItem" nowrap width="50%"><fmt:message key="configureToolboxRequest.portn" bundle="${lang}"/><font color="FF0000"><%=warn.equals("wrongFormatApachePort") ? " - WRONG FORMAT!" : "" %></td>
-                    <td class="tdForm" nowrap><input name="apachePort" type="text" value="<%= currApachePort %>" size="5" maxlength="5" <%=disabled%>></td>
-                </tr>
+                
                 <tr><!-- Row 8 -->
                     <td class=sortable colspan="2" nowrap><fmt:message key="configureToolboxRequest.proxy" bundle="${lang}"/></td>
                 </tr>

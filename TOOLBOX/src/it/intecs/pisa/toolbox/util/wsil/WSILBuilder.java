@@ -6,6 +6,7 @@
 package it.intecs.pisa.toolbox.util.wsil;
 
 import it.intecs.pisa.toolbox.Toolbox;
+import it.intecs.pisa.toolbox.configuration.ToolboxNetwork;
 import it.intecs.pisa.toolbox.service.ServiceManager;
 import it.intecs.pisa.toolbox.service.TBXSOAPInterface;
 import it.intecs.pisa.toolbox.service.TBXService;
@@ -92,7 +93,7 @@ public class WSILBuilder {
 
                 descriptionEl = wsilDoc.createElement("wsil:description");
                 descriptionEl.setAttribute(REFERENCED_NAMESPACE, "");
-                descriptionEl.setAttribute(LOCATION, tbx.getPublicAddress()+ VIEW_SERVICE_INFO + service.getServiceName());
+                descriptionEl.setAttribute(LOCATION, ToolboxNetwork.getEndpointURL()+ VIEW_SERVICE_INFO + service.getServiceName());
                 serviceEl.appendChild(descriptionEl);
 
             }

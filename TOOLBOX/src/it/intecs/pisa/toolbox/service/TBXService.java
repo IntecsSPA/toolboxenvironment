@@ -53,6 +53,7 @@ import it.intecs.pisa.toolbox.security.ToolboxSecurityConfigurator;
 import it.intecs.pisa.toolbox.service.tasks.ServiceLifeCycle;
 import it.intecs.pisa.util.wsdl.WSDL;
 import it.intecs.pisa.common.tbx.WSDLBuilder;
+import it.intecs.pisa.toolbox.configuration.ToolboxNetwork;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.concurrent.Semaphore;
@@ -567,7 +568,7 @@ public class TBXService extends Service {
         WSDL wsdl;
         File wsdlFile;
 
-        wsdl=WSDLBuilder.buildFromService(this,getServiceURL(),Toolbox.getInstance().getPublicAddress());
+        wsdl=WSDLBuilder.buildFromService(this,getServiceURL(),ToolboxNetwork.getEndpointURL());
 
         publicServiceDir.mkdirs();
         wsdlFile=new File(this.publicServiceDir,this.serviceName+".wsdl");
@@ -576,14 +577,7 @@ public class TBXService extends Service {
     }
 
     synchronized public String getServiceURL() throws Exception {
-       String tbxUrl;
-       Toolbox tbx;
-
-       tbx=Toolbox.getInstance();
-       tbxUrl=tbx.getPublicAddress();
-
-       return tbxUrl+"/services/"+this.serviceName;
-
+       return ToolboxNetwork.getEndpointURL()+"/services/"+serviceName;
     }
 
     protected void deploySchemaFilesNew() throws Exception {
@@ -601,7 +595,7 @@ public class TBXService extends Service {
             publicDir = tbx.getPublicServiceDir(serviceName);
             IOUtil.copyDirectory(schemaDir, publicDir);
 
-            uri = new URI(tbx.getPublicAddress() + "/WSDL/" + serviceName);
+            uri = new URI(ToolboxNetwork.getEndpointURL() + "/WSDL/" + serviceName);
             SchemaSetRelocator.updateSchemaLocationToRelative(publicDir, schemaDir.toURI());
             SchemaSetRelocator.updateSchemaLocationToAbsolute(publicDir, uri);
         } catch (Exception e) {
@@ -836,7 +830,7 @@ public class TBXService extends Service {
     }
 
     public String getWSDLUrl() throws Exception {
-       return Toolbox.getInstance().getPublicAddress()+"/WSDL/"+serviceName+"/"+serviceName+".wsdl";
+       return ToolboxNetwork.getEndpointURL()+"/WSDL/"+serviceName+"/"+serviceName+".wsdl";
     }
 
     public String getSchemaUrl() throws Exception {

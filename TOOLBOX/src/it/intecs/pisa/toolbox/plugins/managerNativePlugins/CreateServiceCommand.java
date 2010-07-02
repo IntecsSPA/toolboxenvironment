@@ -204,7 +204,7 @@ public class CreateServiceCommand extends NativeCommandsManagerPlugin {
             descr.setImplementedInterface(opInterface);
         }
 
-        SchemaSetRelocator.updateSchemaLocationToAbsolute(serviceSchemaDir, serviceSchemaDir.toURI());
+        //SchemaSetRelocator.updateSchemaLocationToAbsolute(serviceSchemaDir, serviceSchemaDir.toURI());
     }
 
     protected void addRepoInterface(Service descr, Hashtable<String, FileItem> mimeparts) throws Exception {

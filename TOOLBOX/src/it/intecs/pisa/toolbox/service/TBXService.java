@@ -596,7 +596,7 @@ public class TBXService extends Service {
             IOUtil.copyDirectory(schemaDir, publicDir);
 
             uri = new URI(ToolboxNetwork.getEndpointURL() + "/WSDL/" + serviceName);
-            SchemaSetRelocator.updateSchemaLocationToRelative(publicDir, schemaDir.toURI());
+            //SchemaSetRelocator.updateSchemaLocationToRelative(publicDir, schemaDir.toURI());
             SchemaSetRelocator.updateSchemaLocationToAbsolute(publicDir, uri);
         } catch (Exception e) {
             System.out.println("Cannot copy schema files to public directory");

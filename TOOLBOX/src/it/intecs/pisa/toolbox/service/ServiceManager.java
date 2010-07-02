@@ -67,7 +67,7 @@ public class ServiceManager {
             Zip.extractZipFile(packageFile.getAbsolutePath(), serviceRoot.getAbsolutePath());
 
             schemaDir=new File(serviceRoot,"Schemas");
-            SchemaSetRelocator.updateSchemaLocationToAbsolute(schemaDir, schemaDir.toURI());
+            //SchemaSetRelocator.updateSchemaLocationToAbsolute(schemaDir, schemaDir.toURI());
 
             newServ = new TBXService(serviceRoot, getWSDLDir(serviceName));
             ServiceStatuses.removeServiceStatus(serviceName);

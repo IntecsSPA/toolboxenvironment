@@ -12,7 +12,6 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.util.Vector;
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
@@ -40,11 +39,15 @@ public class ToolboxServiceSchemaEntityResolver implements EntityResolver {
         String uriAsString;
 
         try {
+
+            
             uri = new URI(systemId);
 
             if (uri.getScheme().equals("http") == true) {
                 return getFileWithHttpSchema(uri.toString());
             } else {
+                String systemIdPath=(new URI(systemId)).getPath();
+
                 String xercesUri="file://"+System.getProperty("user.dir")+"/";
                 uriAsString=systemId.substring(xercesUri.length());
 
@@ -77,8 +80,15 @@ public class ToolboxServiceSchemaEntityResolver implements EntityResolver {
             fetchedSchemas.add(uriAsString);
             inputSource = new InputSource(url.openStream());
         } catch (Exception e) {
-            log("An error occurred while trying to load schema " + uriAsString);
-            return null;
+            log("An error occurred while trying to load schema " + uriAsString+" Trying to load it manually.");
+
+            File serviceDir=rootDir.getParentFile();
+            String serviceName=serviceDir.getName();
+            
+            int index=uriAsString.indexOf(serviceName);
+            String path=uriAsString.substring(index+1+serviceName.length());
+
+            return new InputSource(new FileInputStream(new File(rootDir,path)));
         }
         return inputSource;
     }

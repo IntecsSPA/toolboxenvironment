@@ -226,6 +226,8 @@ public class DOMUtil {
             int index) {
         return (Element) element.getElementsByTagName(tag).item(index);
     }
+
+
     private final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
     private DocumentBuilder documentBuilder;
     private DOMParser parser = new DOMParser();
@@ -344,6 +346,28 @@ public class DOMUtil {
             parser.parse(new InputSource(xml));
             return parser.getDocument();
         }
+    }
+
+      public static DocumentBuilder getValidatingParser(String schemaURL) {
+        final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
+        final String JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
+        final String JAXP_SCHEMA_SOURCE = "http://java.sun.com/xml/jaxp/properties/schemaSource";
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        documentBuilderFactory.setNamespaceAware(true);
+        documentBuilderFactory.setValidating(true);
+        documentBuilderFactory.setExpandEntityReferences(false);
+        documentBuilderFactory.setAttribute(JAXP_SCHEMA_LANGUAGE,
+                W3C_XML_SCHEMA);
+        documentBuilderFactory.setAttribute(JAXP_SCHEMA_SOURCE, schemaURL);
+        DocumentBuilder documentBuilder = null;
+        try {
+            documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            documentBuilder.setErrorHandler(DOMUtil.getThrowerErrorHandler());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return documentBuilder;
     }
 
     public static DocumentBuilder getValidatingParser(File schema) {

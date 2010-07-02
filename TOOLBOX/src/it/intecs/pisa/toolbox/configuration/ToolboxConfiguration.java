@@ -66,7 +66,15 @@ public  class ToolboxConfiguration {
     public static final String MAIL_FROM="mailFrom";
     public static final String CLEANUP_EVERY="cleanupEvery";
 
-    protected static final int CONFIG_VALUES_COUNT=37;
+    public static final String GEOSERVER_URL="geoserverURL";
+    public static final String GEOSERVER_VERSION="geoserverVersion";
+    public static final String GEOSERVER_USERNAME="geoserverUsername";
+    public static final String GEOSERVER_PASSWORD="geoserverPassword";
+    public static final String GEOSERVER_TOOLBOX_WORKSPACE="geoserverToolboxWorkspace";
+
+
+
+    protected static final int CONFIG_VALUES_COUNT=42;
 
     protected Hashtable<String,String> configValues;
     protected static ToolboxConfiguration instance=new ToolboxConfiguration();
@@ -216,6 +224,14 @@ public  class ToolboxConfiguration {
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+SMTP_PORT+"','25')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+MAIL_FROM+"','')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+CLEANUP_EVERY+"','1w')");
+
+               stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+GEOSERVER_URL+"','http://localhost:8080/geoserver')");
+               stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+GEOSERVER_VERSION+"','2.0.1')");
+               stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+GEOSERVER_USERNAME+"','admin')");
+               stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+GEOSERVER_PASSWORD+"','geoserver')");
+               stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+GEOSERVER_TOOLBOX_WORKSPACE+"','toolbox')");
+
+
             }
 
 

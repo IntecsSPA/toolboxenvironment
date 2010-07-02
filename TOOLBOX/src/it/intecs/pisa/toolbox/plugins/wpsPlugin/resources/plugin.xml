@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin name="WPSPlugin" version="1.0">
+    <!--tagPlugin namespace="http://pisa007.pisa.intecs.it/toolbox/WPSPlugin" class=""/-->
+    <information>
+        <versions>
+            <version>1.0.0</version>
+        </versions>
+        <description></description>
+    </information>
+    <engines>
+        <engine className="WPSGrassEngine">
+            <description></description>
+        </engine>
+        <engine className="WPSShellEngine">
+            <description></description>
+        </engine>
+        <engine className="WPSToolboxEngine">
+            <description></description>
+        </engine>
+        <!--engine name="WPSOctaveEngine">
+            <description></description>
+        </engine>
+        <engine name="WPSOpenMathEngine">
+            <description></description>
+        </engine-->
+    </engines>
+</plugin>

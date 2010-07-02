@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tagList>
+    <tag name="createRasterData" class="it.intecs.pisa.toolbox.plugins.gisPlugin.tags.CreateRasterDataTag"/>
+    <tag name="geoserverDataDeploy" class="it.intecs.pisa.toolbox.plugins.gisPlugin.tags.GeoserverDataDepolyTag"/>
+    <tag name="geoserverDataDelete" class="it.intecs.pisa.toolbox.plugins.gisPlugin.tags.GeoserverDataDeleteTag"/>
+    <tag name="geoserverOWSUrl" class="it.intecs.pisa.toolbox.plugins.gisPlugin.tags.GeoserverOWSUrlTag"/>
+</tagList>

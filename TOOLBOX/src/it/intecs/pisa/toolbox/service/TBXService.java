@@ -595,7 +595,7 @@ public class TBXService extends Service {
             publicDir = tbx.getPublicServiceDir(serviceName);
             IOUtil.copyDirectory(schemaDir, publicDir);
 
-            uri = new URI(ToolboxNetwork.getEndpointURL() + "/WSDL/" + serviceName);
+            uri = new URI(ToolboxNetwork.getEndpointURL() + "/TOOLBOX/WSDL/" + serviceName);
             //SchemaSetRelocator.updateSchemaLocationToRelative(publicDir, schemaDir.toURI());
             SchemaSetRelocator.updateSchemaLocationToAbsolute(publicDir, uri);
         } catch (Exception e) {

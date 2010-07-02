@@ -82,6 +82,7 @@ public class TBXSOAPInterface extends Interface{
             fullPathSchemaFile=new File(schemaFile,schemaRoot);
 
             validatingParser=DOMUtil.getValidatingParser(fullPathSchemaFile);
+
             validatingParser.setEntityResolver(new ToolboxServiceSchemaEntityResolver(schemaFile));
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             new XMLSerializer2(out).serialize(document);

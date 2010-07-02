@@ -1,11 +1,13 @@
 package it.intecs.pisa.pluginscore;
 
+import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.util.DOMUtil;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.LinkedList;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -126,7 +128,11 @@ public abstract class ToolboxPluginManager {
        }
        catch(Exception ecc)
        {
-           ecc.printStackTrace();
+           Logger logger;
+       
+           logger=Toolbox.getInstance().getLogger();
+           if(logger!=null)
+               logger.error("Cannot startup plugin in folder "+file.getAbsolutePath());
        }
     }
     

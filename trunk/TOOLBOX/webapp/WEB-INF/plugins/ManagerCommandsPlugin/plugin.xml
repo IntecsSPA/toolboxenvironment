@@ -59,5 +59,9 @@
     <commandViaGet cmd="delPushedMsg" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.DeletePushedMessageCommand"/>
     <commandViaGet cmd="getTextResource" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.GetTextResourceCommand"/>
     <commandViaGet cmd="getAllServiceInstances" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.GetAllServiceInstancesCommand"/>
+    <commandViaPost cmd="importGroupServices" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.ImportServicesGroupCommand"/>
+    <commandViaGet cmd="exportGroupServices" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.ExportServicesGroupCommand"/>
+    <commandViaGet cmd="getServiceResource" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.GetServiceResourceCommand"/>
+    <commandViaGet cmd="getLog" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.GetLogCommand"/>
 </plugin>
 

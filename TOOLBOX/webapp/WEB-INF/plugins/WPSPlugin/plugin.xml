@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin name="WPSPlugin" version="1.0">
+   <commandViaPost cmd="wpsServiceCreate" class="it.intecs.pisa.toolbox.plugins.wpsPlugin.commands.WPSServiceCreateCommand"/>
+    <commandViaPost cmd="wpsProcessingCreate" class="it.intecs.pisa.toolbox.plugins.wpsPlugin.commands.WPSProcessingCreateCommand"/>
+    <commandViaPost cmd="wpsProcessingUpdate" class="it.intecs.pisa.toolbox.plugins.wpsPlugin.commands.WPSProcessingUpdateCommand"/>
+    <commandViaGet cmd="wpsProcessingDelete" class="it.intecs.pisa.toolbox.plugins.wpsPlugin.commands.WPSProcessingDeleteCommand"/>
+</plugin>
+

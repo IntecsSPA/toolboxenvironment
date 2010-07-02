@@ -353,6 +353,7 @@ public class DOMUtil {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         documentBuilderFactory.setNamespaceAware(true);
         documentBuilderFactory.setValidating(true);
+        documentBuilderFactory.setExpandEntityReferences(false);
         documentBuilderFactory.setAttribute(JAXP_SCHEMA_LANGUAGE,
                 W3C_XML_SCHEMA);
         documentBuilderFactory.setAttribute(JAXP_SCHEMA_SOURCE, schema);

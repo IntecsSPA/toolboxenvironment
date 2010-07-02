@@ -4,7 +4,7 @@
  */
 package it.intecs.pisa.common.tbx.schemas;
 
-import it.intecs.pisa.util.IOUtil;
+import it.intecs.pisa.toolbox.Toolbox;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,8 +12,8 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -30,7 +30,7 @@ public class ToolboxServiceSchemaEntityResolver implements EntityResolver {
 
     public ToolboxServiceSchemaEntityResolver(File schemaRootDir) {
         //System.out.println("schemaeRootDir: " + schemaRootDir.getAbsolutePath());
-        rootDir = new File(schemaRootDir,"");
+        rootDir = new File(schemaRootDir, "");
         fetchedSchemas = new Vector<String>();
     }
 
@@ -39,32 +39,26 @@ public class ToolboxServiceSchemaEntityResolver implements EntityResolver {
         String scheme;
         String uriAsString;
 
-        //System.out.println("PublicID: " + publicId);
-        //System.out.println("SystemID: " + systemId);
-
         try {
             uri = new URI(systemId);
-            //System.out.println("Scheme: "+uri.getScheme());
-            //checking if schema has beel already loaded
-            uriAsString = uri.toString();
-            if (fetchedSchemas.indexOf(uriAsString) != -1) {
-                return new InputSource();
-            }
 
-            scheme = uri.getScheme();
-            if (scheme == null) {
+            if (uri.getScheme().equals("http") == true) {
+                return getFileWithHttpSchema(uri.toString());
+            } else {
+                String xercesUri="file://"+System.getProperty("user.dir")+"/";
+                uriAsString=systemId.substring(xercesUri.length());
+
+                System.out.println("Resolved uri to relative path "+uriAsString);
+                if (fetchedSchemas.indexOf(uriAsString) != -1) {
+                    return new InputSource();
+                }
+
                 return getFileWithNoSchema(uriAsString);
-            } else if (scheme.equals("service") == true) {
-                return getFileWithServiceSchema(uriAsString);
-            } else if (scheme.equals("http") == true) {
-                return getFileWithHttpSchema(uriAsString);
-            } else if (scheme.equals("file") == true) {
-                return getFileWithFileSchema(uriAsString);
             }
-            else return null;
+            //I'm assuming that xerces will always prepend user.dir to the include path
 
         } catch (Exception ex) {
-            Logger.getLogger(ToolboxServiceSchemaEntityResolver.class.getName()).log(Level.SEVERE, null, ex);
+            log("An error occurred while trying to resolve entity " + systemId);
             return null;
         }
     }
@@ -74,76 +68,41 @@ public class ToolboxServiceSchemaEntityResolver implements EntityResolver {
         InputSource inputSource;
         HttpURLConnection conn;
 
-        //System.out.println("Downloading " + uriAsString + " from network");
+        try {
+            if (fetchedSchemas.indexOf(uriAsString) != -1) {
+                    return new InputSource();
+                }
 
-        url = new URL(uriAsString);
-        fetchedSchemas.add(uriAsString);
-        inputSource = new InputSource(url.openStream());
-              
-        return inputSource;
-    }
-
-    protected InputSource getFileWithServiceSchema(String uriAsString) throws Exception {
-        File schemaFile;
-        InputSource inputSource;
-
-        schemaFile = new File(rootDir, uriAsString.substring(8));
-
-        fetchedSchemas.add(uriAsString);
-        //System.out.println("Resolved " + uriAsString + " schema reference to " + schemaFile.getAbsolutePath());
-        inputSource = new InputSource(new FileInputStream(schemaFile));
-               
-        return inputSource;
-    }
-
-    protected InputSource getFileWithFileSchema(String uriAsString) throws Exception {
-        File schemaFile;
-        InputSource inputSource;
-        String workingDir;
-        File workingDirFile;
-        URI uri;
-      
-        workingDir=System.getProperty("user.dir");
-        workingDirFile=new File(workingDir);
-
-        uri=new URI(uriAsString);
-       /* if(IOUtil.isParentDirectory(workingDirFile.toURI(), uri))
-        {
-            schemaFile = new File(rootDir,uriAsString.substring(workingDir.length()+uriAsString.indexOf(workingDir)));
+            url = new URL(uriAsString);
+            fetchedSchemas.add(uriAsString);
+            inputSource = new InputSource(url.openStream());
+        } catch (Exception e) {
+            log("An error occurred while trying to load schema " + uriAsString);
+            return null;
         }
-        else
-        {
-             schemaFile = new File(uriAsString);
-             if(schemaFile.isAbsolute()==false)
-                 schemaFile = new File(rootDir,schemaFile.getPath());
-        }*/
-
-        schemaFile=new File(uri);
-
-        fetchedSchemas.add(uriAsString);
-        //System.out.println("Resolved " + uriAsString + " schema reference to " + schemaFile.getAbsolutePath());
-
-
-        inputSource = new InputSource(new FileInputStream(schemaFile));
-       
         return inputSource;
     }
 
     protected InputSource getFileWithNoSchema(String uriAsString) throws Exception {
         File schemaFile;
         InputSource inputSource;
-             
-        schemaFile = new File(uriAsString);
-        
+
+        schemaFile = new File(rootDir, uriAsString);
+
         fetchedSchemas.add(uriAsString);
-        //System.out.println("Resolved " + uriAsString + " schema reference to " + schemaFile.getAbsolutePath());
         inputSource = new InputSource(new FileInputStream(schemaFile));
 
         return inputSource;
     }
 
-    public void resetFetchedSchemas()
-    {
-        fetchedSchemas=new Vector<String>();
+    public void resetFetchedSchemas() {
+        fetchedSchemas = new Vector<String>();
+    }
+
+    protected void log(String text) {
+        Toolbox tbxInstance = Toolbox.getInstance();
+        Logger logger = tbxInstance.getLogger();
+
+        logger.error(text);
     }
 }

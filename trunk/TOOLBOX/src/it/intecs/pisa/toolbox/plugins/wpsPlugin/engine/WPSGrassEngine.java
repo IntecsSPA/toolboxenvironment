@@ -3,6 +3,9 @@ package it.intecs.pisa.toolbox.plugins.wpsPlugin.engine;
 import it.intecs.pisa.common.tbx.Operation;
 import it.intecs.pisa.common.tbx.Script;
 import it.intecs.pisa.toolbox.plugins.wpsPlugin.manager.WPSOperation;
+import it.intecs.pisa.toolbox.service.TBXAsynchronousOperation;
+import it.intecs.pisa.toolbox.service.TBXOperation;
+import it.intecs.pisa.toolbox.service.TBXSynchronousOperation;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.IOUtil;
 import java.io.ByteArrayInputStream;
@@ -94,8 +97,8 @@ public class WPSGrassEngine implements WPSEngine{
         original.delete();
     }
 
-    public Operation createWPSSyncOperation(File newServicePath, String processingName) throws Exception {
-        Operation operationGrassDescr=WPSOperation.newWPSSyncOperation(processingName);
+    public TBXSynchronousOperation createWPSSyncOperation(File newServicePath, String processingName) throws Exception {
+        TBXSynchronousOperation operationGrassDescr=WPSOperation.newWPSSyncOperation(processingName);
         File grassScriptFolder=new File(newServicePath,GRASS_SCRIPT_PATH);
         grassScriptFolder.mkdirs();
         IOUtil.copy(new ByteArrayInputStream(getGrassScript().getBytes()),
@@ -110,8 +113,8 @@ public class WPSGrassEngine implements WPSEngine{
         return operationGrassDescr;
     }
 
-    public Operation createWPSAsyncOperation(File newServicePath, String processingName) throws Exception {
-        Operation operationEngineDescr=WPSOperation.newWPSAsyncOperation(newServicePath,processingName);
+    public TBXAsynchronousOperation createWPSAsyncOperation(File newServicePath, String processingName) throws Exception {
+        TBXAsynchronousOperation operationEngineDescr=WPSOperation.newWPSAsyncOperation(newServicePath,processingName);
         operationEngineDescr.setScripts(getExecuteScriptDescriptorAsync(newServicePath,operationEngineDescr.getName()));
          operationEngineDescr.setAdmittedHosts("");
         return operationEngineDescr;
@@ -122,9 +125,11 @@ public class WPSGrassEngine implements WPSEngine{
      scripts[0] = new Script();
      scripts[0].setScriptDoc(domUtil.inputStreamToDocument(new FileInputStream(new File(servicePath, EXECUTE_TOOLBOX_SCRIPT_FOLDER_PATH+EXECUTE_GRASS_ENGINE_SCRIPT_FILE_NAME))));
      scripts[0].setPath(PATH_OPERATION+"/"+operationName + "/"+FIRST_SCRIPT_FILE_NAME);
+     scripts[0].setType(Script.SCRIPT_TYPE_FIRST_SCRIPT);
      scripts[1] = new Script();
      scripts[1].setScriptDoc(domUtil.inputStreamToDocument(new FileInputStream(new File(servicePath, EXECUTE_TOOLBOX_SCRIPT_FOLDER_PATH+EXECUTE_ERROR_SCRIPT_FILE_NAME))));
      scripts[1].setPath(PATH_OPERATION+"/"+operationName + "/"+GLOBAL_ERROR_SCRIPT_FILE_NAME);
+     scripts[1].setType(Script.SCRIPT_TYPE_GLOBAL_ERROR);
      return scripts;
     }
 
@@ -134,21 +139,27 @@ public class WPSGrassEngine implements WPSEngine{
       scripts[0] = new Script();
       scripts[0].setScriptDoc(domUtil.inputStreamToDocument(new FileInputStream(new File(servicePath, EXECUTE_ASYNC_GRASS_ENGINE_SCRIPT_FOLDER_PATH+FIRST_SCRIPT_FILE_NAME))));
       scripts[0].setPath(PATH_OPERATION+"/"+operationName + "/"+FIRST_SCRIPT_FILE_NAME);
+      scripts[0].setType(Script.SCRIPT_TYPE_FIRST_SCRIPT);
       scripts[1] = new Script();
       scripts[1].setScriptDoc(domUtil.inputStreamToDocument(new FileInputStream(new File(servicePath, EXECUTE_ASYNC_GRASS_ENGINE_SCRIPT_FOLDER_PATH+SECOND_SCRIPT_FILE_NAME))));
       scripts[1].setPath(PATH_OPERATION+"/"+operationName + "/"+SECOND_SCRIPT_FILE_NAME);
+      scripts[1].setType(Script.SCRIPT_TYPE_SECOND_SCRIPT);
       scripts[2] = new Script();
       scripts[2].setScriptDoc(domUtil.inputStreamToDocument(new FileInputStream(new File(servicePath, EXECUTE_ASYNC_GRASS_ENGINE_SCRIPT_FOLDER_PATH+THIRD_SCRIPT_FILE_NAME))));
       scripts[2].setPath(PATH_OPERATION+"/"+operationName + "/"+THIRD_SCRIPT_FILE_NAME);
+      scripts[2].setType(Script.SCRIPT_TYPE_THIRD_SCRIPT);
       scripts[3] = new Script();
       scripts[3].setScriptDoc(domUtil.inputStreamToDocument(new FileInputStream(new File(servicePath, EXECUTE_ASYNC_GRASS_ENGINE_SCRIPT_FOLDER_PATH+RESPONSE_BUILDER_SCRIPT_FILE_NAME))));
       scripts[3].setPath(PATH_OPERATION+"/"+operationName + "/"+RESPONSE_BUILDER_SCRIPT_FILE_NAME);
+      scripts[3].setType(Script.SCRIPT_TYPE_RESPONSE_BUILDER);
       scripts[4] = new Script();
       scripts[4].setScriptDoc(domUtil.inputStreamToDocument(new FileInputStream(new File(servicePath, EXECUTE_ASYNC_GRASS_ENGINE_SCRIPT_FOLDER_PATH+RESPONSE_BUILDER_ERROR_SCRIPT_FILE_NAME))));
       scripts[4].setPath(PATH_OPERATION+"/"+operationName + "/"+RESPONSE_BUILDER_ERROR_SCRIPT_FILE_NAME);
+      scripts[4].setType(Script.SCRIPT_TYPE_ERROR_ON_RESP_BUILDER);
       scripts[5] = new Script();
       scripts[5].setScriptDoc(domUtil.inputStreamToDocument(new FileInputStream(new File(servicePath, EXECUTE_ASYNC_GRASS_ENGINE_SCRIPT_FOLDER_PATH+GLOBAL_ERROR_SCRIPT_FILE_NAME))));
       scripts[5].setPath(PATH_OPERATION+"/"+operationName + "/"+GLOBAL_ERROR_SCRIPT_FILE_NAME);
+      scripts[5].setType(Script.SCRIPT_TYPE_GLOBAL_ERROR);
       return scripts;
     }
 

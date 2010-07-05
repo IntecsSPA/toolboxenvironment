@@ -56,10 +56,12 @@ public class ServiceManager {
         TBXService newServ;
         File serviceRoot;
         File schemaDir;
+        boolean serviceExist=false;
         DOMUtil util= new DOMUtil();
 
         try {
-            if (isServiceDeployed(serviceName)) {
+            serviceExist=isServiceDeployed(serviceName);
+            if (serviceExist) {
                 throw new ToolboxException("Service already exists!");
             }
 
@@ -91,7 +93,8 @@ public class ServiceManager {
 
             newServ.attemptToDeployWSDLAndSchemas();
         } catch (Exception ex) {
-            deleteService(serviceName);
+            if(!serviceExist)
+                deleteService(serviceName);
             throw ex;
 
         }

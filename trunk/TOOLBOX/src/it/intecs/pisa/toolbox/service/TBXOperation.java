@@ -21,6 +21,7 @@ import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.db.InstanceVariable;
 import it.intecs.pisa.toolbox.db.StatisticsUtil;
 import it.intecs.pisa.toolbox.log.ErrorMailer;
+import it.intecs.pisa.util.DOMUtil;
 
 
 public abstract class TBXOperation extends Operation{
@@ -385,6 +386,23 @@ public abstract class TBXOperation extends Operation{
         else validInputMessage=inputMessageBody;
 
         return validInputMessage;
+    }
+
+    public void dumpOperationScripts() throws Exception {
+
+       File scriptFile;
+       File opDir;
+       File serviceRootDir=this.getParentService().getServiceRoot();
+       
+       opDir=new File(serviceRootDir,"Operations/"+this.name);
+       opDir.mkdir();
+
+
+       for(Script s:this.scripts)
+       {
+           scriptFile=new File(serviceRootDir,s.getPath());
+           DOMUtil.dumpXML(s.getScriptDoc(), scriptFile);
+       }
     }
 
    

@@ -76,7 +76,7 @@ public class WPSUtil {
     private static String SCHEMA_FOLDER ="Schemas/";
     private static String ADDITIONAL_RESOURCES_PATH="AdditionalResources/WPS/";
     private static String DESCRIBE_TREE_FILE_NAME="DescribeTreeDump.xml";
-    private static String ALL_SCHEMA_LOCATION ="Schemas/wps/1.0.0/wpsAll.xsd";
+    private static String ALL_SCHEMA_LOCATION ="wps/1.0.0/wpsAll.xsd";//Schemas/
     private static String SCHEMA_SERVICE_ALL_FILE_NAME ="WPSSoapAll.xsd";
 
     protected DOMUtil domUtil=null;
@@ -195,7 +195,7 @@ public class WPSUtil {
           xslDocument=domUtil.fileToDocument(stylesheet);
           transformer = TransformerFactory.newInstance().newTransformer(new DOMSource(xslDocument));
           transformer.setParameter("wpsSchemaLocation", /*new File(newServicePath, */ALL_SCHEMA_LOCATION/*).getAbsolutePath()*/);
-          transformer.setParameter("wpsExecuteSchemaFolder", /*new File(newServicePath, */SCHEMA_FOLDER+serviceName/*).getAbsolutePath()*/);
+          transformer.setParameter("wpsExecuteSchemaFolder", /*new File(newServicePath, SCHEMA_FOLDER+*/serviceName/*).getAbsolutePath()*/);
           transformer.transform(new DOMSource(treeDescribeFolder), new StreamResult(new FileOutputStream(new File(newServicePath,SCHEMA_FOLDER+SCHEMA_SERVICE_ALL_FILE_NAME))));
        }
 

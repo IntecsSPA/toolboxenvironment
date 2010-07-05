@@ -164,6 +164,7 @@ public class Interface {
         }
 
         newarray[operations.length] = op;
+        op.parentInterf=this;
         operations = newarray;
 
     }

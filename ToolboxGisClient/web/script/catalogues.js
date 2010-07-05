@@ -131,6 +131,7 @@ ToolboxCatalogues.Application = function()
                        contextMap.async=false;
                        contextMap.validateOnParse=false;
                        contextMap.load("resources/xml/WebMapContext.xml");
+                      // contextMap.load("resources/xml/statrepWebMapContext.xml");
                        map = formatWMC.read(contextMap, {map: map});       
                        map.zoomToMaxExtent();
                        var toc = new WebGIS.Control.Toc({map: map, parseWMS: false, autoScroll: true});
@@ -152,7 +153,8 @@ ToolboxCatalogues.Application = function()
                         toolbar.add(new WebGIS.MapAction.Scale({map: map}));
                         toolbar.add(new WebGIS.MapAction.OfflineMap({map: map, 
                                       offline: false,
-                                      wmcURL: "resources/xml/WebMapContext.xml", 
+                                      //wmcURL: "resources/xml/WebMapContext.xml",
+                                      wmcURL: "resources/xml/statrepWebMapContext.xml",
                                       imageUrl: "resources/images/backround.png",
                                       imageAOI: "-180,-90,180,90",
                                       imageWidth: 1260,

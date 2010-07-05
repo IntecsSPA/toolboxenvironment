@@ -76,7 +76,7 @@ String extImport = (extVers.equalsIgnoreCase("2.0.1") ? extImport2 : extImport3)
     <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
 
 <script language="Javascript" type="text/javascript">
-
+    var currentService="<%=serviceName%>";
         function init(){
             <% if(loadPanel) {%>
               var firebugWarning = function () {
@@ -172,6 +172,7 @@ String extImport = (extVers.equalsIgnoreCase("2.0.1") ? extImport2 : extImport3)
         <br /><span id="loading-msg">Loading... Please Wait...</span></div>
     </div>
   <% } %>
+  <div id="workspace"></div>
 <TABLE cellSpacing=0 cellPadding=0 width="100%">
     <TR> 
         <TD class=headerTemplate> 

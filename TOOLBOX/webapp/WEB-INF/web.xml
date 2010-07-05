@@ -15,6 +15,14 @@
         <servlet-name>Push</servlet-name>
         <servlet-class>it.intecs.pisa.toolbox.PushServer</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Tools</servlet-name>
+        <servlet-class>it.intecs.pisa.toolbox.Tools</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Tools</servlet-name>
+        <url-pattern>/Tools</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Toolbox</servlet-name>
         <url-pattern>/services/*</url-pattern>

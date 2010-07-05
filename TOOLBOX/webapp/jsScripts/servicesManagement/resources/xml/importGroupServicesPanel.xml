@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<inputInterface xmlns="http://gisClient.pisa.intecs.it/gisClient">
+    <section name="TOOLBOX Import Services">
+        <group label="Load the services zip file:">
+          <input type="file" name="zipServices" hideLabel="false" id="zipServices" 
+           optional="true"
+           size="300"
+           iconImage="upload-icon"
+           blankText="Load Services Group Zip File"
+           action="importServices"
+           submitLabel="Import Services"/>
+            
+        </group>
+    </section>
+    <!--requestInformations backgroundColor="#eeeeee">
+        <buttons>
+            <button name="importServicesButton" id="importServicesButton" label="Import Services" iconImage="" onclick="importServices"/>
+        </buttons>
+    </requestInformations-->
+</inputInterface>

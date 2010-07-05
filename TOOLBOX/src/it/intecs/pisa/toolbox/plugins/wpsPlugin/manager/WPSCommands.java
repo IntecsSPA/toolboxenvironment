@@ -1,11 +1,11 @@
 package it.intecs.pisa.toolbox.plugins.wpsPlugin.manager;
 
 import it.intecs.pisa.common.tbx.Operation;
-import it.intecs.pisa.common.tbx.Service;
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.plugins.wpsPlugin.engine.WPSEngine;
 import it.intecs.pisa.toolbox.service.ServiceManager;
 import it.intecs.pisa.toolbox.service.TBXAsynchronousOperation;
+import it.intecs.pisa.toolbox.service.TBXSOAPInterface;
 import it.intecs.pisa.toolbox.service.TBXService;
 import it.intecs.pisa.toolbox.service.TBXSynchronousOperation;
 import it.intecs.pisa.util.DOMUtil;
@@ -65,16 +65,18 @@ public class WPSCommands extends WPSUtil{
       NodeList nl=serviceInformationDocument.getElementsByTagName(SERVICE_NAME_TAG_NAME);
       serviceName=DOMUtil.getTextFromNode((Element) nl.item(0));
       File wpsServiceTemplate=new File(Toolbox.getInstance().getRootDir(), SERVICE_TEMPLATE_PATH);
-
+      ServiceManager serviceManager;
+      serviceManager=ServiceManager.getInstance();
       try {
-            deployWPSTempateServiceWithZipPackage(wpsServiceTemplate,serviceName);
+           // deployWPSTempateServiceWithZipPackage(wpsServiceTemplate,serviceName);
+          serviceManager.deployService(wpsServiceTemplate, serviceName);
       } catch (Exception ex) {
-           ServiceManager serviceManager;
+         /*  ServiceManager serviceManager;
            serviceManager=ServiceManager.getInstance();
            Service service = serviceManager.getService(serviceName);
           if (service != null) {
               serviceManager.deleteService(serviceName);
-          }
+          }*/
       }
 
       File newServicePath=tbxServlet.getServiceRoot(serviceName);
@@ -101,18 +103,19 @@ public class WPSCommands extends WPSUtil{
 
       Document xslDocument,doc=null;
       File wpsServiceTemplate=new File(Toolbox.getInstance().getRootDir(), SERVICE_TEMPLATE_PATH);
-
+      ServiceManager serviceManager;
+      serviceManager=ServiceManager.getInstance();
       try {
-            deployWPSTempateServiceWithZipPackage(wpsServiceTemplate,serviceName);
+            //deployWPSTempateServiceWithZipPackage(wpsServiceTemplate,serviceName);
+            serviceManager.deployService(wpsServiceTemplate, serviceName);
       } catch (Exception ex) {
-            ServiceManager serviceManager;
-            serviceManager=ServiceManager.getInstance();
-            Service service = serviceManager.getService(serviceName);
+            
+           /* Service service = serviceManager.getService(serviceName);
           if (service != null) {
                serviceManager.deleteService(serviceName);
           }
           ex.printStackTrace(System.out);
-          throw new Exception(ex.getMessage());
+          throw new Exception(ex.getMessage());*/
       }
 
       File newServicePath=tbxServlet.getServiceRoot(serviceName);
@@ -176,8 +179,11 @@ public class WPSCommands extends WPSUtil{
         int i;
         File newServicePath=tbxServlet.getServiceRoot(serviceName);
         String asynchronous=null, processingName=null;
+        ServiceManager serviceManager=ServiceManager.getInstance();
+        TBXService tbxService=serviceManager.getService(serviceName);
         try{
-            domUtil.validateDocument(new File(newServicePath,DESCRIBE_RESPONSE_SCHEMA_LOCATION), describeDocument);
+            ((TBXSOAPInterface)tbxService.getImplementedInterface()).validateDocument(describeDocument);
+            //domUtil.validateDocument(new File(newServicePath,DESCRIBE_RESPONSE_SCHEMA_LOCATION), describeDocument);
         }catch(SAXException saxE){
                 createResponse.insertErrorValidation(saxE.getMessage());
                 validate=false;

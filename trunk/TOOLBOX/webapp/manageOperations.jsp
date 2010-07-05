@@ -1,3 +1,4 @@
+<%@page import="it.intecs.pisa.toolbox.configuration.ToolboxConfiguration"%>
 <!-- 
  -
  -  Copyright 2003-2004 Intecs
@@ -24,9 +25,9 @@
   <fmt:setBundle basename="ToolboxBundle" var="lang" scope="page"/>  
 </c:if>
 <% 
-	String service = request.getParameter("serviceName");
+    String service = request.getParameter("serviceName");
     String orderBy = request.getParameter("orderBy");
-	TBXService serv;
+    TBXService serv;
 
     serv=ServiceManager.getInstance().getService(service);
 
@@ -98,6 +99,12 @@ function deleteOp(service, operation)
         Transformer transformer = TransformerFactory.newInstance().newTransformer(new DOMSource(xslDocument));
         transformer.setParameter("serviceName", service);
         transformer.setParameter("orderBy", orderBy);
+        if(serv.getFullSchemaPath().contains("WPSSoapAll.xsd")){
+            ToolboxConfiguration td = ToolboxConfiguration.getInstance();
+            String address=td.getConfigurationValue(ToolboxConfiguration.ENDPOINT_ADDRESS);
+            String port=td.getConfigurationValue(ToolboxConfiguration.ENDPOINT_PORT);
+            transformer.setParameter("proxyURL", "http://"+address+":"+port);
+        }
         transformer.setParameter("viewWSDLInfoURL", response.encodeURL("viewWSDLInfo.jsp"));
         transformer.setParameter("configureOperationURL", response.encodeURL("configureOperation.jsp"));
         transformer.setParameter("deleteOperationURL", response.encodeURL("manager?cmd=deleteOperation"));

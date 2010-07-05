@@ -11,6 +11,7 @@
 </c:if>
 <%
 String serviceName = (request.getParameter("serviceName") == null ? "": request.getParameter("serviceName"));
+String error = (request.getParameter("error") == null ? "": request.getParameter("error"));
 String servicesManagement = "servicesManagement.jsp" +(serviceName == "" ? "" :"?serviceName=") + serviceName;
 String monitoringCenter = "monitoringCenter.jsp" +(serviceName == "" ? "" :"?serviceName=") + serviceName;
 String downloadVersion = ""; 
@@ -48,6 +49,9 @@ String extImport2="<link rel=\"stylesheet\" type=\"text/css\" href=\"jsScripts/e
              +"<script type=\"text/javascript\" src=\"jsScripts/ext-2.0.1/ext-all.js\"></script>\n";
 
 String extImport = (extVers.equalsIgnoreCase("2.0.1") ? extImport2 : extImport3);
+
+
+
                 
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
@@ -77,37 +81,47 @@ String extImport = (extVers.equalsIgnoreCase("2.0.1") ? extImport2 : extImport3)
 
 <script language="Javascript" type="text/javascript">
     var currentService="<%=serviceName%>";
+    var error="";
+    <% if(!error.equalsIgnoreCase("")){%>
+         error= "<%=error%>";
+
+    <% } %>
+
+
         function init(){
-            <% if(loadPanel) {%>
-              var firebugWarning = function () {
-            <% } %>
+            if(error==""){
+                <% if(loadPanel) {%>
+                  var firebugWarning = function () {
+                <% } %>
 
-            <% if(firebugControl) { %>
-                            var cp = new Ext.state.CookieProvider();
+                <% if(firebugControl) { %>
+                                var cp = new Ext.state.CookieProvider();
 
-                            if(window.console && window.console.firebug && ! cp.get('hideFBWarning')){
-                                Ext.Msg.show({
-                                   title:'Firebug Warning',
-                                   msg: 'Firebug is known to cause performance issues with the TOOLBOX 7.1 Application.',
-                                   buttons: Ext.Msg.OK,
-                                   icon: Ext.MessageBox.WARNING
+                                if(window.console && window.console.firebug && ! cp.get('hideFBWarning')){
+                                    Ext.Msg.show({
+                                       title:'Firebug Warning',
+                                       msg: 'Firebug is known to cause performance issues with the TOOLBOX 7.1 Application.',
+                                       buttons: Ext.Msg.OK,
+                                       icon: Ext.MessageBox.WARNING
+                                    });
+                                }
+                      <% } %>
+
+                 <% if(loadPanel) {%>
+                  }
+
+                            var hideMask = function () {
+                                Ext.get('loading').remove();
+                                Ext.fly('loading-mask').fadeOut({
+                                    remove:true,
+                                    callback : firebugWarning
                                 });
                             }
-                  <% } %>
 
-             <% if(loadPanel) {%>
-              }
-
-                        var hideMask = function () {
-                            Ext.get('loading').remove();
-                            Ext.fly('loading-mask').fadeOut({
-                                remove:true,
-                                callback : firebugWarning
-                            });
-                        }
-
-                        hideMask.defer(<%=loadDefer%>);
-            <% } %>
+                            hideMask.defer(<%=loadDefer%>);
+                <% } %>
+           }else
+             printError(error);
 
         }
 </script>

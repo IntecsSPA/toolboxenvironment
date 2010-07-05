@@ -25,43 +25,33 @@
 </c:if>
 <jsp:include page="header.jsp" /> 
 <%
-    String serviceName="";
-    String warnMsg = "";
-    String warn = "";
-    String createChecked = "checked";
-    String importChecked = "";
-    
-    if(request.getParameter("backbutton")==null || request.getParameter("backbutton").equals("false")){
-         session.setAttribute("newServiceName", null);
-          session.setAttribute("newServiceAbstract", null);
-          session.setAttribute("newServiceDescription", null);
-         
-       }
-    else      serviceName = (session.getAttribute("newServiceName") != null ? (String)session.getAttribute("newServiceName") : "");
-    
-    if(request.getParameter("importOrCreate") != null){    
-    if (request.getParameter("importOrCreate").equals("create")) {
-			createChecked = "checked";
-			importChecked = "";
-		} else if (request.getParameter("importOrCreate").equals("import")){
-			createChecked = "";
-			importChecked = "checked";
-		}
-	}
-    
-    if (request.getParameter("warningMsg") != null) {
-        warn = " - WARN!";
-        warnMsg = " - " + request.getParameter("warningMsg");
-        session.setAttribute("warning", request.getParameter("warningMsg"));
+    PropertyResourceBundle messages = (PropertyResourceBundle) ResourceBundle.getBundle("ToolboxBundle", new Locale((String) session.getAttribute("languageReq")));
+        String home = (String) messages.getObject("createServiceRequest.home");
+        String serviceManag = (String) messages.getObject("createServiceRequest.serviceManag");
+        String bc = "<a href='main.jsp'>" + home + "</a>&nbsp;&gt;&nbsp;<a href='servicesManagement.jsp'>" + serviceManag + "</a>";
+
+        String serviceName = "";
+        String warnMsg = "";
+        String warn = "";
+        String createChecked = "checked";
+        String importChecked = "";
+        Hashtable<String,String> newServiceHashtable;
+
+        if (request.getParameter("backbutton") == null || request.getParameter("backbutton").equals("false")) {
+            newServiceHashtable=new Hashtable<String,String>();
+            session.setAttribute("newServiceHashtable", newServiceHashtable);
+            newServiceHashtable.put("importOrCreate","");
+            newServiceHashtable.put("serviceName","");
+            newServiceHashtable.put("serviceAbstract","");
+            newServiceHashtable.put("serviceDescription","");
+            newServiceHashtable.put("serviceType","UserDefined");
+
+        } else {
+            newServiceHashtable=(Hashtable<String,String>)session.getAttribute("newServiceHashtable");
+            serviceName = newServiceHashtable.get("serviceName");
+            importChecked=newServiceHashtable.get("importOrCreate").equals("create")?"":"checked";
+            createChecked=newServiceHashtable.get("importOrCreate").equals("create")?"checked":"";
         }
-
-    PropertyResourceBundle messages = (PropertyResourceBundle)ResourceBundle.getBundle("ToolboxBundle", new Locale((String)session.getAttribute("languageReq")));
-    String home = (String)messages.getObject("selectImportOrCreate.home");
-    String servManag = (String)messages.getObject("selectImportOrCreate.servManag");
-    String create = (String)messages.getObject("selectImportOrCreate.create");
-
-    String bc = "<a href='main.jsp'>Home</a>&nbsp;&gt;" +
-              "&nbsp;<a href='servicesManagement.jsp'>"+servManag+"</a>&nbsp;&gt;&nbsp;" + create;
     
 %>
 <link rel="stylesheet" type="text/css" href="jsScripts/import/gis-client-library/import/ext/resources/css/ext-all.css" />
@@ -162,7 +152,7 @@
             <TR> 
               <TD id=main> <P class=arbloc><FONT class=arttl><fmt:message key="selectImportOrCreate.create" bundle="${lang}"/></FONT></P> 
                 <P>  
-			<form NAME="newService" onsubmit="return controlNewService()" method="post" action="<%= response.encodeURL("createServiceRequestStep1.jsp")%>">
+			<form NAME="newService" onsubmit="return controlNewService()" method="post" action="<%= response.encodeURL("createNewServiceSelectType.jsp")%>">
 				<!-- Page contents table-->
 					<table width="80%" cellspacing="2" cellpadding="2" align="center">
                         <tr><!-- Row 1 -->

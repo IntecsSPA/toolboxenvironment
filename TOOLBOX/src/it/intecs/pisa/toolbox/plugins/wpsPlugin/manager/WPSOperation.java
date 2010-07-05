@@ -4,6 +4,9 @@ package it.intecs.pisa.toolbox.plugins.wpsPlugin.manager;
 
 import it.intecs.pisa.common.tbx.Operation;
 import it.intecs.pisa.toolbox.plugins.wpsPlugin.engine.WPSEngine;
+import it.intecs.pisa.toolbox.service.TBXAsynchronousOperation;
+import it.intecs.pisa.toolbox.service.TBXOperation;
+import it.intecs.pisa.toolbox.service.TBXSynchronousOperation;
 import java.io.File;
 
 /**
@@ -13,8 +16,8 @@ import java.io.File;
 public class WPSOperation {
 
 
-    public static Operation newWPSSyncOperation(String processingName) throws Exception{
-        Operation operationDescr = new Operation();
+    public static TBXSynchronousOperation newWPSSyncOperation(String processingName) throws Exception{
+        TBXSynchronousOperation operationDescr =  new TBXSynchronousOperation();
         operationDescr.setName(WPSEngine.EXECUTE_OPERATION_PREFIX+processingName);
         operationDescr.setAdmittedHosts("");
         operationDescr.setType("synchronous");
@@ -29,11 +32,11 @@ public class WPSOperation {
 
     }
 
-    public static Operation newWPSAsyncOperation(File newServicePath, String processingName) throws Exception{
+    public static TBXAsynchronousOperation newWPSAsyncOperation(File newServicePath, String processingName) throws Exception{
         // Create WPS Engine Asynchoronus Operation
-        Operation operationAsyncDescr=null;
+        TBXAsynchronousOperation operationAsyncDescr=null;
         String execupteOperationAsyncName=WPSEngine.EXECUTE_OPERATION_PREFIX+processingName+WPSEngine.EXECUTE_ASYNC_OPERATION_SUFIX;
-        operationAsyncDescr = new Operation();
+        operationAsyncDescr = new TBXAsynchronousOperation();
         operationAsyncDescr.setName(execupteOperationAsyncName);
         operationAsyncDescr.setType("asynchronous");
         operationAsyncDescr.setPollingRate("15s");

@@ -83,7 +83,8 @@ public class DeployServiceCommand extends NativeCommandsManagerPlugin {
             serviceManager=ServiceManager.getInstance();
             serviceManager.deployService(packageFile, serviceName);
         } catch (Exception e) {
-            resp.sendError(resp.SC_INTERNAL_SERVER_ERROR);
+            resp.sendRedirect("selectImportOrCreate.jsp?serviceName=" + serviceName+"&error=serviceexist");
+            return;
         }
         if (forward == true) {
             resp.sendRedirect("serviceConfiguration.jsp?serviceName=" + serviceName);

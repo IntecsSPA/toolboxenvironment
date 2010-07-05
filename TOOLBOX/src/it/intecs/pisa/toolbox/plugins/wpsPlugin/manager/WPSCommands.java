@@ -5,6 +5,7 @@ import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.plugins.wpsPlugin.engine.WPSEngine;
 import it.intecs.pisa.toolbox.service.ServiceManager;
 import it.intecs.pisa.toolbox.service.TBXAsynchronousOperation;
+import it.intecs.pisa.toolbox.service.TBXOperation;
 import it.intecs.pisa.toolbox.service.TBXSOAPInterface;
 import it.intecs.pisa.toolbox.service.TBXService;
 import it.intecs.pisa.toolbox.service.TBXSynchronousOperation;
@@ -170,6 +171,7 @@ public class WPSCommands extends WPSUtil{
         //Operation operationDescr=null;
 
         createWPSProcess(serviceName,processingName,Boolean.valueOf(asynchronous),engineType, new FileInputStream(script));
+      
        
 }
 
@@ -280,7 +282,7 @@ public class WPSCommands extends WPSUtil{
 
     public Document createWPSProcess(String serviceName, String processingName, boolean async, String engineType, InputStream script) throws Exception{
        File newServicePath=tbxServlet.getServiceRoot(serviceName);
-       Operation operationDescr=null;
+       
        File originalScript=new File(newServicePath,SERVICE_RESOURCES_PATH+"/execute_"+processingName+"_script");
        IOUtil.copy(script, new FileOutputStream(originalScript));
        File describeFolder=new File(newServicePath, DESCRIBE_PROCESS_PATH);
@@ -304,17 +306,23 @@ public class WPSCommands extends WPSUtil{
        WPSEngine wpsEngine = (WPSEngine) wpsEngineClass.newInstance();
        wpsEngine.setScriptEngine(new FileInputStream(originalScript));
 
-       operationDescr=wpsEngine.createWPSSyncOperation(newServicePath, processingName);
+       TBXSynchronousOperation operationDescr=wpsEngine.createWPSSyncOperation(newServicePath, processingName);
        ServiceManager serviceManager=ServiceManager.getInstance();
        TBXService service = serviceManager.getService(serviceName);
-       service.addOperation(new TBXSynchronousOperation(operationDescr));
-      
+       service.addOperation(operationDescr);
+
+
+       operationDescr.dumpOperationScripts();
+
        if(async){
            // Create Engine Asynchoronus Operation
-           Operation operationAsyncDescr=wpsEngine.createWPSAsyncOperation(newServicePath,processingName);
-           service.addOperation(new TBXAsynchronousOperation(operationAsyncDescr));
+           TBXAsynchronousOperation operationAsyncDescr=wpsEngine.createWPSAsyncOperation(newServicePath,processingName);
+           service.addOperation(operationAsyncDescr);
+           operationAsyncDescr.dumpOperationScripts();
            
         }
+       
+       service.dumpService();
        createResponse.insertOperationResult(true);
 
        return createResponse.getDocumentResponse();

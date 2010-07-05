@@ -1,7 +1,8 @@
 package it.intecs.pisa.toolbox.plugins.wpsPlugin.engine;
 
-import it.intecs.pisa.common.tbx.Operation;
 import it.intecs.pisa.common.tbx.Script;
+import it.intecs.pisa.toolbox.service.TBXAsynchronousOperation;
+import it.intecs.pisa.toolbox.service.TBXSynchronousOperation;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.IOUtil;
 import java.io.File;
@@ -31,11 +32,11 @@ public class WPSToolboxEngine implements WPSEngine{
 
     private String engineName="Toolbox";
 
-    public Operation createWPSSyncOperation(File newServicePath, String processingName) throws Exception {
+    public TBXSynchronousOperation createWPSSyncOperation(File newServicePath, String processingName) throws Exception {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public Operation createWPSAsyncOperation(File newServicePath, String processingName) throws Exception {
+    public TBXAsynchronousOperation createWPSAsyncOperation(File newServicePath, String processingName) throws Exception {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

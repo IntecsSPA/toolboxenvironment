@@ -62,7 +62,7 @@ public class CreateOperationFromInterfaceCommand extends NativeCommandsManagerPl
     }
 
     protected TBXOperation getOperationToAdd(Hashtable<String, FileItem> mimeparts) throws Exception {
-        Operation operationDescr;
+        TBXOperation operationDescr;
         InterfacePluginManager interfman;
         Interface implementedInterface;
         boolean isAsynchronous;
@@ -111,26 +111,12 @@ public class CreateOperationFromInterfaceCommand extends NativeCommandsManagerPl
         repoRoot=interfman.getInterfaceDescriptionPluginDirectory(interfaceName, interfaceVersion, interfaceType, interfaceMode);
         loadScripts(operationDescr,repoRoot);
         setUserDefinedScripts(mimeparts,operationDescr,serviceRoot);
-        dumpOperationScripts(operationDescr,serviceRoot);
+        operationDescr.dumpOperationScripts();
 
         return (TBXOperation) operationDescr;
     }
 
-    private void dumpOperationScripts(Operation operationDescr,File serviceRootDir) throws Exception {
-       Script[] scripts;
-       File scriptFile;
-       File opDir;
-
-       opDir=new File(serviceRootDir,"Operations/"+operationDescr.getName());
-       opDir.mkdir();
-
-       scripts= operationDescr.getScripts();
-       for(Script s:scripts)
-       {
-           scriptFile=new File(serviceRootDir,s.getPath());
-           DOMUtil.dumpXML(s.getScriptDoc(), scriptFile);
-       }
-    }
+    
 
     private void loadScripts(Operation operationDescr,File startDir) throws Exception {
        Script[] scripts;

@@ -40,7 +40,7 @@
     </section>
     <section name="Protocol Parameters">
         <group label="Soap Parameters">
-            <input type="text" name="ServiceUrl" label="Catalogue Url" id="ServiceUrl" optional="false" value="http://hrt-11.pisa.intecs.it/ergorr/webservice" grow="true"/>
+            <input type="text" name="ServiceUrl" label="Catalogue Url" id="ServiceUrl" optional="false" value="http://as4.rosa-rc.ro/TOOLBOX/services/OGC06-131_standalone" grow="true"/>
             <!--input type="text" name="ServiceUrl" label="Catalogue Url" id="ServiceUrl" optional="false" value="http://192.168.24.84:8084/ToolboxSecurity/services/ClientSecurityWrapper/SecuredEBRR" grow="true"/-->
             <!--input type="text" name="catalogueOperation" label="Operation" id="catalogueOperation" disabled="true" optional="false" value="http://earth.esa.int/SOAP/searchRequest"/-->
             <input type="combo" name="soapVersion" label="SOAP Version" size="16" id="soapVersion" optional="true" store="VALUES" storeFields="['value']"

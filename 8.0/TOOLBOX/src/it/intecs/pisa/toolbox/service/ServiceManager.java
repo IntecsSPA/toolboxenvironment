@@ -53,9 +53,12 @@ public class ServiceManager {
         TBXService newServ;
         File serviceRoot;
         File schemaDir;
+        boolean serviceExist=false;
+        DOMUtil util= new DOMUtil();
 
         try {
-            if (isServiceDeployed(serviceName)) {
+            serviceExist=isServiceDeployed(serviceName);
+            if (serviceExist) {
                 throw new ToolboxException("Service already exists!");
             }
 
@@ -64,8 +67,20 @@ public class ServiceManager {
 
             Zip.extractZipFile(packageFile.getAbsolutePath(), serviceRoot.getAbsolutePath());
 
+            File descriptorFile = new File(serviceRoot, ServiceConstants.SERVICE_DESCRIPTOR_FILE_NAME);
+            Document descriptor = util.fileToDocument(descriptorFile);
+
+            Element root = descriptor.getDocumentElement();
+            String name = root.getAttribute("serviceName");
+            if (name.equals(serviceName) == false) {
+                root.setAttribute("serviceName", serviceName);
+            }
+
+             DOMUtil.dumpXML(descriptor,descriptorFile);
+
             schemaDir=new File(serviceRoot,"Schemas");
-            SchemaSetRelocator.updateSchemaLocationToAbsolute(schemaDir, schemaDir.toURI());
+            //SchemaSetRelocator.updateSchemaLocationToAbsolute(schemaDir, schemaDir.toURI());
+
 
             newServ = new TBXService(serviceRoot, getWSDLDir(serviceName));
             ServiceStatuses.removeServiceStatus(serviceName);
@@ -75,7 +90,8 @@ public class ServiceManager {
 
             newServ.attemptToDeployWSDLAndSchemas();
         } catch (Exception ex) {
-            deleteService(serviceName);
+            if(!serviceExist)
+                deleteService(serviceName);
             throw ex;
 
         }

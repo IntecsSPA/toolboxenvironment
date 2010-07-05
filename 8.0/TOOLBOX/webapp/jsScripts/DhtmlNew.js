@@ -508,3 +508,16 @@ if(perc_width)
    });  
    pageWindowFrame[id].show();
 }
+
+
+function printError (errorType){
+    if(errorType == 'serviceexist'){
+         Ext.Msg.show({
+            title:'Create a new service: Error',
+            buttons: Ext.Msg.OK,
+            msg: 'Service already defined. Please choose another name',
+            animEl: 'elId',
+            icon: Ext.MessageBox.ERROR
+     });  
+    }
+}

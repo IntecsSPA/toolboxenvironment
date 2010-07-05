@@ -9,6 +9,7 @@ import it.intecs.pisa.common.tbx.Service;
 import it.intecs.pisa.common.tbx.lifecycle.LifeCycle;
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.soap.toolbox.exceptions.ToolboxException;
+import it.intecs.pisa.toolbox.constants.ServiceConstants;
 import it.intecs.pisa.toolbox.db.ServiceInfo;
 import it.intecs.pisa.toolbox.db.ToolboxInternalDatabase;
 import it.intecs.pisa.toolbox.security.ToolboxSecurityConfigurator;
@@ -16,7 +17,6 @@ import it.intecs.pisa.toolbox.service.instances.InstanceHandler;
 import it.intecs.pisa.toolbox.service.tasks.ServiceLifeCycle;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.IOUtil;
-import it.intecs.pisa.util.SchemaSetRelocator;
 import it.intecs.pisa.util.Zip;
 import java.io.File;
 import java.io.FileWriter;
@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.concurrent.Semaphore;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * This class handles all services currently deployed under TOOLBOX.
@@ -55,6 +56,7 @@ public class ServiceManager {
         TBXService newServ;
         File serviceRoot;
         File schemaDir;
+        DOMUtil util= new DOMUtil();
 
         try {
             if (isServiceDeployed(serviceName)) {
@@ -66,8 +68,20 @@ public class ServiceManager {
 
             Zip.extractZipFile(packageFile.getAbsolutePath(), serviceRoot.getAbsolutePath());
 
+            File descriptorFile = new File(serviceRoot, ServiceConstants.SERVICE_DESCRIPTOR_FILE_NAME);
+            Document descriptor = util.fileToDocument(descriptorFile);
+
+            Element root = descriptor.getDocumentElement();
+            String name = root.getAttribute("serviceName");
+            if (name.equals(serviceName) == false) {
+                root.setAttribute("serviceName", serviceName);
+            }
+
+             DOMUtil.dumpXML(descriptor,descriptorFile);
+
             schemaDir=new File(serviceRoot,"Schemas");
             //SchemaSetRelocator.updateSchemaLocationToAbsolute(schemaDir, schemaDir.toURI());
+
 
             newServ = new TBXService(serviceRoot, getWSDLDir(serviceName));
             ServiceStatuses.removeServiceStatus(serviceName);

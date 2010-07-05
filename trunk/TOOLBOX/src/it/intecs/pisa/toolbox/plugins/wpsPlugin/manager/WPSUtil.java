@@ -5,6 +5,7 @@ import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.configuration.ToolboxConfiguration;
 import it.intecs.pisa.toolbox.plugins.wpsPlugin.engine.WPSEngine;
 import it.intecs.pisa.toolbox.service.ServiceManager;
+import it.intecs.pisa.toolbox.service.TBXService;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.IOUtil;
 import it.intecs.pisa.util.SchemaSetRelocator;
@@ -193,8 +194,8 @@ public class WPSUtil {
        if(stylesheet.exists()){
           xslDocument=domUtil.fileToDocument(stylesheet);
           transformer = TransformerFactory.newInstance().newTransformer(new DOMSource(xslDocument));
-          transformer.setParameter("wpsSchemaLocation", new File(newServicePath, ALL_SCHEMA_LOCATION).getAbsolutePath());
-          transformer.setParameter("wpsExecuteSchemaFolder", new File(newServicePath, SCHEMA_FOLDER+serviceName).getAbsolutePath());
+          transformer.setParameter("wpsSchemaLocation", /*new File(newServicePath, */ALL_SCHEMA_LOCATION/*).getAbsolutePath()*/);
+          transformer.setParameter("wpsExecuteSchemaFolder", /*new File(newServicePath, */SCHEMA_FOLDER+serviceName/*).getAbsolutePath()*/);
           transformer.transform(new DOMSource(treeDescribeFolder), new StreamResult(new FileOutputStream(new File(newServicePath,SCHEMA_FOLDER+SCHEMA_SERVICE_ALL_FILE_NAME))));
        }
 
@@ -202,9 +203,13 @@ public class WPSUtil {
        if(stylesheet.exists()){
            xslDocument=domUtil.fileToDocument(stylesheet);
            transformer = TransformerFactory.newInstance().newTransformer(new DOMSource(xslDocument));
-           transformer.setParameter("wpsSchemaLocation", new File(newServicePath, ALL_SCHEMA_LOCATION).getAbsolutePath());
+           transformer.setParameter("wpsSchemaLocation", /*new File(newServicePath, */ALL_SCHEMA_LOCATION/*).getAbsolutePath()*/);
            transformer.transform(new DOMSource(describeDocument), new StreamResult(new FileOutputStream(new File(newServicePath,SCHEMA_FOLDER+serviceName+"/"+processingName+".xsd"))));
        }
+
+       ServiceManager serviceManager=ServiceManager.getInstance();
+       TBXService tbxService=serviceManager.getService(serviceName);
+       tbxService.attemptToDeployWSDLAndSchemas();
     }
 
 

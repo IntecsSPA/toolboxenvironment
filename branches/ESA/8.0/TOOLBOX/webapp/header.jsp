@@ -7,6 +7,7 @@
 </c:if>
 <%
 String serviceName = (request.getParameter("serviceName") == null ? "": request.getParameter("serviceName"));
+String error = (request.getParameter("error") == null ? "": request.getParameter("error"));
 String servicesManagement = "servicesManagement.jsp" +(serviceName == "" ? "" :"?serviceName=") + serviceName;
 String monitoringCenter = "monitoringCenter.jsp" +(serviceName == "" ? "" :"?serviceName=") + serviceName;
 String downloadVersion = ""; 

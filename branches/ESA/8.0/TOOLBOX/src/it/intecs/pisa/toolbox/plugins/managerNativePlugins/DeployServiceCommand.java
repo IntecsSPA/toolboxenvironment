@@ -26,7 +26,7 @@ public class DeployServiceCommand extends NativeCommandsManagerPlugin {
         executeDeploy(req,resp);
     }
 
-    private void executeDeploy(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+     private void executeDeploy(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String contentType = null;
         File packageFile = null;
         FileItem item = null;
@@ -83,7 +83,8 @@ public class DeployServiceCommand extends NativeCommandsManagerPlugin {
             serviceManager=ServiceManager.getInstance();
             serviceManager.deployService(packageFile, serviceName);
         } catch (Exception e) {
-            resp.sendError(resp.SC_INTERNAL_SERVER_ERROR);
+            resp.sendRedirect("selectImportOrCreate.jsp?serviceName=" + serviceName+"&error=serviceexist");
+            return;
         }
         if (forward == true) {
             resp.sendRedirect("serviceConfiguration.jsp?serviceName=" + serviceName);

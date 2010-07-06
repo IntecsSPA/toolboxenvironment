@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+	<extension point="org.eclipse.debug.core.sourceLocators">
+      <sourceLocator
+            id="com.intecs.toolboxscript.sourceLookupDirector"
+            class="it.intecs.pisa.develenv.model.launch.ToolboxScriptSourceLookupDirector"
+            name="Tscript Source Lookup Director">
+      </sourceLocator>
+   </extension>
+   
+   <extension point="org.eclipse.debug.core.sourcePathComputers">
+      <sourcePathComputer
+            id="com.intecs.toolboxscript.sourcePathComputer.tscript"
+            class="it.intecs.pisa.develenv.model.launch.ToolboxScriptSourcePathComputerDelegate">
+      </sourcePathComputer>
+   </extension>
+
+   <extension point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            name="Toolbox"
+            delegate="it.intecs.pisa.develenv.model.launch.ToolboxScriptLaunchDelegate"
+            modes="run,debug"
+            id="com.intecs.ToolboxScript.launchConfigurationType.tscript"
+            sourcePathComputerId="com.intecs.toolboxscript.sourcePathComputer.tscript"
+            sourceLocatorId="com.intecs.toolboxscript.sourceLookupDirector">
+      </launchConfigurationType>
+   </extension>
+   
+  
+ 
+   
+ 	<extension point="org.eclipse.core.runtime.contentTypes"> 
+  		<content-type  	
+			id="com.intecs.ToolboxScript.contentType"
+ 			name="Toolbox Script"
+ 			base-type="org.eclipse.core.runtime.xml"
+			file-extensions="tscript">
+		</content-type>
+  	</extension>
+  	  
+   <extension id="com.intecs.ToolboxScript.lineBreakpoint.marker"
+         point="org.eclipse.core.resources.markers">
+      	<super type="org.eclipse.debug.core.lineBreakpointMarker">
+      </super>
+      <persistent value="true">
+      </persistent>
+   </extension>
+      
+   <extension point="org.eclipse.debug.core.breakpoints">
+      <breakpoint
+            markerType="com.intecs.ToolboxScript.lineBreakpoint.marker"
+            class="it.intecs.pisa.develenv.model.debug.TscriptLineBreakpoint"
+            id="com.intecs.toolboxscript.lineBreakpoint">
+      </breakpoint>
+   </extension>
+   
+   <extension point="org.eclipse.core.resources.natures"
+      id="TOOLBOXProjectNature" name="TOOLBOX Project">
+      <runtime>
+      	<run class="it.intecs.pisa.develenv.model.project.ToolboxProjectNature"></run>
+      </runtime>
+   </extension>
+  
+	
+   
+</plugin>

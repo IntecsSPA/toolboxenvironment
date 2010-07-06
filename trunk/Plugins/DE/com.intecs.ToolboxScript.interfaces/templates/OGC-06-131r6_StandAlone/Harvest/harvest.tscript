@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:ebrr="http://pisa.intecs.it/toolbox/ebrr" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pisa.intecs.it/mass/toolbox/xmlScript file:/home/massi/Programmi/eclipse_3.2.1/plugins/com.intecs.ToolboxScript.editorFiles_1.2.0/schemas/xmlScript.xsd">
+		
+	<setVariable name="cswResourceFormat">
+		<xPath xmlns:csw="http://www.opengis.net/cat/csw/2.0.2">
+			<xmlRequest/>
+			<string>//@ResourceFormat</string>
+		</xPath>
+	</setVariable>
+	
+ 	<setVariable name="cswResponseHandlerCount">
+		<xPath xmlns:csw="http://www.opengis.net/cat/csw/2.0.2">
+			<xmlRequest/>
+			<string>count(//ResponseHandler)</string>
+		</xPath>
+	</setVariable>
+	
+	<setVariable name="cswResourceType">
+		<xPath xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" outputType="text">
+			<xmlRequest/>
+			<string>/csw:Harvest/csw:ResourceType/text()</string>
+		</xPath>
+	</setVariable>
+	
+	<setVariable name="cswHarvestInterval">
+		<xPath xmlns:csw="http://www.opengis.net/cat/csw/2.0.2">
+			<xmlRequest/>
+			<string>/csw:Harvest/csw:HarvestInterval/text()</string>
+		</xPath>
+	</setVariable>
+	
+
+	<if>
+		<and>
+			<oneq>
+				<variable name="cswResourceFormat"/>
+				<string/>
+			</oneq>
+			<oneq>
+				<variable name="cswResourceFormat"/>
+				<string>application/xml</string>
+			</oneq>
+		</and>
+		<return>
+			<SOAPFault>
+				<string>Resource Format not supported.</string>
+			</SOAPFault>
+		</return>
+		
+	</if>
+	
+	<if>
+		<and>
+			<oneq>
+				<variable name="cswResponseHandlerCount"/>
+				<string/>
+			</oneq>
+			<gt>
+				<atoi>
+					<variable name="cswResponseHandlerCount"/>
+				</atoi>
+				<literal type="int" value="0"/>
+			</gt>
+		</and>
+		
+		<return>
+			<SOAPFault>
+				<string>Response handler not supported.</string>
+			</SOAPFault>
+		</return>
+		
+	</if>
+
+    <if>
+		<gt>
+            <stringLength>
+                <variable name="ebRRExternalInstanceUrl"/>
+            </stringLength>
+            <literal type="int" value="0"/>
+		</gt>
+        <setVariable name="connection">
+            <ebrr:catalogueConnection url="$ebRRExternalInstanceUrl"/>
+        </setVariable>
+        <setVariable name="connection">
+            <ebrr:directCatalogueConnection dbName="$ebRRDbName" dbPassword="$ebRRDbPwd" dbUrl="$ebRRDbUrl" dbUser="$ebRRDbUser"/>
+        </setVariable>
+    </if>
+
+	<ebrr:harvest harvestInterval="$cswHarvestInterval" resourceType="$cswResourceType">
+		<variable name="connection"/>
+		<xPath xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" outputType="text">
+			<xmlRequest/>
+			<string>/csw:Harvest/csw:Source/text()</string>
+		</xPath>
+	</ebrr:harvest>
+
+</sequence>

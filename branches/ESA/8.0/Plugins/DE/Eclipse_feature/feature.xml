@@ -2,7 +2,7 @@
 <feature
       id="Toolbox.Develop.Plugin"
       label="Toolbox Develop Plugin"
-      version="1.3.13"
+      version="1.3.14"
       provider-name="Intecs Informatica e Tecnologia del Software"
       os="linux,macosx,win32"
       ws="gtk,win32"
@@ -749,7 +749,7 @@ Public License instead of this License.  But first, please read
          id="com.intecs.ToolboxScript.model"
          download-size="0"
          install-size="0"
-         version="1.3.12"
+         version="1.3.13"
          unpack="false"/>
 
    <plugin

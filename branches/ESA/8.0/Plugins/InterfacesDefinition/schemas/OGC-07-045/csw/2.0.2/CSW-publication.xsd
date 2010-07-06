@@ -53,7 +53,7 @@
          </xsd:documentation>
       </xsd:annotation>
       <xsd:sequence>
-         <xsd:any processContents="strict" namespace="##other"
+         <xsd:any processContents="lax" namespace="##other"
             maxOccurs="unbounded"/>
       </xsd:sequence>
       <xsd:attribute name="typeName" type="xsd:anyURI" use="optional"/>
@@ -74,7 +74,7 @@
       </xsd:annotation>
       <xsd:sequence>
          <xsd:choice>
-            <xsd:any processContents="strict" namespace="##other"/>
+            <xsd:any processContents="lax" namespace="##other"/>
             <xsd:sequence>
                <xsd:element ref="csw:RecordProperty" maxOccurs="unbounded"/>
                <xsd:element ref="csw:Constraint"/>

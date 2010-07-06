@@ -169,13 +169,20 @@ public class ToolboxEclipseProjectUtil {
 		Service descriptor = null;
 		IFile descriptorFile = null;
 
-		descriptor = new Service();
-
-		descriptorFile = project
-				.getFile(ToolboxEclipseProject.FILE_SERVICE_DESCRIPTOR);
-
-		return descriptor.loadFromFile(descriptorFile.getLocationURI()
-				.getPath());
+		try
+		{
+			descriptor = new Service();
+	
+			descriptorFile = project
+					.getFile(ToolboxEclipseProject.FILE_SERVICE_DESCRIPTOR);
+	
+			return descriptor.loadFromFile(descriptorFile.getLocationURI()
+					.getPath());
+		}
+		catch(Exception e)
+		{
+			return false;
+		}
 	}
 
 	public static boolean isToolboxProject(String projectName) {

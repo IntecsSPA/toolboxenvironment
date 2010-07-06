@@ -32,6 +32,24 @@ String newVersion=null;
   String tbxRevision=tbxServlet.getToolboxRevision();
                 
 %>
+
+<script language="Javascript" type="text/javascript">
+    var currentService="<%=serviceName%>";
+    var error="";
+    <% if(!error.equalsIgnoreCase("")){%>
+         error= "<%=error%>";
+
+    <% } %>
+
+
+        function init(){
+            if(error==""){
+                
+           }else
+             printError(error);
+
+        }
+</script>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
@@ -71,7 +89,7 @@ String newVersion=null;
 
    
 </HEAD>
-<BODY id=body> 
+<BODY id=body onload="init()"> 
 <TABLE cellSpacing=0 cellPadding=0 width="100%">
     <TR> 
         <TD class=headerTemplate> 

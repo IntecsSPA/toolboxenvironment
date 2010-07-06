@@ -1,6 +1,6 @@
 <%@ page language="java"  errorPage="errorPage.jsp"  import="it.intecs.pisa.toolbox.db.*,it.intecs.pisa.toolbox.service.status.*,it.intecs.pisa.toolbox.service.*"%>
 <%@ include file="checkAccount.jsp" %>
-<jsp:include page="header.jsp" /> 
+<jsp:include page="header.jsp?firebugControl=false&loadPanel=true&loadDefer=250&extVers=3" />
 <%@taglib uri="http://java.sun.com/jstl/core"  prefix="c"%>
 <%@taglib uri="http://java.sun.com/jstl/fmt"  prefix="fmt"%>
 <c:if test="${sessionScope.languageReq!= null}">
@@ -80,6 +80,45 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;&nbsp;" + serviceManag;
     }
 </script>
 
+
+                <link rel="stylesheet" type="text/css" href="jsScripts/import/gis-client-library/import/ext/resources/css/ext-all.css" />
+<link rel="stylesheet" type="text/css" href="jsScripts/import/gis-client-library/widgets/style/css/webgis.css" />
+<script type="text/javascript" src="jsScripts/import/gis-client-library/import/OpenLayers/lib/OpenLayers.js"></script>
+<!--script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/jquery/jquery-1.2.6.js"></script-->
+
+<link rel="stylesheet" type="text/css" href="jsScripts/import/gis-client-library/import/ext/ux/fileuploadfield/css/fileuploadfield.css"/>
+
+
+<!--script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/adapter/jquery/ext-jquery-adapter.js"></script-->
+<!--script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/adapter/ext/ext-base.js"></script>
+<script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/ext-all.js"></script-->
+<script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/ux/fileuploadfield/FileUploadField.js"></script>
+<script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/ux/Spotlight.js"></script>
+<script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/openlayers/Format/XMLKeyValue.js"></script>
+
+<script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/webgis/Panel/WindowInterfacePanel.js"></script>
+<script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/general.js"></script>
+<script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/manager.js"></script>
+<script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/browserDetect.js"></script>
+<script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/XmlDoc.js"></script>
+<script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/ext/ExtFormUtils.js"></script>
+<script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/ext/ExtFormType.js"></script>
+<script type="text/javascript" src="jsScripts/import/gis-client-library/import/sarissa/Sarissa.js"></script>
+<script type="text/javascript" src="jsScripts/import/gis-client-library/import/sarissa/sarissa_ieemu_xpath.js"></script>
+
+
+
+
+<script type="text/javascript" src="jsScripts/servicesManagement/scripts/servicesManagementManager.js"></script>
+<style type="text/css">
+
+.upload-icon {
+            background: url('images/image_add.png') no-repeat 0 0 !important;
+        }
+</style>
+
+
+<div id="workspace"></div>
 <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center> 
     <TBODY> 
         <TR>
@@ -93,7 +132,19 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;&nbsp;" + serviceManag;
                     <P> 
                         <A href="<%= response.encodeURL("selectImportOrCreate.jsp") %>"><IMG class=labelHomePage title=create alt="Create a new service" src="images/createService.png" align=middle border=0></A>
                     <fmt:message key="servicesManagement.selection" bundle="${lang}"/></P> 
-                </DIV> 
+                </DIV>
+                <!-- ************ Backup/Restore Services Section *****************-->
+                <DIV class="portletItem" id="05">
+                    <DIV>
+                        <A href=# onclick="javascript: importExportGroupServices();"><fmt:message key="servicesManagement.impExp" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
+                    </DIV>
+                    <P>
+                        <A href=# onclick="javascript: importExportGroupServices();"><IMG class=labelHomePage title="import/export services" alt="import/export services" src="images/createService.png" align=middle border=0></A>
+                        <fmt:message key="servicesManagement.impExpDescr" bundle="${lang}"/>
+                    </P>
+                </DIV>
+                <!-- **************************************************************-->
+ 
                 <DIV class="portletItem" id="02"> 
                     <DIV> 
                         <A href="<%= response.encodeURL(showAllServicesStatus) %>"><fmt:message key="servicesManagement.display" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
@@ -120,7 +171,9 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;&nbsp;" + serviceManag;
                         <A href=# ONCLICK="javascript: assign('startAllServices');"><IMG class=labelHomePage title="startAllServices" alt="startAllServices" src="images/startAll.png" align=middle border=0> </a>
                         <fmt:message key="servicesManagement.startDescr" bundle="${lang}"/>
                     </P>
-                </DIV> 
+                </DIV>
+
+                
                 <%
                 if (service.equals("")) {
                 %>

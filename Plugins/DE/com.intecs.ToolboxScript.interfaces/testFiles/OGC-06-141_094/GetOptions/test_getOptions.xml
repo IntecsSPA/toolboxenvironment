@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GetOptions xmlns="http://earth.esa.int/hma/ordering" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="">
+	<collectionId></collectionId>
+	<userInformation>
+		<userId></userId>
+		<password></password>
+	</userInformation>
+</GetOptions>

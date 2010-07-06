@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interfaces>
+	<interface name="OGC-07-045" version="1.0.0" type="Catalogue" mode="Gateway">
+    <rootSchemaFile>csw/2.0.2/CSW-publication.xsd</rootSchemaFile>
+    <schemaSetLocation>schemas/OGC-07-045</schemaSetLocation>
+    <wsdlFile>CatalogueInterfacesPlugin/wsdl/</wsdlFile>
+    <targetNameSpace>http://www.opengis.net/cat/csw/2.0.2</targetNameSpace>
+    <operations>
+            <operation name="GetCapabilities" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#GetCapabilities">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetCapabilitiesRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetCapabilitiesResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-07-045_Gateway/GetCapabilities/getCapabilities.tscript" overrideByUser="true"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-07-045_Gateway/GetCapabilities/getCapabilities_globalError.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-07-045/GetCapabilities/test.xml</testFiles>
+            </operation>
+            <operation name="DescribeRecord" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#DescribeRecord">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="DescribeRecordRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="DescribeRecordResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-07-045_Gateway/DescribeRecord/describeRecord.tscript" overrideByUser="true"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-07-045_Gateway/DescribeRecord/describeRecord_globalError.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-07-045/DescribeRecord/test.xml</testFiles>
+            </operation>
+            <operation name="GetRecords" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecords">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordsRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordsResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-07-045_Gateway/GetRecords/getRecords.tscript" overrideByUser="true"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-07-045_Gateway/GetRecords/getRecords_globalError.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-07-045/GetRecords/test.xml</testFiles>
+            </operation>
+            <operation name="GetRecordById" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecordById">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordByIdRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordByIdResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-07-045_Gateway/GetRecordById/getRecordById.tscript" overrideByUser="true"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-07-045_Gateway/GetRecordById/getRecordById_globalError.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-07-045/GetRecordById/test.xml</testFiles>
+            </operation>           
+            <operation name="Harvest" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#Harvest">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="HarvestRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="HarvestResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-07-045_Gateway/Harvest/harvest.tscript" overrideByUser="true"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-07-045_Gateway/Harvest/harvest_globalError.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-07-045/Harvest/test.xml</testFiles>
+            </operation>
+        </operations>
+    <variables>
+        <variable name="maxRecords" value="10" type="integer" displayedText="Maximum number of records returned"/>
+        
+    </variables>
+</interface>
+
+
+
+	<interface name="OGC-06-131r6" version="0.2.4" type="Catalogue" mode="Gateway">
+    <rootSchemaFile>csw/2.0.2/CSW-publication.xsd</rootSchemaFile>
+    <schemaSetLocation>schemas/OGC-06-131r6</schemaSetLocation>
+    <wsdlFile>CatalogueInterfacesPlugin/wsdl/</wsdlFile>
+    <targetNameSpace>http://www.opengis.net/cat/csw/2.0.2</targetNameSpace>
+    <operations>
+            <operation name="GetCapabilities" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#GetCapabilities">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetCapabilitiesRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetCapabilitiesResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-131r6_Gateway/GetCapabilities/script.tscript" overrideByUser="true"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-131r6_Gateway/GetCapabilities/globalError.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-06-131r6/GetCapabilities/test.xml</testFiles>
+            </operation>
+            <operation name="DescribeRecord" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#DescribeRecord">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="DescribeRecordRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="DescribeRecordResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-131r6_Gateway/DescribeRecord/script.tscript" overrideByUser="true"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-131r6_Gateway/DescribeRecord/globalError.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-06-131r6/DescribeRecord/test.xml</testFiles>
+            </operation>
+            <operation name="GetRecords" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecords">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordsRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordsResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-131r6_Gateway/GetRecords/script.tscript" overrideByUser="true"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-131r6_Gateway/GetRecords/globalError.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-06-131r6/GetRecords/test.xml</testFiles>
+            </operation>
+            <operation name="GetRecordById" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecordById">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordByIdRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordByIdResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-131r6_Gateway/GetRecordById/script.tscript" overrideByUser="true"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-131r6_Gateway/GetRecordById/globalError.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-06-131r6/GetRecordById/test.xml</testFiles>
+            </operation>
+            <operation name="Harvest" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#Harvest">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="HarvestRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="HarvestResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-131r6_Gateway/Harvest/script.tscript" overrideByUser="true"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-131r6_Gateway/Harvest/globalError.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-06-131r6/Harvest/test.xml</testFiles>
+            </operation>
+        </operations>
+    <variables>
+        <variable name="maxRecords" value="10" type="integer" displayedText="Maximum number of records returned"/>
+    </variables>
+</interface>
+
+<interface name="OGC-07-038" version="0.1.11" type="Catalogue" mode="Gateway">
+    <rootSchemaFile>wrs/1.0.0/wrs.xsd</rootSchemaFile>
+    <schemaSetLocation>schemas/OGC-07-038</schemaSetLocation>
+    <wsdlFile>CatalogueInterfacesPlugin/wsdl/</wsdlFile>
+    <targetNameSpace>http://www.opengis.net/cat/csw/2.0.2</targetNameSpace>
+    <operations>
+            <operation name="GetCapabilities" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#GetCapabilities">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetCapabilitiesRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetCapabilitiesResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-07-038_Gateway/GetCapabilities/script.tscript" overrideByUser="true"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-07-038_Gateway/GetCapabilities/globalError.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-07-038/GetCapabilities/test.xml</testFiles>
+            </operation>
+            <operation name="DescribeRecord" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#DescribeRecord">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="DescribeRecordRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="DescribeRecordResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-07-038_Gateway/DescribeRecord/script.tscript" overrideByUser="true"></scriptFile>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-07-038_Gateway/DescribeRecord/globalError.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-07-038/DescribeRecord/test.xml</testFiles>
+            </operation>
+            <operation name="GetRecords" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecords">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordsRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordsResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-07-038_Gateway/GetRecords/script.tscript" overrideByUser="true"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-07-038_Gateway/GetRecords/globalError.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-07-038/GetRecords/test.xml</testFiles>
+            </operation>
+            <operation name="GetRecordById" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecordById">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordByIdRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordByIdResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-07-038_Gateway/GetRecordById/script.tscript" overrideByUser="true"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-07-038_Gateway/GetRecordById/globalError.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-07-038/GetRecordById/test.xml</testFiles>
+            </operation>           
+            <operation name="Harvest" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#Harvest">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="HarvestRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="HarvestResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-07-038_Gateway/Harvest/script.tscript" overrideByUser="true"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-07-038_Gateway/Harvest/globalError.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-07-038/Harvest/test.xml</testFiles>
+            </operation>
+        </operations>
+    <variables>
+        <variable name="maxRecords" value="10" type="integer" displayedText="Maximum number of records returned"/>
+        
+    </variables>
+</interface>
+
+<interface name="OGC-05-025r3" version="0.10.3" type="Catalogue" mode="Gateway">
+    <rootSchemaFile>wrs/1.0.0/wrs.xsd</rootSchemaFile>
+    <schemaSetLocation>schemas/OGC-05-025r3</schemaSetLocation>
+    <wsdlFile>CatalogueInterfacesPlugin/wsdl/</wsdlFile>
+    <targetNameSpace>http://www.opengis.net/cat/csw/2.0.2</targetNameSpace>
+    <operations>
+            <operation name="GetCapabilities" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#GetCapabilities">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetCapabilitiesRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetCapabilitiesResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-05-025r3_Gateway/GetCapabilities/script.tscript" overrideByUser="true"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-05-025r3_Gateway/GetCapabilities/globalError.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-05-025r3/GetCapabilities/test.xml</testFiles>
+            </operation>
+            <operation name="DescribeRecord" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#DescribeRecord">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="DescribeRecordRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="DescribeRecordResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-05-025r3_Gateway/DescribeRecord/script.tscript" overrideByUser="true"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-05-025r3_Gateway/DescribeRecord/globalError.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-05-025r3/DescribeRecord/test.xml</testFiles>
+            </operation>
+            <operation name="GetRecords" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecords">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordsRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordsResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-05-025r3_Gateway/GetRecords/script.tscript" overrideByUser="true"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-05-025r3_Gateway/GetRecords/globalError.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-05-025r3/GetRecords/test.xml</testFiles>
+            </operation>
+            <operation name="GetRecordById" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecordById">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordByIdRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordByIdResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-05-025r3_Gateway/GetRecordById/script.tscript" overrideByUser="true"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-05-025r3_Gateway/GetRecordById/globalError.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-05-025r3/GetRecordById/test.xml</testFiles>
+            </operation>           
+            <operation name="Harvest" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#Harvest">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="HarvestRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="HarvestResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-05-025r3_Gateway/Harvest/script.tscript" overrideByUser="true"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-05-025r3_Gateway/Harvest/globalError.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-05-025r3/Harvest/test.xml</testFiles>
+            </operation>
+        </operations>
+    <variables>
+        <variable name="maxRecords" value="10" type="integer" displayedText="Maximum number of records returned"/>
+    </variables>
+</interface>
+
+<interface name="OGC-06-141" version="0.9.4" type="Ordering" mode="Standard">
+		<rootSchemaFile>Order.xsd</rootSchemaFile>
+		<schemaSetLocation>schemas/OGC-06-141_094</schemaSetLocation>
+		<wsdlFile>wsdl/OGC-06-141_094.wsdl</wsdlFile>
+		<targetNameSpace>http://earth.esa.int/hma/ordering</targetNameSpace>
+		<operations>
+			<operation name="Submit" type="asynchronous" SOAPAction="Submit" callbackSOAPAction="SubmitResponse" pollingRate="1m" requestTimeout="1d">
+				<admittedHosts/>
+                <inputType namespace="http://earth.esa.int/hma/ordering" type="Submit"/>
+				<outputType namespace="http://earth.esa.int/hma/ordering" type="SubmitAck"/>
+				<callbackInputType namespace="http://earth.esa.int/hma/ordering" type="SubmitResponse"/>
+				<callbackOutputType namespace="http://earth.esa.int/hma/ordering" type="SubmitResponseAck"/>
+				<scriptFile type="RESP_BUILDER" path="templates/OGC-06-141_094/Submit/responseBuilder.tscript" overrideByUser="false"/>
+				<scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-141_094/Submit/first_script.tscript" overrideByUser="true"/>
+				<scriptFile type="SECOND_SCRIPT" path="templates/OGC-06-141_094/Submit/second_script.tscript" overrideByUser="true"/>
+				<scriptFile type="THIRD_SCRIPT" path="templates/OGC-06-141_094/Submit/third_script.tscript" overrideByUser="true"/>
+				<scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-141_094/Submit/globalError.tscript" overrideByUser="false"/>
+				<scriptFile type="ERROR_ON_RESP_BUILDER" path="templates/OGC-06-141_094/Submit/responseBuilder_Error.tscript" overrideByUser="false"/>
+				<testFiles>testFiles/OGC-06-141_094/Submit/test_submit.xml</testFiles>
+			</operation>
+            <operation name="Cancel" type="asynchronous" SOAPAction="Cancel" callbackSOAPAction="CancelResponse" pollingRate="1m" requestTimeout="1d">
+				<admittedHosts/>
+                <inputType namespace="http://earth.esa.int/hma/ordering" type="Cancel"/>
+				<outputType namespace="http://earth.esa.int/hma/ordering" type="Cancel"/>
+                <callbackInputType namespace="http://earth.esa.int/hma/ordering" type="CancelResponse"/>
+				<callbackOutputType namespace="http://earth.esa.int/hma/ordering" type="CancelResponseAck"/>
+				<scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-141_094/Cancel/first_script.tscript" overrideByUser="true"/>
+				<scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-141_094/Cancel/globalError.tscript" overrideByUser="false"/>
+				<scriptFile type="RESP_BUILDER" path="templates/OGC-06-141_094/Cancel/responseBuilder.tscript" overrideByUser="false"/>
+				<scriptFile type="SECOND_SCRIPT" path="templates/OGC-06-141_094/Cancel/second_script.tscript" overrideByUser="true"/>
+				<scriptFile type="THIRD_SCRIPT" path="templates/OGC-06-141_094/Cancel/third_script.tscript" overrideByUser="true"/>
+				<scriptFile type="ERROR_ON_RESP_BUILDER" path="templates/OGC-06-141_094/Cancel/Submit/responseBuilder_Error.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-06-141_094/Cancel/test_cancel.xml</testFiles>
+			</operation>
+			<operation name="GetStatus" type="synchronous" SOAPAction="GetStatus">
+				<admittedHosts/>
+                <inputType namespace="http://earth.esa.int/hma/ordering" type="GetStatus"/>
+				<outputType namespace="http://earth.esa.int/hma/ordering" type="GetStatusResponse"/>
+				<scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-141_094/GetStatus/script.tscript" overrideByUser="true"/>
+				<scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-141_094/GetStatus/globalError.tscript" overrideByUser="false"/>
+				<testFiles>testFiles/OGC-06-141_094/GetStatus/test_getStatus.xml</testFiles>
+			</operation>
+			<operation name="GetOptions" type="synchronous" SOAPAction="GetOptions">
+                <admittedHosts/>
+                <inputType namespace="http://earth.esa.int/hma/ordering" type="GetOptions"/>
+				<outputType namespace="http://earth.esa.int/hma/ordering" type="GetOptionsResponse"/>
+				<scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-141_094/GetOptions/script.tscript" overrideByUser="true"/>
+				<scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-141_094/GetOptions/globalError.tscript" overrideByUser="false"/>
+				<testFiles>testFiles/OGC-06-141_094/GetOptions/test_getOptions.xml</testFiles>
+			</operation>
+			<operation name="GetQuotation" type="synchronous" SOAPAction="GetQuotation" callbackSOAPAction="GetQuotation" pollingRate="1m" requestTimeout="1d">
+				<admittedHosts/>
+                <inputType namespace="http://earth.esa.int/hma/ordering" type="GetQuotation"/>
+				<outputType namespace="http://earth.esa.int/hma/ordering" type="GetQuotationAck"/>
+				<callbackInputType namespace="http://earth.esa.int/hma/ordering" type="GetQuotationResponse"/>
+				<callbackOutputType namespace="http://earth.esa.int/hma/ordering" type="GetQuotationResponseAck"/>
+				<scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-141_094/GetQuotation/first_script.tscript" overrideByUser="true"/>
+				<scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-141_094/GetQuotation/globalError.tscript" overrideByUser="false"/>
+				<scriptFile type="RESP_BUILDER" path="templates/OGC-06-141_094/GetQuotation/responseBuilder.tscript" overrideByUser="false"/>
+				<scriptFile type="SECOND_SCRIPT" path="templates/OGC-06-141_094/GetQuotation/second_script.tscript" overrideByUser="true"/>
+				<scriptFile type="THIRD_SCRIPT" path="templates/OGC-06-141_094/GetQuotation/third_script.tscript" overrideByUser="true"/>
+				<scriptFile type="ERROR_ON_RESP_BUILDER" path="templates/OGC-06-141_094/GetQuotation/responseBuilder_Error.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-06-141_094/GetQuotation/test_getQuotation.xml</testFiles>
+			</operation>
+			<operation name="GetCapabilities" type="synchronous" SOAPAction="GetCapabilities">
+				<admittedHosts/>
+                <inputType namespace="http://earth.esa.int/hma/ordering" type="GetCapabilities"/>
+				<outputType namespace="http://earth.esa.int/hma/ordering" type="Capabilities"/>
+				<scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-141_094/GetCapabilities/script.tscript" overrideByUser="true"/>
+				<scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-141_094/GetCapabilities/globalError.tscript" overrideByUser="false"/>
+				<testFiles>testFiles/OGC-06-141_094/GetCapabilities/test_GetCapabilities.xml</testFiles>
+			</operation>
+            <operation name="DescribeResultAccess" type="synchronous" SOAPAction="DescribeResultAccess">
+				<admittedHosts/>
+                <inputType namespace="http://earth.esa.int/hma/ordering" type="DescribeResultAccess"/>
+				<outputType namespace="http://earth.esa.int/hma/ordering" type="DescribeResultAccessResponse"/>
+				<scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-141_094/DescribeResultAccess/script.tscript" overrideByUser="true"/>
+				<scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-141_094/DescribeResultAccess/globalError.tscript" overrideByUser="false"/>
+				<testFiles>testFiles/OGC-06-141_094/GetCapabilities/test_GetCapabilities.xml</testFiles>
+			</operation>
+		</operations>
+	</interface>
+
+
+
+
+	<interface name="SSE" version="1.4">
+		<rootSchemaFile>SSE_main_template.xsd</rootSchemaFile>
+		<schemaSetLocation>schemas/SSE_14</schemaSetLocation>
+		<wsdlFile>wsdl/SSE_14.wsdl</wsdlFile>
+		<targetNameSpace>http://www.mycompanyname.com/ws/mynamespace</targetNameSpace>
+		<operations>
+			<operation SOAPAction="processRFQ" name="processRFQ" type="synchronous">
+				<admittedHosts/>
+				<inputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="processRFQRequestMsg"/>
+				<outputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="processRFQResponseMsg"/>
+				<scriptFile path="templates/SSE_14/processRFQ/script.tscript" type="FIRST_SCRIPT"/>
+				<scriptFile path="templates/SSE_14/processRFQ/globalError.tscript" type="GLOBAL_ERROR"/>
+				<testFiles>testFiles/SSE_14/processRFQ/test.xml</testFiles>
+			</operation>
+			<operation SOAPAction="processOrder" name="processOrder" type="synchronous">
+				<admittedHosts/>
+				<inputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="processOrderRequestMsg"/>
+				<outputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="processOrderResponseMsg"/>
+				<scriptFile path="templates/SSE_14/processOrder/script.tscript" type="FIRST_SCRIPT"/>
+				<scriptFile path="templates/SSE_14/processOrder/globalError.tscript" type="GLOBAL_ERROR"/>
+				<testFiles>testFiles/SSE_14/processOrder/test.xml</testFiles>
+			</operation>
+			<operation SOAPAction="sendRFQ" name="RFQ" type="asynchronous" callbackSOAPAction="returnRFQResult" pollingRate="1m" requestTimeout="1d">
+				<inputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="sendOrderInput"/>
+				<outputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="sendOrderOutput"/>
+				<callbackInputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="returnRFQResultInput"/>
+				<callbackOutputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="returnOrderResultOutput"/>
+				<scriptFile type="RESP_BUILDER" path="templates/SSE_14/RFQ/response_builder.tscript"/>
+				<scriptFile type="FIRST_SCRIPT" path="templates/SSE_14/RFQ/first_script.tscript"/>
+				<scriptFile type="SECOND_SCRIPT" path="templates/SSE_14/RFQ/second_script.tscript"/>
+				<scriptFile type="THIRD_SCRIPT" path="templates/SSE_14/RFQ/third_script.tscript"/>
+				<scriptFile type="GLOBAL_ERROR" path="templates/SSE_14/RFQ/globalError.tscript"/>
+				<scriptFile type="ERROR_ON_RESP_BUILDER" path="templates/SSE_14/RFQ/response_builder_error.tscript"/>
+				<testFiles>testFiles/SSE_14/RFQ/test.xml</testFiles>
+			</operation>
+			<operation SOAPAction="sendOrder" callbackSOAPAction="returnoRDERResult" name="Order" type="asynchronous" pollingRate="1m" requestTimeout="1d">
+				<inputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="sendOrderInput"/>
+				<outputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="sendOrderOutput"/>
+				<callbackInputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="returnOrderResultInput"/>
+				<callbackOutputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="returnOrderResultOutput"/>
+				<scriptFile type="RESP_BUILDER" path="templates/SSE_14/Order/response_builder.tscript"/>
+				<scriptFile type="FIRST_SCRIPT" path="templates/SSE_14/Order/first_script.tscript"/>
+				<scriptFile type="SECOND_SCRIPT" path="templates/SSE_14/Order/second_script.tscript"/>
+				<scriptFile type="THIRD_SCRIPT" path="templates/SSE_14/Order/third_script.tscript"/>
+				<scriptFile type="GLOBAL_ERROR" path="templates/SSE_14/Order/globalError.tscript"/>
+				<scriptFile type="ERROR_ON_RESP_BUILDER" path="templates/SSE_14/Order/response_builder_error.tscript"/>
+				<testFiles>testFiles/SSE_14/Order/test.xml</testFiles>
+			</operation>
+		</operations>
+	</interface>
+	<interface name="SSE" version="1.6">
+		<rootSchemaFile>SSE_main_template.xsd</rootSchemaFile>
+		<schemaSetLocation>schemas/SSE_16</schemaSetLocation>
+		<wsdlFile>wsdl\SSE_16.wsdl</wsdlFile>
+		<targetNameSpace>http://www.mycompanyname.com/ws/mynamespace</targetNameSpace>
+		<operations>
+			<operation SOAPAction="processRFQ" name="processRFQ" type="synchronous">
+				<admittedHosts/>
+				<inputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="processRFQRequestMsg"/>
+				<outputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="processRFQResponseMsg"/>
+				<scriptFile path="templates/SSE_16/processRFQ/script.tscript" type="FIRST_SCRIPT"/>
+				<scriptFile path="templates/SSE_16/processRFQ/globalError.tscript" type="GLOBAL_ERROR"/>
+				<testFiles>testFiles/SSE_16/processRFQ/test.xml</testFiles>
+			</operation>
+			<operation SOAPAction="processOrder" name="processOrder" type="synchronous">
+				<admittedHosts/>
+				<inputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="processOrderRequestMsg"/>
+				<outputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="processOrderResponseMsg"/>
+				<scriptFile path="templates/SSE_16/processOrder/script.tscript" type="FIRST_SCRIPT"/>
+				<scriptFile path="templates/SSE_16/processOrder/globalError.tscript" type="GLOBAL_ERROR"/>
+				<testFiles>testFiles/SSE_16/processOrder/test.xml</testFiles>
+			</operation>
+			<operation SOAPAction="sendRFQ" callbackSOAPAction="returnRFQResult" name="RFQ" pollingRate="1m" requestTimeout="1h" type="asynchronous">
+				<admittedHosts/>
+				<inputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="sendRFQRequestMsg"/>
+				<outputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="sendRFQResponseMsg"/>
+				<callbackInputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="returnRFQResultRequestMsg"/>
+				<callbackOutputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="returnRFQResultResponseMsg"/>
+				<scriptFile path="templates/SSE_16/RFQ/first_script.tscript" type="FIRST_SCRIPT"/>
+				<scriptFile path="templates/SSE_16/RFQ/second_script.tscript" type="SECOND_SCRIPT"/>
+				<scriptFile path="templates/SSE_16/RFQ/third_script.tscript" type="THIRD_SCRIPT"/>
+				<scriptFile type="GLOBAL_ERROR" path="templates/SSE_16/RFQ/globalError.tscript"/>
+				<scriptFile type="ERROR_ON_RESP_BUILDER" path="templates/SSE_16/RFQ/response_builder_error.tscript"/>
+				<scriptFile type="RESP_BUILDER" path="templates/SSE_16/RFQ/response_builder.tscript"/>
+				<testFiles>testFiles/SSE_16/RFQ/test.xml</testFiles>
+			</operation>
+			<operation SOAPAction="sendOrder" callbackSOAPAction="returnOrderResult" name="Order" pollingRate="1m" requestTimeout="1h" type="asynchronous">
+				<admittedHosts/>
+				<inputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="sendOrderRequestMsg"/>
+				<outputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="sendOrderResponseMsg"/>
+				<callbackInputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="returnOrderResultRequestMsg"/>
+				<callbackOutputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="returnOrderResultResponseMsg"/>
+				<scriptFile path="templates/SSE_16/Order/first_script.tscript" type="FIRST_SCRIPT"/>
+				<scriptFile path="templates/SSE_16/Order/second_script.tscript" type="SECOND_SCRIPT"/>
+				<scriptFile path="templates/SSE_16/Order/third_script.tscript" type="THIRD_SCRIPT"/>
+				<scriptFile type="GLOBAL_ERROR" path="templates/SSE_16/Order/globalError.tscript"/>
+				<scriptFile type="ERROR_ON_RESP_BUILDER" path="templates/SSE_16/Order/response_builder_error.tscript"/>
+				<scriptFile type="RESP_BUILDER" path="templates/SSE_16/Order/response_builder.tscript"/>
+				<testFiles>testFiles/SSE_16/Order/test.xml</testFiles>
+			</operation>
+		</operations>
+	</interface>
+	<interface name="EOLI" version="2.6">
+		<rootSchemaFile>eoli.xsd</rootSchemaFile>
+		<schemaSetLocation>schemas/EOLI_26</schemaSetLocation>
+		<wsdlFile>wsdl/EOLI_26wsdl</wsdlFile>
+		<targetNameSpace>http://earth.esa.int/XML/eoli</targetNameSpace>
+		<operations>
+			<operation SOAPAction="http://earth.esa.int/SOAP/searchRequest" name="EOLI_Search" type="synchronous">
+				<inputType namespace="http://earth.esa.int/XML/eoli" type="searchRequest"/>
+				<outputType namespace="http://earth.esa.int/XML/eoli" type="response"/>
+				<scriptFile type="FIRST_SCRIPT" path="templates/EOLI_26/EOLI_Search/search.tscript"></scriptFile>
+				<scriptFile type="GLOBAL_ERROR" path="templates/EOLI_26/EOLI_Search/globalError.tscript"/>
+				<testFiles>testFiles/EOLI_26/EOLI_Search/test_search.xml</testFiles>
+			</operation>
+			<operation SOAPAction="http://earth.esa.int/SOAP/presentRequest" name="EOLI_Present" type="synchronous">
+				<inputType namespace="http://earth.esa.int/XML/eoli" type="presentRequest"/>
+				<outputType namespace="http://earth.esa.int/XML/eoli" type="response"/>
+				<scriptFile type="FIRST_SCRIPT" path="templates/EOLI_26/EOLI_Present/present.tscript"/>
+				<scriptFile type="GLOBAL_ERROR" path="templates/EOLI_26/EOLI_Present/globalError.tscript"/>
+				<testFiles>testFiles/EOLI_26/EOLI_Present/test_present.xml</testFiles>
+			</operation>
+		</operations>
+	</interface>
+	
+	
+	
+	<interface name="Eoli_Order" version="3.4" type="Standard" mode="Standard">
+		<rootSchemaFile>SSE_main_template.xsd</rootSchemaFile>
+		<schemaSetLocation>schemas/EOLI_ORDER_34</schemaSetLocation>
+		<wsdlFile>wsdl\Eoli_Order_34.wsdl</wsdlFile>
+		<targetNameSpace>http://earth.esa.int/XML/eoli</targetNameSpace>
+		<operations>
+			<operation SOAPAction="http://earth.esa.int/SOAP/eoaDataAccessRequest" name="processEoaDataAccessRequest" type="synchronous">
+				<admittedHosts/>
+				<inputType namespace="http://earth.esa.int/XML/eoli" type="eoaDataAccessRequest"/>
+				<outputType namespace="http://earth.esa.int/XML/eoli" type="eoaDataAccessResponse"/>
+				<scriptFile path="templates/EOLI_ORDER_34/processEoaDataAccessRequest/script.tscript" type="FIRST_SCRIPT" overrideByUser="true"/>
+				<scriptFile path="templates/EOLI_ORDER_34/processEoaDataAccessRequest/globalError.tscript" type="GLOBAL_ERROR" overrideByUser="false"/>
+				<testFiles>testFiles/SSE_16/processRFQ/test.xml</testFiles>
+			</operation>
+			
+		</operations>
+	</interface>
+</interfaces>

@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+    <launchConfigurationTypeImage
+        icon="icons/Toolbox_gear_green.jpg"
+        configTypeID="com.intecs.ToolboxScript.launchConfigurationType.tscript"
+        id="org.eclipse.jdt.debug.ui.launchConfigurationTypeImage.tscript">
+    </launchConfigurationTypeImage>
+   </extension>
+   
+   <extension point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            type="com.intecs.ToolboxScript.launchConfigurationType.tscript"
+            description="Run or debug a Toolbox script"
+            class="it.intecs.pisa.develenv.ui.launching.TscriptTabGroup"
+            id="com.intecs.toolboxscript.ui.launchConfigurationTabGroup.tscript">
+      </launchConfigurationTabGroup>
+   </extension>
+  
+	<extension point="org.eclipse.core.runtime.adapters">
+      <factory class="it.intecs.pisa.develenv.ui.model.TscriptBreakpointAdapterFactory"
+            adaptableType="org.eclipse.wst.sse.ui.StructuredTextEditor">
+         <adapter type="org.eclipse.debug.ui.actions.IToggleBreakpointsTarget">
+         </adapter>
+      </factory>
+   </extension>
+
+	<extension point="org.eclipse.wst.sse.ui.breakpoint">
+		<breakpointContribution id="com.intecs.toolboxscript.ui.providers">
+			<provider
+				contentTypes="com.intecs.ToolboxScript.contentType"
+				class="it.intecs.pisa.develenv.ui.model.TscriptBreakpointProvider"
+				id="com.intecs.toolboxscript.ui.breakpointproviders.TscriptBreakpointProvider" />
+		</breakpointContribution>
+	</extension>
+	
+	<extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="Toolbox"
+            id="com.intecs.ToolboxScript">
+      </category>
+      <category
+            name="Service"
+            id="com.intecs.ToolboxScript.Service"
+            parentCategory="com.intecs.ToolboxScript"
+            >
+      </category>
+       <category
+            name="Resources"
+            id="com.intecs.ToolboxScript.Resources"
+            parentCategory="com.intecs.ToolboxScript">
+      </category>
+       <category
+            name="Interface Repository"
+            id="com.intecs.ToolboxScript.InterfRepository"
+            parentCategory="com.intecs.ToolboxScript">
+      </category>
+            
+      <wizard
+            name="Service"
+            icon="icons/Toolbox_gear_T.jpg"
+            project="true"
+            category="com.intecs.ToolboxScript/com.intecs.ToolboxScript.Service"
+            class="it.intecs.pisa.develenv.ui.wizards.TBX_NewProjectWizard"
+            id="com.intecs.toolboxscript.ui.wizards.TscriptNewProjectWizard"
+            >
+         <description>This wizard lets you to create a new service.</description>
+      </wizard>
+      
+       <wizard
+            name="Operation"
+            icon="icons/Toolbox_gear_T.jpg"
+            project="false"
+            category="com.intecs.ToolboxScript/com.intecs.ToolboxScript.Service"
+            class="it.intecs.pisa.develenv.ui.wizards.TBX_AddRemoveOperationsWizard"
+            id="com.intecs.toolboxscript.ui.wizards.TBX_AddRemoveOperationsWizard">
+          <description>This wizard lets you to add an operation to the selected service.</description>
+      </wizard>
+     
+      <wizard
+            category="com.intecs.ToolboxScript/com.intecs.ToolboxScript.InterfRepository"
+            class="it.intecs.pisa.develenv.ui.wizards.TBX_NewInterfaceWizard"
+            icon="icons/Toolbox_gear_T.jpg"
+            id="it.intecs.pisa.develenv.ui.wizards.TBX_NewInterfaceWizard"
+            name="User defined interface"
+            project="false">
+         <description>This wizard lets you add an interface definition to the Interface Repository. The new interface can be then selected while creating a new service through the "Service" wizard.</description>
+      </wizard>
+            
+      <wizard
+            category="com.intecs.ToolboxScript/com.intecs.ToolboxScript.InterfRepository"
+            class="it.intecs.pisa.develenv.ui.wizards.TBX_RemoveInterfaceWizard"
+            icon="icons/Toolbox_gear_T.jpg"
+            id="it.intecs.pisa.develenv.ui.wizards.TBX_RemoveInterfaceWizard"
+            name="Remove an user defined interface from interface repository"
+            project="false">
+         <description>This wizard lets you remove an interface definition from the Interface Repository.</description>
+      </wizard>
+      <wizard
+            category="com.intecs.ToolboxScript/com.intecs.ToolboxScript.Resources"
+            class="it.intecs.pisa.develenv.ui.wizards.TBX_NewScriptFileWizard"
+            hasPages="true"
+            icon="icons/Toolbox_gear_T.jpg"
+            id="com.intecs.toolboxscript.ui.wizards.TscriptNewScriptWizard"
+            name="Tscript file"
+            project="false">
+         <description>This wizard lets you add a tscript file to the service. The file will be created under the "Resources" directory.</description>
+      </wizard>
+      <wizard
+            category="com.intecs.ToolboxScript/com.intecs.ToolboxScript.Resources"
+            class="it.intecs.pisa.develenv.ui.wizards.TBX_NewTestFileWizard"
+            hasPages="true"
+            icon="icons/Toolbox_gear_T.jpg"
+            id="com.intecs.toolboxscript.ui.wizards.TscriptNewScriptWizard"
+            name="Test file"
+            project="false">
+         <description>This wizard lets you create a new test file for a specified operation.</description>
+      </wizard>
+     
+   </extension>
+
+   <extension
+         point="org.eclipse.debug.ui.debugModelPresentations">
+      <debugModelPresentation
+            class="it.intecs.pisa.develenv.ui.model.TscriptModelPresentation"
+            id="com.intecs.toolboxscript.debug">
+      </debugModelPresentation>
+   </extension>
+  
+ 	<extension point="org.eclipse.ui.editors"> 
+     	<editor 
+         id="com.intecs.ToolboxScript.editor" 
+         name="Tscript editor"
+         icon="icons/Toolbox_gear_blue.jpg" 
+         extensions="tscript" 
+         class="it.intecs.pisa.develenv.ui.editors.TscriptMultiPageEditorPart" 
+         contributorClass="org.eclipse.wst.xml.ui.internal.actions.ActionContributorXML" 
+         symbolicFontName="org.eclipse.jface.textfont"
+         default="true"> 
+      	</editor> 
+  	</extension>
+   	
+ 	<extension point="org.eclipse.wst.sse.ui.editorConfiguration">
+ 		<sourceViewerConfiguration target="com.intecs.ToolboxScript.editor,com.intecs.ToolboxScript.contentType" 
+ 			class="it.intecs.pisa.develenv.ui.editors.TscriptMultiPageEditorPartConfiguration"/>		
+ 	</extension>
+  
+  
+  <extension
+        point="org.eclipse.ui.decorators">
+     <decorator
+           adaptable="true"
+           class="it.intecs.pisa.develenv.ui.decorators.TOOLBOXProjectDecorator"
+           id="com.intecs.toolboxscript.ui.decorators.ReadOnly"
+           label="Read-only Decorator"
+           lightweight="true"
+           state="true">
+        <enablement>
+           <and>
+              <objectClass name="org.eclipse.core.resources.IProject"/>
+              <objectClass name="org.eclipse.core.resources.IFolder"/>
+           </and>
+        </enablement>
+     </decorator>
+  </extension>
+  
+  <extension
+        point="org.eclipse.ui.exportWizards">
+     <category
+           id="com.intecs.toolboxscript.ui.exportWizards.TOOLBOX"
+           name="TOOLBOX"/>
+     <wizard
+           category="com.intecs.toolboxscript.ui.exportWizards.TOOLBOX"
+           class="it.intecs.pisa.develenv.ui.wizards.TBX_ProjectExportWizard"
+           icon="icons/Toolbox_gear_T.jpg"
+           id="TBXProjectExport"
+           name="Service">
+        <description>This wizard lets you export the service in a zip file.</description>
+     </wizard>
+  </extension>
+  
+  <extension
+        point="org.eclipse.ui.importWizards">
+     <category
+           id="com.intecs.toolboxscript.ui.importWizards.TOOLBOX"
+           name="TOOLBOX"/>
+    
+     <wizard
+           category="com.intecs.toolboxscript.ui.importWizards.TOOLBOX"
+           class="it.intecs.pisa.develenv.ui.wizards.TBX_ResourceImportWizard"
+           icon="icons/Toolbox_gear_T.jpg"
+           id="importWizard"
+           name="External resources">
+           <description>Import a file from the local file system into the workspace.</description>
+    </wizard>
+   <!--  <wizard
+           category="com.intecs.toolboxscript.ui.importWizards.TOOLBOX"
+           class="it.intecs.pisa.develenv.ui.wizards.TBX_JarsImportWizard"
+           icon="icons/Toolbox_gear_T.jpg"
+           id="jarsImportWizard"
+           name="External Jars">
+           <description>Import a jars from the local file system into the workspace.</description>
+    </wizard>-->
+     <wizard
+           category="com.intecs.toolboxscript.ui.importWizards.TOOLBOX"
+           class="it.intecs.pisa.develenv.ui.wizards.TBX_ProjectImportWizard"
+           icon="icons/Toolbox_gear_T.jpg"
+           id="serviceImportWizard"
+           name="Service">
+        <description>This wizard lets you to import a TOOLBOX service into the workspace. The service to import shall be provided in the form of a zip file</description>
+     </wizard>
+     <wizard
+           category="com.intecs.toolboxscript.ui.importWizards.TOOLBOX"
+           class="it.intecs.pisa.develenv.ui.wizards.TBX_ProjectImportOldDescriptorWizard"
+           icon="icons/Toolbox_gear_T.jpg"
+           id="serviceImportOldDescriptorWizard"
+           name="Service (from a Service Descriptor)">
+        <description>This wizard lets you to import services exported from older TOOLBOX Runtie Environments. The service to import shall be in the form of xml file</description>
+     </wizard>
+     <wizard
+           category="com.intecs.toolboxscript.ui.importWizards.TOOLBOX"
+           class="it.intecs.pisa.develenv.ui.wizards.TBX_PortalXSLImportWizard"
+           icon="icons/Toolbox_gear_blue.jpg"
+           id="id_portalXSLimportwizard"
+           name="SSE portal stylesheet">
+        <description>This wizard lets you to set a SSE portal stylesheet to a service. This will be used in the TOOLBOX Runtime Environment to customize some visualization aspects.</description>
+     </wizard>
+     <wizard
+           category="com.intecs.toolboxscript.ui.importWizards.TOOLBOX"
+           class="it.intecs.pisa.develenv.ui.wizards.TBX_OutputOnMapStylesheetImportWizard"
+           icon="icons/decorator/map.png"
+           id="id_outputOnMapImportwizard"
+           name="Output on map visualization stylesheet">
+        <description>This wizard lets you to import a stylesheet to be used convert the output of service's operations to GML data. These data will be visualized in a map.</description>
+     </wizard>
+  </extension>
+  
+  <extension point="org.eclipse.ui.popupMenus">
+     <objectContribution
+           id="com.intecs.ToolboxScript.ui.setRoot"
+           nameFilter="*.xsd"
+           objectClass="org.eclipse.core.resources.IFile">
+
+        <action
+              class="it.intecs.pisa.develenv.ui.popup.contextmenu.SetXSDAsRootAction"
+              enablesFor="1"
+              id="com.intecs.ToolboxScript.ui.newAction"
+              label="Set Schema as root for Service"
+              icon="icons/Toolbox_gear_T.jpg"
+              />
+     </objectContribution>
+     <objectContribution
+           id="com.intecs.ToolboxScript.ui.deployAction"
+           nameFilter="*"
+           objectClass="org.eclipse.core.resources.IProject">
+
+        <action
+              class="it.intecs.pisa.develenv.ui.popup.contextmenu.deployServiceAction"
+              enablesFor="1"
+              id="com.intecs.ToolboxScript.ui.deployServiceAction"
+              label="Deploy/Redeploy Service"
+              icon="icons/Toolbox_gear_T.jpg"
+              />
+     </objectContribution>
+     <objectContribution
+           id="com.intecs.ToolboxScript.ui.undeployActiont"
+           nameFilter="*"
+           objectClass="org.eclipse.core.resources.IProject">
+
+        <action
+              class="it.intecs.pisa.develenv.ui.popup.contextmenu.undeployServiceAction"
+              enablesFor="1"
+              id="com.intecs.ToolboxScript.ui.deployServiceAction"
+              label="Undeploy Service"
+              icon="icons/Toolbox_gear_T.jpg"
+              />
+     </objectContribution>
+  </extension>
+ 
+
+ 
+   <extension point="org.eclipse.ui.perspectives"> 
+        <perspective
+              class="it.intecs.pisa.develenv.ui.perspectives.developPerspective"
+              fixed="false"
+              icon="icons/Toolbox_gear_blue.jpg"
+              id="it.intecs.pisa.develenv.ui.perspectives.develop"
+              name="TOOLBOX develop">
+        </perspective> 
+        
+        <perspective
+              class="it.intecs.pisa.develenv.ui.perspectives.debugPerspective"
+              fixed="false"
+              icon="icons/Toolbox_gear_blue.jpg"
+              id="it.intecs.pisa.develenv.ui.perspectives.debug"
+              name="TOOLBOX debug">
+        </perspective> 
+    </extension>
+  
+  <extension
+        point="org.eclipse.ui.propertyPages">
+    <page
+           class="it.intecs.pisa.develenv.ui.propertyPages.TOOLBOXProjectPropertyPage"
+           icon="icons/Toolbox_gear_blue.jpg"
+           id="com.intecs.toolboxscript.ui.properties.TOOLBOXProjectPropertyPage"
+           name="Service preferences"
+           nameFilter="*"
+           objectClass="org.eclipse.core.resources.IProject"/>
+   <!-- <page
+           class="it.intecs.pisa.develenv.ui.propertyPages.ServiceOperationPropertyPage"
+           icon="icons/Toolbox_gear_blue.jpg"
+           id="com.intecs.toolboxscript.ui.properties.ServiceOperationPropertyPage"
+           name="Service operation preferences"
+           nameFilter="*"
+           objectClass="org.eclipse.core.resources.IFolder"
+           adaptable="true">
+          
+          <enabledWhen>
+           <equals value="name=Operations"/>
+         </enabledWhen>
+          
+          
+         <filter name="getParent().getName()" value="Operations"/>
+         <filter name="name" value="Operations"/>
+         <test property="isOperationFolder" value="true"/>
+         
+         </page> -->     
+</extension>
+  <extension
+        point="org.eclipse.ui.views">
+     <category
+           id="it.intecs.pisa.develenv.ui.views.executiontree"
+           name="Toolbox DE"/>
+     <view
+           category="it.intecs.pisa.develenv.ui.views.executiontree"
+           class="it.intecs.pisa.develenv.ui.views.ExecutionTreeView"
+           icon="icons/sample.gif"
+           id="it.intecs.pisa.develenv.ui.views.ExecutionTreeView"
+           name="Execution Tree View"/>
+  </extension>
+  <extension
+        point="org.eclipse.ui.perspectiveExtensions">
+     <perspectiveExtension targetID="org.eclipse.ui.resourcePerspective">
+        <view
+              id="it.intecs.pisa.develenv.ui.views.ExecutionTreeView"
+              ratio="0.5"
+              relationship="right"
+              relative="org.eclipse.ui.views.TaskList"/>
+     </perspectiveExtension>
+  </extension>
+  
+ <!--<extension point="org.eclipse.core.expressions.propertyTesters">
+<propertyTester
+      id="it.intecs.pisa.develenv.model.project.ServiceOperationFolder"
+      type="org.eclipse.core.resources.IFolder"
+      namespace="org.eclipse.jdt.ui"
+      properties="isOperationFolder"
+      class="it.intecs.pisa.develenv.model.project.propertyTester.ToolboxProjectTester">
+  </propertyTester>
+ </extension>-->
+ 
+ 
+</plugin>

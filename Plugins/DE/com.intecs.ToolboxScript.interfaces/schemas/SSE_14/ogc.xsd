@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.opengis.net/wcts" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema">
+	<element name="Transform" type="anyType"/>
+	<element name="TransformedData" type="anyType"/>
+	<!--this simulates the OGC schemas that defines message types for the WCTS service-->
+</schema>

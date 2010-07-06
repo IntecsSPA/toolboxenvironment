@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="">
+
+	<!-- **********************************
+			Creating the response message 
+		 ********************************** -->
+	<throw>
+				<errorMessage>
+					<variable name="error"/>
+				</errorMessage>
+				<details>
+					<xml attributePrefix="x" textTag="evaluate">
+						<ExceptionReport language="en-us" version="2.1.3" xmlns="http://www.opengeospatial.net/ows" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+							<Exception exceptionCode="NoApplicableCode">
+								<ExceptionText>Error while executing the GetOptions method</ExceptionText>
+							</Exception>
+						</ExceptionReport>
+					</xml>
+				</details>
+			</throw>
+
+</sequence>

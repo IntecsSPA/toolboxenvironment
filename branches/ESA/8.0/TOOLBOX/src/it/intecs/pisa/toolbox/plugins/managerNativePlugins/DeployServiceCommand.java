@@ -4,6 +4,8 @@
  */
 package it.intecs.pisa.toolbox.plugins.managerNativePlugins;
 
+import it.intecs.pisa.common.tbx.exceptions.ServiceValidationException;
+import it.intecs.pisa.soap.toolbox.exceptions.ValidationException;
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.service.ServiceManager;
 import java.io.File;
@@ -82,7 +84,13 @@ public class DeployServiceCommand extends NativeCommandsManagerPlugin {
 
             serviceManager=ServiceManager.getInstance();
             serviceManager.deployService(packageFile, serviceName);
-        } catch (Exception e) {
+        }
+        catch(ServiceValidationException val)
+        {
+            resp.sendRedirect("selectImportOrCreate.jsp?serviceName=" + serviceName+"&error=validationError");
+            return;
+        }
+        catch (Exception e) {
             resp.sendRedirect("selectImportOrCreate.jsp?serviceName=" + serviceName+"&error=serviceexist");
             return;
         }

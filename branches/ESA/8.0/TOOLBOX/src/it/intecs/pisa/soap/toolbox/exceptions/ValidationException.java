@@ -13,6 +13,11 @@ public class ValidationException extends Exception {
     private String errorMessage;
     private String scriptToExecute;
 
+    public ValidationException()
+    {
+        
+    }
+
     public ValidationException(String errorMessage,String scriptToExecute)
     {
         this.errorMessage=errorMessage;

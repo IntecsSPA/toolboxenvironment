@@ -4,17 +4,21 @@
  */
 package it.intecs.pisa.toolbox.service;
 
+import it.intecs.pisa.common.tbx.Operation;
+import it.intecs.pisa.common.tbx.Script;
 import it.intecs.pisa.toolbox.db.ServiceStatuses;
 import it.intecs.pisa.common.tbx.Service;
+import it.intecs.pisa.common.tbx.ServiceValidator;
+import it.intecs.pisa.common.tbx.schemas.ScriptSchemaEntityResolver;
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.soap.toolbox.exceptions.ToolboxException;
+import it.intecs.pisa.soap.toolbox.exceptions.ValidationException;
 import it.intecs.pisa.toolbox.db.ServiceInfo;
 import it.intecs.pisa.toolbox.db.ToolboxInternalDatabase;
 import it.intecs.pisa.toolbox.security.ToolboxSecurityConfigurator;
 import it.intecs.pisa.toolbox.service.instances.InstanceHandler;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.IOUtil;
-import it.intecs.pisa.util.SchemaSetRelocator;
 import it.intecs.pisa.util.Zip;
 import java.io.File;
 import java.io.FileWriter;
@@ -23,8 +27,10 @@ import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.concurrent.Semaphore;
+import javax.xml.parsers.DocumentBuilder;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * This class handles all services currently deployed under TOOLBOX.
@@ -67,7 +73,7 @@ public class ServiceManager {
 
             Zip.extractZipFile(packageFile.getAbsolutePath(), serviceRoot.getAbsolutePath());
 
-            File descriptorFile = new File(serviceRoot, ServiceConstants.SERVICE_DESCRIPTOR_FILE_NAME);
+            File descriptorFile = new File(serviceRoot, "serviceDescriptor.xml");
             Document descriptor = util.fileToDocument(descriptorFile);
 
             Element root = descriptor.getDocumentElement();
@@ -79,9 +85,8 @@ public class ServiceManager {
              DOMUtil.dumpXML(descriptor,descriptorFile);
 
             schemaDir=new File(serviceRoot,"Schemas");
-            //SchemaSetRelocator.updateSchemaLocationToAbsolute(schemaDir, schemaDir.toURI());
-
-
+            
+            ServiceValidator.validateService(serviceRoot,new File(servicesRootDir,"../schemas/xmlScript.xsd"));
             newServ = new TBXService(serviceRoot, getWSDLDir(serviceName));
             ServiceStatuses.removeServiceStatus(serviceName);
             ServiceStatuses.addServiceStatus(serviceName);
@@ -97,8 +102,6 @@ public class ServiceManager {
         }
 
     }
-
-    
 
     public void createService(Service descriptor) throws Exception {
         String serviceName;
@@ -473,4 +476,6 @@ public class ServiceManager {
     {
       return ServiceManager.getInstance().getService(ServiceInfo.getServiceName(serviceInstanceId));
     }
+
+
 }

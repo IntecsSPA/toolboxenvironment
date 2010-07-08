@@ -161,7 +161,8 @@ function deleteSel()
     var ids="";
 
      <%  for(int i=1; i<=instanceNum; i++) {  %>
-    	if(document.deleteChecked.INST<%=i%>.checked == true)
+	if(document.deleteChecked.INST<%=i%>)
+	  if(document.deleteChecked.INST<%=i%>.checked == true)
         	ids+='ID_'+<%=i%>+'='+document.deleteChecked.ID_<%=i%>.value+"&";
    <%} %>
 

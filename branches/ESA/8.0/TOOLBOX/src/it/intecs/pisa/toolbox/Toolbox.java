@@ -1,7 +1,7 @@
 /*
  *
  * ****************************************************************************
- *  Copyright 2003*2004 Intecs
+ *  Copyright 2003*2010 Intecs
  ****************************************************************************
  *  This file is part of TOOLBOX.
  *
@@ -27,14 +27,15 @@
  */
 package it.intecs.pisa.toolbox;
 
-
+import it.intecs.pisa.toolbox.util.Util;
 import be.kzen.ergorr.service.RepositoryManager;
+import com.google.gson.JsonObject;
 import it.intecs.pisa.common.tbx.Interface;
 import it.intecs.pisa.toolbox.service.TBXOperation;
 import it.intecs.pisa.toolbox.service.TBXService;
-import it.intecs.pisa.communication.ServerDebugConsole;
-import it.intecs.pisa.communication.messages.ExecutionStartedMessage;
-import it.intecs.pisa.communication.messages.TerminateMessage;
+import it.intecs.pisa.common.communication.ServerDebugConsole;
+import it.intecs.pisa.common.communication.messages.ExecutionStartedMessage;
+import it.intecs.pisa.common.communication.messages.TerminateMessage;
 import it.intecs.pisa.soap.toolbox.exceptions.ToolboxException;
 import it.intecs.pisa.toolbox.configuration.ToolboxConfiguration;
 import java.io.*;
@@ -51,29 +52,33 @@ import java.net.*;
 import it.intecs.pisa.util.*;
 import it.intecs.pisa.toolbox.service.ServiceManager;
 import it.intecs.pisa.toolbox.db.ToolboxInternalDatabase;
-import it.intecs.pisa.toolbox.plugins.IManagerPlugin;
-import it.intecs.pisa.toolbox.plugins.InterfacePluginManager;
-import it.intecs.pisa.toolbox.plugins.ManagerPluginManager;
-import it.intecs.pisa.toolbox.plugins.TagPluginManager;
+import it.intecs.pisa.pluginscore.IManagerPlugin;
+import it.intecs.pisa.pluginscore.InterfacePluginManager;
+import it.intecs.pisa.pluginscore.ManagerPluginManager;
+import it.intecs.pisa.pluginscore.TagPluginManager;
 import it.intecs.pisa.toolbox.resources.LogResourcesPersistence;
 import it.intecs.pisa.toolbox.resources.XMLResourcesPersistence;
 import it.intecs.pisa.toolbox.db.ServiceStatuses;
+import it.intecs.pisa.pluginscore.UIPluginManager;
+import it.intecs.pisa.toolbox.cleanup.AutomaticCleanup;
+import it.intecs.pisa.toolbox.constants.MiscConstants;
+import it.intecs.pisa.toolbox.db.StatisticsUtil;
 import it.intecs.pisa.toolbox.log.ErrorMailer;
-import it.intecs.pisa.toolbox.plugins.managerNativePlugins.DeployServiceCommand;
-import it.intecs.pisa.toolbox.resources.TextResourcesPersistence;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.soap.SOAP11Constants;
 import org.apache.axiom.soap.SOAP12Constants;
 import org.apache.axis2.context.MessageContext;
 import org.apache.axis2.transport.http.AxisServlet;
 import org.apache.axis2.util.XMLUtils;
+import it.intecs.pisa.toolbox.plugins.managerNativePlugins.DeployServiceCommand;
+import it.intecs.pisa.toolbox.resources.TextResourcesPersistence;
+import it.intecs.pisa.util.json.JsonUtil;
 
 public class Toolbox extends AxisServlet implements ServletContextListener {
 
     public static final String CDATA_S = "<![CDATA[";
     public static final String CDATA_E = "]]>";
     public static final String ROOT = "/";
-    public static final String SLASH = "/";
     public static final String XSD = ".xsd";
     public static final String TOOLBOX_CONFIGURATION = "toolboxConfiguration.xml";
     public static final String TOOLBOX_LOG = "toolbox.log";
@@ -88,7 +93,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     public static final String AXIS2SERVICES = "axis2services";
     public static final String SERVICE = "service";
     public static final String FTP_SERVER = "FTPServer";
-    public static final int MAX_BACKUP_INDEX = 9;
+    public static final int MAX_BACKUP_INDEX = 9;   
     public static final String PORTAL_SSE_NAME = "portalSSE";
     public static final String IMPORT = "import";
     public static final String INCLUDE = "include";
@@ -121,9 +126,9 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     public static final String WSIL = "WSIL";
     public static final String WSIL_FILE = "index.wsil";
     public static final String WSIL_ABSTRACT = "abstract";
+    public static final String WSIL_DESCRIPTION = "description"; 
     public static final String WSIL_NAMESPACE = "http://schemas.xmlsoap.org/wsdl/";
-    public static final String HARVEST = "harvest";
-    public static final String DOT_WSDL = ".wsdl";
+    public static final String DOT_WSDL = ".wsdl"; 
     public static final int MIN_FILE_INDEX = 0;
     public static final int MAX_FILE_INDEX = 9;
     public static final String EXPORT_DESCRIPTOR_SCHEMA = "exportDescriptor.xsd";
@@ -144,7 +149,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     private boolean configurationProcessed;
     private Object processingRequest;
     private static boolean isDbRunning = false;
-    private long instanceKeyUnderDebug = -1;
+    private long instanceKeyUnderDebug;
     private ServerDebugConsole dbgConsole;
     private TagPluginManager tagPluginManager;
     private InterfacePluginManager interfacePluginManager;
@@ -153,11 +158,13 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     private XMLResourcesPersistence xmlResPersistence;
     private LogResourcesPersistence logResPersistence;
     protected ServiceManager serviceManager;
+    protected UIPluginManager uiPluginManager;
     private String deployAdminToken;
     private boolean needsInitialization = true;
     private ToolboxConfiguration tbxConfig;
     private String toolboxVersion="";
     private String toolboxRevision = "";
+
     /**
      *  Method accessed by the administration WEB application jsp pages, to retrieve the {@link Toolbox.ToolboxConfigurator} object.
      */
@@ -198,7 +205,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     public void signalDebugConsoleClosed() {
         dbgConsole.close();
         dbgConsole = null;
-        this.instanceKeyUnderDebug=-1;
+        this.instanceKeyUnderDebug=0;
         System.gc();
     }
 
@@ -316,7 +323,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
                 soapRequestDocument = domUtil.readerToDocument(buf);
             } catch (Exception e) {
                 errorMsg = "Error extracting SOAP payload: " + CDATA_S + e.getMessage() + CDATA_E;
-                logger.error(errorMsg);               
+                logger.error(errorMsg);
                 throw new ToolboxException(errorMsg);
             }
 
@@ -409,8 +416,8 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
 
         if (operation == null) {
             logger.error("[" + serviceName + "] " + TBXService.UNKNOWN_SOAP_PORT + operationName);
-             ErrorMailer.send(serviceName, operationName, null, null,"[" + serviceName + "] " + TBXService.UNKNOWN_SOAP_PORT + operationName);
-             throw new ToolboxException(TBXService.UNKNOWN_SOAP_PORT + operationName + " for service " + serviceName);
+            ErrorMailer.send(serviceName, operationName, null, null,"[" + serviceName + "] " + TBXService.UNKNOWN_SOAP_PORT + operationName);
+            throw new ToolboxException(TBXService.UNKNOWN_SOAP_PORT + operationName + " for service " + serviceName);
         }
       
         //**************** Processing Request *********************
@@ -466,7 +473,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
                     IOUtil.copy(new FileInputStream(file), out);
                 }
                 else response.sendError(404);
-            } else {
+               } else {
                 System.out.println("ID not provided");
             }
         }
@@ -548,9 +555,9 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
 
             Boolean usingTempDirectory = false;
             String errorMessage="";
+            configuredLogDir.mkdirs();
 
-             configuredLogDir.mkdirs();
-             if (!configuredLogDir.canWrite() || !configuredLogDir.canRead())
+            if (!configuredLogDir.canWrite() || !configuredLogDir.canRead())
              {
                 //in case of write permission errors we use thetemporary directory
                 errorMessage = "Unable to create log directory: " + configuredLogDir.getAbsolutePath() + " Check the read/write permissions";
@@ -572,12 +579,13 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             logResPersistence.setDirectory(resourcePersistenceDir);
 
             logger=logResPersistence.getRollingLogForToolbox();
-            logger.info("Core services started");
+            
+            resourcePersistenceDir = new File(configuredLogDir, "Text");
+            TextResourcesPersistence textPers=TextResourcesPersistence.getInstance();
+            textPers.setDirectory(resourcePersistenceDir);
 
-             resourcePersistenceDir = new File(configuredLogDir, "Text");
-             TextResourcesPersistence textPers=TextResourcesPersistence.getInstance();
-             textPers.setDirectory(resourcePersistenceDir);
-             
+             logger.info("Core services started");
+
              if (usingTempDirectory)
              {
                 logger.error(errorMessage);
@@ -593,15 +601,17 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             interfacePluginManager = InterfacePluginManager.getInstance();
             managerPluginManager = ManagerPluginManager.getInstance();
             serviceManager = ServiceManager.getInstance();
-            
+            uiPluginManager=UIPluginManager.getInstance();
+
             String tbxPluginDirectory = pluginDirectory.getAbsolutePath();
 
             tagPluginManager.initManager(tbxPluginDirectory);
             interfacePluginManager.initManager(tbxPluginDirectory);
             managerPluginManager.initManager(tbxPluginDirectory);
-
+            uiPluginManager.initManager(tbxPluginDirectory);
+            
             logger.info("Plugins started");
-
+           
             adjustAllSchemaReferences(); // Adjust the Schema cross references (import and include) paths according to the rootDir
 
             File wsdlDir;
@@ -635,9 +645,11 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
                 logger.info("FTP server started");
             }
 
+
             needsInitialization=false;
 
         } catch (Exception e) {
+            
             throw new ServletException(e);
         }
 
@@ -687,6 +699,15 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             this.toolboxVersion="8.0";
         }
 
+        try
+        {
+            AutomaticCleanup.start();
+        }
+        catch(Exception e)
+        {
+            logger.info("Cannot start automatic cleanup service");
+        }
+
         logger.info("Initialization completed");
     }
 
@@ -701,7 +722,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             return;
         }
 
-        //logger = LogResourcesPersistence.getInstance().getRollingLogForToolbox();
+        logger = LogResourcesPersistence.getInstance().getRollingLogForToolbox();
 
         logger.info("TOOLBOX START");
         logger.info("configuration validated and loaded");
@@ -738,7 +759,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
                 logger.error("The FTP server functionalities will be disabled.");
             }
 
-         }
+        }
 
         /* This flag is to avoid doing this process more than once */
         setConfigurationProcessed(true);
@@ -757,8 +778,14 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         String request;
         String requestURI;
 
-        try {
-            logger.info("Received request " + req.getRequestURI());
+        try
+        {
+            requestURI=req.getRequestURI();
+            
+            logger.debug("Received request " + requestURI);
+
+            if(requestURI.startsWith("/TOOLBOX/rest"))
+                executeRestCommand(req, resp);
 
             id = req.getParameter("id");
             service = req.getParameter("service");
@@ -799,34 +826,36 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
      *  This method invokes the implementation of the super class, unless a "password" parameter is present, in which case it calls the {@link #doGet} method.
      */
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String requestURI = req.getRequestURI();
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, java.io.IOException {
+        String requestURI;
+        
+        requestURI=req.getRequestURI();
 
-        logger.info("Received request " + requestURI);
+        logger.debug("Received request " + requestURI);
 
         if (req.getParameter("password") != null) {
             doGet(req, resp);
         } else if (requestURI.startsWith("/TOOLBOX/services")) {
+            StatisticsUtil.incrementStatistic(StatisticsUtil.STAT_ARRIVED);
             super.doPost(req, resp);
             return;
         }
         if (requestURI.startsWith("/TOOLBOX/debug")) {
-            //TODO should this pass through axis2?
             debugServiceRequest(resp, req, requestURI);
         } else if (requestURI.startsWith("/TOOLBOX/deploy")) {
-            try {
-                executeDeploy(req, resp);
+           try {
+             executeDeploy(req, resp);
             } catch (Exception ex) {
                 java.util.logging.Logger.getLogger(Toolbox.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
             }
         } else if (requestURI.startsWith("/TOOLBOX/manager")) {
             executeManagerCommands(req, resp);
-        } //STOP - Deploy a new service remotely
+        } else if(requestURI.startsWith("/rest"))
+            executeRestCommand(req, resp);
 
     }
 
     
-
      /**
      *  Returns the rootDir directory of the TOOLBOX WEB application
      */
@@ -861,8 +890,6 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     public File getAxis2ServicesRoot(String fileName) {
         return new File(new File(new File(getRootDir(), WEB_INF), AXIS2SERVICES), fileName);
     }
-
-    
 
     /**
      *  Adjusts the Schema cross references (import and include) paths according to the rootDir in every schema file in the rootDir directory
@@ -918,7 +945,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
      *  Builds the correct schema location, based on the old value and the current rootDir directory. It uses {@link Util#getURI}.
      */
     private String getSchemaLocation(String oldSchemaLocation) {
-        int slashIndex = oldSchemaLocation.lastIndexOf(SLASH); // It is correct to search for SLASH since it is an URI
+        int slashIndex = oldSchemaLocation.lastIndexOf(MiscConstants.SLASH); // It is correct to search for SLASH since it is an URI
 
         return Util.getURI(new File(new File(new File(getRootDir(), WEB_INF), SCHEMAS), oldSchemaLocation.substring(slashIndex + 1)).getAbsolutePath());
     }
@@ -941,17 +968,27 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             }
 
             System.out.println("Shutting down DB");
-           
+            if (isDbRunning) {
                 try {
                     internalDatabase.close();
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
+            }
 
             System.out.println("Shutting down debug console");
             if (dbgConsole != null) {
                 dbgConsole.close();
 
+            }
+
+            try
+            {
+                AutomaticCleanup.stop();
+            }
+            catch(Exception e)
+            {
+                
             }
 
             serviceManager = null;
@@ -964,14 +1001,9 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         }
     }
 
-    /**
-     *  Returns the log level, as specified in the configuration file.
-     */
     public Level getLogLevel() {
         return Level.toLevel(tbxConfig.getConfigurationValue(ToolboxConfiguration.LOG_LEVEL));
     }
-
-   
 
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
         try {
@@ -1062,19 +1094,11 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         this.logger = logger;
     }
 
-    /*public FIFOMutex getQueueMutex() {
-    return queueMutex;
-    }
-
-    public void setQueueMutex(FIFOMutex queueMutex) {
-    this.queueMutex = queueMutex;
-    }*/
     public static void setMailError(String aMailError) {
         mailError = aMailError;
     }
 
-   
-
+    
     public static String getMailError() {
         return mailError;
     }
@@ -1093,30 +1117,6 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
 
     public void setDeployAdministrationToken(String token) {
         this.deployAdminToken = token;
-    }
-
-    public String getPublicAddress() throws UnknownHostException {
-        String publicAddress = "";
-        InetAddress addr;
-        Toolbox tbx;
-        String host, port;
-        Element configurationRoot;
-
-        tbx = Toolbox.getInstance();
-
-        host = tbxConfig.getConfigurationValue(ToolboxConfiguration.APACHE_ADDRESS);
-        port = tbxConfig.getConfigurationValue(ToolboxConfiguration.APACHE_PORT);
-
-        if (host == null || port == null || host.equals("") || port.equals("")) {
-            addr = InetAddress.getLocalHost();
-
-            host = addr.getHostAddress();
-
-            port = tbxConfig.getConfigurationValue(ToolboxConfiguration.TOMCAT_PORT);
-        }
-
-        publicAddress = "http://" + host + ":" + port + "/TOOLBOX";
-        return publicAddress;
     }
 
     public String getToolboxScriptSchemaLocation() {
@@ -1230,7 +1230,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
 
         sc=new DeployServiceCommand();
         sc.executeCommand(req, resp);
-    }
+ }
 
     public String getDeployAdminToken() {
         return deployAdminToken;
@@ -1239,4 +1239,34 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     public void setDeployAdminToken(String deployAdminToken) {
         this.deployAdminToken = deployAdminToken;
     }
+
+    private void executeRestCommand(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String cmd;
+        ManagerPluginManager man;
+        IManagerPlugin commandPlugin;
+        JsonObject inputObj;
+        try {
+            cmd = req.getRequestURI();
+            cmd=cmd.substring(req.getContextPath().length());
+
+            inputObj=JsonUtil.getInputAsJson(req.getInputStream());
+
+            man = ManagerPluginManager.getInstance();
+
+            commandPlugin = man.getRESTCommand(cmd, "REST");
+            JsonObject jsonResp=commandPlugin.executeCommand(cmd, inputObj);
+
+            JsonUtil.writeJsonToStream(jsonResp, resp.getOutputStream());
+            resp.setStatus(resp.SC_OK);
+        } catch (Exception e) {
+            resp.sendError(resp.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    
+
+
 }
+
+
+

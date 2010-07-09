@@ -309,12 +309,12 @@ function view(file, title){
             width: 100
         }, {
             id:'text',
-            header:"text",
+            header:"Message",
             dataIndex:'',
             sortable:true,
             width: 200
         },{
-            header:"Data",
+            header:"Date",
             dataIndex:'data',
             sortable:true,
             width:70
@@ -349,7 +349,7 @@ function view(file, title){
 }
 
 var http = new XMLHttpRequest();
-
+var barPaging=null;
 function addGrid(file, titleTab){
     
     if (!tabs.findById(titleTab)){
@@ -394,16 +394,16 @@ function addGrid(file, titleTab){
                                                 {text: 'DEBUG', handler: function(){store.clearFilter();}}
                                                 ]}
         });
-        var bar = new Ext.PagingToolbar({
+        barPaging = new Ext.PagingToolbar({
             store: store,
             pageSize:1
         });
         var but = new Ext.Button({
             text:'Clear',
             handler:function(){
-                
+               // barPaging.changePage(1);
                 var c = file.replace("get","clear");
-     
+               
                 http.open("GET", c, true);
                 http.onreadystatechange = ResponseClear;
                 if ( !callInProgress(http) ) {
@@ -419,8 +419,15 @@ function addGrid(file, titleTab){
                         closable:true
                     });
                 }
-                store.reload();
-                tabs.setActiveTab(titleTab);
+                //store.reload();
+                store.load({params:{start:0}});
+
+                /*alert(tabs.items.items.length);
+                tabs.items.items[0].remove();*/
+               
+
+                //addGrid(file, titleTab);
+                //tabs.setActiveTab(titleTab);
             }
         });
         
@@ -459,7 +466,7 @@ function addGrid(file, titleTab){
                 enableRowBody:true,
                 showPreview:false
             },
-            bbar: [bar, menu, but, but1]
+            bbar: [barPaging, menu, but, but1]
         });
         
         tabs.add(grid);
@@ -470,20 +477,14 @@ function addGrid(file, titleTab){
 }
 
 
-function openWindowFrame (id,title,url,perc_width,perc_height,buttons,listeners){
-  var width,height,htmlFrame;
+function openWindowFrame (id,title,url,perc_width,perc_height){
+  var width,height;  
   if(pageWindowFrame[id]) {
      pageWindowFrame[id].close();  
      pageWindowFrame[id].destroy();
      pageWindowFrame[id]=null;
-  }
-
-  if(url)
-    htmlFrame="<iframe scrolling='auto' src='"+url+"' name='windowFrame_"+id+"' width='98%' height='98%' marginwidth='0' marginheight='0'></iframe>";
-  else
-    htmlFrame= "<iframe scrolling='auto' name='windowFrame_"+id+"' width='98%' height='98%' marginwidth='0' marginheight='0'></iframe>";
-
-if(perc_width)
+  } 
+  if(perc_width)
      width=Math.floor((screen.width/100)*perc_width); 
   else
      width=Math.floor((screen.width/100)*50); 
@@ -502,13 +503,10 @@ if(perc_width)
 	width: width,
 	height: height,
         closeAction:'hide',
-        html: htmlFrame,
-        buttons: buttons,
-        listeners: listeners
+        html:"<iframe scrolling='auto' src='"+url+"' name='windowFrame_"+id+"' width='98%' height='98%' marginwidth='0' marginheight='0'></iframe>"
    });  
    pageWindowFrame[id].show();
 }
-
 
 function printError (errorType){
     if(errorType == 'serviceexist'){

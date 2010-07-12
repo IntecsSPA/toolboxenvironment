@@ -117,13 +117,10 @@
             Transformer transformer = TransformerFactory.newInstance().newTransformer(new DOMSource(xslDocument));
             transformer.setParameter("type", instanceType);
             transformer.setParameter("serviceName", service);
-            transformer.setParameter("instanceIdOrderDirection", (orderBy.equals("INSTANCE_ID")?(order.equals("ASC")?"DESC":"ASC"):"ASC") );
-            transformer.setParameter("orderIdOrderDirection", (orderBy.equals("ORDER_ID")?(order.equals("ASC")?"DESC":"ASC"):"ASC"));
-            transformer.setParameter("arrivalDateOrderDirection",  (orderBy.equals("ARRIVAL_DATE")?(order.equals("ASC")?"DESC":"ASC"):"ASC"));
-            transformer.setParameter("statusOrderDirection",  (orderBy.equals("STATUS")?(order.equals("ASC")?"DESC":"ASC"):"ASC"));
-            transformer.setParameter("expirationDateOrderDirection",  (orderBy.equals("EXPIRATION_DATE")?(order.equals("ASC")?"DESC":"ASC"):"ASC"));
-            transformer.setParameter("pushHostOrderDirection",  (orderBy.equals("PUSH_HOST")?(order.equals("ASC")?"DESC":"ASC"):"ASC"));
-
+            transformer.setParameter("orderBy", orderBy );
+            transformer.setParameter("order", order);
+            transformer.setParameter("inverseOrder", order.equals("ASC")?"DESC":"ASC");
+            transformer.setParameter("page",pageNum);
 
             transformer.transform(new DOMSource(instancesDoc), new StreamResult(out));
 

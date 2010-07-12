@@ -22,7 +22,7 @@ import it.intecs.pisa.toolbox.configuration.ToolboxConfiguration;
 import it.intecs.pisa.toolbox.service.ServiceManager;
 import it.intecs.pisa.toolbox.service.TBXService;
 import it.intecs.pisa.util.IOUtil;
-import it.intecs.pisa.toolbox.util.ToolboxRollingFileAppender;
+import it.intecs.pisa.util.ToolboxRollingFileAppender;
 import java.io.File;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;

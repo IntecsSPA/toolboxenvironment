@@ -19,6 +19,7 @@ import it.intecs.pisa.toolbox.security.ToolboxSecurityConfigurator;
 import it.intecs.pisa.toolbox.service.instances.InstanceHandler;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.IOUtil;
+import it.intecs.pisa.util.SchemaSetRelocator;
 import it.intecs.pisa.util.Zip;
 import java.io.File;
 import java.io.FileWriter;
@@ -85,7 +86,8 @@ public class ServiceManager {
              DOMUtil.dumpXML(descriptor,descriptorFile);
 
             schemaDir=new File(serviceRoot,"Schemas");
-            
+            SchemaSetRelocator.updateSchemaLocationToAbsolute(schemaDir, schemaDir.toURI());
+
             ServiceValidator.validateService(serviceRoot,new File(servicesRootDir,"../schemas/xmlScript.xsd"));
             newServ = new TBXService(serviceRoot, getWSDLDir(serviceName));
             ServiceStatuses.removeServiceStatus(serviceName);

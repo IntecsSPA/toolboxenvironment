@@ -30,6 +30,7 @@ function XMLHTTPObject() {
         }
     }
     return xmlhttp;
+
 }
 
 /*Show a Yes/No Dialog box
@@ -517,5 +518,14 @@ function printError (errorType){
             animEl: 'elId',
             icon: Ext.MessageBox.ERROR
      });  
+    }else if(errorType == 'validationError'){
+         Ext.Msg.show({
+            title:'Create a new service: Error',
+            buttons: Ext.Msg.OK,
+            msg: 'An error occurred while deploying the service. A validation error occurred.',
+            animEl: 'elId',
+            icon: Ext.MessageBox.ERROR
+     });
     }
+
 }

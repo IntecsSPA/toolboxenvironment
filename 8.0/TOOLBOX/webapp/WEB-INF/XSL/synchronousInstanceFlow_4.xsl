@@ -44,6 +44,11 @@
         <xsl:if test="$language = 'en'">Output message (</xsl:if>
         <xsl:if test="$language = 'it'">Messaggio di output (</xsl:if>
     </xsl:param>
+    <xsl:param name="invalidOutputTxt">
+        <xsl:if test="$language = 'en'">Invalid output message (</xsl:if>
+        <xsl:if test="$language = 'it'">Messaggio di output non valido (</xsl:if>
+    </xsl:param>
+
 
          <xsl:template match="/">
         <script>

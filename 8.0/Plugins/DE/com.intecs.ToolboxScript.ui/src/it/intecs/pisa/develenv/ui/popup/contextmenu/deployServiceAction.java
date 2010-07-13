@@ -2,6 +2,7 @@ package it.intecs.pisa.develenv.ui.popup.contextmenu;
 
 import it.intecs.pisa.common.tbx.exceptions.CannotAuthenticateException;
 import it.intecs.pisa.common.tbx.exceptions.CannotDeployException;
+import it.intecs.pisa.common.tbx.exceptions.ServiceValidationException;
 import it.intecs.pisa.develenv.model.project.ToolboxEclipseProjectDeployer;
 import it.intecs.pisa.develenv.model.project.ToolboxEclipseProjectPreferences;
 import it.intecs.pisa.develenv.model.project.ToolboxEclipseProjectUtil;
@@ -75,6 +76,16 @@ public class deployServiceAction implements IObjectActionDelegate {
 						catch(CannotDeployException e)
 						{
 							displayError("Cannot deploy to host "+tbxUrl);
+						}
+						catch(ServiceValidationException e)
+						{
+							String message=e.getDetail();
+							String additionInfo=message!=null && message.equals("")==false?" The validation process returned this exception: "+message:"";
+							displayError("The service is not valid. Please check operation scripts for validity."+additionInfo);
+						}
+						catch(Exception e)
+						{
+							displayError("An unexpected error occurred while deploying the service to host "+tbxUrl);
 						}
 					}
 				} else {

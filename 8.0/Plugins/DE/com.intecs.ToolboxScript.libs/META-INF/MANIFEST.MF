@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: TDE_libs Plug-in
 Bundle-SymbolicName: com.intecs.ToolboxScript.libraries;singleton:=true
-Bundle-Version: 1.3.10
+Bundle-Version: 1.3.11
 Bundle-Localization: plugin
 Bundle-ClassPath: .,
  jars/commons-httpclient-2.0.2.jar,

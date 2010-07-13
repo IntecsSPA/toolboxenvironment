@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2006 sp1 U (http://www.altova.com) by Massimiliano (In) -->
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!-- edited with XMLSpy v2006 sp1 U (http://www.altova.com) by Massimiliano (In) --><!--
  -
  -  Developed By:      Intecs  S.P.A.
  -  File Name:         $RCSfile: xmlScript.xsd,v $
@@ -8,8 +6,7 @@
  -  File Revision:     $Revision: 1.1.1.1 $
  -  Revision Date:     $Date: 2006/06/13 15:02:33 $
  -
- -->
-<xsd:schema targetNamespace="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:com="http://pisa.intecs.it/mass/toolbox/common" xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" elementFormDefault="qualified" attributeFormDefault="unqualified">
+ --><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:com="http://pisa.intecs.it/mass/toolbox/common" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://pisa.intecs.it/mass/toolbox/xmlScript">
 	<!--<xsd:import namespace="http://pisa.intecs.it/mass/toolbox/common" schemaLocation="file:/C:/Progetti/SAS/Plugin/com.intecs.ToolboxScript.editorFiles/schemas/common.xsd"/>-->
 	<!--Replacing import of common.xsd schema-->
     <xsd:simpleType name="ToolboxTime">
@@ -153,7 +150,7 @@
             <xsd:documentation>Ths tag is used to create a path. This tag is OS aware.</xsd:documentation>
         </xsd:annotation>
         <xsd:complexType>
-            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:choice maxOccurs="unbounded" minOccurs="0">
                 <xsd:group ref="LValueGroup"/>
                 <xsd:group ref="StringGroup"/>
             </xsd:choice>
@@ -205,7 +202,7 @@
             <xsd:documentation>This tag creates a zip file. The child tag dir is used to specify the directory where data is stored. zipFile tag is used to provide the full path pf the zip file</xsd:documentation>
         </xsd:annotation>
         <xsd:complexType>
-            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:choice maxOccurs="unbounded" minOccurs="0">
                 <xsd:element name="dir" type="Expression"/>
                 <xsd:element name="file" type="Expression"/>
             </xsd:choice>
@@ -259,7 +256,7 @@
             <xsd:documentation>Returns an instance of a wrapper class (Byte, Short, Integer etc.) whose type is given by the "type" attribute and whose value is given by the "value" attribute. This tag can be used wherever a primitive type is needed.</xsd:documentation>
         </xsd:annotation>
         <xsd:complexType>
-            <xsd:attribute name="type" type="TypeType" default="int"/>
+            <xsd:attribute default="int" name="type" type="TypeType"/>
             <xsd:attribute name="value" type="xsd:string" use="required"/>
         </xsd:complexType>
     </xsd:element>
@@ -293,7 +290,7 @@
         </xsd:annotation>
         <xsd:complexType>
             <xsd:attribute name="name" type="xsd:string" use="required"/>
-            <xsd:attribute name="scope" type="xsd:string" default="local"/>
+            <xsd:attribute default="local" name="scope" type="xsd:string"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="existsVariable">
@@ -319,7 +316,7 @@
         </xsd:annotation>
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:group ref="ExpressionChoice" minOccurs="2" maxOccurs="unbounded"/>
+                <xsd:group maxOccurs="unbounded" minOccurs="2" ref="ExpressionChoice"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
@@ -335,7 +332,7 @@
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:group ref="TargetChoice"/>
-                <xsd:element ref="parameter" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" ref="parameter"/>
             </xsd:sequence>
             <xsd:attribute name="methodName" type="xsd:string" use="required"/>
         </xsd:complexType>
@@ -347,7 +344,7 @@
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:group ref="ExpressionChoice"/>
-                <xsd:element ref="parameter" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" ref="parameter"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
@@ -358,7 +355,7 @@
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:group ref="ExpressionChoice"/>
-                <xsd:element ref="parameter" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" ref="parameter"/>
             </xsd:sequence>
             <xsd:attribute name="internalClass" type="xsd:string" use="required"/>
         </xsd:complexType>
@@ -369,7 +366,7 @@
         </xsd:annotation>
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:group ref="ExpressionChoice" minOccurs="2" maxOccurs="unbounded"/>
+                <xsd:group maxOccurs="unbounded" minOccurs="2" ref="ExpressionChoice"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
@@ -384,7 +381,7 @@
         </xsd:annotation>
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:group ref="ExpressionChoice" maxOccurs="unbounded"/>
+                <xsd:group maxOccurs="unbounded" ref="ExpressionChoice"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
@@ -547,8 +544,8 @@
             <xsd:documentation>Returns the boolean and of the boolean values returned by the enclosed tags. If the tag is empty, it returns true, if it contains one tag, its value is returned. If the attribute "shortcut" has "true" value (the default), evaluation stops after the first false tag is found, otherwise all the tags are evaluated.</xsd:documentation>
         </xsd:annotation>
         <xsd:complexType>
-            <xsd:group ref="ExpressionChoice" minOccurs="0" maxOccurs="unbounded"/>
-            <xsd:attribute name="shortcut" type="xsd:boolean" default="true"/>
+            <xsd:group maxOccurs="unbounded" minOccurs="0" ref="ExpressionChoice"/>
+            <xsd:attribute default="true" name="shortcut" type="xsd:boolean"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="or">
@@ -556,8 +553,8 @@
             <xsd:documentation>Returns the boolean or of the boolean values returned by the enclosed tags. If the tag is empty, it returns false, if it contains one tag, its value is returned. If the attribute "shortcut" has "true" value (the default), evaluation stops after the first true tag is found, otherwise all the tags are evaluated.</xsd:documentation>
         </xsd:annotation>
         <xsd:complexType>
-            <xsd:group ref="ExpressionChoice" minOccurs="0" maxOccurs="unbounded"/>
-            <xsd:attribute name="shortcut" type="xsd:boolean" default="true"/>
+            <xsd:group maxOccurs="unbounded" minOccurs="0" ref="ExpressionChoice"/>
+            <xsd:attribute default="true" name="shortcut" type="xsd:boolean"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="xor" type="ExpressionSequence">
@@ -576,7 +573,7 @@
         </xsd:annotation>
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:group ref="ExpressionChoice" minOccurs="2" maxOccurs="3"/>
+                <xsd:group maxOccurs="3" minOccurs="2" ref="ExpressionChoice"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
@@ -586,7 +583,7 @@
         </xsd:annotation>
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:group ref="ExpressionChoice" minOccurs="2" maxOccurs="2"/>
+                <xsd:group maxOccurs="2" minOccurs="2" ref="ExpressionChoice"/>
             </xsd:sequence>
             <xsd:attribute name="operation" type="xsd:string" use="optional"/>
             <xsd:attribute name="sslCertificateLocation" type="xsd:string" use="optional"/>
@@ -609,18 +606,18 @@
         </xsd:annotation>
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:group ref="ExpressionChoice" maxOccurs="unbounded"/>
+                <xsd:group maxOccurs="unbounded" ref="ExpressionChoice"/>
                 <xsd:sequence>
-                    <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                    <xsd:choice maxOccurs="unbounded" minOccurs="0">
                         <xsd:group ref="ExpressionChoice"/>
                         <xsd:element name="continue">
                             <xsd:complexType>
-                                <xsd:group ref="ExpressionChoice" maxOccurs="unbounded"/>
+                                <xsd:group maxOccurs="unbounded" ref="ExpressionChoice"/>
                             </xsd:complexType>
                         </xsd:element>
                         <xsd:element name="break">
                             <xsd:complexType>
-                                <xsd:group ref="ExpressionChoice" maxOccurs="unbounded"/>
+                                <xsd:group maxOccurs="unbounded" ref="ExpressionChoice"/>
                             </xsd:complexType>
                         </xsd:element>
                     </xsd:choice>
@@ -634,7 +631,7 @@
         </xsd:annotation>
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:element name="cleanup" maxOccurs="unbounded">
+                <xsd:element maxOccurs="unbounded" name="cleanup">
                     <xsd:complexType>
                         <xsd:group ref="ExpressionChoice"/>
                         <xsd:attribute name="marker" type="xsd:string" use="optional"/>
@@ -665,9 +662,9 @@
         </xsd:annotation>
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:group ref="ExpressionChoice" minOccurs="0"/>
+                <xsd:group minOccurs="0" ref="ExpressionChoice"/>
                 <xsd:element name="condition" type="Expression"/>
-                <xsd:group ref="ExpressionChoice" maxOccurs="2"/>
+                <xsd:group maxOccurs="2" ref="ExpressionChoice"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
@@ -684,7 +681,7 @@
                         <xsd:attribute name="errorMessageName" type="xsd:string" use="required"/>
                     </xsd:complexType>
                 </xsd:element>
-                <xsd:element name="anyway" type="Expression" minOccurs="0"/>
+                <xsd:element minOccurs="0" name="anyway" type="Expression"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
@@ -694,7 +691,7 @@
         </xsd:annotation>
         <xsd:complexType>
             <xsd:group ref="ExpressionChoice"/>
-            <xsd:attribute name="newLine" type="xsd:boolean" default="true"/>
+            <xsd:attribute default="true" name="newLine" type="xsd:boolean"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="execute">
@@ -708,7 +705,7 @@
                         <xsd:group ref="ExpressionChoice"/>
                     </xsd:complexType>
                 </xsd:element>
-                <xsd:element name="argument" minOccurs="0" maxOccurs="unbounded">
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="argument">
                     <xsd:complexType>
                         <xsd:group ref="ExpressionChoice"/>
                         <xsd:attribute name="name" use="required"/>
@@ -758,7 +755,7 @@
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:group ref="ExpressionChoice"/>
-                <xsd:element ref="parameter" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" ref="parameter"/>
             </xsd:sequence>
             <xsd:attribute name="name" type="xsd:string" use="required"/>
         </xsd:complexType>
@@ -804,7 +801,7 @@
         </xsd:annotation>
         <xsd:complexType/>
     </xsd:element>
-    <xsd:element name="xPath"  >
+    <xsd:element name="xPath">
         <xsd:annotation>
             <xsd:documentation>It returns the string obtained by evaluating the XPath expression given by the second enclosed element, on the DOM Document given by the first enclosed element. IMPORTANT: xpath expression evaluating to something different than a string are not supported, if complex XPath operations have to be performed other ways are required (method invocation tags etc. see SUM). See also XPath documentation for details about XPath expressions and their value.</xsd:documentation>
         </xsd:annotation>
@@ -812,7 +809,7 @@
             <xsd:complexContent>
                 <xsd:extension base="ExpressionCouple">
                     
-                        <xsd:attribute name="outputType" default="text">
+                        <xsd:attribute default="text" name="outputType">
                             <xsd:simpleType>
                                 <xsd:restriction base="xsd:string">
                                     <xsd:enumeration value="text"/>
@@ -838,7 +835,7 @@
                             <xsd:group ref="ExpressionChoice"/>
                         </xsd:complexType>
                     </xsd:element>
-                    <xsd:element name="parameter" minOccurs="0" maxOccurs="unbounded">
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="parameter">
                         <xsd:complexType>
                             <xsd:group ref="ExpressionChoice"/>
                             <xsd:attribute name="name" type="xsd:string" use="required"/>
@@ -847,8 +844,8 @@
                 </xsd:choice>
             </xsd:sequence>
             <xsd:attribute name="host" type="xsd:string" use="optional"/>
-            <xsd:attribute name="port" type="xsd:string" use="optional" />
-            <xsd:attribute name="method" default="POST">
+            <xsd:attribute name="port" type="xsd:string" use="optional"/>
+            <xsd:attribute default="POST" name="method">
                 <xsd:simpleType>
                     <xsd:restriction base="xsd:string">
                         <xsd:enumeration value="GET"/>
@@ -856,7 +853,7 @@
                     </xsd:restriction>
                 </xsd:simpleType>
             </xsd:attribute>
-            <xsd:attribute name="fileType" default="text">
+            <xsd:attribute default="text" name="fileType">
                 <xsd:simpleType>
                     <xsd:restriction base="xsd:string">
                         <xsd:enumeration value="binary"/>
@@ -874,7 +871,7 @@
         </xsd:annotation>
         <xsd:complexType>
             <xsd:group ref="ExpressionChoice"/>
-            <xsd:attribute name="fileType" default="text">
+            <xsd:attribute default="text" name="fileType">
                 <xsd:simpleType>
                     <xsd:restriction base="xsd:string">
                         <xsd:enumeration value="text"/>
@@ -889,8 +886,8 @@
             <xsd:documentation>This tag dumps, in a file whose name is given by the result of the first child element, the string/bytes given by the second child element. It returns null.</xsd:documentation>
         </xsd:annotation>
         <xsd:complexType>
-            <xsd:group ref="ExpressionChoice" minOccurs="2" maxOccurs="2"/>
-            <xsd:attribute name="fileType" default="text">
+            <xsd:group maxOccurs="2" minOccurs="2" ref="ExpressionChoice"/>
+            <xsd:attribute default="text" name="fileType">
                 <xsd:simpleType>
                     <xsd:restriction base="xsd:string">
                         <xsd:enumeration value="text"/>
@@ -923,7 +920,7 @@
     <xsd:element name="procedureList">
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:element name="procedure" minOccurs="0" maxOccurs="unbounded">
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="procedure">
                     <xsd:complexType>
                         <xsd:group ref="ExpressionChoice"/>
                         <xsd:attribute name="name" type="xsd:string" use="required"/>
@@ -964,7 +961,7 @@
             <xsd:sequence>
                 <xsd:group ref="ExpressionChoice"/>
             </xsd:sequence>
-            <xsd:attribute name="direction" default="encode">
+            <xsd:attribute default="encode" name="direction">
                 <xsd:simpleType>
                     <xsd:restriction base="xsd:string">
                         <xsd:enumeration value="decode"/>
@@ -1012,8 +1009,8 @@
             <xsd:documentation>It serializes as XML, in a file whose name is given by the first enclosed element, the DOM document returned by the second enclosed element.</xsd:documentation>
         </xsd:annotation>
         <xsd:complexType>
-            <xsd:group ref="ExpressionChoice" minOccurs="2" maxOccurs="2"/>
-            <xsd:attribute name="indent" type="xsd:boolean" default="false"/>
+            <xsd:group maxOccurs="2" minOccurs="2" ref="ExpressionChoice"/>
+            <xsd:attribute default="false" name="indent" type="xsd:boolean"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="horizontalMove">
@@ -1021,8 +1018,8 @@
             <xsd:documentation>This tag moves the cursor along the current line. The cursor is moved according to the integer value (let's call it 'n') returned by the enclosed element and to the value of the "absolute" attribute. If absolute is false (default) the cursor is moved n characters to the right (if n is negative the cursor moves left). If absolute is true, the cursor goes n characters to right of line start if it is non-negative and n characters to the left of line end if it is negative. If the enclosed element is missing, the behaviour is as the returned value was 1. If the result of the move would be on the left of line start the cursor goes to line start. If the result of the move would be on the right of line end the cursor goes to line end.</xsd:documentation>
         </xsd:annotation>
         <xsd:complexType>
-            <xsd:group ref="ExpressionChoice" minOccurs="0"/>
-            <xsd:attribute name="absolute" type="xsd:boolean" default="false"/>
+            <xsd:group minOccurs="0" ref="ExpressionChoice"/>
+            <xsd:attribute default="false" name="absolute" type="xsd:boolean"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="verticalMove">
@@ -1030,9 +1027,9 @@
             <xsd:documentation>This tag moves the cursor on a different line of the current text context. The cursor is moved according to the integer value (let's call it 'n') returned by the enclosed element, to the value of the "absolute" attribute and to the value of the "position" attribute. If absolute is false (default) the cursor is moved n lines down (if n is negative the cursor moves up). If absolute is true, the cursor goes on line n + 1 if it is non-negative and n lines above the last if it is negative. If the enclosed element is missing, the behaviour is as the returned value was 1. If the result of the move would above first line the cursor goes to first line. If the result of the move would be below last line the cursor goes to last line. The value of the "position" attribute affects the column the cursor will be position after vertical move. The possible values are: column (default), start, end. If the value is start the cursor will go to line start, if the value is end the cursor will go to line end, if the value is column the cursor will remain on the same column it was before moving, unless the destination line is not long enough, in shich case the cursor will go to line end.</xsd:documentation>
         </xsd:annotation>
         <xsd:complexType>
-            <xsd:group ref="ExpressionChoice" minOccurs="0"/>
-            <xsd:attribute name="absolute" type="xsd:boolean" default="false"/>
-            <xsd:attribute name="position" default="column">
+            <xsd:group minOccurs="0" ref="ExpressionChoice"/>
+            <xsd:attribute default="false" name="absolute" type="xsd:boolean"/>
+            <xsd:attribute default="column" name="position">
                 <xsd:simpleType>
                     <xsd:restriction base="xsd:string">
                         <xsd:enumeration value="start"/>
@@ -1048,10 +1045,10 @@
             <xsd:documentation>This tag moves cursor along current line, moving from a field to another. What a field is depends on a list of separator characters. The "separators" attribute is a string containing all the characters used to separate fields (escape sequences \c, where c is a character, have a special meaning see POSIX regular expressions. \b means blank). The "greedy" attribute changes the way separations are calculated: when is true (default), two or more adjacent separator characters are considered a single separation, when is false, an empty field is considered between two adjacent separator characters. The "position" attribute can have two values, start (default) and end, defining where cursor will be positioned after move (field start or field end, where field end means start of next separator). If the move would take the cursor before the first field, it will go on the first field. If the move would take the cursor after the last field, it will go on the last field. The enclosed element gives the number of field to move through (non-negative on the right, negative on the left). The "absolute" attribute has the same meaning it has in the horizontalMove tag.</xsd:documentation>
         </xsd:annotation>
         <xsd:complexType>
-            <xsd:group ref="ExpressionChoice" minOccurs="0"/>
-            <xsd:attribute name="absolute" type="xsd:boolean" default="false"/>
+            <xsd:group minOccurs="0" ref="ExpressionChoice"/>
+            <xsd:attribute default="false" name="absolute" type="xsd:boolean"/>
             <xsd:attribute name="separators" type="xsd:string" use="required"/>
-            <xsd:attribute name="position" default="start">
+            <xsd:attribute default="start" name="position">
                 <xsd:simpleType>
                     <xsd:restriction base="xsd:string">
                         <xsd:enumeration value="start"/>
@@ -1059,7 +1056,7 @@
                     </xsd:restriction>
                 </xsd:simpleType>
             </xsd:attribute>
-            <xsd:attribute name="greedy" type="xsd:boolean" default="true"/>
+            <xsd:attribute default="true" name="greedy" type="xsd:boolean"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="search">
@@ -1068,9 +1065,9 @@
         </xsd:annotation>
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:group ref="ExpressionChoice" maxOccurs="2"/>
+                <xsd:group maxOccurs="2" ref="ExpressionChoice"/>
             </xsd:sequence>
-            <xsd:attribute name="absolute" type="xsd:boolean" default="false"/>
+            <xsd:attribute default="false" name="absolute" type="xsd:boolean"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="lineNumber">
@@ -1140,7 +1137,7 @@
         </xsd:annotation>
         <xsd:complexType>
             <xsd:group ref="ExpressionChoice"/>
-            <xsd:attribute name="new" type="xsd:boolean" default="true"/>
+            <xsd:attribute default="true" name="new" type="xsd:boolean"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="ftpAccount">
@@ -1152,10 +1149,10 @@
                 <xsd:element name="user" type="Expression"/>
                 <xsd:element name="password" type="Expression"/>
                 <xsd:element name="rootDir" type="Expression"/>
-                <xsd:element name="onExpire" type="Expression" minOccurs="0"/>
+                <xsd:element minOccurs="0" name="onExpire" type="Expression"/>
             </xsd:sequence>
             <xsd:attribute name="duration" type="ToolboxTime" use="required"/>
-            <xsd:attribute name="writePermission" type="xsd:boolean" default="false"/>
+            <xsd:attribute default="false" name="writePermission" type="xsd:boolean"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="ftpRename">
@@ -1225,15 +1222,15 @@
         </xsd:annotation>
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:group ref="ExpressionChoice" minOccurs="2" maxOccurs="2"/>
-                <xsd:element name="parameter" minOccurs="0" maxOccurs="unbounded">
+                <xsd:group maxOccurs="2" minOccurs="2" ref="ExpressionChoice"/>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="parameter">
                     <xsd:complexType>
                         <xsd:group ref="ExpressionChoice"/>
                         <xsd:attribute name="name" type="xsd:string"/>
                     </xsd:complexType>
                 </xsd:element>
             </xsd:sequence>
-            <xsd:attribute name="xmlOutput" type="xsd:boolean" default="true"/>
+            <xsd:attribute default="true" name="xmlOutput" type="xsd:boolean"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="command">
@@ -1242,7 +1239,7 @@
         </xsd:annotation>
         <xsd:complexType>
             <xsd:group ref="ExpressionChoice"/>
-            <xsd:attribute name="asynchronous" type="xsd:boolean" default="false"/>
+            <xsd:attribute default="false" name="asynchronous" type="xsd:boolean"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="log">
@@ -1251,7 +1248,7 @@
         </xsd:annotation>
         <xsd:complexType>
             <xsd:group ref="ExpressionChoice"/>
-            <xsd:attribute name="level" type="LogLevelType" default="INFO"/>
+            <xsd:attribute default="INFO" name="level" type="LogLevelType"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="localHost">
@@ -1292,7 +1289,7 @@
             <xsd:documentation>Modifies a value in a DOM Document (text nodes or attribute). The first child must return the Document to be modified. The second child nust return an XPath string to select the node to be modified. The third child return the new value of the node. It is not possible to set non existing nodes.</xsd:documentation>
         </xsd:annotation>
         <xsd:complexType>
-            <xsd:group ref="ExpressionChoice" minOccurs="3" maxOccurs="3"/>
+            <xsd:group maxOccurs="3" minOccurs="3" ref="ExpressionChoice"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="dbConnect">
@@ -1300,9 +1297,9 @@
             <xsd:documentation>Connects to a DBMS via JDBC. The driver attribute gives the JDBC driver to be used. This driver must be in the classpath. The auto-commit attribute (default true) tells if every update performed on this connection is commited or not. The first child must return the URL to be used for connection. The second child must return the user to be used for connection. The third child must return the password to be used for connection. The return value is a JDBC Connection object.</xsd:documentation>
         </xsd:annotation>
         <xsd:complexType>
-            <xsd:group ref="ExpressionChoice" minOccurs="3" maxOccurs="3"/>
+            <xsd:group maxOccurs="3" minOccurs="3" ref="ExpressionChoice"/>
             <xsd:attribute name="driver" type="xsd:string"/>
-            <xsd:attribute name="autoCommit" type="xsd:boolean" default="true"/>
+            <xsd:attribute default="true" name="autoCommit" type="xsd:boolean"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="dbClose" type="Expression">
@@ -1381,7 +1378,7 @@
         </xsd:annotation>
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                <xsd:choice maxOccurs="unbounded" minOccurs="0">
                     <xsd:element ref="storeElement"/>
                     <xsd:element ref="storeFragment"/>
                 </xsd:choice>
@@ -1397,7 +1394,7 @@
                 <xsd:complexType>
                     <xsd:sequence>
                         <xsd:group ref="ExpressionChoice"/>
-                        <xsd:group ref="RootChoice" minOccurs="2" maxOccurs="2"/>
+                        <xsd:group maxOccurs="2" minOccurs="2" ref="RootChoice"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
@@ -1425,7 +1422,7 @@
     <xsd:element name="storeFragment">
         <xsd:complexType mixed="true">
             <xsd:sequence>
-                <xsd:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:any maxOccurs="unbounded" minOccurs="0" processContents="skip"/>
             </xsd:sequence>
             <xsd:attribute name="name" type="xsd:string" use="required"/>
         </xsd:complexType>
@@ -1441,7 +1438,7 @@
                 </xsd:element>
                 <xsd:element name="attributes">
                     <xsd:complexType>
-                        <xsd:group ref="AttributeChoice" minOccurs="0" maxOccurs="unbounded"/>
+                        <xsd:group maxOccurs="unbounded" minOccurs="0" ref="AttributeChoice"/>
                     </xsd:complexType>
                 </xsd:element>
                 <xsd:element ref="content"/>
@@ -1466,16 +1463,16 @@
                 <xsd:complexType>
                     <xsd:sequence>
                         <xsd:group ref="ExpressionChoice"/>
-                        <xsd:group ref="AttributeChoice" maxOccurs="2"/>
+                        <xsd:group maxOccurs="2" ref="AttributeChoice"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
         </xsd:choice>
     </xsd:group>
     <xsd:element name="content" type="XMLContent"/>
-    <xsd:complexType name="XMLContent" mixed="true">
+    <xsd:complexType mixed="true" name="XMLContent">
         <xsd:sequence>
-            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:choice maxOccurs="unbounded" minOccurs="0">
                 <xsd:element name="text" type="Expression"/>
                 <xsd:element ref="element"/>
                 <xsd:element ref="storeElement"/>
@@ -1487,7 +1484,7 @@
                         <xsd:sequence>
                             <xsd:group ref="ExpressionChoice"/>
                             <xsd:element name="then" type="XMLContent"/>
-                            <xsd:element name="else" type="XMLContent" minOccurs="0"/>
+                            <xsd:element minOccurs="0" name="else" type="XMLContent"/>
                         </xsd:sequence>
                     </xsd:complexType>
                 </xsd:element>
@@ -1749,14 +1746,14 @@
         <xsd:group ref="ExpressionChoice"/>
     </xsd:complexType>
     <xsd:complexType name="ExpressionSequence">
-        <xsd:group ref="ExpressionChoice" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:group maxOccurs="unbounded" minOccurs="0" ref="ExpressionChoice"/>
     </xsd:complexType>
     <xsd:complexType name="ExpressionCouple">
-        <xsd:group ref="ExpressionChoice" minOccurs="2" maxOccurs="2"/>
+        <xsd:group maxOccurs="2" minOccurs="2" ref="ExpressionChoice"/>
     </xsd:complexType>
     <xsd:complexType name="CallType">
         <xsd:sequence>
-            <xsd:element name="argument" minOccurs="0" maxOccurs="unbounded">
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="argument">
                 <xsd:complexType>
                     <xsd:group ref="ExpressionChoice"/>
                     <xsd:attribute name="name" use="required"/>
@@ -1773,8 +1770,8 @@
             <xsd:element name="password" type="Expression"/>
             <xsd:element name="remotePath" type="Expression"/>
         </xsd:sequence>
-        <xsd:attribute name="pasv" type="xsd:boolean" default="false"/>
-        <xsd:attribute name="transfer" default="ascii">
+        <xsd:attribute default="false" name="pasv" type="xsd:boolean"/>
+        <xsd:attribute default="ascii" name="transfer">
             <xsd:simpleType>
                 <xsd:restriction base="xsd:string">
                     <xsd:enumeration value="ascii"/>
@@ -1789,7 +1786,7 @@
             <xsd:element name="to" type="Expression"/>
             <xsd:element name="otherRecipients">
                 <xsd:complexType>
-                    <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                    <xsd:choice maxOccurs="unbounded" minOccurs="0">
                         <xsd:element name="to" type="Expression"/>
                         <xsd:element name="cc" type="Expression"/>
                         <xsd:element name="bcc" type="Expression"/>
@@ -1797,11 +1794,11 @@
                 </xsd:complexType>
             </xsd:element>
             <xsd:element name="subject" type="Expression"/>
-            <xsd:choice minOccurs="1" maxOccurs="1">
+            <xsd:choice maxOccurs="1" minOccurs="1">
                 <xsd:element name="text" type="Expression"/>
                 <xsd:element name="htmlbody" type="Expression"/>
             </xsd:choice>
-            <xsd:element name="attachment" minOccurs="0" maxOccurs="unbounded">
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="attachment">
                 <xsd:complexType>
                     <xsd:group ref="ExpressionChoice"/>
                     <xsd:attribute name="name" type="xsd:string"/>
@@ -1809,8 +1806,8 @@
             </xsd:element>
         </xsd:sequence>
         <xsd:attribute name="smtpServer" type="xsd:string" use="required"/>
-        <xsd:attribute name="authUsername" type="xsd:string" default=""/>
-        <xsd:attribute name="authPassword" type="xsd:string" default=""/>
+        <xsd:attribute default="" name="authUsername" type="xsd:string"/>
+        <xsd:attribute default="" name="authPassword" type="xsd:string"/>
     </xsd:complexType>
     <xsd:simpleType name="IntegerVariableType">
         <xsd:restriction base="xsd:string">

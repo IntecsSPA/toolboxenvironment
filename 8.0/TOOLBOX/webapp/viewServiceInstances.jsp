@@ -30,9 +30,11 @@
 
         String service = request.getParameter("serviceName");
         String orderBy = request.getParameter("orderBy");
-
+        orderBy=orderBy!=null && orderBy.equals("")==false?orderBy:"ASC";
 
         String order = request.getParameter("order");
+        order=order!=null && order.equals("")==false?order:"INSTANCE_ID";
+
         String pageNum = request.getParameter("page") != null ? request.getParameter("page") : "1";
 
         String instanceType = request.getParameter("instanceType") != null ? request.getParameter("instanceType") : "S";

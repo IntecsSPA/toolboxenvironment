@@ -13,7 +13,7 @@
       href="main.jsp"><fmt:message key="footer.home" bundle="${lang}"/></A> <A class=center 
       href="aboutSSE.jsp"><fmt:message key="footer.about" bundle="${lang}"/></A> <A class=center 
       href="copyrights.jsp"><fmt:message key="footer.copyright" bundle="${lang}"/></A> <A class=center 
-      href="mailto:toolbox@pisa.intecs.it"><fmt:message key="footer.contact" bundle="${lang}"/></A> 
+      href="mailto:toolbox@intecs.it"><fmt:message key="footer.contact" bundle="${lang}"/></A> 
           </DIV> 
      <DIV> 
           <P><SMALL>&nbsp;&nbsp;&nbsp;<fmt:message key="footer.bestView" bundle="${lang}"/> <A 

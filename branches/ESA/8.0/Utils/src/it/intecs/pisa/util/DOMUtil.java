@@ -345,6 +345,25 @@ public class DOMUtil {
             return parser.getDocument();
         }
     }
+    
+    public static DocumentBuilder getValidatingParser() {
+        final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
+        final String JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        documentBuilderFactory.setNamespaceAware(true);
+        documentBuilderFactory.setValidating(true);
+        documentBuilderFactory.setAttribute(JAXP_SCHEMA_LANGUAGE,
+                W3C_XML_SCHEMA);
+        DocumentBuilder documentBuilder = null;
+        try {
+            documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            documentBuilder.setErrorHandler(DOMUtil.getThrowerErrorHandler());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return documentBuilder;
+    }
 
     public static DocumentBuilder getValidatingParser(File schema) {
         final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";

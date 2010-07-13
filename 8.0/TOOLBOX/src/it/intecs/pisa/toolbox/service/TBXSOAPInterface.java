@@ -23,8 +23,6 @@ import org.w3c.dom.Element;
  * @author massi
  */
 public class TBXSOAPInterface extends Interface{
-    private DocumentBuilder validatingParser;
-
     public TBXSOAPInterface()
     {
         super();
@@ -80,8 +78,7 @@ public class TBXSOAPInterface extends Interface{
             serviceRoot=((TBXService)this.parentService).getServiceRoot();
             schemaFile=new File(serviceRoot,schemaDir);
             fullPathSchemaFile=new File(schemaFile,schemaRoot);
-
-            validatingParser=DOMUtil.getValidatingParser(fullPathSchemaFile);
+            DocumentBuilder validatingParser = DOMUtil.getValidatingParser(fullPathSchemaFile);
             validatingParser.setEntityResolver(new ToolboxServiceSchemaEntityResolver(schemaFile));
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             new XMLSerializer2(out).serialize(document);

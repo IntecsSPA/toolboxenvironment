@@ -4,8 +4,6 @@ package it.intecs.pisa.develenv.model.project;
 import it.intecs.pisa.common.tbx.exceptions.CannotAuthenticateException;
 import it.intecs.pisa.common.tbx.exceptions.CannotDeployException;
 import it.intecs.pisa.common.tbx.exceptions.CannotUndeployException;
-import it.intecs.pisa.develenv.model.project.ToolboxEclipseProjectDeployer;
-import it.intecs.pisa.develenv.model.project.ToolboxEclipseProjectUtil;
 import it.intecs.pisa.util.DOMUtil;
 
 import java.io.File;
@@ -128,8 +126,10 @@ public class ToolboxEclipseProjectDeployer {
      * @param deployURL TODO
      * @param authToken TODO
      * @return true or false, depending on the deploy success
+     * @throws IOException 
+     * @throws Exception 
      */
-    public static boolean deploy(IProject serviceProject, String deployURL, String authToken)
+    public static boolean deploy(IProject serviceProject, String deployURL, String authToken) throws Exception
     {
 	PostMethod post=null;
 	File packageFile=null;
@@ -138,6 +138,10 @@ public class ToolboxEclipseProjectDeployer {
 	int retValue=0;
 	
 	try {
+		
+		ToolboxEclipseProjectUtil.align(serviceProject);
+		ToolboxEclipseProjectUtil.validate(serviceProject);
+		
 		if(undeploy(serviceProject,deployURL)==false)
 			return false;
 		
@@ -170,11 +174,7 @@ public class ToolboxEclipseProjectDeployer {
 	   
 	    // handle response.
 	    return retValue==200;
-	} catch (Exception e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	    return false;
-	}
+	} 
 	finally
 	{
 	    if(post!=null)
@@ -189,12 +189,13 @@ public class ToolboxEclipseProjectDeployer {
      * @param token TODO
      * @param serviceProject Service project that shall be deployed
      * @return true or false, depending on the deploy success
+     * @throws Exception 
      */
-    public static boolean deploy(String projectName, String deployURL, String username,String password) throws CannotAuthenticateException,CannotDeployException
+    public static boolean deploy(String projectName, String deployURL, String username,String password) throws Exception
     {
 	IProject serviceProject=null;
 	String token;
-	try {
+	
 	    serviceProject=ToolboxEclipseProjectUtil.getProject(projectName);
 	    
 	    token = authenticate(deployURL, username,password);
@@ -206,11 +207,6 @@ public class ToolboxEclipseProjectDeployer {
 	    	throw new CannotDeployException();
 	    
 	    return invalidateToken(deployURL);
-	} catch (IllegalArgumentException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	    return false;
-	}
     }
     
     protected static boolean invalidateToken(String tbxUrl) {

@@ -27,6 +27,7 @@ import org.apache.commons.fileupload.DiskFileUpload;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  *
@@ -47,6 +48,11 @@ public abstract class NativeCommandsManagerPlugin extends ManagerCommandPlugin {
     protected void sendXMLAsResponse(HttpServletResponse resp, Document doc) throws Exception {
         resp.setContentType("text/xml");
         IOUtil.copy(DOMUtil.getDocumentAsInputStream(doc), resp.getOutputStream());
+    }
+
+    protected void sendXMLAsResponse(HttpServletResponse resp, Element el) throws Exception {
+        resp.setContentType("text/xml");
+        IOUtil.copy(DOMUtil.getElementAsInputStream(el), resp.getOutputStream());
     }
 
     protected InputStream getResource(HttpServletRequest request) throws Exception {

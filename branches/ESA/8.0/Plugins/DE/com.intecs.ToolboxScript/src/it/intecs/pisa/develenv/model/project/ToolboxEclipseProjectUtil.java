@@ -5,11 +5,16 @@ package it.intecs.pisa.develenv.model.project;
 
 import it.intecs.pisa.common.tbx.Interface;
 import it.intecs.pisa.common.tbx.Operation;
+import it.intecs.pisa.common.tbx.Script;
 import it.intecs.pisa.common.tbx.Service;
-import it.intecs.pisa.develenv.model.project.ToolboxEclipseProject;
+import it.intecs.pisa.common.tbx.ServiceValidator;
+import it.intecs.pisa.common.tbx.exceptions.ServiceAlignmentException;
+import it.intecs.pisa.develenv.model.utils.CommonPaths;
+import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.IOUtil;
 import it.intecs.pisa.util.SchemaSetRelocator;
 import it.intecs.pisa.util.ServiceFoldersFilter;
+import it.intecs.pisa.util.XmlRootSchemaUtil;
 import it.intecs.pisa.util.Zip;
 
 import java.io.File;
@@ -22,6 +27,8 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 /**
  * This class contains some static method that are used to perform some common,
@@ -296,5 +303,61 @@ public class ToolboxEclipseProjectUtil {
 			return null;
 		}
 	}
+	
+	public static void validate(IProject prj) throws Exception
+	{
+		File serviceFolder=prj.getLocation().toFile();
+		File schemaFile = CommonPaths.getScriptSchema();
+		ServiceValidator.validateService(serviceFolder,schemaFile);
+	}
+	
+	public static void align(IProject prj) throws Exception
+	{
+		IFile descriptorFile;
+		DOMUtil util;
+        Service serviceToValidate;
 
+        try
+        {
+            util=new DOMUtil();
+            descriptorFile=prj.getFile("serviceDescriptor.xml");
+            
+            Document descriptorDocument = util.fileToDocument(new File(descriptorFile.getLocationURI()));
+            serviceToValidate=new Service();
+            serviceToValidate.initializeFromXMLDescriptor(descriptorDocument.getDocumentElement());
+        }
+        catch(Exception e)
+        {
+            throw new Exception("Cannot load service descriptor");
+        }
+
+        try
+        {
+            Operation[] operations=serviceToValidate.getImplementedInterface().getOperations();
+            for(Operation op:operations)
+            {
+                alignOperation(prj,op);
+            }
+        }
+        catch(Exception e)
+        {
+            throw new ServiceAlignmentException(e.getMessage());
+        }
+	}
+	
+	private static void alignOperation(IProject prj, Operation op) throws Exception, SAXException {
+		Script[] scripts=op.getScripts();
+        DOMUtil util;
+        
+        util=new DOMUtil();
+        for(Script s:scripts)
+        {
+            File scriptFile=new File(new File(prj.getLocationURI()),s.getPath());
+            Document doc = util.fileToDocument(scriptFile);
+
+    		XmlRootSchemaUtil.updateSchemaLocation(doc, CommonPaths.getScriptSchema());
+    		DOMUtil.dumpXML(doc, scriptFile);
+        }
+		
+	}
 }

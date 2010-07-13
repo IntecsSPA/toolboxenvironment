@@ -2,7 +2,7 @@
 <feature
       id="Toolbox.Develop.Plugin"
       label="Toolbox Develop Plugin"
-      version="1.3.14"
+      version="1.3.15"
       provider-name="Intecs Informatica e Tecnologia del Software"
       os="linux,macosx,win32"
       ws="gtk,win32"
@@ -11,8 +11,16 @@
       image="images/intecslogo.jpg">
 
    <description url="http://toolbox.pisa.intecs.it/download/editorVersionInfo.jsp">
-      New in 1.3.13
-Fixed bug that affected TOOLBOX projects from being visualized in the wizards
+      New in 1.3.15
+Fixed issue #327 http://sse-wiki.spacebel.be/tracsvn/sse-operation/ticket/327
+Fixed issue #328 http://sse-wiki.spacebel.be/tracsvn/sse-operation/ticket/328
+Fixed issue #329 http://sse-wiki.spacebel.be/tracsvn/sse-operation/ticket/329
+Fixed issue #330 http://sse-wiki.spacebel.be/tracsvn/sse-operation/ticket/330
+New in 1.3.14
+Trying to fix issue #321 http://sse-wiki.spacebel.be/tracsvn/sse-operation/ticket/321
+New in 1.3.13
+Fixed bug that affected TOOLBOX projects from being visualized
+in the wizards
 New in 1.3.12
 Fixed issue #269 http://sse-wiki.spacebel.be/tracsvn/sse-operation/ticket/269
 (not fixed completely with version 1.3.10)
@@ -749,21 +757,21 @@ Public License instead of this License.  But first, please read
          id="com.intecs.ToolboxScript.model"
          download-size="0"
          install-size="0"
-         version="1.3.13"
+         version="1.3.14"
          unpack="false"/>
 
    <plugin
          id="com.intecs.ToolboxScript.ui"
          download-size="0"
          install-size="0"
-         version="1.3.11"
+         version="1.3.12"
          unpack="false"/>
 
    <plugin
          id="com.intecs.ToolboxScript.libraries"
          download-size="0"
          install-size="0"
-         version="1.3.10"/>
+         version="1.3.11"/>
 
    <plugin
          id="com.intecs.ToolboxScript.editorFiles"

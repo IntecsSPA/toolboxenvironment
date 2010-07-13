@@ -9,15 +9,15 @@ package it.intecs.pisa.common.tbx.exceptions;
  *
  * @author massi
  */
-public class ServiceValidationException extends Exception{
+public class ServiceAlignmentException extends Exception{
     private String detail;
 	
-	public ServiceValidationException()
+	public ServiceAlignmentException()
     {
 
     }
 
-	public ServiceValidationException(String det)
+	public ServiceAlignmentException(String det)
     {
 		detail=det;
     }

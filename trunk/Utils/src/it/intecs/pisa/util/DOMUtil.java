@@ -459,6 +459,15 @@ public class DOMUtil {
         return getValidatingParser(schema).parse(xml);
     }
 
+    public static InputStream getElementAsInputStream(Element xml)
+            throws Exception {
+        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        StreamResult res = new StreamResult(out);
+        transformer.transform(new DOMSource(xml), res);
+        return new ByteArrayInputStream(out.toByteArray());
+    }
+
     public static InputStream getDocumentAsInputStream(Document xml)
             throws Exception {
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -838,6 +847,13 @@ public class DOMUtil {
         util=new DOMUtil();
         str=DOMUtil.getDocumentAsInputStream(doc);
         return util.inputStreamToDocument(str);
+    }
+
+    public static Document getElementAsNewDocument(Element el) throws Exception
+    {
+        DOMParser parser=new DOMParser();
+        parser.parse(new InputSource(getElementAsInputStream(el)));
+        return parser.getDocument();
     }
 }
 

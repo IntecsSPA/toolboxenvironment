@@ -48,12 +48,12 @@
 			<td class="sortable">
                         SCRIPT(
               <a>
-				<xsl:attribute name="href">javascript:viewResource('expirationDateTime=<xsl:value-of select="@expirationDateTime"/>&amp;outputType=XML&amp;orderId=<xsl:value-of select="ts:status/ts:variable[@name='orderId']/@value"/>&amp;serviceName=<xsl:value-of select="$service"/>')</xsl:attribute>
-				<img src="images/xml-icon.jpg" alt="arrow"/>
+				<xsl:attribute name="href">javascript:viewResource('xml','expirationDate=<xsl:value-of select="@expirationDateTime"/>&amp;output=XML&amp;serviceName=<xsl:value-of select="$service"/>','Timer script')</xsl:attribute>
+ 				<img src="images/xml-icon.jpg" alt="arrow"/>
             </a>
               <a>
-				<xsl:attribute name="href">javascript:viewResource('expirationDateTime=<xsl:value-of select="@expirationDateTime"/>&amp;outputType=TREE&amp;orderId=<xsl:value-of select="ts:status/ts:variable[@name='orderId']/@value"/>&amp;serviceName=<xsl:value-of select="$service"/>')</xsl:attribute>
-				<img src="images/tree-icon.jpg" alt="arrow"/>
+				<xsl:attribute name="href">javascript:viewResource('tree','expirationDate=<xsl:value-of select="@expirationDateTime"/>&amp;output=TREE&amp;serviceName=<xsl:value-of select="$service"/>','Timer script')</xsl:attribute>
+ 				<img src="images/tree-icon.jpg" alt="arrow"/>
             </a>
                         )                        
 			</td>

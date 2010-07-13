@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin name="ManagerCommandsPlugin" version="1.0">
+    <commandViaGet cmd="getTimerScript" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.GetTimerScriptCommand"/>
     <commandViaGet cmd="getScript" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.GetOperationScriptCommand"/>
     <commandViaGet cmd="getServiceDescriptor" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.GetServiceDescriptorCommand"/>
     <commandViaGet cmd="GetServiceList" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.GetServiceListCommand"/>

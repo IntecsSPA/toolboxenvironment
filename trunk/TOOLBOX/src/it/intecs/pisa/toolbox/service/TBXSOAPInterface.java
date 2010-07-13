@@ -30,8 +30,7 @@ import org.w3c.dom.Element;
  * @author massi
  */
 public class TBXSOAPInterface extends Interface{
-    private DocumentBuilder validatingParser;
-
+    
     public TBXSOAPInterface()
     {
         super();
@@ -65,35 +64,21 @@ public class TBXSOAPInterface extends Interface{
         return operationsDef;
     }
 
- /*   @Override
-    public void addOperations(Operation op) {
-        TBXOperation newOp;
-
-        if(op.getType().equals(Operation.OPERATION_TYPE_SYNCHRONOUS))
-                newOp = new TBXSynchronousOperation(op);
-            else
-                newOp = new TBXAsynchronousOperation(op);
-
-        super.addOperations(newOp);
-    }*/
-
-    public Document validateDocument(Document document) throws Exception {
+   public Document validateDocument(Document document) throws Exception {
         File schemaFile;
-        File fullPathSchemaFile;
         File serviceRoot;
 
         if(schemaRoot!=null && schemaRoot.equals("")==false)
         {
             serviceRoot=((TBXService)this.parentService).getServiceRoot();
             schemaFile=new File(serviceRoot,schemaDir);
-            fullPathSchemaFile=new File(schemaFile,schemaRoot);
-
+            
             String serviceName;
             String schemaURL;
             
             serviceName=this.getParent().getServiceName();
             schemaURL=ToolboxNetwork.getEndpointURL()+"/TOOLBOX/WSDL/"+serviceName+"/"+this.getSchemaRoot();
-            validatingParser=DOMUtil.getValidatingParser(schemaURL);
+            DocumentBuilder validatingParser = DOMUtil.getValidatingParser(schemaURL);
 
             validatingParser.setEntityResolver(new ToolboxServiceSchemaEntityResolver(schemaFile));
             ByteArrayOutputStream out = new ByteArrayOutputStream();

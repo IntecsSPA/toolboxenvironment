@@ -36,20 +36,15 @@
         String bc = "<a href='main.jsp'>Home</a>&nbsp;&gt;" + "<a href='monitoringCenter.jsp?serviceName="+service+"'>&nbsp;"+monitoring+"</a>&nbsp;&gt; "+status;
 %>
 <SCRIPT language="JavaScript">
-<!--
-function viewResource(parameters) 
-{
-       if (document.all) {
-          window.showModelessDialog( "getScript.jsp?" + parameters + "&outputType=TREE", 
-          "popup", // Pass as object reference to bypass size limitation 
-          "dialogHeight:700px; dialogwidth:820px; center: Yes; help: No; resizable: Yes; status: No;"
-          );
-       }
-       else {
-          window.open("getScript.jsp?" + parameters + "&outputType=TREE",'resource', 'width=820,height=700,status=yes');
-       }
-  }
- //-->
+function viewResource(type,parameters,label)
+    {
+        if(type == 'xml')
+            openTab('xml','Tab', "manager?cmd=getTimerScript&output=text&" + parameters, 'XML ' + label);
+        if(type == 'tree')
+            openTab('tree','Tab', "manager?cmd=getTimerScript&output=xml&" + parameters, 'TREE '+label);
+        if(type == 'text')
+            downloadPopup ("manager?cmd=getTimerScript&output=xml&" + parameters);
+    }
  </SCRIPT>
 <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center> 
   <TBODY> 

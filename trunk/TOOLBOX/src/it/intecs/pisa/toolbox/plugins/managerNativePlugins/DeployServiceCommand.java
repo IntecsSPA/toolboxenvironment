@@ -20,10 +20,11 @@ import org.apache.commons.fileupload.FileItem;
  * @author Massimiliano Fanciulli
  */
 public class DeployServiceCommand extends NativeCommandsManagerPlugin {
+
     public static final String ZIP_DEPLOY_PACKAGE_MIME_TYPE = "application/x-zip-compressed";
 
     public void executeCommand(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        executeDeploy(req,resp);
+        executeDeploy(req, resp);
     }
 
     private void executeDeploy(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -80,13 +81,14 @@ public class DeployServiceCommand extends NativeCommandsManagerPlugin {
         try {
             ServiceManager serviceManager;
 
-            serviceManager=ServiceManager.getInstance();
+            serviceManager = ServiceManager.getInstance();
             serviceManager.deployService(packageFile, serviceName);
         } catch (Exception e) {
             resp.sendRedirect("selectImportOrCreate.jsp?serviceName=" + serviceName+"&error=serviceexist");
             return;
         }
         if (forward == true) {
+
             resp.sendRedirect("serviceConfiguration.jsp?serviceName=" + serviceName);
         } else {
             resp.setStatus(HttpServletResponse.SC_OK);

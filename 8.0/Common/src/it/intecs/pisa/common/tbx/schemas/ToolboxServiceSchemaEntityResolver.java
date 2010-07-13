@@ -4,7 +4,6 @@
  */
 package it.intecs.pisa.common.tbx.schemas;
 
-import it.intecs.pisa.util.IOUtil;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;

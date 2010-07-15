@@ -7,6 +7,8 @@ var textAreaFrameW=(screen.width/1.55);
 /* Service Management XML Interfaces*/
 var exportGroupServicesXML="jsScripts/servicesManagement/resources/xml/exportGroupServicesPanel.xml";
 var importGroupServicesXML="jsScripts/servicesManagement/resources/xml/importGroupServicesPanel.xml";
+var xmlDocumentWPSUrl="jsScripts/wpsWizard/resources/xml/createWPSServicePanel.xml";
+var createToolboxServiceXML="jsScripts/servicesManagement/resources/xml/createToolboxServicePanel.xml";
 
 
 /* Service Management Interface Objects */
@@ -16,7 +18,7 @@ var importGroupServiceIO=null;
 
 /* Service Management Windows*/
 var importExportGroupServiceWin=null;
-
+var createServiceWin=null;
 
 
 var spot = new Ext.ux.Spotlight({
@@ -205,5 +207,158 @@ var importServices=function(){
                 }
 	     });
          }
+}
+
+
+
+function createServiceInterface(){
+   // executeRemoteMethod("test");
+   if(createServiceWin == null){
+        
+        var createServiceIO=createPanelExjFormByXml(createToolboxServiceXML);
+        var createWPSIO=createPanelExjFormByXml(xmlDocumentWPSUrl);
+
+
+       var createToolboxServicePanel=new Ext.Panel({
+                            title: 'Create Toolbox Services',
+                            border: true,
+                            autoScroll : true,
+                            id: "createServicePanel",
+                            bodyColor: '#79a3cb',
+                            html: "<div id='createToolboxServiceInterface'>",
+                            iconCls: 'export'
+                   });
+
+        var createWPSToolboxPanel=new Ext.Panel({
+                            title: 'Create Toolbox WPS',
+                            border: true,
+                            autoScroll : true,
+                            id: "createWPSPanel",
+                            bodyColor: '#79a3cb',
+                            html: "<div id='createToolboxWPSInterface'>",
+                            iconCls: 'import'
+                   });
+
+       var accordionCreateServicePanel=new Ext.Panel({
+                          split:true,
+                          bodyStyle : {background: "#79a3cb"},
+                          anchor:'100% 80%',
+                          margins:'5 0 5 5',
+                          //autoScroll : true,
+                                  layout:'accordion',
+                                  layoutConfig: {
+                                        titleCollapse: false,
+                                        animate: false,
+                                        hideCollapseTool: false,
+                                        titleCollapse: true,
+                                        fill : false
+                                    },
+
+
+                                  items:[createToolboxServicePanel,
+                                         createWPSToolboxPanel//,
+                                        ]
+                            });
+;
+
+
+
+       createServiceWin = new WebGIS.Panel.WindowInterfacePanel({
+                        title: 'Create new Toolbox Service',
+                        id: 'createNewServiceWin',
+                        border: false,
+                        animCollapse : true,
+                        maximizable : true,
+                       // autoScroll : true,
+                        resizable : false,
+                        collapsible: true,
+                        layout: 'fit',
+                        loadingBarImg: "images/loader1.gif",
+                        loadingBarImgPadding: 60,
+                        loadingMessage: "Loading... Please Wait...",
+                        loadingMessagePadding: 30,
+                        loadingMessageColor: "black",
+                        loadingPanelColor: "#d9dce0",
+                        loadingPanelDuration: 1000,
+                        listeners:{
+                          hide: function(){
+                             // alert("close");
+                              spot.hide();
+                          },
+                          collapse: function(){
+                              spot.hide();
+                          },
+                          expand: function(){
+                              spot.show('createServiceWin');
+                          }
+                        },
+
+                        width: screen.width/1.3,
+                        height: screen.height/1.8,
+                        closeAction:'hide',
+                        items:[accordionCreateServicePanel]
+			});
+       createServiceWin.show();
+       createServiceWin.insertLoadingPanel();
+
+       //accordionImportExportServicesPanel.render(document.getElementById("accordionImportExportServicesPanel"));
+        accordionCreateServicePanel.layout.setActiveItem(0);
+        createServiceIO.formsPanel.render(document.getElementById("createToolboxServiceInterface"));
+        createServiceIO.render();
+
+        accordionCreateServicePanel.layout.setActiveItem(1);
+        createWPSIO.formsPanel.render(document.getElementById("createToolboxWPSInterface"));
+        createWPSIO.render();
+
+        accordionCreateServicePanel.layout.setActiveItem(0);
+
+
+    }else
+       createServiceWin.show();
+
+    
+}
+
+
+///TOOLBOX/rest/gui/getJs/<ID>
+/*var restGetJsURL="/TOOLBOX/rest/gui/getJs/";"/TOOLBOX/jsScripts/";*/
+var restGetJsURL="ProxyRedirect?url=http://192.168.24.121:8080/TOOLBOX/rest/gui/getJs/";
+function executeRemoteMethod(methodID){;
+    var restRequest=restGetJsURL+methodID;
+    var getJSMethod=function(response){
+             if(!response)
+                          Ext.Msg.show({
+                                title:'getJSMethod: Error',
+                                buttons: Ext.Msg.OK,
+                                msg: 'Service Exception!',
+                                animEl: 'elId',
+                                icon: Ext.MessageBox.ERROR
+                          });
+              else{
+                  alert(response);
+                  var jsMethod=eval(response);
+                  alert(jsMethod);
+                  jsMethod.call("10");
+                  jsMethod('newTest');
+
+              }
+
+     };
+
+     var wpsProcessingCreateOperationControlTimeOut=function(){
+                 Ext.Msg.show({
+                    title:'getJSMethod: Error',
+                    buttons: Ext.Msg.OK,
+                    msg: 'Request TIME-OUT!',
+                    animEl: 'elId',
+                    icon: Ext.MessageBox.ERROR
+                });
+     };
+
+     var onSubmit=sendXmlHttpRequestTimeOut("GET",
+            restRequest,
+            false, null, 800000, getJSMethod, wpsProcessingCreateOperationControlTimeOut,null);
+
+
 }
 

@@ -811,7 +811,7 @@
     </xsd:element>
     <xsd:element name="xml">
         <xsd:annotation>
-            <xsd:documentation>This tag returns an XML Document. The XML content of this tag is not composed by XML script tags. The document returned evaluating this tag will have as root the child element of this element. Moreover two mechanisms are foreseen to make the content dynamic. An XML document has data in two parts: attribute values and text nodes. Any of these two kinds of nodes can be made context dependent in the following way. The "xml" element has two mandatory attributes: "attributePrefix" and "textTag". The content of the XML element is processed substituting any attribute value starting with the value of the "attributePrefix" value, with the value of the variable named like the remaining part of the attribute value. Moreover every element having a tag equal to the value of the "textTag" attribute value, is substituted with a text node with the value of the variable named as the "name" attribute of the textTag element.</xsd:documentation>
+            <xsd:documentation>This tag returns an XML Document. The XML content of this tag is not composed by XML script tags. The document returned evaluating this tag will have as root the child element of this element. Moreover two mechanisms are foreseen to make the content dynamic. An XML document has data in two parts: attribute values and text nodes. Any of these two kinds of nodes can be made context dependent in the following way. The "xml" element has two mandatory attributes: "attributePrefix" and "textTag". The "xml" element has two optional attributes: "nodeTag" and "documentTag". The content of the XML element is processed substituting any attribute value starting with the value of the "attributePrefix" value, with the value of the variable named like the remaining part of the attribute value. Moreover every element having a tag equal to the value of the "textTag" attribute value, is substituted with a text node with the value of the variable named as the "name" attribute of the textTag element.Every element having a tag equal to the value of the "nodeTag" attribute value, is substituted with a new node with the content of the variable named as the "name" attribute of the nodeTag element.Every element having a tag equal to the value of the "documentTag" attribute value, is substituted with a new node with the document element of the variable named as the "name" attribute of the documentTag element.</xsd:documentation>
         </xsd:annotation>
         <xsd:complexType>
             <xsd:sequence>
@@ -819,6 +819,8 @@
             </xsd:sequence>
             <xsd:attribute name="attributePrefix" type="xsd:string" use="required"/>
             <xsd:attribute name="textTag" type="xsd:string" use="required"/>
+            <xsd:attribute name="nodeTag" type="xsd:string" use="optional"/>
+            <xsd:attribute name="documentTag" type="xsd:string" use="optional"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="xmlRequest">

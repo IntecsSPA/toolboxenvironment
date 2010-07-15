@@ -1,3 +1,5 @@
+<%@page import="it.intecs.pisa.toolbox.configuration.ToolboxNetwork"%>
+<%@page import="it.intecs.pisa.toolbox.configuration.ToolboxConfiguration"%>
 <%@ page language="java"  import="it.intecs.pisa.toolbox.*,it.intecs.pisa.toolbox.service.*" errorPage="errorPage.jsp" %>
 <%@taglib uri="http://java.sun.com/jstl/core"  prefix="c"%>
 <%@taglib uri="http://java.sun.com/jstl/fmt"  prefix="fmt"%>
@@ -15,7 +17,8 @@ PropertyResourceBundle messages = (PropertyResourceBundle)ResourceBundle.getBund
 String home = (String)messages.getObject("testCenter.home");
 String testCenter = (String)messages.getObject("testCenter.testCenter"); 
 String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;" +"&nbsp;"+testCenter;
-String toolboxUrl=Toolbox.getInstance().getPublicAddress();
+ToolboxConfiguration td = ToolboxConfiguration.getInstance();
+String toolboxUrl=ToolboxNetwork.getTOOLBOXEndpointURL();
 %>
 <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center> 
     <TBODY> 

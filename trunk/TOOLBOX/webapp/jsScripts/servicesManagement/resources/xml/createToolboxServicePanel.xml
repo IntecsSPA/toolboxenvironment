@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<inputInterface xmlns="http://gisClient.pisa.intecs.it/gisClient">
+   <section name="Service Identification">
+        <group label="Service Identification Info: ">
+            <input type="text" name="toolboxServiceName" label="Service Name" id="toolboxServiceName" optional="false" value="" size="52"/>
+            <input type="textarea" name="toolboxServiceAbstract" label="Service Abstract" id="toolboxServiceAbstract" optional="true" value="" cols="50" rows="5"/>
+            <input type="text" name="toolboxServiceDescription" label="Service Description" id="toolboxServiceDescription" optional="true" value="" size="52"/>
+        </group>
+    </section>
+    <section name="Service Schema">
+        <group label="Schema package">
+            <input type="file" name="schemaPackage" hideLabel="false" id="schemaPackage"
+               optional="true"
+               size="300"
+               iconImage="upload-icon"
+               blankText="Selecet Schema Package File" />
+        </group>
+    </section>
+    <section name="Service Settings">
+        <group label="General Setting">
+            <input type="checkbox" name="serviceQueueIncoming" id="serviceQueueIncoming" label="Queue incoming service requests"/>
+        </group>
+        <group label="Suspend Mode">
+            <input type="radiogroup" name="suspendMode" id="suspendMode" labelList="SOFT,HARD" valueList="SOFT,HARD"
+                valueCheked="SOFT"/>
+        </group>
+   </section>
+   <section name="Service Security">
+       <group label="Secure Communication">
+            <input type="checkbox" name="secureCommunicationEnable" id="secureCommunicationEnable" label="Enable Secure Communication"/>
+        </group>
+        <group label="WS-Security (HMA)">
+            <input type="checkbox" name="wsSecurityHMAEnable" id="wsSecurityHMAEnable" label="Enable WS-Security (HMA)"/>
+        </group>
+   </section>
+   <!--section name="Service Schema">
+        <group label="Service Provider Information">
+            <input type="text" name="ProviderName" label="Provider Name" id="ProviderName" optional="true" value="" size="52"/>
+            <input type="text" name="ProviderSite" label="Provider Site" id="ProviderSite" optional="true" value="" size="52"/>
+        </group>
+   </section>
+   <section name="Contact Info">
+        <group label="Service Contact Information">
+            <input type="text" name="IndividualName" label="Individual Name" id="IndividualName" optional="true" value="" size="52"/>
+            <input type="text" name="PositionName" label="Position Name" id="PositionName" optional="true" value="" size="52"/>
+            <input type="text" name="PhoneVoice" label="Phone Voice" id="PhoneVoice" optional="true" value="" size="25"/>
+             <input type="text" name="PhoneFacsimile" label="Phone Facsimile" id="PhoneFacsimile" optional="true" value="" size="25"/>
+             <input type="text" name="DeliveryPoint" label="Delivery Point" id="DeliveryPoint" optional="true" value="" size="52"/>
+             <input type="text" name="City" label="City" id="City" optional="true" value="" size="52"/>
+             <input type="text" name="AdministrativeArea" label="Administrative Area" id="AdministrativeArea" optional="true" value="" size="52"/>
+             <input type="text" name="PostalCode" label="Postal Code" id="PostalCode" optional="true" value="" size="52"/>
+             <input type="text" name="Country" label="Country" id="Country" optional="true" value="" size="52"/>
+             <input type="text" name="ElectronicMailAddress" label="Electronic Mail Address" id="ElectronicMailAddress" optional="true" value="" size="52"/>
+        </group>
+   </section-->
+   <requestInformations>
+        <buttons>
+            
+            <button name="createWPSButton" id="createWPSButton" label="Create WPS Service" iconImage="" onclick="createWPSRequest" disableIfNotMandatoryFields="true"/>
+        </buttons>
+    </requestInformations>
+</inputInterface>

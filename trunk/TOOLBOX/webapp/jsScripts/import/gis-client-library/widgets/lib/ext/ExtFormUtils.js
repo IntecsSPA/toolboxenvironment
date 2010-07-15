@@ -5130,6 +5130,7 @@ function generateFileField(field){
             };*/
 
 
+  
   formField[u]={
              colspan: 1,
              layout: "form",
@@ -5144,12 +5145,15 @@ function generateFileField(field){
                 buttonCfg: {
                     iconCls: field.icon
                 }
-               }),new Ext.Button({
+               })]
+          };
+    if(field.action)
+      formField[u].items[1]=new Ext.Button({
                 text: field.submitLabel,
               //  renderTo: 'fi-basic-btn',
                 handler: eval(field.action)
-              })]
-          };
+              });
+
 
    /*formField[u+1]={
       colspan: 1,

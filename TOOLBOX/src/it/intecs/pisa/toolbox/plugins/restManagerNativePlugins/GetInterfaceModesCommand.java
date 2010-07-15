@@ -5,14 +5,15 @@
 
 package it.intecs.pisa.toolbox.plugins.restManagerNativePlugins;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import it.intecs.pisa.pluginscore.InterfacePluginManager;
 import it.intecs.pisa.pluginscore.RESTManagerCommandPlugin;
 import it.intecs.pisa.util.DOMUtil;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -71,6 +72,31 @@ public class GetInterfaceModesCommand extends RESTManagerCommandPlugin{
             root.appendChild(modeEl);
         }
         return doc;
+    }
+
+    @Override
+    public JsonObject executeCommand(String cmd, JsonObject request) throws Exception {
+        String interfaceName, interfaceVersion, interfaceType;
+        JsonObject outputJson = new JsonObject();
+        JsonArray array = new JsonArray();
+
+        StringTokenizer tokenizer=new StringTokenizer(cmd,"/");
+        tokenizer.nextToken();
+        tokenizer.nextToken();
+        tokenizer.nextToken();
+        interfaceType=tokenizer.nextToken();
+        interfaceName=tokenizer.nextToken();
+        interfaceVersion=tokenizer.nextToken();
+
+        InterfacePluginManager interfManager = InterfacePluginManager.getInstance();
+        String[] interfaceModes = interfManager.getInterfacesModes(interfaceName, interfaceVersion, interfaceType);
+
+        for (String mode : interfaceModes) {
+                array.add(new JsonPrimitive(mode));
+        }
+        outputJson.add("types", array);
+        outputJson.addProperty("success", true);
+        return outputJson;
     }
 
     

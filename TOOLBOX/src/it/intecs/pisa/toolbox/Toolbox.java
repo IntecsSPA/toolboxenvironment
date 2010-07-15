@@ -1246,44 +1246,71 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         String cmd;
         ManagerPluginManager man;
         IRESTManagerPlugin commandPlugin=null;
+        String contentType=null;
         try {
+            man = ManagerPluginManager.getInstance();
+
             cmd = req.getRequestURI();
             cmd=cmd.substring(req.getContextPath().length());
 
-            man = ManagerPluginManager.getInstance();
+            String formatLessCmd=cmd;
+            String lastToken="";
+            StringTokenizer tokenizer=new StringTokenizer(cmd,"/");
 
+            while(tokenizer.hasMoreTokens())
+            {
+                lastToken=tokenizer.nextToken();
+            }
+
+            if(lastToken!=null)
+            {
+                int index=lastToken.lastIndexOf(".");
+                if(index>-1)
+                {
+                    contentType=lastToken.substring(index+1);
+                    if(contentType.equals("json")==false && contentType.equals("xml")==false)
+                        contentType=null;
+
+                }
+                else
+                {
+                    contentType = null;
+                }
+
+            }
+
+            if(contentType!=null)
+                formatLessCmd=cmd.substring(0,cmd.length()-contentType.length()-1);
+            
             String method=req.getMethod();
-
             if(method.equals("GET"))
-                commandPlugin = (IRESTManagerPlugin) man.getCommand(cmd,ManagerPluginManager.METHOD_REST_GET);
+                commandPlugin = (IRESTManagerPlugin) man.getCommand(formatLessCmd,ManagerPluginManager.METHOD_REST_GET);
             else if(method.equals("POST"))
-                commandPlugin = (IRESTManagerPlugin) man.getCommand(cmd,ManagerPluginManager.METHOD_REST_POST);
+                commandPlugin = (IRESTManagerPlugin) man.getCommand(formatLessCmd,ManagerPluginManager.METHOD_REST_POST);
             else throw new Exception("Method "+method+" not supported");
 
-            String contentType=req.getHeader("Content-Type");
-
-            if(contentType!=null && contentType.equals("text/json"))
+            if(contentType!=null && contentType.equals("json"))
             {
                 JsonObject inputObj;
                 inputObj=JsonUtil.getInputAsJson(req.getInputStream());
-                JsonObject jsonResp = commandPlugin.executeCommand(cmd, inputObj);
+                JsonObject jsonResp = commandPlugin.executeCommand(formatLessCmd, inputObj);
 
                 JsonUtil.writeJsonToStream(jsonResp, resp.getOutputStream());
             }
-            else if (contentType!=null && contentType.equals("text/xml"))
+            else if (contentType!=null && contentType.equals("xml"))
             {
                 DOMUtil util;
 
                 util=new DOMUtil();
                 Document inputDoc=util.inputStreamToDocument(req.getInputStream());
-                Document respDoc=commandPlugin.executeCommand(cmd, inputDoc);
+                Document respDoc=commandPlugin.executeCommand(formatLessCmd, inputDoc);
 
                 DOMUtil.dumpXML(respDoc, resp.getOutputStream(), false);
             }
             else
             {
                 InputStream response;
-                response=commandPlugin.executeCommand(cmd, req.getInputStream());
+                response=commandPlugin.executeCommand(formatLessCmd, req.getInputStream());
                 IOUtil.copy(response, resp.getOutputStream());
             }
 

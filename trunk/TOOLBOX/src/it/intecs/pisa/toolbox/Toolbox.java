@@ -53,6 +53,7 @@ import it.intecs.pisa.util.*;
 import it.intecs.pisa.toolbox.service.ServiceManager;
 import it.intecs.pisa.toolbox.db.ToolboxInternalDatabase;
 import it.intecs.pisa.pluginscore.IManagerPlugin;
+import it.intecs.pisa.pluginscore.IRESTManagerPlugin;
 import it.intecs.pisa.pluginscore.InterfacePluginManager;
 import it.intecs.pisa.pluginscore.ManagerPluginManager;
 import it.intecs.pisa.pluginscore.TagPluginManager;
@@ -784,6 +785,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             
             logger.info("Received request " + requestURI);
 
+
             if(requestURI.startsWith("/TOOLBOX/rest"))
                 executeRestCommand(req, resp);
 
@@ -850,7 +852,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             }
         } else if (requestURI.startsWith("/TOOLBOX/manager")) {
             executeManagerCommands(req, resp);
-        } else if(requestURI.startsWith("/rest"))
+        } else if(requestURI.startsWith("/TOOLBOX/rest"))
             executeRestCommand(req, resp);
 
     }
@@ -1243,23 +1245,51 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     private void executeRestCommand(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String cmd;
         ManagerPluginManager man;
-        IManagerPlugin commandPlugin;
-        JsonObject inputObj;
+        IRESTManagerPlugin commandPlugin=null;
         try {
             cmd = req.getRequestURI();
             cmd=cmd.substring(req.getContextPath().length());
 
-            inputObj=JsonUtil.getInputAsJson(req.getInputStream());
-
             man = ManagerPluginManager.getInstance();
 
-            commandPlugin = man.getRESTCommand(cmd, "REST");
-            JsonObject jsonResp=commandPlugin.executeCommand(cmd, inputObj);
+            String method=req.getMethod();
 
-            JsonUtil.writeJsonToStream(jsonResp, resp.getOutputStream());
+            if(method.equals("GET"))
+                commandPlugin = (IRESTManagerPlugin) man.getCommand(cmd,ManagerPluginManager.METHOD_REST_GET);
+            else if(method.equals("POST"))
+                commandPlugin = (IRESTManagerPlugin) man.getCommand(cmd,ManagerPluginManager.METHOD_REST_POST);
+            else throw new Exception("Method "+method+" not supported");
+
+            String contentType=req.getHeader("Content-Type");
+
+            if(contentType!=null && contentType.equals("text/json"))
+            {
+                JsonObject inputObj;
+                inputObj=JsonUtil.getInputAsJson(req.getInputStream());
+                JsonObject jsonResp = commandPlugin.executeCommand(cmd, inputObj);
+
+                JsonUtil.writeJsonToStream(jsonResp, resp.getOutputStream());
+            }
+            else if (contentType!=null && contentType.equals("text/xml"))
+            {
+                DOMUtil util;
+
+                util=new DOMUtil();
+                Document inputDoc=util.inputStreamToDocument(req.getInputStream());
+                Document respDoc=commandPlugin.executeCommand(cmd, inputDoc);
+
+                DOMUtil.dumpXML(respDoc, resp.getOutputStream(), false);
+            }
+            else
+            {
+                InputStream response;
+                response=commandPlugin.executeCommand(cmd, req.getInputStream());
+                IOUtil.copy(response, resp.getOutputStream());
+            }
+
             resp.setStatus(resp.SC_OK);
         } catch (Exception e) {
-            resp.sendError(resp.SC_INTERNAL_SERVER_ERROR);
+            resp.sendError(resp.SC_BAD_REQUEST);
         }
     }
 }

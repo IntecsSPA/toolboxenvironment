@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin name="RESTManagerCommandsPlugin" version="1.0">
+    <restCommandViaGet cmd="/rest/gui/getJs/*" class="it.intecs.pisa.toolbox.plugins.gui.GetJsCommand"/>
+    <restCommandViaGet cmd="/rest/gui/getDefinition/*" class="it.intecs.pisa.toolbox.plugins.gui.GetDefinitionCommand"/>
+</plugin>
+

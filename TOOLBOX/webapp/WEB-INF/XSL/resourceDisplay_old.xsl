@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:xdt="http://www.w3.org/2005/xpath-datatypes">
+	<xsl:output method="html" encoding="ISO-8859-1" omit-xml-declaration="no" indent="no" media-type="text/html"/>
 
     <xsl:param name="serviceName"/>
     <xsl:param name="instanceType"/>
@@ -60,24 +61,20 @@ margin-bottom:0px;
 			</BODY>
 		</HTML>
 	</xsl:template>
-	<!-- Template for attributes not handled elsewhere -->
-	<xsl:template match="@*" xml:space="preserve">
+	<!-- Template for attributes not handled elsewhere xml:space="preserve"-->
+	<xsl:template match="@*">
 		<SPAN class="ns">
-			<!--xsl:attribute name="class"><xsl:if test="xsl:*/@*">x</xsl:if>t</xsl:attribute-->
+			<xsl:attribute name="class"><xsl:if test="xsl:*/@*">x</xsl:if>t</xsl:attribute>
 			<xsl:value-of select="name()"/>
 		</SPAN>
 		<SPAN class="m">="</SPAN>
 		<SPAN class="att">
 			<xsl:choose>
-				<xsl:when test="name()='resourceKey'">
-                               <a class="a" href="#" ONCLICK="javascript:parent.openTab('xml','Tab', 'getResource.jsp?serviceName={$serviceName}&amp;instanceType={$instanceType}&amp;instanceId={$instanceId}&amp;resourceKey={.}','XML '+'{.}')">
-					<xsl:value-of select="."/>
-			       </a>
+                                <xsl:when test="name()='resourceKey'">
+                               <a class="a" href="#" onclick="javascript:document.viewResource('xml','manager?cmd=getResource&amp;id={.}','A')">External resource Key</a>
 				</xsl:when>
-                                <xsl:when test="name()='resourceLink'">
-                               <a class="a" href="#" ONCLICK="javascript:parent.openTab('xml','Tab', 'getResource.jsp?serviceName={$serviceName}&amp;instanceType={$instanceType}&amp;instanceId={$instanceId}&amp;resourceKey={.}','XML '+'{.}')">
-					Click here to display resource
-			       </a>
+				<xsl:when test="name()='resourceLink'">
+                               <a class="a"  href="#" onclick="javascript:parent.openTab('xml','Tab', 'manager?cmd=getResource&amp;resourceKey={.}','XML '+'{.}')">External resource Link</a>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:value-of select="."/>
@@ -87,7 +84,7 @@ margin-bottom:0px;
 		<SPAN class="m">"</SPAN>
 	</xsl:template>
 	<!-- Template for attributes in the xmlns or xml namespace -->
-	<!--xsl:template match="@xmlns:*">
+	<!--xsl:template match="namespace::*">
 		<SPAN class="ns">
 			<xsl:value-of select="name()"/>
 		</SPAN>
@@ -97,7 +94,23 @@ margin-bottom:0px;
 		</SPAN>
 		<SPAN class="m">"</SPAN>
 	</xsl:template-->
-	<!-- Template for text nodes -->
+
+    <xsl:template name="pnamespace">
+    <xsl:param name="element"/>
+    <xsl:for-each select="$element/namespace::*"> 
+      <xsl:text> </xsl:text>
+      <SPAN class="ns">
+			<xsl:value-of select="name()"/>
+		</SPAN>
+		<SPAN class="m">="</SPAN>
+		<SPAN class="att">
+			<xsl:value-of select="."/>
+		</SPAN>
+		<SPAN class="m">"</SPAN>  
+      </xsl:for-each>
+	</xsl:template>
+
+    <!-- Template for text nodes -->
 	<xsl:template match="text()">
 		<DIV class="e">
 			<SPAN class="b">
@@ -147,8 +160,11 @@ class="m">]]&gt;</SPAN>
 					<xsl:attribute name="class"><xsl:if test="xsl:*">x</xsl:if>t</xsl:attribute>
 					<xsl:value-of select="name()"/>
 				</SPAN>
+				<xsl:call-template name ="pnamespace">
+                    <xsl:with-param name="element" select="."/>
+                </xsl:call-template>
 				<xsl:apply-templates select="@*"/>
-				<SPAN class="m"> /&gt;</SPAN>
+                <SPAN class="m"> /&gt;</SPAN>
 			</DIV>
 		</DIV>
 	</xsl:template>
@@ -161,6 +177,10 @@ class="m">]]&gt;</SPAN>
 					<xsl:attribute name="class"><xsl:if test="xsl:*">x</xsl:if>t</xsl:attribute>
 					<xsl:value-of select="name()"/>
 				</SPAN>
+                				<xsl:call-template name ="pnamespace">
+                    <xsl:with-param name="element" select="."/>
+                </xsl:call-template>
+
 				<xsl:apply-templates select="@*"/>
 				<SPAN class="m">&gt;</SPAN>
 			</DIV>
@@ -192,6 +212,10 @@ class="m">]]&gt;</SPAN>
 					<xsl:attribute name="class"><xsl:if test="xsl:*">x</xsl:if>t</xsl:attribute>
 					<xsl:value-of select="name()"/>
 				</SPAN>
+                				<xsl:call-template name ="pnamespace">
+                    <xsl:with-param name="element" select="."/>
+                </xsl:call-template>
+
 				<xsl:apply-templates select="@*"/>
 				<SPAN class="m">&gt;</SPAN>
 				<SPAN class="tx">
@@ -215,6 +239,10 @@ class="m">]]&gt;</SPAN>
 					<xsl:attribute name="class"><xsl:if test="xsl:*">x</xsl:if>t</xsl:attribute>
 					<xsl:value-of select="name()"/>
 				</SPAN>
+                				<xsl:call-template name ="pnamespace">
+                    <xsl:with-param name="element" select="."/>
+                </xsl:call-template>
+
 				<xsl:apply-templates select="@*"/>
 				<SPAN class="m">&gt;</SPAN>
 			</DIV>

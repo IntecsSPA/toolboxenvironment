@@ -1,3 +1,4 @@
+<%@page import="it.intecs.pisa.toolbox.configuration.ToolboxNetwork"%>
 <%@page import="it.intecs.pisa.toolbox.configuration.ToolboxConfiguration"%>
 <!-- 
  -
@@ -100,10 +101,7 @@ function deleteOp(service, operation)
         transformer.setParameter("serviceName", service);
         transformer.setParameter("orderBy", orderBy);
         if(serv.getFullSchemaPath().contains("WPSSoapAll.xsd")){
-            ToolboxConfiguration td = ToolboxConfiguration.getInstance();
-            String address=td.getConfigurationValue(ToolboxConfiguration.ENDPOINT_ADDRESS);
-            String port=td.getConfigurationValue(ToolboxConfiguration.ENDPOINT_PORT);
-            transformer.setParameter("proxyURL", "http://"+address+":"+port);
+            transformer.setParameter("proxyURL", ToolboxNetwork.getEndpointURL());
         }
         transformer.setParameter("viewWSDLInfoURL", response.encodeURL("viewWSDLInfo.jsp"));
         transformer.setParameter("configureOperationURL", response.encodeURL("configureOperation.jsp"));

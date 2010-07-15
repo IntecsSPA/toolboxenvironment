@@ -110,6 +110,8 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;&nbsp;" + serviceManag;
 
 
 <script type="text/javascript" src="jsScripts/servicesManagement/scripts/servicesManagementManager.js"></script>
+<script type="text/javascript" src="jsScripts/wpsWizard/scripts/wpsWizardManager.js"></script>
+
 <style type="text/css">
 
 .upload-icon {
@@ -129,9 +131,11 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;&nbsp;" + serviceManag;
                     <DIV> 
                         <A href="<%= response.encodeURL("selectImportOrCreate.jsp") %>"><fmt:message key="servicesManagement.createNew" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
                     </DIV> 
-                    <P> 
-                        <A href="<%= response.encodeURL("selectImportOrCreate.jsp") %>"><IMG class=labelHomePage title=create alt="Create a new service" src="images/createService.png" align=middle border=0></A>
-                    <fmt:message key="servicesManagement.selection" bundle="${lang}"/></P> 
+                    <P> <!--%= response.encodeURL("selectImportOrCreate.jsp") %-->
+                        <!--A href=""><IMG class=labelHomePage title=create alt="Create a new service" src="images/createService.png" align=middle border=0></A-->
+                        <A href=# onclick="javascript:createServiceInterface();"><IMG class=labelHomePage title=create alt="Create a new service" src="images/createService.png" align=middle border=0></A>
+                    
+                        <fmt:message key="servicesManagement.selection" bundle="${lang}"/></P>
                 </DIV>
                 <!-- ************ Backup/Restore Services Section *****************-->
                 <DIV class="portletItem" id="05">
@@ -139,7 +143,7 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;&nbsp;" + serviceManag;
                         <A href=# onclick="javascript: importExportGroupServices();"><fmt:message key="servicesManagement.impExp" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
                     </DIV>
                     <P>
-                        <A href=# onclick="javascript: importExportGroupServices();"><IMG class=labelHomePage title="import/export services" alt="import/export services" src="images/createService.png" align=middle border=0></A>
+                        <A href=# onclick="javascript: importExportGroupServices();"><IMG class=labelHomePage title="import/export services" alt="import/export services" src="images/ImportExport.png" align=middle border=0></A>
                         <fmt:message key="servicesManagement.impExpDescr" bundle="${lang}"/>
                     </P>
                 </DIV>

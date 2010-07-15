@@ -309,12 +309,12 @@ function view(file, title){
             width: 100
         }, {
             id:'text',
-            header:"text",
+            header:"Message",
             dataIndex:'',
             sortable:true,
             width: 200
         },{
-            header:"Data",
+            header:"Date",
             dataIndex:'data',
             sortable:true,
             width:70
@@ -349,7 +349,7 @@ function view(file, title){
 }
 
 var http = new XMLHttpRequest();
-
+var barPaging=null;
 function addGrid(file, titleTab){
     
     if (!tabs.findById(titleTab)){
@@ -394,16 +394,16 @@ function addGrid(file, titleTab){
                                                 {text: 'DEBUG', handler: function(){store.clearFilter();}}
                                                 ]}
         });
-        var bar = new Ext.PagingToolbar({
+        barPaging = new Ext.PagingToolbar({
             store: store,
             pageSize:1
         });
         var but = new Ext.Button({
             text:'Clear',
             handler:function(){
-                
+               // barPaging.changePage(1);
                 var c = file.replace("get","clear");
-     
+               
                 http.open("GET", c, true);
                 http.onreadystatechange = ResponseClear;
                 if ( !callInProgress(http) ) {
@@ -419,8 +419,15 @@ function addGrid(file, titleTab){
                         closable:true
                     });
                 }
-                store.reload();
-                tabs.setActiveTab(titleTab);
+                //store.reload();
+                store.load({params:{start:0}});
+
+                /*alert(tabs.items.items.length);
+                tabs.items.items[0].remove();*/
+               
+
+                //addGrid(file, titleTab);
+                //tabs.setActiveTab(titleTab);
             }
         });
         
@@ -459,7 +466,7 @@ function addGrid(file, titleTab){
                 enableRowBody:true,
                 showPreview:false
             },
-            bbar: [bar, menu, but, but1]
+            bbar: [barPaging, menu, but, but1]
         });
         
         tabs.add(grid);
@@ -512,3 +519,4 @@ function printError (errorType){
      });  
     }
 }
+

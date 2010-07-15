@@ -158,8 +158,8 @@ public class TBXAsynchronousOperationSecondThirdScriptExecutor extends Thread {
                 InstanceResources.storeXMLResource(response, serviceInstanceId, InstanceResources.TYPE_OUTPUT_MESSAGE);
             } catch (Exception e) {
                 Document errorResp;
-
-                logger.error(e.getMessage());
+                e.printStackTrace();
+                logger.error("An error occurred while validating the output message. See catalina.out for further information.");
 
                 InstanceResources.storeXMLResource(response, serviceInstanceId, InstanceResources.TYPE_INVALID_OUTPUT_MESSAGE);
                 InstanceStatuses.updateInstanceStatus(serviceInstanceId, InstanceStatuses.STATUS_INVALID_OUTPUT_MESSAGE);

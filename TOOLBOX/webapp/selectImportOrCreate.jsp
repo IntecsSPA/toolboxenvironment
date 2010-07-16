@@ -75,71 +75,7 @@
 
 <script type="text/javascript" src="jsScripts/wpsWizard/scripts/wpsWizardManager.js"></script>
 <SCRIPT>
-    function controlNewService(serviceName){
-       var newServiceName;
-     if(!serviceName){
-       if(document.newService.importOrCreate[1].checked)
-          newServiceName=document.newService.newServiceName.value;
-     }else
-         newServiceName=serviceName;
-          if(newServiceName.length<=0){
-
-               Ext.Msg.show({
-                    title:'Create a new service: Error',
-                    buttons: Ext.Msg.OK,
-                    msg: 'Please insert a new Service Name',
-                    animEl: 'elId',
-                    icon: Ext.MessageBox.ERROR
-                });
-               return false;
-          }else{
-             try{  
-             var controlServiceName=function(response){
-                 if(!response){
-                          Ext.Msg.show({
-                                title:'Create a new service: Error',
-                                buttons: Ext.Msg.OK,
-                                msg: 'Service Exception!',
-                                animEl: 'elId',
-                                icon: Ext.MessageBox.ERROR
-                          });  
-                      }else{
-                        var xmlResponse = (new DOMParser()).parseFromString(response, "text/xml");
-                        var isValid=xmlResponse.selectNodes("response")[0].getAttribute("value");
-                        if(isValid !='true'){
-                            Ext.Msg.show({
-                                title:'Create a new service: Error',
-                                buttons: Ext.Msg.OK,
-                                msg: 'Service already defined. Please choose another name',
-                                animEl: 'elId',
-                                icon: Ext.MessageBox.ERROR
-                            });  
-                            globalControl=false;
-                        }
-                      }   
-             }; 
-             var controlServiceTimeOut=function(){
-                 Ext.Msg.show({
-                    title:'Create a new service: Error',
-                    buttons: Ext.Msg.OK,
-                    msg: 'Request TIME-OUT!',
-                    animEl: 'elId',
-                    icon: Ext.MessageBox.ERROR
-                });
-             };
-             
-             var globalControl=true;
-             var onSubmit=sendXmlHttpRequestTimeOut("GET", 
-                         "manager?cmd=isServiceNameAvailable&serviceName="+newServiceName, 
-                         false, null, 8000, controlServiceName, controlServiceTimeOut,null);          
-            return globalControl && onSubmit;             
-              }catch(e){
-                    return false;
-              }
-         }
-       
-       return true; 
-    }
+    
 </SCRIPT>
 <TABLE cellSpacing=0 cellPadding=0 width="100%" height="100%" align=center> 
   <TBODY> 

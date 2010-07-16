@@ -2,5 +2,6 @@
 <plugin name="RESTManagerCommandsPlugin" version="1.0">
     <restCommandViaGet cmd="/rest/gui/getJs/*" class="it.intecs.pisa.toolbox.plugins.gui.GetJsCommand"/>
     <restCommandViaGet cmd="/rest/gui/getDefinition/*" class="it.intecs.pisa.toolbox.plugins.gui.GetDefinitionCommand"/>
+    <restCommandViaPost cmd="/rest/gui/createService" class="it.intecs.pisa.toolbox.plugins.gui.CreateServiceCommand"/>
 </plugin>
 

@@ -39,6 +39,7 @@ function generateFormFieldSet(title, fieldSets, numCol, localizationObj){
         width: '100%',
         items:arrayFieldSet
     });
+    
   var result={fieldSetArray: arrayFieldSet, form: newForm};
   return(result);
     
@@ -86,7 +87,7 @@ function createPanelExjFormByXml(xmlDocument,lang){
              controlMandatoryButtons.push(buttonElements[i].getAttribute("id"));
              disabled=true;
            }   
-
+           
            if(loc){
              textButton=loc.getLocalMessage(buttonElements[i].getAttribute("label"));  
            }else
@@ -242,7 +243,8 @@ function createPanelExjFormByXml(xmlDocument,lang){
                              if(!input[j].validate()){
                                 for(i=0;i<this.controlMandatoryButtons.length;i++)
                                   for(u=0; u<this.buttonPanel.buttons.length; u++){
-                                    this.buttonPanel.buttons[u].disable(); 
+                                     if(controlMandatoryButtons[i] == this.buttonPanel.buttons[u].id)
+                                        this.buttonPanel.buttons[u].disable();
                                   }  
                                 return(false);  
                              }
@@ -252,7 +254,8 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                   if(!input[j].getValue() || input[j].getValue()==""){
                                      for(i=0;i<this.controlMandatoryButtons.length;i++)
                                         for(u=0; u<this.buttonPanel.buttons.length; u++){
-                                          this.buttonPanel.buttons[u].disable(); 
+                                          if(controlMandatoryButtons[i] == this.buttonPanel.buttons[u].id)
+                                            this.buttonPanel.buttons[u].disable();
                                         }  
                                     return(false);  
                                  }
@@ -553,7 +556,7 @@ function createPanelExjFormByXml(xmlDocument,lang){
                 },
                 getFormValues: function(label){
                   var xtypeArray;  
-                  xtypeArray=["textfield","textarea", "combo","datefield","numberfield","checkbox","field","checkboxgroup","spinnerfield"];
+                  xtypeArray=["textfield","textarea", "combo","datefield","numberfield","checkbox","field","checkboxgroup","radiogroup","spinnerfield"];
                   var input,i,u,j;
                   var idRequest="";
                   var formValues=new Array();
@@ -608,6 +611,12 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                               id: input[j].getItemId(),
                                               value:input[j].value
                                            };
+                                 }else
+                                 if(xtypeArray[u] == "radiogroup") {
+                                    formValues[input[j].getItemId()]={
+                                                  id: input[j].getItemId(),
+                                                  value:input[j].getValue().inputValue
+                                              };
                                  }else{
                                     formValues[input[j].getItemId()]={
                                                   id: input[j].getItemId(),
@@ -708,6 +717,15 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                   else
                                       complexValues[tempform[u].id]=null;
                                   //alert(complexValues[tempform[i].id]);
+                                  break;
+                          case "radiogroup":
+                                  if(formValues[tempform[u].id].value){
+                                      complexValues[tempform[u].id]=replaceAll(formValues[tempform[u].id].value,"__",',');
+                                      idRequest+=formValues[tempform[u].id].value;
+                                    }
+                                  else
+                                      complexValues[tempform[u].id]=null;
+
                                   break;
                                   
                           case "combo":
@@ -2789,6 +2807,9 @@ function generateRadioGroupField(field){
     u++;
   }
 
+
+
+
   var radioLabels=field.labelList.split(",");
   var radioValues=field.valueList.split(",");
   var checked=false;
@@ -2801,21 +2822,38 @@ function generateRadioGroupField(field){
          radioLabel=field.localization.getLocalMessage(radioLabels[i]); 
       else
          radioLabel=radioLabels[i];
-      items.push({
+      /*items.push({
           xtype:'radio',
           hideLabel: true,
           checked: checked,
           name: field.id,
           boxLabel: radioLabel,
           value: radioValues[i]
-      });
+      });*/
+        items.push({
+            boxLabel: radioLabel,
+            name: field.id,
+            inputValue: radioValues[i],
+            checked: checked
+        });
       checked=false;
   }
+
+  var radiogroup=new Ext.form.RadioGroup({
+            itemCls: 'x-check-group-alt',
+            columns: 1,
+            id: field.id,
+            name: field.id,
+            //fieldLabel: 'Auto Layout',
+            items: items
+        });
+
+       
   
   formField[u]={
              colspan: numberColsField,
              layout: "form",
-             items: items
+             items: [radiogroup]
   };                  
   return(formField);    
 }
@@ -3779,10 +3817,6 @@ function generateComboField(field){
      onchange+="_formObj_[_formObj_.length-1].onChangeFieldControlMandatory();"; */
   if(field.onChange)
     onchange=field.onChange;
-
-
-  
-
 
   var label;
   if(field.localization && field.label!="" && field.label){

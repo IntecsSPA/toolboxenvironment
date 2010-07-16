@@ -118,7 +118,15 @@ OpenLayers.Format.XMLKeyValue = OpenLayers.Class(OpenLayers.Format.XML, {
                                        
                                         this.writeNode(root, tempform[u].id, keyValue.formValues[tempform[u].id]);
                                       }  
-                                      break;      
+                                      break;
+                                case "radiogroup":
+                                  
+                                      //alert(keyValue.formValues[tempform[u].id]);
+                                      if(keyValue.formValues[tempform[u].id]){
+
+                                        this.writeNode(root, tempform[u].id, keyValue.formValues[tempform[u].id]);
+                                      }
+                                      break;
                                 case "combo":
                                       //alert(keyValue.formValues[tempform[u].id]);
                                       if(keyValue.formValues[tempform[u].id]){

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<inputInterface xmlns="http://gisClient.pisa.intecs.it/gisClient">
+   <section name="Catalogue Identification">
+        <group label="Catalogue Service Identification Info: ">
+            <input type="text" name="catalogueServiceName" label="Service Name" id="catalogueServiceName" optional="false" value="" size="52"/>
+            <input type="textarea" name="catalogueServiceAbstract" label="Service Abstract" id="catalogueServiceAbstract" optional="true" value="" cols="50" rows="5"/>
+            <input type="text" name="catalogueServiceDescription" label="Service Description" id="catalogueServiceDescription" optional="true" value="" size="52"/>
+        </group>
+    </section>
+    <section name="Catalogue Information">
+        <group label="Interface Type">
+            <input type="text" name="interfaceType" id="interfaceType" hidden="true" hideLabel="true" value="" optional="false"/>
+            <input type="text" name="interfaceName" id="interfaceName" hidden="true" hideLabel="true" value="" optional="false"/>
+            <input type="text" name="interfaceVersion" id="interfaceVersion" hidden="true" hideLabel="true" value="" optional="false"/>
+            <input type="text" name="interfaceMode" id="interfaceMode" hidden="true" hideLabel="true" value="" optional="false"/>
+            <input type="combo" name="catalogueServiceInterface" id="catalogueServiceInterface" store="VALUES"
+               storeFields="['interfaceTitle', 'interfaceType', 'interfaceName', 'interfaceVersion','interfaceModeUrlRequest']"
+               storeData="[
+                        ['OGC-06-131r6 version 0.2.4', 'catalogue', 'OGC-06-131r6', '0.2.4', 'rest/manager/getInterfaceModes/Catalogue/OGC-06-131r6/0.2.4.json'],
+                        ['EOLI version 2.6', 'catalogue', 'EOLI', '2.6', 'rest/manager/getInterfaceModes/Catalogue/EOLI/2.6.json'],
+                        ['OGC-07-045 1.0.0', 'catalogue', 'OGC-07-045', '1.0.0', 'rest/manager/getInterfaceModes/Catalogue/OGC-07-045/1.0.0.json'],
+                        ['OGC-05-025r3 0.10.3', 'catalogue', 'OGC-05-025r3', '0.10.3', 'rest/manager/getInterfaceModes/Catalogue/OGC-05-025r3/0.10.3.json'],
+                        ['OGC-07-038 0.1.11', 'catalogue', 'OGC-07-038', '0.1.11', 'rest/manager/getInterfaceModes/Catalogue/OGC-07-038/0.1.11.json']
+                    ]"
+               optional="false" onChange="serviceInterfaceTypeChange"
+               />
+        </group>
+        <group label="Interface Mode">
+            <input type="combo" name="catalogueInterfaceMode" id="catalogueInterfaceMode" store="VALUES"
+               storeFields="['interfaceMode']"
+               storeData="[]"
+               optional="false" onChange="serviceInterfaceModeChange"
+               />
+        </group>
+
+    </section>
+    <section name="Catalogue Settings">
+        <group label="General Setting">
+            <input type="checkbox" name="catalogueServiceQueueIncoming" id="catalogueServiceQueueIncoming" label="Queue incoming service requests"/>
+        </group>
+        <group label="Suspend Mode">
+            <input type="radiogroup" name="catalogueSuspendMode" id="catalogueSuspendMode" labelList="SOFT,HARD" valueList="SOFT,HARD"
+                valueCheked="SOFT"/>
+        </group>
+   </section>
+   <section name="Catalogue Security">
+       <group label="Secure Communication">
+            <!--input type="checkbox" name="catalogueSecureCommunicationEnable" id="catalogueSecureCommunicationEnable" label="Enable Secure Communication"/-->
+            <input type="text" name="catalogueSSLCertificateLocation" label="SSL certificate location" id="catalogueSSLCertificateLocation" optional="true" value="" size="52"/>
+        </group>
+        <!--group label="WS-Security (HMA)">
+            <input type="checkbox" name="cataloguewsSecurityHMAEnable" id="wsSecurityHMAEnable" label="Enable WS-Security (HMA)"/>
+        </group-->
+   </section>
+  
+   <requestInformations>
+        <buttons>
+            
+            <button name="createCatalogueServiceButton" id="createCatalogueServiceButton" label="Create Catalogue Service" iconImage="" onclick="createServiceRequest"/>
+        </buttons>
+    </requestInformations>
+</inputInterface>

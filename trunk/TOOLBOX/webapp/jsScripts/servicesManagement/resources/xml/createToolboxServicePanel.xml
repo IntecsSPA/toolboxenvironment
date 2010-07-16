@@ -57,7 +57,7 @@
    <requestInformations>
         <buttons>
             
-            <button name="createWPSButton" id="createWPSButton" label="Create WPS Service" iconImage="" onclick="createWPSRequest" disableIfNotMandatoryFields="true"/>
+            <button name="createServiceUDButton" id="createServiceUDButton" label="Create Service" iconImage="" onclick="createServiceUDRequest" disableIfNotMandatoryFields="true"/>
         </buttons>
     </requestInformations>
 </inputInterface>

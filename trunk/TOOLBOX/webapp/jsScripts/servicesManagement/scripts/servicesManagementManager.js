@@ -7,9 +7,24 @@ var textAreaFrameW=(screen.width/1.55);
 /* Service Management XML Interfaces*/
 var exportGroupServicesXML="jsScripts/servicesManagement/resources/xml/exportGroupServicesPanel.xml";
 var importGroupServicesXML="jsScripts/servicesManagement/resources/xml/importGroupServicesPanel.xml";
-var xmlDocumentWPSUrl="jsScripts/wpsWizard/resources/xml/createWPSServicePanel.xml";
-var createToolboxServiceXML="jsScripts/servicesManagement/resources/xml/createToolboxServicePanel.xml";
 
+var servicesXMLInterface= new Array();
+//var createWPSXML="jsScripts/wpsWizard/resources/xml/createWPSServicePanel.xml";
+//var createToolboxServiceXML="jsScripts/servicesManagement/resources/xml/createToolboxServicePanel.xml";
+servicesXMLInterface.push({xmlUrl:"jsScripts/servicesManagement/resources/xml/createOrderingServicePanel.xml",
+                           icon:"images/order_blk.png", title:"Create Ordering Service", name:"orderingService"});
+servicesXMLInterface.push({xmlUrl:"jsScripts/servicesManagement/resources/xml/createCatalogueServicePanel.xml",
+                            icon:"images/catalogue_blk.png", title:"Create Catalogue Service", name:"catalogueService"});
+servicesXMLInterface.push({xmlUrl:"jsScripts/servicesManagement/resources/xml/createArchivingServicePanel.xml",
+                        icon:"images/archiving_blk.png", title:"Create Archiving Service", name:"archivingService"});
+servicesXMLInterface.push({xmlUrl:"jsScripts/wpsWizard/resources/xml/createWPSServicePanel.xml",
+                            icon:"images/wps_blk.png", title:"Create Web Processing Service (WPS)", name:"wpsService",
+                            actionMethod: "createWPSRequest(this)"});
+
+
+
+var servicesAccordionPanels=new Array();
+var servicesInterfaces=new Array();
 
 /* Service Management Interface Objects */
 var exportGroupServiceIO=null;
@@ -213,31 +228,33 @@ var importServices=function(){
 
 function createServiceInterface(){
    // executeRemoteMethod("test");
+   var i;
+   var header;
    if(createServiceWin == null){
-        
-        var createServiceIO=createPanelExjFormByXml(createToolboxServiceXML);
-        var createWPSIO=createPanelExjFormByXml(xmlDocumentWPSUrl);
 
-
-       var createToolboxServicePanel=new Ext.Panel({
-                            title: 'Create Toolbox Services',
+        for(i=0; i<servicesXMLInterface.length;i++){
+           servicesInterfaces.push(createPanelExjFormByXml(servicesXMLInterface[i].xmlUrl));
+           header=document.getElementById("body");
+           header.innerHTML+="\n<style type=\"text/css\">\n"+
+                                "."+servicesXMLInterface[i].name+"cls {\n"+
+                                    "background-image:url("+servicesXMLInterface[i].icon+");\n"+
+                                "}\n"+
+                            "</style>\n";
+           servicesAccordionPanels.push(new Ext.Panel({
+                            title: servicesXMLInterface[i].title,
                             border: true,
                             autoScroll : true,
-                            id: "createServicePanel",
+                            id: servicesXMLInterface[i].name+"ServicePanel",
                             bodyColor: '#79a3cb',
-                            html: "<div id='createToolboxServiceInterface'>",
-                            iconCls: 'export'
-                   });
+                            html: "<div id='"+servicesXMLInterface[i].name+"ServiceInterface'>",
+                            iconCls: servicesXMLInterface[i].name+'cls'
+                   }));
 
-        var createWPSToolboxPanel=new Ext.Panel({
-                            title: 'Create Toolbox WPS',
-                            border: true,
-                            autoScroll : true,
-                            id: "createWPSPanel",
-                            bodyColor: '#79a3cb',
-                            html: "<div id='createToolboxWPSInterface'>",
-                            iconCls: 'import'
-                   });
+
+
+
+
+        }
 
        var accordionCreateServicePanel=new Ext.Panel({
                           split:true,
@@ -253,11 +270,9 @@ function createServiceInterface(){
                                         titleCollapse: true,
                                         fill : false
                                     },
-
-
-                                  items:[createToolboxServicePanel,
-                                         createWPSToolboxPanel//,
-                                        ]
+                                  items:servicesAccordionPanels/*[createOrderingServicePanel,
+                                         createWPSToolboxPanel,
+                                        ]*/
                             });
 ;
 
@@ -293,22 +308,21 @@ function createServiceInterface(){
                           }
                         },
 
-                        width: screen.width/1.3,
-                        height: screen.height/1.8,
+                        width: screen.width/2.1,
+                        height: screen.height/2.1,
                         closeAction:'hide',
                         items:[accordionCreateServicePanel]
 			});
        createServiceWin.show();
        createServiceWin.insertLoadingPanel();
 
-       //accordionImportExportServicesPanel.render(document.getElementById("accordionImportExportServicesPanel"));
-        accordionCreateServicePanel.layout.setActiveItem(0);
-        createServiceIO.formsPanel.render(document.getElementById("createToolboxServiceInterface"));
-        createServiceIO.render();
+        for(i=0; i<servicesXMLInterface.length;i++){
+            accordionCreateServicePanel.layout.setActiveItem(i);
+            servicesInterfaces[i].formsPanel.render(document.getElementById(servicesXMLInterface[i].name+"ServiceInterface"));
+            servicesInterfaces[i].render();
 
-        accordionCreateServicePanel.layout.setActiveItem(1);
-        createWPSIO.formsPanel.render(document.getElementById("createToolboxWPSInterface"));
-        createWPSIO.render();
+        }
+    
 
         accordionCreateServicePanel.layout.setActiveItem(0);
 
@@ -362,3 +376,193 @@ function executeRemoteMethod(methodID){;
 
 }
 
+function serviceInterfaceModeChange(){
+    var formPanel=this.findParentByType("form");
+    var interfaceModeText=formPanel.form.items.items[3];
+    interfaceModeText.setValue(this.getValueInformation("interfaceMode"));
+     //alert(interfaceModeText.value);
+}
+
+function serviceInterfaceTypeChange(){
+
+    var restModeRequest=this.getValueInformation("interfaceModeUrlRequest");
+    var formPanel=this.findParentByType("form");
+    var interfaceTypeText=formPanel.form.items.items[0];
+    interfaceTypeText.setValue(this.getValueInformation("interfaceType"));
+    //alert(interfaceTypeText.value);
+    var interfaceNameText=formPanel.form.items.items[1];
+    interfaceNameText.setValue(this.getValueInformation("interfaceName"));
+    //alert(interfaceNameText.value);
+    var interfaceVersionText=formPanel.form.items.items[2];
+    interfaceVersionText.setValue(this.getValueInformation("interfaceVersion"));
+    //alert(interfaceVersionText.value);
+    var modeCombo=formPanel.form.items.items[5];
+    
+    var getInterfaceModeMethod=function(response){
+             if(!response)
+                          Ext.Msg.show({
+                                title:'Get Interface Mode: Error',
+                                buttons: Ext.Msg.OK,
+                                msg: 'Service Exception!',
+                                animEl: 'elId',
+                                icon: Ext.MessageBox.ERROR
+                          });
+              else{
+                  var jsonResponseObj=eval('(' + response + ')');
+                  var newStrore= new Array();
+                  for(var u=0; u<jsonResponseObj.types.length; u++)
+                      newStrore.push([jsonResponseObj.types[u]]);
+                  modeCombo.setStore(newStrore,
+                    ['interfaceMode'],
+                    'interfaceMode');
+
+              }
+
+     };
+
+     var getInterfaceModeTimeOut=function(){
+                 Ext.Msg.show({
+                    title:'Get Interface Mode: Error',
+                    buttons: Ext.Msg.OK,
+                    msg: 'Request TIME-OUT!',
+                    animEl: 'elId',
+                    icon: Ext.MessageBox.ERROR
+                });
+     };
+
+     var onSubmit=sendXmlHttpRequestTimeOut("GET",
+            restModeRequest,
+            false, null, 800000, getInterfaceModeMethod, getInterfaceModeTimeOut,null);
+
+}
+
+function createServiceRequest(){
+  var j=0;
+  for(var i=0;i<servicesInterfaces.length;i++){
+     validate=true;
+     for(j=0;j<servicesInterfaces[i].formsArray.length;j++)
+        validate=validate && servicesInterfaces[i].formsArray[j].getForm().isValid();
+     if(validate){
+
+        var interfaceActionMethod=servicesXMLInterface[i].actionMethod;
+        interfaceActionMethod=replaceAll(interfaceActionMethod, "this", "servicesInterfaces[i]");
+        alert(interfaceActionMethod);
+        eval(interfaceActionMethod);
+        /*var xmlRequest=servicesInterfaces[i].getXmlKeyValueDocument("String",false);
+        alert(xmlRequest);
+        newServiceName=servicesInterfaces[i].formsArray[0].getForm().items.items[0].value;
+        alert(serviceName);
+        httpGetRequest="configureService.jsp?serviceName="+newServiceName;
+        window.location.href = httpGetRequest;*/
+
+     }
+
+  }  
+}
+
+
+function createToolboxService(formCrateService){
+    var xmlRequest=formCrateService.getXmlKeyValueDocument('String', false);
+
+    var serviceCreateControl=function(response){
+             if(!response){
+                     Ext.Msg.show({
+                         title:'Create a new service: Error',
+                         buttons: Ext.Msg.OK,
+                         msg: 'Service Exception!',
+                         animEl: 'elId',
+                         icon: Ext.MessageBox.ERROR
+                      });
+               }else{
+
+                alert(response);
+
+
+
+               }
+                 //window.location="configureService.jsp?serviceName="+newServiceName;
+
+           };
+                 var serviceCreateControlTimeOut=function(){
+                     Ext.Msg.show({
+                        title:'Create a new service: Error',
+                        buttons: Ext.Msg.OK,
+                        msg: 'Request TIME-OUT!',
+                        animEl: 'elId',
+                        icon: Ext.MessageBox.ERROR
+                    });
+                 };
+
+                 var globalControl=true;
+                 var onSubmit=sendXmlHttpRequestTimeOut("POST",
+                             "/rest/gui/createService.xml",
+                             true, xmlRequest, 800000, serviceCreateControl, serviceCreateControlTimeOut,null);
+}
+
+
+
+function controlNewService(serviceName){
+       var newServiceName;
+     if(!serviceName){
+       if(document.newService.importOrCreate[1].checked)
+          newServiceName=document.newService.newServiceName.value;
+     }else
+         newServiceName=serviceName;
+          if(newServiceName.length<=0){
+
+               Ext.Msg.show({
+                    title:'Create a new service: Error',
+                    buttons: Ext.Msg.OK,
+                    msg: 'Please insert a new Service Name',
+                    animEl: 'elId',
+                    icon: Ext.MessageBox.ERROR
+                });
+               return false;
+          }else{
+             try{
+             var controlServiceName=function(response){
+                 if(!response){
+                          Ext.Msg.show({
+                                title:'Create a new service: Error',
+                                buttons: Ext.Msg.OK,
+                                msg: 'Service Exception!',
+                                animEl: 'elId',
+                                icon: Ext.MessageBox.ERROR
+                          });
+                      }else{
+                        var xmlResponse = (new DOMParser()).parseFromString(response, "text/xml");
+                        var isValid=xmlResponse.selectNodes("response")[0].getAttribute("value");
+                        if(isValid !='true'){
+                            Ext.Msg.show({
+                                title:'Create a new service: Error',
+                                buttons: Ext.Msg.OK,
+                                msg: 'Service already defined. Please choose another name',
+                                animEl: 'elId',
+                                icon: Ext.MessageBox.ERROR
+                            });
+                            globalControl=false;
+                        }
+                      }
+             };
+             var controlServiceTimeOut=function(){
+                 Ext.Msg.show({
+                    title:'Create a new service: Error',
+                    buttons: Ext.Msg.OK,
+                    msg: 'Request TIME-OUT!',
+                    animEl: 'elId',
+                    icon: Ext.MessageBox.ERROR
+                });
+             };
+
+             var globalControl=true;
+             var onSubmit=sendXmlHttpRequestTimeOut("GET",
+                         "manager?cmd=isServiceNameAvailable&serviceName="+newServiceName,
+                         false, null, 8000, controlServiceName, controlServiceTimeOut,null);
+            return globalControl && onSubmit;
+              }catch(e){
+                    return false;
+              }
+         }
+
+       return true;
+    }

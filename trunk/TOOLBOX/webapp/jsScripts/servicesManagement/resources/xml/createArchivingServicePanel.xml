@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<inputInterface xmlns="http://gisClient.pisa.intecs.it/gisClient">
+   <section name="Archiving Identification">
+        <group label="Archiving Service Identification Info: ">
+            <input type="text" name="archivingServiceName" label="Service Name" id="archivingServiceName" optional="false" value="" size="52"/>
+            <input type="textarea" name="archivingServiceAbstract" label="Service Abstract" id="archivingServiceAbstract" optional="true" value="" cols="50" rows="5"/>
+            <input type="text" name="archivingServiceDescription" label="Service Description" id="archivingServiceDescription" optional="true" value="" size="52"/>
+        </group>
+    </section>
+    <section name="Archiving Information">
+        <group label="Interface Type">
+            <input type="text" name="interfaceType" id="interfaceType" hidden="true" hideLabel="true" value="" optional="false"/>
+            <input type="text" name="interfaceName" id="interfaceName" hidden="true" hideLabel="true" value="" optional="false"/>
+            <input type="text" name="interfaceVersion" id="interfaceVersion" hidden="true" hideLabel="true" value="" optional="false"/>
+            <input type="text" name="interfaceMode" id="interfaceMode" hidden="true" hideLabel="true" value="" optional="false"/>
+
+            <input type="combo" name="archivingServiceInterface" id="archivingServiceInterface" store="VALUES"
+               storeFields="['interfaceTitle', 'interfaceType', 'interfaceName', 'interfaceVersion','interfaceModeUrlRequest']"
+               storeData="[
+                        ['OGC-05-007r7 version 1.0.0', 'archiving','OGC-05-007r7', '1.0.0', 'rest/manager/getInterfaceModes/Archiving/OGC-05-007r7/1.0.0.json']
+                    ]"
+               optional="true" onChange="serviceInterfaceTypeChange"
+               />
+        </group>
+        <group label="Interface Mode">
+            <input type="combo" name="archivingInterfaceMode" id="archivingInterfaceMode" store="VALUES"
+               storeFields="['interfaceMode']"
+               storeData="[]"
+               optional="true" onChange="serviceInterfaceModeChange"
+               />
+        </group>
+
+    </section>
+    <section name="Archiving Settings">
+        <group label="General Setting">
+            <input type="checkbox" name="archivingServiceQueueIncoming" id="archivingServiceQueueIncoming" label="Queue incoming service requests"/>
+        </group>
+        <group label="Suspend Mode">
+            <input type="radiogroup" name="archivingSuspendMode" id="archivingSuspendMode" labelList="SOFT,HARD" valueList="SOFT,HARD"
+                valueCheked="SOFT"/>
+        </group>
+   </section>
+   <section name="Archiving Security">
+       <group label="Secure Communication">
+           
+            <input type="text" name="archivingSSLCertificateLocation" label="SSL certificate location" id="archivingSSLCertificateLocation" optional="true" value="" size="52"/>
+        </group>
+        
+   </section>
+  
+   <requestInformations>
+        <buttons>
+            
+            <button name="createArchivingServiceButton" id="createArchivingServiceButton" label="Create Archiving Service" iconImage="" onclick="createServiceRequest"/>
+        </buttons>
+    </requestInformations>
+</inputInterface>

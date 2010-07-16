@@ -113,7 +113,7 @@ function wpsProcessingWizardManager(){
    }
 }
 
-function createWPSRequest(){
+function createWPSRequest(formCrateWpsService){
     var xmlRequest=formCrateWpsService.getXmlKeyValueDocument('String', false);
     var newServiceName=formCrateWpsService.getFormValues()["serviceName"];
     
@@ -128,7 +128,7 @@ function createWPSRequest(){
                                     icon: Ext.MessageBox.ERROR
                               });
                           }else
-                            window.location="serviceConfiguration.jsp?serviceName="+newServiceName;
+                            window.location="configureService.jsp?serviceName="+newServiceName;
 
                  };
                  var wpsServiceCreateControlTimeOut=function(){

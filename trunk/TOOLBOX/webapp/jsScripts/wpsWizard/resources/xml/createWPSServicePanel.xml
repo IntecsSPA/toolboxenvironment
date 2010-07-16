@@ -6,6 +6,7 @@
             <input type="text" name="serviceName" label="Service Name" id="serviceName" optional="false" value="" size="52"/>
             <input type="textarea" name="serviceAbstract" label="Abstract" id="serviceAbstract" optional="true" value="" cols="50" rows="5"/>
             <input type="text" name="serviceKeyWords" label="KeyWords( separated by ',')" id="serviceKeyWords" optional="true" value="" size="52"/>
+            <input type="hidden" name="interfaceType" id="interfaceType" value="ordering"/>
         </group>
    </section>
    <section name="Provider Info">
@@ -31,7 +32,7 @@
    <requestInformations>
         <buttons>
             <!--button name="resetButton" id="resetButton" label="Reset" iconImage="" onclick="tbxCat.Reset"/-->
-            <button name="createWPSButton" id="createWPSButton" label="Create WPS Service" iconImage="" onclick="createWPSRequest" disableIfNotMandatoryFields="true"/>
+            <button name="createWPSButton" id="createWPSButton" label="Create WPS Service" iconImage="" onclick="createServiceRequest"/>
         </buttons>
     </requestInformations>
 </inputInterface>

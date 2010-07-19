@@ -77,7 +77,7 @@ public class TBXSOAPInterface extends Interface{
             String schemaURL;
             
             serviceName=this.getParent().getServiceName();
-            schemaURL=ToolboxNetwork.getEndpointURL()+"/TOOLBOX/WSDL/"+serviceName+"/"+this.getSchemaRoot();
+            schemaURL=ToolboxNetwork.getEndpointURL()+"/WSDL/"+serviceName+"/"+this.getSchemaRoot();
             DocumentBuilder validatingParser = DOMUtil.getValidatingParser(schemaURL);
 
             validatingParser.setEntityResolver(new ToolboxServiceSchemaEntityResolver(schemaFile));

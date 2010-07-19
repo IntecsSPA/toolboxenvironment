@@ -15,6 +15,7 @@ public class ToolboxNetwork {
         ToolboxConfiguration instance = ToolboxConfiguration.getInstance();
 
         return "http://"+instance.getConfigurationValue(ToolboxConfiguration.ENDPOINT_ADDRESS)+
-                ":"+instance.getConfigurationValue(ToolboxConfiguration.ENDPOINT_PORT);
+                ":"+instance.getConfigurationValue(ToolboxConfiguration.ENDPOINT_PORT)+
+                "/TOOLBOX";
     }
 }

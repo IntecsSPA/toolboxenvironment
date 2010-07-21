@@ -1,10 +1,9 @@
 package it.intecs.pisa.toolbox.plugins.wpsPlugin.engine;
 
-import it.intecs.pisa.common.tbx.Operation;
 import it.intecs.pisa.common.tbx.Script;
 import it.intecs.pisa.toolbox.plugins.wpsPlugin.manager.WPSOperation;
 import it.intecs.pisa.toolbox.service.TBXAsynchronousOperation;
-import it.intecs.pisa.toolbox.service.TBXOperation;
+import it.intecs.pisa.toolbox.service.TBXScript;
 import it.intecs.pisa.toolbox.service.TBXSynchronousOperation;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.IOUtil;
@@ -33,8 +32,8 @@ public class WPSGrassEngine implements WPSEngine{
   private static String EXECUTE_GRASS_ENGINE_SCRIPT_FILE_NAME ="scriptGrassEngine.tscript";
   private static String EXECUTE_ERROR_SCRIPT_FILE_NAME ="globalError.tscript";
   private static String EXECUTE_ASYNC_GRASS_ENGINE_SCRIPT_FOLDER_PATH ="AdditionalResources/WPS/ExecuteRequestToolboxScript/Async/GrassEngine/";
-  private static String GRASS_TEMPLATE_XSLT_PATH="AdditionalResources/WPS/XSL/Create_GrassScript_Template.xsl";
-  private static String GRASS_OUTPUT_MANAGER_XLST_PATH="AdditionalResources/WPS/XSL/OutptManager_GrassScript.xsl";
+  private static String GRASS_TEMPLATE_XSLT_PATH="AdditionalResources/WPS/XSL/GrassEngine/Create_GrassScript_Template.xsl";
+  private static String GRASS_OUTPUT_MANAGER_XLST_PATH="AdditionalResources/WPS/XSL/GrassEngine/OutptManager_GrassScript.xsl";
 
 
   private String grassScript="";
@@ -120,43 +119,43 @@ public class WPSGrassEngine implements WPSEngine{
         return operationEngineDescr;
     }
 
-    public Script[] getExecuteScriptDescriptorSync(File servicePath, String operationName) throws IOException, SAXException{
-     Script[] scripts=new Script[2];
-     scripts[0] = new Script();
+    public TBXScript[] getExecuteScriptDescriptorSync(File servicePath, String operationName) throws IOException, SAXException{
+     TBXScript[] scripts=new TBXScript[2];
+     scripts[0] = new TBXScript();
      scripts[0].setScriptDoc(domUtil.inputStreamToDocument(new FileInputStream(new File(servicePath, EXECUTE_TOOLBOX_SCRIPT_FOLDER_PATH+EXECUTE_GRASS_ENGINE_SCRIPT_FILE_NAME))));
      scripts[0].setPath(PATH_OPERATION+"/"+operationName + "/"+FIRST_SCRIPT_FILE_NAME);
      scripts[0].setType(Script.SCRIPT_TYPE_FIRST_SCRIPT);
-     scripts[1] = new Script();
+     scripts[1] = new TBXScript();
      scripts[1].setScriptDoc(domUtil.inputStreamToDocument(new FileInputStream(new File(servicePath, EXECUTE_TOOLBOX_SCRIPT_FOLDER_PATH+EXECUTE_ERROR_SCRIPT_FILE_NAME))));
      scripts[1].setPath(PATH_OPERATION+"/"+operationName + "/"+GLOBAL_ERROR_SCRIPT_FILE_NAME);
      scripts[1].setType(Script.SCRIPT_TYPE_GLOBAL_ERROR);
      return scripts;
     }
 
-    public Script[] getExecuteScriptDescriptorAsync(File servicePath, String operationName) throws IOException, SAXException{
-      Script[] scripts=new Script[6];
+    public TBXScript[] getExecuteScriptDescriptorAsync(File servicePath, String operationName) throws IOException, SAXException{
+      TBXScript[] scripts=new TBXScript[6];
       
-      scripts[0] = new Script();
+      scripts[0] = new TBXScript();
       scripts[0].setScriptDoc(domUtil.inputStreamToDocument(new FileInputStream(new File(servicePath, EXECUTE_ASYNC_GRASS_ENGINE_SCRIPT_FOLDER_PATH+FIRST_SCRIPT_FILE_NAME))));
       scripts[0].setPath(PATH_OPERATION+"/"+operationName + "/"+FIRST_SCRIPT_FILE_NAME);
       scripts[0].setType(Script.SCRIPT_TYPE_FIRST_SCRIPT);
-      scripts[1] = new Script();
+      scripts[1] = new TBXScript();
       scripts[1].setScriptDoc(domUtil.inputStreamToDocument(new FileInputStream(new File(servicePath, EXECUTE_ASYNC_GRASS_ENGINE_SCRIPT_FOLDER_PATH+SECOND_SCRIPT_FILE_NAME))));
       scripts[1].setPath(PATH_OPERATION+"/"+operationName + "/"+SECOND_SCRIPT_FILE_NAME);
       scripts[1].setType(Script.SCRIPT_TYPE_SECOND_SCRIPT);
-      scripts[2] = new Script();
+      scripts[2] = new TBXScript();
       scripts[2].setScriptDoc(domUtil.inputStreamToDocument(new FileInputStream(new File(servicePath, EXECUTE_ASYNC_GRASS_ENGINE_SCRIPT_FOLDER_PATH+THIRD_SCRIPT_FILE_NAME))));
       scripts[2].setPath(PATH_OPERATION+"/"+operationName + "/"+THIRD_SCRIPT_FILE_NAME);
       scripts[2].setType(Script.SCRIPT_TYPE_THIRD_SCRIPT);
-      scripts[3] = new Script();
+      scripts[3] = new TBXScript();
       scripts[3].setScriptDoc(domUtil.inputStreamToDocument(new FileInputStream(new File(servicePath, EXECUTE_ASYNC_GRASS_ENGINE_SCRIPT_FOLDER_PATH+RESPONSE_BUILDER_SCRIPT_FILE_NAME))));
       scripts[3].setPath(PATH_OPERATION+"/"+operationName + "/"+RESPONSE_BUILDER_SCRIPT_FILE_NAME);
       scripts[3].setType(Script.SCRIPT_TYPE_RESPONSE_BUILDER);
-      scripts[4] = new Script();
+      scripts[4] = new TBXScript();
       scripts[4].setScriptDoc(domUtil.inputStreamToDocument(new FileInputStream(new File(servicePath, EXECUTE_ASYNC_GRASS_ENGINE_SCRIPT_FOLDER_PATH+RESPONSE_BUILDER_ERROR_SCRIPT_FILE_NAME))));
       scripts[4].setPath(PATH_OPERATION+"/"+operationName + "/"+RESPONSE_BUILDER_ERROR_SCRIPT_FILE_NAME);
       scripts[4].setType(Script.SCRIPT_TYPE_ERROR_ON_RESP_BUILDER);
-      scripts[5] = new Script();
+      scripts[5] = new TBXScript();
       scripts[5].setScriptDoc(domUtil.inputStreamToDocument(new FileInputStream(new File(servicePath, EXECUTE_ASYNC_GRASS_ENGINE_SCRIPT_FOLDER_PATH+GLOBAL_ERROR_SCRIPT_FILE_NAME))));
       scripts[5].setPath(PATH_OPERATION+"/"+operationName + "/"+GLOBAL_ERROR_SCRIPT_FILE_NAME);
       scripts[5].setType(Script.SCRIPT_TYPE_GLOBAL_ERROR);

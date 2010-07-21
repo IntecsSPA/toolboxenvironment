@@ -35,6 +35,7 @@ import org.apache.axiom.om.OMElement;
 import org.apache.axiom.soap.SOAPEnvelope;
 import org.apache.axis2.addressing.EndpointReference;
 import org.apache.axis2.addressing.RelatesTo;
+import org.apache.axis2.Constants;
 import org.apache.axis2.client.OperationClient;
 import org.apache.axis2.client.Options;
 import org.apache.axis2.client.ServiceClient;
@@ -51,11 +52,16 @@ import java.security.Security;
 import it.intecs.pisa.util.*;
 import java.util.Iterator;
 import java.util.LinkedList;
+import javax.xml.soap.SOAPConstants;
 import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMAttribute;
 import org.apache.axiom.om.OMNamespace;
+import org.apache.axiom.soap.SOAP11Constants;
+import org.apache.axiom.soap.SOAP12Constants;
 import org.apache.axiom.soap.SOAPHeaderBlock;
 import org.apache.axiom.soap.impl.llom.soap11.SOAP11Factory;
+import org.apache.axis2.description.TransportInDescription;
+import org.apache.axis2.description.TransportOutDescription;
 
 public class AxisSOAPClient {
     private static final String USAGE = "USAGE: java [-cp $CLASSPATH] AxisSOAPClient <url> <message_path> <is_message_body> [soap_action]";
@@ -151,19 +157,49 @@ public class AxisSOAPClient {
      * @return the Element representing the body of the SOAP response
      * @throws Exception
      */
+     /*options.setTransportIn(new TransportInDescription(Constants.TRANSPORT_HTTP));
+        options.setTransportOut(new TransportOutDescription(Constants.TRANSPORT_HTTP));*/
     public static Element sendReceive(URL url, Element message, Element[] soapHeaders, String soapAction, String messageID) throws Exception {
         Options options = new Options();
         ServiceClient client = new ServiceClient();
+        
         InputStream inStream;
         options.setTo(new EndpointReference(url.toString()));
-
+       
         options.setAction(soapAction);
         options.setTimeOutInMilliSeconds(600000);
+
         //Blocking invocation
+        options.setSoapVersionURI(SOAP11Constants.SOAP_ENVELOPE_NAMESPACE_URI);
+        options.setTransportInfo(Constants.TRANSPORT_HTTP, Constants.TRANSPORT_HTTP, false);
         options.setProperty(org.apache.axis2.transport.http.HTTPConstants.CHUNKED, Boolean.FALSE);
 
+
+        /* SOAPFactory fac = OMAbstractFactory.getSOAP11Factory();
+76
+77         OMElement payload = createEnvelope();
+78         MyInOutMEPClient inOutMEPClient = new MyInOutMEPClient();
+79         inOutMEPClient.setSoapVersionURI(SOAP11Constants.SOAP_ENVELOPE_NAMESPACE_URI);
+80         inOutMEPClient.setTo(targetEPR);
+81         inOutMEPClient.setTransportInfo(Constants.TRANSPORT_HTTP, Constants.TRANSPORT_HTTP, false);
+82
+83         SOAPEnvelope result =
+84                  inOutMEPClient.invokeBlockingWithEnvelopeOut(operationName.getLocalPart(), payload);
+85         assertEquals("SOAP Version received is not compatible", SOAP11Constants.SOAP_ENVELOPE_NAMESPACE_URI, result.getNamespace().getName());
+86         inOutMEPClient.close();
+
+Read more: http://kickjava.com/src/org/apache/axis2/engine/SOAPversionTest.java.htm#ixzz0u82yRSvn
+*/
+        
+        /*options.setProperty(org.apache.axis2.transport.http.HTTPConstants.HTTP_PROTOCOL_VERSION,
+                                 org.apache.axis2.transport.http.HTTPConstants.HEADER_PROTOCOL_10);
+        options.setProperty(org.apache.axis2.Constants.Configuration.CHARACTER_SET_ENCODING, "UTF-8");*/
+
+        /*options.setTransportIn(new TransportInDescription(Constants.TRANSPORT_LOCAL));
+        options.setTransportOut(new TransportOutDescription(Constants.TRANSPORT_LOCAL));*/
         client.setOptions(options);
 
+      
         if(messageID!=null && messageID.equals("")==false)
             options.setMessageId(messageID);
 
@@ -183,6 +219,7 @@ public class AxisSOAPClient {
         {
             inputMsg=(OMElement)XMLUtils.toOM(inStream);
             result = client.sendReceive(inputMsg);
+
         }
         catch(Exception ecc)
         {

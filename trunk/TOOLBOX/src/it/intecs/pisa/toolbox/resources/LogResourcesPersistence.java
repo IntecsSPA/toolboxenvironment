@@ -17,7 +17,10 @@
 
 package it.intecs.pisa.toolbox.resources;
 
+import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.configuration.ToolboxConfiguration;
+import it.intecs.pisa.toolbox.service.ServiceManager;
+import it.intecs.pisa.toolbox.service.TBXService;
 import it.intecs.pisa.util.IOUtil;
 import it.intecs.pisa.toolbox.util.ToolboxRollingFileAppender;
 import java.io.File;
@@ -25,6 +28,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
 import java.io.FileFilter;
+import org.apache.log4j.Level;
 
 /**
  *
@@ -153,6 +157,7 @@ public class LogResourcesPersistence {
             rollingAppender.setMaxFileSize(Integer.toString(inKbFileSize));
             rollingAppender.setMaxBackupIndex(MAX_BACKUP_INDEX);
             logger.addAppender(rollingAppender);
+            logger.setLevel(Level.toLevel(tbxConfig.getConfigurationValue(ToolboxConfiguration.LOG_LEVEL)));
             rollingAppender.activateOptions();
         }
         catch(Exception e)
@@ -165,14 +170,43 @@ public class LogResourcesPersistence {
 
     public void deleteLog(String service) throws Exception {
         File logDir;
-
+        ToolboxConfiguration tbxConfig;
+        Logger logger=null;
+        ServiceManager serviceManager=null;
+        TBXService tbxService=null;
         try
         {
-
+            tbxConfig=ToolboxConfiguration.getInstance();
+            Toolbox toolbox= Toolbox.getInstance();
             logDir=new File(storeDirectory,service);
             IOUtil.rmdir(logDir);
-
             logDir.mkdirs();
+
+            serviceManager=ServiceManager.getInstance();
+            tbxService=serviceManager.getService(service);
+            logger=tbxService.getLogger();
+
+            logDir=new File(storeDirectory,service);
+            logDir.mkdirs();
+
+            File logFile = new File(logDir, service + ".log");
+            String logFileSize = tbxConfig.getConfigurationValue(ToolboxConfiguration.LOG_FILE_SIZE);
+            String logPattern=tbxConfig.getConfigurationValue(ToolboxConfiguration.LOG_PATTERN);
+            logger.removeAllAppenders();
+            int inKbFileSize=Integer.parseInt(logFileSize)*1024;
+
+            ToolboxRollingFileAppender rollingAppender = new ToolboxRollingFileAppender(new PatternLayout(logPattern), logFile.getAbsolutePath());
+            rollingAppender.setMaxFileSize(Integer.toString(inKbFileSize));
+            rollingAppender.setMaxBackupIndex(MAX_BACKUP_INDEX);
+            logger.addAppender(rollingAppender);
+            rollingAppender.activateOptions();
+
+           /* Logger newServicelogger=LogResourcesPersistence.getInstance().getRollingLogForService(service);
+
+            newServicelogger.setLevel(toolbox.getLogLevel());
+            newServicelogger.info("Service " + service + " cleared");
+            tbxService.setLogger(newServicelogger);*/
+
         }
         catch(Exception e)
         {
@@ -218,7 +252,33 @@ public class LogResourcesPersistence {
         try
         {
             logFile=new File(storeDirectory,"Toolbox.log");
-            logFile.delete();
+            logFile.delete();   
+            int i=1;
+            while(true){
+                logFile=new File(storeDirectory,"Toolbox.log."+i);
+                if(logFile.exists()){
+                    logFile.delete();
+                    i++;
+                }
+                else
+                  break;
+            }
+            Toolbox toolbox= Toolbox.getInstance();
+            ToolboxConfiguration tbxConfig=ToolboxConfiguration.getInstance();
+
+            Logger toolboxLogger=toolbox.getLogger();
+            toolboxLogger.removeAllAppenders();
+
+            logFile = new File(storeDirectory, "Toolbox.log");
+            String logFileSize = tbxConfig.getConfigurationValue(ToolboxConfiguration.LOG_FILE_SIZE);
+            String logPattern=tbxConfig.getConfigurationValue(ToolboxConfiguration.LOG_PATTERN);
+            int inKbFileSize = Integer.parseInt(logFileSize) * 1024;
+
+            ToolboxRollingFileAppender rollingAppender = new ToolboxRollingFileAppender(new PatternLayout(logPattern), logFile.getAbsolutePath());
+            rollingAppender.setMaxFileSize(Integer.toString(inKbFileSize));
+            rollingAppender.setMaxBackupIndex(MAX_BACKUP_INDEX);
+            toolboxLogger.addAppender(rollingAppender);
+            
         }
         catch(Exception e)
         {

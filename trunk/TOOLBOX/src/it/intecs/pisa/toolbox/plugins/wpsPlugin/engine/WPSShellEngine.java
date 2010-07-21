@@ -5,6 +5,7 @@ import it.intecs.pisa.common.tbx.Script;
 import it.intecs.pisa.toolbox.plugins.wpsPlugin.manager.WPSOperation;
 import it.intecs.pisa.toolbox.service.TBXAsynchronousOperation;
 import it.intecs.pisa.toolbox.service.TBXOperation;
+import it.intecs.pisa.toolbox.service.TBXScript;
 import it.intecs.pisa.toolbox.service.TBXSynchronousOperation;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.IOUtil;
@@ -37,12 +38,12 @@ public class WPSShellEngine implements WPSEngine{
     private static String EXECUTE_ASYNC_SHELL_ENGINE_SCRIPT_FOLDER_PATH="AdditionalResources/WPS/ExecuteRequestToolboxScript/Async/ShellEngine/";;
 
 
-    private static String EXECUTE_ENVIRONMENT_TXT_FILE_TOP ="AdditionalResources/WPS/XSL/Execute_ShellEnvironment_top.txt";
-    private static String EXECUTE_ENVIRONMENT_TXT_FILE_BOTTOM ="AdditionalResources/WPS/XSL/Execute_ShellEnvironment_bottom.txt";
-    private static String EXECUTE_ENVIRONMENT_XSL_FILE_PATH ="AdditionalResources/WPS/XSL/Execute_Shell_Enviorement.xsl";
+    /*private static String EXECUTE_ENVIRONMENT_TXT_FILE_TOP ="AdditionalResources/WPS/XSL/ShellEngine/Execute_ShellEnvironment_top.txt";
+    private static String EXECUTE_ENVIRONMENT_TXT_FILE_BOTTOM ="AdditionalResources/WPS/XSL/ShellEngine/Execute_ShellEnvironment_bottom.txt";
+    private static String EXECUTE_ENVIRONMENT_XSL_FILE_PATH ="AdditionalResources/WPS/XSL/ShellEngine/Execute_Shell_Enviorement.xsl";*/
 
-    private static String SHELL_TEMPLATE_XSLT_PATH="AdditionalResources/WPS/XSL/Create_ShellScript_Template.xsl";
-    private static String SHELL_OUTPUT_MANAGER_XLST_PATH="AdditionalResources/WPS/XSL/OutptManager_GrassScript.xsl";
+    private static String SHELL_TEMPLATE_XSLT_PATH="AdditionalResources/WPS/XSL/ShellEngine/Create_ShellScript_Template.xsl";
+    private static String SHELL_OUTPUT_MANAGER_XLST_PATH="AdditionalResources/WPS/XSL/ShellEngine/OutptManager_ShellScript.xsl";
 
     private InputStream shellStream=null;
     private DOMUtil domUtil=new DOMUtil();
@@ -54,34 +55,34 @@ public class WPSShellEngine implements WPSEngine{
         TBXSynchronousOperation operationShellDescr=WPSOperation.newWPSSyncOperation(processingName);
         FileInputStream topStream,bottomStream;
         SequenceInputStream seqStream;
-        Vector<InputStream> streams;
+        /*Vector<InputStream> streams;
         topStream=new FileInputStream(new File(newServicePath,EXECUTE_ENVIRONMENT_TXT_FILE_TOP));
         bottomStream=new FileInputStream(new File(newServicePath,EXECUTE_ENVIRONMENT_TXT_FILE_BOTTOM));
         streams=new Vector<InputStream>();
-        streams.add(topStream);
+        streams.add(topStream);*/
         File shellScriptFolder=new File(newServicePath,SHELL_SCRIPT_PATH);
         shellScriptFolder.mkdirs();
         IOUtil.copy(shellStream, new FileOutputStream(new File(shellScriptFolder,SHELL_SCRIPT_FILE_PREFIX+processingName+"_original.sh")));
-        streams.add(new FileInputStream(new File(shellScriptFolder,SHELL_SCRIPT_FILE_PREFIX+processingName+"_original.sh")));
-        /*String shellOutpManager=IOUtil.inputToString(new FileInputStream(new File(newServicePath,SHELL_SCRIPT_PATH+"/"+SHELL_SCRIPT_FILE_PREFIX+processingName+"_outputManager.tmp")));
+        /*streams.add(new FileInputStream(new File(shellScriptFolder,SHELL_SCRIPT_FILE_PREFIX+processingName+"_original.sh")));
+        String shellOutpManager=IOUtil.inputToString(new FileInputStream(new File(newServicePath,SHELL_SCRIPT_PATH+"/"+SHELL_SCRIPT_FILE_PREFIX+processingName+"_outputManager.tmp")));
         shellOutpManager=shellOutpManager.replaceAll("<", "&lt;");
         shellOutpManager=shellOutpManager.replaceAll(">", "&gt;");
         shellOutpManager=shellOutpManager.replaceAll("&", "&amp;");
-        streams.add(new ByteArrayInputStream(shellOutpManager.getBytes()));*/
+        streams.add(new ByteArrayInputStream(shellOutpManager.getBytes()));
         streams.add(bottomStream);
         
         seqStream=new SequenceInputStream(streams.elements());
         String shellScript=IOUtil.inputToString(seqStream);
         FileOutputStream shellScriptOutputStream=new FileOutputStream(new File(newServicePath,EXECUTE_ENVIRONMENT_XSL_FILE_PATH));
         shellScriptOutputStream.write(shellScript.getBytes());
-        shellScriptOutputStream.close();
+        shellScriptOutputStream.close();*/
 
         String shellOutpManager=IOUtil.loadString(new File(newServicePath,SHELL_SCRIPT_PATH+"/"+SHELL_SCRIPT_FILE_PREFIX+processingName+"_outputManager.tmp"));
         String shellProcessScript=IOUtil.inputToString(
                 new FileInputStream(new File(shellScriptFolder,
                 SHELL_SCRIPT_FILE_PREFIX+processingName+"_original.sh")))
                 +shellOutpManager;
-        shellScriptOutputStream=new FileOutputStream(new File(newServicePath,getScriptPathforProcessingName(processingName)));
+        FileOutputStream shellScriptOutputStream=new FileOutputStream(new File(newServicePath,getScriptPathforProcessingName(processingName)));
         shellScriptOutputStream.write(shellProcessScript.getBytes());
         shellScriptOutputStream.close();
         
@@ -97,42 +98,42 @@ public class WPSShellEngine implements WPSEngine{
        return operationEngineDescr;
     }
 
-    public Script[] getExecuteScriptDescriptorSync(File servicePath, String operationName) throws IOException, SAXException{
-     Script[] scripts=new Script[2];
-     scripts[0] = new Script();
+    public TBXScript[] getExecuteScriptDescriptorSync(File servicePath, String operationName) throws IOException, SAXException{
+     TBXScript[] scripts=new TBXScript[2];
+     scripts[0] = new TBXScript();
      scripts[0].setScriptDoc(domUtil.inputStreamToDocument(new FileInputStream(new File(servicePath, EXECUTE_TOOLBOX_SCRIPT_FOLDER_PATH+EXECUTE_SHELL_ENGINE_SCRIPT_FILE_NAME))));
      scripts[0].setPath(PATH_OPERATION+"/"+operationName + "/"+ FIRST_SCRIPT_FILE_NAME);
      scripts[0].setType(Script.SCRIPT_TYPE_FIRST_SCRIPT);
-     scripts[1] = new Script();
+     scripts[1] = new TBXScript();
      scripts[1].setScriptDoc(domUtil.inputStreamToDocument(new FileInputStream(new File(servicePath, EXECUTE_TOOLBOX_SCRIPT_FOLDER_PATH+EXECUTE_SHELL_ERROR_SCRIPT_FILE_NAME))));
      scripts[1].setPath(PATH_OPERATION+"/"+operationName + "/"+ GLOBAL_ERROR_SCRIPT_FILE_NAME);
      scripts[1].setType(Script.SCRIPT_TYPE_GLOBAL_ERROR);
      return scripts;
     }
 
-    public Script[] getExecuteScriptDescriptorAsync(File servicePath, String operationName) throws IOException, SAXException {
-      Script[] scripts=new Script[6];
-      scripts[0] = new Script();
+    public TBXScript[] getExecuteScriptDescriptorAsync(File servicePath, String operationName) throws IOException, SAXException {
+      TBXScript[] scripts=new TBXScript[6];
+      scripts[0] = new TBXScript();
       scripts[0].setScriptDoc(domUtil.inputStreamToDocument(new FileInputStream(new File(servicePath, EXECUTE_ASYNC_SHELL_ENGINE_SCRIPT_FOLDER_PATH+FIRST_SCRIPT_FILE_NAME))));
       scripts[0].setPath(PATH_OPERATION+"/"+operationName + "/"+FIRST_SCRIPT_FILE_NAME);
       scripts[0].setType(Script.SCRIPT_TYPE_FIRST_SCRIPT);
-      scripts[1] = new Script();
+      scripts[1] = new TBXScript();
       scripts[1].setScriptDoc(domUtil.inputStreamToDocument(new FileInputStream(new File(servicePath, EXECUTE_ASYNC_SHELL_ENGINE_SCRIPT_FOLDER_PATH+SECOND_SCRIPT_FILE_NAME))));
       scripts[1].setPath(PATH_OPERATION+"/"+operationName + "/"+SECOND_SCRIPT_FILE_NAME);
       scripts[1].setType(Script.SCRIPT_TYPE_SECOND_SCRIPT);
-      scripts[2] = new Script();
+      scripts[2] = new TBXScript();
       scripts[2].setScriptDoc(domUtil.inputStreamToDocument(new FileInputStream(new File(servicePath, EXECUTE_ASYNC_SHELL_ENGINE_SCRIPT_FOLDER_PATH+THIRD_SCRIPT_FILE_NAME))));
       scripts[2].setPath(PATH_OPERATION+"/"+operationName + "/"+THIRD_SCRIPT_FILE_NAME);
       scripts[2].setType(Script.SCRIPT_TYPE_THIRD_SCRIPT);
-      scripts[3] = new Script();
+      scripts[3] = new TBXScript();
       scripts[3].setScriptDoc(domUtil.inputStreamToDocument(new FileInputStream(new File(servicePath, EXECUTE_ASYNC_SHELL_ENGINE_SCRIPT_FOLDER_PATH+RESPONSE_BUILDER_SCRIPT_FILE_NAME))));
       scripts[3].setPath(PATH_OPERATION+"/"+operationName + "/"+RESPONSE_BUILDER_SCRIPT_FILE_NAME);
       scripts[3].setType(Script.SCRIPT_TYPE_RESPONSE_BUILDER);
-      scripts[4] = new Script();
+      scripts[4] = new TBXScript();
       scripts[4].setScriptDoc(domUtil.inputStreamToDocument(new FileInputStream(new File(servicePath, EXECUTE_ASYNC_SHELL_ENGINE_SCRIPT_FOLDER_PATH+RESPONSE_BUILDER_ERROR_SCRIPT_FILE_NAME))));
       scripts[4].setPath(PATH_OPERATION+"/"+operationName + "/"+RESPONSE_BUILDER_ERROR_SCRIPT_FILE_NAME);
       scripts[4].setType(Script.SCRIPT_TYPE_ERROR_ON_RESP_BUILDER);
-      scripts[5] = new Script();
+      scripts[5] = new TBXScript();
       scripts[5].setScriptDoc(domUtil.inputStreamToDocument(new FileInputStream(new File(servicePath, EXECUTE_ASYNC_SHELL_ENGINE_SCRIPT_FOLDER_PATH+GLOBAL_ERROR_SCRIPT_FILE_NAME))));
       scripts[5].setPath(PATH_OPERATION+"/"+operationName + "/"+GLOBAL_ERROR_SCRIPT_FILE_NAME);
       scripts[5].setType(Script.SCRIPT_TYPE_GLOBAL_ERROR);
@@ -147,34 +148,34 @@ public class WPSShellEngine implements WPSEngine{
         FileInputStream topStream,bottomStream;
         SequenceInputStream seqStream;
         shellStream=(InputStream) script;
-        Vector<InputStream> streams;
+        /*Vector<InputStream> streams;
         topStream=new FileInputStream(new File(newServicePath,EXECUTE_ENVIRONMENT_TXT_FILE_TOP));
         bottomStream=new FileInputStream(new File(newServicePath,EXECUTE_ENVIRONMENT_TXT_FILE_BOTTOM));
         streams=new Vector<InputStream>();
-        streams.add(topStream);
+        streams.add(topStream);*/
         File shellScriptFolder=new File(newServicePath,SHELL_SCRIPT_PATH);
         shellScriptFolder.mkdirs();
         IOUtil.copy(shellStream, new FileOutputStream(new File(shellScriptFolder,SHELL_SCRIPT_FILE_PREFIX+processingName+"_original.sh")));
-        streams.add(new FileInputStream(new File(shellScriptFolder,SHELL_SCRIPT_FILE_PREFIX+processingName+"_original.sh")));
+       // streams.add(new FileInputStream(new File(shellScriptFolder,SHELL_SCRIPT_FILE_PREFIX+processingName+"_original.sh")));
         /*String shellOutpManager=IOUtil.inputToString(new FileInputStream(new File(newServicePath,SHELL_SCRIPT_PATH+"/"+SHELL_SCRIPT_FILE_PREFIX+processingName+"_outputManager.tmp")));
         shellOutpManager=shellOutpManager.replaceAll("<", "&lt;");
         shellOutpManager=shellOutpManager.replaceAll(">", "&gt;");
         shellOutpManager=shellOutpManager.replaceAll("&", "&amp;");
-        streams.add(new ByteArrayInputStream(shellOutpManager.getBytes()));*/
+        streams.add(new ByteArrayInputStream(shellOutpManager.getBytes()));
         streams.add(bottomStream);
        
         seqStream=new SequenceInputStream(streams.elements());
         String shellScript=IOUtil.inputToString(seqStream);
         FileOutputStream shellScriptOutputStream=new FileOutputStream(new File(newServicePath,EXECUTE_ENVIRONMENT_XSL_FILE_PATH));
         shellScriptOutputStream.write(shellScript.getBytes());
-        shellScriptOutputStream.close();
+        shellScriptOutputStream.close();*/
 
         String shellOutpManager=IOUtil.loadString(new File(newServicePath,SHELL_SCRIPT_PATH+"/"+SHELL_SCRIPT_FILE_PREFIX+processingName+"_outputManager.tmp"));
         String shellProcessScript=IOUtil.inputToString(
                 new FileInputStream(new File(shellScriptFolder,
                 SHELL_SCRIPT_FILE_PREFIX+processingName+"_original.sh")))
                 +shellOutpManager;
-        shellScriptOutputStream=new FileOutputStream(new File(newServicePath,getScriptPathforProcessingName(processingName)));
+        FileOutputStream shellScriptOutputStream=new FileOutputStream(new File(newServicePath,getScriptPathforProcessingName(processingName)));
         shellScriptOutputStream.write(shellProcessScript.getBytes());
         shellScriptOutputStream.close();
     }

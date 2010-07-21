@@ -3,9 +3,7 @@
 	<!-- set global properties for this build -->
 	<property environment="env"/>
 	<property name="src" location="TOOLBOX/src"/>
-	<property name="src2" location="Common/src/"/>
-	<property name="src3" location="Utils/src/"/>
-	<property name="src4" location="PluginsCore/src/"/>
+
 	<property name="src5" location="ToolboxGisClient/src"/>
 	<property name="build" location="TOOLBOX/webapp"/>
         <property name="temp" location="temp"/>
@@ -19,6 +17,9 @@
 			<include name="*.jar"/>
 		</fileset>
 		<fileset dir="TOOLBOX/webapp/WEB-INF/lib/">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="TOOLBOX/webapp/WEB-INF/plugins/GISPlugin/libs/">
 			<include name="*.jar"/>
 		</fileset>
 	</path>
@@ -39,7 +40,7 @@
 
 	<target name="compileTBX" depends="init" description="compile the source ">
 		<mkdir dir="${temp}"/>
-		<javac srcdir="${src}:${src2}:${src3}:${src4}" destdir="${temp}" classpathref="build.classpath" nowarn="yes" target="1.5"/>
+		<javac srcdir="${src}" destdir="${temp}" classpathref="build.classpath" nowarn="yes" target="1.5"/>
 		<jar jarfile="TOOLBOX/webapp/WEB-INF/lib/toolbox.jar">
 			<fileset dir="${temp}">
 				
@@ -163,60 +164,16 @@
     
         <target name="svnDownloadTBX" depends="">
             <echo>Donwload packages from SVN</echo> 
-            
-            <mkdir dir="${basedir}/Common"/>
-           <exec executable="svn">
-                <arg value="export"/>
-                <arg value="-r"/>
-                <arg value="${revision}"/>
-                <arg value="${svnroot}/Common/src"/>
-                 <arg value="${basedir}/Common/src"/>
-            </exec>
-            
-            <mkdir dir="${basedir}/Utils"/>
-           <exec executable="svn">
-                <arg value="export"/>
-                <arg value="-r"/>
-                <arg value="${revision}"/>
-                <arg value="${svnroot}/Utils/src"/>
-                 <arg value="${basedir}/Utils/src"/>
-            </exec>
-            
             <mkdir dir="${basedir}/TOOLBOX"/>
            <exec executable="svn">
                 <arg value="export"/>
+		<arg value="--force"/>
                 <arg value="-r"/>
                 <arg value="${revision}"/>
-                <arg value="${svnroot}/TOOLBOX/webapp"/>
-                 <arg value="${basedir}/TOOLBOX/webapp"/>
+                <arg value="${svnroot}/TOOLBOX"/>
+                <arg value="${basedir}/TOOLBOX"/>
             </exec>
             
-           <exec executable="svn">
-                <arg value="export"/>
-                <arg value="-r"/>
-                <arg value="${revision}"/>
-                <arg value="${svnroot}/TOOLBOX/src"/>
-                 <arg value="${basedir}/TOOLBOX/src"/>
-            </exec>
-            
-            <exec executable="svn">
-                <arg value="export"/>
-                <arg value="-r"/>
-                <arg value="${revision}"/>
-                <arg value="${svnroot}/TOOLBOX/compile-only-libs"/>
-                 <arg value="${basedir}/TOOLBOX/compile-only-libs"/>
-            </exec>
-      
-        
-           <mkdir dir="${basedir}/PluginsCore"/>
-           <exec executable="svn">
-                <arg value="export"/>
-                <arg value="-r"/>
-                <arg value="${revision}"/>
-                <arg value="${svnroot}/Plugins/RE/PluginsCore/src"/>
-                 <arg value="${basedir}/PluginsCore/src"/>
-            </exec>
-
             <mkdir dir="${basedir}/TOOLBOX/webapp/Documentation"/>
 	    <exec executable="svn">
 		<arg value="export"/>

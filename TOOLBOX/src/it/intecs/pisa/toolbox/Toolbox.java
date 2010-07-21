@@ -783,7 +783,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         {
             requestURI=req.getRequestURI();
             
-            logger.info("Received request " + requestURI);
+            logger.debug("Received request " + requestURI);
 
 
             if(requestURI.startsWith("/TOOLBOX/rest"))
@@ -833,7 +833,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         
         requestURI=req.getRequestURI();
 
-        logger.info("Received request " + requestURI);
+        logger.debug("Received request " + requestURI);
 
         if (req.getParameter("password") != null) {
             doGet(req, resp);
@@ -1319,4 +1319,11 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             resp.sendError(resp.SC_BAD_REQUEST);
         }
     }
+
+    
+
+
 }
+
+
+

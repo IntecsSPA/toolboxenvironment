@@ -33,6 +33,7 @@ public class SoapCallTag extends NativeTagExecutor {
         soapParams= DOMUtil.getChildren(soapCall);
         url = new URL((String) this.executeChildTag((Element) soapParams.get(0)));
         messageID=evaluateAttribute(soapCall, "messageId");
+
         soapAction = (soapCall.hasAttribute(OPERATION) ? evaluateAttribute(soapCall,OPERATION) : "");
         
         el=(Element) soapParams.get(1);
@@ -66,7 +67,8 @@ public class SoapCallTag extends NativeTagExecutor {
             soapResponse=AxisSOAPClient.secureExchange(url,request.getDocumentElement(), headers, soapAction,messageID,evaluateAttribute(soapCall,SSL_CERTIFICATE_LOCATION));
            
         } else {
-            soapResponse=AxisSOAPClient.sendReceive(url, request.getDocumentElement() , headers,soapAction,messageID);
+              soapResponse=AxisSOAPClient.sendReceive(url, request.getDocumentElement() , headers,soapAction,messageID);
+              
         }
         }
         catch(Exception e)

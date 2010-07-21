@@ -56,8 +56,8 @@ public class Operation {
     protected Script[] scripts;
     protected String requestTimeout = "1h";
     protected String pollingRate = "5s";
-    protected String retryAttempts = "";
-    protected String retryRate = "";
+    protected String retryAttempts = null;
+    protected String retryRate = null;
     protected LifeCycle serviceLifeCycle = null;
     protected Interface parentInterf;
     protected String admittedHosts = "";

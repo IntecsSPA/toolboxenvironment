@@ -68,7 +68,7 @@ public class TBXSOAPInterface extends Interface{
         File schemaFile;
         File serviceRoot;
 
-        if(schemaRoot!=null && schemaRoot.equals("")==false)
+        if(schemaRoot!=null && schemaRoot.equals("")==false && isValidationActive())
         {
             serviceRoot=((TBXService)this.parentService).getServiceRoot();
             schemaFile=new File(serviceRoot,schemaDir);

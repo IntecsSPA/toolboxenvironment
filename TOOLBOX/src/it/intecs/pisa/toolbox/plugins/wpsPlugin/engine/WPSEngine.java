@@ -2,8 +2,8 @@
 package it.intecs.pisa.toolbox.plugins.wpsPlugin.engine;
 
 
-import it.intecs.pisa.common.tbx.Script;
 import it.intecs.pisa.toolbox.service.TBXAsynchronousOperation;
+import it.intecs.pisa.toolbox.service.TBXScript;
 import it.intecs.pisa.toolbox.service.TBXSynchronousOperation;
 import java.io.File;
 import java.io.IOException;
@@ -44,9 +44,9 @@ public interface WPSEngine {
 
   public TBXAsynchronousOperation createWPSAsyncOperation(File newServicePath, String processingName) throws Exception;
 
-  public Script[] getExecuteScriptDescriptorSync(File servicePath, String operationName) throws IOException, SAXException;
+  public TBXScript[] getExecuteScriptDescriptorSync(File servicePath, String operationName) throws IOException, SAXException;
 
-  public Script[] getExecuteScriptDescriptorAsync(File servicePath, String operationName) throws IOException, SAXException;
+  public TBXScript[] getExecuteScriptDescriptorAsync(File servicePath, String operationName) throws IOException, SAXException;
 
   public void setScriptEngine(Object script) throws Exception;
 

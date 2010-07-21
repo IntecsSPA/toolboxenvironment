@@ -1,7 +1,7 @@
 package it.intecs.pisa.toolbox.plugins.wpsPlugin.engine;
 
-import it.intecs.pisa.common.tbx.Script;
 import it.intecs.pisa.toolbox.service.TBXAsynchronousOperation;
+import it.intecs.pisa.toolbox.service.TBXScript;
 import it.intecs.pisa.toolbox.service.TBXSynchronousOperation;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.IOUtil;
@@ -40,11 +40,11 @@ public class WPSToolboxEngine implements WPSEngine{
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public Script[] getExecuteScriptDescriptorSync(File servicePath, String operationName) throws IOException, SAXException {
+    public TBXScript[] getExecuteScriptDescriptorSync(File servicePath, String operationName) throws IOException, SAXException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public Script[] getExecuteScriptDescriptorAsync(File servicePath, String operationName) throws IOException, SAXException {
+    public TBXScript[] getExecuteScriptDescriptorAsync(File servicePath, String operationName) throws IOException, SAXException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

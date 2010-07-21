@@ -1,80 +1,59 @@
 package it.intecs.pisa.toolbox.plugins.nativeTagPlugin;
 
-import it.intecs.pisa.pluginscore.toolbox.engine.interfaces.IEngine;
 import it.intecs.pisa.util.DOMUtil;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.io.StringWriter;
-import java.lang.Object;
-import java.net.URL;
 import java.util.Iterator;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import org.apache.commons.httpclient.HttpConnection;
+import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
+import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.HttpState;
+import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.NodeList;
 
 public class HttpTag extends NativeTagExecutor {
     // protected String tagName="Http";
-     
+
      public HttpTag()
      {
          tagName="Http";
      }
-     
+
     @Override
     public Object executeTag(org.w3c.dom.Element http) throws Exception {
        HttpMethod method;
-        Element parameter;
-        Document xmlResponse;
-        String stringResponse;
-        URL url;
+       int statusCode = 0;
         String urlStr;
-        String urlPath;
-        String host;
-        String queryStr="";
-        int port;
-        TransformerFactory tfactory=null; 
+
+        TransformerFactory tfactory=null;
         Transformer transformer=null;
         Iterator children = DOMUtil.getChildren(http).iterator();
         Element urlTag = DOMUtil.getChildByTagName(http, "url");
         urlStr = (String) this.executeChildTag(DOMUtil.getFirstChild(urlTag));
-        
-        if(urlStr.startsWith("http://"))
-        {
-            url=new URL(urlStr);
-            host=url.getHost();
-            port=url.getPort();
-            urlPath=url.getPath();
-            queryStr=url.getQuery();
-        }
-        else
-        {
-            host=engine.evaluateString(http.getAttribute(HOST),IEngine.EngineStringType.ATTRIBUTE);
-            port=Integer.parseInt(this.engine.evaluateString(http.getAttribute(PORT),IEngine.EngineStringType.ATTRIBUTE));
-            urlPath=urlStr;
-        }
-        
-        if(queryStr==null)
-                queryStr="";
 
+       // Create an instance of HttpClient.
+       HttpClient client = new HttpClient();
 
-        if (http.getAttribute(METHOD).equals(POST)) {
-            PostMethod pMethod = (PostMethod) (method = new PostMethod(urlPath));
+       
 
-            Element bodyTag;
+       if (http.getAttribute(METHOD).equals(POST)) {
 
-            bodyTag = DOMUtil.getChildByTagName(http, "body");
-            String content=null;
-            if (bodyTag != null) {
+          method = new PostMethod(urlStr);
+          Element bodyTag;
+          Element headerTag;
+
+          bodyTag = DOMUtil.getChildByTagName(http, "body");
+          headerTag = DOMUtil.getChildByTagName(http, "headers");
+          String content=null;
+          if (bodyTag != null) {
                 Object obj= executeChildTag(DOMUtil.getFirstChild(bodyTag));
                 if(obj instanceof String)
                    content = (String) executeChildTag(DOMUtil.getFirstChild(bodyTag));
@@ -86,84 +65,42 @@ public class HttpTag extends NativeTagExecutor {
                          transformer.transform(new DOMSource((Document)obj),new StreamResult(writer));
                          content=writer.toString();
                      }
-                       
-                }   
-               
-                pMethod.setRequestBody(content);
-                   
-               
-            } else {
-                while (children.hasNext()) {
-                    parameter = (Element) children.next();
-                    if(parameter.getNodeName().contains("parameter"))
-                    {
-                    pMethod.addParameter(parameter.getAttribute(NAME),
-                            (String) executeChildTag(DOMUtil.getFirstChild(parameter)));
+
+                }
+                if (headerTag != null) {
+                    NodeList headers=headerTag.getElementsByTagName("header");
+                    NamedNodeMap attributes;
+                    for(int i=0;i<headers.getLength(); i++){
+                        attributes=headers.item(i).getAttributes();
+                        method.setRequestHeader(attributes.getNamedItem("key").getNodeValue(), attributes.getNamedItem("value").getNodeValue());
                     }
                 }
-            }
+                ((PostMethod)method).setRequestBody(content);
 
-
-        } else {
-            GetMethod gMethod = (GetMethod) (method = new GetMethod(urlPath));
-           
-            while (children.hasNext()) {
-                parameter = (Element) children.next();
-                  if(parameter.getNodeName().contains("parameter")){
-                      if(queryStr.equals("")==false && queryStr.endsWith("&")==false)
-                          queryStr+="&";
-                      
-                    queryStr+=engine.evaluateString(parameter.getAttribute(NAME),IEngine.EngineStringType.ATTRIBUTE);
-                    queryStr+="=";
-                    queryStr+= (String) executeChildTag(DOMUtil.getFirstChild(parameter));
-                  }
-            }
-            gMethod.setQueryString(queryStr);
         }
+       
+       }else{
+           // Create a method instance.
+           method = new GetMethod(urlStr);
 
-        HttpConnection conn = new HttpConnection(host, port);
+           // Provide custom retry handler is necessary
+           method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
+                    new DefaultHttpMethodRetryHandler(3, false));
 
-        String proxyHost;
-        String proxyPort;
-        if ((proxyHost = System.getProperty("http.proxyHost")) != null &&
-                (proxyPort = System.getProperty("http.proxyPort")) != null) {
-            conn.setProxyHost(proxyHost);
-            conn.setProxyPort(Integer.parseInt(proxyPort));
-        }
+       }
 
-        method.execute(new HttpState(), conn);
+          // Execute the method.
+          statusCode = client.executeMethod(method);
+
+          if (statusCode != HttpStatus.SC_OK) {
+            System.err.println("Method failed: " + method.getStatusLine());
+          }
 
 
-        if (http.getAttribute(FILE_TYPE).equals(BINARY)) {
-            DataInputStream in = new DataInputStream(method.getResponseBodyAsStream());
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            byte[] buffer = new byte[1024];
-            int count;
-            for (count = in.read(buffer); count >= 0; count = in.read(buffer)) {
-                out.write(buffer, 0, count);
-                out.flush();
-            }
-            return out.toByteArray();
-        }
-
-        Reader in = new InputStreamReader(method.getResponseBodyAsStream());
-        StringBuffer out = new StringBuffer();
-        char[] buffer = new char[1024];
-        int count;
-        for (count = in.read(buffer); count >= 0; count = in.read(buffer)) {
-            out.append(buffer, 0, count);
-        }
-
-        if (http.getAttribute(FILE_TYPE).equals(XML)) {
-            xmlResponse=new DOMUtil().stringToDocument(out.toString());
-            dumpResourceAndAddToDebugTree(xmlResponse);
-            return xmlResponse;
-        } else {
-            stringResponse=out.toString();
-            dumpResourceAndAddToDebugTree(stringResponse);
-            return stringResponse;
-        }
+       // Read the response body.
+       byte[] responseBody = method.getResponseBody();
+       return responseBody;
     }
-    
- 
 }
+            
+    

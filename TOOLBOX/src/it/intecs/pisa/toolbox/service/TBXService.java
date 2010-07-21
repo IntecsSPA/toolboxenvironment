@@ -348,7 +348,6 @@ public class TBXService extends Service {
         }
 
         initialized=true;
-        
         logger.info("Started timer manager");
     }
 
@@ -1194,6 +1193,11 @@ public class TBXService extends Service {
 
     public boolean isInitialized() {
         return initialized;
+    }
+
+    public void setLogerr(Logger newServiceLogger){
+
+        this.logger=newServiceLogger;
     }
     
 }

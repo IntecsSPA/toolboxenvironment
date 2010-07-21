@@ -20,6 +20,17 @@ public class XmlTag extends NativeTagExecutor{
      * The Constant TEXT_TAG.
      */
     private static final String TEXT_TAG = "textTag";
+
+    /**
+     * The Constant NODE_TAG.
+     */
+    private static final String NODE_TAG = "nodeTag";
+
+
+    /**
+     * The Constant DOCUMENT_TAG.
+     */
+    private static final String DOCUMENT_TAG = "documentTag";
     
       
     /**
@@ -47,7 +58,9 @@ public class XmlTag extends NativeTagExecutor{
                 newDocument();
         document.appendChild(processXML(document, DOMUtil.getFirstChild(tagEl),
                 tagEl.getAttribute(ATTRIBUTE_PREFIX),
-                tagEl.getAttribute(TEXT_TAG)));
+                tagEl.getAttribute(TEXT_TAG),
+                tagEl.getAttribute(NODE_TAG),
+                tagEl.getAttribute(DOCUMENT_TAG)));
  
         dumpResourceAndAddToDebugTree(document);
          return document;
@@ -60,11 +73,13 @@ public class XmlTag extends NativeTagExecutor{
      * @param attributePrefix the attribute prefix
      * @param document the document
      * @param textTag the text tag
+     * @param nodeTag the node tag
+     * @param documentTag the node tag
      *
      * @return the element
      */
     private Element processXML(Document document, Element element,
-            String attributePrefix, String textTag) {
+            String attributePrefix, String textTag, String nodeTag, String documentTag) {
 //        Element newElement = document.createElement(element.getTagName());
         /*the previous line has been replaced by the following one in order to make the getXmlGetResponse work (namespace of the root element)*/
         Element newElement = document.createElementNS(element.getNamespaceURI(),
@@ -84,6 +99,7 @@ public class XmlTag extends NativeTagExecutor{
         }
         NodeList children = element.getChildNodes();
         Node child;
+        Node newNode;
         short childNodeType;
         Element childElement;
         
@@ -95,10 +111,23 @@ public class XmlTag extends NativeTagExecutor{
                 if (childElement.getTagName().equals(textTag)) {
                     newElement.appendChild(document.createTextNode(engine.getVariablesStore().getVariable(
                             childElement.getAttribute(NAME)).toString()));
-                } else {
-                    newElement.appendChild(processXML(document, childElement,
-                            attributePrefix, textTag));
-                }
+                }else
+                   if(childElement.getTagName().equals(nodeTag)) {
+                     newNode=document.adoptNode((Element)engine.getVariablesStore().getVariable(
+                            childElement.getAttribute(NAME)));
+                     newElement.appendChild(newNode);
+
+                   }else
+                    if(childElement.getTagName().equals(documentTag)) {
+                      newNode=document.adoptNode(((Document)engine.getVariablesStore().getVariable(
+                            childElement.getAttribute(NAME))).getDocumentElement());
+                      newElement.appendChild(newNode);
+
+                    }
+                    else {
+                         newElement.appendChild(processXML(document, childElement,
+                            attributePrefix, textTag, nodeTag, documentTag));
+                    }
             } else if (childNodeType == Node.TEXT_NODE &&
                     Pattern.matches("^\n\\s*", child.getNodeValue())) {
                 continue;

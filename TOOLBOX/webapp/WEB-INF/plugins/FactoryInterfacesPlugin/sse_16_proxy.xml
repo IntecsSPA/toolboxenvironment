@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface name="SSE" version="1.6" type="Ordering" mode="Proxy">
 		<rootSchemaFile>SSE_main_template.xsd</rootSchemaFile>
-		<schemaSetLocation>schemas\SSE_16</schemaSetLocation>
-		<wsdlFile>wsdl\SSE_16.wsdl</wsdlFile>
+		<schemaSetLocation>schemas/SSE_16</schemaSetLocation>
+		<wsdlFile>wsdl/SSE_16.wsdl</wsdlFile>
 		<targetNameSpace>http://www.mycompanyname.com/ws/mynamespace</targetNameSpace>
 		<operations>
 			<operation SOAPAction="processRFQ" name="processRFQ" type="synchronous">

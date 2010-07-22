@@ -9,6 +9,8 @@ import net.sf.saxon.om.NodeInfo;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class XPathTag extends NativeTagExecutor {
     @Override
@@ -45,10 +47,10 @@ public class XPathTag extends NativeTagExecutor {
        
         
         if(outputType.equals("xml")) {
-           List matchedNodes=(List) saxonDoc.evaluatePath(xPathString, XPathConstants.NODESET);
+           NodeList matchedNodes=(NodeList) saxonDoc.evaluatePath(xPathString, XPathConstants.NODESET);
            if (matchedNodes != null){
 
-               firstEl=(Element)matchedNodes.get(0);
+               firstEl=(Element)matchedNodes.item(0);
                if(firstEl == null)
                 return null;
                 else{
@@ -63,15 +65,15 @@ public class XPathTag extends NativeTagExecutor {
         }
         else if(outputType.equals("array"))
         {
-         List matchedNodes=(List) saxonDoc.evaluatePath(xPathString, XPathConstants.NODESET);
+         NodeList matchedNodes=(NodeList) saxonDoc.evaluatePath(xPathString, XPathConstants.NODESET);
          //returning a string array.. shall be checked if strings are selected by xpath
          int resultCount;
          
-         resultCount=matchedNodes.size();
+         resultCount=matchedNodes.getLength();
 
          outputAsStringArray=new String[resultCount];
          for(int i=0;i<resultCount;i++)
-            outputAsStringArray[i]=((NodeInfo)matchedNodes.get(i)).getStringValue();
+            outputAsStringArray[i]=matchedNodes.item(i).getTextContent();
 
          return outputAsStringArray;
         }

@@ -235,6 +235,46 @@ function createServiceInterface(){
    var header;
    if(createServiceWin == null){
 
+        createServiceWin = new WebGIS.Panel.WindowInterfacePanel({
+                        title: 'Create new Toolbox Service',
+                        id: 'createNewServiceWin',
+                        border: false,
+                        animCollapse : true,
+                        maximizable : true,
+                       // autoScroll : true,
+                        resizable : false,
+                        collapsible: true,
+                        layout: 'fit',
+                        loadingBarImg: "images/loader1.gif",
+                        loadingBarImgPadding: 60,
+                        loadingMessage: "Loading... Please Wait...",
+                        loadingMessagePadding: 30,
+                        loadingMessageColor: "black",
+                        loadingPanelColor: "#d9dce0",
+                        loadingPanelDuration: 1000,
+                        listeners:{
+                          hide: function(){
+                             // alert("close");
+                              spot.hide();
+                          },
+                          collapse: function(){
+                              spot.hide();
+                          },
+                          expand: function(){
+                              spot.show('createServiceWin');
+                          }
+                        },
+
+                        width: screen.width/2.1,
+                        height: screen.height/2.1,
+                        closeAction:'hide',
+                        html: "<div id='newServiceAggordionInterface'>"
+                        //items:[accordionCreateServicePanel]
+			});
+        createServiceWin.show();
+        createServiceWin.insertLoadingPanel();
+
+
         for(i=0; i<servicesXMLInterface.length;i++){
            servicesInterfaces.push(createPanelExjFormByXml(servicesXMLInterface[i].xmlUrl));
            header=document.getElementById("body");
@@ -281,44 +321,9 @@ function createServiceInterface(){
 
 
 
-       createServiceWin = new WebGIS.Panel.WindowInterfacePanel({
-                        title: 'Create new Toolbox Service',
-                        id: 'createNewServiceWin',
-                        border: false,
-                        animCollapse : true,
-                        maximizable : true,
-                       // autoScroll : true,
-                        resizable : false,
-                        collapsible: true,
-                        layout: 'fit',
-                        loadingBarImg: "images/loader1.gif",
-                        loadingBarImgPadding: 60,
-                        loadingMessage: "Loading... Please Wait...",
-                        loadingMessagePadding: 30,
-                        loadingMessageColor: "black",
-                        loadingPanelColor: "#d9dce0",
-                        loadingPanelDuration: 1000,
-                        listeners:{
-                          hide: function(){
-                             // alert("close");
-                              spot.hide();
-                          },
-                          collapse: function(){
-                              spot.hide();
-                          },
-                          expand: function(){
-                              spot.show('createServiceWin');
-                          }
-                        },
+       
 
-                        width: screen.width/2.1,
-                        height: screen.height/2.1,
-                        closeAction:'hide',
-                        items:[accordionCreateServicePanel]
-			});
-       createServiceWin.show();
-       createServiceWin.insertLoadingPanel();
-
+         accordionCreateServicePanel.render(document.getElementById("newServiceAggordionInterface"));
         for(i=0; i<servicesXMLInterface.length;i++){
             accordionCreateServicePanel.layout.setActiveItem(i);
             servicesInterfaces[i].formsPanel.render(document.getElementById(servicesXMLInterface[i].name+"ServiceInterface"));
@@ -467,7 +472,7 @@ function createServiceRequest(){
 function createToolboxService(formCrateService){
     var xmlRequest=formCrateService.getXmlKeyValueDocument('String', false);
 
-    alert(xmlRequest);
+    //alert(xmlRequest);
     var serviceCreateControl=function(response){
              if(!response){
                      Ext.Msg.show({
@@ -478,13 +483,15 @@ function createToolboxService(formCrateService){
                          icon: Ext.MessageBox.ERROR
                       });
                }else{
+                var responseDocument= Sarissa.getDomDocument();
+                responseDocument=(new DOMParser()).parseFromString(response, "text/xml");
+                responseDocument.setProperty("SelectionLanguage", "XPath");
 
-                alert(response);
+                responseDocument=new XmlDoc(responseDocument);
 
-
-
+                var newServiceName=responseDocument.selectNodes("response/serviceName")[0].childNodes[0].nodeValue;
+                window.location="configureService.jsp?serviceName="+newServiceName+"&info=servicecreated";
                }
-                 //window.location="configureService.jsp?serviceName="+newServiceName;
 
            };
                  var serviceCreateControlTimeOut=function(){

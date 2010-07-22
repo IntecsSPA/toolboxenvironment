@@ -12,6 +12,7 @@
 <%
 String serviceName = (request.getParameter("serviceName") == null ? "": request.getParameter("serviceName"));
 String error = (request.getParameter("error") == null ? "": request.getParameter("error"));
+String info = (request.getParameter("info") == null ? "": request.getParameter("info"));
 String servicesManagement = "servicesManagement.jsp" +(serviceName == "" ? "" :"?serviceName=") + serviceName;
 String monitoringCenter = "monitoringCenter.jsp" +(serviceName == "" ? "" :"?serviceName=") + serviceName;
 String downloadVersion = ""; 
@@ -89,9 +90,16 @@ String extImport = (extVers.equalsIgnoreCase("2.0.1") ? extImport2 : extImport3)
 
     <% } %>
 
+    var info="";
+    <% if(!info.equalsIgnoreCase("")){%>
+         info= "<%=info%>";
+
+    <% } %>
+
 
         function init(){
-            if(error==""){
+            if(error=="" && info==""){
+
                 <% if(loadPanel) {%>
                   var firebugWarning = function () {
                 <% } %>
@@ -123,7 +131,10 @@ String extImport = (extVers.equalsIgnoreCase("2.0.1") ? extImport2 : extImport3)
                             hideMask.defer(<%=loadDefer%>);
                 <% } %>
            }else
-             printError(error);
+             if(error!="")
+                printError(error);
+             else
+                printInfo (info);
 
         }
 </script>

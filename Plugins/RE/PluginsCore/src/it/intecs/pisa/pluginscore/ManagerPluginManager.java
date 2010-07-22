@@ -4,8 +4,10 @@
  */
 package it.intecs.pisa.pluginscore;
 
+import it.intecs.pisa.toolbox.Toolbox;
 import java.io.File;
 import java.util.StringTokenizer;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Element;
 
 /**
@@ -83,7 +85,11 @@ public class ManagerPluginManager extends ToolboxPluginManager {
             commandPlugin.setPluginDirectory(new File(path));
             return commandPlugin;
         } catch (Exception e) {
-            e.printStackTrace();
+            Toolbox tbx=Toolbox.getInstance();
+            Logger logger=tbx.getLogger();
+
+            logger.error("Cannot find proper class for manager command "+cmd);
+
             return null;
         }
     }
@@ -92,7 +98,10 @@ public class ManagerPluginManager extends ToolboxPluginManager {
 
     @Override
     protected boolean isTagHandled(String tagname) {
-        return tagname.equals(EXTENSION_TYPE_METHOD_GET) || tagname.equals(EXTENSION_TYPE_METHOD_POST) || tagname.equals(EXTENSION_TYPE_METHOD_REST_GET);
+        return tagname.equals(EXTENSION_TYPE_METHOD_GET)
+                || tagname.equals(EXTENSION_TYPE_METHOD_POST)
+                || tagname.equals(EXTENSION_TYPE_METHOD_REST_GET)
+                || tagname.equals(EXTENSION_TYPE_METHOD_REST_POST);
     }
 
     public static ManagerPluginManager getInstance() {

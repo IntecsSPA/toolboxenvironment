@@ -636,4 +636,8 @@ public class Interface {
     public void setValidationActive(boolean validationActive) {
         this.validationActive = validationActive;
     }
+
+    public void removeAllOperations() {
+        operations = new Operation[0];
+    }
 }

@@ -111,7 +111,9 @@ public class CreateServiceCommand extends RESTManagerCommandPlugin{
                                                                     serviceInfo.get("interfaceMode"));
 
             opInterface=(Interface) interf.clone();
+            opInterface.removeAllOperations();
             descr.setImplementedInterface(opInterface);
+            descr.adjustReferences();
 
             schemaDir = interfman.getSchemaDirForInterface(serviceInfo.get("interfaceName"),
                                                                     serviceInfo.get("interfaceVersion"),

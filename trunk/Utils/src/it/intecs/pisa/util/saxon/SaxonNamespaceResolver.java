@@ -19,7 +19,7 @@ public class SaxonNamespaceResolver implements NamespaceContext{
     private Map<String, String> prefixToURInamespaces;
     private Map<String, Set> uriToPrefixnamespaces;
 
-    SaxonNamespaceResolver(){
+    public SaxonNamespaceResolver(){
 
         this.prefixToURInamespaces=new HashMap<String, String>();
         this.uriToPrefixnamespaces=new HashMap<String, Set>();

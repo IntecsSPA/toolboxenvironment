@@ -50,6 +50,7 @@ public class CreateOperationFromInterfaceCommand extends NativeCommandsManagerPl
             operation =getOperationToAdd(mimeparts);
 
             service.addOperation(operation);
+            operation.dumpOperationScripts();
             service.dumpService();
 
             redirectUrl = "configureOperation.jsp?serviceName=" + serviceName + "&operationName=" + operationName;
@@ -111,8 +112,7 @@ public class CreateOperationFromInterfaceCommand extends NativeCommandsManagerPl
         repoRoot=interfman.getInterfaceDescriptionPluginDirectory(interfaceName, interfaceVersion, interfaceType, interfaceMode);
         loadScripts(operationDescr,repoRoot);
         setUserDefinedScripts(mimeparts,operationDescr,serviceRoot);
-        operationDescr.dumpOperationScripts();
-
+        
         return (TBXOperation) operationDescr;
     }
 

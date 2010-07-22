@@ -1,13 +1,10 @@
 package it.intecs.pisa.toolbox.plugins.nativeTagPlugin;
 
 import it.intecs.pisa.util.DOMUtil;
-import it.intecs.pisa.util.saxon.SaxonDocument;
 import java.util.Iterator;
-import java.util.List;
-import javax.xml.xpath.XPathConstants;
+import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 
 public class SetXMLValueTag extends NativeTagExecutor {
     protected String tagName="setXMLValue";
@@ -20,7 +17,7 @@ public class SetXMLValueTag extends NativeTagExecutor {
         Element selectedNode;
 
 
-        /*if (setXMLValue.getAttributes().getLength() > 0) {
+        if (setXMLValue.getAttributes().getLength() > 0) {
             selectedNode=(Element) XPathAPI.selectSingleNode(document,
                     (String) executeChildTag((Element) children.next()),
                     setXMLValue);
@@ -28,7 +25,9 @@ public class SetXMLValueTag extends NativeTagExecutor {
             selectedNode=(Element) XPathAPI.selectSingleNode(document,
                     (String) executeChildTag((Element) children.next()),
                     document.getDocumentElement());
-        }*/
+        }
+
+        /*
         Element xPathDocElement=setXMLValue.getOwnerDocument().getDocumentElement();
         Element namespaceElements []= {xPathDocElement,setXMLValue};
         String attrSplit[];
@@ -47,9 +46,9 @@ public class SetXMLValueTag extends NativeTagExecutor {
           }
         }
 
-        List matchedNodes=(List) saxonDoc.evaluatePath((String) executeChildTag((Element) children.next()), XPathConstants.NODESET);
+        selectedNode=(Node) saxonDoc.evaluatePath((String) executeChildTag((Element) children.next()), XPathConstants.NODE);
         selectedNode=(Element)matchedNodes.get(0);
-
+*/
         Object objToAdd;
 
         objToAdd=executeChildTag((Element) children.next());

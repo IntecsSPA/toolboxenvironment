@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface name="Eoli_Order" version="3.4" type="Ordering" mode="Standard">
 		<rootSchemaFile>SSE_main_template.xsd</rootSchemaFile>
-		<schemaSetLocation>schemas\EOLI_ORDER_34</schemaSetLocation>
-		<wsdlFile>wsdl\Eoli_Order_34.wsdl</wsdlFile>
+		<schemaSetLocation>schemas/EOLI_ORDER_34</schemaSetLocation>
+		<wsdlFile>wsdl/Eoli_Order_34.wsdl</wsdlFile>
 		<targetNameSpace>http://earth.esa.int/XML/eoli</targetNameSpace>
 		<operations>
 			<operation SOAPAction="http://earth.esa.int/SOAP/eoaDataAccessRequest" name="processEoaDataAccessRequest" type="synchronous">

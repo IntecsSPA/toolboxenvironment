@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.net.URL;
 import javax.xml.namespace.QName;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.sax.SAXSource;
 import net.sf.saxon.xpath.XPathFactoryImpl;
 import javax.xml.xpath.*;
@@ -21,6 +22,7 @@ import net.sf.saxon.xpath.XPathEvaluator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -77,10 +79,12 @@ public class SaxonDocument {
     }
 
 
-   public Object evaluatePath(String xpath, QName nameType) throws XPathFactoryConfigurationException, XPathException, XPathExpressionException {
+   public Object evaluatePath(String xpath, QName nameType) throws XPathFactoryConfigurationException, XPathException, XPathExpressionException, IOException, SAXException {
         XPath xpe = xpf.newXPath();
         xpe.setNamespaceContext(this.namespaceResolver);
-        NodeInfo doc = ((XPathEvaluator)xpe).setSource(this.getSAXSource());
+        //NodeInfo doc = ((XPathEvaluator)xpe).setSource(this.getSAXSource());
+        DOMUtil du= new DOMUtil();
+        Document doc=du.stringToDocument(this.stringDoc);
         XPathExpression xPathExp =xpe.compile(xpath);
         return xPathExp.evaluate(doc, nameType);
     }
@@ -96,6 +100,13 @@ public class SaxonDocument {
     private SAXSource getSAXSource() {
        // System.out.println("this.stringDoc: " + this.stringDoc);
         return(new SAXSource(new InputSource(new StringReader(this.stringDoc))));
+    }
+
+    private DOMSource getDOMSource() throws IOException, SAXException {
+       // System.out.println("this.stringDoc: " + this.stringDoc);
+        DOMUtil du= new DOMUtil();
+        Node n=du.stringToDocument(this.stringDoc);
+        return(new DOMSource(n));
     }
 
     /**

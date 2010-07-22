@@ -12,11 +12,14 @@ var servicesXMLInterface= new Array();
 //var createWPSXML="jsScripts/wpsWizard/resources/xml/createWPSServicePanel.xml";
 //var createToolboxServiceXML="jsScripts/servicesManagement/resources/xml/createToolboxServicePanel.xml";
 servicesXMLInterface.push({xmlUrl:"jsScripts/servicesManagement/resources/xml/createOrderingServicePanel.xml",
-                           icon:"images/order_blk.png", title:"Create Ordering Service", name:"orderingService"});
+                           icon:"images/order_blk.png", title:"Create Ordering Service", name:"orderingService",
+                            actionMethod: "createToolboxService(this)"});
 servicesXMLInterface.push({xmlUrl:"jsScripts/servicesManagement/resources/xml/createCatalogueServicePanel.xml",
-                            icon:"images/catalogue_blk.png", title:"Create Catalogue Service", name:"catalogueService"});
+                            icon:"images/catalogue_blk.png", title:"Create Catalogue Service", name:"catalogueService",
+                            actionMethod: "createToolboxService(this)"});
 servicesXMLInterface.push({xmlUrl:"jsScripts/servicesManagement/resources/xml/createArchivingServicePanel.xml",
-                        icon:"images/archiving_blk.png", title:"Create Archiving Service", name:"archivingService"});
+                        icon:"images/archiving_blk.png", title:"Create Archiving Service", name:"archivingService",
+                            actionMethod: "createToolboxService(this)"});
 servicesXMLInterface.push({xmlUrl:"jsScripts/wpsWizard/resources/xml/createWPSServicePanel.xml",
                             icon:"images/wps_blk.png", title:"Create Web Processing Service (WPS)", name:"wpsService",
                             actionMethod: "createWPSRequest(this)"});
@@ -446,7 +449,7 @@ function createServiceRequest(){
 
         var interfaceActionMethod=servicesXMLInterface[i].actionMethod;
         interfaceActionMethod=replaceAll(interfaceActionMethod, "this", "servicesInterfaces[i]");
-        alert(interfaceActionMethod);
+        
         eval(interfaceActionMethod);
         /*var xmlRequest=servicesInterfaces[i].getXmlKeyValueDocument("String",false);
         alert(xmlRequest);
@@ -464,6 +467,7 @@ function createServiceRequest(){
 function createToolboxService(formCrateService){
     var xmlRequest=formCrateService.getXmlKeyValueDocument('String', false);
 
+    alert(xmlRequest);
     var serviceCreateControl=function(response){
              if(!response){
                      Ext.Msg.show({
@@ -495,7 +499,7 @@ function createToolboxService(formCrateService){
 
                  var globalControl=true;
                  var onSubmit=sendXmlHttpRequestTimeOut("POST",
-                             "/rest/gui/createService.xml",
+                             "rest/gui/createService.xml",
                              true, xmlRequest, 800000, serviceCreateControl, serviceCreateControlTimeOut,null);
 }
 

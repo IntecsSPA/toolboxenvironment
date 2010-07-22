@@ -498,7 +498,7 @@ function createToolboxService(formCrateService){
                  };
 
                  var globalControl=true;
-                 var onSubmit=sendXmlHttpRequestTimeOut("POST",
+                 var onSubmit=sendXmlHttpRequestTimeOut("PUT",
                              "rest/gui/createService.xml",
                              true, xmlRequest, 800000, serviceCreateControl, serviceCreateControlTimeOut,null);
 }

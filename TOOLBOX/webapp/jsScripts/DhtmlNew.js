@@ -520,3 +520,16 @@ function printError (errorType){
     }
 }
 
+
+function printInfo (infoType){
+    if(infoType == 'servicecreated'){
+         Ext.Msg.show({
+            title:'New service creation: Completed',
+            buttons: Ext.Msg.OK,
+            msg: 'The new service \"'+currentService+'\" was created. <br> Please complete the service configuration.',
+            animEl: 'elId',
+            icon: Ext.MessageBox.INFO
+     });
+    }
+}
+

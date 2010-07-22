@@ -128,7 +128,7 @@ function createWPSRequest(formCrateWpsService){
                                     icon: Ext.MessageBox.ERROR
                               });
                           }else
-                            window.location="configureService.jsp?serviceName="+newServiceName;
+                            window.location="configureService.jsp?serviceName="+newServiceName+"&info=servicecreated";;
 
                  };
                  var wpsServiceCreateControlTimeOut=function(){

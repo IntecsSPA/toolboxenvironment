@@ -20,10 +20,12 @@ public class ManagerPluginManager extends ToolboxPluginManager {
     public static final String EXTENSION_TYPE_METHOD_POST = "commandViaPost";
     public static final String EXTENSION_TYPE_METHOD_REST_GET = "restCommandViaGet";
     public static final String EXTENSION_TYPE_METHOD_REST_POST = "restCommandViaPost";
+    public static final String EXTENSION_TYPE_METHOD_REST_PUT = "restCommandViaPut";
     public static final String METHOD_GET = "GET";
     public static final String METHOD_POST = "POST";
     public static final String METHOD_REST_GET = "REST_GET";
     public static final String METHOD_REST_POST = "REST_POST";
+     public static final String METHOD_REST_PUT = "REST_PUT";
     protected String[][] commandClasses = new String[0][3];
     private static ManagerPluginManager manager = new ManagerPluginManager();
 
@@ -57,6 +59,8 @@ public class ManagerPluginManager extends ToolboxPluginManager {
             newCommands[parsedInterfaces][2] = METHOD_REST_GET;
         }else if(tagName.equals(EXTENSION_TYPE_METHOD_REST_POST)) {
             newCommands[parsedInterfaces][2] = METHOD_REST_POST;
+        }else if(tagName.equals(EXTENSION_TYPE_METHOD_REST_PUT)) {
+            newCommands[parsedInterfaces][2] = METHOD_REST_PUT;
         }
             
         commandClasses = newCommands;
@@ -101,7 +105,8 @@ public class ManagerPluginManager extends ToolboxPluginManager {
         return tagname.equals(EXTENSION_TYPE_METHOD_GET)
                 || tagname.equals(EXTENSION_TYPE_METHOD_POST)
                 || tagname.equals(EXTENSION_TYPE_METHOD_REST_GET)
-                || tagname.equals(EXTENSION_TYPE_METHOD_REST_POST);
+                || tagname.equals(EXTENSION_TYPE_METHOD_REST_POST)
+                || tagname.equals(EXTENSION_TYPE_METHOD_REST_PUT);
     }
 
     public static ManagerPluginManager getInstance() {

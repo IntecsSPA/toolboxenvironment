@@ -241,7 +241,7 @@ function createServiceInterface(){
                         border: false,
                         animCollapse : true,
                         maximizable : true,
-                       // autoScroll : true,
+                        autoScroll : true,
                         resizable : false,
                         collapsible: true,
                         layout: 'fit',

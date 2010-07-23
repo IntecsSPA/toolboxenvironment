@@ -128,8 +128,8 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;&nbsp;" + serviceManag;
                 <SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT>
                 <SCRIPT>addHelp("RE/main.html_Run-time_environment*blankpage.html_tasks*RE/serviceManagement.html_Service_management*");</SCRIPT>
                 <DIV class="portletItem" id="01"> 
-                    <DIV> 
-                        <A href="<%= response.encodeURL("selectImportOrCreate.jsp") %>"><fmt:message key="servicesManagement.createNew" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
+                    <DIV> <!--%= response.encodeURL("selectImportOrCreate.jsp") %-->
+                       <A href=# onclick="javascript:createServiceInterface();"><fmt:message key="servicesManagement.createNew" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
                     </DIV> 
                     <P> <!--%= response.encodeURL("selectImportOrCreate.jsp") %-->
                         <!--A href=""><IMG class=labelHomePage title=create alt="Create a new service" src="images/createService.png" align=middle border=0></A-->

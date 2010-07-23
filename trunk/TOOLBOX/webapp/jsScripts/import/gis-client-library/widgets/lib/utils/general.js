@@ -80,7 +80,7 @@ function sendXmlHttpRequestTimeOut(requestMethod, requestUrl, requestAsync,
     }
 }
 
-function sendAuthenticateXmlHttpRequestTimeOut(requestMethod, requestUrl, requestAsync, 
+function sendAuthenticationXmlHttpRequestTimeOut(requestMethod, requestUrl, requestAsync,
                                                 requestBody, userName, password, timeOutRequest,
                                                 eventResponse, eventTimeOut, headers, loading, eventError){
     request=assignXMLHttpRequest();

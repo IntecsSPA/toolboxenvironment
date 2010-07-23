@@ -1315,9 +1315,16 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             else if (contentType!=null && contentType.equals("xml"))
             {
                 DOMUtil util;
-
-                util=new DOMUtil();
-                Document inputDoc=util.inputStreamToDocument(req.getInputStream());
+                Document inputDoc;
+                try
+                {
+                    util=new DOMUtil();
+                    inputDoc=util.inputStreamToDocument(req.getInputStream());
+                }
+                catch(Exception e)
+                {
+                    inputDoc=null;
+                }
                 Document respDoc=commandPlugin.executeCommand(formatLessCmd, inputDoc);
 
                 DOMUtil.dumpXML(respDoc, resp.getOutputStream(), false);

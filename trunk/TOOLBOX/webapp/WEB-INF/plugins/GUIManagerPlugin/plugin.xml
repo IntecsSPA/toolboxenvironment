@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin name="RESTManagerCommandsPlugin" version="1.0">
+<plugin name="GUIManagerPlugin" version="1.0">
     <restCommandViaGet cmd="/rest/gui/getJs/*" class="it.intecs.pisa.toolbox.plugins.gui.GetJsCommand"/>
     <restCommandViaGet cmd="/rest/gui/getDefinition/*" class="it.intecs.pisa.toolbox.plugins.gui.GetDefinitionCommand"/>
     <restCommandViaPut cmd="/rest/gui/createService" class="it.intecs.pisa.toolbox.plugins.gui.CreateServiceCommand"/>
-    <restCommandViaGet cmd="/rest/gui/creationWizardJs/*" class="it.intecs.pisa.toolbox.plugins.gui.CreationWizardJsCommand"/>
-    <restCommandViaGet cmd="/rest/gui/creationWizardTemplate/*" class="it.intecs.pisa.toolbox.plugins.gui.CreationWizardTemplateCommand"/>
+    <restCommandViaGet cmd="/rest/gui/creationWizard/*" class="it.intecs.pisa.toolbox.plugins.gui.CreationWizardCommand"/>
+    <restCommandViaGet cmd="/rest/gui/creationWizardInterface/*" class="it.intecs.pisa.toolbox.plugins.gui.CreationWizardInterfaceCommand"/>
+    <restCommandViaGet cmd="/rest/gui/creationWizardWPS" class="it.intecs.pisa.toolbox.plugins.gui.CreationWizardWPSCommand"/>
+    <restCommandViaGet cmd="/rest/gui/creationWizardInterfaceWPS" class="it.intecs.pisa.toolbox.plugins.gui.CreationWizardInterfaceWPSCommand"/>
 </plugin>
 

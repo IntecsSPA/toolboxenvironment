@@ -21,7 +21,7 @@ public class CreationWizardCommand extends RESTManagerCommandPlugin{
         int index=method.lastIndexOf("/");
         String interfaceType=method.substring(index+1);
 
-        outputJson.addProperty("xmlUrl", "/rest/gui/creationWizardTemplate/"+interfaceType+".xml");
+        outputJson.addProperty("xmlUrl", "/rest/gui/creationWizardInterface/"+interfaceType+".xml");
         outputJson.addProperty("icon", "images/order_blk.png");
         outputJson.addProperty("title", "Create "+interfaceType+" service");
         outputJson.addProperty("name", interfaceType+"Service");

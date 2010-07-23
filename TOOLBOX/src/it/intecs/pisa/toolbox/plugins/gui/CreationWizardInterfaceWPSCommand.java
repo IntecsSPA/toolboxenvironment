@@ -18,7 +18,7 @@ import org.w3c.dom.Document;
 public class CreationWizardInterfaceWPSCommand extends RESTManagerCommandPlugin{
   
     @Override
-    public Document executeCommand(String cmd, Document inputDoc) {
+     public Document executeCommand(String cmd, Document inputDoc) {
         try {
             DOMUtil domUtil;
 

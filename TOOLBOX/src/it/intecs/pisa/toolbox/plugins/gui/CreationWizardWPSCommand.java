@@ -21,7 +21,7 @@ public class CreationWizardWPSCommand extends RESTManagerCommandPlugin{
         int index=method.lastIndexOf("/");
         String interfaceType=method.substring(index+1);
 
-        outputJson.addProperty("xmlUrl", "/rest/gui/creationWizardInterfaceWPS.xml");
+        outputJson.addProperty("xmlUrl", "rest/gui/creationWizardInterfaceWPS.xml");
         outputJson.addProperty("icon", "images/order_blk.png");
         outputJson.addProperty("title", "Create WPS service");
         outputJson.addProperty("name", "WPS Service");

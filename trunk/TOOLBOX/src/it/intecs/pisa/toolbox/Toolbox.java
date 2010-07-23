@@ -284,6 +284,8 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         }
     }
 
+
+
     private void executeManagerCommands(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String cmd;
         String method;
@@ -824,6 +826,17 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         return tokenizer.nextToken();
     }
 
+     @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String requestURI;
+
+        requestURI=request.getRequestURI();
+
+
+         if(requestURI.startsWith("/TOOLBOX/rest"))
+            executeRestCommand(request, response);
+    }
+
     /**
      *  This method invokes the implementation of the super class, unless a "password" parameter is present, in which case it calls the {@link #doGet} method.
      */
@@ -1287,6 +1300,8 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
                 commandPlugin = (IRESTManagerPlugin) man.getCommand(formatLessCmd,ManagerPluginManager.METHOD_REST_GET);
             else if(method.equals("POST"))
                 commandPlugin = (IRESTManagerPlugin) man.getCommand(formatLessCmd,ManagerPluginManager.METHOD_REST_POST);
+            else if(method.equals("PUT"))
+                commandPlugin = (IRESTManagerPlugin) man.getCommand(formatLessCmd,ManagerPluginManager.METHOD_REST_PUT);
             else throw new Exception("Method "+method+" not supported");
 
             if(contentType!=null && contentType.equals("json"))

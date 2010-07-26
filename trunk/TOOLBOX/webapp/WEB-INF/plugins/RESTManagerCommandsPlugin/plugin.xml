@@ -3,5 +3,6 @@
     <restCommandViaGet cmd="/rest/manager/authenticate" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.AuthenticateCommand"/>
     <restCommandViaGet cmd="/rest/manager/getInterfacesTypes" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.GetInterfacesTypesCommand"/>
     <restCommandViaGet cmd="/rest/manager/getInterfaceModes/*/*/*" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.GetInterfaceModesCommand"/>
+    <restCommandViaPut cmd="/rest/manager/storeData" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.StoreDataCommand"/>
 </plugin>
 

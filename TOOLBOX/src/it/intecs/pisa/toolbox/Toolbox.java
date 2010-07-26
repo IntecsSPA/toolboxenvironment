@@ -1304,11 +1304,17 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
                 commandPlugin = (IRESTManagerPlugin) man.getCommand(formatLessCmd,ManagerPluginManager.METHOD_REST_PUT);
             else throw new Exception("Method "+method+" not supported");
 
+            Hashtable<String,String> headers,parameters;
+
+            headers=parseRequestHeaders(req);
+            parameters=parseHeaderParameters(req);
+
             if(contentType!=null && contentType.equals("json"))
             {
                 JsonObject inputObj;
                 inputObj=JsonUtil.getInputAsJson(req.getInputStream());
-                JsonObject jsonResp = commandPlugin.executeCommand(formatLessCmd, inputObj);
+
+                JsonObject jsonResp = commandPlugin.executeCommand(formatLessCmd, inputObj,headers,parameters);
 
                 JsonUtil.writeJsonToStream(jsonResp, resp.getOutputStream());
             }
@@ -1325,14 +1331,14 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
                 {
                     inputDoc=null;
                 }
-                Document respDoc=commandPlugin.executeCommand(formatLessCmd, inputDoc);
+                Document respDoc=commandPlugin.executeCommand(formatLessCmd, inputDoc,headers,parameters);
 
                 DOMUtil.dumpXML(respDoc, resp.getOutputStream(), false);
             }
             else
             {
                 InputStream response;
-                response=commandPlugin.executeCommand(formatLessCmd, req.getInputStream());
+                response=commandPlugin.executeCommand(formatLessCmd, req.getInputStream(),headers,parameters);
                 IOUtil.copy(response, resp.getOutputStream());
             }
 
@@ -1340,6 +1346,36 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         } catch (Exception e) {
             resp.sendError(resp.SC_BAD_REQUEST);
         }
+    }
+
+    private Hashtable<String, String> parseRequestHeaders(HttpServletRequest req) {
+        Enumeration<String> en=req.getHeaderNames();
+
+        Hashtable<String, String> headers;
+
+        headers=new Hashtable<String, String>();
+        while(en.hasMoreElements())
+        {
+            String name=en.nextElement();
+            headers.put(name, req.getHeader(name));
+        }
+
+        return headers;
+    }
+
+    private Hashtable<String, String> parseHeaderParameters(HttpServletRequest req) {
+        Enumeration<String> en=req.getParameterNames();
+
+        Hashtable<String, String> headers;
+
+        headers=new Hashtable<String, String>();
+        while(en.hasMoreElements())
+        {
+            String name=en.nextElement();
+            headers.put(name, req.getParameter(name));
+        }
+
+        return headers;
     }
 
     

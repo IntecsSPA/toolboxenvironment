@@ -9,6 +9,9 @@ import it.intecs.pisa.pluginscore.RESTManagerCommandPlugin;
 import it.intecs.pisa.util.DOMUtil;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.Hashtable;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.w3c.dom.Document;
 
 /**
@@ -18,7 +21,7 @@ import org.w3c.dom.Document;
 public class CreationWizardInterfaceWPSCommand extends RESTManagerCommandPlugin{
   
     @Override
-     public Document executeCommand(String cmd, Document inputDoc) {
+     public Document executeCommand(String cmd, Document inputDoc,Hashtable<String,String> headers,Hashtable<String,String> parameters) {
         try {
             DOMUtil domUtil;
 
@@ -32,6 +35,10 @@ public class CreationWizardInterfaceWPSCommand extends RESTManagerCommandPlugin{
         } catch (Exception ex) {
            return null;
         }
+    }
+
+    public void executeCommand(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }

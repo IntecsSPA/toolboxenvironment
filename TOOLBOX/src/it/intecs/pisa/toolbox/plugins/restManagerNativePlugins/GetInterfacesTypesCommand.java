@@ -10,6 +10,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import it.intecs.pisa.pluginscore.InterfacePluginManager;
 import it.intecs.pisa.pluginscore.RESTManagerCommandPlugin;
+import java.util.Hashtable;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -18,7 +21,7 @@ import it.intecs.pisa.pluginscore.RESTManagerCommandPlugin;
 public class GetInterfacesTypesCommand extends RESTManagerCommandPlugin{
 
     @Override
-    public JsonObject executeCommand(String method, JsonObject request) throws Exception  {
+    public JsonObject executeCommand(String method, JsonObject request,Hashtable<String,String> headers,Hashtable<String,String> parameters) throws Exception  {
         boolean success=true;
         JsonObject outputJson=null;
         try
@@ -49,6 +52,10 @@ public class GetInterfacesTypesCommand extends RESTManagerCommandPlugin{
         return outputJson;
 
 
+    }
+
+    public void executeCommand(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 

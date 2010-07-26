@@ -133,7 +133,7 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;&nbsp;" + serviceManag;
                     </DIV> 
                     <P> <!--%= response.encodeURL("selectImportOrCreate.jsp") %-->
                         <!--A href=""><IMG class=labelHomePage title=create alt="Create a new service" src="images/createService.png" align=middle border=0></A-->
-                        <A href=# onclick="javascript:createServiceInterface();"><IMG class=labelHomePage title=create alt="Create a new service" src="images/createService.png" align=middle border=0></A>
+                        <A href=# onclick="javascript:createServiceInterface();"><IMG class=labelHomePage title=create alt="Create a new service" src="images/createService.png" align=middle border=0 id="createServiceImage"></A>
                     
                         <fmt:message key="servicesManagement.selection" bundle="${lang}"/></P>
                 </DIV>

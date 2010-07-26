@@ -11,7 +11,7 @@ var importGroupServicesXML="jsScripts/servicesManagement/resources/xml/importGro
 var servicesXMLInterface= new Array();
 //var createWPSXML="jsScripts/wpsWizard/resources/xml/createWPSServicePanel.xml";
 //var createToolboxServiceXML="jsScripts/servicesManagement/resources/xml/createToolboxServicePanel.xml";
-servicesXMLInterface.push({xmlUrl:"jsScripts/servicesManagement/resources/xml/createOrderingServicePanel.xml",
+/*servicesXMLInterface.push({xmlUrl:"jsScripts/servicesManagement/resources/xml/createOrderingServicePanel.xml",
                            icon:"images/order_blk.png", title:"Create Ordering Service", name:"orderingService",
                             actionMethod: "createToolboxService(this)"});
 servicesXMLInterface.push({xmlUrl:"jsScripts/servicesManagement/resources/xml/createCatalogueServicePanel.xml",
@@ -22,7 +22,16 @@ servicesXMLInterface.push({xmlUrl:"jsScripts/servicesManagement/resources/xml/cr
                             actionMethod: "createToolboxService(this)"});
 servicesXMLInterface.push({xmlUrl:"jsScripts/wpsWizard/resources/xml/createWPSServicePanel.xml",
                             icon:"images/wps_blk.png", title:"Create Web Processing Service (WPS)", name:"wpsService",
-                            actionMethod: "createWPSRequest(this)"});
+                            actionMethod: "createWPSRequest(this)"});*/
+
+ var arrayPlugin= new Array();
+ arrayPlugin.push("rest/gui/creationWizard/Ordering.json");
+ arrayPlugin.push("rest/gui/creationWizard/Archiving.json");
+ arrayPlugin.push("rest/gui/creationWizard/Catalogue.json");
+ arrayPlugin.push("rest/gui/creationWizardWPS.json");
+
+
+
 
 
 
@@ -40,6 +49,11 @@ var createServiceWin=null;
 
 
 var spot = new Ext.ux.Spotlight({
+        easing: 'easeOut',
+        duration: .3
+    });
+
+var spot2 = new Ext.ux.Spotlight({
         easing: 'easeOut',
         duration: .3
     });
@@ -230,49 +244,54 @@ var importServices=function(){
 
 
 function createServiceInterface(){
-   // executeRemoteMethod("test");
-   var i;
+
+   var i,k;
    var header;
+
+   
+
    if(createServiceWin == null){
 
-        createServiceWin = new WebGIS.Panel.WindowInterfacePanel({
-                        title: 'Create new Toolbox Service',
-                        id: 'createNewServiceWin',
-                        border: false,
-                        animCollapse : true,
-                        maximizable : true,
-                        autoScroll : true,
-                        resizable : false,
-                        collapsible: true,
-                        layout: 'fit',
-                        loadingBarImg: "images/loader1.gif",
-                        loadingBarImgPadding: 60,
-                        loadingMessage: "Loading... Please Wait...",
-                        loadingMessagePadding: 30,
-                        loadingMessageColor: "black",
-                        loadingPanelColor: "#d9dce0",
-                        loadingPanelDuration: 1000,
-                        listeners:{
-                          hide: function(){
-                             // alert("close");
-                              spot.hide();
-                          },
-                          collapse: function(){
-                              spot.hide();
-                          },
-                          expand: function(){
-                              spot.show('createServiceWin');
-                          }
-                        },
+        var elementImage=document.getElementById("createServiceImage");
 
-                        width: screen.width/2.1,
-                        height: screen.height/2.1,
-                        closeAction:'hide',
-                        html: "<div id='newServiceAggordionInterface'>"
-                        //items:[accordionCreateServicePanel]
-			});
-        createServiceWin.show();
-        createServiceWin.insertLoadingPanel();
+        elementImage.src="images/createServiceLoader.gif";
+        for(var k=0; k<arrayPlugin.length; k++){
+            var getPluginInfo=function(response){
+                     if(!response){
+                             Ext.Msg.show({
+                                 title:'Get Plugin: Error',
+                                 buttons: Ext.Msg.OK,
+                                 msg: 'Service Exception!',
+                                 animEl: 'elId',
+                                 icon: Ext.MessageBox.ERROR
+                              });
+                       }else{
+                            var jsonResponseObj=eval('new Object(' + response + ')');
+                            
+                            servicesXMLInterface.push(jsonResponseObj);
+                       }
+
+                   };
+
+                 var getPluginTimeOut=function(){
+                     Ext.Msg.show({
+                        title:'Get Plugin: Error',
+                        buttons: Ext.Msg.OK,
+                        msg: 'Request TIME-OUT!',
+                        animEl: 'elId',
+                        icon: Ext.MessageBox.ERROR
+                    });
+                 };
+
+                 var globalControl=true;
+                
+                 var onSubmit=sendXmlHttpRequestTimeOut("GET",
+                             arrayPlugin[k],
+                             false, null, 800000, getPluginInfo, getPluginTimeOut,null);
+
+        }
+       
+        
 
 
         for(i=0; i<servicesXMLInterface.length;i++){
@@ -313,17 +332,54 @@ function createServiceInterface(){
                                         titleCollapse: true,
                                         fill : false
                                     },
-                                  items:servicesAccordionPanels/*[createOrderingServicePanel,
-                                         createWPSToolboxPanel,
-                                        ]*/
+                                  items:servicesAccordionPanels
                             });
 ;
 
+         createServiceWin = new WebGIS.Panel.WindowInterfacePanel({
+                        title: 'Create new Toolbox Service',
+                        id: 'createServiceWin',
+                        border: false,
+                        animCollapse : true,
+                        maximizable : true,
+                        autoScroll : true,
+                        resizable : false,
+                        collapsible: true,
+                        layout: 'fit',
+                        loadingBarImg: "images/loader1.gif",
+                        loadingBarImgPadding: 60,
+                        loadingMessage: "Loading... Please Wait...",
+                        loadingMessagePadding: 30,
+                        loadingMessageColor: "black",
+                        loadingPanelColor: "#d9dce0",
+                        loadingPanelDuration: 2000,
+                        listeners:{
+                          hide: function(){
+                             // alert("close");
+                              spot2.hide();
+                          },
+                          collapse: function(){
+                              spot2.hide();
+                          },
+                          expand: function(){
+                              spot2.show('createServiceWin');
+                          }
+                        },
 
+                        width: screen.width/2.1,
+                        height: screen.height/2.1,
+                        closeAction:'hide',
+                       // html: "<div id='newServiceAggordionInterface'>"
+                        items:[accordionCreateServicePanel]
+			});
+        createServiceWin.show();
+        createServiceWin.insertLoadingPanel();
 
-       
+        var elementImage=document.getElementById("createServiceImage");
 
-         accordionCreateServicePanel.render(document.getElementById("newServiceAggordionInterface"));
+        elementImage.src="images/createService.png";
+
+        // accordionCreateServicePanel.render(document.getElementById("newServiceAggordionInterface"));
         for(i=0; i<servicesXMLInterface.length;i++){
             accordionCreateServicePanel.layout.setActiveItem(i);
             servicesInterfaces[i].formsPanel.render(document.getElementById(servicesXMLInterface[i].name+"ServiceInterface"));
@@ -333,11 +389,17 @@ function createServiceInterface(){
     
 
         accordionCreateServicePanel.layout.setActiveItem(0);
+        spot2.show('createServiceWin');
 
+        var elementImage=document.getElementById("createServiceImage");
 
-    }else
+        elementImage.src="images/createService.png";
+       
+    }else{
        createServiceWin.show();
-
+       spot2.show('createServiceWin');
+    }
+       
     
 }
 

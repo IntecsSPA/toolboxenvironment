@@ -25,10 +25,10 @@ servicesXMLInterface.push({xmlUrl:"jsScripts/wpsWizard/resources/xml/createWPSSe
                             actionMethod: "createWPSRequest(this)"});*/
 
  var arrayPlugin= new Array();
- arrayPlugin.push("rest/gui/creationWizard/Ordering.json");
+ /*arrayPlugin.push("rest/gui/creationWizard/Ordering.json");
  arrayPlugin.push("rest/gui/creationWizard/Archiving.json");
  arrayPlugin.push("rest/gui/creationWizard/Catalogue.json");
- arrayPlugin.push("rest/gui/creationWizardWPS.json");
+ arrayPlugin.push("rest/gui/creationWizardWPS.json");*/
 
 
 
@@ -254,7 +254,31 @@ function createServiceInterface(){
 
         var elementImage=document.getElementById("createServiceImage");
 
-        elementImage.src="images/createServiceLoader.gif";
+        //elementImage.src="images/createServiceLoader.gif";
+        elementImage.src="images/loader1.gif";
+
+        var getPlugins=function(response){
+            var jsonResponseObj=eval('new Object(' + response + ')');
+            arrayPlugin=jsonResponseObj.sections;
+        };
+
+        var getPluginsTimeOut=function(response){
+            Ext.Msg.show({
+                        title:'Get Plugins: Error',
+                        buttons: Ext.Msg.OK,
+                        msg: 'Request TIME-OUT!',
+                        animEl: 'elId',
+                        icon: Ext.MessageBox.ERROR
+                    });
+
+        };
+
+
+        var onSubmit=sendXmlHttpRequestTimeOut("GET",
+                             "rest/gui/creationWizardSections.json",
+                             false, null, 800000, getPlugins, getPluginsTimeOut,null);
+
+
         for(var k=0; k<arrayPlugin.length; k++){
             var getPluginInfo=function(response){
                      if(!response){
@@ -286,7 +310,7 @@ function createServiceInterface(){
                  var globalControl=true;
                 
                  var onSubmit=sendXmlHttpRequestTimeOut("GET",
-                             arrayPlugin[k],
+                             arrayPlugin[k]+".json",
                              false, null, 800000, getPluginInfo, getPluginTimeOut,null);
 
         }
@@ -320,6 +344,7 @@ function createServiceInterface(){
 
        var accordionCreateServicePanel=new Ext.Panel({
                           split:true,
+                          autoScroll : true,
                           bodyStyle : {background: "#79a3cb"},
                           anchor:'100% 80%',
                           margins:'5 0 5 5',
@@ -344,7 +369,8 @@ function createServiceInterface(){
                         maximizable : true,
                         autoScroll : true,
                         resizable : false,
-                        collapsible: true,
+                        draggable: false,
+                        collapsible: false,
                         layout: 'fit',
                         loadingBarImg: "images/loader1.gif",
                         loadingBarImgPadding: 60,
@@ -508,26 +534,31 @@ function serviceInterfaceTypeChange(){
 
 function createServiceRequest(){
   var j=0;
+  var genValidate=false;
   for(var i=0;i<servicesInterfaces.length;i++){
      validate=true;
      for(j=0;j<servicesInterfaces[i].formsArray.length;j++)
         validate=validate && servicesInterfaces[i].formsArray[j].getForm().isValid();
      if(validate){
-
+        genValidate=true;
         var interfaceActionMethod=servicesXMLInterface[i].actionMethod;
         interfaceActionMethod=replaceAll(interfaceActionMethod, "this", "servicesInterfaces[i]");
         
         eval(interfaceActionMethod);
-        /*var xmlRequest=servicesInterfaces[i].getXmlKeyValueDocument("String",false);
-        alert(xmlRequest);
-        newServiceName=servicesInterfaces[i].formsArray[0].getForm().items.items[0].value;
-        alert(serviceName);
-        httpGetRequest="configureService.jsp?serviceName="+newServiceName;
-        window.location.href = httpGetRequest;*/
+        
 
      }
 
-  }  
+  }
+    if(!genValidate)
+         Ext.Msg.show({
+                         title:'Create a new service: Error',
+                         buttons: Ext.Msg.OK,
+                         msg: 'Missing mandatory parameters!',
+                         animEl: 'elId',
+                         icon: Ext.MessageBox.ERROR
+         });
+
 }
 
 

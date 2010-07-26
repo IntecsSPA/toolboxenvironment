@@ -238,6 +238,37 @@ Ext.apply(Ext.form.VTypes, {
   },
   millsecondsText: 'The millseconds value is between 0 and 999.',
 
+  remotecontrol: function(val, field){
+
+      var control=true;
+      var remoteControl=function(response){
+           //alert(Ext.form.VTypes.remotecontrolText);
+           var jsonResponseObj=eval('new Object(' + response + ')');
+           control=jsonResponseObj.success;
+           if(!control)
+            Ext.form.VTypes.remotecontrolText= jsonResponseObj.reason;
+        };
+
+        var remoteControlTimeOut=function(response){
+            Ext.Msg.show({
+                        title:'Remote Control: Error',
+                        buttons: Ext.Msg.OK,
+                        msg: 'Remote Control TIME-OUT!',
+                        animEl: 'elId',
+                        icon: Ext.MessageBox.ERROR
+                    });
+
+        };
+
+        var onSubmit=sendXmlHttpRequestTimeOut("GET",
+                   field.remoteControlURL+"?value="+val,
+                   false, null, 800000, remoteControl, remoteControlTimeOut,null);
+
+      return control;
+
+  },
+  remotecontrolText: 'Error',
+
   checkboxgroupcontrol: function (val, field){
     alert(val);
     if(field.id.indexOf("_selDelAll") != -1){

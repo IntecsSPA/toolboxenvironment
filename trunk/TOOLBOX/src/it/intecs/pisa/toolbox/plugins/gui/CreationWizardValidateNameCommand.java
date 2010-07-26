@@ -10,6 +10,8 @@ import it.intecs.pisa.pluginscore.RESTManagerCommandPlugin;
 import it.intecs.pisa.toolbox.service.ServiceManager;
 import java.net.URLDecoder;
 import java.util.Hashtable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,16 +32,20 @@ public class CreationWizardValidateNameCommand extends RESTManagerCommandPlugin{
         String serviceName=parameters.get("value");
         serviceName=URLDecoder.decode(serviceName, "UTF-8");
 
+        String regex = "[a-zA-Z0-9-_]+";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(serviceName);
+
         if(serviceName==null || serviceName.equals(""))
         {
             success=false;
             reason="Service name is not provided";
-        }
-        if(serviceName.contains("./,:;+'()&%$£\"!*§°Ç "))
-        {
-            success=false;
-            reason="Service name contains an invalid character";
-        }
+        }else
+            if(!matcher.matches())
+            {
+                success=false;
+                reason="Service name contains an invalid character";
+            }
         else
         {
             ServiceManager servMan;

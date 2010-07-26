@@ -1314,7 +1314,8 @@ function createExjFormByElement(title, formDataElement, numCols, localizationObj
             dataEmptyMessage: inputFormElements[i].getAttribute("dataEmptyMessage"),
                       button: inputFormElements[i].getAttribute("button"),
                buttonHandler: inputFormElements[i].getAttribute("buttonHandler"),
-                 buttonLabel: inputFormElements[i].getAttribute("buttonLabel")
+                 buttonLabel: inputFormElements[i].getAttribute("buttonLabel"),
+            remoteControlURL: inputFormElements[i].getAttribute("remoteControlURL")
                   };
                   
        valuesControl.push(inputArray[i]);            
@@ -2460,7 +2461,9 @@ function generateTextField(field){
     label=field.localization.getLocalMessage(field.label);
   }else
    label=field.label;   
-    
+
+  if(field.remoteControlURL)
+      field.vtype="remotecontrol";
 
   formField[u]={
              colspan: numberColsField,
@@ -2476,6 +2479,7 @@ function generateTextField(field){
                                     size: size, 
                                     autocomplete: "off"
                                 },
+                                remoteControlURL: field.remoteControlURL,
                                 value: field.value,
                                 hideLabel: field.hideLabel,
                                 disabled: field.disabled,
@@ -3811,7 +3815,8 @@ function generateComboField(field){
   var allowBlank=true;
   if(field.allowBlank == "false")
      allowBlank=false; 
- 
+
+  
    var onchange="skip";
  /* if(!allowBlank)
      onchange+="_formObj_[_formObj_.length-1].onChangeFieldControlMandatory();"; */
@@ -3924,7 +3929,7 @@ function generateComboField(field){
  comboField.on('afterrender', eval(onRenderFunct));*/
  if(onchange!="")
     comboField.on('select', eval(onchange));
- if(field.value)
+ //if(field.value)
     comboField.setValue(field.value);  
  return(formField);  
 }

@@ -10,6 +10,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Hashtable;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -17,7 +20,7 @@ import java.io.InputStream;
  */
 public class GetJsCommand extends RESTManagerCommandPlugin{
     @Override
-     public InputStream executeCommand(String cmd, InputStream in) {
+     public InputStream executeCommand(String cmd, InputStream in,Hashtable<String,String> headers,Hashtable<String,String> parameters) {
         try {
             int index=cmd.lastIndexOf("/");
             String fileName=cmd.substring(index+1);
@@ -27,5 +30,9 @@ public class GetJsCommand extends RESTManagerCommandPlugin{
         } catch (FileNotFoundException ex) {
            return null;
         }
+    }
+
+    public void executeCommand(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

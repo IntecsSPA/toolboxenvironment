@@ -17,6 +17,8 @@ import it.intecs.pisa.util.IOUtil;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.Hashtable;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -30,7 +32,7 @@ public class CreateServiceCommand extends RESTManagerCommandPlugin{
     protected static final String INTERFACETYPE = "interfaceType";
 
     @Override
-    public Document executeCommand(String cmd, Document inputDoc) {
+    public Document executeCommand(String cmd, Document inputDoc,Hashtable<String,String> headers,Hashtable<String,String> parameters) {
         Document responseDoc=null;
         Hashtable<String,String> serviceInfo;
 
@@ -183,6 +185,10 @@ public class CreateServiceCommand extends RESTManagerCommandPlugin{
         rootEl.appendChild(servNameEl);
 
         return doc;
+    }
+
+    public void executeCommand(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 

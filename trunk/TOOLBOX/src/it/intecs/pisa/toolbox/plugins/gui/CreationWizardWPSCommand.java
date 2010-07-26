@@ -7,6 +7,9 @@ package it.intecs.pisa.toolbox.plugins.gui;
 
 import com.google.gson.JsonObject;
 import it.intecs.pisa.pluginscore.RESTManagerCommandPlugin;
+import java.util.Hashtable;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -15,7 +18,7 @@ import it.intecs.pisa.pluginscore.RESTManagerCommandPlugin;
 public class CreationWizardWPSCommand extends RESTManagerCommandPlugin{
    
     @Override
-    public JsonObject executeCommand(String method, JsonObject request) throws Exception {
+    public JsonObject executeCommand(String method, JsonObject request,Hashtable<String,String> headers,Hashtable<String,String> parameters) throws Exception {
         JsonObject outputJson = new JsonObject();
 
         int index=method.lastIndexOf("/");
@@ -28,6 +31,10 @@ public class CreationWizardWPSCommand extends RESTManagerCommandPlugin{
         outputJson.addProperty("actionMethod", "createWPSRequest(this)");
         return outputJson;
 
+    }
+
+    public void executeCommand(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 

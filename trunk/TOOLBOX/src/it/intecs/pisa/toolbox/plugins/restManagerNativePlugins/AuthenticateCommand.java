@@ -10,7 +10,10 @@ import it.intecs.pisa.pluginscore.RESTManagerCommandPlugin;
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.util.DOMUtil;
 import java.io.File;
+import java.util.Hashtable;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -22,7 +25,7 @@ import org.w3c.dom.NodeList;
 public class AuthenticateCommand extends RESTManagerCommandPlugin{
 
     @Override
-    public JsonObject executeCommand(String method, JsonObject request) throws Exception  {
+    public JsonObject executeCommand(String method, JsonObject request,Hashtable<String,String> headers,Hashtable<String,String> parameters) throws Exception  {
         ServletContext context = Toolbox.getInstance().getServletContext();
         DOMUtil util=new DOMUtil();
         boolean isValidAccount=false;
@@ -55,6 +58,10 @@ public class AuthenticateCommand extends RESTManagerCommandPlugin{
             return outputJson;
         }
         else throw new Exception("Method not supported");
+    }
+
+    public void executeCommand(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 

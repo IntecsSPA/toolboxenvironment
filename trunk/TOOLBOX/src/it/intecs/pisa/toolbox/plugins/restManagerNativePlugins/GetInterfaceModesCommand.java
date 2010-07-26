@@ -13,7 +13,10 @@ import it.intecs.pisa.pluginscore.RESTManagerCommandPlugin;
 import it.intecs.pisa.util.DOMUtil;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Hashtable;
 import java.util.StringTokenizer;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -24,12 +27,12 @@ import org.w3c.dom.Element;
 public class GetInterfaceModesCommand extends RESTManagerCommandPlugin{
 
     @Override
-    public InputStream executeCommand(String cmd, InputStream in) {
+    public InputStream executeCommand(String cmd, InputStream in,Hashtable<String,String> headers,Hashtable<String,String> parameters) {
         InputStream documentAsInputStream = null;
         try {
             Document response;
 
-            response = executeCommand(cmd, (Document) null);
+            response = executeCommand(cmd, (Document) null,headers,parameters);
             documentAsInputStream = DOMUtil.getDocumentAsInputStream(response);
 
             return documentAsInputStream;
@@ -45,7 +48,7 @@ public class GetInterfaceModesCommand extends RESTManagerCommandPlugin{
     }
 
     @Override
-    public Document executeCommand(String cmd, Document inputDoc) {
+    public Document executeCommand(String cmd, Document inputDoc,Hashtable<String,String> headers,Hashtable<String,String> parameters) {
         DOMUtil util=new DOMUtil();
         Document doc;
         String interfaceName, interfaceVersion, interfaceType;
@@ -75,7 +78,7 @@ public class GetInterfaceModesCommand extends RESTManagerCommandPlugin{
     }
 
     @Override
-    public JsonObject executeCommand(String cmd, JsonObject request) throws Exception {
+    public JsonObject executeCommand(String cmd, JsonObject request,Hashtable<String,String> headers,Hashtable<String,String> parameters) throws Exception {
         String interfaceName, interfaceVersion, interfaceType;
         JsonObject outputJson = new JsonObject();
         JsonArray array = new JsonArray();
@@ -97,6 +100,10 @@ public class GetInterfaceModesCommand extends RESTManagerCommandPlugin{
         outputJson.add("types", array);
         outputJson.addProperty("success", true);
         return outputJson;
+    }
+
+    public void executeCommand(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     

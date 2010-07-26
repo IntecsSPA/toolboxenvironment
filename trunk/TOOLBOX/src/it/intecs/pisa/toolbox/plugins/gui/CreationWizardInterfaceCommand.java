@@ -14,6 +14,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.PipedInputStream;
 import java.util.ArrayList;
+import java.util.Hashtable;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.sax.SAXSource;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
@@ -25,7 +28,7 @@ import org.xml.sax.InputSource;
 public class CreationWizardInterfaceCommand extends RESTManagerCommandPlugin{
   
     @Override
-    public Document executeCommand(String cmd, Document inputDoc) {
+    public Document executeCommand(String cmd, Document inputDoc,Hashtable<String,String> headers,Hashtable<String,String> params) {
         try {
             DOMUtil domUtil;
 
@@ -53,6 +56,10 @@ public class CreationWizardInterfaceCommand extends RESTManagerCommandPlugin{
         } catch (Exception ex) {
            return null;
         }
+    }
+
+    public void executeCommand(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }

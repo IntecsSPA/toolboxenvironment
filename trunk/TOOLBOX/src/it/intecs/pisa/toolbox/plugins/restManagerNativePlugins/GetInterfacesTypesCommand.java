@@ -10,13 +10,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import it.intecs.pisa.pluginscore.InterfacePluginManager;
 import it.intecs.pisa.pluginscore.RESTManagerCommandPlugin;
-import it.intecs.pisa.toolbox.Toolbox;
-import it.intecs.pisa.util.DOMUtil;
-import java.io.File;
-import javax.servlet.ServletContext;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 /**
  *

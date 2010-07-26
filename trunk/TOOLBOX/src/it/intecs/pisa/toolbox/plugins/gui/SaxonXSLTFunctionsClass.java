@@ -30,10 +30,10 @@ public class SaxonXSLTFunctionsClass {
                 value+="['"+interfaceName+" version "+interfaceVersion+
                         "','"+interfaceType+"','"+interfaceName+"','"+interfaceVersion+
                         "','rest/manager/getInterfaceModes/"+interfaceType+"/"+interfaceName+"/"+
-                        interfaceVersion+".json']";
+                        interfaceVersion+".json'],";
             }
 
-            return value+"]";
+            return value.substring(0,value.length()-1)+"]";
 
         } catch (Exception ex) {
            return "";

@@ -3,6 +3,7 @@
     <restCommandViaGet cmd="/rest/gui/getJs/*" class="it.intecs.pisa.toolbox.plugins.gui.GetJsCommand"/>
     <restCommandViaGet cmd="/rest/gui/getDefinition/*" class="it.intecs.pisa.toolbox.plugins.gui.GetDefinitionCommand"/>
     <restCommandViaPut cmd="/rest/gui/createService" class="it.intecs.pisa.toolbox.plugins.gui.CreateServiceCommand"/>
+    <restCommandViaGet cmd="/rest/gui/creationWizardSections" class="it.intecs.pisa.toolbox.plugins.gui.CreationWizardSectionsCommand"/>
     <restCommandViaGet cmd="/rest/gui/creationWizard/*" class="it.intecs.pisa.toolbox.plugins.gui.CreationWizardCommand"/>
     <restCommandViaGet cmd="/rest/gui/creationWizardInterface/*" class="it.intecs.pisa.toolbox.plugins.gui.CreationWizardInterfaceCommand"/>
     <restCommandViaGet cmd="/rest/gui/creationWizardWPS" class="it.intecs.pisa.toolbox.plugins.gui.CreationWizardWPSCommand"/>

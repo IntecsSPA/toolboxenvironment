@@ -7,7 +7,7 @@
         <inputInterface xmlns="http://gisClient.pisa.intecs.it/gisClient">
             <section name="{$interfaceType} Identification">
                 <group label="{$interfaceType} Service Identification Info: ">
-                    <input type="text" name="{$interfaceType}ServiceName" label="Service Name" id="{$interfaceType}ServiceName" optional="false" value="" size="52"/>
+                    <input type="text" name="{$interfaceType}ServiceName" label="Service Name" id="{$interfaceType}ServiceName" optional="false" value="" size="52" remoteControlURL="rest/gui/creationWizard/validate/serviceName.json"/>
                     <input type="textarea" name="{$interfaceType}ServiceAbstract" label="Service Abstract" id="{$interfaceType}ServiceAbstract" optional="true" value="" cols="50" rows="5"/>
                     <input type="text" name="{$interfaceType}ServiceDescription" label="Service Description" id="{$interfaceType}ServiceDescription" optional="true" value="" size="52"/>
                 </group>
@@ -20,19 +20,18 @@
                     <input type="text" name="interfaceVersion" id="interfaceVersion" hidden="true" hideLabel="true" value="" optional="false"/>
                     <input type="text" name="interfaceMode" id="interfaceMode" hidden="true" hideLabel="true" value="" optional="false"/>
 
-                    <input type="combo" name="{$interfaceType}ServiceInterface" id="{$interfaceType}ServiceInterface" store="VALUES"
+                    <input type="combo" optional="false" name="{$interfaceType}ServiceInterface" id="{$interfaceType}ServiceInterface" store="VALUES" size="40"
                storeFields="['interfaceTitle', 'interfaceType', 'interfaceName', 'interfaceVersion','interfaceModeUrlRequest']"
-               storeData="{fun:getInterfaces($interfaceType)}"
-               optional="true" onChange="serviceInterfaceTypeChange"
+               storeData="{fun:getInterfaces($interfaceType)}" value=""
+                onChange="serviceInterfaceTypeChange"
                />
                 </group>
                 <group label="Interface Mode">
 
-                    <input type="combo" name="{$interfaceType}InterfaceMode" id="{$interfaceType}InterfaceMode" store="VALUES"
-               storeFields="['interfaceMode']"
+                    <input type="combo" optional="false" name="{$interfaceType}InterfaceMode" id="{$interfaceType}InterfaceMode" store="VALUES" size="40"
+               storeFields="['interfaceMode']" value=""
                storeData="[]"
-               optional="true" onChange="serviceInterfaceModeChange"
-               />
+                onChange="serviceInterfaceModeChange"/>
                 </group>
 
             </section>

@@ -44,4 +44,8 @@ public abstract class RESTManagerCommandPlugin implements IRESTManagerPlugin {
      public InputStream executeCommand(String cmd, InputStream in,Hashtable<String,String> headers,Hashtable<String,String> parameters) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+     public void executeCommand(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

@@ -18,7 +18,7 @@ public class SaxonXSLTFunctionsClass {
         try {
             InterfacePluginManager interfman;
             interfman = InterfacePluginManager.getInstance();
-            Interface[] interfaces = interfman.getInterfaces(interfaceType);
+            Interface[] interfaces = interfman.getUniqueInterfacesByType(interfaceType);
 
             String value="[";
             for(Interface interf:interfaces)

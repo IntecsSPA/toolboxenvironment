@@ -10,7 +10,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.w3c.dom.Element;
 import it.intecs.pisa.common.tbx.Interface;
+import java.util.Enumeration;
 import java.util.Set;
+import java.util.Vector;
 import org.apache.commons.collections.map.MultiKeyMap;
 
 /**
@@ -275,5 +277,42 @@ public class InterfacePluginManager extends ToolboxPluginManager {
         }
 
         return types;
+    }
+
+    public Interface[] getUniqueInterfacesByType(String interfaceType) {
+        try {
+            Interface[] interfaces;
+            Vector<Interface> uniques;
+            int count=0;
+
+            uniques=new Vector<Interface>();
+            interfaces = this.getInterfaces(interfaceType);
+
+            if(interfaces.length>0)
+            {
+                uniques.add(interfaces[0]);
+                for(Interface interf:interfaces)
+                {
+                    Enumeration<Interface> uniquesEn=uniques.elements();
+                    boolean inserted=false;
+                    while(uniquesEn.hasMoreElements())
+                    {
+                        Interface inter=uniquesEn.nextElement();
+                        if(inter.getName().equals(interf.getName()))
+                            inserted=true;
+                    }
+
+                    if(inserted==false)
+                        uniques.add(interf);
+                }
+
+                return uniques.toArray(new Interface[0]);
+            }
+            else return new Interface[0];
+
+        } catch (Exception ex) {
+            return new Interface[0];
+        }
+
     }
 }

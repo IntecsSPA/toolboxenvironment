@@ -1337,9 +1337,16 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             }
             else
             {
-                InputStream response;
-                response=commandPlugin.executeCommand(formatLessCmd, req.getInputStream(),headers,parameters);
-                IOUtil.copy(response, resp.getOutputStream());
+                try
+                {
+                    InputStream response;
+                    response=commandPlugin.executeCommand(formatLessCmd, req.getInputStream(),headers,parameters);
+                    IOUtil.copy(response, resp.getOutputStream());
+                }
+                catch(UnsupportedOperationException ex)
+                {
+                    commandPlugin.executeCommand(req,resp);
+                }
             }
 
             resp.setStatus(resp.SC_OK);

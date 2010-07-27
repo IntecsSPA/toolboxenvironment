@@ -9,5 +9,6 @@
     <restCommandViaGet cmd="/rest/gui/creationWizardWPS" class="it.intecs.pisa.toolbox.plugins.gui.CreationWizardWPSCommand"/>
     <restCommandViaGet cmd="/rest/gui/creationWizardInterfaceWPS" class="it.intecs.pisa.toolbox.plugins.gui.CreationWizardInterfaceWPSCommand"/>
     <restCommandViaGet cmd="/rest/gui/creationWizard/validate/serviceName" class="it.intecs.pisa.toolbox.plugins.gui.CreationWizardValidateNameCommand"/>
+    <restCommandViaPut cmd="/rest/gui/storeData" class="it.intecs.pisa.toolbox.plugins.gui.StoreDataCommand"/>
 </plugin>
 

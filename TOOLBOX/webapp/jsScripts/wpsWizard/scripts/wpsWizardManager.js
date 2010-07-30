@@ -96,7 +96,7 @@ function wpsProcessingWizardManager(){
                                       spot.hide();
                                   },
                                   expand: function(){
-                                      spot.show('insertDescribeWizardWindow');
+                                      spot.show('insertDescribeWizardWindow');z
                                   }
                                 },
                                 width: screen.width/1.5,

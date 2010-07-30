@@ -21,7 +21,7 @@
     <fmt:setLocale value="${param.lang}" />
     <fmt:setBundle basename="ToolboxBundle" var="lang" scope="page"/>  
 </c:if>
-<HTML lang=it><HEAD><TITLE>SSE TOOLBOX - Login</TITLE>
+<HTML lang=it><HEAD><TITLE>TOOLBOX - Login</TITLE>
         <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
         <LINK href="jsScripts/dom.css" rel=stylesheet>
         <LINK href="jsScripts/dom.directory.css" rel=stylesheet>
@@ -51,9 +51,9 @@
                                                     <TD vAlign=bottom align=left bgColor=#607a92 height=60><IMG
                                                             src="images/toolboxLogo.png"
                                                             border=0></A> </TD>
-                                                    <TD vAlign=bottom align=middle bgColor=#607a92 height=60><A
+                                                    <TD vAlign=bottom align=middle bgColor=#607a92 height=60><!--A
                                                             href="http://services.eoportal.org/index.jsp" target=_top><IMG
-                                                                src="images/sse.gif" border=0></A> </TD>
+                                                                src="images/sse.gif" border=0></A--> </TD>
                                                     <TD vAlign=bottom align=right bgColor=#607a92 height=60><IMG
                                                             height=60 src="images/directory_top.png"
                                                             width=293 border=0 name=top> </TD></TR>

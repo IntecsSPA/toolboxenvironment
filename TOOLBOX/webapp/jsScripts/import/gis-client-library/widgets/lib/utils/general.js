@@ -42,6 +42,7 @@ function assignXMLHttpRequest() {
 function sendXmlHttpRequestTimeOut(requestMethod, requestUrl, requestAsync, 
                                     requestBody, timeOutRequest, eventResponse,
                                     eventTimeOut, headers, loading, eventError){
+    
     request=assignXMLHttpRequest();
     //alert(requestAsync);
     if(request){
@@ -64,6 +65,7 @@ function sendXmlHttpRequestTimeOut(requestMethod, requestUrl, requestAsync,
                      ajaxResponseManager(request,xhrTimeout,message,eventResponse,eventError);
               };
         }
+       
         if(loading){
            message=Ext.MessageBox.wait(loading.message,loading.title);
            //String title, String msg, [String progressText] )

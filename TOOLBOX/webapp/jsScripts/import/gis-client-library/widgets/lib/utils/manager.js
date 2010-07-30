@@ -3,9 +3,10 @@
  * author: Andrea Marongiu
  */
 
-GisClientManager= function(lang, proxyUrl, utilsUrl) {
+GisClientManager= function(lang, gisClientLibPath, proxyUrl, utilsUrl) {
 
  this.lang="eng";
+ this.gisClientLibPath="";
  this.utilsUrl="Utils";
  this.proxyUrl="ProxyRedirect";
  this.loadScripts= new Array();
@@ -14,19 +15,21 @@ GisClientManager= function(lang, proxyUrl, utilsUrl) {
  this.init= function(){
      if(lang)
        this.lang=lang;
+     if(gisClientLibPath)
+       this.gisClientLibPath=gisClientLibPath;
      if(proxyUrl)
        this.proxyUrl=proxyUrl;
      if(utilsUrl)
        this.utilsUrl=utilsUrl;
-   //  this.loadScript("import/gisClient/widgets/lib/utils/browserDetect.js");
 
+     this.interfaceImport();
  };
 
  this.loadScript= function(url){
             if(!document.getElementById(url)){
                 var script=document.createElement('script');
                 script.defer=false;script.type="text/javascript";
-                script.src=url;
+                script.src=this.gisClientLibPath+"/"+url;
                 script.id=url;
                 document.getElementsByTagName('head')[0].appendChild(script);
                 this.loadScripts.push(script);
@@ -46,15 +49,28 @@ GisClientManager= function(lang, proxyUrl, utilsUrl) {
                 link.defer=false;
                 link.rel="stylesheet";
                 link.type="text/css";
-                link.href=url;
+                link.href=this.gisClientLibPath+"/"+url;;
                 link.id=url;
                 document.getElementsByTagName('head')[0].appendChild(link);
                // this.loadCSS.push(link);
             }
 };
- this.onloadTest=function(){
- // Not yet Implemeted!! Carica le librerie sulla base di un xml delle funzionalità
-};
+
+
+ this.interfaceImport= function(){
+
+    /*INTERFACE FIELD -- Start Import*/
+    this.loadScript("widgets/lib/ext/field/fileField.js");
+    this.loadScript("widgets/lib/ext/field/spinnerField.js");
+    this.loadScript("widgets/lib/ext/field/editAreaField.js");
+        setTimeout("editAreaLoadDip();",3000);
+    //setTimeout("spinnerLoadDip();",10000);
+
+
+
+
+    /*INTERFACE FIELD -- End Import*/
+ };
 
 this.onLoadControl= function(cssNumber, scriptNumber){
     

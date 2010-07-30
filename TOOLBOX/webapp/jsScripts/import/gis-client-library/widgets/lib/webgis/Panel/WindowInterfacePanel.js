@@ -16,9 +16,14 @@ WebGIS.Panel.WindowInterfacePanel = Ext.extend(Ext.Window, {
   loadingMessageColor: "black",
   loadingPanelColor: "#d9dce0",
   loadingMessagePadding: 0,
+  //xtype: 'window',
   loadingBarImgPadding: 0,
   loadingPanelDuration: 1000,
   loadingPanelWorkspaceEl: 'workspace',
+
+  getXType:function(){
+    return('window');
+  },
 
   insertLoadingPanel: function(){
                                         // Insert Style

@@ -9,18 +9,16 @@ import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.IOUtil;
 import it.intecs.pisa.util.SchemaSetRelocator;
 import it.intecs.pisa.util.Zip;
+import it.intecs.pisa.util.DateUtil;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.fileupload.DiskFileUpload;
-import org.apache.commons.fileupload.FileItem;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -30,27 +28,29 @@ import org.w3c.dom.Element;
  */
 public class ImportServicesGroupCommand extends NativeCommandsManagerPlugin {
 
-  /*  private static String IMPORT_SERVICE_WPS_TARGET_SCHEMA ="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap";
-    private static String SERVICE_DESCRIPTOR_TARGET_NAMESPACE_XPATH ="service/interface/targetNameSpace";*/
 
+    private static String ID_PARAMETER="id";
+
+    private static String FILES_STORED_FOLDER_PATH="../GUIManagerPlugin/resources/storedData/";
 
     public void executeCommand(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
-        FileItem item = null;
+        //FileItem item = null;
         ZipEntry entry= null;
         String entryFileName;
         int i;
-        DiskFileUpload upload = new DiskFileUpload();
-        List items = upload.parseRequest(req);
+        /*DiskFileUpload upload = new DiskFileUpload();
+        List items = upload.parseRequest(req);*/
+
+
+        String storedZipFileID=req.getParameter(ID_PARAMETER);
         Boolean allServicesDeployed=true;
         ArrayList notDeployedService= new ArrayList();
         ArrayList notDeployedServiceError= new ArrayList();
-     
-
-        item = (FileItem) items.get(0);
-        File packageFile = new File(System.getProperty("java.io.tmpdir"), item.getName());
-        item.write(packageFile);
-        ZipFile zipFile = new ZipFile(packageFile);
+        
+        /*File packageFile = new File(System.getProperty("java.io.tmpdir"), item.getName());
+        item.write(packageFile);*/
+        ZipFile zipFile = new ZipFile(new File(pluginDir, FILES_STORED_FOLDER_PATH+ storedZipFileID));
 
         File tempFile= null;
         Enumeration entries = zipFile.entries();

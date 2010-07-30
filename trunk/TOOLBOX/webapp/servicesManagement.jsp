@@ -117,6 +117,12 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;&nbsp;" + serviceManag;
 .upload-icon {
             background: url('images/image_add.png') no-repeat 0 0 !important;
         }
+.import {
+            background: url('images/import_blk.png') no-repeat 0 0 !important;
+        }
+.export {
+            background: url('images/export_blk.png') no-repeat 0 0 !important;
+        }
 </style>
 
 

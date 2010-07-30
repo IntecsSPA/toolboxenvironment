@@ -3,10 +3,10 @@
  * ****************************************************/
 
 // Load extent Ux -- Start Import
-var gcManager= new GisClientManager("eng");
-/*gcManager.loadCSS("import/gisClient/import/ext/ux/css/Spinner.css");
-gcManager.loadScript("import/gisClient/import/ext/ux/Spinner.js");
-gcManager.loadScript("import/gisClient/import/ext/ux/SpinnerField.js");*/
+//var gcManager= new GisClientManager("eng");
+/**/
+
+
 // Load extent Ux -- End Import
 
 //
@@ -28,36 +28,61 @@ var popup;
 
 
 function generateFormFieldSet(title, fieldSets, numCol, localizationObj){
-  var newForm;
+  var newForm, formsPanel;
   var arrayFieldSet=generateListOfFieldSet(fieldSets, numCol, localizationObj);
 
-  newForm = new Ext.FormPanel({
+ var arrayFormFile=getFormFiles(title,fieldSets);
+
+  var html="<div id='"+title+"MainForm'></div>";
+
+  for(var i=0; i<arrayFormFile.length; i++){
+      html+="<div id='"+arrayFormFile[i].divName+"'></div>";
+  }
+
+  newForm=new Ext.FormPanel({
         frame: true,
-        title: title,
+        width: '100%',
         autoShow : true,
         fileUpload: true,
-        width: '100%',
+        divName: title+"MainForm",
         items:arrayFieldSet
     });
+
+
+  formsPanel=new Ext.Panel({
+        autoShow : true,
+        width: '100%',
+        html: html
+    });
+
+  
     
-  var result={fieldSetArray: arrayFieldSet, form: newForm};
+  var result={fieldSetArray: arrayFieldSet, 
+              form: newForm,
+              formFiles: arrayFormFile,
+              panel: formsPanel};
+
   return(result);
     
 }
 
 function createPanelExjFormByXml(xmlDocument,lang){
     
-  _formObj_.push({onChangeFieldControlMandatory:function(){}});  
+  _formObj_.push({onChangeFieldControlMandatory:function(){}});
+
   var contentFormPanel, tabPanel, forms=null, idElementTabs=null;  
   var formObjCreated, fieldSetForms= new Array();
   var controlMandatoryButtons= new Array();
   forms= new Array();
+  var formsFile= new Array();
+  var tabContentPanels= new Array();
   var fieldSetConfValues=new Array();
   var inputInterfaceXml;
+
   inputInterfaceXml=new XmlDoc(xmlDocument,"xmlns:gis='http://gisClient.pisa.intecs.it/gisClient'");
   
- var loc=null;
- if(inputInterfaceXml.selectNodes("/gis:inputInterface")[0].getAttribute("localization")){
+  var loc=null;
+  if(inputInterfaceXml.selectNodes("/gis:inputInterface")[0].getAttribute("localization")){
     var localizationControl=inputInterfaceXml.selectNodes("/gis:inputInterface")[0].getAttribute("localization");
     if(localizationControl == 'yes'){
         var localizationPath=inputInterfaceXml.selectNodes("/gis:inputInterface")[0].getAttribute("pathLocalization");
@@ -74,9 +99,10 @@ function createPanelExjFormByXml(xmlDocument,lang){
     backgroundColor=requestInformationsNodes[0].getAttribute("backgroundColor");  
     if(!backgroundColor)
        backgroundColor='#99bbe8';
+
     buttonElements=inputInterfaceXml.selectNodes("/gis:inputInterface/gis:requestInformations/gis:buttons/gis:button");     
-      var type,onclickFunction,disabled,disableIfNotMandatoryFields;  
-      var contentButtonPanel,textButton;
+    var type,onclickFunction,disabled,disableIfNotMandatoryFields;  
+    var contentButtonPanel,textButton;
       if(buttonElements.length>0){
         var buttons= new Array();  
         for(i=0;i<buttonElements.length;i++){
@@ -140,22 +166,29 @@ function createPanelExjFormByXml(xmlDocument,lang){
           cols=cols*numberColsField;
         numberColsForm=cols;
         idElementTabs[i]=nameTab+"Div";
+
+        formObjCreated=createExjFormByElement(idElementTabs[i],sectionInterfaceElements[i],cols,loc);
         items[i]={
               id: nameTab,
               title: nameTab,
               enableTabScroll:true,
               autoScroll:true,
-              html: "<div id='"+idElementTabs[i]+"'></div>",
+              autoHeight: true,
+              items: [formObjCreated.formsPanel],
+             // html: "<div id='"+idElementTabs[i]+"'></div>",
               closable:false
         };
-       formObjCreated=createExjFormByElement("",sectionInterfaceElements[i],cols,loc);
-
+     
        fieldSetConfValues.push(formObjCreated.valuesControl);
        forms[i]= formObjCreated.formFieldSet;
+       tabContentPanels[i]= formObjCreated.formsPanel;
+       formsFile[i]=formObjCreated.fileForms;
        fieldSetForms[i]=formObjCreated.fieldSetList;
     }    
     tabPanel=new Ext.TabPanel({
         activeTab: 0,
+        height:'auto',
+        //autoHeight: true,
        /*/ minTabWidth: 115,
         tabWidth:135,*/
         enableTabScroll:true,
@@ -174,27 +207,29 @@ function createPanelExjFormByXml(xmlDocument,lang){
           cols=cols*numberColsField;
    numberColsForm=cols;
    idElementTabs[0]=nameTab+"Div";
+
+   formObjCreated=createExjFormByElement(idElementTabs[0],sectionInterfaceElements[0],cols,loc);
+
    var  item={
               id: nameTab,
               //title: nameTab,
               enableTabScroll:true,
               autoScroll:true,
-              html: "<div id='"+idElementTabs[0]+"'></div>",
+              items: [formObjCreated.formsPanel],
               closable:false
         };
 
-    formObjCreated=createExjFormByElement("",sectionInterfaceElements[0],cols,loc);
-    
     fieldSetConfValues.push(formObjCreated.valuesControl);
     forms[0]=formObjCreated.formFieldSet;
+    tabContentPanels[0]= formObjCreated.formsPanel;
+    formsFile[0]=formObjCreated.fileForms;
     fieldSetForms[0]=formObjCreated.fieldSetList;
    
     tabPanel=new Ext.Panel({
         items: [item],
         closable:false});
   }
-                      
-//  if(this.confValues[this.confValues.length-1][this.confValues[this.confValues.length-1].length-1].name !="idRequest" )
+
   fieldSetConfValues[fieldSetConfValues.length-1].push({
                           name:"idRequest",
                           id:"idRequest",
@@ -202,18 +237,19 @@ function createPanelExjFormByXml(xmlDocument,lang){
                           value: ""
                       });
   if(buttonElements.length>0){
-    panels=[tabPanel,contentButtonPanel];  
+    panels=[tabPanel,contentButtonPanel];
   }else{
     panels=[tabPanel]; 
     contentButtonPanel=null;
   } 
-
+ 
   contentFormPanel=new Ext.Panel({
         autoScroll: true,
         border:false,
         bodyStyle : {background: backgroundColor},
         items: panels
-  }); 
+  });
+  
   var outputManager;
   var outputInformationElements=inputInterfaceXml.selectNodes("/gis:inputInterface/gis:outputInformations");
   if(outputInformationElements.length>0){  
@@ -227,6 +263,10 @@ function createPanelExjFormByXml(xmlDocument,lang){
                 formsTab: tabPanel,
                 buttonPanel: contentButtonPanel,
                 formsArray: forms,
+                formsFileArray: formsFile,
+                tabContentPanels:tabContentPanels,
+
+
                 formsFieldSetArray: fieldSetForms,
                 tabElementsId: idElementTabs,
                 confValues: fieldSetConfValues,
@@ -249,7 +289,7 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                 return(false);  
                              }
                              else{
-                                 //alert(input[j].allowBlank);
+                                 
                                if((input[j].allowBlank == false)||(input[j].allowBlank == 'false')){ 
                                   if(!input[j].getValue() || input[j].getValue()==""){
                                      for(i=0;i<this.controlMandatoryButtons.length;i++)
@@ -282,24 +322,39 @@ function createPanelExjFormByXml(xmlDocument,lang){
                       this.buttonPanel.destroy();
                    this.formsPanel.destroy(); 
                 },
-                render: function(){;
+                renderFileForm: function(){
+                   for(var i=0; i<this.formsFileArray.length;i++){
+                          this.formsTab.setActiveTab(i);
+                          this.formsArray[i].render(document.getElementById(this.formsArray[i].divName));
+
+                        }
+
+                },
+                render: function(){
+                      var k,i,u,j;
                       if(this.formsArray.length > 1){
-                        for(var i=0; i<this.formsArray.length;i++){
-                          this.formsTab.setActiveTab(i);                
-                          this.formsArray[i].render(document.getElementById(this.tabElementsId[i])); 
-              
+                        for(i=0; i<this.formsArray.length;i++){
+                          this.formsTab.setActiveTab(i);
+                          if(this.formsArray[i].items.length >0)
+                            this.formsArray[i].render(document.getElementById(this.formsArray[i].divName));
+                          if(this.formsFileArray[i])
+                              for(k=0; k<this.formsFileArray[i].length;k++)
+                                this.formsFileArray[i][k].render(document.getElementById(this.formsFileArray[i][k].divName));
                         }
                         this.formsTab.setActiveTab(0);
                       }else{
-                         this.formsArray[0].render(document.getElementById(this.tabElementsId[0])); 
-                   
-
+                         if(this.formsArray[0].items.length >0)
+                            this.formsArray[0].render(document.getElementById(this.formsArray[0].divName));
+                         if(this.formsFileArray[0]){
+                             for(k=0; k<this.formsFileArray[0].length;k++)
+                                this.formsFileArray[0][k].render(document.getElementById(this.formsFileArray[0][k].divName));
+                         }
                       }
                      
-                    for(var u=0;u<supportToolbars.length;u++){
+                    for(u=0;u<supportToolbars.length;u++){
                       supportToolbars[u].toolbar.render(supportToolbars[u].id);
 
-                      for(var j=0; j<supportToolbars[u].buttons.length; j++){
+                      for(j=0; j<supportToolbars[u].buttons.length; j++){
                           if(supportToolbars[u].toolbar.items.length < supportToolbars[u].buttons.length){
                             var button=eval(supportToolbars[u].buttons[j]);
                             supportToolbars[u].toolbar.add(button);
@@ -555,13 +610,26 @@ function createPanelExjFormByXml(xmlDocument,lang){
                   }
                 },
                 getFormValues: function(label){
+                 
                   var xtypeArray;  
                   xtypeArray=["textfield","textarea", "combo","datefield","numberfield","checkbox","field","checkboxgroup","radiogroup","spinnerfield"];
-                  var input,i,u,j;
+                  var input,i,u,j,k;
                   var idRequest="";
                   var formValues=new Array();
                   var complexValues=new Array();
                   for(i=0; i<this.formsArray.length; i++ ){
+                    if(this.formsFileArray[i])
+                      for(k=0; k<this.formsFileArray[i].length; k++ ){
+                         input=this.formsFileArray[i][k].findByType("textfield");
+                         for(j=0; j<input.length; j++){
+                             
+                             formValues[input[j].getItemId()]={
+                                    id: input[j].getItemId(),
+                                    value:input[j].getValue()
+                              };
+                         }
+                      }
+
                       for(u=0; u<xtypeArray.length; u++){
                          input=this.formsArray[i].findByType(xtypeArray[u]);
                          for(j=0; j<input.length; j++){
@@ -627,7 +695,10 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                 this.responseType=input[j].getValue();       
                          }
                       }
-                    }  
+                    }
+
+                  
+
                   formValues["idRequest"]="";
                   var tempform,tempFormat,tempTime1,tempTime2;  
                   
@@ -856,6 +927,19 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                         complexValues[tempform[u].id]=null;  
                                   
                                   break;
+                          case "file":
+                                    
+                                    if(formValues[tempform[u].id+"_file"].value){
+                                        complexValues[tempform[u].id]= new Object();
+                                        complexValues[tempform[u].id].fileName=formValues[tempform[u].id+"_file"].value;
+                                        idRequest+=formValues[tempform[u].id+"_file"].value;
+                                        if(formValues[tempform[u].id+"UploadID"].value){
+                                          complexValues[tempform[u].id].uploadID=formValues[tempform[u].id+"UploadID"].value;
+                                          idRequest+=formValues[tempform[u].id+"UploadID"].value;
+                                        }
+                                    }else
+                                        complexValues[tempform[u].id]=null;
+                                  break;
                           case "rangetime":
                                   //alert(tempform[u].id);
                                   if(formValues['hStart'+tempform[u].id].value &&
@@ -1045,7 +1129,7 @@ function createPanelExjFormByXml(xmlDocument,lang){
 
                                            var barPaging=null;var outputPanel=null;
                                            if(eval(outputManager.paging)){
-                                              // alert("set paging");
+                                              
                                                barPaging = new Ext.PagingToolbar({
                                                       store: outputStore,
                                                       displayInfo: true,
@@ -1138,7 +1222,7 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                                  //"html: '<textarea id='ErrorGisClientText'row='"+screen.height/10+"' cols='"+ screen.width/10+"'><textarea>',"+
                       }
                       if(blockBar)
-                        barProgress=barProgress.updateProgress(0.2,  "Waiting Response", "Request Sent");
+                        barProgress=barProgress.updateProgress("0.2",  "Waiting Response", "Request Sent");
                       if(!proxyRedirect)
                           proxyRedirect="proxyRedirect";
                       sendXmlHttpRequestTimeOut("POST", 
@@ -1178,6 +1262,7 @@ function createPanelExjFormByXml(xmlDocument,lang){
                 }
                 
               };
+         
   return(_formObj_[_formObj_.length-1]);
 }
 
@@ -1315,7 +1400,12 @@ function createExjFormByElement(title, formDataElement, numCols, localizationObj
                       button: inputFormElements[i].getAttribute("button"),
                buttonHandler: inputFormElements[i].getAttribute("buttonHandler"),
                  buttonLabel: inputFormElements[i].getAttribute("buttonLabel"),
-            remoteControlURL: inputFormElements[i].getAttribute("remoteControlURL")
+            remoteControlURL: inputFormElements[i].getAttribute("remoteControlURL"),
+               autoUploadURL: inputFormElements[i].getAttribute("autoUploadURL"),
+                    iconWait: inputFormElements[i].getAttribute("iconWait"),
+                 iconSuccess: inputFormElements[i].getAttribute("iconSuccess"),
+                 iconFailure: inputFormElements[i].getAttribute("iconFailure")
+
                   };
                   
        valuesControl.push(inputArray[i]);            
@@ -1338,8 +1428,12 @@ function createExjFormByElement(title, formDataElement, numCols, localizationObj
                       });*/
 
    var formFieldSet=generateFormFieldSet(title, fieldSets, numCols, localizationObj);
+
+
    return({
            formFieldSet: formFieldSet.form,
+           formsPanel: formFieldSet.panel,
+           fileForms: formFieldSet.formFiles,
            fieldSetList: formFieldSet.fieldSetArray,
            valuesControl: valuesControl  
           }); 
@@ -1628,7 +1722,6 @@ function createHtmlTemplateOperation(templateOperationElement){
                      var xslResponse=templateOperationElement.getAttribute("xslResponse");
                      winHeight=eval(templateOperationElement.getAttribute("winHeight"));
                      var serviceURL=templateOperationElement.getAttribute("serviceURL")
-                     //callback: function(){ alert('callback!');
                      var attributesReq=requestAttributes.split(',');
                      var currentParamArray;
                      var getRequest=serviceURL+"?"
@@ -1638,8 +1731,6 @@ function createHtmlTemplateOperation(templateOperationElement){
                             getRequest+=currentParamArray[0]+"="+currentParamArray[1]+"&"
                      }
                      getRequest=getRequest.substring(0,getRequest.length-1);
-                    // alert(getRequest);
-                  //   var getRequest=serviceURL+"/httpservice?request=GetRepositoryItem&service=CSW-ebRIM&version=2.0.2&id={"+idAttribute +"}";
                      var showpopupWindow="var targetURL='"+getRequest+"&XSLResponse="+xslResponse+"';"+
                                   "var win = new Ext.Window({ "+
                                             "title: '({"+idAttribute +"}) Result Details', "+
@@ -2014,8 +2105,7 @@ function createCodeOnLoadOperation(onLoadOperationElement){
                                             createPopup(e.feature,this, toolbar, group, idAtt);
                                         }
                                     });
-                                }
-                            //alert(this.toolbarInfoName);
+                                };
 
                             if(this.toolbarInfoName && this.setToolbar){
 
@@ -2063,7 +2153,6 @@ function createCodeOnLoadOperation(onLoadOperationElement){
                                             getValueInformation: function(infoValue){
                                                 var i;
                                                 for(i=0;i<this.store.getTotalCount();i++){
-                                                   // alert("i: "+this.store.getAt(i).get(this.displayField));
                                                     if(this.store.getAt(i).get(this.displayField) == this.value)
                                                        return(this.store.getAt(i).get(infoValue));
                                                 }
@@ -2111,11 +2200,6 @@ function createCodeOnLoadOperation(onLoadOperationElement){
                                this.setToolbar=false;
                             }
 
-
-                              // alert(toolbar);
-                             // comboElement=toolbar.items.get(1);
-                             // alert(toolbar.items.getCount());
-                               //alert(toolbar.findById('VectorCombo').value());
                            }
 
                             //mapPanel = mapwin.items.get(0);
@@ -2135,20 +2219,232 @@ function createCodeOnLoadOperation(onLoadOperationElement){
 }
 
 
-function zoomTo (pointString, formatPoint, mapObjcetName, zoomfactor){
-   var mapObj=eval(mapObjcetName);
-   var latFormatPosition=formatPoint.indexOf('lat');
-   var latIndex,lonIndex;
-   if(latFormatPosition == 0){
-          latIndex=0;lonIndex=1;
-       }else{
-          latIndex=1;lonIndex=0;
-       }
-   var pointSeparator=formatPoint[3];
-   var tempPointSplit=pointString.split(pointSeparator);
-   var lonLat = new OpenLayers.LonLat(tempPointSplit[lonIndex], tempPointSplit[latIndex]);
-   mapObj.setCenter (lonLat, zoomfactor);
+
+
+
+function generateListOfFieldSet(fieldSets, numberColums, localizationObj){ 
+  var fieldSetArray= new Array(), listField;
+  var groupName;
+  for(var i=0;i<fieldSets.length;i++){
+     listField=generateListOfField(fieldSets[i].fields); 
+     if(localizationObj && fieldSets[i].name && fieldSets[i].name!="")
+        groupName=localizationObj.getLocalMessage(fieldSets[i].name);
+     else
+        groupName=fieldSets[i].name;
+   
+     if(listField.length > 0)
+         fieldSetArray[i]= new Ext.form.FieldSet({
+                      title: groupName,
+                      layout: 'table',
+
+                      draggable: fieldSets[i].draggable,
+                      ddGroup: fieldSets[i].ddGroup,
+                      layoutConfig: {
+                          columns: numberColums
+                      },
+                     /* listeners: {
+                         "afterrender": function(){
+
+                             alert("expand");
+                         }
+                      },*/
+                      autoHeight: true,
+
+                      items: listField
+
+                });
+  }
+  
+  return(fieldSetArray);  
+    
 }
+
+function getFormFiles(title,fieldSets){
+  var formFileArray= new Array();
+  for(var i=0;i<fieldSets.length;i++){
+      for(var k=0;k<fieldSets[i].fields.length;k++){
+          switch(fieldSets[i].fields[k].type) {
+               case "file":
+                   formFileArray.push(new /*Ext.Client.Interface.*/FileField(fieldSets[i].fields[k], title, numberColsField));
+                  break;
+
+          }
+      }
+  }
+  return(formFileArray);
+}
+
+
+function generateListOfField(Fields){
+   
+  var fieldsArray= new Array();
+  var j=0;
+  var k,temp;
+  for(var i=0;i<Fields.length;i++){
+      switch(Fields[i].type) {
+          case "text":temp= new Array();
+                  temp=generateTextField(Fields[i]);
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k]; 
+                      j++;
+                  }   
+                  break;
+          case "password":temp= new Array();
+                  temp=generatePasswordField(Fields[i]);
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k]; 
+                      j++;
+                  }   
+                  break;        
+          case "numeric":temp= new Array();
+                  temp=generateNumericField(Fields[i]);
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k]; 
+                      j++;
+                  }   
+                  break;
+          case "spinner":temp= new Array();
+                  temp=new /*Interface.*/SpinnerField(Fields[i], numberColsField);
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k];
+                      j++;
+                  }
+                  break;
+          case "numericRange":temp= new Array();
+                  temp=generateNumericRangeField(Fields[i]);
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k];
+                      j++;
+                  }
+                  break;
+          case "combo":temp= new Array();
+                  temp=generateComboField(Fields[i]);
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k]; 
+                      j++;
+                  }   
+                  break;
+          case "gazetteer":temp= new Array();
+                  temp=generateGazetteerField(Fields[i]);
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k];
+                      j++;
+                  }
+                  break;
+          case "checkbox":temp= new Array();
+                  temp=generateCheckBoxField(Fields[i]);  
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k]; 
+                      j++;
+                  }   
+                  break;
+          case "checkboxgroup":temp= new Array();
+                  temp=generateCheckBoxGroupField(Fields[i]);
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k];
+                      j++;
+                  }
+                  break;
+          case "radiogroup":temp= new Array();
+                  temp=generateRadioGroupField(Fields[i]);  
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k]; 
+                      j++;
+                  }   
+                  break;        
+          case "date":temp= new Array();
+                  temp=generateDateField(Fields[i]); 
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k]; 
+                      j++;
+                  }   
+                  break;
+          case "rangedate":temp= new Array();
+                  temp=generateRangeDateField(Fields[i]); 
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k]; 
+                      j++;
+                  }   
+                  break;
+          case "label":temp= new Array();
+                  temp=generateLabelField(Fields[i]);
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k]; 
+                      j++;
+                  }   
+                  break;
+          /*case "file":temp= new Array();
+                  temp=generateFileField(Fields[i]);
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k]; 
+                      j++;
+                  }   
+                  break;  */
+          case "bbox":temp= new Array();
+                  temp=generateBBOXField(Fields[i]);
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k]; 
+                      j++;
+                  }   
+                  break;
+          case "button":temp= new Array();
+                  temp=generateButtonField(Fields[i]);
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k]; 
+                      j++;
+                  }   
+                  break;
+          case "timeStep":temp= new Array();
+                  temp=generateTimeStepField(Fields[i]);
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k]; 
+                      j++;
+                  }   
+                  break;
+          case "time":temp= new Array();
+                  temp=generateTimeField(Fields[i]);
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k]; 
+                      j++;
+                  }   
+                  break;
+          case "rangetime":temp= new Array();
+                  temp=generateRangeTimeField(Fields[i]);
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k]; 
+                      j++;
+                    }  
+                  break;   
+          case "percentage":temp= new Array();
+                  temp=generatePercentageField(Fields[i]);
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k]; 
+                      j++;
+                    }  
+                  break;   
+          case "textarea":temp= new Array();
+                  temp=generateTextAreaField(Fields[i]);
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k]; 
+                      j++;
+                    }  
+                  break;
+          case "editarea":temp= new Array();
+                  temp=new EditAreaField(Fields[i], numberColsField);
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k];
+                      j++;
+                    }
+                  break;
+        }
+   }
+
+  return(fieldsArray);    
+}
+
+
+
+
 
 /*this.style --> style     mapObjcetName--> this.mapObjcetName     this.layerFillOpacity --> layerOptions  this.layerGraphicOpacity-->layerOptions
  *this.geometry --> geometry      this.vectorLayer --> vectorLayer*/
@@ -2231,203 +2527,37 @@ function geometryrendering (pointsString, format, separator, geometry, vectorLay
        }
 }
 
-function generateListOfFieldSet(fieldSets, numberColums, localizationObj){ 
-  var fieldSetArray= new Array(), listField;
-  var groupName;
-  for(var i=0;i<fieldSets.length;i++){
-     listField=generateListOfField(fieldSets[i].fields); 
-     if(localizationObj && fieldSets[i].name && fieldSets[i].name!="")
-        groupName=localizationObj.getLocalMessage(fieldSets[i].name);
-     else
-        groupName=fieldSets[i].name;
-   
 
-     fieldSetArray[i]= new Ext.form.FieldSet({
-                  title: groupName,
-                  layout: 'table',
 
-                  draggable: fieldSets[i].draggable,
-                  ddGroup: fieldSets[i].ddGroup,
-                  layoutConfig: {
-                      columns: numberColums
-                  },
-                  autoHeight: true,
-               
-                  items: listField
-                
-            });
-  }
-  
-  return(fieldSetArray);  
-    
+function zoomTo (pointString, formatPoint, mapObjcetName, zoomfactor){
+   var mapObj=eval(mapObjcetName);
+   var latFormatPosition=formatPoint.indexOf('lat');
+   var latIndex,lonIndex;
+   if(latFormatPosition == 0){
+          latIndex=0;lonIndex=1;
+       }else{
+          latIndex=1;lonIndex=0;
+       }
+   var pointSeparator=formatPoint[3];
+   var tempPointSplit=pointString.split(pointSeparator);
+   var lonLat = new OpenLayers.LonLat(tempPointSplit[lonIndex], tempPointSplit[latIndex]);
+   mapObj.setCenter (lonLat, zoomfactor);
 }
 
-function generateListOfField(Fields){
-   
-  var fieldsArray= new Array();
-  var j=0;
-  var k,temp;
-  for(var i=0;i<Fields.length;i++){
-      switch(Fields[i].type) {
-          case "text":temp= new Array();
-                  temp=generateTextField(Fields[i]);
-                  for(k=0; k<temp.length; k++){
-                      fieldsArray[j]=temp[k]; 
-                      j++;
-                  }   
-                  break;
-          case "password":temp= new Array();
-                  temp=generatePasswordField(Fields[i]);
-                  for(k=0; k<temp.length; k++){
-                      fieldsArray[j]=temp[k]; 
-                      j++;
-                  }   
-                  break;        
-          case "numeric":temp= new Array();
-                  temp=generateNumericField(Fields[i]);
-                  for(k=0; k<temp.length; k++){
-                      fieldsArray[j]=temp[k]; 
-                      j++;
-                  }   
-                  break;
-          case "spinner":temp= new Array();
-                  temp=generateSpinnerField(Fields[i]);
-                  for(k=0; k<temp.length; k++){
-                      fieldsArray[j]=temp[k];
-                      j++;
-                  }
-                  break;
-          case "numericRange":temp= new Array();
-                  temp=generateNumericRangeField(Fields[i]);
-                  for(k=0; k<temp.length; k++){
-                      fieldsArray[j]=temp[k];
-                      j++;
-                  }
-                  break;
-          case "combo":temp= new Array();
-                  temp=generateComboField(Fields[i]);
-                  for(k=0; k<temp.length; k++){
-                      fieldsArray[j]=temp[k]; 
-                      j++;
-                  }   
-                  break;
-          case "gazetteer":temp= new Array();
-                  temp=generateGazetteerField(Fields[i]);
-                  for(k=0; k<temp.length; k++){
-                      fieldsArray[j]=temp[k];
-                      j++;
-                  }
-                  break;
-          case "checkbox":temp= new Array();
-                  temp=generateCheckBoxField(Fields[i]);  
-                  for(k=0; k<temp.length; k++){
-                      fieldsArray[j]=temp[k]; 
-                      j++;
-                  }   
-                  break;
-          case "checkboxgroup":temp= new Array();
-                  temp=generateCheckBoxGroupField(Fields[i]);
-                  for(k=0; k<temp.length; k++){
-                      fieldsArray[j]=temp[k];
-                      j++;
-                  }
-                  break;
-          case "radiogroup":temp= new Array();
-                  temp=generateRadioGroupField(Fields[i]);  
-                  for(k=0; k<temp.length; k++){
-                      fieldsArray[j]=temp[k]; 
-                      j++;
-                  }   
-                  break;        
-          case "date":temp= new Array();
-                  temp=generateDateField(Fields[i]); 
-                  for(k=0; k<temp.length; k++){
-                      fieldsArray[j]=temp[k]; 
-                      j++;
-                  }   
-                  break;
-          case "rangedate":temp= new Array();
-                  temp=generateRangeDateField(Fields[i]); 
-                  for(k=0; k<temp.length; k++){
-                      fieldsArray[j]=temp[k]; 
-                      j++;
-                  }   
-                  break;
-          case "label":temp= new Array();
-                  temp=generateLabelField(Fields[i]);
-                  for(k=0; k<temp.length; k++){
-                      fieldsArray[j]=temp[k]; 
-                      j++;
-                  }   
-                  break;
-          case "file":temp= new Array();
-                  temp=generateFileField(Fields[i]);
-                  for(k=0; k<temp.length; k++){
-                      fieldsArray[j]=temp[k]; 
-                      j++;
-                  }   
-                  break;        
-          case "bbox":temp= new Array();
-                  temp=generateBBOXField(Fields[i]);
-                  for(k=0; k<temp.length; k++){
-                      fieldsArray[j]=temp[k]; 
-                      j++;
-                  }   
-                  break;
-          case "button":temp= new Array();
-                  temp=generateButtonField(Fields[i]);
-                  for(k=0; k<temp.length; k++){
-                      fieldsArray[j]=temp[k]; 
-                      j++;
-                  }   
-                  break;
-          case "timeStep":temp= new Array();
-                  temp=generateTimeStepField(Fields[i]);
-                  for(k=0; k<temp.length; k++){
-                      fieldsArray[j]=temp[k]; 
-                      j++;
-                  }   
-                  break;
-          case "time":temp= new Array();
-                  temp=generateTimeField(Fields[i]);
-                  for(k=0; k<temp.length; k++){
-                      fieldsArray[j]=temp[k]; 
-                      j++;
-                  }   
-                  break;
-          case "rangetime":temp= new Array();
-                  temp=generateRangeTimeField(Fields[i]);
-                  for(k=0; k<temp.length; k++){
-                      fieldsArray[j]=temp[k]; 
-                      j++;
-                    }  
-                  break;   
-          case "percentage":temp= new Array();
-                  temp=generatePercentageField(Fields[i]);
-                  for(k=0; k<temp.length; k++){
-                      fieldsArray[j]=temp[k]; 
-                      j++;
-                    }  
-                  break;   
-          case "textarea":temp= new Array();
-                  temp=generateTextAreaField(Fields[i]);
-                  for(k=0; k<temp.length; k++){
-                      fieldsArray[j]=temp[k]; 
-                      j++;
-                    }  
-                  break;
-          case "editarea":temp= new Array();
-                  temp=generateEditAreaField(Fields[i]);
-                  for(k=0; k<temp.length; k++){
-                      fieldsArray[j]=temp[k];
-                      j++;
-                    }
-                  break;
-        }
-   }
 
-  return(fieldsArray);    
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function generateTextField(field){ 
   var formField=new Array(), size="20";
@@ -2623,7 +2753,6 @@ function generateCheckBoxField(field){
               "var arrayInput=enableInputList.split(',');"+
               "var tmp;"+
               "var indexForm;"+
-            //  "alert('enable');"+
               "for(var i=0; i<arrayInput.length;i++){"+
                   "tmp=arrayInput[i].split('-');"+
                   "indexForm=parseInt(tmp[0]);"+
@@ -3150,271 +3279,7 @@ function generateTextAreaField(field){
   return(formField);  
 }
 
-function generateEditAreaField(field){
-  var formField=new Array(), rows="4", cols="20";
-  if (field.cols)
-      cols=field.cols;
-  if (field.rows)
-      rows=field.rows;
-  var colSpan=0;
-  if (field.colSpan)
-      colSpan=(parseFloat(field.colSpan)-1)*numberColsField;
 
-  var u=0;
-  if(colSpan>0){
-    formField[0]={
-        colspan: colSpan,
-        html: "&nbsp;"
-    };
-    u++;
-  }
-
-  var allowBlank=true;
-  if(field.allowBlank == "false")
-     allowBlank=false;
-
-  var onchange="";
-  if(!allowBlank)
-     onchange+="_formObj_[_formObj_.length-1].onChangeFieldControlMandatory();";
-  if(field.onChange)
-    onchange+=field.onChange;
-
-  var action;
- if(field.action)
-    action=field.action;
- else
-    action=rootFolder+utilServlet+"?cmd=putFile&type=proxy&fileId="+field.id+"_file";
- var htmlFormValue="<div id='editAreaDIV_"+field.id+"'><form name='formFile_"+field.id+"_editAreaForm' action='"+action+"' method='POST' onsubmit='javascript:onSubmit_editArea_"+field.id+"()' enctype='multipart/form-data' target='iframeMessage_editArea"+field.id+"'>"+
-            "<input type='file' id='"+field.id+"_file' name='"+field.id+"_file' value='' width='"+cols+"' />"+ //onchange='javascript:"+onchange+"' onsubmit='javascript:alert('onsubmit')''
-             "<input type='submit' name='buttonSubmit_"+field.id+"' value='"+"Load File"+"'/>"+
-            "</form><iframe scrolling='no' FRAMEBORDER='0'name='iframeMessage_editArea"+field.id+"' width='0' height='0' marginwidth='0' marginheight='0/></div>";
-
-
-
-
-  var clientManager= new GisClientManager();
-  var loadCallback;
-  var saveCallback;
-
-  if(field.loadCallback)
-     loadCallback=field.loadCallback;
-  else{
-      loadCallback="editArea_load_"+field.id;
-      var callbackLoadFunction= " var editAreaWindow_"+field.id+"=null; \n"+
-             " function editArea_load_"+field.id+"(id) { \n"+
-             " if(!editAreaWindow_"+field.id+")" +
-                    "editAreaWindow_"+field.id+" = new Ext.Window({ "+
-                                            " title: 'Edit Area ("+field.id+") : Load Local File',"+
-                                            " id: 'editAreaWindow_"+field.id+"',"+
-                                            " border: false,"+
-                                            " animCollapse : false,"+
-                                            " autoScroll : true,"+
-                                            " resizable : true,"+
-                                            " collapsible: false,"+
-                                            " layout: 'fit',"+
-                                            " width:  screen.width/3,"+
-                                            " height: 70,"+
-                                            " closeAction:'hide',"+
-                                            " html: \""+htmlFormValue+"\""+
-                                        " }); "+
-            " editAreaWindow_"+field.id+".show();"+
-          //  "editAreaLoader.setValue(id, \"The content is loaded from the load_callback function into EditArea\");\n"+
-            "} \n";
-      callbackLoadFunction+="function onSubmit_editArea_"+field.id+"() { \n"+
-          "setTimeout('loadFileContent_editArea_"+field.id+"()', 500);"+
-          "} \n";
-      callbackLoadFunction+="function loadFileContent_editArea_"+field.id+"() { \n"+
-         // "alert('SettaFile');"+
-          " if(parent.iframeMessage_editArea"+field.id+".document.getElementById('textarea')) { \n"+
-              " var filename=document.getElementById('"+field.id+"_file').value;";
-       if(field.isMultiFile)
-         callbackLoadFunction+=" var new_file= {id: filename, text: parent.iframeMessage_editArea"+field.id+".document.getElementById('textarea').value, syntax: '"+field.syntax+"'}; "+
-            " editAreaLoader.openFile('"+field.id+"', new_file); ";
-       else
-         callbackLoadFunction+="  editAreaLoader.setValue('"+field.id+"', parent.iframeMessage_editArea"+field.id+".document.getElementById('textarea').value); ";
-       
-       callbackLoadFunction+=" editAreaWindow_"+field.id+".hide(); " +
-          " }else {"+
-             " if(parent.iframeMessage_editArea"+field.id+".document.getElementsByTagName('head')[0]) "+
-                    " Ext.Msg.show({ "+
-                                "title:'Load File: Error',"+
-                                "buttons: Ext.Msg.OK,"+
-                                "msg: 'Utilis or Custom Service  Exception!',"+
-                                "animEl: 'elId',"+
-                                "icon: Ext.MessageBox.ERROR"+
-                          "}); "+
-            " else "+
-                " setTimeout('loadFileContent_editArea_"+field.id+"()', 500);"+
-          " } \n" +
-             
-          " } \n";
-      clientManager.insertScript(callbackLoadFunction, "EditAreaCallbackLoad_"+field.id);
-    }
-
-  if(field.saveCallback)
-     saveCallback=field.saveCallback;
-  else{
-      saveCallback="editArea_save_"+field.id;
-      var callbackSaveFunction=" function editArea_save_"+field.id+"(id, content) { \n"+
-            
-            "alert(\"Here is the content of the EditArea '\"+ id +\"' as received by the save callback function:\\n\"+content);\n"+
-            "} \n ";
-      clientManager.insertScript(callbackSaveFunction, "EditAreaCallbackSave_"+field.id);
-    }
-
-  
-  var editAreaLodearFunction="editAreaLoader.init({"+
-            		"id: field.id"+	// id of the textarea to transform
-			",start_highlight: true"+
-			",font_size: '8'";
-                        if(field.fontFamily)
-                            editAreaLodearFunction+=",font_family: '"+field.fontFamily+"'"
-    editAreaLodearFunction+=//",allow_resize: 'y'"+
-			",allow_toggle: false"+
-                        ",word_wrap: true"+
-			",language: 'en'"+ //change for localization
-			",syntax: '"+field.syntax+"'"+
-			",toolbar: '"+field.toolbar+"'"+
-			",load_callback: '"+loadCallback+"'"+
-			",save_callback: '"+saveCallback+"'";
-                         if(field.defaultFiles || field.value){
-                           var eA_load_callback=" function editAreaLoaded"+field.id+" () { \n";
-                                                  if(field.defaultFiles){
-                                                     eA_load_callback+=" var defaultFiles="+field.defaultFiles+"; \n"+
-                                                     "for(var i=0; i<defaultFiles.length; i++){ \n"+
-                                                        " if(defaultFiles[i].loadURL){ \n"+
-                                                            "var setEditArea=function(response){ \n"+
-                                                                 " if(!response){ \n"+
-                                                                          "Ext.Msg.show({ \n"+
-                                                                                "title:'Load Content: Error', \n"+
-                                                                                "buttons: Ext.Msg.OK, \n"+
-                                                                                "msg: 'Service Exception!', \n"+
-                                                                                "animEl: 'elId', \n"+
-                                                                                "icon: Ext.MessageBox.ERROR \n"+
-                                                                          "}); \n"+
-                                                                      "}else{ \n"+
-                                                                              " defaultFiles[i].text=response; \n";
-                                                                  if(field.isMultiFile)
-                                                                     eA_load_callback+="editAreaLoader.openFile('"+field.id+"', defaultFiles[i]); \n";
-                                                                  else
-                                                                     eA_load_callback+="editAreaLoader.setValue('"+field.id+"', defaultFiles[i].text); \n";
-                                                   eA_load_callback+="} \n"+
-                                                            " }; \n"+
-                                                             "var setEditAreaTimeOut=function(){ \n"+
-                                                                 "Ext.Msg.show({ \n"+
-                                                                    "title:'Load Content: Error', \n"+
-                                                                    "buttons: Ext.Msg.OK, \n"+
-                                                                    "msg: 'Request TIME-OUT!', \n"+
-                                                                    "animEl: 'elId', \n"+
-                                                                    "icon: Ext.MessageBox.ERROR \n"+
-                                                                "}); \n"+
-                                                             "};"+
-                                                            "var onSubmit=sendXmlHttpRequestTimeOut('GET', " +
-                                                                "defaultFiles[i].loadURL, " +
-                                                                "false, null, 80000, setEditArea, setEditAreaTimeOut,null); "+
-                                                       "} else \n";
-                                                       if(field.isMultiFile)
-                                                          eA_load_callback+="editAreaLoader.openFile('"+field.id+"', defaultFiles[i]); \n";
-                                                       else
-                                                          eA_load_callback+="editAreaLoader.setValue('"+field.id+"', defaultFiles[i].text); \n";
-                             eA_load_callback+=" } \n";
-                                      }else
-                                        eA_load_callback+=" var defaultFiles='"+field.value+"'; \n"+
-                                                            "editAreaLoader.setValue('"+field.id+"', defaultFiles); \n";
-                        eA_load_callback+="\n }";
-
-                        clientManager.insertScript(eA_load_callback, "EditAreaCallbackLoad_"+field.id);
-                        editAreaLodearFunction+=",EA_load_callback: 'editAreaLoaded"+field.id+"'";
-                      }
-                        if(field.syntaxSelectionAllow)
-                          editAreaLodearFunction+=",syntax_selection_allow: '"+field.syntaxSelectionAllow+"'"
-                        if(field.isMultiFile)
-                          editAreaLodearFunction+=",is_multi_files: '"+field.isMultiFile+"'"
-                        if(field.plugins)
-                            editAreaLodearFunction+=",plugins: '"+field.plugins+"'"
-                        if(field.charmapDefault)
-                            editAreaLodearFunction+=",charmap_default: '"+field.charmapDefault+"'"
-			
-   editAreaLodearFunction+="});";
-
-
-
-  eval(editAreaLodearFunction);
-
-  var label;
-  if(field.localization && field.label!="" && field.label){
-    label=field.localization.getLocalMessage(field.label);
-  }else
-   label=field.label;
-
- 
-  
-  formField[u]={
-             colspan: numberColsField+colSpan,
-             layout: "form",
-             items: [new Ext.form.Field({
-				name: field.name,
-                                autoCreate : {
-                                    tag: "textarea",
-                                    id: field.id,
-                                    name: field.name,
-                                    //onchange: onchange,
-                                    cols: cols,
-                                    rows: rows,
-                                    autocomplete: "off"
-                                },
-                                //value: eval(field.defaultFiles),
-                                hideLabel: field.hideLabel,
-                                disabled: field.disabled,
-                                hidden: field.hidden,
-                                id: field.id,
-                                fieldType: "editarea",
-                                labelStyle: field.labelStyle,
-                                labelSeparetor: field.labelSeparetor,
-				fieldLabel: label,
-                                msgTarget : 'qtip',
-                                multipleFile: field.isMultiFile,
-                                vtype: field.vtype,
-                                vtypeText: field.vtypeText,
-                                getEditorValue: function(){
-                                  if(this.multipleFile){
-                                    return(editAreaLoader.getAllFiles(field.id));
-                                  }else
-                                    return(editAreaLoader.getValue(field.id));
-                                },
-                                //objValue String for single File
-                                // or Object
-                                 /*   *  id : (required) A string that will identify the file. it's the only required field.
-                                      Type: String
-                                    * title : (optionnal) The title that will be displayed in the tab area.
-                                      Type: String
-                                      Default: set with the id field value
-                                    * text : (optionnal) The text content of the file.
-                                      Type: String
-                                      Default: ""
-                                    * syntax : (optionnal) The syntax to use for this file.
-                                      Type: String
-                                      Default: ""
-                                    * do_highlight : (optionnal) Set if the file should start highlighted or not
-                                      Type: String
-                                      Default: ""*/
-                                // For multiple File
-                                setEditorValue: function(objValue){
-                                  if(this.multipleFile){
-                                     for(var i=0; i<objValue.length; i++){
-                                        editAreaLoader.openFile(field.id, objValue[i]);
-                                     }
-                                  }else
-                                     editAreaLoader.setValue(field.id,objValue);
-                                },
-                                allowBlank:allowBlank
-			})]
-  };
-
-
-
-  return(formField);
-}
 
 
 
@@ -3845,7 +3710,7 @@ function generateComboField(field){
                                        this.tooltip.initTarget(this.container.id);
                                 },
                                select: function() {
-                                   //alert(this.getValueInformation("description"));
+                                  
                                    if(this.tooltip){
                                        this.tooltip.destroy();
                                        this.tooltip=new Ext.ToolTip({
@@ -3885,7 +3750,7 @@ function generateComboField(field){
                                 var i;
                       
                                 for(i=0;i<this.store.getTotalCount();i++){
-                                   // alert("i: "+this.store.getAt(i).get(this.displayField));
+                                   
                                     if(this.store.getAt(i).get(this.displayField) == this.value)
                                        return(this.store.getAt(i).get(infoValue)); 
                                 }
@@ -4010,7 +3875,7 @@ function generateGazetteerField(field){
                                        this.tooltip.initTarget(this.container.id);
                                 },
                                select: function() {
-                                   //alert(this.getValueInformation("description"));
+                                   
                                    if(this.tooltip){
                                        this.tooltip.destroy();
                                        this.tooltip=new Ext.ToolTip({
@@ -4056,7 +3921,7 @@ function generateGazetteerField(field){
                                 var i;
 
                                 for(i=0;i<this.store.getTotalCount();i++){
-                                   // alert("i: "+this.store.getAt(i).get(this.displayField));
+                                   
                                     if(this.store.getAt(i).get(this.displayField) == this.value)
                                        return(this.store.getAt(i).get(infoValue));
                                 }
@@ -5113,169 +4978,9 @@ function generateRangeDateField(field){
   return(formField);  
 }  
 
-function generateFileField(field){
-  var formField=new Array(), size="20";
-  var colSpan=0;
-  if (field.colSpan)
-      colSpan=(parseFloat(field.colSpan)-1)*numberColsField;
-  if (field.size)
-      size=field.size;
-  
-  var u=0;
-  if(colSpan>0){
-    formField[0]={
-        colspan: colSpan,
-        html: "&nbsp;"
-    };
-    u++;
-  }   
- var allowBlank=true;
-  if(field.allowBlank == "false")
-     allowBlank=false;
-  var onchange="";
-  if(!allowBlank)
-     onchange+="_formObj_[_formObj_.length-1].onChangeFieldControlMandatory();"; 
- 
-  if(field.onChange)
-    onchange+=field.onChange;
-
-  var submitLabel;
-  if(field.localization && field.submitLabel!="" && field.submitLabel){
-    submitLabel=field.localization.getLocalMessage(field.submitLabel);
-  }else
-   submitLabel=field.submitLabel;
-
- /* var fileHtml="<form name='formFile_"+field.id+"' action='"+field.action+"' method='POST' enctype='multipart/form-data' target='"+field.target+"'>"+
-            "<input type='file' id='"+field.id+"_file' name='"+field.id+"_file' value='' onchange='javascript:"+onchange+"' width='"+size+"' />"+
-             "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='buttonSubmit_"+field.id+"' value='"+submitLabel+"'/>"+
-            "</form>";
-     formField[u]={
-             colspan: numberColsField,
-             layout: "form",
-             items: [new Ext.form.Field({
-                        autoCreate: {tag: 'div', cn:{tag:'div'}},
-                        id: field.id,
-                        name: field.id,
-                        hideLabel: true,
-                        value: fileHtml,
-                        setValue:function(val) { 
-                            this.value = val;
-                            if(this.rendered){
-                                this.el.child('div').update(
-                                '<p>'+this.value+'</p>');   
-                        }
-                      }
-                   })]
-            };*/
 
 
-  
-  formField[u]={
-             colspan: 1,
-             layout: "form",
-             items: [new Ext.ux.form.FileUploadField({
-                //xtype: 'fileuploadfield',
-                id: field.id,
-                width: eval(field.size),
-                emptyText: field.blankText,
-                fieldLabel: field.label,
-                name: field.id+"_file",
-                buttonText: '',
-                buttonCfg: {
-                    iconCls: field.icon
-                }
-               })]
-          };
-    if(field.action)
-      formField[u].items[1]=new Ext.Button({
-                text: field.submitLabel,
-              //  renderTo: 'fi-basic-btn',
-                handler: eval(field.action)
-              });
 
-
-   /*formField[u+1]={
-      colspan: 1,
-      layout: "form",
-        html: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-   };
-
-   formField[u+2]={
-             colspan: 1,
-             layout: "form",
-             items: [new Ext.Button({
-                text: field.submitLabel,
-              //  renderTo: 'fi-basic-btn',
-                handler: eval(field.action)
-              })]
-       };*/
-  return(formField);  
-}
-
-function generateSpinnerField(field){
-  var formField=new Array(), size="20";
-  if (field.size)
-      size=field.size;
-  var colSpan=0;
-  if (field.colSpan)
-      colSpan=(parseFloat(field.colSpan)-1)*numberColsField;
-  var u=0;
-  if(colSpan>0){
-    formField[0]={
-        colspan: colSpan,
-        html: "&nbsp;"
-    };
-    u++;
-  }
-
-  var allowBlank=true;
-  if(field.allowBlank == "false")
-     allowBlank=false;
-
-  var onchange="";
-  if(!allowBlank)
-     onchange+="_formObj_[_formObj_.length-1].onChangeFieldControlMandatory();";
-  if(field.onChange)
-    onchange+=field.onChange;
-
-  var label;
-  if(field.localization && field.label!="" && field.label){
-    label=field.localization.getLocalMessage(field.label);
-  }else
-   label=field.label;
-
-  formField[u]={
-             colspan: numberColsField+colSpan,
-             layout: "form",
-             items: [new Ext.ux.form.SpinnerField({
-                                fieldLabel: label,
-                                id: field.id,
-                                hideLabel: field.hideLabel,
-                                name: field.name,
-                                disabled: field.disabled,
-                                labelStyle: field.labelStyle,
-                                labelSeparetor: field.labelSeparetor,
-                                listeners: {
-                                    "onFocus": function(){
-                                       
-                                    }
-                                },
-                                value: field.value,
-                                vtype: field.vtype,
-                                vtypeText: field.vtypeText,
-                                hidden: field.hidden,
-                                minValue: field.min,
-                                maxValue: field.max,
-                                allowDecimals: true,
-                                decimalSeparator: field.decimalSeparator,
-                                decimalPrecision : field.decimalPrecision,
-                                incrementValue: eval(field.inc),
-                                //alternateIncrementValue: 2.1,
-                                accelerate: true      
-			})]
-  };
-  return(formField);
-}
 
 function generateLabelField(field){
   var formField=new Array();

@@ -157,6 +157,13 @@ OpenLayers.Format.XMLKeyValue = OpenLayers.Class(OpenLayers.Format.XML, {
                                         this.writeNode(root, tempform[u].id+"EndDate", keyValue.formValues[tempform[u].id].endDate);
                                       }  
                                       break;
+                                case "file":
+                                      if(keyValue.formValues[tempform[u].id]){
+                                        this.writeNode(root, tempform[u].id+"FileName", keyValue.formValues[tempform[u].id].fileName);
+                                        if(keyValue.formValues[tempform[u].id].uploadID)
+                                            this.writeNode(root, tempform[u].id+"UploadID", keyValue.formValues[tempform[u].id].uploadID);
+                                      }
+                                      break;
                                 case "rangetime":
                                       //alert(keyValue.formValues[tempform[u].id]);
                                       if(keyValue.formValues[tempform[u].id]){

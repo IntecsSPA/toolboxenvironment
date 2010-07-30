@@ -20,6 +20,7 @@
             </input>
            
              <input type="text" name="ServiceUrl" id="ServiceUrl"  hidden="true" hideLabel="true" value="manager?cmd=exportGroupServices"/>
+           
         </group>
     </section>
     <!--requestInformations backgroundColor="#eeeeee">

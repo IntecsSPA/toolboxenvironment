@@ -6,16 +6,21 @@
           <input type="file" name="zipServices" hideLabel="false" id="zipServices" 
            optional="true"
            size="300"
+           autoUploadURL="rest/gui/storeData"
            iconImage="upload-icon"
            blankText="Load Services Group Zip File"
-           action="importServices"
+           label="Select Services Group Zip File"
+           iconWait="images/loaderFile.gif"
+           iconFailure="images/fail.png"
+           iconSuccess="images/success.png"
            submitLabel="Import Services"/>
-            
+           <!--input type="editarea" name="test" id="test"  hidden="true" hideLabel="true" value="manager?cmd=exportGroupServices"/>
+           <input type="editarea" name="test2" id="test2"  hidden="true" hideLabel="true" value="manager?cmd=exportGroupServices"/-->
         </group>
     </section>
-    <!--requestInformations backgroundColor="#eeeeee">
+    <requestInformations>
         <buttons>
             <button name="importServicesButton" id="importServicesButton" label="Import Services" iconImage="" onclick="importServices"/>
         </buttons>
-    </requestInformations-->
+    </requestInformations>
 </inputInterface>

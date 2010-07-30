@@ -25,10 +25,7 @@ servicesXMLInterface.push({xmlUrl:"jsScripts/wpsWizard/resources/xml/createWPSSe
                             actionMethod: "createWPSRequest(this)"});*/
 
  var arrayPlugin= new Array();
- /*arrayPlugin.push("rest/gui/creationWizard/Ordering.json");
- arrayPlugin.push("rest/gui/creationWizard/Archiving.json");
- arrayPlugin.push("rest/gui/creationWizard/Catalogue.json");
- arrayPlugin.push("rest/gui/creationWizardWPS.json");*/
+
 
 
 
@@ -64,9 +61,10 @@ function importExportGroupServices(){
     if(importExportGroupServiceWin == null){
 
         exportGroupServiceIO=createPanelExjFormByXml(exportGroupServicesXML);
-   
+
         importGroupServiceIO=createPanelExjFormByXml(importGroupServicesXML);
 
+     
         var exportServicesPanel=new Ext.Panel({
                             title: 'Export Services',
                             border: true,
@@ -91,6 +89,7 @@ function importExportGroupServices(){
                                   split:true,
                                   bodyStyle : {background: "#79a3cb"},
                                   anchor:'100% 80%',
+                                  autoScroll : true,
                                   margins:'5 0 5 5',
                                   //autoScroll : true,
                                   layout:'accordion',
@@ -104,12 +103,8 @@ function importExportGroupServices(){
                                   
 
                                   items:[importServicesPanel,
-                                         exportServicesPanel//,
-                                         /*cat.advancedSearchPanel,
-                                         cat.modelInstanceSearchPanel,
-                                         cat.remoteSensingSearchPanel,
-                                         cat.observationsSearchPanel,
-                                         cat.settingsPanel*/]
+                                         exportServicesPanel
+                                       ]
                             });
 
   
@@ -119,10 +114,12 @@ function importExportGroupServices(){
                         border: false,
                         animCollapse : true,
                         maximizable : true,
-                       // autoScroll : true,
-                                resizable : false,
-                                collapsible: true,
+                        autoScroll : true,
+                        resizable : false,
+                        draggable: false,
+                        collapsible: false,
                         layout: 'fit',
+                        
                         loadingBarImg: "images/loader1.gif",
                         loadingBarImgPadding: 60,
                         loadingMessage: "Loading... Please Wait...",
@@ -140,7 +137,10 @@ function importExportGroupServices(){
                           },
                           expand: function(){
                               spot.show('importExportGroupServiceWin');
-                          }
+                          },
+                           maximize: function(){
+                                   
+                                  }
                         },
                         
                         width: screen.width/2.1,
@@ -155,12 +155,14 @@ function importExportGroupServices(){
         accordionImportExportServicesPanel.layout.setActiveItem(0);
         importGroupServiceIO.formsPanel.render(document.getElementById("importServicesInterface"));
         importGroupServiceIO.render();
+        //importGroupServiceIO.renderFileForm();
 
         accordionImportExportServicesPanel.layout.setActiveItem(1);
         exportGroupServiceIO.formsPanel.render(document.getElementById("exportServicesInterface"));
         exportGroupServiceIO.render();
 
         accordionImportExportServicesPanel.layout.setActiveItem(0);
+       
      //   importExportGroupServiceIO.formsTab.setActiveTab(0);
     }else
        importExportGroupServiceWin.show();
@@ -203,42 +205,46 @@ function exportServices(){
 
 }
 
+function importServices(){
 
-var importServices=function(){
-  
-     if(importGroupServiceIO.formsArray[0].getForm().isValid()){
-        // alert(importGroupServiceIO.formsArray[0].getForm().findField(this.filePathID));
-        // if(importGroupServiceIO.formsArray[0].getForm().findField(this.filePathID))
+   var formValuesImport=importGroupServiceIO.getFormValues(false);
 
-	  importGroupServiceIO.formsArray[0].getForm().submit({
-	        url: 'manager?cmd=importGroupServices',
-	        waitMsg: 'Loading services Group...',
-	        success: function(form, action){
+   if(formValuesImport.zipServices.uploadID){
+       
+       var loading=new Object();
+       loading.message="Please Wait ...";
+       loading.title="Import Services";
+       
+       var importServiceFunc=function(response){
 
-	           Ext.Msg.show({
+            Ext.Msg.show({
                           title: 'Import Services',
                           buttons: Ext.Msg.OK,
                           width: Math.floor((screen.width/100)*50),
-                          msg: action.response.responseText,
+                          msg: "<pre>"+response+"</pre>",
                           fn: function(){
                             window.location = 'main.jsp';
                           },
                           icon: Ext.MessageBox.INFO
                       });
-                   
-	         },
-                failure: function(form, action) {
-                   Ext.Msg.show({
-                          title: 'Import Services: Internal Error ',
-                          buttons: Ext.Msg.OK,
-                          width: Math.floor((screen.width/100)*50),
-                          msg: 'Internal Error:  '+action.response.responseText,
-                          icon: Ext.MessageBox.ERROR
-                      });
-                
-                }
-	     });
-         }
+       }
+
+
+       var importServiceTimeOut=function(){
+           Ext.Msg.show({
+                            title:'Import group services: Error',
+                            buttons: Ext.Msg.OK,
+                            msg: 'Request TIME-OUT!',
+                            animEl: 'elId',
+                            icon: Ext.MessageBox.ERROR
+                        });
+       }
+
+        var onSubmit=sendXmlHttpRequestTimeOut("GET",
+             "manager?cmd=importGroupServices&id="+formValuesImport.zipServices.uploadID,
+             true, null, 800000, importServiceFunc, importServiceTimeOut,null,
+                                    loading, null);
+   }
 }
 
 
@@ -254,8 +260,9 @@ function createServiceInterface(){
 
         var elementImage=document.getElementById("createServiceImage");
 
+            elementImage.setAttribute("src", "images/loader1.gif");
         //elementImage.src="images/createServiceLoader.gif";
-        elementImage.src="images/loader1.gif";
+       // elementImage.src="images/loader1.gif";
 
         var getPlugins=function(response){
             var jsonResponseObj=eval('new Object(' + response + ')');
@@ -670,3 +677,4 @@ function controlNewService(serviceName){
 
        return true;
     }
+    

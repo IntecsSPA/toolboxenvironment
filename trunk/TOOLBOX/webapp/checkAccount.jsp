@@ -1,19 +1,3 @@
-<!-- 
- -
- -  Copyright 2003-2004 Intecs
- -
- -  This file is part of TOOLBOX.
- -  TOOLBOX is free software; you can redistribute it andOr modify
- -  it under the terms of the GNU General Public License as published by
- -  the Free Software Foundation; either version 2 of the License, or
- -  (at your option) any later version.
- -
- -  File Name:         $RCSfile: checkAccount.jsp,v $
- -  TOOLBOX Version:   $Name:  $
- -  File Revision:     $Revision: 1.6 $
- -  Revision Date:     $Date: 2004/09/07 13:24:16 $
- -
- -->
 <%@ page import="it.intecs.pisa.toolbox.*, 
                  java.util.*,
                  org.w3c.dom.*,

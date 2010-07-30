@@ -57,7 +57,6 @@ String extImport = (extVers.equalsIgnoreCase("2.0.1") ? extImport2 : extImport3)
 
                 
 %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
 
@@ -65,7 +64,7 @@ String extImport = (extVers.equalsIgnoreCase("2.0.1") ? extImport2 : extImport3)
    <meta http-equiv="pragma" content="no-cache">
    <meta http-equiv="Cache-Control" content="no-cache">
 
-    <TITLE>SSE Toolbox</TITLE>
+    <TITLE>TOOLBOX</TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <%=extImport%>
     <link rel="stylesheet" href="jsScripts/dhtmlwindow.css" type="text/css" >
@@ -80,9 +79,11 @@ String extImport = (extVers.equalsIgnoreCase("2.0.1") ? extImport2 : extImport3)
     <META http-equiv=Cache-Control content="no-store, no-cache, must-revalidate, post-check=0, pre-check=0">
     <META http-equiv=Expires content=0>
     <SCRIPT type="text/javascript" src="jsScripts/CommonScript.js"></SCRIPT>
+    <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/manager.js"></script>
     <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
 
 <script language="Javascript" type="text/javascript">
+    var gcManager= new GisClientManager("eng", "jsScripts/import/gis-client-library");
     var currentService="<%=serviceName%>";
     var error="";
     <% if(!error.equalsIgnoreCase("")){%>
@@ -210,17 +211,16 @@ String extImport = (extVers.equalsIgnoreCase("2.0.1") ? extImport2 : extImport3)
                 </TR> 
                 <TR> 
                     <TD> 
-                        <TABLE class=flagcolour cellSpacing=0 cellPadding=0 width="100%" 
-                               align=center border=0> 
+                        <TABLE class=flagcolour cellSpacing=0 cellPadding=0 width="100%" align=center border=0> 
                         <TBODY> 
                         <TR bgColor=#607a92> 
                             <TD vAlign=bottom align=left bgColor=#607a92 height=60><A 
                                     href="main.jsp" target=_top><IMG 
                                 src="images/toolboxLogo.png" border=0></A> </TD>
                             <TD vAlign=bottom align=middle bgColor=#607a92 height=60><!-- &nbsp; --> 
-                                <A 
+                                <!--A
                                     href="http://services.eoportal.org/index.jsp" target=_top><IMG 
-                                src="images/sse.gif" border=0></A> </TD>
+                                src="images/sse.gif" border=0></A--> </TD>
                             
                             <%
                             if ( newVersion != null ) {                          

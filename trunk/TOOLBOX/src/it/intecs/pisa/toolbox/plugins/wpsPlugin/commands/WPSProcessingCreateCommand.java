@@ -45,7 +45,7 @@ public class WPSProcessingCreateCommand extends NativeCommandsManagerPlugin {
                 documentResponse=createResponse.getDocumentResponse();
             }
             if(!notWellFormed)
-               documentResponse=commands.parseWPSDescribeProcess(serviceInformationDocument,serviceName);
+               documentResponse=commands.parseWPSDescribeProcess(serviceInformationDocument,serviceName, pluginDir);
         }else{
             /* ------- GENERATE OPERATION -------------*/
             if(step.equalsIgnoreCase("generateOperation")){

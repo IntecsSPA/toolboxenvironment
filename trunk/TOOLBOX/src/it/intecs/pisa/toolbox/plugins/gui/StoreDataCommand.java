@@ -38,7 +38,7 @@ public class StoreDataCommand extends RESTManagerCommandPlugin{
         JsonObject outputJson = new JsonObject();
         outputJson.addProperty("success", true);
         outputJson.addProperty("id", id);
-        resp.setContentType("text/html");
+        resp.setContentType("text/xml");
         IOUtil.copy(JsonUtil.getJsonAsStream(outputJson),resp.getOutputStream());
     }
 }

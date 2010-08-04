@@ -1,5 +1,6 @@
 package it.intecs.pisa.toolbox.plugins.wpsPlugin.manager;
 
+
 import it.intecs.pisa.common.tbx.Operation;
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.plugins.wpsPlugin.engine.WPSEngine;
@@ -10,7 +11,9 @@ import it.intecs.pisa.toolbox.service.TBXSOAPInterface;
 import it.intecs.pisa.toolbox.service.TBXService;
 import it.intecs.pisa.toolbox.service.TBXSynchronousOperation;
 import it.intecs.pisa.util.DOMUtil;
+import it.intecs.pisa.util.DateUtil;
 import it.intecs.pisa.util.IOUtil;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -175,7 +178,7 @@ public class WPSCommands extends WPSUtil{
        
 }
 
-    public Document parseWPSDescribeProcess(Document describeDocument, String serviceName) throws Exception {
+    public Document parseWPSDescribeProcess(Document describeDocument, String serviceName, File pluginDir) throws Exception {
         WPSCommandResponse createResponse=new WPSCommandResponse(PARSE_DESCRIBE_OP);
         boolean validate=true;
         int i;
@@ -211,9 +214,16 @@ public class WPSCommands extends WPSUtil{
             // Generate Engine Scripts Template and outputManager
             List<WPSEngine> listEngins=getWPSEngines();
             String template=null;
+            File templateFile=null;
+            String templateRequest="rest/wps/storedData/";
+            String id;
             for(i=0; i<listEngins.size(); i++){
                template=listEngins.get(i).generateEngineTemplate(newServicePath, describeDocument, processingName);
-               createResponse.insertCDATATemplate(listEngins.get(i).getEngineName(), template);
+               id = DateUtil.getCurrentDateAsUniqueId();
+               templateFile = new File(pluginDir, "resources/storedData/" + id);
+               IOUtil.copy(new ByteArrayInputStream(template.getBytes()), new FileOutputStream(templateFile));
+               //createResponse.insertCDATATemplate(listEngins.get(i).getEngineName(), template);
+               createResponse.insertTemplateFileURL(listEngins.get(i).getEngineName(), templateRequest+id);
                listEngins.get(i).generateEngineOutputManager(newServicePath, describeDocument, processingName);
             }
 
@@ -227,8 +237,8 @@ public class WPSCommands extends WPSUtil{
     
 
 }
-    public Document updateWPSDescribeProcess(Document describeDocument, String serviceName, String processingName, String engineType, boolean currentAsync) throws Exception {
-        Document parseResponse=parseWPSDescribeProcess(describeDocument,serviceName);
+    public Document updateWPSDescribeProcess(Document describeDocument, String serviceName, String processingName, String engineType, boolean currentAsync, File pluginDir) throws Exception {
+        Document parseResponse=parseWPSDescribeProcess(describeDocument,serviceName, pluginDir);
         NodeList errors=parseResponse.getElementsByTagName("ErrorValidation");
 
       //  Toolbox.getToolboxConfigurator().deleteOperation(serviceName,operationName);

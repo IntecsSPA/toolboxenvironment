@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 public class GetInterfacesTypesCommand extends RESTManagerCommandPlugin{
 
     @Override
-    public JsonObject executeCommand(String method, JsonObject request,Hashtable<String,String> headers,Hashtable<String,String> parameters) throws Exception  {
+    public JsonObject executeCommand(String method, JsonObject request) throws Exception  {
         boolean success=true;
         JsonObject outputJson=null;
         try

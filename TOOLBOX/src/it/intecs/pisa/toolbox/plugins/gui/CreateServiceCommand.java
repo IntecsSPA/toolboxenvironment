@@ -32,7 +32,7 @@ public class CreateServiceCommand extends RESTManagerCommandPlugin{
     protected static final String INTERFACETYPE = "interfaceType";
 
     @Override
-    public Document executeCommand(String cmd, Document inputDoc,Hashtable<String,String> headers,Hashtable<String,String> parameters) {
+    public Document executeCommand(String cmd, Document inputDoc) {
         Document responseDoc=null;
         Hashtable<String,String> serviceInfo;
 

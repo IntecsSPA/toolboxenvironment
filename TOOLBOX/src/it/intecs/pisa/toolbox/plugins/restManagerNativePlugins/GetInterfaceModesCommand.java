@@ -27,12 +27,12 @@ import org.w3c.dom.Element;
 public class GetInterfaceModesCommand extends RESTManagerCommandPlugin{
 
     @Override
-    public InputStream executeCommand(String cmd, InputStream in,Hashtable<String,String> headers,Hashtable<String,String> parameters) {
+    public InputStream executeCommand(String cmd, InputStream in) {
         InputStream documentAsInputStream = null;
         try {
             Document response;
 
-            response = executeCommand(cmd, (Document) null,headers,parameters);
+            response = executeCommand(cmd, (Document) null);
             documentAsInputStream = DOMUtil.getDocumentAsInputStream(response);
 
             return documentAsInputStream;
@@ -48,7 +48,7 @@ public class GetInterfaceModesCommand extends RESTManagerCommandPlugin{
     }
 
     @Override
-    public Document executeCommand(String cmd, Document inputDoc,Hashtable<String,String> headers,Hashtable<String,String> parameters) {
+    public Document executeCommand(String cmd, Document inputDoc) {
         DOMUtil util=new DOMUtil();
         Document doc;
         String interfaceName, interfaceVersion, interfaceType;
@@ -78,7 +78,7 @@ public class GetInterfaceModesCommand extends RESTManagerCommandPlugin{
     }
 
     @Override
-    public JsonObject executeCommand(String cmd, JsonObject request,Hashtable<String,String> headers,Hashtable<String,String> parameters) throws Exception {
+    public JsonObject executeCommand(String cmd, JsonObject request) throws Exception {
         String interfaceName, interfaceVersion, interfaceType;
         JsonObject outputJson = new JsonObject();
         JsonArray array = new JsonArray();

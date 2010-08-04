@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Massimiliano
+ * @author Massimiliano Fanciulli
  */
 public interface IManagerPlugin {
     public void executeCommand(HttpServletRequest req, HttpServletResponse resp) throws Exception;

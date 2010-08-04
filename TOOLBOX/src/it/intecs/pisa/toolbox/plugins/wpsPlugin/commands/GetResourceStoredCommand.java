@@ -17,7 +17,7 @@ public class GetResourceStoredCommand extends RESTManagerCommandPlugin{
 
 
     @Override
-    public InputStream executeCommand(String cmd, InputStream in, Hashtable<String, String> headers, Hashtable<String, String> parameters) {
+    public InputStream executeCommand(String cmd, InputStream in) {
         File storedFile;
         int index=cmd.lastIndexOf("/");
         String fileName=cmd.substring(index+1);

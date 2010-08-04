@@ -23,7 +23,7 @@ import java.util.Hashtable;
 public class StoreDataCommand extends RESTManagerCommandPlugin{
 
     @Override
-    public InputStream executeCommand(String cmd, InputStream in, Hashtable<String, String> headers, Hashtable<String, String> parameters) {
+    public InputStream executeCommand(String cmd, InputStream in) {
         try {
             InputStream response;
             File outputFile;

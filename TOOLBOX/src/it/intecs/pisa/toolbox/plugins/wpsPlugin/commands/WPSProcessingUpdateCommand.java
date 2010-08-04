@@ -43,7 +43,7 @@ public class WPSProcessingUpdateCommand extends NativeCommandsManagerPlugin{
             }
             if(!notWellFormed)
                 documentResponse=commands.updateWPSDescribeProcess(serviceInformationDocument,serviceName,
-                        processingName,engineType,Boolean.parseBoolean(async));
+                        processingName,engineType,Boolean.parseBoolean(async), pluginDir);
         }else{
             /* ------- UPDATE SCRIT ENGINE -------------*/
             if(step.equalsIgnoreCase("updateScriptEngine")){     

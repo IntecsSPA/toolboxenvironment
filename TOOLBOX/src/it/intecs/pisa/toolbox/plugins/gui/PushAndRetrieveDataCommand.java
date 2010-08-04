@@ -5,18 +5,18 @@
 
 package it.intecs.pisa.toolbox.plugins.gui;
 
-import com.google.gson.JsonObject;
 import http.utils.multipartrequest.MultipartRequest;
 import http.utils.multipartrequest.ServletMultipartRequest;
 import it.intecs.pisa.pluginscore.RESTManagerCommandPlugin;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.DateUtil;
 import it.intecs.pisa.util.IOUtil;
-import it.intecs.pisa.util.json.JsonUtil;
+import java.io.ByteArrayInputStream;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
+import java.net.URLEncoder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.w3c.dom.Document;
@@ -37,30 +37,33 @@ public class PushAndRetrieveDataCommand extends RESTManagerCommandPlugin{
         String id = DateUtil.getCurrentDateAsUniqueId();
         outputFile = new File(pluginDir, "resources/storedData/" + id);
 
-        IOUtil.copy(parser.getFileContents(parser.getFileParameterNames().nextElement().toString()), new FileOutputStream(outputFile));
 
-        String contentType=req.getHeader("Content-Type");
+        String fileName=parser.getFileParameterNames().nextElement().toString();
+        IOUtil.copy(parser.getFileContents(fileName), new FileOutputStream(outputFile));
+
+        String contentType=parser.getContentType(fileName);
         if(contentType==null)
             throw new Exception("No content type in request");
 
-        InputStream outStream;
+        String out;
         if(contentType.equals("text/xml"))
         {
             Document doc;
             DOMUtil util;
-
             util=new DOMUtil();
             doc=util.fileToDocument(outputFile);
             DOMUtil.indent(doc);
-            outStream=util.getDocumentAsInputStream(doc);
+            out=URLEncoder.encode(DOMUtil.getDocumentAsString(doc), "UTF-8");
+            
+            
         }
         else
         {
-            outStream=new FileInputStream(outputFile);
-        }
+          out=URLEncoder.encode(IOUtil.inputToString(new FileInputStream(outputFile)), "UTF-8");
 
-        IOUtil.copy(outStream,resp.getOutputStream());
-        outStream.close();
+        }
+        resp.setContentType("text/html");
+        IOUtil.copy( new ByteArrayInputStream(out.getBytes()),resp.getOutputStream());
         outputFile.delete();
     }
 }

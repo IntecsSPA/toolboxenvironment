@@ -109,6 +109,13 @@ public class WPSCommandResponse {
         documentResponse.getDocumentElement().appendChild(templateElement);
     }
 
+
+    public void insertTemplateFileURL (String engineName, String url){
+        Element templateElement=documentResponse.createElement(engineName+"Template");
+        templateElement.setTextContent(url);
+        documentResponse.getDocumentElement().appendChild(templateElement);
+    }
+
     /**
      * @return the documentResponse
      */

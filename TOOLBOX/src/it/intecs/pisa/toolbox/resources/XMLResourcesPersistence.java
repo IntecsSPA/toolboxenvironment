@@ -19,6 +19,7 @@ package it.intecs.pisa.toolbox.resources;
 
 import it.intecs.pisa.toolbox.db.ResourceSequence;
 import it.intecs.pisa.util.DOMUtil;
+import it.intecs.pisa.util.IOUtil;
 import java.io.File;
 import java.util.Date;
 import org.w3c.dom.Document;
@@ -142,30 +143,6 @@ public class XMLResourcesPersistence {
 
     public void deleteOlderThan(Date treshold)
     {
-        if(storeDirectory!=null && storeDirectory.exists())
-        {
-            for(File f:storeDirectory.listFiles())
-            {
-                if(f.isDirectory())
-                    removeOldFilesFromSubdir(f,treshold);
-            }
-        }
-    }
-
-    private void removeOldFilesFromSubdir(File f, Date treshold) {
-        for(File subFile:f.listFiles())
-        {
-            try
-            {
-                if(subFile.lastModified()<treshold.getTime())
-                {
-                    subFile.delete();
-                }
-            }
-            catch(Exception e)
-            {
-                System.out.println("Cannot delete file "+subFile.getAbsolutePath());
-            }
-        }
+        IOUtil.deleteOlderThan(storeDirectory, treshold);
     }
 }

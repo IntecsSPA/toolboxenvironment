@@ -415,4 +415,31 @@ public class IOUtil {
             return true;
         else return isParentDirectory(parentDirToCheck,fileuri.getParentFile());
     }
+
+    public static void deleteOlderThan(File folder,Date treshold)
+    {
+        if(folder!=null && folder.exists())
+        {
+            for(File f:folder.listFiles())
+            {
+                if(f.isDirectory())
+                    removeOldFilesFromSubdir(f,treshold);
+            }
+        }
+    }
+
+    private static void removeOldFilesFromSubdir(File f, Date treshold) {
+        for(File subFile:f.listFiles())
+        {
+            try
+            {
+                if(subFile.lastModified()<treshold.getTime())
+                    subFile.delete();
+            }
+            catch(Exception e)
+            {
+                System.out.println("Cannot delete file "+subFile.getAbsolutePath());
+            }
+        }
+    }
 }

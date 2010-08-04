@@ -16,14 +16,21 @@ public class AutomaticCleanup {
 
     public static void start()
     {
+        long interval=60000*5; //5min
         DeleteOldInstancesAutomaticallyTask dt;
         CleanupUnlinkedResourcesTask ct;
+        RestResourcesUploadCleanupTask rrut;
+        WPSUploadCleanupTask wpsct;
 
         dt=new DeleteOldInstancesAutomaticallyTask();
         ct= new CleanupUnlinkedResourcesTask();
+        rrut=new RestResourcesUploadCleanupTask();
+        wpsct=new WPSUploadCleanupTask();
 
-        timer.scheduleAtFixedRate(dt, 0, 60000);
-        timer.scheduleAtFixedRate(ct, 0, 60000);
+        timer.scheduleAtFixedRate(dt, 0, interval);
+        timer.scheduleAtFixedRate(ct, 0, interval);
+        timer.scheduleAtFixedRate(rrut, 0, interval);
+        timer.scheduleAtFixedRate(wpsct, 0, interval);
     }
 
     public static void stop()

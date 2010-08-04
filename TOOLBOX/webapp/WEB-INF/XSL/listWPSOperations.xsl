@@ -194,7 +194,7 @@
                       <xsl:copy-of select="."/>
                     </xsl:for-each>
                     <tr processname="{$processName}" rowspan="3">
-                       <xsl:variable name="processInfo" select="document(string(concat($proxyURL, '/TOOLBOX/manager?cmd=getServiceResource&amp;serviceName=', $serviceName, '&amp;relativePath=AdditionalResources/WPS/InfoProcess/', $processName, '_Info.xml')))"/>
+                       <xsl:variable name="processInfo" select="document(string(concat($proxyURL, '/manager?cmd=getServiceResource&amp;serviceName=', $serviceName, '&amp;relativePath=AdditionalResources/WPS/InfoProcess/', $processName, '_Info.xml')))"/>
                        <xsl:variable name="processType" select="$processInfo//Type"/>
                        <xsl:variable name="async" select="$processInfo//Asynchronous"/>
                        <!--xsl:variable name="processType" select="concat($proxyURL, '/TOOLBOX/manager?cmd=getServiceResource&amp;serviceName=', $serviceName, '&amp;relativePath=AdditionalResources/WPS/InfoProcess/', $processName, '_Info.xml')"/-->

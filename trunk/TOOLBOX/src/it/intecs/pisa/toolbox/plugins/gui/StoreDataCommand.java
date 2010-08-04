@@ -34,11 +34,12 @@ public class StoreDataCommand extends RESTManagerCommandPlugin{
         outputFile = new File(pluginDir, "resources/storedData/" + id);
 
         IOUtil.copy(parser.getFileContents(parser.getFileParameterNames().nextElement().toString()), new FileOutputStream(outputFile));
-            
+
+
         JsonObject outputJson = new JsonObject();
         outputJson.addProperty("success", true);
         outputJson.addProperty("id", id);
-        resp.setContentType("text/xml");
+        resp.setContentType("text/html");
         IOUtil.copy(JsonUtil.getJsonAsStream(outputJson),resp.getOutputStream());
     }
 }

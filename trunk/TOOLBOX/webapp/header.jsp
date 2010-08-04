@@ -320,7 +320,7 @@ String extImport = (extVers.equalsIgnoreCase("2.0.1") ? extImport2 : extImport3)
                   <TR align=middle> 
                     <%
 						String serviceConfiguration = "serviceConfiguration.jsp?serviceName=" + serviceName;
-						String manageOperations= "manageOperations.jsp?serviceName=" + serviceName;
+						String manageOperations= "manageOperations.jsp?extVers=3&serviceName=" + serviceName;
                                                 String rssFeed="manager?cmd=getServiceRSS&serviceName=" + serviceName;
 						//String deleteService = "deleteServiceRequest.jsp?serviceName=" + serviceName;
 					%> 

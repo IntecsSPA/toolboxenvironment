@@ -60,10 +60,20 @@ GisClientManager= function(lang, gisClientLibPath, proxyUrl, utilsUrl) {
  this.interfaceImport= function(){
 
     /*INTERFACE FIELD -- Start Import*/
+
+    /*Ext ux extension*/
+    this.loadScript("import/ext/ux/fileuploadfield/FileUploadField.js");
+
+    /* FILE field*/
+    this.loadCSS("import/ext/ux/fileuploadfield/css/fileuploadfield.css");
     this.loadScript("widgets/lib/ext/field/fileField.js");
+
+    
+
     this.loadScript("widgets/lib/ext/field/spinnerField.js");
     this.loadScript("widgets/lib/ext/field/editAreaField.js");
-        setTimeout("editAreaLoadDip();",3000);
+
+
     //setTimeout("spinnerLoadDip();",10000);
 
 

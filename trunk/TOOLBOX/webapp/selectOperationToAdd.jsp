@@ -48,7 +48,7 @@
             String newOp = (String) messages.getObject("chooseCommunicationMode.newOp");
 
             String bc = "<a href='main.jsp'>" + home + "</a>&nbsp;&gt;" +
-                    "&nbsp;<a href='manageOperations.jsp?serviceName=" + serviceName + "'>" + opManag + "</a>&nbsp;&gt;" +
+                    "&nbsp;<a href='manageOperations.jsp?extVers=3&serviceName=" + serviceName + "'>" + opManag + "</a>&nbsp;&gt;" +
                     newOp;
 
             servMan = ServiceManager.getInstance();
@@ -93,7 +93,7 @@
 
     function gothere() 
     { 
-        window.location="<%= response.encodeURL("manageOperations.jsp?" + request.getQueryString())%>";
+        window.location="<%= response.encodeURL("manageOperations.jsp?extVers=3&" + request.getQueryString())%>";
     } 
     //-->
 </SCRIPT>

@@ -42,10 +42,10 @@
               "&nbsp;"+opManag;
 %>
 
-<script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/jquery/jquery-1.2.6.js"></script>
+<!--script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/jquery/jquery-1.2.6.js"></script>
 <script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/adapter/jquery/ext-jquery-adapter.js"></script>
 <script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/adapter/ext/ext-base.js"></script>
-<script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/ext-all.js"></script>
+<script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/ext-all.js"></script-->
 <script src="jsScripts/import/gis-client-library/import/OpenLayers/lib/OpenLayers.js"></script>
 <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/openlayers/Format/XMLKeyValue.js"></script>
 <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/webgis/Panel/WindowInterfacePanel.js"></script>
@@ -61,6 +61,15 @@
 
 
 <script type="text/javascript" src="jsScripts/wpsWizard/scripts/wpsWizardManager.js"></script>
+
+
+<style type="text/css">
+
+.upload-icon {
+            background: url('images/image_add.png') no-repeat 0 0 !important;
+        }
+
+</style>
 <SCRIPT language="JavaScript">
 <!--
 function gothere() 

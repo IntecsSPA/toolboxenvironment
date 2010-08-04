@@ -10,10 +10,21 @@ var editAreaPath="jsScripts/import/edit_area/edit_area_full.js";
 var textAreaFrameH=(screen.height/1.9);
 var textAreaFrameW=(screen.width/1.55);
 var toolsServlet="Tools";
-var grassTemplate;
-var shellTemplate;
-var toolboxTemplate;
-var insertGrassScriptWizardWindow=null;
+var engineTemplatesURL;
+var insertEngineScriptWizardWindow=null;
+
+var serviceName;
+var processingName;
+var asynchronous;
+var eType;
+
+
+var createWPSProccesingXML="jsScripts/wpsWizard/resources/xml/createWPSProcessing_InsertDescribePanel.xml";
+var updateWPSDescribeXML="jsScripts/wpsWizard/resources/xml/updateWPSProcessing_UpdateDescribePanel.xml";
+var updateWPSSciptEngineXML="jsScripts/wpsWizard/resources/xml/updateWPSProcessing_UpdateEngineScriptPanel.xml";
+var createWPSScriptEngineXML="jsScripts/wpsWizard/resources/xml/createWPSProcessing_InsertEngineScriptPanel.xml";
+
+var createWPSProccesingIO=null, createWPSProccesingScriptEngineIO=null;
 
 var spot = new Ext.ux.Spotlight({
         //easing: 'easeOut',
@@ -60,17 +71,11 @@ function wpsWizardManager(){
 }
 
 function wpsProcessingWizardManager(){
-    var id="InsertDescribeInterface";
-    var insertDescribeWizard_html="<table width='100%'></br><tr rowspan='2' BGCOLOR='#325e8f'><td align='center'><b style='color: #ffffff;'>Insert WPS Process Description: </b><br></td></tr><tr><td align='left' width='100%'>"+
-                                     "<form name='formFile_"+id+"' action='"+toolsServlet+"?cmd=putFile&type=multipart&modality=edit&editAreaPath="+editAreaPath+"&cols="+textAreaFrameW/7.2+"&rows="+textAreaFrameH/15+"' method='POST' enctype='multipart/form-data' target='iframeRequest_"+id+"'>"+
-                                        "<input type='file' id='FILE' name='FILE' value='' width='"+textAreaFrameW/1.4+"' />"+
-                                        "<input type='submit' name='buttonSubmit_"+id+"' value='Load File'/>"+
-                                    "</form></td></tr><tr align='center'><td>"+
-                                    "<iframe scrolling='no' FRAMEBORDER='0' src='"+toolsServlet+"?cmd=putFile&type=nomultipart&editAreaPath="+editAreaPath+"&modality=edit&cols="+textAreaFrameW/7.2+"&rows="+textAreaFrameH/15+"' name='iframeRequest_"+id+"' width='"+textAreaFrameW+"' height='"+(textAreaFrameH+(textAreaFrameH/50))+"' marginwidth='0' marginheight='0'></iframe>"+
-                                    "<tr><td><input type='button' name='buttonSendDescribe_"+id+"' value='Parse WPS Processing Describe Information' onclick='parseWPSDescribeProcessingRequest();'/>"+
-                                    "</td></tr></table>";
 
    if(insertDescribeWizardWindow == null){
+
+
+           createWPSProccesingIO=createPanelExjFormByXml(createWPSProccesingXML);
 
            insertDescribeWizardWindow = new WebGIS.Panel.WindowInterfacePanel({
                                 title: 'Create a new WPS Processing',
@@ -80,6 +85,7 @@ function wpsProcessingWizardManager(){
                                 autoScroll : true,
                                 resizable : false,
                                 collapsible: true,
+                                maximizable: true,
                                 layout: 'fit',
                                 loadingBarImg: "images/loader1.gif",
                                 loadingBarImgPadding: 90,
@@ -96,7 +102,7 @@ function wpsProcessingWizardManager(){
                                       spot.hide();
                                   },
                                   expand: function(){
-                                      spot.show('insertDescribeWizardWindow');z
+                                      spot.show('insertDescribeWizardWindow');
                                   }
                                 },
                                 width: screen.width/1.5,
@@ -105,10 +111,14 @@ function wpsProcessingWizardManager(){
                                 html: "<div id='insertDescribeWizardWindow_div'/>"
                     });
            insertDescribeWizardWindow.on('close', function(){/*insertDescribeWizardWindow=null*/window.location.reload();});
-           
+
+
            insertDescribeWizardWindow.show();
            insertDescribeWizardWindow.insertLoadingPanel();
-           document.getElementById("insertDescribeWizardWindow_div").innerHTML=insertDescribeWizard_html;
+           //document.getElementById("insertDescribeWizardWindow_div").innerHTML=insertDescribeWizard_html;
+
+           createWPSProccesingIO.formsPanel.render(document.getElementById("insertDescribeWizardWindow_div"));
+           createWPSProccesingIO.render();
            spot.show('insertDescribeWizardWindow');
    }
 }
@@ -149,7 +159,8 @@ function createWPSRequest(formCrateWpsService){
 }
 
 function parseWPSDescribeProcessingRequest(){
-   var describeProcess=parent.iframeRequest_InsertDescribeInterface.window.getEditAreaValue();
+   var describeProcess=createWPSProccesingIO.getFormValues()['processDescriptionContent'];
+
    if(describeProcess != ''){
         var wpsProcessingDescribeParseControl=function(response){
                  if(!response){
@@ -161,7 +172,7 @@ function parseWPSDescribeProcessingRequest(){
                                 icon: Ext.MessageBox.ERROR
                           });
                       }else{
-                        
+                        ;
                         var xmlResponse = (new DOMParser()).parseFromString(response, "text/xml");
                         var ValidateErrors=xmlResponse.selectNodes("parseWPSDescribrProcessingResult/ErrorValidation");
                         if(ValidateErrors.length >0){
@@ -180,47 +191,31 @@ function parseWPSDescribeProcessingRequest(){
                                 var processNameElements=xmlResponse.selectNodes("parseWPSDescribrProcessingResult/ProcessingName");
                                 var asynchronousElements=xmlResponse.selectNodes("parseWPSDescribrProcessingResult/Asynchronous");
 
-                                grassTemplate=grassTemplateElements[0].firstChild.nodeValue;
-                                shellTemplate=shellTemplateElements[0].firstChild.nodeValue;
-                                toolboxTemplate=toolboxTemplateElements[0].firstChild.nodeValue;
+                                
 
-                                /*Ext.Msg.show({
-                                title:'Grass Template',
-                                buttons: Ext.Msg.OK,
-                                msg: grassTemplate,
-                                animEl: 'elId',
-                                icon: Ext.MessageBox.ERROR
-                                  });*/
-                                var serviceName=serviceNameElements[0].firstChild.nodeValue;
-                                var processingName=processNameElements[0].firstChild.nodeValue;
-                                var asynchronous=asynchronousElements[0].firstChild.nodeValue;
+                                engineTemplatesURL= new Object();
+                                engineTemplatesURL.GrassEngine=grassTemplateElements[0].firstChild.nodeValue;
+                                engineTemplatesURL.ShellEngine=shellTemplateElements[0].firstChild.nodeValue;
+                                engineTemplatesURL.ToolboxEngine=toolboxTemplateElements[0].firstChild.nodeValue;
+                               
+                               
+
+
+                                serviceName=serviceNameElements[0].firstChild.nodeValue;
+                                processingName=processNameElements[0].firstChild.nodeValue;
+                                asynchronous=asynchronousElements[0].firstChild.nodeValue;
                                 if(controlNewWPSOperation(serviceName,"ExecuteProcess_"+processingName,"ExecuteProcess_"+processingName)){
                                     insertDescribeWizardWindow.destroy();
                                      var id="engineEditArea";
-                                     var  insertGrassScriptWizard_html="<table width='100%'></br><tr rowspan='2' BGCOLOR='#325e8f'><td align='center'><b style='color: #ffffff;'>Insert a Engine modality for the WPS Process: </b><br></td></tr>"+
-                                                 "<tr><td align='left' width='100%'>"+
-                                                    "<form id='formEngine'><table width='100%'><tr><td colspan='3' align='center'><b>Select a WPS Processing Type:</b></td></tr>"+
-                                                    "<tr><td width='20%'><input type='radio' name='WPSType' value='GrassEngine' onchange='javascript:getElementById(\"engineMessageInformation\").innerHTML=\"<b>Insert a GRASS Shell Script :</b>\";parent.iframeRequest_engineEditArea.window.setEditAreaValue(grassTemplate);'/><h8>Grass Engine</h8></td>"+
-                                                    "<td width='20%'><input type='radio' name='WPSType' value='ShellEngine' onchange='javascript:getElementById(\"engineMessageInformation\").innerHTML=\"<b>Insert a Shell Script :</b>\";parent.iframeRequest_engineEditArea.window.setEditAreaValue(shellTemplate);'/><h8>Shell Script</h8></td>"+
-                                                    "<td width='20%'><input type='radio' name='WPSType' value='JavaEngine'  onchange='javascript:getElementById(\"engineMessageInformation\").innerHTML=\"<b>Insert a TOOLBOX Script :</b>\";parent.iframeRequest_engineEditArea.window.setEditAreaValue(toolboxTemplate);'/><h8>Toolbox Script</h8></td>"+
-                                                    "<td align='left'><div id='engineMessageInformation'><b>-</b></div></td></tr>"+
-                                                    "</table></form>"+
-                                                 "</td></tr>"+
-                                                 "<tr><td align='left' width='100%'>"+
-                                                 "<form name='formFile_"+id+"' action='"+toolsServlet+"?cmd=putFile&type=multipart&modality=edit&editAreaPath="+editAreaPath+"&cols="+textAreaFrameW/7.2+"&rows="+textAreaFrameH/17+"' method='POST' enctype='multipart/form-data' target='iframeRequest_"+id+"'>"+
-                                                    "<input type='file' id='FILE' name='FILE' value='' width='"+textAreaFrameW/1.4+"' />"+
-                                                    "<input type='submit' name='buttonSubmit_"+id+"' value='Load File'/>"+
-                                                "</form></td></tr><tr align='center'><td>"+
-                                                "<iframe scrolling='no' FRAMEBORDER='0' src='"+toolsServlet+"?cmd=putFile&type=nomultipart&editAreaPath="+editAreaPath+"&modality=edit&cols="+textAreaFrameW/7.2+"&rows="+textAreaFrameH/17+"' name='iframeRequest_"+id+"' width='"+textAreaFrameW+"' height='"+(textAreaFrameH/1.1+(textAreaFrameH/50))+"' marginwidth='0' marginheight='0'></iframe>"+
-                                                "<tr><td><input type='button' name='buttonSendDescribe_"+id+"' value='Create WPS Processing' onclick='createWPSProcessingRequest(\""+serviceName+"\",\""+processingName+"\",\""+asynchronous+"\");'/>"+
-                                                "</td></tr></table>";
+                                   
+                                        createWPSProccesingScriptEngineIO=createPanelExjFormByXml(createWPSScriptEngineXML);
 
-                                        if(insertGrassScriptWizardWindow==null){
-                                            insertGrassScriptWizardWindow = new Ext.Window({
+                                        if(insertEngineScriptWizardWindow==null){
+                                            insertEngineScriptWizardWindow = new Ext.Window({
                                                             title: 'Create a new WPS Processing',
                                                             border: false,
                                                             animCollapse : true,
-                                                            id: 'insertGrassScriptWizardWindow',
+                                                            id: 'insertEngineScriptWizardWindow',
                                                             autoScroll : true,
                                                             resizable : false,
                                                             collapsible: true,
@@ -233,20 +228,24 @@ function parseWPSDescribeProcessingRequest(){
                                                                   spot.hide();
                                                               },
                                                               expand: function(){
-                                                                  spot.show('insertGrassScriptWizardWindow');
+                                                                  spot.show('insertEngineScriptWizardWindow');
                                                               }
-                                },
+                                                            },
                                                             width: screen.width/1.5,
                                                             height: screen.height/1.5,
                                                             closeAction:'close',
-                                                            html: insertGrassScriptWizard_html
+                                                            html: "<div id='insertScriptEngineWizardWindow_div'/>"
+                                                           // html: insertGrassScriptWizard_html
                                                             //items:[formCrateWpsService.formsPanel]
                                                 });
 
-                                            insertGrassScriptWizardWindow.on('close', function(){/*insertGrassScriptWizardWindow=null*/ window.location.reload();});
-                                            insertGrassScriptWizardWindow.show();
-                                            spot.show('insertGrassScriptWizardWindow');
-                                           // parent.iframeRequest_engineEditArea.window.setEditAreaValue(toolboxTemplate);
+                                            insertEngineScriptWizardWindow.on('close', function(){/*insertEngineScriptWizardWindow=null*/ window.location.reload();});
+                                            insertEngineScriptWizardWindow.show();
+
+                                            createWPSProccesingScriptEngineIO.formsPanel.render(document.getElementById("insertScriptEngineWizardWindow_div"));
+                                            createWPSProccesingScriptEngineIO.render();
+                                            spot.show('insertEngineScriptWizardWindow');
+                                           
                                         }
                                 }
                               }
@@ -278,81 +277,99 @@ function parseWPSDescribeProcessingRequest(){
    }
 }
 
-function createWPSProcessingRequest(serviceName,processingName,asynchronous){
-    var engineScript=parent.iframeRequest_engineEditArea.window.getEditAreaValue();
 
-    var engineTypeElements=document.getElementById("formEngine").WPSType;
-    var engineType="";
+    
+    
 
 
-    for(var i=0; engineTypeElements.length; i++){
-        if(engineTypeElements[i].checked){
-            engineType=engineTypeElements[i].value;
-            break;
-        }
+
+
+function onChangeEngineType(){
+    if(createWPSProccesingScriptEngineIO.getFormValues()){
+        var engine=createWPSProccesingScriptEngineIO.formsArray[0].getForm().findField("wpsEngineType").getValueInformation('engineName');
+
+
+        var getTemplate= function(response){
+            createWPSProccesingScriptEngineIO.formsArray[0].getForm().findField("processScriptEngineContent").setEditorValue(response);
+            createWPSProccesingScriptEngineIO.formsFileArray[0][0].getForm().findField("scriptProcessFile_file").reset();
+        };
+
+        var getTemplateTimeOut= function(){
+            Ext.Msg.show({
+                        title:'Get a WPS Processing Script Template: Error',
+                        buttons: Ext.Msg.OK,
+                        msg: 'Request TIME-OUT!',
+                        animEl: 'elId',
+                        icon: Ext.MessageBox.ERROR
+                    });
+
+        };
+        sendXmlHttpRequestTimeOut("GET",
+                             engineTemplatesURL[engine],
+                             true, null, 800000, getTemplate, getTemplateTimeOut,null);
     }
-    if(engineScript!=""){
-        var wpsProcessingCreateOperationControl=function(response){
-                    if(!response){
-                          Ext.Msg.show({
-                                title:'Create a new WPS Processing: Error',
-                                buttons: Ext.Msg.OK,
-                                msg: 'Service Exception!',
-                                animEl: 'elId',
-                                icon: Ext.MessageBox.ERROR
-                          });
-                      }else{
-                          var xmlResponse = (new DOMParser()).parseFromString(response, "text/xml");
-                           var ValidateErrors=xmlResponse.selectNodes("createWPSOperationResult/ErrorValidation");
-                          if(ValidateErrors.length >0){
-                            Ext.Msg.show({
-                                title:'Create a new WPS Processing: Toolbox Script Validation Error',
-                                buttons: Ext.Msg.OK,
-                                msg: ValidateErrors[0].firstChild.nodeValue,
-                                animEl: 'elId',
-                                icon: Ext.MessageBox.ERROR
-                            });
-                        }else
-                           window.location="manageOperations.jsp?serviceName="+serviceName;
 
-                      }
-             };
-             var wpsProcessingCreateOperationControlTimeOut=function(){
-                 Ext.Msg.show({
-                    title:'Create a new WPS Processing: Error',
-                    buttons: Ext.Msg.OK,
-                    msg: 'Request TIME-OUT!',
-                    animEl: 'elId',
-                    icon: Ext.MessageBox.ERROR
-                });
-             };
 
-             var onSubmit=sendXmlHttpRequestTimeOut("POST",
-                         "manager?cmd=wpsProcessingCreate&step=generateOperation&engineType="+engineType+"&serviceName="+serviceName+"&processingName="+processingName+"&asynchronous="+asynchronous,
-                         true, engineScript, 800000, wpsProcessingCreateOperationControl, wpsProcessingCreateOperationControlTimeOut,null);
-    }else{
-        switch (engineType){
-            case "JavaEngine":
-                    Ext.Msg.show({
-                            title:'Create a new WPS Processing Operation: Error',
-                            buttons: Ext.Msg.OK,
-                            msg: 'Please insert the Toolbox script file in the Edit Area.',
-                            animEl: 'elId',
-                            icon: Ext.MessageBox.ERROR
+}
+
+function createWPSProcessingRequest(){
+
+    var formValues=createWPSProccesingScriptEngineIO.getFormValues();
+
+    if(formValues){
+        var engineScript=formValues['processScriptEngineContent'];
+        var engineType=createWPSProccesingScriptEngineIO.formsArray[0].getForm().findField("wpsEngineType").getValueInformation('engineName');
+        if(engineScript!=""){
+            var wpsProcessingCreateOperationControl=function(response){
+                        if(!response){
+                              Ext.Msg.show({
+                                    title:'Create a new WPS Processing: Error',
+                                    buttons: Ext.Msg.OK,
+                                    msg: 'Service Exception!',
+                                    animEl: 'elId',
+                                    icon: Ext.MessageBox.ERROR
+                              });
+                          }else{
+                              var xmlResponse = (new DOMParser()).parseFromString(response, "text/xml");
+                               var ValidateErrors=xmlResponse.selectNodes("createWPSOperationResult/ErrorValidation");
+                              if(ValidateErrors.length >0){
+                                Ext.Msg.show({
+                                    title:'Create a new WPS Processing: Toolbox Script Validation Error',
+                                    buttons: Ext.Msg.OK,
+                                    msg: ValidateErrors[0].firstChild.nodeValue,
+                                    animEl: 'elId',
+                                    icon: Ext.MessageBox.ERROR
+                                });
+                            }else
+                               window.location="manageOperations.jsp?serviceName="+serviceName;
+
+                          }
+                 };
+                 var wpsProcessingCreateOperationControlTimeOut=function(){
+                     Ext.Msg.show({
+                        title:'Create a new WPS Processing: Error',
+                        buttons: Ext.Msg.OK,
+                        msg: 'Request TIME-OUT!',
+                        animEl: 'elId',
+                        icon: Ext.MessageBox.ERROR
                     });
-                break;
-            case "GrassEngine":
-                    Ext.Msg.show({
-                            title:'Create a new WPS Processing Operation: Error',
-                            buttons: Ext.Msg.OK,
-                            msg: 'Please insert the GRASS shell script file in the Edit Area.',
-                            animEl: 'elId',
-                            icon: Ext.MessageBox.ERROR
-                    });
-                break;
+                 };
+
+                 var onSubmit=sendXmlHttpRequestTimeOut("POST",
+                             "manager?cmd=wpsProcessingCreate&step=generateOperation&engineType="+engineType+"&serviceName="+serviceName+"&processingName="+processingName+"&asynchronous="+asynchronous,
+                             true, engineScript, 800000, wpsProcessingCreateOperationControl, wpsProcessingCreateOperationControlTimeOut,null);
+        }else{
+
+               Ext.Msg.show({
+                   title:'Create a new WPS Processing Operation: Error',
+                   buttons: Ext.Msg.OK,
+                   msg: 'Please insert the Engine Script file in the Edit Area.',
+                   animEl: 'elId',
+                   icon: Ext.MessageBox.ERROR
+               });
+
 
         }
-
     }
 
 }
@@ -465,10 +482,11 @@ function controlNewWPSOperation(serviceName,newOperationName,newOperationSoapAct
 
 var describeResponse;
 var wpsDescribeEditorWindow=null;
-function editDescribeProcess(serviceName, processName, async, engineType){
-    var id="editDescribeProcess";
+function editDescribeProcess(serviceNameCurrent, processName, async, engineType){
+
+    createWPSProccesingIO=createPanelExjFormByXml(updateWPSDescribeXML);
     var describePath="AdditionalResources/WPS/DescribeProcess/DescribeInformation_"+processName+".xml";
-    var currentDescribe=getWPSResource(serviceName, describePath);
+    var currentDescribe=getWPSResource(serviceNameCurrent, describePath);
     var ind=currentDescribe.indexOf("?>")+2;
 
     var describe=currentDescribe.substr(ind, currentDescribe.length);
@@ -476,14 +494,10 @@ function editDescribeProcess(serviceName, processName, async, engineType){
     describeResponse+=describe;
     describeResponse+="\n</wps:ProcessDescriptions>";
 
-    var insertDescribeWizard_html="<table width='100%'></br><tr rowspan='2' BGCOLOR='#325e8f'><td align='center'><b style='color: #ffffff;'>Insert WPS Process Description: </b><br></td></tr><tr><td align='left' width='100%'>"+
-                                     "<form name='formFile_"+id+"' action='"+toolsServlet+"?cmd=putFile&type=multipart&modality=edit&editAreaPath="+editAreaPath+"&cols="+textAreaFrameW/7.2+"&rows="+textAreaFrameH/15+"' method='POST' enctype='multipart/form-data' target='iframeRequest_"+id+"'>"+
-                                        "<input type='file' id='FILE' name='FILE' value='' width='"+textAreaFrameW/1.4+"' />"+
-                                        "<input type='submit' name='buttonSubmit_"+id+"' value='Load File'/>"+
-                                    "</form></td></tr><tr align='center'><td>"+
-                                    "<iframe scrolling='no' FRAMEBORDER='0' src='"+toolsServlet+"?cmd=putFile&type=nomultipart&editAreaPath="+editAreaPath+"&modality=edit&cols="+textAreaFrameW/7.2+"&rows="+textAreaFrameH/15+"' name='iframeRequest_"+id+"' width='"+textAreaFrameW+"' height='"+(textAreaFrameH+(textAreaFrameH/50))+"' marginwidth='0' marginheight='0'></iframe>"+
-                                    "<tr><td><input type='button' name='buttonSendDescribe_"+id+"' value='Change WPS Processing Describe' onclick=\"changeWPSDescribeProcessingRequest('"+serviceName+"', '"+processName+"', '"+async+"', '"+engineType+"');\">"+
-                                    "</td></tr></table>";
+    serviceName=serviceNameCurrent;
+    processingName=processName;
+    asynchronous=async;
+    eType=engineType;
 
     wpsDescribeEditorWindow = new WebGIS.Panel.WindowInterfacePanel({
                                 title: 'Edit Describe Process',
@@ -492,6 +506,7 @@ function editDescribeProcess(serviceName, processName, async, engineType){
                                 animCollapse : true,
                                 autoScroll : true,
                                 resizable : false,
+                                maximizable: true,
                                 collapsible: true,
                                 layout: 'fit',
                                 loadingBarImg: "images/loader1.gif",
@@ -521,31 +536,25 @@ function editDescribeProcess(serviceName, processName, async, engineType){
 
            wpsDescribeEditorWindow.show();
            wpsDescribeEditorWindow.insertLoadingPanel();
-           document.getElementById("editDescribeWindow_div").innerHTML=insertDescribeWizard_html;
+
+           createWPSProccesingIO.formsPanel.render(document.getElementById("editDescribeWindow_div"));
+           createWPSProccesingIO.render();
            spot.show('editDescribeWindow');
 
-           //parent.iframeRequest_editDescribeProcess.window.setEditAreaValue(describeResponse);
-
-           setTimeout("parent.iframeRequest_editDescribeProcess.window.setEditAreaValue(describeResponse)",1250);
+           setTimeout("createWPSProccesingIO.formsArray[0].getForm().findField(\"processUpdateDescriptionContent\").setEditorValue(describeResponse)",1250);
 }
 
 var currentEngineScript;
 var wpsEngineScriptEditorWindow;
-function editEngineScript(serviceName, processName, async, engineType, scriptPath){
-    var id="editEngineScript";
+function editEngineScript(serviceNameCurrent, processName, async, engineType, scriptPath){
+    serviceName=serviceNameCurrent;
+    processingName=processName;
+    asynchronous=async;
+    eType=engineType;
 
     currentEngineScript=getWPSResource(serviceName, scriptPath);
 
-
-    var insertDescribeWizard_html="<table width='100%'></br><tr rowspan='2' BGCOLOR='#325e8f'><td align='center'><b style='color: #ffffff;'>Insert WPS Process "+engineType+" Script: </b><br></td></tr><tr><td align='left' width='100%'>"+
-                                     "<form name='formFile_"+id+"' action='"+toolsServlet+"?cmd=putFile&type=multipart&modality=edit&editAreaPath="+editAreaPath+"&cols="+textAreaFrameW/7.2+"&rows="+textAreaFrameH/15+"' method='POST' enctype='multipart/form-data' target='iframeRequest_"+id+"'>"+
-                                        "<input type='file' id='FILE' name='FILE' value='' width='"+textAreaFrameW/1.4+"' />"+
-                                        "<input type='submit' name='buttonSubmit_"+id+"' value='Load File'/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-                                        "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='button' name='buttonTemplate_"+id+"' value='Load "+engineType+" Processing Template' onclick=\"loadEngineTemplate('"+serviceName+"', '"+processName+"', '"+engineType+"')\"/>"+
-                                    "</form></td></tr><tr align='center'><td>"+
-                                    "<iframe scrolling='no' FRAMEBORDER='0' src='"+toolsServlet+"?cmd=putFile&type=nomultipart&editAreaPath="+editAreaPath+"&modality=edit&cols="+textAreaFrameW/7.2+"&rows="+textAreaFrameH/15+"' name='iframeRequest_"+id+"' width='"+textAreaFrameW+"' height='"+(textAreaFrameH+(textAreaFrameH/50))+"' marginwidth='0' marginheight='0'></iframe>"+
-                                    "<tr><td><input type='button' name='buttonSendEngineScript_"+id+"' value='Change WPS Processing Engine Script' onclick=\"changeWPSEngineScriptRequest('"+serviceName+"', '"+processName+"', '"+async+"', '"+engineType+"');\">"+
-                                    "</td></tr></table>";
+    createWPSProccesingIO=createPanelExjFormByXml(updateWPSSciptEngineXML);
 
     wpsEngineScriptEditorWindow = new WebGIS.Panel.WindowInterfacePanel({
                                 title: 'Edit '+engineType+' Script',
@@ -554,6 +563,7 @@ function editEngineScript(serviceName, processName, async, engineType, scriptPat
                                 animCollapse : true,
                                 autoScroll : true,
                                 resizable : false,
+                                maximizable: true,
                                 collapsible: true,
                                 layout: 'fit',
                                 loadingBarImg: "images/loader1.gif",
@@ -583,63 +593,71 @@ function editEngineScript(serviceName, processName, async, engineType, scriptPat
 
            wpsEngineScriptEditorWindow.show();
            wpsEngineScriptEditorWindow.insertLoadingPanel();
-           document.getElementById("edit"+engineType+"SciptWindow_div").innerHTML=insertDescribeWizard_html;
+
+           createWPSProccesingIO.formsPanel.render(document.getElementById("edit"+engineType+"SciptWindow_div"));
+           createWPSProccesingIO.render();
+           //document.getElementById("edit"+engineType+"SciptWindow_div").innerHTML=insertDescribeWizard_html;
            spot.show("edit"+engineType+"SciptWindow_div");
 
            //parent.iframeRequest_editDescribeProcess.window.setEditAreaValue(describeResponse);
 
-           setTimeout("parent.iframeRequest_"+id+".window.setEditAreaValue(currentEngineScript)",1250);
+           setTimeout("createWPSProccesingIO.formsArray[0].getForm().findField(\"processUpdateScriptEngineContent\").setEditorValue(currentEngineScript)",1250);
 }
 
 
-function changeWPSDescribeProcessingRequest(serviceName, processingName, async, engineType){
-   var describeProcess=parent.iframeRequest_editDescribeProcess.window.getEditAreaValue();
+function changeWPSDescribeProcessingRequest(){
+   var describeProcess=createWPSProccesingIO.getFormValues()['processUpdateDescriptionContent'];
 
-   var wpsProcessingDescribeParseControl=function(response){
-       var xmlResponse = (new DOMParser()).parseFromString(response, "text/xml");
-                        var ValidateErrors=xmlResponse.selectNodes("parseWPSDescribrProcessingResult/ErrorValidation");
-                        if(ValidateErrors.length >0){
-                            Ext.Msg.show({
-                                title:'Update WPS Processing: Error',
-                                buttons: Ext.Msg.OK,
-                                msg: ValidateErrors[0].firstChild.nodeValue,
-                                animEl: 'elId',
-                                icon: Ext.MessageBox.ERROR
-                          });
-                        }else{
-                           Ext.Msg.show({
-                                title:'Update WPS Processing',
-                                buttons: Ext.Msg.OK,
-                                msg: 'Processing Udpated',
-                                animEl: 'elId',
-                                fn: function(){
-                                    wpsDescribeEditorWindow.close();
-                                },
-                                icon: Ext.MessageBox.INFO
-                          });
-                          
-                        }
-   };
 
-   var wpsProcessingDescribeParseControlTimeOut=function(){
-                 Ext.Msg.show({
-                    title:'Update WPS Processing: Error',
-                    buttons: Ext.Msg.OK,
-                    msg: 'Request TIME-OUT!',
-                    animEl: 'elId',
-                    icon: Ext.MessageBox.ERROR
-                });
-   };
-   sendXmlHttpRequestTimeOut("POST",
-       "manager?cmd=wpsProcessingUpdate&step=updateDescribe&serviceName="+serviceName+"&processingName="+processingName+"&engineType="+engineType+"&async="+async,
-        true, describeProcess, 800000, wpsProcessingDescribeParseControl, wpsProcessingDescribeParseControlTimeOut,null);
+    if(describeProcess != ''){
+       var wpsProcessingDescribeParseControl=function(response){
+           var xmlResponse = (new DOMParser()).parseFromString(response, "text/xml");
+                            var ValidateErrors=xmlResponse.selectNodes("parseWPSDescribrProcessingResult/ErrorValidation");
+                            if(ValidateErrors.length >0){
+                                Ext.Msg.show({
+                                    title:'Update WPS Processing: Error',
+                                    buttons: Ext.Msg.OK,
+                                    msg: ValidateErrors[0].firstChild.nodeValue,
+                                    animEl: 'elId',
+                                    icon: Ext.MessageBox.ERROR
+                              });
+                            }else{
+                               Ext.Msg.show({
+                                    title:'Update WPS Processing',
+                                    buttons: Ext.Msg.OK,
+                                    msg: 'Processing Udpated',
+                                    animEl: 'elId',
+                                    fn: function(){
+                                        wpsDescribeEditorWindow.close();
+                                    },
+                                    icon: Ext.MessageBox.INFO
+                              });
+
+                            }
+       };
+
+       var wpsProcessingDescribeParseControlTimeOut=function(){
+                     Ext.Msg.show({
+                        title:'Update WPS Processing: Error',
+                        buttons: Ext.Msg.OK,
+                        msg: 'Request TIME-OUT!',
+                        animEl: 'elId',
+                        icon: Ext.MessageBox.ERROR
+                    });
+       };
+       sendXmlHttpRequestTimeOut("POST",
+           "manager?cmd=wpsProcessingUpdate&step=updateDescribe&serviceName="+serviceName+"&processingName="+processingName+"&engineType="+eType+"&async="+asynchronous,
+            true, describeProcess, 800000, wpsProcessingDescribeParseControl, wpsProcessingDescribeParseControlTimeOut,null);
+    }
 
     
 }
 
-function changeWPSEngineScriptRequest(serviceName, processingName, async, engineType){
-   var scriptEngine=parent.iframeRequest_editEngineScript.window.getEditAreaValue();
+function changeWPSEngineScriptRequest(){
+  
+  var scriptEngine=createWPSProccesingIO.getFormValues()['processUpdateScriptEngineContent'];
 
+ if(scriptEngine){
    var wpsUpdateScriptEngine=function(response){
     var xmlResponse = (new DOMParser()).parseFromString(response, "text/xml");
                         var result=xmlResponse.selectNodes("createWPSOperationResult");
@@ -685,9 +703,9 @@ function changeWPSEngineScriptRequest(serviceName, processingName, async, engine
                 });
    };
    sendXmlHttpRequestTimeOut("POST",
-       "manager?cmd=wpsProcessingUpdate&step=updateScriptEngine&serviceName="+serviceName+"&processingName="+processingName+"&engineType="+engineType+"&async="+async,
+       "manager?cmd=wpsProcessingUpdate&step=updateScriptEngine&serviceName="+serviceName+"&processingName="+processingName+"&engineType="+eType+"&async="+asynchronous,
         true, scriptEngine, 800000, wpsUpdateScriptEngine, wpsUpdateScriptEngineTimeOut,null);
-
+ }
 
 }
 
@@ -722,7 +740,7 @@ function getWPSResource (serviceName, resourcePath){
 
      var onSubmit=sendXmlHttpRequestTimeOut("GET",
             getResourceCommandURL,
-            false, null, 800000, wpsGetResource, wpsProcessingCreateOperationControlTimeOut,null);
+            false, null, 800000, wpsGetResource, wpsProcessingCreateOperationControlTimeOut,["Accept,text"]);
 
 
     return resource;

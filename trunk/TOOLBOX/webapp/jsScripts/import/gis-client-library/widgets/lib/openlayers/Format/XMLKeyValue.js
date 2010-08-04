@@ -111,7 +111,12 @@ OpenLayers.Format.XMLKeyValue = OpenLayers.Class(OpenLayers.Format.XML, {
                                       if(keyValue.formValues[tempform[u].id]){  
                                         this.writeNode(root, tempform[u].id, keyValue.formValues[tempform[u].id]);
                                       }  
-                                      break;      
+                                      break;
+                                case "editarea":
+                                      if(keyValue.formValues[tempform[u].id]){
+                                        this.writeNode(root, tempform[u].id, keyValue.formValues[tempform[u].id]);
+                                      }
+                                      break;
                                 case "checkbox":
                                       //alert(keyValue.formValues[tempform[u].id]);
                                       if(keyValue.formValues[tempform[u].id]){  

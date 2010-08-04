@@ -43,8 +43,6 @@ public class DeleteOldInstancesAutomaticallyTask extends TimerTask{
                     InstanceHandler handler;
                     handler=new InstanceHandler(instanceId);
                     handler.deleteInstance();
-
-                    System.out.println("Automatically deleted instance "+instanceId);
                 }
             }
         }

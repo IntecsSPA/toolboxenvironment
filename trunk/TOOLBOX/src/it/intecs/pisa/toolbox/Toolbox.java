@@ -73,7 +73,9 @@ import org.apache.axis2.transport.http.AxisServlet;
 import org.apache.axis2.util.XMLUtils;
 import it.intecs.pisa.toolbox.plugins.managerNativePlugins.DeployServiceCommand;
 import it.intecs.pisa.toolbox.resources.TextResourcesPersistence;
+import it.intecs.pisa.util.json.JsonErrorObject;
 import it.intecs.pisa.util.json.JsonUtil;
+import it.intecs.pisa.util.xml.DocumentError;
 
 public class Toolbox extends AxisServlet implements ServletContextListener {
 
@@ -94,7 +96,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     public static final String AXIS2SERVICES = "axis2services";
     public static final String SERVICE = "service";
     public static final String FTP_SERVER = "FTPServer";
-    public static final int MAX_BACKUP_INDEX = 9;   
+    public static final int MAX_BACKUP_INDEX = 9;
     public static final String PORTAL_SSE_NAME = "portalSSE";
     public static final String IMPORT = "import";
     public static final String INCLUDE = "include";
@@ -127,9 +129,9 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     public static final String WSIL = "WSIL";
     public static final String WSIL_FILE = "index.wsil";
     public static final String WSIL_ABSTRACT = "abstract";
-    public static final String WSIL_DESCRIPTION = "description"; 
+    public static final String WSIL_DESCRIPTION = "description";
     public static final String WSIL_NAMESPACE = "http://schemas.xmlsoap.org/wsdl/";
-    public static final String DOT_WSDL = ".wsdl"; 
+    public static final String DOT_WSDL = ".wsdl";
     public static final int MIN_FILE_INDEX = 0;
     public static final int MAX_FILE_INDEX = 9;
     public static final String EXPORT_DESCRIPTOR_SCHEMA = "exportDescriptor.xsd";
@@ -163,13 +165,11 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     private String deployAdminToken;
     private boolean needsInitialization = true;
     private ToolboxConfiguration tbxConfig;
-    private String toolboxVersion="";
+    private String toolboxVersion = "";
     private String toolboxRevision = "";
-
     /**
      *  Method accessed by the administration WEB application jsp pages, to retrieve the {@link Toolbox.ToolboxConfigurator} object.
      */
-    
     private static Toolbox servletInstance;
 
     public static Toolbox getInstance() {
@@ -206,19 +206,19 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     public void signalDebugConsoleClosed() {
         dbgConsole.close();
         dbgConsole = null;
-        this.instanceKeyUnderDebug=0;
+        this.instanceKeyUnderDebug = 0;
         System.gc();
     }
 
     public void initFtpServer(File webinf) {
         String dir = null;
         String warnMsg = null;
-  
+
         try {
             dir = (new File(webinf, FTP_SERVER)).getAbsolutePath();
 
             setFtpServerManager(FTPServerManager.getInstance(dir));
-            
+
             ftpServerManager.updatePort(tbxConfig.getConfigurationValue(ToolboxConfiguration.FTP_PORT));
             ftpServerManager.updatePassiveModePort(tbxConfig.getConfigurationValue(ToolboxConfiguration.FTP_POOL_PORT));
             ftpServerManager.updateServerHost(tbxConfig.getConfigurationValue(ToolboxConfiguration.FTP_SERVER_HOST));
@@ -245,7 +245,63 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         }
     }
 
-   
+    protected void executeRestCommandJSON(HttpServletRequest req, HttpServletResponse resp, IRESTManagerPlugin commandPlugin, String formatLessCmd, Hashtable<String, String> headers, Hashtable<String, String> parameters) throws IOException, Exception {
+        JsonObject inputObj;
+        inputObj = JsonUtil.getInputAsJson(req.getInputStream());
+        JsonObject jsonResp;
+        boolean res = commandPlugin.authenticate(formatLessCmd, inputObj, headers, parameters);
+        if (res == true) {
+            res = commandPlugin.validateInput(formatLessCmd, inputObj, headers, parameters);
+            if (res == true) {
+                jsonResp = commandPlugin.executeCommand(formatLessCmd, inputObj, headers, parameters);
+            } else {
+                jsonResp = JsonErrorObject.get("Could not validate input");
+            }
+        } else {
+            jsonResp = JsonErrorObject.get("Could not authenticate request");
+        }
+        JsonUtil.writeJsonToStream(jsonResp, resp.getOutputStream());
+    }
+
+    protected void executeRestCommandStream(HttpServletRequest req, HttpServletResponse resp,IRESTManagerPlugin commandPlugin, String formatLessCmd, Hashtable<String, String> headers, Hashtable<String, String> parameters) throws IOException {
+        InputStream response;
+        boolean res = commandPlugin.authenticate(formatLessCmd, req.getInputStream(), headers, parameters);
+        if (res == true) {
+            res = commandPlugin.validateInput(formatLessCmd, req.getInputStream(), headers, parameters);
+            if (res == true) {
+                response = commandPlugin.executeCommand(formatLessCmd, req.getInputStream(), headers, parameters);
+            } else {
+                response = new ByteArrayInputStream("Could not validate input".getBytes());
+            }
+        } else {
+            response = new ByteArrayInputStream("Could not authenticate request".getBytes());
+        }
+        IOUtil.copy(response, resp.getOutputStream());
+    }
+
+    protected void executeRestCommandXML(HttpServletRequest req, HttpServletResponse resp, IRESTManagerPlugin commandPlugin, String formatLessCmd, Hashtable<String, String> headers, Hashtable<String, String> parameters) throws Exception {
+        DOMUtil util;
+        Document inputDoc;
+        try {
+            util = new DOMUtil();
+            inputDoc = util.inputStreamToDocument(req.getInputStream());
+        } catch (Exception e) {
+            inputDoc = null;
+        }
+        Document respDoc;
+        boolean res = commandPlugin.authenticate(formatLessCmd, inputDoc, headers, parameters);
+        if (res == true) {
+            res = commandPlugin.validateInput(formatLessCmd, inputDoc, headers, parameters);
+            if (res == true) {
+                respDoc = commandPlugin.executeCommand(formatLessCmd, inputDoc, headers, parameters);
+            } else {
+                respDoc = DocumentError.get("Could not validate input");
+            }
+        } else {
+            respDoc = DocumentError.get("Could not authenticate request");
+        }
+        DOMUtil.dumpXML(respDoc, resp.getOutputStream(), false);
+    }
 
     private void debugServiceRequest(HttpServletResponse resp, HttpServletRequest req, String requestURI) throws IOException {
         int index = 0;
@@ -284,8 +340,6 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         }
     }
 
-
-
     private void executeManagerCommands(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String cmd;
         String method;
@@ -316,7 +370,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         String soapaction = null;
 
         try {
-           
+
             resp.setContentType("text/xml");
             writer = resp.getWriter();
             domUtil = new DOMUtil(true);
@@ -342,9 +396,9 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
                 writer.flush();
                 writer.close();
             } catch (Exception e) {
-                errorMsg = "Error while serializing response document:: "+ e.getMessage();
+                errorMsg = "Error while serializing response document:: " + e.getMessage();
                 logger.error(errorMsg);
-                ErrorMailer.send(null, soapaction, null, null,errorMsg);
+                ErrorMailer.send(null, soapaction, null, null, errorMsg);
                 throw new ToolboxException(errorMsg);
             }
 
@@ -383,14 +437,14 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         Element soapRequestElement = null;
         try {
             soapRequestElement = XMLUtils.toDOM(msgCtx.getEnvelope());
-            
+
         } catch (Exception ex) {
             this.logger.error("Error while converting SOAP envelope from OM to DOM", ex);
             throw new ToolboxException("Error while retrieving SOAP envelope, impossible to execute the service request.");
         }
 
         String operationName = Toolbox.getOperationName(msgCtx);
-       
+
         return executeServiceRequest(operationName, soapRequestElement.getOwnerDocument(), requestURI, debugMode);
     }
 
@@ -419,10 +473,10 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
 
         if (operation == null) {
             logger.error("[" + serviceName + "] " + TBXService.UNKNOWN_SOAP_PORT + operationName);
-            ErrorMailer.send(serviceName, operationName, null, null,"[" + serviceName + "] " + TBXService.UNKNOWN_SOAP_PORT + operationName);
+            ErrorMailer.send(serviceName, operationName, null, null, "[" + serviceName + "] " + TBXService.UNKNOWN_SOAP_PORT + operationName);
             throw new ToolboxException(TBXService.UNKNOWN_SOAP_PORT + operationName + " for service " + serviceName);
         }
-      
+
         //**************** Processing Request *********************
 
         try {
@@ -450,8 +504,8 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         service = servMan.getService(serviceName);
 
         interf = service.getImplementedInterface();
-        if (interf.getName().equals("OGC-06-131r6") && interf.getVersion().equals("0.2.4") &&
-                interf.getType().equals("Catalogue") && interf.getMode().equals("StandAlone")) {
+        if (interf.getName().equals("OGC-06-131r6") && interf.getVersion().equals("0.2.4")
+                && interf.getType().equals("Catalogue") && interf.getMode().equals("StandAlone")) {
 
 
 
@@ -460,23 +514,23 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             String id = request.getParameter("id");
 
             if (id != null && !id.trim().equals("")) {
-                Hashtable<String,String> var;
+                Hashtable<String, String> var;
 
-                var=service.getImplementedInterface().getUserVariable().get("ebRRDbName");
+                var = service.getImplementedInterface().getUserVariable().get("ebRRDbName");
 
 
                 RepositoryManager repoMngr = new RepositoryManager(var.get(Interface.VAR_TABLE_VALUE));
                 File file = repoMngr.getFile(id);
 
                 logger.info("Checking repo file: " + file.getAbsolutePath());
-                if(file.exists())
-                {
+                if (file.exists()) {
                     logger.info("Request for repo file: " + file.getAbsolutePath());
 
                     IOUtil.copy(new FileInputStream(file), out);
+                } else {
+                    response.sendError(404);
                 }
-                else response.sendError(404);
-               } else {
+            } else {
                 System.out.println("ID not provided");
             }
         }
@@ -510,7 +564,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     public void init(ServletConfig config) throws ServletException {
         File pluginDirectory;
         File ebRRpropertiesFile;
-        
+
         if (this.needsInitialization == false) {
             return;
         }
@@ -550,18 +604,17 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             ServiceStatuses.removeServiceStatus("testService");
             ServiceStatuses.addServiceStatus("testService");
 
-            tbxConfig=ToolboxConfiguration.getInstance();
+            tbxConfig = ToolboxConfiguration.getInstance();
             tbxConfig.initializeConfigTable();
             tbxConfig.loadConfiguration();
 
             File configuredLogDir = new File(tbxConfig.getConfigurationValue(ToolboxConfiguration.LOG_DIR));
 
             Boolean usingTempDirectory = false;
-            String errorMessage="";
+            String errorMessage = "";
             configuredLogDir.mkdirs();
 
-            if (!configuredLogDir.canWrite() || !configuredLogDir.canRead())
-             {
+            if (!configuredLogDir.canWrite() || !configuredLogDir.canRead()) {
                 //in case of write permission errors we use thetemporary directory
                 errorMessage = "Unable to create log directory: " + configuredLogDir.getAbsolutePath() + " Check the read/write permissions";
                 System.out.println(errorMessage);
@@ -569,7 +622,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
                 configuredLogDir = new File(System.getProperty("java.io.tmpdir"));
                 System.out.println("Setting the Log Directory to: " + System.getProperty("java.io.tmpdir"));
                 usingTempDirectory = true;
-             }
+            }
 
             File resourcePersistenceDir = new File(configuredLogDir, "XML");
 
@@ -581,30 +634,29 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             logResPersistence = LogResourcesPersistence.getInstance();
             logResPersistence.setDirectory(resourcePersistenceDir);
 
-            logger=logResPersistence.getRollingLogForToolbox();
-            
+            logger = logResPersistence.getRollingLogForToolbox();
+
             resourcePersistenceDir = new File(configuredLogDir, "Text");
-            TextResourcesPersistence textPers=TextResourcesPersistence.getInstance();
+            TextResourcesPersistence textPers = TextResourcesPersistence.getInstance();
             textPers.setDirectory(resourcePersistenceDir);
 
-             logger.info("Core services started");
+            logger.info("Core services started");
 
-             if (usingTempDirectory)
-             {
+            if (usingTempDirectory) {
                 logger.error(errorMessage);
                 logger.warn("Using the default temporary directory: " + System.getProperty("java.io.tmpdir"));
-             }
-            
+            }
+
             pluginDirectory = new File(webinfDir, "plugins");
             ebRRpropertiesFile = new File(pluginDirectory, "ebRRPlugin/resources/common.properties");
 
             System.setProperty("ergorr.common.properties", ebRRpropertiesFile.getAbsolutePath());
-            
+
             tagPluginManager = TagPluginManager.getInstance();
             interfacePluginManager = InterfacePluginManager.getInstance();
             managerPluginManager = ManagerPluginManager.getInstance();
             serviceManager = ServiceManager.getInstance();
-            uiPluginManager=UIPluginManager.getInstance();
+            uiPluginManager = UIPluginManager.getInstance();
 
             String tbxPluginDirectory = pluginDirectory.getAbsolutePath();
 
@@ -612,9 +664,9 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             interfacePluginManager.initManager(tbxPluginDirectory);
             managerPluginManager.initManager(tbxPluginDirectory);
             uiPluginManager.initManager(tbxPluginDirectory);
-            
+
             logger.info("Plugins started");
-           
+
             adjustAllSchemaReferences(); // Adjust the Schema cross references (import and include) paths according to the rootDir
 
             File wsdlDir;
@@ -649,65 +701,51 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             }
 
 
-            needsInitialization=false;
+            needsInitialization = false;
 
         } catch (Exception e) {
-            
+
             throw new ServletException(e);
         }
 
-        try
-        {
-            Statement stm=null;
+        try {
+            Statement stm = null;
             ToolboxInternalDatabase db;
 
-            db= ToolboxInternalDatabase.getInstance();
+            db = ToolboxInternalDatabase.getInstance();
 
             stm = db.getStatement();
             stm.executeUpdate("UPDATE T_SERVICE_INSTANCES SET STATUS=8 WHERE STATUS=16");
             stm.close();
+        } catch (Exception e) {
         }
-        catch(Exception e)
-        {
 
-        }
-        
-       try
-        {
-           // WSILBuilder.createWSIL();
+        try {
+            // WSILBuilder.createWSIL();
 
             ServiceManager servMan;
             TBXService[] services;
 
-            servMan=ServiceManager.getInstance();
-            services=servMan.getServicesAsArray();
+            servMan = ServiceManager.getInstance();
+            services = servMan.getServicesAsArray();
 
-            for(TBXService service:services)
-            {
+            for (TBXService service : services) {
                 service.attemptToDeployWSDLAndSchemas();
             }
-        }
-        catch(Exception ecc)
-        {
+        } catch (Exception ecc) {
             logger.error("Error while deploying the WSDL files. Error: " + ecc.getMessage());
         }
 
-        try
-        {
+        try {
             initVersionRevision();
-        }
-        catch(Exception e)
-        {
-            this.toolboxRevision="0";
-            this.toolboxVersion="8.0";
+        } catch (Exception e) {
+            this.toolboxRevision = "0";
+            this.toolboxVersion = "8.0";
         }
 
-        try
-        {
+        try {
             AutomaticCleanup.start();
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             logger.info("Cannot start automatic cleanup service");
         }
 
@@ -781,23 +819,23 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         String request;
         String requestURI;
 
-        try
-        {
-            requestURI=req.getRequestURI();
-            
+        try {
+            requestURI = req.getRequestURI();
+
             logger.debug("Received request " + requestURI);
 
 
-            if(requestURI.startsWith("/TOOLBOX/rest"))
+            if (requestURI.startsWith("/TOOLBOX/rest")) {
                 executeRestCommand(req, resp);
+            }
 
             id = req.getParameter("id");
             service = req.getParameter("service");
             request = req.getParameter("request");
 
-            if (id != null && id.equals("") == false &&
-                    service != null && service.equals("CSW-ebRIM") &&
-                    request != null && request.equals("GetRepositoryItem")) {
+            if (id != null && id.equals("") == false
+                    && service != null && service.equals("CSW-ebRIM")
+                    && request != null && request.equals("GetRepositoryItem")) {
                 handleGetRepository(req, resp, getTargetedServiceName(req));
             } else {
                 requestURI = req.getRequestURI();
@@ -826,15 +864,16 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         return tokenizer.nextToken();
     }
 
-     @Override
+    @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String requestURI;
 
-        requestURI=request.getRequestURI();
+        requestURI = request.getRequestURI();
 
 
-         if(requestURI.startsWith("/TOOLBOX/rest"))
+        if (requestURI.startsWith("/TOOLBOX/rest")) {
             executeRestCommand(request, response);
+        }
     }
 
     /**
@@ -843,8 +882,8 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, java.io.IOException {
         String requestURI;
-        
-        requestURI=req.getRequestURI();
+
+        requestURI = req.getRequestURI();
 
         logger.debug("Received request " + requestURI);
 
@@ -858,20 +897,20 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         if (requestURI.startsWith("/TOOLBOX/debug")) {
             debugServiceRequest(resp, req, requestURI);
         } else if (requestURI.startsWith("/TOOLBOX/deploy")) {
-           try {
-             executeDeploy(req, resp);
+            try {
+                executeDeploy(req, resp);
             } catch (Exception ex) {
                 java.util.logging.Logger.getLogger(Toolbox.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
             }
         } else if (requestURI.startsWith("/TOOLBOX/manager")) {
             executeManagerCommands(req, resp);
-        } else if(requestURI.startsWith("/TOOLBOX/rest"))
+        } else if (requestURI.startsWith("/TOOLBOX/rest")) {
             executeRestCommand(req, resp);
+        }
 
     }
 
-    
-     /**
+    /**
      *  Returns the rootDir directory of the TOOLBOX WEB application
      */
     public File getRootDir() {
@@ -997,13 +1036,9 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
 
             }
 
-            try
-            {
+            try {
                 AutomaticCleanup.stop();
-            }
-            catch(Exception e)
-            {
-                
+            } catch (Exception e) {
             }
 
             serviceManager = null;
@@ -1113,7 +1148,6 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         mailError = aMailError;
     }
 
-    
     public static String getMailError() {
         return mailError;
     }
@@ -1209,21 +1243,20 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
 
     }
 
-    protected void initVersionRevision() throws Exception
-    {
+    protected void initVersionRevision() throws Exception {
         File infoFile;
         Document infoDoc;
         DOMUtil util;
         Element rootEl;
 
-        util=new DOMUtil();
+        util = new DOMUtil();
 
-        infoFile=new File(rootDir,"WEB-INF/xml/info.xml");
-        infoDoc=util.fileToDocument(infoFile);
-        rootEl=infoDoc.getDocumentElement();
+        infoFile = new File(rootDir, "WEB-INF/xml/info.xml");
+        infoDoc = util.fileToDocument(infoFile);
+        rootEl = infoDoc.getDocumentElement();
 
-        toolboxVersion=rootEl.getAttribute("toolboxVersion");
-        toolboxRevision=rootEl.getAttribute("revisionVersion");
+        toolboxVersion = rootEl.getAttribute("toolboxVersion");
+        toolboxRevision = rootEl.getAttribute("revisionVersion");
     }
 
     /**
@@ -1243,9 +1276,9 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     private void executeDeploy(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         DeployServiceCommand sc;
 
-        sc=new DeployServiceCommand();
+        sc = new DeployServiceCommand();
         sc.executeCommand(req, resp);
- }
+    }
 
     public String getDeployAdminToken() {
         return deployAdminToken;
@@ -1258,94 +1291,65 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     private void executeRestCommand(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String cmd;
         ManagerPluginManager man;
-        IRESTManagerPlugin commandPlugin=null;
-        String contentType=null;
+        IRESTManagerPlugin commandPlugin = null;
+        String contentType = null;
         try {
             man = ManagerPluginManager.getInstance();
 
             cmd = req.getRequestURI();
-            cmd=cmd.substring(req.getContextPath().length());
+            cmd = cmd.substring(req.getContextPath().length());
 
-            String formatLessCmd=cmd;
-            String lastToken="";
-            StringTokenizer tokenizer=new StringTokenizer(cmd,"/");
+            String formatLessCmd = cmd;
+            String lastToken = "";
+            StringTokenizer tokenizer = new StringTokenizer(cmd, "/");
 
-            while(tokenizer.hasMoreTokens())
-            {
-                lastToken=tokenizer.nextToken();
+            while (tokenizer.hasMoreTokens()) {
+                lastToken = tokenizer.nextToken();
             }
 
-            if(lastToken!=null)
-            {
-                int index=lastToken.lastIndexOf(".");
-                if(index>-1)
-                {
-                    contentType=lastToken.substring(index+1);
-                    if(contentType.equals("json")==false && contentType.equals("xml")==false)
-                        contentType=null;
+            if (lastToken != null) {
+                int index = lastToken.lastIndexOf(".");
+                if (index > -1) {
+                    contentType = lastToken.substring(index + 1);
+                    if (contentType.equals("json") == false && contentType.equals("xml") == false) {
+                        contentType = null;
+                    }
 
-                }
-                else
-                {
+                } else {
                     contentType = null;
                 }
 
             }
 
-            if(contentType!=null)
-                formatLessCmd=cmd.substring(0,cmd.length()-contentType.length()-1);
-            
-            String method=req.getMethod();
-            if(method.equals("GET"))
-                commandPlugin = (IRESTManagerPlugin) man.getCommand(formatLessCmd,ManagerPluginManager.METHOD_REST_GET);
-            else if(method.equals("POST"))
-                commandPlugin = (IRESTManagerPlugin) man.getCommand(formatLessCmd,ManagerPluginManager.METHOD_REST_POST);
-            else if(method.equals("PUT"))
-                commandPlugin = (IRESTManagerPlugin) man.getCommand(formatLessCmd,ManagerPluginManager.METHOD_REST_PUT);
-            else throw new Exception("Method "+method+" not supported");
-
-            Hashtable<String,String> headers,parameters;
-
-            headers=parseRequestHeaders(req);
-            parameters=parseHeaderParameters(req);
-
-            if(contentType!=null && contentType.equals("json"))
-            {
-                JsonObject inputObj;
-                inputObj=JsonUtil.getInputAsJson(req.getInputStream());
-
-                JsonObject jsonResp = commandPlugin.executeCommand(formatLessCmd, inputObj,headers,parameters);
-
-                JsonUtil.writeJsonToStream(jsonResp, resp.getOutputStream());
+            if (contentType != null) {
+                formatLessCmd = cmd.substring(0, cmd.length() - contentType.length() - 1);
             }
-            else if (contentType!=null && contentType.equals("xml"))
-            {
-                DOMUtil util;
-                Document inputDoc;
-                try
-                {
-                    util=new DOMUtil();
-                    inputDoc=util.inputStreamToDocument(req.getInputStream());
-                }
-                catch(Exception e)
-                {
-                    inputDoc=null;
-                }
-                Document respDoc=commandPlugin.executeCommand(formatLessCmd, inputDoc,headers,parameters);
 
-                DOMUtil.dumpXML(respDoc, resp.getOutputStream(), false);
+            String method = req.getMethod();
+            if (method.equals("GET")) {
+                commandPlugin = (IRESTManagerPlugin) man.getCommand(formatLessCmd, ManagerPluginManager.METHOD_REST_GET);
+            } else if (method.equals("POST")) {
+                commandPlugin = (IRESTManagerPlugin) man.getCommand(formatLessCmd, ManagerPluginManager.METHOD_REST_POST);
+            } else if (method.equals("PUT")) {
+                commandPlugin = (IRESTManagerPlugin) man.getCommand(formatLessCmd, ManagerPluginManager.METHOD_REST_PUT);
+            } else {
+                throw new Exception("Method " + method + " not supported");
             }
-            else
-            {
-                try
-                {
-                    InputStream response;
-                    response=commandPlugin.executeCommand(formatLessCmd, req.getInputStream(),headers,parameters);
-                    IOUtil.copy(response, resp.getOutputStream());
-                }
-                catch(UnsupportedOperationException ex)
-                {
-                    commandPlugin.executeCommand(req,resp);
+
+            Hashtable<String, String> headers, parameters;
+
+            headers = parseRequestHeaders(req);
+            parameters = parseHeaderParameters(req);
+
+            if (contentType != null && contentType.equals("json")) {
+                executeRestCommandJSON(req, resp, commandPlugin, formatLessCmd, headers, parameters);
+            } else if (contentType != null && contentType.equals("xml")) {
+                executeRestCommandXML(req, resp, commandPlugin, formatLessCmd, headers, parameters);
+            } else {
+                try {
+                    executeRestCommandStream(req, resp, commandPlugin, formatLessCmd, headers, parameters);
+                } catch (UnsupportedOperationException ex) {
+                    executeRestCommandServletInterface(req, resp,commandPlugin);
                 }
             }
 
@@ -1356,14 +1360,13 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     }
 
     private Hashtable<String, String> parseRequestHeaders(HttpServletRequest req) {
-        Enumeration<String> en=req.getHeaderNames();
+        Enumeration<String> en = req.getHeaderNames();
 
         Hashtable<String, String> headers;
 
-        headers=new Hashtable<String, String>();
-        while(en.hasMoreElements())
-        {
-            String name=en.nextElement();
+        headers = new Hashtable<String, String>();
+        while (en.hasMoreElements()) {
+            String name = en.nextElement();
             headers.put(name, req.getHeader(name));
         }
 
@@ -1371,24 +1374,36 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     }
 
     private Hashtable<String, String> parseHeaderParameters(HttpServletRequest req) {
-        Enumeration<String> en=req.getParameterNames();
+        Enumeration<String> en = req.getParameterNames();
 
         Hashtable<String, String> headers;
 
-        headers=new Hashtable<String, String>();
-        while(en.hasMoreElements())
-        {
-            String name=en.nextElement();
+        headers = new Hashtable<String, String>();
+        while (en.hasMoreElements()) {
+            String name = en.nextElement();
             headers.put(name, req.getParameter(name));
         }
 
         return headers;
     }
 
-    
+    private void executeRestCommandServletInterface(HttpServletRequest req, HttpServletResponse resp, IRESTManagerPlugin commandPlugin) throws Exception {
+        DOMUtil util;
+        InputStream errorResp=null;
 
+        boolean res = commandPlugin.authenticate(req, resp);
+        if (res == true) {
+            res = commandPlugin.validateInput(req, resp);
+            if (res == true) {
+                commandPlugin.executeCommand(req, resp);
+            } else {
+                errorResp = new ByteArrayInputStream("Could not validate input".getBytes());
+            }
+        } else {
+            errorResp = new ByteArrayInputStream("Could not authenticate request".getBytes());
+        }
 
+        if(errorResp!=null)
+            IOUtil.copy(errorResp, resp.getOutputStream());
+    }
 }
-
-
-

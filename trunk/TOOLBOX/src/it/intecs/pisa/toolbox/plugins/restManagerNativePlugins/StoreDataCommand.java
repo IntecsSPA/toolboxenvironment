@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import it.intecs.pisa.pluginscore.RESTManagerCommandPlugin;
 import it.intecs.pisa.util.DateUtil;
 import it.intecs.pisa.util.IOUtil;
+import it.intecs.pisa.util.json.JsonErrorObject;
 import it.intecs.pisa.util.json.JsonUtil;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -37,10 +38,7 @@ public class StoreDataCommand extends RESTManagerCommandPlugin{
 
             return JsonUtil.getJsonAsStream(outputJson);
         } catch (Exception ex) {
-            JsonObject outputJson = new JsonObject();
-            outputJson.addProperty("success", false);
-            outputJson.addProperty("reason", ex.getMessage());
-
+            JsonObject outputJson = JsonErrorObject.get(ex.getMessage());
             return JsonUtil.getJsonAsStream(outputJson);
         }
     }

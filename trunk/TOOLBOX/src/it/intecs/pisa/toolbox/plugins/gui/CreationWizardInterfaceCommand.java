@@ -28,7 +28,7 @@ import org.xml.sax.InputSource;
 public class CreationWizardInterfaceCommand extends RESTManagerCommandPlugin{
   
     @Override
-    public Document executeCommand(String cmd, Document inputDoc,Hashtable<String,String> headers,Hashtable<String,String> params) {
+    public Document executeCommand(String cmd, Document inputDoc) {
         try {
             DOMUtil domUtil;
 

@@ -9,7 +9,6 @@ import com.google.gson.JsonObject;
 import it.intecs.pisa.pluginscore.RESTManagerCommandPlugin;
 import it.intecs.pisa.toolbox.service.ServiceManager;
 import java.net.URLDecoder;
-import java.util.Hashtable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
@@ -24,12 +23,12 @@ public class CreationWizardValidateNameCommand extends RESTManagerCommandPlugin{
   
    
     @Override
-    public JsonObject executeCommand(String method, JsonObject request,Hashtable<String,String> headers,Hashtable<String,String> parameters) throws Exception {
+    public JsonObject executeCommand(String method, JsonObject request) throws Exception {
         JsonObject outputJson = new JsonObject();
         boolean success=false;
         String reason="";
 
-        String serviceName=parameters.get("value");
+        String serviceName=inputParameters.get("value");
         serviceName=URLDecoder.decode(serviceName, "UTF-8");
 
         String regex = "[a-zA-Z0-9-_]+";

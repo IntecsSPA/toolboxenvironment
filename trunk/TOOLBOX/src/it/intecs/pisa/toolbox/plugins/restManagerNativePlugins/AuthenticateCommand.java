@@ -25,7 +25,7 @@ import org.w3c.dom.NodeList;
 public class AuthenticateCommand extends RESTManagerCommandPlugin{
 
     @Override
-    public JsonObject executeCommand(String method, JsonObject request,Hashtable<String,String> headers,Hashtable<String,String> parameters) throws Exception  {
+    public JsonObject executeCommand(String method, JsonObject request) throws Exception  {
         ServletContext context = Toolbox.getInstance().getServletContext();
         DOMUtil util=new DOMUtil();
         boolean isValidAccount=false;

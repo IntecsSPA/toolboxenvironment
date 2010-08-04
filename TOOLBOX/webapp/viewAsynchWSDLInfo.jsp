@@ -35,7 +35,7 @@
 function back() 
 { 
 
-  window.location="<%= response.encodeURL("manageOperations.jsp?serviceName=" + serviceName)%>";
+  window.location="<%= response.encodeURL("manageOperations.jsp?extVers=3&serviceName=" + serviceName)%>";
 
 }
 function configure() 
@@ -78,7 +78,7 @@ function configure()
         String asynchOp = (String)messages.getObject("viewAsynchWSDLInfo.asynchOp");
 
         String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;" +
-	                "&nbsp;<a href='manageOperations.jsp?serviceName="+serviceName+"'>"+opManag+"</a>&nbsp;&gt;&nbsp;" + asynchOp;
+	                "&nbsp;<a href='manageOperations.jsp?extVers=3&serviceName="+serviceName+"'>"+opManag+"</a>&nbsp;&gt;&nbsp;" + asynchOp;
 
         
 %>

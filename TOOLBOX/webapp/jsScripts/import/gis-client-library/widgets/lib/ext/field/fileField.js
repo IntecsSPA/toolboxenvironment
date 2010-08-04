@@ -43,11 +43,22 @@
                         name: field.id+"_file",
                         labelIcon: "Label"+field.id,
                         iconWait: field.iconWait,
+                        fileValue: "",
                         buttonText: '',
+                        reset: function(){
+                            if(this.iconWait){
+                              var label=this.findParentByType("form").getForm().findField(this.labelIcon);
+                                      label.setValue("");
+                            }
+                            this.setValue("");
+                            this.fileInput.dom.value="";
+
+                        },
+
                         listeners: {
                             "fileselected": function (){
                                 if(this.autoUploadURL){
-                                   if(this.iconWait){;
+                                   if(this.iconWait){
                                       var label=this.findParentByType("form").getForm().findField(this.labelIcon);
                                       label.setValue("<img src='"+this.iconWait+"'/>");
                                    }
@@ -58,14 +69,27 @@
                                         iconSuccess: this.iconSuccess,
                                         iconFailure: this.iconFailure,
                                         success: function(form, action){
+                                            var jsonResponseObj=eval('new Object(' + action.response.responseText + ')');
                                             if(form.iconSuccess){
-                                              var jsonResponseObj=eval('new Object(' + action.response.responseText + ')');
-                                              var idField=form.findField(form.fieldID);
-                                            
-                                              idField.setValue(jsonResponseObj.id);
+                                              if(jsonResponseObj.id){
+                                                var idField=form.findField(form.fieldID);
+                                                idField.setValue(jsonResponseObj.id);
+                                              }
                                               var label=form.findField(form.labelIcon);
                                               label.setValue("<img src='"+form.iconSuccess+"'/>");
                                            }
+                                           if(form.editAreaID){
+                                                var editArea = document.getElementById(form.editAreaID+"TextAreaIframe");
+                                                var editAreaDoc = editArea.contentWindow.document;
+                                                var textResp=eval("'"+jsonResponseObj.content+"'");
+                                                
+                                                var decode=decodeURIComponent(textResp.replace(/\+/g,  " "));
+
+                                                editAreaDoc.setValue(decode);
+                                           }
+
+                                          var file=form.findField(form.fileID);
+                                          file.fileInput.dom.value="";
 
                                         },
                                         failure: function(form, action) {
@@ -133,6 +157,8 @@
                     iconFailure: field.iconFailure,
                     labelIcon: "Label"+field.id,
                     fieldID: field.id+"UploadID",
+                    fileID: field.id+"_file",
+                    editAreaID: field.editAreaID,
                     autoShow : true,
                     items: [contentForm]
                 });

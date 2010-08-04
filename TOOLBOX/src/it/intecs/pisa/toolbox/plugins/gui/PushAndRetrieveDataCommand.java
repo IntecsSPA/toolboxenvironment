@@ -5,12 +5,14 @@
 
 package it.intecs.pisa.toolbox.plugins.gui;
 
+import com.google.gson.JsonObject;
 import http.utils.multipartrequest.MultipartRequest;
 import http.utils.multipartrequest.ServletMultipartRequest;
 import it.intecs.pisa.pluginscore.RESTManagerCommandPlugin;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.DateUtil;
 import it.intecs.pisa.util.IOUtil;
+import it.intecs.pisa.util.json.JsonUtil;
 import java.io.ByteArrayInputStream;
 
 import java.io.File;
@@ -19,6 +21,7 @@ import java.io.FileOutputStream;
 import java.net.URLEncoder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.w3c.dom.Document;
 
 /**
@@ -53,17 +56,20 @@ public class PushAndRetrieveDataCommand extends RESTManagerCommandPlugin{
             util=new DOMUtil();
             doc=util.fileToDocument(outputFile);
             DOMUtil.indent(doc);
-            out=URLEncoder.encode(DOMUtil.getDocumentAsString(doc), "UTF-8");
-            
-            
+            out=StringEscapeUtils.escapeJavaScript(DOMUtil.getDocumentAsString(doc));   
         }
         else
         {
-          out=URLEncoder.encode(IOUtil.inputToString(new FileInputStream(outputFile)), "UTF-8");
+          out=StringEscapeUtils.escapeJavaScript(IOUtil.inputToString(new FileInputStream(outputFile)));
 
         }
+
+        JsonObject outputJson = new JsonObject();
+        outputJson.addProperty("success", true);
+        outputJson.addProperty("content", out);
+
         resp.setContentType("text/html");
-        IOUtil.copy( new ByteArrayInputStream(out.getBytes()),resp.getOutputStream());
+        IOUtil.copy(JsonUtil.getJsonAsStream(outputJson),resp.getOutputStream());
         outputFile.delete();
     }
 }

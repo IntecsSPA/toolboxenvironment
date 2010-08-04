@@ -2,14 +2,14 @@
     <head>
         <%
             String syntax = (request.getParameter("syntax") == null ? "html": request.getParameter("syntax"));
+            String id = (request.getParameter("id") == null ? "": request.getParameter("id"));
             String multifiles = (request.getParameter("multifiles") == null ? "false": request.getParameter("multifiles"));
-            String gisClientPath = (request.getParameter("gcpath") == null ? "import/editarea/edit_area_full.js": request.getParameter("gcpath")+"/import/editarea/edit_area_full.js");
         %>
-        <script language="Javascript" type="text/javascript" src="<%=gisClientPath%>"></script>
+        <script language="Javascript" type="text/javascript" src="../../import/editarea/edit_area_full.js"></script>
 	<script language="Javascript" type="text/javascript">
 		// initialisation
 		editAreaLoader.init({
-			id: "textAreaId"	// id of the textarea to transform
+			id: "textAreaId<%=id%>"	// id of the textarea to transform
 			,start_highlight: true	// if start with highlight
 			,allow_resize: "both"
 			,allow_toggle: false
@@ -25,20 +25,21 @@
 
                 // callback functions
 
-                function setValue(value){
-                   editAreaLoader.setValue("textAreaId", value);
+                document.setValue=function(value){
+                   editAreaLoader.setValue("textAreaId<%=id%>", value);
                 }
   
-		function getValue(){
-                    editAreaLoader.getValue("textAreaId");
+		document.getValue=function(){
+                    return editAreaLoader.getValue("textAreaId<%=id%>");
                 }
 
-		
+	
        </script>
     </head>
     <body>
-        <textarea  id="textAreaId" style="height: 100%; width: 100%;" name="test_2">
-            <html></html>
+  
+        <textarea  id="textAreaId<%=id%>" style="height: 96%; width: 100%;" name="test_2">
+          
         </textarea>
     </body>
 

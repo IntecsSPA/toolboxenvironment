@@ -35,7 +35,7 @@
 function back() 
 { 
 
-  window.location="<%= response.encodeURL("manageOperations.jsp?serviceName=" + serviceName)%>";
+  window.location="<%= response.encodeURL("manageOperations.jsp?extVers=3&serviceName=" + serviceName)%>";
 
 }
 function configure() 
@@ -72,7 +72,7 @@ function configure()
         String synchOp = (String)messages.getObject("viewSynchWSDLInfo.synchOp");
 
 	String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;" +
-	                "&nbsp;<a href='manageOperations.jsp?serviceName="+serviceName+"'>"+opManag+"</a>&nbsp;&gt;&nbsp;" +synchOp;
+	                "&nbsp;<a href='manageOperations.jsp?extVers=3&serviceName="+serviceName+"'>"+opManag+"</a>&nbsp;&gt;&nbsp;" +synchOp;
 
 %>
 <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center> 

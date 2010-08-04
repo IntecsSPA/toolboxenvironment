@@ -23,7 +23,8 @@ public class GetResourceStoredCommand extends RESTManagerCommandPlugin{
         String fileName=cmd.substring(index+1);
         storedFile = new File(pluginDir, "resources/storedData/" + fileName);
         storedFile.deleteOnExit();
-        
+
+        this.outputHeaders.put("content-type", "text/html");
         try {
             return new FileInputStream(storedFile);
         } catch (FileNotFoundException ex) {

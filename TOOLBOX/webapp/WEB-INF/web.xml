@@ -18,7 +18,7 @@
     <servlet>
         <servlet-name>Tools</servlet-name>
         <servlet-class>it.intecs.pisa.toolbox.Tools</servlet-class>
-    </servlet>
+    </servlet>z
     <servlet-mapping>
         <servlet-name>Tools</servlet-name>
         <url-pattern>/Tools</url-pattern>

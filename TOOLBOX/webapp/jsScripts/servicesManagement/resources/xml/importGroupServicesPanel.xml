@@ -13,9 +13,12 @@
            iconWait="images/loaderFile.gif"
            iconFailure="images/fail.png"
            iconSuccess="images/success.png"
-           submitLabel="Import Services"/>
-           <!--input type="editarea" name="test" id="test"  hidden="true" hideLabel="true" value="manager?cmd=exportGroupServices"/>
-           <input type="editarea" name="test2" id="test2"  hidden="true" hideLabel="true" value="manager?cmd=exportGroupServices"/-->
+           submitLabel="Import Services"
+           editAreaID="test"/>
+           <input type="editarea" name="test" id="test"  hidden="true" hideLabel="true"
+                adaptButtonLabel="Adapt to screen" syntax="html"
+                height="screen.height/1.8"/>
+           
         </group>
     </section>
     <requestInformations>

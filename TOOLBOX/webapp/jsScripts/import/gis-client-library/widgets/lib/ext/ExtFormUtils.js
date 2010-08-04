@@ -33,11 +33,15 @@ function generateFormFieldSet(title, fieldSets, numCol, localizationObj){
 
  var arrayFormFile=getFormFiles(title,fieldSets);
 
-  var html="<div id='"+title+"MainForm'></div>";
+ var html="";
 
   for(var i=0; i<arrayFormFile.length; i++){
       html+="<div id='"+arrayFormFile[i].divName+"'></div>";
   }
+  
+  html+="<div id='"+title+"MainForm'></div>";
+
+  
 
   newForm=new Ext.FormPanel({
         frame: true,
@@ -668,11 +672,12 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                  }
                                else
                                  if(xtypeArray[u] == "field") {
-                                     if(input[j].fieldType == "editarea")
+                                     if(input[j].fieldType == "editarea"){
                                         formValues[input[j].getItemId()]={
                                               id: input[j].getItemId(),
                                               value:input[j].getEditorValue()
                                           };
+                                     }
                                      else
                                         if(label)
                                             formValues[input[j].getItemId()]={
@@ -1404,7 +1409,10 @@ function createExjFormByElement(title, formDataElement, numCols, localizationObj
                autoUploadURL: inputFormElements[i].getAttribute("autoUploadURL"),
                     iconWait: inputFormElements[i].getAttribute("iconWait"),
                  iconSuccess: inputFormElements[i].getAttribute("iconSuccess"),
-                 iconFailure: inputFormElements[i].getAttribute("iconFailure")
+                 iconFailure: inputFormElements[i].getAttribute("iconFailure"),
+            adaptButtonLabel: inputFormElements[i].getAttribute("adaptButtonLabel"),
+                  editAreaID: inputFormElements[i].getAttribute("editAreaID")
+
 
                   };
                   

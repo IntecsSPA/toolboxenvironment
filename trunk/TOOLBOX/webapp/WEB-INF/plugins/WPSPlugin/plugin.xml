@@ -4,5 +4,6 @@
     <commandViaPost cmd="wpsProcessingCreate" class="it.intecs.pisa.toolbox.plugins.wpsPlugin.commands.WPSProcessingCreateCommand"/>
     <commandViaPost cmd="wpsProcessingUpdate" class="it.intecs.pisa.toolbox.plugins.wpsPlugin.commands.WPSProcessingUpdateCommand"/>
     <commandViaGet cmd="wpsProcessingDelete" class="it.intecs.pisa.toolbox.plugins.wpsPlugin.commands.WPSProcessingDeleteCommand"/>
+    <restCommandViaGet cmd="/rest/wps/storedData/*" class="it.intecs.pisa.toolbox.plugins.wpsPlugin.commands.GetResourceStoredCommand"/>
 </plugin>
 

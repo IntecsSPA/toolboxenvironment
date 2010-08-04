@@ -16,4 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 public interface IManagerPlugin {
     public void executeCommand(HttpServletRequest req, HttpServletResponse resp) throws Exception;
     public void setPluginDirectory(File dir) throws Exception;
+    public boolean validateInput(HttpServletRequest req, HttpServletResponse resp);
+    public boolean authenticate(HttpServletRequest req, HttpServletResponse resp);
 }

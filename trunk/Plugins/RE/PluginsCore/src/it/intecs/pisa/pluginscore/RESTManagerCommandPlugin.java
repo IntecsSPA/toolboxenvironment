@@ -17,9 +17,6 @@ import org.w3c.dom.Document;
  * @author Massimiliano
  */
 public abstract class RESTManagerCommandPlugin implements IRESTManagerPlugin {
-
-
-
     protected File pluginDir;
 
     public RESTManagerCommandPlugin() {
@@ -47,5 +44,37 @@ public abstract class RESTManagerCommandPlugin implements IRESTManagerPlugin {
 
      public void executeCommand(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+      public boolean authenticate(String method, JsonObject request, Hashtable<String, String> headers, Hashtable<String, String> parameters) {
+        return true;
+    }
+
+    public boolean authenticate(String cmd, Document inputDoc, Hashtable<String, String> headers, Hashtable<String, String> parameters) {
+        return true;
+    }
+
+    public boolean authenticate(String cmd, InputStream in, Hashtable<String, String> headers, Hashtable<String, String> parameters) {
+        return true;
+    }
+
+    public boolean validateInput(String method, JsonObject request, Hashtable<String, String> headers, Hashtable<String, String> parameters) {
+        return true;
+    }
+
+    public boolean validateInput(String cmd, Document inputDoc, Hashtable<String, String> headers, Hashtable<String, String> parameters) {
+        return true;
+    }
+
+    public boolean validateInput(String cmd, InputStream in, Hashtable<String, String> headers, Hashtable<String, String> parameters) {
+        return true;
+    }
+
+    public boolean authenticate(HttpServletRequest req, HttpServletResponse resp) {
+       return true;
+    }
+
+    public boolean validateInput(HttpServletRequest req, HttpServletResponse resp) {
+        return true;
     }
 }

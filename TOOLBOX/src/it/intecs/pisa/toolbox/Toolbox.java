@@ -245,15 +245,15 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         }
     }
 
-    protected void executeRestCommandJSON(HttpServletRequest req, HttpServletResponse resp, IRESTManagerPlugin commandPlugin, String formatLessCmd, Hashtable<String, String> headers, Hashtable<String, String> parameters) throws IOException, Exception {
+    protected void executeRestCommandJSON(HttpServletRequest req, HttpServletResponse resp, IRESTManagerPlugin commandPlugin, String formatLessCmd) throws IOException, Exception {
         JsonObject inputObj;
         inputObj = JsonUtil.getInputAsJson(req.getInputStream());
         JsonObject jsonResp;
-        boolean res = commandPlugin.authenticate(formatLessCmd, inputObj, headers, parameters);
+        boolean res = commandPlugin.authenticate(formatLessCmd, inputObj);
         if (res == true) {
-            res = commandPlugin.validateInput(formatLessCmd, inputObj, headers, parameters);
+            res = commandPlugin.validateInput(formatLessCmd, inputObj);
             if (res == true) {
-                jsonResp = commandPlugin.executeCommand(formatLessCmd, inputObj, headers, parameters);
+                jsonResp = commandPlugin.executeCommand(formatLessCmd, inputObj);
             } else {
                 jsonResp = JsonErrorObject.get("Could not validate input");
             }
@@ -263,13 +263,13 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         JsonUtil.writeJsonToStream(jsonResp, resp.getOutputStream());
     }
 
-    protected void executeRestCommandStream(HttpServletRequest req, HttpServletResponse resp,IRESTManagerPlugin commandPlugin, String formatLessCmd, Hashtable<String, String> headers, Hashtable<String, String> parameters) throws IOException {
+    protected void executeRestCommandStream(HttpServletRequest req, HttpServletResponse resp,IRESTManagerPlugin commandPlugin, String formatLessCmd) throws IOException {
         InputStream response;
-        boolean res = commandPlugin.authenticate(formatLessCmd, req.getInputStream(), headers, parameters);
+        boolean res = commandPlugin.authenticate(formatLessCmd, req.getInputStream());
         if (res == true) {
-            res = commandPlugin.validateInput(formatLessCmd, req.getInputStream(), headers, parameters);
+            res = commandPlugin.validateInput(formatLessCmd, req.getInputStream());
             if (res == true) {
-                response = commandPlugin.executeCommand(formatLessCmd, req.getInputStream(), headers, parameters);
+                response = commandPlugin.executeCommand(formatLessCmd, req.getInputStream());
             } else {
                 response = new ByteArrayInputStream("Could not validate input".getBytes());
             }
@@ -279,7 +279,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         IOUtil.copy(response, resp.getOutputStream());
     }
 
-    protected void executeRestCommandXML(HttpServletRequest req, HttpServletResponse resp, IRESTManagerPlugin commandPlugin, String formatLessCmd, Hashtable<String, String> headers, Hashtable<String, String> parameters) throws Exception {
+    protected void executeRestCommandXML(HttpServletRequest req, HttpServletResponse resp, IRESTManagerPlugin commandPlugin, String formatLessCmd) throws Exception {
         DOMUtil util;
         Document inputDoc;
         try {
@@ -289,11 +289,11 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             inputDoc = null;
         }
         Document respDoc;
-        boolean res = commandPlugin.authenticate(formatLessCmd, inputDoc, headers, parameters);
+        boolean res = commandPlugin.authenticate(formatLessCmd, inputDoc);
         if (res == true) {
-            res = commandPlugin.validateInput(formatLessCmd, inputDoc, headers, parameters);
+            res = commandPlugin.validateInput(formatLessCmd, inputDoc);
             if (res == true) {
-                respDoc = commandPlugin.executeCommand(formatLessCmd, inputDoc, headers, parameters);
+                respDoc = commandPlugin.executeCommand(formatLessCmd, inputDoc);
             } else {
                 respDoc = DocumentError.get("Could not validate input");
             }
@@ -301,6 +301,38 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             respDoc = DocumentError.get("Could not authenticate request");
         }
         DOMUtil.dumpXML(respDoc, resp.getOutputStream(), false);
+    }
+
+    protected void setOutputHeaders(IRESTManagerPlugin commandPlugin, HttpServletResponse resp) {
+        Map<String, String> outputHeaders = null;
+        outputHeaders = commandPlugin.getOutputHeaders();
+        if (outputHeaders != null) {
+            Set<String> keys;
+            keys = outputHeaders.keySet();
+            for (String key : keys.toArray(new String[0])) {
+                resp.setHeader(key, outputHeaders.get(key));
+            }
+        }
+    }
+
+    private void executeRestCommandServletInterface(HttpServletRequest req, HttpServletResponse resp, IRESTManagerPlugin commandPlugin) throws Exception {
+        DOMUtil util;
+        InputStream errorResp=null;
+
+        boolean res = commandPlugin.authenticate(req, resp);
+        if (res == true) {
+            res = commandPlugin.validateInput(req, resp);
+            if (res == true) {
+                commandPlugin.executeCommand(req, resp);
+            } else {
+                errorResp = new ByteArrayInputStream("Could not validate input".getBytes());
+            }
+        } else {
+            errorResp = new ByteArrayInputStream("Could not authenticate request".getBytes());
+        }
+
+        if(errorResp!=null)
+            IOUtil.copy(errorResp, resp.getOutputStream());
     }
 
     private void debugServiceRequest(HttpServletResponse resp, HttpServletRequest req, String requestURI) throws IOException {
@@ -1293,6 +1325,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         ManagerPluginManager man;
         IRESTManagerPlugin commandPlugin = null;
         String contentType = null;
+
         try {
             man = ManagerPluginManager.getInstance();
 
@@ -1336,22 +1369,27 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
                 throw new Exception("Method " + method + " not supported");
             }
 
-            Hashtable<String, String> headers, parameters;
+            Map<String,String> headers, parameters;
 
             headers = parseRequestHeaders(req);
             parameters = parseHeaderParameters(req);
 
+            commandPlugin.setInputHeaders(headers);
+            commandPlugin.setInputParameters(parameters);
+
             if (contentType != null && contentType.equals("json")) {
-                executeRestCommandJSON(req, resp, commandPlugin, formatLessCmd, headers, parameters);
+                executeRestCommandJSON(req, resp, commandPlugin, formatLessCmd);
             } else if (contentType != null && contentType.equals("xml")) {
-                executeRestCommandXML(req, resp, commandPlugin, formatLessCmd, headers, parameters);
+                executeRestCommandXML(req, resp, commandPlugin, formatLessCmd);
             } else {
                 try {
-                    executeRestCommandStream(req, resp, commandPlugin, formatLessCmd, headers, parameters);
+                    executeRestCommandStream(req, resp, commandPlugin, formatLessCmd);
                 } catch (UnsupportedOperationException ex) {
                     executeRestCommandServletInterface(req, resp,commandPlugin);
                 }
             }
+            
+            setOutputHeaders(commandPlugin, resp);
 
             resp.setStatus(resp.SC_OK);
         } catch (Exception e) {
@@ -1359,12 +1397,12 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         }
     }
 
-    private Hashtable<String, String> parseRequestHeaders(HttpServletRequest req) {
+    private Map<String, String> parseRequestHeaders(HttpServletRequest req) {
         Enumeration<String> en = req.getHeaderNames();
 
-        Hashtable<String, String> headers;
+        HashMap<String, String> headers;
 
-        headers = new Hashtable<String, String>();
+        headers = new HashMap<String, String>();
         while (en.hasMoreElements()) {
             String name = en.nextElement();
             headers.put(name, req.getHeader(name));
@@ -1373,12 +1411,12 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         return headers;
     }
 
-    private Hashtable<String, String> parseHeaderParameters(HttpServletRequest req) {
+    private Map<String, String> parseHeaderParameters(HttpServletRequest req) {
         Enumeration<String> en = req.getParameterNames();
 
-        Hashtable<String, String> headers;
+        HashMap<String, String> headers;
 
-        headers = new Hashtable<String, String>();
+        headers = new HashMap<String, String>();
         while (en.hasMoreElements()) {
             String name = en.nextElement();
             headers.put(name, req.getParameter(name));
@@ -1387,23 +1425,5 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         return headers;
     }
 
-    private void executeRestCommandServletInterface(HttpServletRequest req, HttpServletResponse resp, IRESTManagerPlugin commandPlugin) throws Exception {
-        DOMUtil util;
-        InputStream errorResp=null;
-
-        boolean res = commandPlugin.authenticate(req, resp);
-        if (res == true) {
-            res = commandPlugin.validateInput(req, resp);
-            if (res == true) {
-                commandPlugin.executeCommand(req, resp);
-            } else {
-                errorResp = new ByteArrayInputStream("Could not validate input".getBytes());
-            }
-        } else {
-            errorResp = new ByteArrayInputStream("Could not authenticate request".getBytes());
-        }
-
-        if(errorResp!=null)
-            IOUtil.copy(errorResp, resp.getOutputStream());
-    }
+    
 }

@@ -11,5 +11,6 @@
     <restCommandViaGet cmd="/rest/gui/creationWizard/validate/serviceName" class="it.intecs.pisa.toolbox.plugins.gui.CreationWizardValidateNameCommand"/>
     <restCommandViaPost cmd="/rest/gui/storeData" class="it.intecs.pisa.toolbox.plugins.gui.StoreDataCommand"/>
     <restCommandViaPost cmd="/rest/gui/pushAndRetrieveData" class="it.intecs.pisa.toolbox.plugins.gui.PushAndRetrieveDataCommand"/>
+    <restCommandViaPost cmd="/rest/gui/pushAndRetrieveData" class="it.intecs.pisa.toolbox.plugins.gui.CloneMultipleServicesCommand"/>
 </plugin>
 

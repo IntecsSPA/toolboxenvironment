@@ -107,7 +107,6 @@ public class GeoserverDataDepolyTag extends NativeTagExecutor {
             }
         }
 
-        // return Web Map Context ...
         return result;
     }
 }

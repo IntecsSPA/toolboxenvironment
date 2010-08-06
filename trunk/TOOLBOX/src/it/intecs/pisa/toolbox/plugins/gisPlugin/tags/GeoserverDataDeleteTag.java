@@ -5,6 +5,8 @@
 
 package it.intecs.pisa.toolbox.plugins.gisPlugin.tags;
 
+import it.intecs.pisa.gis.geoserver.rest.RestAPI;
+import it.intecs.pisa.gis.geoserver.rest.RestUtil;
 import it.intecs.pisa.toolbox.configuration.ToolboxConfiguration;
 import it.intecs.pisa.toolbox.plugins.nativeTagPlugin.NativeTagExecutor;
 import org.w3c.dom.Element;
@@ -21,7 +23,7 @@ import org.w3c.dom.Element;
  *      <geoserverUsername></geoserverUsername>
  *      <geoserverPassword></geoserverPassword>
  *      <deployName></deployName>
- *      <data type=""/> // types supported geotiff,shp,style,
+ *      <data type=""/> // types supported geotiff,shp
  * </geoserverDataDelete>
  *
  */
@@ -53,6 +55,8 @@ public class GeoserverDataDeleteTag extends NativeTagExecutor{
     protected static final String DATA = "data";
     protected static final String DATA_TYPE = "type";
     protected static final String DEPLOY_NAME="deployName";
+    protected static final String REST_API_PACKAGE = "it.intecs.pisa.toolbox.plugins.gisPlugin.geoserver.rest.";
+    protected static final String REST_API_CLASS_NAME = "RestAPIVersion";
 
 
     @Override
@@ -84,49 +88,24 @@ public class GeoserverDataDeleteTag extends NativeTagExecutor{
 
       deployName=deployNameElement!=null ? deployNameElement.getTextContent() : null;
       
+        boolean opResult=false;
+        int version = Integer.parseInt("" + geoserverVersion.charAt(0));
+        Class geoserverREST = Class.forName(REST_API_PACKAGE
+                + REST_API_CLASS_NAME + version);
+        RestAPI geoserverRestAPI = (RestAPI) geoserverREST.newInstance();
+        geoserverRestAPI.setGeoserverURL(geoserverURL);
 
-    /*  String restRoot=geoserverURL+"/rest/";
-      String restRequest=restRoot;
-      boolean opResult=false;
-      int version=Integer.parseInt(""+geoserverVersion.charAt(0));
-      if(version >= 2){
-          restRequest+="workspaces/"+geoserverWorkspace;
-          if(deployType.equalsIgnoreCase("shp")){
-             opResult=RESTService.deleteURL(
-                                      new URL(restRoot+"layers/"+deployName),
-                                      geoserverUsername, geoserverPassword);
-             restRequest+="/datastores/"+deployName;
-             opResult=opResult && RESTService.deleteURL(
-                               new URL(restRequest+"/featuretypes/"+deployName),
-                                      geoserverUsername, geoserverPassword);
-             opResult=opResult && RESTService.deleteURL(
-                               new URL(restRequest),
-                                      geoserverUsername, geoserverPassword);
-          }else
-            if(deployType.equalsIgnoreCase("geotiff")){
-              opResult=RESTService.deleteURL(
-                                     new URL(restRoot+"layers/"+deployName),
-                                     geoserverUsername, geoserverPassword);
-              restRequest+="/coveragestores/"+deployName;
-              opResult=opResult && RESTService.deleteURL(
-                               new URL(restRequest+"/coverages/"+deployName),
-                                      geoserverUsername, geoserverPassword);
-              opResult=opResult && RESTService.deleteURL(
-                               new URL(restRequest),
-                                      geoserverUsername, geoserverPassword);
-            }else
-              if(deployType.equalsIgnoreCase("style")){
-                opResult=RESTService.deleteURL(
-                                     new URL(restRoot+"/styles/"+deployName),
-                                     geoserverUsername, geoserverPassword);
-              }  
-      }else{
-         restRoot+="folders/"+geoserverWorkspace+"/layers/"+deployName;
-         opResult=RESTService.deleteURL(new URL(restRoot),
-                                          geoserverUsername, geoserverPassword);
-      }*/
-      
-      return false;
+        if (deployType.equalsIgnoreCase("shp")) {
+            opResult = RestUtil.deleteVectorData(geoserverRestAPI,
+                    geoserverUsername, geoserverPassword,
+                    geoserverWorkspace, deployName);
+        } else if (deployType.equalsIgnoreCase("geotiff")) {
+            opResult = RestUtil.deleteRasterData(geoserverRestAPI,
+                    geoserverUsername, geoserverPassword,
+                    geoserverWorkspace, deployName);
+        }
+
+       return opResult;
     }
 
 }

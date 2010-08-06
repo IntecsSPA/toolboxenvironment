@@ -882,9 +882,15 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         } catch (Exception e) {
             resp.sendError(500);
         }
+    }
 
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String requestURI = request.getRequestURI();
 
-
+        if (requestURI.startsWith("/TOOLBOX/rest")) {
+                executeRestCommand(request, response);
+            }
     }
 
     protected String getTargetedServiceName(HttpServletRequest req) {

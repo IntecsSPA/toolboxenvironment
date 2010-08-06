@@ -505,4 +505,8 @@ public class ServiceManager {
     {
       return ServiceManager.getInstance().getService(ServiceInfo.getServiceName(serviceInstanceId));
     }
+
+    public boolean cloneService(String fromName, String toName) {
+        return true;
+    }
 }

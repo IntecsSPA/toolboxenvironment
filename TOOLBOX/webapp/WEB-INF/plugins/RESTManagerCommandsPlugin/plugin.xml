@@ -4,5 +4,6 @@
     <restCommandViaGet cmd="/rest/manager/getInterfacesTypes" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.GetInterfacesTypesCommand"/>
     <restCommandViaGet cmd="/rest/manager/getInterfaceModes/*/*/*" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.GetInterfaceModesCommand"/>
     <restCommandViaPut cmd="/rest/manager/storeData" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.StoreDataCommand"/>
+    <restCommandViaPut cmd="/rest/manager/cloneService" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.CloneServiceCommand"/>
 </plugin>
 

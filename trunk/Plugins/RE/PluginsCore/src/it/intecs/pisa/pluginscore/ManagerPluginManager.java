@@ -21,11 +21,13 @@ public class ManagerPluginManager extends ToolboxPluginManager {
     public static final String EXTENSION_TYPE_METHOD_REST_GET = "restCommandViaGet";
     public static final String EXTENSION_TYPE_METHOD_REST_POST = "restCommandViaPost";
     public static final String EXTENSION_TYPE_METHOD_REST_PUT = "restCommandViaPut";
+    public static final String EXTENSION_TYPE_METHOD_REST_DELETE = "restCommandViaDelete";
     public static final String METHOD_GET = "GET";
     public static final String METHOD_POST = "POST";
     public static final String METHOD_REST_GET = "REST_GET";
     public static final String METHOD_REST_POST = "REST_POST";
-     public static final String METHOD_REST_PUT = "REST_PUT";
+    public static final String METHOD_REST_PUT = "REST_PUT";
+    public static final String METHOD_REST_DELETE = "REST_DELETE";
     protected String[][] commandClasses = new String[0][3];
     private static ManagerPluginManager manager = new ManagerPluginManager();
 
@@ -61,7 +63,11 @@ public class ManagerPluginManager extends ToolboxPluginManager {
             newCommands[parsedInterfaces][2] = METHOD_REST_POST;
         }else if(tagName.equals(EXTENSION_TYPE_METHOD_REST_PUT)) {
             newCommands[parsedInterfaces][2] = METHOD_REST_PUT;
+        }else if(tagName.equals(EXTENSION_TYPE_METHOD_REST_DELETE)) {
+            newCommands[parsedInterfaces][2] = METHOD_REST_DELETE;
         }
+
+
             
         commandClasses = newCommands;
     }
@@ -106,7 +112,8 @@ public class ManagerPluginManager extends ToolboxPluginManager {
                 || tagname.equals(EXTENSION_TYPE_METHOD_POST)
                 || tagname.equals(EXTENSION_TYPE_METHOD_REST_GET)
                 || tagname.equals(EXTENSION_TYPE_METHOD_REST_POST)
-                || tagname.equals(EXTENSION_TYPE_METHOD_REST_PUT);
+                || tagname.equals(EXTENSION_TYPE_METHOD_REST_PUT)
+                || tagname.equals(EXTENSION_TYPE_METHOD_REST_DELETE);
     }
 
     public static ManagerPluginManager getInstance() {

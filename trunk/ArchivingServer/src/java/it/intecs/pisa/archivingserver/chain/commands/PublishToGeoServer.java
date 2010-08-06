@@ -88,7 +88,7 @@ public class PublishToGeoServer implements Command {
     private String publish(File fileToPublish,  String url, String workspacename,String publishName, String dataType ) throws Exception {
         String geoserverUrl;
         String username, password;
-        JsonObject responseObj=null;
+        String locationUrl=null;
         Document responseDoc=null;
         
         HTTPLinkTokenizer tokenizer;
@@ -108,15 +108,13 @@ public class PublishToGeoServer implements Command {
         GeoServerWorkspaces.create(new URL(geoserverUrl), workspacename, username, password);
 
         if(dataType.equals("shp"))
-            responseObj=GeoServerPublisher.publishShape(new URL(geoserverUrl), fileToPublish, workspacename, publishName, username, password);
+            locationUrl=GeoServerPublisher.publishShape(new URL(geoserverUrl), fileToPublish, workspacename, publishName, username, password);
         else  if(dataType.equals("tiff"))
             responseDoc=GeoServerPublisher.publishTiff(new URL(geoserverUrl), fileToPublish, workspacename, publishName, username, password);
 
-        if(responseObj!=null)
-            return getLocation(responseObj);
-        else if(responseDoc!=null)
+        if(responseDoc!=null)
             return getLocation(responseDoc);
-        else return null;
+        else return locationUrl;
     }
 
     protected String getLocation(JsonObject obj)

@@ -87,35 +87,41 @@ public class RestUtil {
             String geoserverUsername,
             String geoserverPassword,
             String geoserverWorkspace,
-            String dataPath,
-            String layerName,
-            String dataType) {
+            String layerName) {
 
-        URL restRequestLayer = null;
-        URL restRequestDataStore = null;
-        //  URL restRequestDataStore=null;
+
+        URL restRequest=null;
         try {
-            restRequestLayer = geoserverRestAPI.getLayerURL(layerName);
+            restRequest = geoserverRestAPI.getLayerURL(layerName);
         } catch (Exception ex) {
-            Logger.getLogger(RestUtil.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
             return false;
         }
 
-        String zipFilePath = null;
+        boolean sent = RESTService.delete(restRequest,
+                geoserverUsername, geoserverPassword);
+
         try {
-            zipFilePath = VectorUtil.createSHPZipDeployName(dataPath, layerName);
+            restRequest = geoserverRestAPI.getFeatureTypeURL(geoserverWorkspace, layerName);
         } catch (Exception ex) {
-            Logger.getLogger(RestUtil.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
             return false;
         }
 
-        /*boolean sent = RESTService.putBinaryFileTo(restRequestLayer,
-        new File(zipFilePath),"application/zip", "PUT",
-        geoserverUsername,geoserverPassword);*/
+         sent = sent && RESTService.delete(restRequest,
+                geoserverUsername, geoserverPassword);
 
-        new File(zipFilePath).delete();
+        try {
+            restRequest = geoserverRestAPI.getDataStoreURL(geoserverWorkspace, layerName);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
 
-        return false;
+         sent = sent && RESTService.delete(restRequest,
+                geoserverUsername, geoserverPassword);    
+
+        return sent;
     }
 
     public static boolean deployRasterData(RestAPI geoserverRestAPI,
@@ -137,6 +143,47 @@ public class RestUtil {
         boolean sent = RESTService.putFile(restRequest,
                 new File(dataType), "image/tiff",
                 geoserverUsername, geoserverPassword);
+        return sent;
+    }
+
+    public static boolean deleteRasterData(RestAPI geoserverRestAPI,
+            String geoserverUsername,
+            String geoserverPassword,
+            String geoserverWorkspace,
+            String layerName) {
+
+
+        URL restRequest=null;
+        try {
+            restRequest = geoserverRestAPI.getLayerURL(layerName);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
+        boolean sent = RESTService.delete(restRequest,
+                geoserverUsername, geoserverPassword);
+
+        try {
+            restRequest = geoserverRestAPI.getCoverageURL(geoserverWorkspace, layerName);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
+         sent = sent && RESTService.delete(restRequest,
+                geoserverUsername, geoserverPassword);
+
+        try {
+            restRequest = geoserverRestAPI.getCoverageStoreURL(geoserverWorkspace, layerName);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
+         sent = sent && RESTService.delete(restRequest,
+                geoserverUsername, geoserverPassword);
+
         return sent;
     }
 

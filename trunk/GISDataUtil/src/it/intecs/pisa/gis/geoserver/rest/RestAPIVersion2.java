@@ -14,9 +14,12 @@ public class RestAPIVersion2 implements RestAPI{
     private static String WORKSAPCES_PATH="/workspaces";
     private static String DATA_STORES_PATH="/datastores";
     private static String LAYERS_PATH="/layers";
+    private static String COVERAGES_PATH="/coverages";
     private static String COVERAGE_STORES_PATH="/coveragestores";
+    private static String FEATURE_TYPES_PATH="/featuretypes";
     private static String STYLES_PATH="/styles";
     private static String FILE_PREFIX="/file.";
+
 
     private static String GEOTIFF_FORMAT="geotiff";
     private static String SHP_FORMAT="shp";
@@ -127,6 +130,33 @@ public class RestAPIVersion2 implements RestAPI{
             if(styleSupportedFormats[1].equalsIgnoreCase(format))
                 return true;
         return false;
+    }
+
+    public URL getFeatureTypeURL(String workspaceName, String layerName) throws Exception {
+        return(new URL(this.geoserverURL+REST_ROOT+WORKSAPCES_PATH+"/"
+              +workspaceName
+              +DATA_STORES_PATH+"/"+layerName+"/"
+              +FEATURE_TYPES_PATH+"/"+layerName));
+
+    }
+
+    public URL getCoverageURL(String workspaceName, String layerName) throws Exception {
+        return(new URL(this.geoserverURL+REST_ROOT+WORKSAPCES_PATH+"/"
+              +workspaceName
+              +COVERAGE_STORES_PATH+"/"+layerName+"/"
+              +COVERAGES_PATH+"/"+layerName));
+    }
+
+    public URL getCoverageStoreURL(String workspaceName, String layerName) throws Exception {
+        return(new URL(this.geoserverURL+REST_ROOT+WORKSAPCES_PATH+"/"
+              +workspaceName
+              +COVERAGE_STORES_PATH+"/"+layerName));
+    }
+
+    public URL getDataStoreURL(String workspaceName, String layerName) throws Exception {
+        return(new URL(this.geoserverURL+REST_ROOT+WORKSAPCES_PATH+"/"
+              +workspaceName
+              +DATA_STORES_PATH+"/"+layerName));
     }
 
 }

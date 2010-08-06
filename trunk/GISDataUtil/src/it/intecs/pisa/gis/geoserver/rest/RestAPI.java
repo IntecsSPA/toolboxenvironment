@@ -24,6 +24,14 @@ public interface RestAPI {
 
     public URL getLayerURL(String layerName) throws Exception;
 
+    public URL getFeatureTypeURL(String workspaceName, String layerName) throws Exception;
+
+    public URL getCoverageURL(String workspaceName, String layerName) throws Exception;
+
+    public URL getCoverageStoreURL(String workspaceName, String layerName) throws Exception;
+
+    public URL getDataStoreURL(String workspaceName, String layerName) throws Exception;
+
     public String[] getRasterSupportedFormats();
 
     public String[] getStyleSupportedFormats();

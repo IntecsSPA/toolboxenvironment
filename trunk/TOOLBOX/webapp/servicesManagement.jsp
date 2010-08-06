@@ -81,17 +81,11 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;&nbsp;" + serviceManag;
 </script>
 
 
-                <!--link rel="stylesheet" type="text/css" href="jsScripts/import/gis-client-library/import/ext/resources/css/ext-all.css" /-->
+               
 <link rel="stylesheet" type="text/css" href="jsScripts/import/gis-client-library/widgets/style/css/webgis.css" />
 <script type="text/javascript" src="jsScripts/import/gis-client-library/import/OpenLayers/lib/OpenLayers.js"></script>
-<!--script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/jquery/jquery-1.2.6.js"></script-->
-
 <link rel="stylesheet" type="text/css" href="jsScripts/import/gis-client-library/import/ext/ux/fileuploadfield/css/fileuploadfield.css"/>
 
-
-<!--script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/adapter/jquery/ext-jquery-adapter.js"></script-->
-<!--script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/adapter/ext/ext-base.js"></script>
-<script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/ext-all.js"></script-->
 <script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/ux/fileuploadfield/FileUploadField.js"></script>
 <script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/ux/Spotlight.js"></script>
 <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/openlayers/Format/XMLKeyValue.js"></script>
@@ -146,10 +140,10 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;&nbsp;" + serviceManag;
                 <!-- ************ Backup/Restore Services Section *****************-->
                 <DIV class="portletItem" id="05">
                     <DIV>
-                        <A href=# onclick="javascript: importExportGroupServices();"><fmt:message key="servicesManagement.impExp" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
+                        <A href=# onclick="javascript: managerGroupServices();"><fmt:message key="servicesManagement.impExp" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
                     </DIV>
                     <P>
-                        <A href=# onclick="javascript: importExportGroupServices();"><IMG class=labelHomePage title="import/export services" alt="import/export services" src="images/ImportExport.png" align=middle border=0></A>
+                        <A href=# onclick="javascript: managerGroupServices();"><IMG class=labelHomePage title="import/export services" alt="import/export services" src="images/ImportExport.png" align=middle border=0></A>
                         <fmt:message key="servicesManagement.impExpDescr" bundle="${lang}"/>
                     </P>
                 </DIV>

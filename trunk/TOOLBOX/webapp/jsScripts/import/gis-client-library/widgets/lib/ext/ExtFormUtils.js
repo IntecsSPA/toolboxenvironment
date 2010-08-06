@@ -71,7 +71,7 @@ function generateFormFieldSet(title, fieldSets, numCol, localizationObj){
 }
 
 function createPanelExjFormByXml(xmlDocument,lang){
-    
+   
   _formObj_.push({onChangeFieldControlMandatory:function(){}});
 
   var contentFormPanel, tabPanel, forms=null, idElementTabs=null;  
@@ -126,7 +126,10 @@ function createPanelExjFormByXml(xmlDocument,lang){
             buttons[i]=new Ext.Button({
                               id: buttonElements[i].getAttribute("id"),  
                               text: textButton,
-                              handler: eval(onclickFunction),
+                              handler: function(){
+                                  if(onclickFunction)
+                                    eval(onclickFunction+"()");
+                              },
                               disabled: disabled,
                               icon:buttonElements[i].getAttribute("icon")
                               });
@@ -2444,6 +2447,13 @@ function generateListOfField(Fields){
                       j++;
                     }
                   break;
+          case "multitext":temp= new Array();
+                  temp=new MultiTextField(Fields[i], numberColsField);
+                  for(k=0; k<temp.length; k++){
+                      fieldsArray[j]=temp[k];
+                      j++;
+                    }
+                  break;
         }
    }
 
@@ -2848,7 +2858,9 @@ function generateCheckBoxGroupField(field){
   var i=0;
 
   checkboxGroupField[i] = {
+                        id:field.id+"_container",
                         colspan: 40,
+                        xtype: 'container',
                         layout: "form",
                         items: new Array()
   };
@@ -2863,7 +2875,11 @@ function generateCheckBoxGroupField(field){
                                           id: field.id+"_button",
                                           name: field.name+"_button",
                                           text: field.buttonLabel,
-                                          handler: eval(field.buttonHandler)
+                                          buttonHandler: field.buttonHandler,
+                                          handler: function(){
+                                              if(this.buttonHandler)
+                                                  eval(field.buttonHandler+"()");
+                                          }
                                           //handlerParm: parameters,
                                           //disabled: field.disabled,
                                           //icon: field.icon
@@ -2888,6 +2904,7 @@ function generateCheckBoxGroupField(field){
                                 //typeAhead: true,
                                 msgTarget : 'qtip',
                                 boxLabel: field.selDeslAllLabel,
+                                onChange: field.onChange,
                                 //label: field.label,
                                 checked: field.value,
                                 hideLabel: true,
@@ -2895,10 +2912,13 @@ function generateCheckBoxGroupField(field){
                                 checkBoxGroupDim: itemsArray.length,
                                 listeners: {
                                     check: function() {
+                                        
                                         var group=this.findParentByType("form").getForm().findField(this.chekboxGroupId);
                                         for(var i=0; i<this.checkBoxGroupDim; i++){
                                             group.items.items[i].setValue(this.checked);
                                         }
+
+                                        
                                     }
 
                                 },
@@ -2922,15 +2942,28 @@ function generateCheckBoxGroupField(field){
                             colspan: 40,
                             layout: "form",
                             msgTarget : 'qtip',
+                            onChange: field.onChange,
                             //fieldLabel: label,
+                            getSelected: function(){
+                                var checkgroupvalue= new Array();
+                                   for(var kk=0; kk<this.items.length; kk++){
+                                       if(this.items.items[kk].checked){
+                                           checkgroupvalue.push(this.items.items[kk].name);
+                                       }
+                                   }
+                               return checkgroupvalue;
+                            },
+                            listeners:{
+                                change: function(){
+                                    if(this.onChange)
+                                        eval(this.onChange+'()');
+                                }
+                            },
                             columns: columns,
                             items: itemsArray
                           }));
                         
-
-
-  if(field.onChange)
-     checkboxGroupField[i].addListener('check', eval(field.onChange));
+  
   return(checkboxGroupField);
 }
 

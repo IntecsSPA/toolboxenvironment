@@ -171,15 +171,22 @@ String extImport = (extVers.equalsIgnoreCase("2.0.1") ? extImport2 : extImport3)
         height:auto;
     }
     #loading a {
-        color:#225588;
+        filter:alpha(opacity=50);
+	-moz-opacity:0.5;
+	-khtml-opacity: 0.5;
+	opacity: 0.5;
+
+        
     }
     #loading .loading-indicator{
-        background:#617995;
-        color:#444;
+        
+        
         font:bold 13px tahoma,arial,helvetica;
         padding:10px;
         margin:0;
         height:auto;
+        
+
     }
     #loading-msg {
         font: normal 10px arial,tahoma,sans-serif;
@@ -191,12 +198,12 @@ String extImport = (extVers.equalsIgnoreCase("2.0.1") ? extImport2 : extImport3)
     }
 </style>
  <% } %>
-</HEAD>
+</HEAD><!-- color:#225588;  background:#617995; color:#444; -->
 <BODY id=body onload="init()">
   <% if(loadPanel) {%>
      <div id="loading-mask" style=""></div>
      <div id="loading">
-        <div class="loading-indicator"><img src="images/toolboxLogo.png" width="286" height="64" style="margin-right:8px;float:left;vertical-align:top;"/><br /><span id="loading-img"><img src="images/init_Load.gif"/></span>
+        <div class="loading-indicator"><!--img src="images/toolboxLogo.png" width="286" height="64" style="margin-right:8px;float:left;vertical-align:top;"/><br /--><span id="loading-img"><img src="images/init_Load.gif"/></span>
         <br /><span id="loading-msg">Loading... Please Wait...</span></div>
     </div>
   <% } %>
@@ -329,7 +336,7 @@ String extImport = (extVers.equalsIgnoreCase("2.0.1") ? extImport2 : extImport3)
                     <TD align=left ><A class=itm 
                         href="<%= response.encodeURL(manageOperations) %>"><fmt:message key="header.operations" bundle="${lang}"/></A></TD>  
                     
-                    <TD align=left colspan=4><A class="itm" href="javascript: confirm ('manager?cmd=delSrv&serviceName=<%= serviceName %>', '<fmt:message key="header.delete" bundle="${lang}"/> <%= serviceName %>', translateDelete('<%= (String)session.getAttribute("languageReq") %>'), 'delete');"><fmt:message key="header.delete" bundle="${lang}"/></A></TD>                                       
+                    <TD align=left colspan=4><A class="itm" href="javascript: confirm ('/rest/manager/deleteService/<%= serviceName %>', '<fmt:message key="header.delete" bundle="${lang}"/> <%= serviceName %>', translateDelete('<%= (String)session.getAttribute("languageReq") %>'), 'delete', 'DELETE');"><fmt:message key="header.delete" bundle="${lang}"/></A></TD>
                
                <TD align=left><a href="<%= response.encodeURL(rssFeed)%>"><img src="images/rssicon.jpg" alt="rss feed"></a>
                </TR> 

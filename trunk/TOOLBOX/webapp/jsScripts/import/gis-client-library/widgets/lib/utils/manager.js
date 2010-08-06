@@ -22,10 +22,22 @@ GisClientManager= function(lang, gisClientLibPath, proxyUrl, utilsUrl) {
      if(utilsUrl)
        this.utilsUrl=utilsUrl;
 
+     this.utilImport();
      this.interfaceImport();
  };
 
- this.loadScript= function(url){
+ this.loadGlobalScript= function(url){
+            if(!document.getElementById(url)){
+                var script=document.createElement('script');
+                script.defer=false;script.type="text/javascript";
+                script.src=url;
+                script.id=url;
+                document.getElementsByTagName('head')[0].appendChild(script);
+                this.loadScripts.push(script);
+            }
+};
+
+this.loadScript= function(url){
             if(!document.getElementById(url)){
                 var script=document.createElement('script');
                 script.defer=false;script.type="text/javascript";
@@ -68,6 +80,9 @@ GisClientManager= function(lang, gisClientLibPath, proxyUrl, utilsUrl) {
     this.loadCSS("import/ext/ux/fileuploadfield/css/fileuploadfield.css");
     this.loadScript("widgets/lib/ext/field/fileField.js");
 
+    /* MULTITEXT field*/
+    this.loadScript("widgets/lib/ext/field/multiTextField.js");
+
     
 
     this.loadScript("widgets/lib/ext/field/spinnerField.js");
@@ -80,6 +95,11 @@ GisClientManager= function(lang, gisClientLibPath, proxyUrl, utilsUrl) {
 
 
     /*INTERFACE FIELD -- End Import*/
+ };
+
+ this.utilImport= function(){
+  /*JSON util*/
+  this.loadScript("widgets/lib/utils/JSON.js");
  };
 
 this.onLoadControl= function(cssNumber, scriptNumber){

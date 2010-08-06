@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inputInterface xmlns="http://gisClient.pisa.intecs.it/gisClient">
+    <section name="TOOLBOX Duplicate Services" cols="10">
+        <group label="Select services to be duplicate: ">     
+          <input type="checkboxgroup" name="dupServices" hideLabel="false" size="25" id="dupServices" optional="true" colSpan="2"
+              remoteValuesURL="manager?cmd=GetServiceList"
+              selDeslAll="true"
+              columns="1"
+              onChange="duplicateServices.onCheckService"
+              button="true" buttonLabel="Duplicate Services" buttonHandler="duplicateServices.onDuplicateServices"
+              selDeslAllLabel="&lt;b&gt; Select / Deselect all services &lt;/b&gt;"
+              remoteValuesType="xml"
+              remoteValuesDataElement="serviceList/service"
+              remoteValuesProperties="boxLabel:@name,name:@name"
+              dataEmptyMessage="Get Service List ERROR">
+            </input>
+             <input type="multitext" name="DuplicateName" id="DuplicateName" optional="true" size="40" labelAlign="top"/>
+             <input type="text" name="DuplicateRestReuqst" id="DuplicateRestReuqst"  hidden="true" hideLabel="true" value="/rest/gui/cloneServices"/>
+        </group>
+    </section>
+    
+</inputInterface>

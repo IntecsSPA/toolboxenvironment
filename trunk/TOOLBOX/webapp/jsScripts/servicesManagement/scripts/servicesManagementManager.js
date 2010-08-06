@@ -1,43 +1,26 @@
 
 
 
-var textAreaFrameH=(screen.height/1.9);
-var textAreaFrameW=(screen.width/1.55);
+/*Import Form Interfaces -- START*/
+    gcManager.loadGlobalScript("jsScripts/servicesManagement/scripts/importServices.js");
+    gcManager.loadGlobalScript("jsScripts/servicesManagement/scripts/exportServices.js");
+    gcManager.loadGlobalScript("jsScripts/servicesManagement/scripts/dupliacateServices.js");
+    gcManager.loadGlobalScript("jsScripts/servicesManagement/scripts/deleteServices.js");
+ /*Import Form Interfaces -- END*/
 
-/* Service Management XML Interfaces*/
-var exportGroupServicesXML="jsScripts/servicesManagement/resources/xml/exportGroupServicesPanel.xml";
-var importGroupServicesXML="jsScripts/servicesManagement/resources/xml/importGroupServicesPanel.xml";
 
 var servicesXMLInterface= new Array();
-//var createWPSXML="jsScripts/wpsWizard/resources/xml/createWPSServicePanel.xml";
-//var createToolboxServiceXML="jsScripts/servicesManagement/resources/xml/createToolboxServicePanel.xml";
-/*servicesXMLInterface.push({xmlUrl:"jsScripts/servicesManagement/resources/xml/createOrderingServicePanel.xml",
-                           icon:"images/order_blk.png", title:"Create Ordering Service", name:"orderingService",
-                            actionMethod: "createToolboxService(this)"});
-servicesXMLInterface.push({xmlUrl:"jsScripts/servicesManagement/resources/xml/createCatalogueServicePanel.xml",
-                            icon:"images/catalogue_blk.png", title:"Create Catalogue Service", name:"catalogueService",
-                            actionMethod: "createToolboxService(this)"});
-servicesXMLInterface.push({xmlUrl:"jsScripts/servicesManagement/resources/xml/createArchivingServicePanel.xml",
-                        icon:"images/archiving_blk.png", title:"Create Archiving Service", name:"archivingService",
-                            actionMethod: "createToolboxService(this)"});
-servicesXMLInterface.push({xmlUrl:"jsScripts/wpsWizard/resources/xml/createWPSServicePanel.xml",
-                            icon:"images/wps_blk.png", title:"Create Web Processing Service (WPS)", name:"wpsService",
-                            actionMethod: "createWPSRequest(this)"});*/
-
- var arrayPlugin= new Array();
-
-
-
-
-
+var arrayPlugin= new Array();
 
 
 var servicesAccordionPanels=new Array();
 var servicesInterfaces=new Array();
 
 /* Service Management Interface Objects */
-var exportGroupServiceIO=null;
-var importGroupServiceIO=null;
+var duplicateServices;
+var deleteServices;
+var exportServices;
+var importServices;
 
 
 /* Service Management Windows*/
@@ -55,16 +38,16 @@ var spot2 = new Ext.ux.Spotlight({
         duration: .3
     });
 
-/*Show Import Export Group Services Interface*/
-function importExportGroupServices(){
+
+function managerGroupServices(){
 
     if(importExportGroupServiceWin == null){
 
-        exportGroupServiceIO=createPanelExjFormByXml(exportGroupServicesXML);
-
-        importGroupServiceIO=createPanelExjFormByXml(importGroupServicesXML);
-
-     
+        importServices=new ImportServicesInterface();
+        exportServices=new ExportServicesInterface();
+        duplicateServices=new DuplicateServicesInterface();
+        deleteServices=new DeleteServicesInterface();
+    
         var exportServicesPanel=new Ext.Panel({
                             title: 'Export Services',
                             border: true,
@@ -85,29 +68,45 @@ function importExportGroupServices(){
                             iconCls: 'import'
                    });
 
+        var duplicateServicesPanel=new Ext.Panel({
+                            title: 'Duplicate Services',
+                            border: true,
+                            autoScroll : true,
+                            id: "duplicateServicePanel",
+                            bodyColor: '#79a3cb',
+                            html: "<div id='duplicateServicesInterface'>",
+                            iconCls: 'export'
+                   });
+
+        var deleteServicesPanel=new Ext.Panel({
+                            title: 'Delete Services',
+                            border: true,
+                            autoScroll : true,
+                            id: "deleteServicePanel",
+                            bodyColor: '#79a3cb',
+                            html: "<div id='deleteServicesInterface'>",
+                            iconCls: 'export'
+                   });
+
         var accordionImportExportServicesPanel= new Ext.Panel({
                                   split:true,
                                   bodyStyle : {background: "#79a3cb"},
                                   anchor:'100% 80%',
                                   autoScroll : true,
                                   margins:'5 0 5 5',
-                                  //autoScroll : true,
                                   layout:'accordion',
                                   layoutConfig: {
-                                        titleCollapse: false,
-                                        animate: false,
-                                        hideCollapseTool: false,
-                                        titleCollapse: true,
-                                        fill : false
+                                        fill : false,
+                                        animate: true,
+                                        sequence:true
                                     },
-                                  
-
-                                  items:[importServicesPanel,
-                                         exportServicesPanel
+                                   items:[importServicesPanel,
+                                         exportServicesPanel,
+                                         duplicateServicesPanel,
+                                         deleteServicesPanel
                                        ]
                             });
 
-  
         importExportGroupServiceWin = new WebGIS.Panel.WindowInterfacePanel({
                         title: 'Import / Export  Services',
                         id: 'importExportGroupServiceWin',
@@ -119,7 +118,6 @@ function importExportGroupServices(){
                         draggable: false,
                         collapsible: false,
                         layout: 'fit',
-                        
                         loadingBarImg: "images/loader1.gif",
                         loadingBarImgPadding: 60,
                         loadingMessage: "Loading... Please Wait...",
@@ -129,7 +127,6 @@ function importExportGroupServices(){
                         loadingPanelDuration: 1000,
                         listeners:{
                           hide: function(){
-                             // alert("close");
                               spot.hide();
                           },
                           collapse: function(){
@@ -137,116 +134,36 @@ function importExportGroupServices(){
                           },
                           expand: function(){
                               spot.show('importExportGroupServiceWin');
-                          },
-                           maximize: function(){
-                                   
-                                  }
+                          }
                         },
-                        
-                        width: screen.width/2.1,
-                        height: screen.height/2.1,
+                        width: screen.width/1.5,
+                        height: screen.height/1.5,
                         closeAction:'hide',
                         items:[accordionImportExportServicesPanel]
 			});
        importExportGroupServiceWin.show();
        importExportGroupServiceWin.insertLoadingPanel();
-       
-       //accordionImportExportServicesPanel.render(document.getElementById("accordionImportExportServicesPanel"));
-        accordionImportExportServicesPanel.layout.setActiveItem(0);
-        importGroupServiceIO.formsPanel.render(document.getElementById("importServicesInterface"));
-        importGroupServiceIO.render();
-        //importGroupServiceIO.renderFileForm();
 
+        accordionImportExportServicesPanel.layout.setActiveItem(0);
+        importServices.render("importServicesInterface");
+ 
         accordionImportExportServicesPanel.layout.setActiveItem(1);
-        exportGroupServiceIO.formsPanel.render(document.getElementById("exportServicesInterface"));
-        exportGroupServiceIO.render();
+        exportServices.render("exportServicesInterface");
+
+        accordionImportExportServicesPanel.layout.setActiveItem(2);
+        duplicateServices.render("duplicateServicesInterface");
+
+        accordionImportExportServicesPanel.layout.setActiveItem(3);
+        deleteServices.render("deleteServicesInterface");
 
         accordionImportExportServicesPanel.layout.setActiveItem(0);
        
-     //   importExportGroupServiceIO.formsTab.setActiveTab(0);
+       
     }else
        importExportGroupServiceWin.show();
 
-      
-       spot.show('importExportGroupServiceWin');
-    
-    
-    // importExportGroupServiceWin.on('close', function(){/*wpsWizardWindow=null*/window.location.reload();});
+       spot.show('importExportGroupServiceWin');  
 }
-
-function exportServices(){
-    var exportInterfaceValues= exportGroupServiceIO.getFormValues();
-
-    var httpGetRequest=exportInterfaceValues['ServiceUrl']+"&services="+exportInterfaceValues['services'];
-  
-    window.location.href = httpGetRequest;
-   /* var exportResponse= function(response){
-          alert(response);
-          var responseDocument= Sarissa.getDomDocument();
-          responseDocument=(new DOMParser()).parseFromString(response, "text/xml");
-          responseDocument.setProperty("SelectionLanguage", "XPath");
-                 
-    };*/
-
-   /* var exportResponseTimeOut= function(){
-         Ext.Msg.alert('Error', 'Export Services Group Request: TIME OUT');
-    };
-    var exportResponseError= function(response){
-         Ext.Msg.alert('Error', 'Export Services Group Request: Internal Error ');
-    };
-
-    sendXmlHttpRequestTimeOut("GET",
-                              httpGetRequest,
-                              false, null, 999,
-                              exportResponse,
-                              exportResponseTimeOut,
-                              null, null, exportResponseError);*/
-
-
-}
-
-function importServices(){
-
-   var formValuesImport=importGroupServiceIO.getFormValues(false);
-
-   if(formValuesImport.zipServices.uploadID){
-       
-       var loading=new Object();
-       loading.message="Please Wait ...";
-       loading.title="Import Services";
-       
-       var importServiceFunc=function(response){
-
-            Ext.Msg.show({
-                          title: 'Import Services',
-                          buttons: Ext.Msg.OK,
-                          width: Math.floor((screen.width/100)*50),
-                          msg: "<pre>"+response+"</pre>",
-                          fn: function(){
-                            window.location = 'main.jsp';
-                          },
-                          icon: Ext.MessageBox.INFO
-                      });
-       }
-
-
-       var importServiceTimeOut=function(){
-           Ext.Msg.show({
-                            title:'Import group services: Error',
-                            buttons: Ext.Msg.OK,
-                            msg: 'Request TIME-OUT!',
-                            animEl: 'elId',
-                            icon: Ext.MessageBox.ERROR
-                        });
-       }
-
-        var onSubmit=sendXmlHttpRequestTimeOut("GET",
-             "manager?cmd=importGroupServices&id="+formValuesImport.zipServices.uploadID,
-             true, null, 800000, importServiceFunc, importServiceTimeOut,null,
-                                    loading, null);
-   }
-}
-
 
 
 function createServiceInterface(){
@@ -355,13 +272,11 @@ function createServiceInterface(){
                           bodyStyle : {background: "#79a3cb"},
                           anchor:'100% 80%',
                           margins:'5 0 5 5',
-                          //autoScroll : true,
                                   layout:'accordion',
                                   layoutConfig: {
                                         titleCollapse: false,
                                         animate: false,
                                         hideCollapseTool: false,
-                                        titleCollapse: true,
                                         fill : false
                                     },
                                   items:servicesAccordionPanels
@@ -436,48 +351,6 @@ function createServiceInterface(){
     
 }
 
-
-///TOOLBOX/rest/gui/getJs/<ID>
-/*var restGetJsURL="/TOOLBOX/rest/gui/getJs/";"/TOOLBOX/jsScripts/";*/
-var restGetJsURL="ProxyRedirect?url=http://192.168.24.121:8080/TOOLBOX/rest/gui/getJs/";
-function executeRemoteMethod(methodID){;
-    var restRequest=restGetJsURL+methodID;
-    var getJSMethod=function(response){
-             if(!response)
-                          Ext.Msg.show({
-                                title:'getJSMethod: Error',
-                                buttons: Ext.Msg.OK,
-                                msg: 'Service Exception!',
-                                animEl: 'elId',
-                                icon: Ext.MessageBox.ERROR
-                          });
-              else{
-                  alert(response);
-                  var jsMethod=eval(response);
-                  alert(jsMethod);
-                  jsMethod.call("10");
-                  jsMethod('newTest');
-
-              }
-
-     };
-
-     var wpsProcessingCreateOperationControlTimeOut=function(){
-                 Ext.Msg.show({
-                    title:'getJSMethod: Error',
-                    buttons: Ext.Msg.OK,
-                    msg: 'Request TIME-OUT!',
-                    animEl: 'elId',
-                    icon: Ext.MessageBox.ERROR
-                });
-     };
-
-     var onSubmit=sendXmlHttpRequestTimeOut("GET",
-            restRequest,
-            false, null, 800000, getJSMethod, wpsProcessingCreateOperationControlTimeOut,null);
-
-
-}
 
 function serviceInterfaceModeChange(){
     var formPanel=this.findParentByType("form");
@@ -677,4 +550,7 @@ function controlNewService(serviceName){
 
        return true;
     }
+
+
+
     

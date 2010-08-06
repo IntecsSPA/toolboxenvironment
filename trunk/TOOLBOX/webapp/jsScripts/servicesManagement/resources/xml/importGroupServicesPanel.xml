@@ -15,15 +15,11 @@
            iconSuccess="images/success.png"
            submitLabel="Import Services"
            editAreaID="test"/>
-           <input type="editarea" name="test" id="test"  hidden="true" hideLabel="true"
-                adaptButtonLabel="Adapt to screen" syntax="html"
-                height="screen.height/1.8"/>
-           
         </group>
     </section>
     <requestInformations>
         <buttons>
-            <button name="importServicesButton" id="importServicesButton" label="Import Services" iconImage="" onclick="importServices"/>
+            <button name="importServicesButton" id="importServicesButton" label="Import Services" iconImage="" onclick="importServices.onImportServices"/>
         </buttons>
     </requestInformations>
 </inputInterface>

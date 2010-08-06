@@ -260,6 +260,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         } else {
             jsonResp = JsonErrorObject.get("Could not authenticate request");
         }
+        resp.setHeader("Content-Type", "text/json");
         JsonUtil.writeJsonToStream(jsonResp, resp.getOutputStream());
     }
 
@@ -300,6 +301,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         } else {
             respDoc = DocumentError.get("Could not authenticate request");
         }
+        resp.setHeader("Content-Type", "text/xml");
         DOMUtil.dumpXML(respDoc, resp.getOutputStream(), false);
     }
 
@@ -1371,7 +1373,9 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
                 commandPlugin = (IRESTManagerPlugin) man.getCommand(formatLessCmd, ManagerPluginManager.METHOD_REST_POST);
             } else if (method.equals("PUT")) {
                 commandPlugin = (IRESTManagerPlugin) man.getCommand(formatLessCmd, ManagerPluginManager.METHOD_REST_PUT);
-            } else {
+            } else if (method.equals("DELETE")) {
+                commandPlugin = (IRESTManagerPlugin) man.getCommand(formatLessCmd, ManagerPluginManager.METHOD_REST_DELETE);
+            }else {
                 throw new Exception("Method " + method + " not supported");
             }
 

@@ -11,7 +11,7 @@
               remoteValuesURL="manager?cmd=GetServiceList"
               selDeslAll="true"
               columns="1"
-              button="true" buttonLabel="Export Services" buttonHandler="exportServices"
+              button="true" buttonLabel="Export Services" buttonHandler="exportServices.onExportServices"
               selDeslAllLabel="&lt;b&gt; Select / Deselect all services &lt;/b&gt;"
               remoteValuesType="xml"
               remoteValuesDataElement="serviceList/service"

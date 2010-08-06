@@ -79,28 +79,34 @@ public class ExtractMetadataFromData implements Command {
             File outFile;
             outFile= new File(prefs.getProperty("download.dir"), itemId + "_metadata.xml");
 
-            String shellCommand;
+            /*String shellCommand;
             shellCommand=commandFile.getAbsolutePath();
             shellCommand+=" "+dataFile.getAbsolutePath()+" "+outFile.getAbsolutePath();
+*/
+            ProcessBuilder pb;
+            Process p;
+            
+            try
+            {
+                pb = new ProcessBuilder("chmod +x "+command);
+                pb.directory(commandFile.getParentFile());
+                p = pb.start();
+                p.waitFor();
+            }
+            catch(Exception e)
+            {
 
-            /*Runtime runtime = Runtime.getRuntime();
-            Process process = runtime.exec(shellCommand);
-            process.waitFor();*/
+            }
+            
+            pb = new ProcessBuilder("./"+command, dataFile.getAbsolutePath(), outFile.getAbsolutePath());
+            pb.directory(commandFile.getParentFile());
+            p = pb.start();
+            p.waitFor();
 
-            ProcessBuilder pb = new ProcessBuilder("./"+command, dataFile.getAbsolutePath(), outFile.getAbsolutePath());
+            DOMUtil util;
+            util=new DOMUtil();
 
-            /*Map<String, String> env = pb.environment();
-             env.put("VAR1", "myValue");
-             env.remove("OTHERVAR");
-             env.put("VAR2", env.get("VAR1") + "suffix");*/
-             pb.directory(commandFile.getParentFile());
-             Process p = pb.start();
-             p.waitFor();
-
-             DOMUtil util;
-             util=new DOMUtil();
-
-             extractedDoc=util.fileToDocument(outFile);
+            extractedDoc=util.fileToDocument(outFile);
         }
 
         return extractedDoc;

@@ -8,6 +8,9 @@ import com.sun.org.apache.xpath.internal.XPathAPI;
 import com.sun.org.apache.xpath.internal.objects.XObject;
 import it.intecs.pisa.archivingserver.data.StoreItem;
 import it.intecs.pisa.archivingserver.db.CatalogueCorrespondence;
+import it.intecs.pisa.archivingserver.db.FTPAccessible;
+import it.intecs.pisa.archivingserver.db.GeoServerAccessible;
+import it.intecs.pisa.archivingserver.db.HttpAccessible;
 import it.intecs.pisa.archivingserver.db.SOAPCatalogueAccessible;
 import it.intecs.pisa.archivingserver.log.Log;
 import it.intecs.pisa.archivingserver.prefs.Prefs;
@@ -29,12 +32,20 @@ import javawebparts.misc.chain.Result;
 import javax.xml.transform.TransformerException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  *
  * @author massi
  */
 public class PublishToEbRIMCatalogue implements Command {
+    protected static final String NAMESPACE_GMD="http://www.isotc211.org/2005/gmd";
+    protected static final String NAMESPACE_EOP="http://earth.esa.int/eop";
+    protected static final String NAMESPACE_OPT="http://earth.esa.int/opt";
+    protected static final String NAMESPACE_SAR="http://earth.esa.int/sar";
+    protected static final String NAMESPACE_ATM="http://earth.esa.int/atm";
+    protected static final String NAMESPACE_GML="http://www.opengis.net/gml";
 
     public Result init(ChainContext cc) {
         return new Result(Result.SUCCESS);
@@ -45,7 +56,6 @@ public class PublishToEbRIMCatalogue implements Command {
         String id;
         File webappDir;
         Document doc;
-        String itemId;
 
         try {
             Log.log("Executing class "+this.getClass().getCanonicalName());
@@ -62,6 +72,8 @@ public class PublishToEbRIMCatalogue implements Command {
                 }
                 else
                 {
+                    putDataLinkIntoMetadata(cc);
+
                     File toDir;
                     File toFile;
                     String harvestDocId;
@@ -147,10 +159,10 @@ public class PublishToEbRIMCatalogue implements Command {
         sourceEl.setTextContent(fullUrl);
         rootEl.appendChild(sourceEl);
 
-        resourceTypeEl=doc.createElement("csw:ResourceType");
+        /*resourceTypeEl=doc.createElement("csw:ResourceType");
         resourceTypeEl.setTextContent("urn:x-ogc:specification:csw-ebrim:ObjectType:EO:EOProduct");
         rootEl.appendChild(resourceTypeEl);
-        return doc;
+        */return doc;
     }
 
     private String extractRIMIdFromHarvestResponse(Document resp) throws TransformerException {
@@ -164,5 +176,106 @@ public class PublishToEbRIMCatalogue implements Command {
         }
         
         return null;
+    }
+
+    private void putDataLinkIntoMetadata(ChainContext cc) throws Exception {
+        StoreItem storeItem;
+        Document doc;
+        
+        storeItem = (StoreItem) cc.getAttribute(CommandsConstants.STORE_ITEM);
+        doc=(Document) cc.getAttribute(CommandsConstants.ITEM_METADATA);
+        
+       String  id = (String) cc.getAttribute(CommandsConstants.ITEM_ID);
+       String url=getMetadataUrl(storeItem,id);
+
+        Element root=doc.getDocumentElement();
+        String namespaceURI=root.getNamespaceURI();
+
+        if(namespaceURI.equals(NAMESPACE_GMD))
+            putLinkIntoCIMMetadata(doc,url);
+        else if(namespaceURI.equals(NAMESPACE_OPT)||
+                namespaceURI.equals(NAMESPACE_ATM)||
+                namespaceURI.equals(NAMESPACE_SAR)||
+                namespaceURI.equals(NAMESPACE_EOP))
+            putLinkIntoEOMetadata(doc,url);
+    }
+
+    private void putLinkIntoEOMetadata(Document doc,String url)
+    {
+        try
+        {
+            Element root=doc.getDocumentElement();
+            Element resultOf=getChildren(root,NAMESPACE_GML,"resultOf");
+            Element eoResult=DOMUtil.getChildByLocalName(resultOf,"EarthObservationResult");
+            Element product=getChildren(eoResult,NAMESPACE_EOP,"product");
+            Element pi=getChildren(product,NAMESPACE_EOP,"ProductInformation");
+            Element filename=getChildren(pi,NAMESPACE_EOP,"fileName");
+
+            filename.setTextContent(url);
+            System.out.println(DOMUtil.getDocumentAsString(doc));
+        }
+        catch(Exception e)
+        {
+            System.out.println("Error while putting metadata link");
+        }
+    }
+
+    private void putLinkIntoCIMMetadata(Document doc,String url) {
+        try
+        {
+            Element root=doc.getDocumentElement();
+            Element MDMetadataEl=getChildren(root,NAMESPACE_GMD,"MD_Metadata");
+            Element distribInfoEl=getChildren(MDMetadataEl,NAMESPACE_GMD,"distributionInfo");
+            Element distributionEl=getChildren(distribInfoEl,NAMESPACE_GMD,"MD_Distribution");
+            Element tranferOptionsEl=getChildren(distributionEl,NAMESPACE_GMD,"tranferOptions");
+            Element digitalTransferOptions=getChildren(tranferOptionsEl,NAMESPACE_GMD,"MD_DigitalTransferOptions");
+            Element onLineEl=getChildren(digitalTransferOptions,NAMESPACE_GMD,"onLine");
+            Element onlineResourceEl=getChildren(onLineEl,NAMESPACE_GMD,"CI_OnlineResource");
+            Element linkageEl=getChildren(onlineResourceEl,NAMESPACE_GMD,"linkage");
+            Element urlEl=getChildren(linkageEl,NAMESPACE_GMD,"URL");
+
+            urlEl.setTextContent(url);
+            System.out.println(DOMUtil.getDocumentAsString(doc));
+        }
+        catch(Exception e)
+        {
+            System.out.println("Error while putting metadata link");
+        }
+    }
+
+    private Element getChildren(Element parentEl,String namespace,String localname)
+    {
+        NodeList children = parentEl.getChildNodes();
+
+        for(int i=0;i<children.getLength();i++)
+        {
+            Node node=children.item(i);
+            if(node instanceof Element &&
+               node.getNamespaceURI().equals(namespace) &&
+               node.getLocalName().equals(localname))
+                return (Element) node;
+        }
+
+        return null;
+    }
+
+    private String getMetadataUrl(StoreItem item,String itemId) throws Exception {
+        if(item.publishHttp==true)
+        {
+            String[] urls = HttpAccessible.getUrls(itemId);
+            return urls[0];
+        }
+        else if (item.publishFtp.length>0)
+        {
+            String[] urls = FTPAccessible.getUrls(itemId);
+            return urls[0];
+        }
+        else if(item.publishGeoserver.length>0)
+        {
+            String[] urls = GeoServerAccessible.getUrls(itemId);
+            return urls[0];
+        }
+
+        return "http://pippoplutopaerino";
     }
 }

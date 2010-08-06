@@ -36,13 +36,14 @@ function XMLHTTPObject() {
  * if the answer is 'Yes', this code load
  * the page in 'add' */
 
-function confirm(add, text, title, msg){
+function confirm(add, text, title, msg, method){
     address = add;
     mess=msg;
     Ext.Msg.show({
         title:title,
         minWidth:200,
         msg: text,
+        method: method,
         buttons: Ext.Msg.YESNO,
         fn: goPage,
         animEl: 'elId',
@@ -63,6 +64,11 @@ function callInProgress(xmlhttp) {
 }
 
 function goPage(btn){
+  var meth;
+    if(this.method)
+       meth= this.method;
+    else
+       meth= "GET"; 
   var http = XMLHTTPObject();
     if (btn == 'yes'){
         if (mess=='delete'){
@@ -73,7 +79,7 @@ function goPage(btn){
                         Ext.MessageBox.wait("Deleting service...","Please Wait"); 
                         setTimeout("location.replace('main.jsp');",4000);
                     } else 
-                        Ext.Msg.alert('TOOLBOX Error ', 'Deleting service: Internally Error'); 
+                        Ext.Msg.alert('TOOLBOX Error ', 'Deleting service: Internal Error'); 
                 }
             };
             if ( !callInProgress(http) ) {

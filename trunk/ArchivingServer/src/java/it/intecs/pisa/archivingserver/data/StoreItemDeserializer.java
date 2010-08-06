@@ -35,7 +35,7 @@ public class StoreItemDeserializer implements JsonDeserializer<StoreItem> {
 
         if(obj.get("type")!=null)
             item.type=obj.get("type").getAsString();
-        else item.type="eo";
+        else item.type="";
 
         if(obj.get("deleteAfter")!=null)
             item.deleteAfter=obj.get("deleteAfter").getAsLong();

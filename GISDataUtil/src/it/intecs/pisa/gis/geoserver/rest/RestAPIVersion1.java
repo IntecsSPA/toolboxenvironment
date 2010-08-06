@@ -126,4 +126,20 @@ public class RestAPIVersion1 implements RestAPI {
         return false;
     }
 
+    public URL getFeatureTypeURL(String workspaceName, String layerName) throws Exception {
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
+    public URL getCoverageURL(String workspaceName, String layerName) throws Exception {
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
+    public URL getCoverageStoreURL(String workspaceName, String layerName) throws Exception {
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
+    public URL getDataStoreURL(String workspaceName, String layerName) throws Exception {
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
 }

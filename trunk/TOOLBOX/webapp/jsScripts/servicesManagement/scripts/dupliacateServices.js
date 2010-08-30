@@ -35,9 +35,37 @@ DuplicateServicesInterface=function(){
         //alert(restRequest);
 
         var duplicateServivcesResponse=function(response){
+              var checkboxGroup=Ext.getCmp("dupServices_cont");
+              var multiText=Ext.getCmp("DuplicateName");
+              multiText.removeAll(false);
+              checkboxGroup.updateValues();
+              var jsonResp=JSON.parse(response);
+              if(jsonResp.success){
+                  var services=jsonResp.created;
+                  var stringServices="";
+                  for(var i=0; i<services.length; i++){
+                      stringServices+="\n -"+services[i].name;
+                      
+                  }
+                Ext.Msg.show({
+                     title: 'Duplicate Group Services',
+                     buttons: Ext.Msg.OK,
+                     width: Math.floor((screen.width/100)*50),
+                     msg: "<pre>The following services have been created: "+stringServices+" </pre>",
+                     /*fn: function(){
+                        window.location = 'main.jsp';
+                     },*/
+                     icon: Ext.MessageBox.INFO
+                });
 
-              alert(response);
-
+              }else
+                Ext.Msg.show({
+                        title:'Duplicate Services: Error',
+                        buttons: Ext.Msg.OK,
+                        msg: 'Internal Error!',
+                        animEl: 'elId',
+                        icon: Ext.MessageBox.ERROR
+                    });
 
         };
        var duplicateServivcesTimeOut=function(){

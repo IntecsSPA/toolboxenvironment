@@ -2350,7 +2350,7 @@ function generateListOfField(Fields){
                   }   
                   break;
           case "checkboxgroup":temp= new Array();
-                  temp=generateCheckBoxGroupField(Fields[i]);
+                  temp=new CheckBoxGroupField(Fields[i], numberColsField); /*generateCheckBoxGroupField(Fields[i]);*/
                   for(k=0; k<temp.length; k++){
                       fieldsArray[j]=temp[k];
                       j++;
@@ -2808,7 +2808,7 @@ function generateCheckBoxField(field){
   return(formField);
 }
 
-function generateCheckBoxGroupField(field){
+/*function generateCheckBoxGroupField(field){
   var formField=new Array();
   var colSpan=0;
   if (field.colSpan)
@@ -2867,10 +2867,7 @@ function generateCheckBoxGroupField(field){
 
     if(field.button =="true"){
 
-     /* checkboxGroupField[i] = {
-                        colspan: colSpan,
-                        layout: "form",
-                        items: [*/checkboxGroupField[checkboxGroupField.length-1].items.push(
+checkboxGroupField[checkboxGroupField.length-1].items.push(
                                     new Ext.Button({
                                           id: field.id+"_button",
                                           name: field.name+"_button",
@@ -2880,9 +2877,7 @@ function generateCheckBoxGroupField(field){
                                               if(this.buttonHandler)
                                                   eval(field.buttonHandler+"()");
                                           }
-                                          //handlerParm: parameters,
-                                          //disabled: field.disabled,
-                                          //icon: field.icon
+
                                           })
                                
                         );
@@ -2943,7 +2938,6 @@ function generateCheckBoxGroupField(field){
                             layout: "form",
                             msgTarget : 'qtip',
                             onChange: field.onChange,
-                            //fieldLabel: label,
                             getSelected: function(){
                                 var checkgroupvalue= new Array();
                                    for(var kk=0; kk<this.items.length; kk++){
@@ -2965,7 +2959,7 @@ function generateCheckBoxGroupField(field){
                         
   
   return(checkboxGroupField);
-}
+}*/
 
 function generateRadioGroupField(field){
   var formField=new Array();

@@ -20,7 +20,7 @@ DeleteServicesInterface=function(){
 
      this.onDeleteServices=function(){
             var exportInterfaceValues= this.formInterface.getFormValues();
-            
+            var deleteAllServices=true;
             formInterface=this.formInterface;
             var serviceArray=new Array();
 
@@ -29,7 +29,7 @@ DeleteServicesInterface=function(){
             else
                 serviceArray=exportInterfaceValues['servicesDel'].split(",");
 
-            alert(serviceArray);
+     
 
             var deleteServiceFunction, deleteServiceTimeOut;
 
@@ -39,18 +39,30 @@ DeleteServicesInterface=function(){
                      var jsonResp=JSON.parse(response);
                    
                       if(jsonResp.success){
-                          alert('success');
+                         var checkboxGroup=Ext.getCmp("servicesDel_cont");
+                         checkboxGroup.updateValues();
                       }else
                         {
-                          alert("ERROR: " + jsonResp.reason)
+                          deleteAllServices=false;
+                          Ext.Msg.show({
+                                    title:'Delete service: Error',
+                                    buttons: Ext.Msg.OK,
+                                    msg: 'Reason: ' + jsonResp.reason,
+                                    animEl: 'elId',
+                                    icon: Ext.MessageBox.ERROR
+                                });
+
                         }
-                       /* alert(this.elementID);
-                        document.getElementById(elementIDG).innerHTML="";
-                        this.render(elementIDG);*/
                 }
 
                 deleteServiceTimeOut=function(response){
-
+                    Ext.Msg.show({
+                                    title:'Delete service: Error',
+                                    buttons: Ext.Msg.OK,
+                                    msg: 'Request TIME-OUT!',
+                                    animEl: 'elId',
+                                    icon: Ext.MessageBox.ERROR
+                                });
 
                 }
 
@@ -62,6 +74,18 @@ DeleteServicesInterface=function(){
 
                 
             }
+
+            if(deleteAllServices)
+                Ext.Msg.show({
+                     title: 'Delete Group Services',
+                     buttons: Ext.Msg.OK,
+                     width: Math.floor((screen.width/100)*50),
+                     msg: "<pre>All the selected services are been deleted</pre>",
+                     /*fn: function(){
+                        window.location = 'main.jsp';
+                     },*/
+                     icon: Ext.MessageBox.INFO
+                });
            
     };
 

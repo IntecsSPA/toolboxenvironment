@@ -39,11 +39,12 @@ function XMLHTTPObject() {
 function confirm(add, text, title, msg, method){
     address = add;
     mess=msg;
+    meth=method;
     Ext.Msg.show({
         title:title,
         minWidth:200,
         msg: text,
-        method: method,
+       // method: method,
         buttons: Ext.Msg.YESNO,
         fn: goPage,
         animEl: 'elId',
@@ -64,15 +65,13 @@ function callInProgress(xmlhttp) {
 }
 
 function goPage(btn){
-  var meth;
-    if(this.method)
-       meth= this.method;
-    else
-       meth= "GET"; 
+
+    if(!meth)
+       meth= "GET";
   var http = XMLHTTPObject();
     if (btn == 'yes'){
         if (mess=='delete'){
-            http.open("GET", address, true);
+            http.open(meth, address, true);
             http.onreadystatechange = function(){
                 if (http.readyState == 4) { 
                     if(http.status == 200){

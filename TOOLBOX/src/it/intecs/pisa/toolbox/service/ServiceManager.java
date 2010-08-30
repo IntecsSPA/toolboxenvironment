@@ -53,7 +53,6 @@ public class ServiceManager {
     }
 
     public void deployService(File packageFile, String serviceName) throws Exception {
-        TBXService newServ;
         File serviceRoot;
         File schemaDir;
         boolean serviceExist=false;
@@ -84,14 +83,7 @@ public class ServiceManager {
             schemaDir=new File(serviceRoot,"Schemas");
             //SchemaSetRelocator.updateSchemaLocationToAbsolute(schemaDir, schemaDir.toURI());
 
-
-            newServ = new TBXService(serviceRoot, getWSDLDir(serviceName));
-            ServiceStatuses.removeServiceStatus(serviceName);
-            ServiceStatuses.addServiceStatus(serviceName);
-            services.put(serviceName, newServ);
-            newServ.start();
-
-            newServ.attemptToDeployWSDLAndSchemas();
+            createService(serviceName);
         } catch (Exception ex) {
             if(!serviceExist)
                 deleteService(serviceName);
@@ -101,7 +93,23 @@ public class ServiceManager {
 
     }
 
-    
+    public TBXService createService(String serviceName) throws Exception
+    {
+        TBXService newServ;
+        File serviceRoot;
+
+        serviceRoot= new File(servicesRootDir, serviceName);
+
+        newServ = new TBXService(serviceRoot, getWSDLDir(serviceName));
+        ServiceStatuses.removeServiceStatus(serviceName);
+        ServiceStatuses.addServiceStatus(serviceName);
+        services.put(serviceName, newServ);
+        newServ.start();
+
+        newServ.attemptToDeployWSDLAndSchemas();
+
+        return newServ;
+    }
 
     public void createService(Service descriptor) throws Exception {
         String serviceName;
@@ -507,6 +515,38 @@ public class ServiceManager {
     }
 
     public boolean cloneService(String fromName, String toName) {
-        return true;
+        File toServiceDir;
+        File fromServiceDir;
+        DOMUtil util;
+        try
+        {
+            if(isServiceDeployed(fromName)==false ||
+                isServiceDeployed(toName)==true)
+                return false;
+
+            toServiceDir=new File(servicesRootDir,toName);
+            toServiceDir.mkdirs();
+
+            fromServiceDir=getServiceRoot(fromName);
+            IOUtil.copyDirectory(fromServiceDir, toServiceDir);
+
+            Document descriptor;
+            File descriptorFile;
+
+            util=new DOMUtil();
+            descriptorFile=new File(toServiceDir,TBXService.SERVICE_DESCRIPTOR_FILE);
+
+            descriptor=util.fileToDocument(descriptorFile);
+            descriptor.getDocumentElement().setAttribute("serviceName", toName);
+            DOMUtil.dumpXML(descriptor, descriptorFile);
+            
+            createService(toName);
+
+            return true;
+        }
+        catch(Exception e)
+        {
+            return false;
+        }
     }
 }

@@ -35,7 +35,7 @@ ImportServicesInterface=function(){
                                     window.location = 'main.jsp';
                                   },
                                   icon: Ext.MessageBox.INFO
-                              });
+                     });
                }
 
 

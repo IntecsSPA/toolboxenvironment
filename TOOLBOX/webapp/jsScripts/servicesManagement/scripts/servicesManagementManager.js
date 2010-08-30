@@ -54,6 +54,12 @@ function managerGroupServices(){
                             autoScroll : true,
                             id: "exportServicePanel",
                             bodyColor: '#79a3cb',
+                            listeners: {
+                                "beforeexpand": function(){
+                                    var checkboxGroup=Ext.getCmp("services_cont");
+                                    checkboxGroup.updateValues();
+                                }
+                            },
                             html: "<div id='exportServicesInterface'>",
                             iconCls: 'export'
                    });
@@ -74,6 +80,12 @@ function managerGroupServices(){
                             autoScroll : true,
                             id: "duplicateServicePanel",
                             bodyColor: '#79a3cb',
+                            listeners: {
+                                "beforeexpand": function(){
+                                    var checkboxGroup=Ext.getCmp("dupServices_cont");
+                                    checkboxGroup.updateValues();
+                                }
+                            },
                             html: "<div id='duplicateServicesInterface'>",
                             iconCls: 'export'
                    });
@@ -84,6 +96,12 @@ function managerGroupServices(){
                             autoScroll : true,
                             id: "deleteServicePanel",
                             bodyColor: '#79a3cb',
+                            listeners: {
+                                "beforeexpand": function(){
+                                    var checkboxGroup=Ext.getCmp("servicesDel_cont");
+                                    checkboxGroup.updateValues();
+                                }
+                            },
                             html: "<div id='deleteServicesInterface'>",
                             iconCls: 'export'
                    });

@@ -336,7 +336,7 @@ String extImport = (extVers.equalsIgnoreCase("2.0.1") ? extImport2 : extImport3)
                     <TD align=left ><A class=itm 
                         href="<%= response.encodeURL(manageOperations) %>"><fmt:message key="header.operations" bundle="${lang}"/></A></TD>  
                     
-                    <TD align=left colspan=4><A class="itm" href="javascript: confirm ('/rest/manager/deleteService/<%= serviceName %>', '<fmt:message key="header.delete" bundle="${lang}"/> <%= serviceName %>', translateDelete('<%= (String)session.getAttribute("languageReq") %>'), 'delete', 'DELETE');"><fmt:message key="header.delete" bundle="${lang}"/></A></TD>
+                    <TD align=left colspan=4><A class="itm" href="javascript: confirm ('rest/manager/deleteService/<%= serviceName %>.json', '<fmt:message key="header.delete" bundle="${lang}"/> <%= serviceName %>', translateDelete('<%= (String)session.getAttribute("languageReq") %>'), 'delete', 'DELETE');"><fmt:message key="header.delete" bundle="${lang}"/></A></TD>
                
                <TD align=left><a href="<%= response.encodeURL(rssFeed)%>"><img src="images/rssicon.jpg" alt="rss feed"></a>
                </TR> 

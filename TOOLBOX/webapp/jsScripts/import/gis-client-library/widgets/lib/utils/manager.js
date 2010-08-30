@@ -83,6 +83,9 @@ this.loadScript= function(url){
     /* MULTITEXT field*/
     this.loadScript("widgets/lib/ext/field/multiTextField.js");
 
+    /* CHECKBOXGROUP field*/
+    this.loadScript("widgets/lib/ext/field/checkBoxGroupField.js");
+
     
 
     this.loadScript("widgets/lib/ext/field/spinnerField.js");

@@ -97,8 +97,8 @@ function managerGroupServices(){
                                   layout:'accordion',
                                   layoutConfig: {
                                         fill : false,
-                                        animate: true,
-                                        sequence:true
+                                        animate: false,
+                                        sequence:false
                                     },
                                    items:[importServicesPanel,
                                          exportServicesPanel,

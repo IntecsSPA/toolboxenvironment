@@ -15,7 +15,7 @@
               dataEmptyMessage="Get Service List ERROR">
             </input>
              <input type="multitext" name="DuplicateName" id="DuplicateName" optional="true" size="40" labelAlign="top"/>
-             <input type="text" name="DuplicateRestReuqst" id="DuplicateRestReuqst"  hidden="true" hideLabel="true" value="/rest/gui/cloneServices"/>
+             <input type="text" name="DuplicateRestReuqst" id="DuplicateRestReuqst"  hidden="true" hideLabel="true" value="rest/gui/cloneServices.json"/>
         </group>
     </section>
     

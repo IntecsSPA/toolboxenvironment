@@ -28,11 +28,11 @@ DuplicateServicesInterface=function(){
         jRequest.value=obj;
 
         var jsonRequest = JSON.stringify(jRequest);
-        alert(jsonRequest);
+        //alert(jsonRequest);
 
         var restRequest=this.formInterface.getFormValues()["DuplicateRestReuqst"];
 
-        alert(restRequest);
+        //alert(restRequest);
 
         var duplicateServivcesResponse=function(response){
 

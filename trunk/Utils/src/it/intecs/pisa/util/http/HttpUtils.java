@@ -3,44 +3,22 @@
  * and open the template in the editor.
  */
 
-package it.intecs.pisa.util.rest;
+package it.intecs.pisa.util.http;
 
-import com.google.gson.JsonObject;
 import it.intecs.pisa.util.IOUtil;
-import it.intecs.pisa.util.json.JsonUtil;
 import java.io.InputStream;
 import java.net.Authenticator;
 import java.net.HttpURLConnection;
 import java.net.PasswordAuthentication;
 import java.net.URL;
-import java.util.HashMap;
+import java.util.Enumeration;
+import java.util.Hashtable;
 
 /**
  *
  * @author Massimiliano Fanciulli
  */
-public class RestPut{
-   public static JsonObject putAsJSON(URL rest_URL,HashMap<String,String> headers, String user, String password,JsonObject content) throws Exception
-    {
-        JsonObject jsonResponse;
-        InputStream inStream;
-        InputStream contentStream;
-         
-        contentStream=JsonUtil.getJsonAsStream(content);
-
-        inStream=put(rest_URL, headers, user,  password,contentStream);
-        if(inStream!=null)
-        {
-            jsonResponse = JsonUtil.getInputAsJson(inStream);
-            inStream.close();
-        } else {
-            jsonResponse = null;
-        }
-
-        contentStream.close();
-        return jsonResponse;
-    }
-
+public class HttpUtils {
     /**
      *
      * @param rest_URL
@@ -50,19 +28,22 @@ public class RestPut{
      * @return
      * @throws Exception
      */
-    public static InputStream put(URL rest_URL, HashMap<String,String> headers, String user, String password,InputStream content) throws Exception {
+    public static InputStream post(URL rest_URL, Hashtable<String,String> headers, String user, String password,InputStream content) throws Exception {
         HttpURLConnection con = (HttpURLConnection) rest_URL.openConnection();
 
         if(headers!=null)
         {
-            String[] headerskeys = headers.keySet().toArray(new String[0]);
-           for(String key:headerskeys)
+            Enumeration<String> headerskeys = headers.keys();
+            while(headerskeys.hasMoreElements())
+            {
+                String key=headerskeys.nextElement();
                 con.setRequestProperty(key,headers.get(key));
+            }
         }
 
         con.setDoOutput(true);
         con.setDoInput(true);
-        con.setRequestMethod("PUT");
+        con.setRequestMethod("POST");
 
 
         final String login = user;
@@ -88,5 +69,4 @@ public class RestPut{
         }
         else return null;
     }
-
 }

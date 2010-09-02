@@ -18,10 +18,8 @@ public class DocumentError {
     public static Document get(String errorMsg)
     {
         Document doc;
-        DOMUtil util;
-        util=new DOMUtil();
-
-        doc=util.newDocument();
+        
+        doc=DOMUtil.newDocument(false);
         Element rootEl;
 
         rootEl=doc.createElement("root");

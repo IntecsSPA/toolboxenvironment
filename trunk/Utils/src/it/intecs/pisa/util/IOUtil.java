@@ -388,6 +388,15 @@ public class IOUtil {
         }
     }
 
+    public static File getTemporaryDirectory()
+    {
+        File tempDir=new File(System.getProperty("java.io.tmpdir"));
+        File temp = new File(tempDir, DateUtil.getCurrentDateAsUniqueId());
+        temp.mkdirs();
+
+        return temp;
+    }
+
 
     /**
      * This method compares two URI in order to check if one of the directory is a parent of the other

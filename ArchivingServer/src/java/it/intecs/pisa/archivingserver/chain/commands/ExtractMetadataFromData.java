@@ -70,7 +70,8 @@ public class ExtractMetadataFromData implements Command {
         {
             File commandFile;
             commandFile=new File(webappDir,"WEB-INF/metadataExtractors/"+command);
-
+            commandFile.setExecutable(true,false);
+            
             Properties prefs = Prefs.load(webappDir);
 
             File dataFile;
@@ -78,25 +79,11 @@ public class ExtractMetadataFromData implements Command {
 
             File outFile;
             outFile= new File(prefs.getProperty("download.dir"), itemId + "_metadata.xml");
-
-            /*String shellCommand;
-            shellCommand=commandFile.getAbsolutePath();
-            shellCommand+=" "+dataFile.getAbsolutePath()+" "+outFile.getAbsolutePath();
-*/
+            
             ProcessBuilder pb;
             Process p;
             
-            try
-            {
-                pb = new ProcessBuilder("chmod +x "+command);
-                pb.directory(commandFile.getParentFile());
-                p = pb.start();
-                p.waitFor();
-            }
-            catch(Exception e)
-            {
-
-            }
+            
             
             pb = new ProcessBuilder("./"+command, dataFile.getAbsolutePath(), outFile.getAbsolutePath());
             pb.directory(commandFile.getParentFile());

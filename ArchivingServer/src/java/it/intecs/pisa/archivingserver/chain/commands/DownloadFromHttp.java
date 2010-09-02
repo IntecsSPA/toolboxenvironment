@@ -14,6 +14,8 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javawebparts.misc.chain.ChainContext;
 import javawebparts.misc.chain.Command;
 import javawebparts.misc.chain.Result;
@@ -57,6 +59,12 @@ public class DownloadFromHttp implements Command {
                 cc.setAttribute(CommandsConstants.DOWNLOADED_FILE_NAME, fileName);
             }
         } catch (Exception e) {
+            id=(String) cc.getAttribute(CommandsConstants.ITEM_ID);
+            try {
+                DownloadsDB.updateStatus(id, "DOWNLOAD ERROR");
+            } catch (Exception ex) {
+                Log.log(ex.getMessage());
+            }
             Log.log(e.getMessage());
             return new Result(Result.FAIL);
         }

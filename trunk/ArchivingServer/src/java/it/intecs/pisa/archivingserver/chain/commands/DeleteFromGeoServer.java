@@ -8,6 +8,7 @@ import it.intecs.pisa.archivingserver.db.GeoServerAccessible;
 import it.intecs.pisa.archivingserver.log.Log;
 import it.intecs.pisa.archivingserver.prefs.Prefs;
 import it.intecs.pisa.util.geoserver.GeoServerUnpublisher;
+import it.intecs.pisa.util.http.HTTPLinkTokenizer;
 import java.io.File;
 import java.net.URL;
 import java.util.Properties;
@@ -41,20 +42,19 @@ public class DeleteFromGeoServer implements Command {
             String[] urls = GeoServerAccessible.getUrls(itemId);
             for(String urlStr:urls)
             {
-                URL url=new URL(urlStr);
-                StringTokenizer tokenizer;
-                
-                tokenizer=new StringTokenizer(url.getPath(),"/");
-                tokenizer.nextElement();
-                tokenizer.nextElement();
-                tokenizer.nextElement();
-                tokenizer.nextElement();
-                tokenizer.nextElement();
+                //Parsing url like http://192.168.31.5:8023/geoserver/rest/layers/armsvector.json
+                HTTPLinkTokenizer tokenizer;
+                tokenizer = new HTTPLinkTokenizer(urlStr);
                                 
                 URL hostUrl;
-                hostUrl=new URL("http://"+url.getHost()+":"+url.getPort()+"/geoserver");
+                String deployName;
+
+                String path=tokenizer.getPath();
+                deployName=path.substring(path.lastIndexOf("/")+1, path.lastIndexOf("."));
                 
-                GeoServerUnpublisher.unpublishCoverage(hostUrl, workspaceName, (String) tokenizer.nextElement(), "admin","geoserver");
+                hostUrl=new URL("http://"+tokenizer.getHost()+":"+tokenizer.getPort()+"/geoserver");
+                
+                GeoServerUnpublisher.unpublishCoverage(hostUrl, workspaceName, deployName, tokenizer.getUsername(),tokenizer.getPassword());
             }
 
             GeoServerAccessible.delete(itemId);

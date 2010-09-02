@@ -9,8 +9,8 @@ import java.net.Authenticator;
 import java.net.HttpURLConnection;
 import java.net.PasswordAuthentication;
 import java.net.URL;
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -18,18 +18,15 @@ import java.util.Hashtable;
  */
 public class RestDelete {
 
-    public static int del(URL rest_URL, Hashtable<String,String> headers, String user, String password) throws Exception
+    public static int del(URL rest_URL, Map<String,String> headers, String user, String password) throws Exception
     {
         HttpURLConnection con = (HttpURLConnection) rest_URL.openConnection();
 
         if(headers!=null)
         {
-            Enumeration<String> headerskeys = headers.keys();
-            while(headerskeys.hasMoreElements())
-            {
-                String key=headerskeys.nextElement();
+            Set<String> keyset= headers.keySet();
+            for(String key:keyset.toArray(new String[0]))
                 con.setRequestProperty(key,headers.get(key));
-            }
         }
 
         con.setRequestMethod("DELETE");

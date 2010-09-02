@@ -250,27 +250,18 @@ public class DOMUtil {
         return documentBuilder.newDocument();
     }
 
-    /*
-     * public void setCoalescing(boolean coalescing) {
-     * documentBuilderFactory.setCoalescing(coalescing); try { documentBuilder =
-     * documentBuilderFactory.newDocumentBuilder(); } catch
-     * (ParserConfigurationException e) { e.printStackTrace(); } }
-     * 
-     * public void setExpandEntityReferences(boolean expandEntityRef) {
-     * documentBuilderFactory.setExpandEntityReferences(expandEntityRef); try {
-     * documentBuilder = documentBuilderFactory.newDocumentBuilder(); } catch
-     * (ParserConfigurationException e) { e.printStackTrace(); } }
-     * 
-     * public void setIgnoringComments(boolean ignoreComments) {
-     * documentBuilderFactory.setIgnoringComments(ignoreComments); try {
-     * documentBuilder = documentBuilderFactory.newDocumentBuilder(); } catch
-     * (ParserConfigurationException e) { e.printStackTrace(); } }
-     * 
-     * public void setIgnoringElementContentWhitespace(boolean whitespace) {
-     * documentBuilderFactory.setIgnoringElementContentWhitespace(whitespace);
-     * try { documentBuilder = documentBuilderFactory.newDocumentBuilder(); }
-     * catch (ParserConfigurationException e) { e.printStackTrace(); } }
-     */
+    public static Document newDocument(boolean nsAwareness) {
+        try {
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+
+            return documentBuilder.newDocument();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     public void setNamespaceAware(boolean awareness) {
         documentBuilderFactory.setNamespaceAware(awareness);
         try {
@@ -678,7 +669,6 @@ public class DOMUtil {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
         return currentNode;
@@ -709,17 +699,6 @@ public class DOMUtil {
 
     public static void collapse(Element oldNode, Node newNodeParent,
             Document newDoc) {
-        /*
-         * Element newNode = (Element)
-         * newNodeParent.appendChild(newDoc.importNode(oldNode, false));
-         * LinkedList oldNodeChildren = getChildren(oldNode); Element
-         * currOldNode; Node currNewNode = null; for (int i = 0; i <
-         * oldNodeChildren.size(); i++) { if (isLeaf((currOldNode = (Element)
-         * oldNodeChildren.get(i)))) {
-         * newNode.appendChild(newDoc.importNode(currOldNode, true)); } else {
-         * currNewNode = newNode.appendChild(newDoc.importNode(currOldNode,
-         * false)); collapse(currOldNode, currNewNode, newDoc); } }
-         */
         Element newNode = (Element) newDoc.importNode(oldNode, false);
         newNodeParent.appendChild(newNode);
         LinkedList oldNodeChildren = getChildren(oldNode);

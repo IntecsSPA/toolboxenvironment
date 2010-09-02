@@ -53,7 +53,6 @@ public class Zip {
     }
 
     private static void extractFile(InputStream stream, String destination) {
-        // TODO Auto-generated method stub
         byte[] buf = new byte[1024];
         FileOutputStream out = null;
         int len = 0;
@@ -79,14 +78,12 @@ public class Zip {
             stream.close();
             out.close();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
     }
 
     private static void createDir(String absolutePath) {
-        // TODO Auto-generated method stub
         StringTokenizer tokenizer;
         File toBeCreated = null;
         String subPath = null;
@@ -117,7 +114,6 @@ public class Zip {
     }
 
     private static void extractDir(ZipEntry entry, String destination) {
-        // TODO Auto-generated method stub
         String name = null;
         StringTokenizer tokenizer = null;
         File toBeCreated = null;
@@ -127,7 +123,6 @@ public class Zip {
             name = entry.getName();
             createDir(destination, name);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -218,7 +213,6 @@ public class Zip {
     }
 
     private static String[] parseDirForFiles(String directoryPath, AbstractFileFilter filter) {
-        // TODO Auto-generated method stub
         Vector<String> entriesVector = null;
         File dir = null;
         try {

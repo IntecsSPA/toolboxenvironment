@@ -32,4 +32,23 @@ public class GeoServerUnpublisher {
         System.out.println(result);
 
     }
+
+    public static void unpublishVector(URL hostUrl, String workspaceName, String deployName, String username, String password) throws Exception {
+        String fullUrl;
+
+        fullUrl=hostUrl.toString()+"/rest/layers/"+deployName;
+
+        int result = RestDelete.del(new URL(fullUrl), null, username, password);
+        System.out.println(result);
+
+        fullUrl=hostUrl.toString()+"/rest/workspaces/"+workspaceName+"/datastores/"+deployName+"/featuretypes/"+deployName;
+
+        result = RestDelete.del(new URL(fullUrl), null, username, password);
+        System.out.println(result);
+
+        fullUrl=hostUrl.toString()+"/rest/workspaces/"+workspaceName+"/datastores/"+deployName;
+
+        result = RestDelete.del(new URL(fullUrl), null, username, password);
+        System.out.println(result);
+    }
 }

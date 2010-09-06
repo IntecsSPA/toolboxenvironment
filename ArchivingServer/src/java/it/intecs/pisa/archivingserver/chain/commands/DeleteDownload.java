@@ -17,28 +17,30 @@ import javawebparts.misc.chain.Result;
  */
 public class DeleteDownload implements Command {
 
+    @Override
     public Result init(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result execute(ChainContext cc) {
         String itemId;
         File appDir;
         File itemDir;
         try {
 
-            Log.log("Executing class "+this.getClass().getCanonicalName());
             appDir=(File) cc.getAttribute(CommandsConstants.APP_DIR);
             itemId=(String) cc.getAttribute(CommandsConstants.ITEM_ID);
 
             DownloadsDB.delete(itemId);
         } catch (Exception e) {
-            Log.log(e.getMessage());
+            Log.logException(e);
             return new Result(Result.FAIL);
         }
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result cleanup(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }

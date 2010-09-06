@@ -22,10 +22,12 @@ import javawebparts.misc.chain.Result;
  */
 public class DeleteFromInternalFTP implements Command {
 
+    @Override
     public Result init(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result execute(ChainContext cc) {
         String itemId;
         Properties prop;
@@ -33,7 +35,6 @@ public class DeleteFromInternalFTP implements Command {
         File itemDir;
 
         try {
-            Log.log("Executing class "+this.getClass().getCanonicalName());
             itemId=(String) cc.getAttribute(CommandsConstants.ITEM_ID);
             File appDir = (File) cc.getAttribute(CommandsConstants.APP_DIR);
 
@@ -48,16 +49,19 @@ public class DeleteFromInternalFTP implements Command {
                 ftpUserDir=new File(prop.getProperty("publish.local.ftp.rootdir"),itemId);
                 IOUtil.rmdir(ftpUserDir);
             }
-            catch(Exception e){}
+            catch(Exception e){
+                Log.logException(e);
+            }
 
             HttpAccessible.delete(itemId);
         } catch (Exception e) {
-            Log.log(e.getMessage());
+            Log.logException(e);
             return new Result(Result.FAIL);
         }
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result cleanup(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }

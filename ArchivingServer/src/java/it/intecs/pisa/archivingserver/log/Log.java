@@ -5,10 +5,7 @@
 
 package it.intecs.pisa.archivingserver.log;
 
-import it.intecs.pisa.archivingserver.db.InternalDatabase;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Date;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -17,30 +14,19 @@ import java.util.Date;
 public class Log {
     public static void log(String text)
     {
-        System.out.println("[ArchivingServer] "+text);
-       /* InternalDatabase db;
-        Statement stm=null;
+        Logger logger = Logger.getLogger("it.intecs.pisa.archivingserver");
+        logger.info(text);
+    }
 
-        System.out.println("[ArchivingServer]"+text);
-        try
-        {
-            db=InternalDatabase.getInstance();
-            stm=db.getStatement();
+    public static void logException(Exception e)
+    {
+        Logger logger = Logger.getLogger("it.intecs.pisa.archivingserver");
+        logger.error("An exception has been thrown. Details: "+e.getMessage());
+    }
 
-            stm.execute("INSERT INTO T_LOG VALUES ('"+text+"',"+(new Date()).getTime()+")");
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-        finally
-        {
-            if(stm!=null)
-                try {
-                stm.close();
-            } catch (SQLException ex) {
-               
-            }
-        }*/
+    public static void logHTTPStatus(String url, int code)
+    {
+        Logger logger = Logger.getLogger("it.intecs.pisa.archivingserver");
+        logger.debug("The HTTP exchange with URL "+url+" return code "+code);
     }
 }

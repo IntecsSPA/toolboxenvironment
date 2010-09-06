@@ -53,17 +53,16 @@ public class AutomaticItemDeleteService extends Thread{
 
             waitInterval=TimeInterval.getIntervalAsLong(intervalStr);
 
-            while(mustShutdown==false)
+            while(!mustShutdown)
             {
                 try
                 {
                     long maxExpires;
-                    Log.log("Automatic item deletion");
                     maxExpires=(new Date()).getTime()-waitInterval;
                     items = getItemsToDelete(maxExpires);
 
                     for (String item : items) {
-                        Log.log("Automatically delete item "+item);
+                        Log.log("Automatic deletion of item "+item);
                         deleteItem(item);
                     }
 
@@ -73,13 +72,13 @@ public class AutomaticItemDeleteService extends Thread{
                 }
                 catch(Exception e)
                 {
-
+                    Log.logException(e);
                 }
             }
         }
         catch(Exception e)
         {
-
+            Log.logException(e);
         }
     }
 
@@ -134,7 +133,7 @@ public class AutomaticItemDeleteService extends Thread{
 
         int success = ct.getResult().getCode();
         if (success == Result.FAIL) {
-            System.out.println("Not delete item " + item);
+            Log.log("Cannot delete item "+item);
         }
     }
 

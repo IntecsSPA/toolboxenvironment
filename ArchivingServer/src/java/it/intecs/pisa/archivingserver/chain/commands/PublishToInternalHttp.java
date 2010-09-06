@@ -21,10 +21,12 @@ import javawebparts.misc.chain.Result;
  */
 public class PublishToInternalHttp implements Command {
 
+    @Override
     public Result init(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result execute(ChainContext cc) {
         File fromFile,toDir,toFile,appDir;
         String downloadFileName;
@@ -33,7 +35,6 @@ public class PublishToInternalHttp implements Command {
         StoreItem storeItem;
 
         try {
-            Log.log("Executing class "+this.getClass().getCanonicalName());
             appDir=(File) cc.getAttribute(CommandsConstants.APP_DIR);
             downloadFileName=(String) cc.getAttribute(CommandsConstants.DOWNLOADED_FILE_NAME);
             itemId=(String) cc.getAttribute(CommandsConstants.ITEM_ID);
@@ -59,12 +60,13 @@ public class PublishToInternalHttp implements Command {
                 HttpAccessible.add(itemId, fullUrl);
             }
         } catch (Exception e) {
-            Log.log(e.getMessage());
+            Log.logException(e);
             return new Result(Result.FAIL);
         }
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result cleanup(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }

@@ -19,16 +19,17 @@ import javawebparts.misc.chain.Result;
  */
 public class RegisterItemRef implements Command {
 
+    @Override
     public Result init(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result execute(ChainContext cc) {
         String itemId;
         long expireDate=0;
         long arrivalDate=0;
         try {
-            Log.log("Executing class "+this.getClass().getCanonicalName());
             itemId=(String) cc.getAttribute(CommandsConstants.ITEM_ID);
             StoreItem storeItem = (StoreItem) cc.getAttribute(CommandsConstants.STORE_ITEM);
 
@@ -46,12 +47,13 @@ public class RegisterItemRef implements Command {
             
             ItemRefDB.register(itemId,arrivalDate,expireDate);
         } catch (Exception e) {
-            Log.log(e.getMessage());
+            Log.logException(e);
             return new Result(Result.FAIL);
         }
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result cleanup(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }

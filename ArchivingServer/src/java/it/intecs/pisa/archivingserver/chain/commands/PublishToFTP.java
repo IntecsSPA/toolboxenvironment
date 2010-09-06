@@ -27,13 +27,14 @@ import org.apache.commons.net.ftp.FTPReply;
  */
 public class PublishToFTP implements Command{
 
+    @Override
     public Result init(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result execute(ChainContext cc) {
         try {
-            Log.log("Executing class "+this.getClass().getCanonicalName());
             StoreItem storeItem = (StoreItem) cc.getAttribute(CommandsConstants.STORE_ITEM);
             File appDir = (File) cc.getAttribute(CommandsConstants.APP_DIR);
             String itemId = (String) cc.getAttribute(CommandsConstants.ITEM_ID);
@@ -49,6 +50,7 @@ public class PublishToFTP implements Command{
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result cleanup(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }
@@ -94,7 +96,7 @@ public class PublishToFTP implements Command{
         }
         catch(Exception e)
         {
-
+            Log.logException(e);
         }
     }
 

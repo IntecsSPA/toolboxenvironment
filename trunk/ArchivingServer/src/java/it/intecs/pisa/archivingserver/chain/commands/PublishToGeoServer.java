@@ -28,10 +28,12 @@ import org.w3c.dom.Document;
  */
 public class PublishToGeoServer implements Command {
 
+    @Override
     public Result init(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result execute(ChainContext cc) {
         File downloadedFile, appDir;
         String downloadFileName;
@@ -42,7 +44,6 @@ public class PublishToGeoServer implements Command {
         Properties prop;
         String location;
         try {
-            Log.log("Executing class "+this.getClass().getCanonicalName());
             appDir = (File) cc.getAttribute(CommandsConstants.APP_DIR);
             downloadFileName = (String) cc.getAttribute(CommandsConstants.DOWNLOADED_FILE_NAME);
             itemId = (String) cc.getAttribute(CommandsConstants.ITEM_ID);
@@ -62,16 +63,18 @@ public class PublishToGeoServer implements Command {
                     if(location!=null)
                         GeoServerAccessible.add(itemId, location);
                 } catch (Exception e) {
+                    Log.logException(e);
                 }
             }
 
         } catch (Exception e) {
-            Log.log(e.getMessage());
+            Log.logException(e);
             return new Result(Result.FAIL);
         }
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result cleanup(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }

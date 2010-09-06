@@ -24,15 +24,15 @@ import javawebparts.misc.chain.Result;
  */
 public class DeleteFromEbRIMCatalogue implements Command {
 
+    @Override
     public Result init(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result execute(ChainContext cc) {
         String itemId;
         try {
-            Log.log("Executing class "+this.getClass().getCanonicalName());
-
             itemId=(String) cc.getAttribute(CommandsConstants.ITEM_ID);
 
             deleteObjectsFromebRIMCatalogues(itemId);
@@ -40,12 +40,13 @@ public class DeleteFromEbRIMCatalogue implements Command {
             SOAPCatalogueAccessible.delete(itemId);
             CatalogueCorrespondence.delete(itemId);
         } catch (Exception e) {
-            Log.log(e.getMessage());
+            Log.logException(e);
             return new Result(Result.FAIL);
         }
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result cleanup(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }
@@ -58,6 +59,12 @@ public class DeleteFromEbRIMCatalogue implements Command {
         }
     }
 
+    /**
+     * This method should be replaced with a better way of creating a SOAP message.
+     * @param urlStr
+     * @param itemId
+     * @throws Exception
+     */
     private void deleteObject(String urlStr, String itemId) throws Exception {
         String catId = ReverseCatalogueId.getCatalogueId(urlStr, itemId);
 

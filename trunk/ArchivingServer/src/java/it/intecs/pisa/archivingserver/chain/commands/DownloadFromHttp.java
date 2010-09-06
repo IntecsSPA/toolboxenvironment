@@ -14,8 +14,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javawebparts.misc.chain.ChainContext;
 import javawebparts.misc.chain.Command;
 import javawebparts.misc.chain.Result;
@@ -26,10 +24,12 @@ import javawebparts.misc.chain.Result;
  */
 public class DownloadFromHttp implements Command {
 
+    @Override
     public Result init(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result execute(ChainContext cc) {
         StoreItem storeItem;
         File outFile;
@@ -39,7 +39,6 @@ public class DownloadFromHttp implements Command {
         Properties prop;
 
         try {
-            Log.log("Executing class "+this.getClass().getCanonicalName());
             storeItem = (StoreItem) cc.getAttribute(CommandsConstants.STORE_ITEM);
             id=(String) cc.getAttribute(CommandsConstants.ITEM_ID);
             webappDir=(File) cc.getAttribute(CommandsConstants.APP_DIR);
@@ -63,14 +62,15 @@ public class DownloadFromHttp implements Command {
             try {
                 DownloadsDB.updateStatus(id, "DOWNLOAD ERROR");
             } catch (Exception ex) {
-                Log.log(ex.getMessage());
+                Log.logException(ex);
             }
-            Log.log(e.getMessage());
+            Log.logException(e);
             return new Result(Result.FAIL);
         }
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result cleanup(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }
@@ -79,7 +79,6 @@ public class DownloadFromHttp implements Command {
         URL url;
         InputStream stream=null;
         byte[] buffer;
-        int count = 0;
         FileOutputStream outStream=null;
 
         try {

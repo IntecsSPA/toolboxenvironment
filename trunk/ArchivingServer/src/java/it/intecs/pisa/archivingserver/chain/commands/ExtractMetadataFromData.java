@@ -22,10 +22,12 @@ import org.w3c.dom.Document;
  */
 public class ExtractMetadataFromData implements Command {
 
+    @Override
     public Result init(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result execute(ChainContext cc) {
         String itemId;
         StoreItem storeItem;
@@ -33,7 +35,6 @@ public class ExtractMetadataFromData implements Command {
         File webappDir;
 
         try {
-            Log.log("Executing class "+this.getClass().getCanonicalName());
             itemId=(String) cc.getAttribute(CommandsConstants.ITEM_ID);
             doc=(Document) cc.getAttribute(CommandsConstants.ITEM_METADATA);
             storeItem=(StoreItem) cc.getAttribute(CommandsConstants.STORE_ITEM);
@@ -47,12 +48,13 @@ public class ExtractMetadataFromData implements Command {
                cc.setAttribute(CommandsConstants.ITEM_METADATA, doc);
             }
         } catch (Exception e) {
-            Log.log(e.getMessage());
+            Log.logException(e);
             return new Result(Result.FAIL);
         }
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result cleanup(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }

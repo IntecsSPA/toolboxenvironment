@@ -6,7 +6,6 @@ package it.intecs.pisa.archivingserver.chain.commands;
 
 import it.intecs.pisa.archivingserver.db.DownloadsDB;
 import it.intecs.pisa.archivingserver.log.Log;
-import it.intecs.pisa.archivingserver.prefs.Prefs;
 import java.io.File;
 import java.util.Properties;
 import javawebparts.misc.chain.ChainContext;
@@ -19,10 +18,12 @@ import javawebparts.misc.chain.Result;
  */
 public class ChangeStatusToPublished implements Command {
 
+    @Override
     public Result init(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result execute(ChainContext cc) {
         String itemId;
         File appDir;
@@ -39,6 +40,7 @@ public class ChangeStatusToPublished implements Command {
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result cleanup(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }

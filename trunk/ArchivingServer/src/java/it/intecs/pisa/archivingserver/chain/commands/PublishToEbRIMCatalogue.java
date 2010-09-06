@@ -47,10 +47,12 @@ public class PublishToEbRIMCatalogue implements Command {
     protected static final String NAMESPACE_ATM="http://earth.esa.int/atm";
     protected static final String NAMESPACE_GML="http://www.opengis.net/gml";
 
+    @Override
     public Result init(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result execute(ChainContext cc) {
         StoreItem storeItem;
         String id;
@@ -58,7 +60,6 @@ public class PublishToEbRIMCatalogue implements Command {
         Document doc;
 
         try {
-            Log.log("Executing class "+this.getClass().getCanonicalName());
             storeItem = (StoreItem) cc.getAttribute(CommandsConstants.STORE_ITEM);
             id = (String) cc.getAttribute(CommandsConstants.ITEM_ID);
             webappDir = (File) cc.getAttribute(CommandsConstants.APP_DIR);
@@ -126,6 +127,7 @@ public class PublishToEbRIMCatalogue implements Command {
         return res;
     }
 
+    @Override
     public Result cleanup(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }
@@ -198,6 +200,8 @@ public class PublishToEbRIMCatalogue implements Command {
                 namespaceURI.equals(NAMESPACE_SAR)||
                 namespaceURI.equals(NAMESPACE_EOP))
             putLinkIntoEOMetadata(doc,url);
+
+        Log.log(DOMUtil.getDocumentAsString(doc));
     }
 
     private void putLinkIntoEOMetadata(Document doc,String url)
@@ -212,11 +216,11 @@ public class PublishToEbRIMCatalogue implements Command {
             Element filename=getChildren(pi,NAMESPACE_EOP,"fileName");
 
             filename.setTextContent(url);
-            System.out.println(DOMUtil.getDocumentAsString(doc));
+            
         }
         catch(Exception e)
         {
-            System.out.println("Error while putting metadata link");
+            Log.logException(e);
         }
     }
 
@@ -224,10 +228,10 @@ public class PublishToEbRIMCatalogue implements Command {
         try
         {
             Element root=doc.getDocumentElement();
-            Element MDMetadataEl=getChildren(root,NAMESPACE_GMD,"MD_Metadata");
-            Element distribInfoEl=getChildren(MDMetadataEl,NAMESPACE_GMD,"distributionInfo");
+            //Element MDMetadataEl=getChildren(root,NAMESPACE_GMD,"MD_Metadata");
+            Element distribInfoEl=getChildren(root,NAMESPACE_GMD,"distributionInfo");
             Element distributionEl=getChildren(distribInfoEl,NAMESPACE_GMD,"MD_Distribution");
-            Element tranferOptionsEl=getChildren(distributionEl,NAMESPACE_GMD,"tranferOptions");
+            Element tranferOptionsEl=getChildren(distributionEl,NAMESPACE_GMD,"transferOptions");
             Element digitalTransferOptions=getChildren(tranferOptionsEl,NAMESPACE_GMD,"MD_DigitalTransferOptions");
             Element onLineEl=getChildren(digitalTransferOptions,NAMESPACE_GMD,"onLine");
             Element onlineResourceEl=getChildren(onLineEl,NAMESPACE_GMD,"CI_OnlineResource");
@@ -235,11 +239,11 @@ public class PublishToEbRIMCatalogue implements Command {
             Element urlEl=getChildren(linkageEl,NAMESPACE_GMD,"URL");
 
             urlEl.setTextContent(url);
-            System.out.println(DOMUtil.getDocumentAsString(doc));
+
         }
         catch(Exception e)
         {
-            System.out.println("Error while putting metadata link");
+            Log.logException(e);
         }
     }
 

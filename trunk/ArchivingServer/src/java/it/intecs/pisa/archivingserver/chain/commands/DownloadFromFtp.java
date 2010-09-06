@@ -27,10 +27,12 @@ import org.apache.commons.net.ftp.FTPReply;
  */
 public class DownloadFromFtp implements Command {
 
+    @Override
     public Result init(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result execute(ChainContext cc) {
         StoreItem storeItem;
         File outFile;
@@ -40,7 +42,6 @@ public class DownloadFromFtp implements Command {
         Properties prop;
 
         try {
-            Log.log("Executing class "+this.getClass().getCanonicalName());
             storeItem = (StoreItem) cc.getAttribute(CommandsConstants.STORE_ITEM);
             id = (String) cc.getAttribute(CommandsConstants.ITEM_ID);
             webappDir = (File) cc.getAttribute(CommandsConstants.APP_DIR);
@@ -60,12 +61,13 @@ public class DownloadFromFtp implements Command {
                 cc.setAttribute(CommandsConstants.DOWNLOADED_FILE_NAME, fileName);
             }
         } catch (Exception e) {
-            Log.log(e.getMessage());
+            Log.logException(e);
             return new Result(Result.FAIL);
         }
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result cleanup(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }
@@ -97,7 +99,7 @@ public class DownloadFromFtp implements Command {
 
             f.logout();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.logException(e);
         }
 
     }

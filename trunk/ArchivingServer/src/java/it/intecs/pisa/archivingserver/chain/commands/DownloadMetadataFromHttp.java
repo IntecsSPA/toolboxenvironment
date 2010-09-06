@@ -23,10 +23,12 @@ import org.w3c.dom.Document;
  */
 public class DownloadMetadataFromHttp implements Command {
 
+    @Override
     public Result init(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result execute(ChainContext cc) {
         StoreItem storeItem;
         File outFile;
@@ -35,7 +37,6 @@ public class DownloadMetadataFromHttp implements Command {
         Properties prop;
         Document doc = null;
         try {
-            Log.log("Executing class "+this.getClass().getCanonicalName());
             storeItem = (StoreItem) cc.getAttribute(CommandsConstants.STORE_ITEM);
             id=(String) cc.getAttribute(CommandsConstants.ITEM_ID);
             webappDir=(File) cc.getAttribute(CommandsConstants.APP_DIR);
@@ -48,12 +49,13 @@ public class DownloadMetadataFromHttp implements Command {
                 cc.setAttribute(CommandsConstants.ITEM_METADATA, doc);
             }
         } catch (Exception e) {
-            Log.log(e.getMessage());
+            Log.logException(e);
             return new Result(Result.FAIL);
         }
         return new Result(Result.SUCCESS);
     }
 
+    @Override
     public Result cleanup(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }

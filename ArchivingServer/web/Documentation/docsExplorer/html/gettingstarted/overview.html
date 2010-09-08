@@ -5,15 +5,39 @@
     </head>
     <body>
         <h2>Overview</h2>
-        <p>The Archiving Server (ARMS) is a service which allows the user to automatically download data,
-            its metadata and store them both in a set of services.<br>
-        The services list comprehends:
+        The Archiving and Resource Management Services (ARMS) is a service which aims to automate some common tasks
+        performed on Earth Observation data and metadata. The ARMS is capable of:
         <ul>
-            <li>FTP servers</li>
-            <li>CSW SOAP ebRIM catalogues</li>
-            <li>Geoserver</li>
+            <li>Asynchronously download data and metadata from an HTTP or FTP host</li>
+            <li>Extract metadata from data through a shell script based mechanism</li>
+            <li>Publish metadata on an CSW ebRIM catalogue</li>
+            <li>Publish vector data or coverage data on a Geoserver instance</li>
+            <li>Publish data via HTTP and FTP</li>
+            <li>Delete data and metadata from all hosts where it is published to</li>
+        </ul>
+        The functionalities of the ARMS address both the short-term and long-term archiving of the
+            input data.
+        <ul>
+            <li>The short-term (temporary) archiving is aimed at storing the results of intermediate
+                processing steps in a chain of services (as in the Workflow Orchestration Service)</li>
+            <li>The long-term archiving is aimed at permanently storing the final results of a computation
+                or the data submitted by a Data Provider</li>
         </ul>
 
-    </p>
+        The ARMS is composed by two components: the TOOLBOX Archiving Service and the ARMS Servlet.<br>
+
+        <h2>Toolbox Archiving Service</h2>
+        The Toolbox Archiving Service is a service to be run in a TOOLBOX instance and provides to the
+        user a WPS SOAP interface. This service will receive all WPS requests from clients and properly invokes
+        the Archiving Servlet. Using a TOOLBOX service to provide a WPS SOAP interface is more powerful than directly
+        providing such interface in the Archiving Servlet since it is possible to use all functionalities provided by
+        TOOLBOX. Examples are: securing the service, providing multiple endpoints for the same ARMS servlet, start/stop/suspend
+        of the client interaction with the service without affecting the engine work.
+
+        <h2>ARMS Servlet</h2>
+        The ARMS servlet is a Java servlet which provides the core logic to the ARMS. It is responsible to perform
+        all tasks assigned to the ARMS and to provide access to data when made accessible via HTTP and FTP. The servlet exposes
+        a REST interface which is used by the Toolbox Archiving Service. No checks are done on the client request
+        so the servlet can be used without the Toolbox Service. Obviously in this case no WPS interface is exposed.
     </body>
 </html>

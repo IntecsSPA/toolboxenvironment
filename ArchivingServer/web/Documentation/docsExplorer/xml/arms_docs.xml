@@ -57,7 +57,10 @@
 			<userdata name="thisurl">html/tasks/store.html</userdata>
 		</item>
                 <item text="REST" id="interfaces.rest" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-			<userdata name="thisurl">html/tasks/retrieve.html</userdata>
+			<userdata name="thisurl">html/interfaces/REST/main.html</userdata>
+                        <item text="Store" id="interfaces.rest.store" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+                            <userdata name="thisurl">html/interfaces/REST/store.html</userdata>
+                        </item>
 		</item>
                 
 	</item>

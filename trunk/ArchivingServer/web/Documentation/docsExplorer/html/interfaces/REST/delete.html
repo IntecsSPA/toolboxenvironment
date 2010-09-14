@@ -1,0 +1,96 @@
+<html>
+    <head>
+        <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+        <title>blank page</title>
+    </head>
+    <body>
+        <h3>Store operation</h3>
+        This REST endpoint will allow a client to store new data and metadata. Fur a full description of how this operation works, please refer to <a href="../../tasks/store.html">this</a> section
+        The store operation is accessible at the URL http://&lt;TOMCAT_IP&gt;:&lt;TOMCAT_PORT&gt;/ArchivingServer/service/store<br>
+        The HTTP method to use for accessing the operation is POST<br>
+        <br>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th><h3>Field</h3></th>
+                    <th><h3>Type</h3></th>
+                    <th><h3>Mandatory</h3></th>
+                    <th><h3>Description</h3></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>downloadUrl</td>
+                    <td>URL</td>
+                    <td>Yes</td>
+                    <td>This field contains the URL link (HTTP or FTP) to data.</td>
+                </tr>
+
+                <tr>
+                    <td>type</td>
+                    <td>Enumeration</td>
+                    <td>Yes</td>
+                    <td>This field specifies the data type for the data identified by the URL in the downloadUrl field. Valid values are:
+                        <ul><li>eo</li><li>iso</li></ul></td>
+                </tr>
+
+                <tr>
+                    <td>deleteAfter</td>
+                    <td>Integer</td>
+                    <td>No</td>
+                    <td>This field allows the client to specify an expiration interval. The ARMS will delete data and metadata after the specified amount of time.</td>
+                </tr>
+
+                <tr>
+                    <td>publish</td>
+                    <td>Array</td>
+                    <td>Yes</td>
+                    <td>This field contains all links to services where data and metadata have to be deployed. See below for a description of all children fields.</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        The table below describes all fields that builds up the publish field.<br>
+        <br>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th><h3>Field</h3></th>
+                    <th><h3>Type</h3></th>
+                    <th><h3>Mandatory</h3></th>
+                    <th><h3>Description</h3></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Http</td>
+                    <td>Boolean</td>
+                    <td>No</td>
+                    <td>This field tells the ARMS if data shall be published in the internal HTTP server.</td>
+                </tr>
+
+                <tr>
+                    <td>Ftp</td>
+                    <td>Array</td>
+                    <td>No</td>
+                    <td>This array contains a set of strings which specify all FTP server in which data shall be published. The server is specified as URI with the ftp:// scheme. Username and password shall be provided in the URI. The special string "ftp:" can be used for identifying the Archiving Servlet internal FTP. A new account in the internal FTP will be created and data will be copied into. For all external FTP server the account shall be created manually.</td>
+                </tr>
+
+                <tr>
+                    <td>ebRIMCatalogue</td>
+                    <td>Array</td>
+                    <td>No</td>
+                    <td>This field allows the user to provide an array of strings identifying one or more ebRIM catalogues. Each field of the array shall be a valid URL that points to the SOAP interface of an ebRIM catalogue instance.</td>
+                </tr>
+
+                <tr>
+                    <td>GeoServer</td>
+                    <td>Array</td>
+                    <td>Yes</td>
+                    <td>This field allows the user to provide an array of strings identifying one or more Geoserver instances. Each field of the array shall be a valid URL.</td>
+                </tr>
+            </tbody>
+        </table>
+        
+</body>
+</html>

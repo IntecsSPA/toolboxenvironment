@@ -54,12 +54,30 @@
 		<userdata name="thisurl">html/interfaces/main.html</userdata>
 		<!--main.html_Getting_started*overview.html_Overview*-->
 		<item text="WPS SOAP interface" id="interfaces.wpssoap" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-			<userdata name="thisurl">html/tasks/store.html</userdata>
+			<userdata name="thisurl">html/interfaces/WPSSOAP/main.html</userdata>
+                        <item text="WPS operations" id="interfaces.wpssoap.wpsoperations" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+                            <userdata name="thisurl">html/interfaces/WPSSOAP/wps.html</userdata>
+                        </item>
+                        <item text="Store processing" id="interfaces.wpssoap.store" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+                            <userdata name="thisurl">html/interfaces/WPSSOAP/store.html</userdata>
+                        </item>
+                        <item text="Retrieve processing" id="interfaces.wpssoap.retrieve" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+                            <userdata name="thisurl">html/interfaces/WPSSOAP/retrieve.html</userdata>
+                        </item>
+                        <item text="Delete processing" id="interfaces.wpssoap.delete" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+                            <userdata name="thisurl">html/interfaces/WPSSOAP/delete.html</userdata>
+                        </item>
 		</item>
                 <item text="REST" id="interfaces.rest" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 			<userdata name="thisurl">html/interfaces/REST/main.html</userdata>
                         <item text="Store" id="interfaces.rest.store" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
                             <userdata name="thisurl">html/interfaces/REST/store.html</userdata>
+                        </item>
+                        <item text="Retrieve" id="interfaces.rest.retrieve" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+                            <userdata name="thisurl">html/interfaces/REST/retrieve.html</userdata>
+                        </item>
+                        <item text="Delete" id="interfaces.rest.delete" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+                            <userdata name="thisurl">html/interfaces/REST/delete.html</userdata>
                         </item>
 		</item>
                 

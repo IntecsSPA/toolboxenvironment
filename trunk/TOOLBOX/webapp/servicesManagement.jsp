@@ -290,30 +290,14 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;&nbsp;" + serviceManag;
                 }catch(Exception e)
                         {
                   %>
-    <DIV class="portletItem" id="10">
-                    <DIV> 
-                        <A href="#" onclick="javascript: assign('resetServiceFile');">Errore nei files di stato!<!--<fmt:message key="servicesManagement.resetService" bundle="${lang}"/>-->&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
-                    </DIV> 
-                    <P>
-                        <a href="#" onclick="javascript: assign('resetServiceFile');"><IMG class=labelHomePage title="suspend" alt="Reset  Service's status files" src="images/resetFiles.png" align=middle border=0></A>
-                        <fmt:message key="servicesManagement.resetService.description" bundle="${lang}"/> 
-                    </P>                     
-                </DIV> 
+   
     
     <%
                 }
                 finally
                 {
                    %>
-    <DIV class="portletItem" id="09">                     
-                    <DIV> 
-                        <A href="#" onclick="javascript: assign('resetServiceFile');"><fmt:message key="servicesManagement.resetService" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
-                    </DIV> 
-                    <P>
-                        <a href="#" onclick="javascript: assign('resetServiceFile');"><IMG class=labelHomePage title="suspend" alt="Reset  Service's status files" src="images/resetFiles.png" align=middle border=0></A>
-                        <fmt:message key="servicesManagement.resetService.description" bundle="${lang}"/> 
-                    </P>                     
-                </DIV> 
+    
     
     <%
                 }

@@ -1,4 +1,4 @@
-
+have
 /*
  * Toolbox Delete Services Interface
  * author: Andrea Marongiu
@@ -80,7 +80,7 @@ DeleteServicesInterface=function(){
                      title: 'Delete Group Services',
                      buttons: Ext.Msg.OK,
                      width: Math.floor((screen.width/100)*50),
-                     msg: "<pre>All the selected services are been deleted</pre>",
+                     msg: "<pre>All the selected services have been deleted</pre>",
                      /*fn: function(){
                         window.location = 'main.jsp';
                      },*/

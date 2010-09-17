@@ -30,7 +30,8 @@
  ToolboxConfiguration configuration;
 
  configuration= ToolboxConfiguration.getInstance();
- String tomcatPort =configuration.getConfigurationValue(ToolboxConfiguration.TOMCAT_PORT);
+ String tomcatPort =configuration.getConfigurationValue(ToolboxConfiguration.ENDPOINT_PORT);
+ String endpoint =configuration.getConfigurationValue(ToolboxConfiguration.ENDPOINT_ADDRESS);
  String responseMessageString="";
  SOAPUtils soapUtils = new SOAPUtils();
  Document message = domUtil.fileToDocument(application.getRealPath("WEB-INF/xml/testMsg.xml"));
@@ -38,7 +39,7 @@
 
    try
         {
-           responseElement = AxisSOAPClient.sendReceive(new URL("http://localhost:" + tomcatPort + "/TOOLBOX/services/testService"), message.getDocumentElement(), "test");
+           responseElement = AxisSOAPClient.sendReceive(new URL("http://"+endpoint+":" + tomcatPort + "/TOOLBOX/services/testService"), message.getDocumentElement(), "test");
            responseMessage=responseElement.getOwnerDocument();
            DOMUtil.indent(responseMessage);
            responseMessageString = DOMUtil.getDocumentAsString(responseMessage);

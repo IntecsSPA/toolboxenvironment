@@ -137,8 +137,16 @@ public class XMLResourcesPersistence {
         return resFile;
     }
 
-    public File getXMLFile(long forkedId) {
-        return getSubDirForId(forkedId);
+
+    public File getXMLFile() throws Exception {
+        long id;
+
+        id=getNewResourceFile();
+        return getSubDirForId(id);
+    }
+
+    public File getXMLFile(long id) {
+        return getSubDirForId(id);
     }
 
     public void deleteOlderThan(Date treshold)

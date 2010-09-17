@@ -30,4 +30,15 @@ public class DateUtil {
     {
         return getCurrentDateAsString("yyyyMMddHHmmssSSS");
     }
+
+    public static Date getFutureDate(long interval_from_now)
+    {
+        Date now;
+        long future;
+
+        now=new Date();
+        future=now.getTime()+interval_from_now;
+
+        return new Date(future);
+    }
 }

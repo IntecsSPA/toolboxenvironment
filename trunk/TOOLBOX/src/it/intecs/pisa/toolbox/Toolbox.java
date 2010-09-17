@@ -734,7 +734,6 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
                 logger.info("FTP server started");
             }
 
-
             needsInitialization = false;
 
         } catch (Exception e) {
@@ -779,6 +778,8 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
 
         try {
             AutomaticCleanup.start();
+            it.intecs.pisa.toolbox.timers.TimerManager timerMan=it.intecs.pisa.toolbox.timers.TimerManager.getInstance();
+
         } catch (Exception e) {
             logger.info("Cannot start automatic cleanup service");
         }
@@ -1081,6 +1082,9 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             } catch (Exception e) {
             }
 
+            it.intecs.pisa.toolbox.timers.TimerManager timerMan=it.intecs.pisa.toolbox.timers.TimerManager.getInstance();
+            timerMan.tearDown();
+
             serviceManager = null;
             ftpServerManager = null;
             dbgConsole = null;
@@ -1124,6 +1128,9 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
 
             }
 
+            it.intecs.pisa.toolbox.timers.TimerManager timerMan=it.intecs.pisa.toolbox.timers.TimerManager.getInstance();
+            timerMan.tearDown();
+            
             serviceManager = null;
             ftpServerManager = null;
             dbgConsole = null;

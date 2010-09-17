@@ -36,10 +36,11 @@ public class VectorUtil {
       List <File> fileList=new ArrayList <File> ();
       int i=0;
       String entryFileSuffix,entryFileName;
-      temp = File.createTempFile("temp", Long.toString(System.nanoTime()));
+
       entries = zipFile.entries();
-      //temp=new File(td.getLogDir()+"/temp");
-      temp.mkdirs();
+      temp=IOUtil.getTemporaryDirectory();
+      try
+      {
       while(entries.hasMoreElements()) {
         ZipEntry entry = (ZipEntry)entries.nextElement();
         entryFileName=entry.getName();
@@ -49,12 +50,16 @@ public class VectorUtil {
            entryFileSuffix.equalsIgnoreCase(".prj") ||
            entryFileSuffix.equalsIgnoreCase(".dbf") ){
            current=new File(temp,deployName+entryFileSuffix);
-            IOUtil.copy(zipFile.getInputStream(entry), new FileOutputStream(current));
-            fileList.add(current);
+           IOUtil.copy(zipFile.getInputStream(entry), new FileOutputStream(current));
+           fileList.add(current);
         }
       }
       zipFile.close();
-
+      }
+      catch(Throwable t)
+      {
+          t.printStackTrace();
+      }
       i=0;
       int len;
       byte[] buf = new byte[1024];
@@ -101,5 +106,7 @@ public class VectorUtil {
     DOMUtil.dumpXML(sldDocument, newSLDDocument);
     return newSLDDocument.getAbsolutePath();
   }
+
+
 
 }

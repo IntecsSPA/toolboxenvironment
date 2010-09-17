@@ -61,9 +61,32 @@ public class TimerManager {
             timer.cancel();
     }
 
-    public void addTimerInstance(long service_instance_id, long script_id, long due_date) {
+    public void addTimerInstance(long service_instance_id, long script_id, long due_date, String extra) throws Exception {
+        TimerInstance timerInstance=new TimerInstance(0);
+        timerInstance.setType(TimerInstance.TYPE_TIMER);
+        timerInstance.setService_instance_id(service_instance_id);
+        timerInstance.setScript_id(script_id);
+        timerInstance.setDue_date(due_date);
+        timerInstance.setExtraValue(extra);
+        timerInstance.store();
+
         ToolboxScriptExecutionTimerTask tt;
         tt=new ToolboxScriptExecutionTimerTask(service_instance_id,script_id);
+
+        timer.schedule(tt, new Date(due_date));
+    }
+
+    public void addFTPTimer(long service_instance_id, long due_date, String username) throws Exception {
+        TimerInstance timerInstance=new TimerInstance(0);
+        timerInstance.setType(TimerInstance.TYPE_FTP);
+        timerInstance.setService_instance_id(service_instance_id);
+        timerInstance.setScript_id(0);
+        timerInstance.setDue_date(due_date);
+        timerInstance.setExtraValue(username);
+        timerInstance.store();
+
+        ToolboxFTPTimerTask tt;
+        tt=new ToolboxFTPTimerTask(service_instance_id,username);
 
         timer.schedule(tt, new Date(due_date));
     }

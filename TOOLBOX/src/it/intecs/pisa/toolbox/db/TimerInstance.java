@@ -14,12 +14,13 @@ import java.sql.Statement;
  */
 public class TimerInstance {
     public static final String TYPE_TIMER="TIMER";
+    public static final String TYPE_FTP="FTP";
     protected long id;
     protected String type;
     protected long service_instance_id;
     protected long script_id;
     protected long due_date;
-    protected String description;
+    protected String extraValue;
 
     public TimerInstance(long instance_id) throws Exception
     {
@@ -43,7 +44,7 @@ public class TimerInstance {
             service_instance_id=rs.getLong("INSTANCE_ID");
             script_id=rs.getLong("SCRIPT");
             due_date=rs.getLong("DUE_DATE");
-            description=rs.getString("DESCRIPTION");
+            extraValue=rs.getString("EXTRA_VALUE");
         }
         finally
         {
@@ -63,7 +64,7 @@ public class TimerInstance {
 
         try
         {
-            sql = "INSERT INTO T_TIMERS VALUES (null,'" + type + "'," + service_instance_id + ","+script_id+","+due_date+",'"+description+"')";
+            sql = "INSERT INTO T_TIMERS VALUES (null,'" + type + "'," + service_instance_id + ","+script_id+","+due_date+",'"+extraValue+"')";
             db = ToolboxInternalDatabase.getInstance();
             stm = db.getStatement();
             stm.executeUpdate(sql);
@@ -108,11 +109,11 @@ public class TimerInstance {
         return type;
     }
 
-    public String getDescription() {
-        return description;
+    public String getExtraValue() {
+        return extraValue;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setExtraValue(String description) {
+        this.extraValue = description;
     }
 }

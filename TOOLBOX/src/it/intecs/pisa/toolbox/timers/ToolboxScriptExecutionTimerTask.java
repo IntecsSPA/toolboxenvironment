@@ -45,7 +45,7 @@ public class ToolboxScriptExecutionTimerTask extends TimerTask{
             FTPServerManager ftpServerManager;
             ftpServerManager=FTPServerManager.getInstance();
             
-            engine=new ToolboxEngine(logger,null,ftpServerManager,false);
+            engine=new ToolboxEngine(logger,ftpServerManager,false);
 
             XMLResourcesPersistence xmlPers;
             xmlPers=XMLResourcesPersistence.getInstance();

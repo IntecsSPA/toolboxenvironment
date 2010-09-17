@@ -81,7 +81,7 @@ public class ImportServicesGroupCommand extends NativeCommandsManagerPlugin {
  
       String result;
       if(allServicesDeployed)
-          result="All Services are deployed";
+          result="All Services have been deployed";
       else{
         result="The following services are not deployed: \n";
         for(i=0; i<notDeployedService.size(); i++){
@@ -153,7 +153,7 @@ public class ImportServicesGroupCommand extends NativeCommandsManagerPlugin {
                     }
                 }
             }else{
-                serviceManager.startService(serviceName);  
+                serviceManager.createService(serviceName);
            }
         } catch (Exception ex) {
             TBXService service = serviceManager.getService(serviceName);

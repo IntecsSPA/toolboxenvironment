@@ -6,11 +6,13 @@ import org.w3c.dom.Element;
 import it.intecs.pisa.toolbox.FTPServerManager;
 import it.intecs.pisa.pluginscore.toolbox.engine.interfaces.IEngine;
 import it.intecs.pisa.pluginscore.toolbox.engine.interfaces.IVariableStore;
-import it.intecs.pisa.toolbox.TimerManager;
 import it.intecs.pisa.toolbox.engine.ToolboxEngineVariablesKeys;
+import it.intecs.pisa.toolbox.timers.TimerManager;
+import it.intecs.pisa.toolbox.util.ScriptUtil;
+import it.intecs.pisa.util.DateUtil;
+import it.intecs.pisa.util.datetime.TimeInterval;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 
 public class FtpAccountTag extends NativeTagExecutor {
 
@@ -28,7 +30,6 @@ public class FtpAccountTag extends NativeTagExecutor {
 
         configVarStore = this.engine.getConfigurationVariablesStore();
         ftpServerManager = (FTPServerManager) configVarStore.getVariable(ToolboxEngineVariablesKeys.CONFIGURATION_FTP_SERVER_MANAGER);
-        timerManager = (TimerManager) configVarStore.getVariable(ToolboxEngineVariablesKeys.CONFIGURATION_TIMER_MANAGER);
         logger = (Logger) configVarStore.getVariable(ToolboxEngineVariablesKeys.CONFIGURATION_SERVICE_LOGGER);
 
         varStore = this.engine.getVariablesStore();
@@ -58,28 +59,22 @@ public class FtpAccountTag extends NativeTagExecutor {
 
         /* extracting the duration of the account using the GetAttribute that can parse the $ symbol*/
         String duration = this.engine.evaluateString(ftpAccount.getAttribute(DURATION), IEngine.EngineStringType.ATTRIBUTE);
-        timerManager.addTimer(user, duration);
+
+        long service_instance_id=Long.valueOf((String)engine.getConfigurationVariablesStore().getVariable(ToolboxEngineVariablesKeys.CONFIGURATION_INSTANCE_ID));
+        long interval=TimeInterval.getIntervalAsLong(duration);
+        long due_date=DateUtil.getFutureDate(interval).getTime();
+
+        timerManager=TimerManager.getInstance();
+        timerManager.addFTPTimer(service_instance_id, due_date,user);
 
         if (children.hasNext()) {
             /*adding a new timer for executing the onExpire tag*/
             Element onExpireTag = null;
             onExpireTag = (Element) children.next();
             if (onExpireTag != null) {
-                /*creating the timer*/
-                /*WARNING: the method addTimer thinks that the tag name is timer, now we are passing to them a onExpire Tag!
-                 *Everithing works because the method doesn't che the tag name and its content is the same in both tags*/
+                long script_id=ScriptUtil.createScriptFromLinkedList(DOMUtil.getChildren(onExpireTag), engine.getVariablesStore());
 
-                Element timerElement = ftpAccount.getOwnerDocument().createElement(TIMER);
-
-                children = DOMUtil.getChildren(onExpireTag).iterator();
-
-                while (children.hasNext()) {
-
-                    timerElement.appendChild(((Node) children.next()).cloneNode(true));
-
-                }
-                timerElement.setAttribute(DELAY, duration);
-                timerManager.addTimer(varStore.getVariables(), timerElement);
+                timerManager.addTimerInstance(service_instance_id, script_id, due_date, "FTPExpire_"+due_date);
 
                 logger.info("Added a timer for handling the onExpire tag.");
             }

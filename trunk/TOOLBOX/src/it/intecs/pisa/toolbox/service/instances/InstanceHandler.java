@@ -143,7 +143,7 @@ public class InstanceHandler {
         op = service.getOperation(operationName);
         script = (TBXScript) op.getScript(scriptType);
 
-        engine = new ToolboxEngine(service.getLogger(), service.getTimerManager(), service.getFtpServerManager(), debugMode, new File(new File(service.getToolbox().getRootDir(), TBXService.WEB_INF), TBXService.TMP));
+        engine = new ToolboxEngine(service.getLogger(),  service.getFtpServerManager(), debugMode, new File(new File(service.getToolbox().getRootDir(), TBXService.WEB_INF), TBXService.TMP));
 
         try {
             if ((scriptType.equals(TBXScript.SCRIPT_TYPE_FIRST_SCRIPT) && op.isAsynchronous()==true)

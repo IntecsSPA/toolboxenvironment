@@ -29,7 +29,6 @@ package it.intecs.pisa.toolbox.service;
 
 import it.intecs.pisa.toolbox.util.Util;
 import it.intecs.pisa.toolbox.util.TimeUtil;
-import it.intecs.pisa.toolbox.TimerManager;
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.FTPServerManager;
 import it.intecs.pisa.toolbox.db.ServiceStatuses;
@@ -273,7 +272,6 @@ public class TBXService extends Service {
     private File logFile;
     private File requestDir;
     private Hashtable requests = new Hashtable();
-    private TimerManager timerManager;
     private FTPServerManager ftpServerManager;
     private Element getOrderIdScript;
     private String orderIdXpath;
@@ -415,16 +413,6 @@ public class TBXService extends Service {
         } while (!referredSchemas.isEmpty());
     }
 
-    private void startTimerManager() {
-        try {
-            (timerManager = new TimerManager(this)).start();
-        } catch (Exception e) {
-            logger.error("Error creating timer manager " + CDATA_S + e.getMessage() + CDATA_E);
-        }
-        logger.info("Started timer manager");
-
-    }
-
     private void updateSchema(File schemaFile, File directory, HashSet referredSchemas) throws Exception {
         String schemaFilePath = schemaFile.getAbsolutePath();
         Document schemaDoc = new DOMUtil().fileToDocument(schemaFilePath);
@@ -518,6 +506,7 @@ public class TBXService extends Service {
             throw new ToolboxException("Error processing request for service " + serviceName + ": " + e.getMessage());
         }
     }
+    
     /**
      *  Extracts orderId from a request using an XML script. THis method uses an ad hoc XML script instead of wiring the necessary DOM manipulation.
      */
@@ -538,9 +527,6 @@ public class TBXService extends Service {
 
     public void destroy() {
         logger.info("destroy " + getServiceName());
-        if (getTimerManager() != null) {
-            getTimerManager().interrupt();
-        }
     }
 
     @Override
@@ -609,8 +595,6 @@ public class TBXService extends Service {
         TBXOperation oper;
 
         logger.info("Initing service "+serviceName);
-
-        startTimerManager();
         
         for(Operation op:implementedInterface.getOperations())
         {
@@ -626,17 +610,8 @@ public class TBXService extends Service {
 
     public void teardown()
     {
-         logger.info("Tearing down service "+serviceName);
-
-        if (getTimerManager() != null) {
-            getTimerManager().interrupt();
-        }
-
+        logger.info("Tearing down service "+serviceName);
         setValidatingParser((DocumentBuilder) null);
-
-        if (getTimerManager() != null) {
-            getTimerManager().clear();
-        }
 
         TBXOperation[] ops;
 
@@ -714,9 +689,9 @@ public class TBXService extends Service {
     /**
      *  Returns a stream directly connected with statusEl descriptor file on disk.
      */
-    public InputStream viewDescriptorFile() throws Exception {
+    /*public InputStream viewDescriptorFile() throws Exception {
         return new FileInputStream(getDescriptorFile());
-    }
+    }*/
 
     public synchronized void deleteOperation(String operationName) throws Exception {
         TBXOperation operation;
@@ -825,15 +800,15 @@ public class TBXService extends Service {
     }
 
     public InputStream getTimerStatus() throws Exception {
-        return this.getTimerManager().getTimerStatus();
+        return null; //this.getTimerManager().getTimerStatus();
     }
 
     public String getWSDLUrl() throws Exception {
        return ToolboxNetwork.getEndpointURL()+"/WSDL/"+serviceName+"/"+serviceName+".wsdl";
     }
 
-    public String getSchemaUrl() throws Exception {
-       /* try {
+    /*public String getSchemaUrl() throws Exception {
+        try {
             if (this.getServiceDescriptor().getServiceSchema().length() != 0) {
                 return this.getServiceURL() + WSDL + SLASH + this.getServiceDescriptor().getServiceName() + SLASH + this.getServiceDescriptor().getServiceSchema();
             } else {
@@ -842,9 +817,9 @@ public class TBXService extends Service {
         } catch (Exception e) {
             e.printStackTrace(System.out);
             throw e;
-        }*/
+        }
         return "TO BE MODIFIED";
-    }
+    }*/
 
     public InputStream getWSDL() throws Exception {
         try {
@@ -1020,10 +995,6 @@ public class TBXService extends Service {
 
     public void setFtpServerManager(FTPServerManager ftpServerManager) {
         this.ftpServerManager = ftpServerManager;
-    }
-
-    public TimerManager getTimerManager() {
-        return timerManager;
     }
 
     public Hashtable getRequests() {

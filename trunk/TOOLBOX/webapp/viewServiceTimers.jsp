@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <!-- 
  -
  -  Copyright 2003-2004 Intecs
@@ -19,6 +20,7 @@
 <%@ include file="checkSession.jsp" %>
 <%@taglib uri="http://java.sun.com/jstl/core"  prefix="c"%>
 <%@taglib uri="http://java.sun.com/jstl/fmt"  prefix="fmt"%>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jstl/sql" %>
 <c:if test="${sessionScope.languageReq!= null}">
   <fmt:setLocale value="${sessionScope.languageReq}" />
   <fmt:setBundle basename="ToolboxBundle" var="lang" scope="page"/>  
@@ -34,16 +36,29 @@
         String monitoring = (String)messages.getObject("viewServiceTimers.monitoring");
        
         String bc = "<a href='main.jsp'>Home</a>&nbsp;&gt;" + "<a href='monitoringCenter.jsp?serviceName="+service+"'>&nbsp;"+monitoring+"</a>&nbsp;&gt; "+status;
+
+        String rootDir;
+
+        rootDir=getServletContext().getRealPath("/");
+        File webInfDir=new File(rootDir,"WEB-INF");
+        File dbDir=new File(webInfDir,"db");
+
+        String dbStr=("jdbc:hsqldb:file:"+dbDir.getAbsolutePath()+File.separatorChar+"TOOLBOX").trim();
+
+        request.setAttribute("serviceName",service);
+        request.setAttribute("dbStr",dbStr);
+
+        SimpleDateFormat toFormatter=new SimpleDateFormat();
 %>
 <SCRIPT language="JavaScript">
 function viewResource(type,parameters,label)
     {
         if(type == 'xml')
-            openTab('xml','Tab', "manager?cmd=getTimerScript&output=text&" + parameters, 'XML ' + label);
+            openTab('xml','Tab', "manager?cmd=getXMLResource&output=text&" + parameters, 'XML ' + label);
         if(type == 'tree')
-            openTab('tree','Tab', "manager?cmd=getTimerScript&output=xml&" + parameters, 'TREE '+label);
+            openTab('tree','Tab', "manager?cmd=getXMLResource&output=xml&" + parameters, 'TREE '+label);
         if(type == 'text')
-            downloadPopup ("manager?cmd=getTimerScript&output=xml&" + parameters);
+            downloadPopup ("manager?cmd=getXMLResource&output=xml&" + parameters);
     }
  </SCRIPT>
 <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center> 
@@ -52,33 +67,33 @@ function viewResource(type,parameters,label)
       <TD class=pageBody id=main>
         <SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT> 
         <SCRIPT>addHelp("RE/main.html_Run-time_environment*blankpage.html_tasks*RE/monitoringCenter.html_Monitoring_center*RE/timerStatus.html_View_the_timers_status*");</SCRIPT>
-        <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center valign="top"> 
-          <TBODY> 
-            <TR> 
-              <TD id=main> <P class=arbloc><FONT class=arttl><fmt:message key="viewServiceTimers.timerStatus" bundle="${lang}"/></FONT></P> 
-                <!-- Page contents table--> 
-                <P>  
-<%
-            ServiceManager servMan;
-            TBXService serv;
+        <sql:setDataSource   user="TOOLBOX" password="intecs" url="${dbStr}" driver="org.hsqldb.jdbcDriver" />
+        <sql:query  var="timers">select EXTRA_VALUE,DUE_DATE,SCRIPT from T_TIMERS where TYPE='TIMER' and INSTANCE_ID in (select ID from T_SERVICE_INSTANCES where SERVICE_NAME='<%=service%>')</sql:query>
 
-            servMan=ServiceManager.getInstance();
-            serv=servMan.getService(service);
 
-            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();        
-            docFactory.setNamespaceAware(true);
-            Document xslDocument = docFactory.newDocumentBuilder().parse(new File(application.getRealPath("WEB-INF/XSL/timerDisplay.xsl")));
-            Transformer transformer = TransformerFactory.newInstance().newTransformer(new DOMSource(xslDocument));
-            transformer.setParameter("language", session.getAttribute("languageReq"));
-            transformer.setParameter("service", service);
-            transformer.transform(new StreamSource(serv.getTimerStatus()), new StreamResult(out));
-%>
+        <TABLE width="70%" valign="middle" height="90%" cellspacing="1" cellpadding="2" align="center">
+            <th class="sortable"><fmt:message key="common.identifier" bundle="${lang}"/></th>
+            <th class="sortable"><fmt:message key="common.due_date" bundle="${lang}"/></th>
+            <th class="sortable"><fmt:message key="common.view" bundle="${lang}"/></th>
 
-</P>
-		&nbsp; </TD> 
-            </TR> 
-          </TBODY> 
-        </TABLE></TD> 
+
+            <c:forEach var="row" items="${timers.rows}">
+                <tr>
+                     <td><c:out value="${row.extra_value}"/></td>
+                     <td><%
+                            TreeMap ithRow=(TreeMap)pageContext.getAttribute("row");
+                            Long duedate=(Long)ithRow.get("due_date");
+
+                            out.write(toFormatter.format(new Date(duedate)).toString());
+                      %></td>
+                     <td><a href="javascript:viewResource('tree','id=<c:out value="${row.script}"/>','Timer <c:out value="${row.extra_value}"/>')"><img src="images/xml-icon.jpg" alt="XML view"></a>
+                         <a href="javascript:viewResource('xml','id=<c:out value="${row.script}"/>','Timer <c:out value="${row.extra_value}"/> (XML)')"><img src="images/tree-icon.jpg" alt="tree view"></a></td>
+                </tr>
+
+            </c:forEach>
+
+        </TABLE>
+      </TD>
     </TR> 
   </TBODY> 
 </TABLE> 

@@ -70,13 +70,16 @@ public class TBXScript extends Script{
 
     @Override
     public void dumpScript() {
+
          File fullPath;
         try
         {
+          if(scriptDoc!=null){
             fullPath=new File(getFullPath());
 
             fullPath.getParentFile().mkdirs();
             DOMUtil.dumpXML(this.scriptDoc,fullPath);
+          }
         }
         catch(Exception ecc)
         {

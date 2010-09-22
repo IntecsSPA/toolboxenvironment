@@ -613,12 +613,13 @@ public class TBXService extends Service {
         logger.info("Tearing down service "+serviceName);
         setValidatingParser((DocumentBuilder) null);
 
-        TBXOperation[] ops;
+        Operation[] ops;
 
-        ops=(TBXOperation[]) this.implementedInterface.getOperations();
-        for(TBXOperation op:ops)
-            op.stop();
-
+        ops=(Operation[]) this.implementedInterface.getOperations();
+        for(Operation op:ops)
+        {
+            ((TBXOperation)op).stop();
+        }
         logger.info("Service "+serviceName+" teared down");
         initialized = false;
     }
@@ -689,9 +690,9 @@ public class TBXService extends Service {
     /**
      *  Returns a stream directly connected with statusEl descriptor file on disk.
      */
-    /*public InputStream viewDescriptorFile() throws Exception {
+    public InputStream viewDescriptorFile() throws Exception {
         return new FileInputStream(getDescriptorFile());
-    }*/
+    }
 
     public synchronized void deleteOperation(String operationName) throws Exception {
         TBXOperation operation;

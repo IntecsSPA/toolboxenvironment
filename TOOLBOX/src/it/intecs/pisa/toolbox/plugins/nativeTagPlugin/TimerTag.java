@@ -25,8 +25,12 @@ public class TimerTag extends NativeTagExecutor {
         script_id=ScriptUtil.createScriptFromLinkedList(DOMUtil.getChildren(timer),engine.getVariablesStore());
 
         String idName;
-        idName=this.engine.evaluateString(timer.getAttribute(NAME),IEngine.EngineStringType.ATTRIBUTE);
 
+        if(timer.hasAttribute(NAME))
+            idName=this.engine.evaluateString(timer.getAttribute(NAME),IEngine.EngineStringType.ATTRIBUTE);
+        else
+           idName=DateUtil.getCurrentDateAsUniqueId();
+        
         TimerManager timerMan;
 
         timerMan=TimerManager.getInstance();

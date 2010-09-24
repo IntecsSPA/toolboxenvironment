@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<processRFQInputMsg xmlns="http://www.mycompanyname.com/ws/mynamespace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="">
-	<commonInput xmlns="http://www.esa.int/mass">
-		<orderId>00000000</orderId>
-	</commonInput>
-	<sendRFQInput>
-		<!-- Add here your content -->
-	</sendRFQInput>
-</processRFQInputMsg>

@@ -1,8 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: ToolboxScript Plug-in
-Bundle-SymbolicName: com.intecs.ToolboxScript.libraries;singleton:=true
-Bundle-Version: @@@
-Bundle-Vendor: INTECS
-Bundle-Localization: plugin
-Eclipse-LazyStart: true

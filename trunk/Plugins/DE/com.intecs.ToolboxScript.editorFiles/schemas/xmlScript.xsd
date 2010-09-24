@@ -1,0 +1,1817 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- edited with XMLSpy v2006 sp1 U (http://www.altova.com) by Massimiliano (In) --><!--
+ -
+ -  Developed By:      Intecs  S.P.A.
+ -  File Name:         $RCSfile: xmlScript.xsd,v $
+ -  TOOLBOX Version:   $Name: HEAD $
+ -  File Revision:     $Revision: 1.1.1.1 $
+ -  Revision Date:     $Date: 2006/06/13 15:02:33 $
+ -
+ --><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:com="http://pisa.intecs.it/mass/toolbox/common" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://pisa.intecs.it/mass/toolbox/xmlScript">
+	<!--<xsd:import namespace="http://pisa.intecs.it/mass/toolbox/common" schemaLocation="file:/C:/Progetti/SAS/Plugin/com.intecs.ToolboxScript.editorFiles/schemas/common.xsd"/>-->
+	<!--Replacing import of common.xsd schema-->
+    <xsd:simpleType name="ToolboxTime">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="[0-9]+[smhdw]|($[a-zA-Z0-9]+)"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="LogLevelType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="ALL"/>
+            <xsd:enumeration value="DEBUG"/>
+            <xsd:enumeration value="INFO"/>
+            <xsd:enumeration value="WARN"/>
+            <xsd:enumeration value="ERROR"/>
+            <xsd:enumeration value="FATAL"/>
+            <xsd:enumeration value="OFF"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:element name="jelly">
+        <xsd:annotation>
+            <xsd:documentation>This tag allows integration of Jelly scripts within TOOLBOX scripts. It can enclose any TOOLBOX XML tag returning a string representing the path to the file containing a Jelly script or the Jelly script itself. Further, this tag requires an attribute ("returns") specifying what the "jelly" tag is expected to return (it depends on the Jelly script). If the attribute is set to "xml", the tag "jelly" will return an XML DOM Document. If the attribute is set to "text", the tag "jelly" will return a String. If the attribute is set to "none", the tag "jelly" will return null. All the variables defined in the TOOLBOX script before the tag "jelly" can be used in the Jelly script (according to the syntax of the Jelly language). All the variables defined in the Jelly script can be used in the TOOLBOX script after the "jelly" tag (according to the syntax of the TOOLBOX XML language).</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:choice>
+                <xsd:group ref="ExpressionChoice"/>
+                <xsd:any processContents="skip"/>
+            </xsd:choice>
+            <xsd:attribute name="returns" use="required">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="none"/>
+                        <xsd:enumeration value="xml"/>
+                        <xsd:enumeration value="text"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+     <xsd:element name="toolboxAddress">
+        <xsd:annotation>
+            <xsd:documentation>It returns the address of the Toolbox Runtime Environment instance. If a proxy is set it is returned instead.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType/>
+    </xsd:element>
+    <xsd:element name="timeDifference" type="ExpressionCouple">
+        <xsd:annotation>
+            <xsd:documentation>Returns the difference, in milliseconds, between two dates</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="updateFtpPermission">
+        <xsd:annotation>
+            <xsd:documentation>This tag allows the user to update the FTP write permission associated with a user account.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="user">
+                <xsd:simpleType>
+                    <xsd:list itemType="xsd:string"/>
+                </xsd:simpleType>
+            </xsd:attribute>
+            <xsd:attribute name="permission">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="TRUE"/>
+                        <xsd:enumeration value="FALSE"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="java">
+        <xsd:annotation>
+            <xsd:documentation>This tag allows the user to execute java code snippet directly into the TOOLBOX script</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="imports" type="xsd:string"/>
+                <xsd:element name="code" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="atof">
+        <xsd:annotation>
+            <xsd:documentation>Return the float expressed by the enclosed string</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group ref="StringGroup"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="fileInfo">
+        <xsd:annotation>
+            <xsd:documentation>Returns information about the file passed as parameter.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group ref="ExpressionChoice"/>
+            <xsd:attribute name="information">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="MODIFICATION"/>
+                        <xsd:enumeration value="LENGTH"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="return" type="Expression">
+        <xsd:annotation>
+            <xsd:documentation>This tag is used to exit from the script, returning the object passed as child</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="validateDocument" type="ExpressionCouple">
+        <xsd:annotation>
+            <xsd:documentation>This tag is used to validate and XML through a schema file. The xml is passed is the result of the first parameter, while the path of the schema file is the result of the second one</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="addOrderConfirmation">
+        <xsd:annotation>
+            <xsd:documentation>This tag add an order confirmation entry for the service. The order id is returned by the tag</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="mnemonicId" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="checkOrderConfirmation">
+        <xsd:annotation>
+            <xsd:documentation>This tag returns the status of the order, whose id is specified by the id attribute</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="id" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="getOrderError">
+        <xsd:annotation>
+            <xsd:documentation>This tag returns error message associated to the order confirmation with the given id</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="id" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="path">
+        <xsd:annotation>
+            <xsd:documentation>Ths tag is used to create a path. This tag is OS aware.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:choice maxOccurs="unbounded" minOccurs="0">
+                <xsd:group ref="LValueGroup"/>
+                <xsd:group ref="StringGroup"/>
+            </xsd:choice>
+            <xsd:attribute name="startFrom">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="TEMP"/>
+                        <xsd:enumeration value="HOME"/>
+                        <xsd:enumeration value="SERVICE_RESOURCE_DIR"/>
+                        <xsd:enumeration value="SERVICE_COMMON_SCRIPTS_DIR"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="date">
+        <xsd:annotation>
+            <xsd:documentation>This tag is used to create a date object, starting from a string. The format of the date is specified in te format attribute.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group ref="ExpressionChoice"/>
+            <xsd:attribute name="format" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="isBefore" type="ExpressionCouple">
+        <xsd:annotation>
+            <xsd:documentation>This tag is used to compare two date objects. It returns true if the first date comes before the second one.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="fork">
+        <xsd:annotation>
+            <xsd:documentation>This tag is used to execute asynchronously a script or a snippet of TOOLBOX script.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:choice>
+                <xsd:element name="file" type="Expression"/>
+                <xsd:group ref="ExpressionChoice"/>
+            </xsd:choice>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="now">
+        <xsd:annotation>
+            <xsd:documentation>Returns a date object with the current time</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType/>
+    </xsd:element>
+    <xsd:element name="zip">
+        <xsd:annotation>
+            <xsd:documentation>This tag creates a zip file. The child tag dir is used to specify the directory where data is stored. zipFile tag is used to provide the full path pf the zip file</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:choice maxOccurs="unbounded" minOccurs="0">
+                <xsd:element name="dir" type="Expression"/>
+                <xsd:element name="file" type="Expression"/>
+            </xsd:choice>
+            <xsd:attribute name="file" type="xsd:string" use="required"/>
+            <xsd:attribute name="filter" type="xsd:string" use="optional"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="dateStringFormatter">
+        <xsd:annotation>
+            <xsd:documentation>Formats a date and returns it as a string. The format is given in the attribute format and the date is given as a child tag.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group ref="ObjectGroup"/>
+            <xsd:attribute name="format" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="null">
+        <xsd:annotation>
+            <xsd:documentation>Returns always null without performing any operation.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType/>
+    </xsd:element>
+    <xsd:element name="classLiteral">
+        <xsd:annotation>
+            <xsd:documentation>Returns the object of class Class whose name is given in attribute "class".</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="class" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="primitiveType">
+        <xsd:annotation>
+            <xsd:documentation>Returns the object of class Class representing the primitive type whose name is given in attribute "type".</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="type" type="TypeType" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="arrayType">
+        <xsd:annotation>
+            <xsd:documentation>Returns the object of class Class representing arrays with number of dimensions given in attribute "dimensions" and item type given by the enclosed tag.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group ref="ExpressionChoice"/>
+            <xsd:attribute name="dimensions" type="IntegerVariableType" use="required"/>
+			<!-- NSI xsd:attribute name="dimensions" type="xsd:positiveInteger" use="required"/-->
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="literal">
+        <xsd:annotation>
+            <xsd:documentation>Returns an instance of a wrapper class (Byte, Short, Integer etc.) whose type is given by the "type" attribute and whose value is given by the "value" attribute. This tag can be used wherever a primitive type is needed.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute default="int" name="type" type="TypeType"/>
+            <xsd:attribute name="value" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="character">
+        <xsd:annotation>
+            <xsd:documentation>Returns an instance of Character Class. The character value is given by the value attribute. This tag can be used wherever a char is needed.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="value" use="required">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:length value="1"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="string" type="xsd:string">
+        <xsd:annotation>
+            <xsd:documentation>Returns the string given as text inside the tag.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="stringLength" type="Expression">
+        <xsd:annotation>
+            <xsd:documentation>Returns the length of the string returned by the element enclosed in this element.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="variable">
+        <xsd:annotation>
+            <xsd:documentation>Returns the object stored in variable whose name is given by "name" attribute. If nothing has been stored with that name, it returns null.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="name" type="xsd:string" use="required"/>
+            <xsd:attribute default="local" name="scope" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="existsVariable">
+        <xsd:annotation>
+            <xsd:documentation>Returns true if and only if there's an object stored in a variable whose name is given by "name" attribute.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="name" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="field">
+        <xsd:annotation>
+            <xsd:documentation>Returns the object stored in field whose name is given by the "fieldName" attribute of what is specified in the element enclosed in this one. If the enclosed tag is "object", the field is taken from the object returned by the element enclosed in the "object" element. Otherwise the the tag is "class" and the value of the static field of the Class object returned by the element enclosed in the "class" element is returned</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group ref="TargetChoice"/>
+            <xsd:attribute name="fieldName" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="arrayLocation">
+        <xsd:annotation>
+            <xsd:documentation>Returns the value stored in the location af a multidimensional array. The first element enclosed in this element must return the array whilst the subsequent elements must return the integer expressions to index the array.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:group maxOccurs="unbounded" minOccurs="2" ref="ExpressionChoice"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="arrayLength" type="Expression">
+        <xsd:annotation>
+            <xsd:documentation>Returns the length of the array returned by the element enclosed in this element.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="methodInvocation">
+        <xsd:annotation>
+            <xsd:documentation>Invokes a method of an object or a static method of a class and returns the value returned by that method. The name of the method is taken from the "methodName" attribute. If the first enclosed element has tag "object", the method is called on the object returned by the element enclosed in the "object" element, otherwise it has tag "class" and the static method of the Class object returned by the element enclosed in the "class" element is invoked. The element tagged "parameter" are used to distinguish between overloaded methods and to retrieve the parameters to be passed to the method, see the "parameter" element.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:group ref="TargetChoice"/>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" ref="parameter"/>
+            </xsd:sequence>
+            <xsd:attribute name="methodName" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="newObject">
+        <xsd:annotation>
+            <xsd:documentation>Creates a new object and returns it. The first enclosed element must return the class of the object to be created. The element tagged "parameter" are used to distinguish between overloaded constructors and to retrieve the parameters to be passed to the constructor, see the "parameter" element.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:group ref="ExpressionChoice"/>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" ref="parameter"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="newInternalObject">
+        <xsd:annotation>
+            <xsd:documentation>Creates a new object, instance of an internal class, and returns it. The name of the internal class is given by the "internalClass" attribute. The first enclosed element must return the object that will contain that instance to be created. The element tagged "parameter" are used to distinguish between overloaded constructors and to retrieve the parameters to be passed to the constructor, see the "parameter" element.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:group ref="ExpressionChoice"/>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" ref="parameter"/>
+            </xsd:sequence>
+            <xsd:attribute name="internalClass" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="newTypedArray">
+        <xsd:annotation>
+            <xsd:documentation>Creates a new multidimensional array and returns it. The first element enclosed in this element must return the Class object representing the type of the array elements. The subsequent elements must return integer expressions representing each dimension of the array to be created.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:group maxOccurs="unbounded" minOccurs="2" ref="ExpressionChoice"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="newArray" type="Expression">
+        <xsd:annotation>
+            <xsd:documentation>Creates a new multidimensional array and returns it. The item type is Object, so the locations of the created array can contain any Java object (including primitive values). The enclosed elements must return integer expressions representing each dimension of the array to be created.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="newInitializedTypedArray">
+        <xsd:annotation>
+            <xsd:documentation>Creates a new linear array, initializes it and returns it. The first element enclosed in this element must return the Class object representing the type of the array elements. The subsequent elements are used to retrieve the objects used to initialize the array.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:group maxOccurs="unbounded" ref="ExpressionChoice"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="newInitializedArray" type="ExpressionSequence">
+        <xsd:annotation>
+            <xsd:documentation>Creates a new linear array, initializes it and returns it. The item type is Object, so the locations of the created array can contain any Java object (including primitive values). The subsequent elements are used to retrieve the objects used to initialize the array.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="stringCat" type="ExpressionSequence">
+        <xsd:annotation>
+            <xsd:documentation>Returns a string obtained concatenating the strings returned by each of the enclosed elements. The enclosed elements can return any object, as they are converted to a string using the String.valueOf method.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="atoi" type="Expression">
+        <xsd:annotation>
+            <xsd:documentation>Returns an integer obtaining converting the String returned by the enclosed element.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="itoa" type="Expression">
+        <xsd:annotation>
+            <xsd:documentation>Returns a string obtaining converting the integer returned by the enclosed element.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="sleep">
+        <xsd:annotation>
+            <xsd:documentation>Causes the engine to stop execution for a while. The sleep time is given by the amount attribute, expressed in milliseconds.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="amount" type="IntegerVariableType" use="required"/>
+			<!--NSI xsd:attribute name="amount" type="xsd:positiveInteger" use="required"/-->
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="plus" type="ExpressionSequence">
+        <xsd:annotation>
+            <xsd:documentation>Returns the sum of the integer expressions returned by each of the enclosed elements. If there is no enclosed tag it returns 0.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="minus" type="ExpressionSequence">
+        <xsd:annotation>
+            <xsd:documentation>Returns the difference of the integer expressions returned by the enclosed elements. If there is no enclosed tag it returns 0. If there is one element it is returned as is. If there are at least two elements, all the expressions returned by the second and subsequent elements are subtracted from the first.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="multiply" type="ExpressionSequence">
+        <xsd:annotation>
+            <xsd:documentation>Returns the product of the integer expressions returned by each of the enclosed elements. If there is no enclosed element, it returns 1.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="divide" type="ExpressionSequence">
+        <xsd:annotation>
+            <xsd:documentation>Returns the integer division of the integer expressions returned by the enclosed elements. If there is no enclosed tag it returns 1. If there is one element it is returned as is. If there are at least two elements, all the expressions returned by the second and subsequent elements are used as divisors.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="module" type="ExpressionCouple">
+        <xsd:annotation>
+            <xsd:documentation>Returns the module of the two integer expressions returned by the enclosed elements.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="inc" type="LValue">
+        <xsd:annotation>
+            <xsd:documentation>Increments by one the enclosed LValue. LValue can be one of variable, field and arrayLocation tags. The returned value is the value after increment. (Pre-increment)</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="dec" type="LValue">
+        <xsd:annotation>
+            <xsd:documentation>Decrements by one the enclosed LValue. LValue can be one of variable, field and arrayLocation tags. The returned value is the value after decrement. (Pre-decrement)</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="negate" type="Expression">
+        <xsd:annotation>
+            <xsd:documentation>Returns the integer returned by the enclosed element, changing sign.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="lShift" type="ExpressionCouple">
+        <xsd:annotation>
+            <xsd:documentation>Returns the integer returned by the first enclosed element, shifting left its bits by an amount given by the second element and filling with zeroes.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="rSShift" type="ExpressionCouple">
+        <xsd:annotation>
+            <xsd:documentation>Returns the integer returned by the first enclosed element, shifting right its bits by an amount given by the second element and filling with sign bit.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="rUShift" type="ExpressionCouple">
+        <xsd:annotation>
+            <xsd:documentation>Returns the integer returned by the first enclosed element, shifting right its bits by an amount given by the second element and filling with zeroes.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="bitAnd" type="ExpressionSequence">
+        <xsd:annotation>
+            <xsd:documentation>Returns the integer obtained performing a bit to bit and operation among each integer returned by the enclosed elements. If only one element is enclosed, it is returned as is, if no element is enclosed, -1 is returned</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="bitOr" type="ExpressionSequence">
+        <xsd:annotation>
+            <xsd:documentation>Returns the integer obtained performing a bit to bit or operation among each integer returned by the enclosed elements. If only one element is enclosed, it is returned as is, if no element is enclosed, 0 is returned</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="bitXor" type="ExpressionSequence">
+        <xsd:annotation>
+            <xsd:documentation>Returns the integer obtained performing a bit to bit xor operation among each integer returned by the enclosed elements. If only one element is enclosed, it is returned as is, if no element is enclosed, 0 is returned</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="not" type="Expression">
+        <xsd:annotation>
+            <xsd:documentation>If the enclosed element returns an integer, this tag returns the integer obtained by complementing each bit. If the enclosed element returns a boolean, this tag returns the negation.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="gt" type="ExpressionCouple">
+        <xsd:annotation>
+            <xsd:documentation>Returns the boolean value obtained evaluating the "grater than" operation between the integer values returned by the two enclosed tags</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="gte" type="ExpressionCouple">
+        <xsd:annotation>
+            <xsd:documentation>Returns the boolean value obtained evaluating the "grater than or equal" operation between the integer values returned by the two enclosed tags</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="lt" type="ExpressionCouple">
+        <xsd:annotation>
+            <xsd:documentation>Returns the boolean value obtained evaluating the "less than" operation between the integer values returned by the two enclosed tags</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="lte" type="ExpressionCouple">
+        <xsd:annotation>
+            <xsd:documentation>Returns the boolean value obtained evaluating the "less than or equal" operation between the integer values returned by the two enclosed tags</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="eq" type="ExpressionCouple">
+        <xsd:annotation>
+            <xsd:documentation>Returns the boolean value obtained evaluating the "equal" operation between the integer values returned by the two enclosed tags</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="neq" type="ExpressionCouple">
+        <xsd:annotation>
+            <xsd:documentation>Returns the boolean value obtained evaluating the "not equal" operation between the integer values returned by the two enclosed tags</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="oeq" type="ExpressionCouple">
+        <xsd:annotation>
+            <xsd:documentation>Returns true if and only if the objects returned by the two enclosed elements are the same object, or neither is null and the equals method of the first object returns true with second object as parameter</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="oneq" type="ExpressionCouple">
+        <xsd:annotation>
+            <xsd:documentation>Returns true if and only if the objects returned by the two enclosed elements are not the same object, and one of them is null or the equals method of the first object returns false with second object as parameter</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="isNull" type="Expression">
+        <xsd:annotation>
+            <xsd:documentation>Returns true if and only if the object returned by the enclosed element is null.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="isNotNull" type="Expression">
+        <xsd:annotation>
+            <xsd:documentation>Returns true if and only if the object returned by the enclosed element is not null.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="and">
+        <xsd:annotation>
+            <xsd:documentation>Returns the boolean and of the boolean values returned by the enclosed tags. If the tag is empty, it returns true, if it contains one tag, its value is returned. If the attribute "shortcut" has "true" value (the default), evaluation stops after the first false tag is found, otherwise all the tags are evaluated.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group maxOccurs="unbounded" minOccurs="0" ref="ExpressionChoice"/>
+            <xsd:attribute default="true" name="shortcut" type="xsd:boolean"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="or">
+        <xsd:annotation>
+            <xsd:documentation>Returns the boolean or of the boolean values returned by the enclosed tags. If the tag is empty, it returns false, if it contains one tag, its value is returned. If the attribute "shortcut" has "true" value (the default), evaluation stops after the first true tag is found, otherwise all the tags are evaluated.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group maxOccurs="unbounded" minOccurs="0" ref="ExpressionChoice"/>
+            <xsd:attribute default="true" name="shortcut" type="xsd:boolean"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="xor" type="ExpressionSequence">
+        <xsd:annotation>
+            <xsd:documentation>Returns the boolean xor of the boolean values returned by the enclosed tags. If the tag is empty, it returns false, if it contains one tag, its value is returned.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="sequence" type="ExpressionSequence">
+        <xsd:annotation>
+            <xsd:documentation>It is just a tag container. It can be empty or contain any number of child tags of any kind. Useful when a single element is needed, but a complex operation has to be performed. The value returned by this tag is the value returned by the last enclosed tag, or null if it is empty.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="if">
+        <xsd:annotation>
+            <xsd:documentation>This tag can contain two or three child elements. The first is evaluated and must return a boolean value. If it evaluates to true, the second child element is evaluated and its value is returned, otherwise, if a third element exists, it is evaluated and its value returnd. If the condition evaluates to false and there's no third element null is returned.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:group maxOccurs="3" minOccurs="2" ref="ExpressionChoice"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="soapCall">
+        <xsd:annotation>
+            <xsd:documentation>Performs a SOAP call to the url returned by the evaluation of the first enclosed element and returns the XML document contained in the SOAP response. The second enclosed element must return an XML document representing the payload (i.e. the child element of the SOAP body) of the SOAP message to be sent. If the optional "operation" attribute is specified the soapAction HTTP header is set to that value: this is for communicating with services deployed on the TOOLBOX and for all those services requirng a non empty soapAction HTTP header. The (optional) attribute "sslCertificateLocation" allows specifying the path to a certificate for SSL communication.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:group maxOccurs="2" minOccurs="2" ref="ExpressionChoice"/>
+            </xsd:sequence>
+            <xsd:attribute name="operation" type="xsd:string" use="optional"/>
+            <xsd:attribute name="sslCertificateLocation" type="xsd:string" use="optional"/>
+            <xsd:attribute name="messageId" type="xsd:string" use="optional"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="xmlGetResponse">
+        <xsd:annotation>
+            <xsd:documentation>It builds the payload of the SOAP response to be sent to the SSE Portal as result of a synchronous operation (RFQ or ORDER) or of an aynchronous operation (RFQ or ORDER) and returns the corresponding DOM document, starting from the DOM Document returned by its enclosed element. This tag builds the response around the DOM document returned by its enclosed element depending on the way (synchronous/asynchronous) the service communicates with the Portal. What the enclosed element has to return is the part of the response that is common to both the communicaton modes (see the mass.xsd schema). The root element of this DOM document must also contain (at least) the mass.xsd schema target namespace declaration.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:group ref="ExpressionChoice"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="while">
+        <xsd:annotation>
+            <xsd:documentation>This element contains at least one child element: the condition. This element is evaluated first: if it returns "true" the remaining elements are evaluated, else the evaluation stops. This happens until the condition is "true", unless a "break" element causes the loop termination Indeed, two special tags can occur as "while" children: "break" and "continue". Both of them can have one or more children. The first one must return a boolean value: if this value is "false" the next "while" child element is evaluated. Otherwise: in case of a "break", the possible remaining "break" child elements are evaluated and the loops terminates, in case of a "continue", the possible remaining "continue" child elements are evaluated, the current iteration is skipped and the condition is evaluated again. The "while" tag returns the value returned by the last evaluated element, or null if the "while" element has only one child element</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:group maxOccurs="unbounded" ref="ExpressionChoice"/>
+                <xsd:sequence>
+                    <xsd:choice maxOccurs="unbounded" minOccurs="0">
+                        <xsd:group ref="ExpressionChoice"/>
+                        <xsd:element name="continue">
+                            <xsd:complexType>
+                                <xsd:group maxOccurs="unbounded" ref="ExpressionChoice"/>
+                            </xsd:complexType>
+                        </xsd:element>
+                        <xsd:element name="break">
+                            <xsd:complexType>
+                                <xsd:group maxOccurs="unbounded" ref="ExpressionChoice"/>
+                            </xsd:complexType>
+                        </xsd:element>
+                    </xsd:choice>
+                </xsd:sequence>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="cleanupProcedure">
+        <xsd:annotation>
+            <xsd:documentation>It encloses the list of operations to be performed in case of failure of the script. E</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" name="cleanup">
+                    <xsd:complexType>
+                        <xsd:group ref="ExpressionChoice"/>
+                        <xsd:attribute name="marker" type="xsd:string" use="optional"/>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="addCleanupMarker">
+        <xsd:annotation>
+            <xsd:documentation>It adds a clean up marker whose value is given by the "value" attribute: in case of failure of the script the related clean up operation(s) shall be executed.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="value" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="removeCleanupMarker">
+        <xsd:annotation>
+            <xsd:documentation>It removes a clean up marker whose value is given by the "value" attribute: in case of failure of the script the related clean up operation(s) shall NOT be executed.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="value" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="for">
+        <xsd:annotation>
+            <xsd:documentation>The first enclosed element, if present, is evaluted first, then the tag enclosed in the condition child is evaluated and must return a boolean value. If the value is false, the remaining children are ignored, otherwise, if the fourth element is present it is evaluated, then the third is evaluated. The condition is again avaluated and so on. This mimics the classic for statement, so the children have the following meaning init-condition-increment-body, with optional init and body. The returned value is null if the condition is false the first time, otherwise it is the result of the last evaluation of the increment child</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:group minOccurs="0" ref="ExpressionChoice"/>
+                <xsd:element name="condition" type="Expression"/>
+                <xsd:group maxOccurs="2" ref="ExpressionChoice"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="try">
+        <xsd:annotation>
+            <xsd:documentation>The first enclosed element is evaluated. If this produces no error, that's all. Otherwise the ifError child is taken into account: a variable with a name given by the errorMessageName is set to the value of the error string produced and the element enclosed in the ifError child is evaluated. If a anyway child is present, it is evaluated as a last step, in both cases. If there's the anyway child, its value is returned, otherwise, if the first child produces no error, its value is returned, if the first child produces an error, the value of the element enclosed in the ifError child is returned.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:group ref="ExpressionChoice"/>
+                <xsd:element name="ifError">
+                    <xsd:complexType>
+                        <xsd:group ref="ExpressionChoice"/>
+                        <xsd:attribute name="errorMessageName" type="xsd:string" use="required"/>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="anyway" type="Expression"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="print">
+        <xsd:annotation>
+            <xsd:documentation>Prints a string on video, with an optional newLine (newLine attribute).</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group ref="ExpressionChoice"/>
+            <xsd:attribute default="true" name="newLine" type="xsd:boolean"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="execute">
+        <xsd:annotation>
+            <xsd:documentation>This tags loads an XMl script from a file on disk and executes it. The file name is given by the "procedure" element. The enclosed argument elements are completely equivalent to the setVariable element. The variables set in this way are visible not only to the script that is going to be executed, but also to the rest of the script. This tag returns the value returned by the root tag of the loaded XMl script.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="procedure">
+                    <xsd:complexType>
+                        <xsd:group ref="ExpressionChoice"/>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="argument">
+                    <xsd:complexType>
+                        <xsd:group ref="ExpressionChoice"/>
+                        <xsd:attribute name="name" use="required"/>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="loadProcedure">
+        <xsd:annotation>
+            <xsd:documentation>This tag loads an XML script from a file (whose name is represented by the string returned by the enclosed element) on disk and stores the script in a variable(named as attribute "name"). This tag returns the loaded script.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group ref="ExpressionChoice"/>
+            <xsd:attribute name="name" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="import">
+        <xsd:annotation>
+            <xsd:documentation/>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="name" type="xsd:string"/>
+            <xsd:attribute name="procedureFile" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="storeProcedure">
+        <xsd:annotation>
+            <xsd:documentation>This tags stores the script defined by the enclosed element in a variable named as attribute "name". This tag returns the stored script.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:group ref="ExpressionChoice"/>
+            </xsd:sequence>
+            <xsd:attribute name="name" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="call" type="CallType">
+        <xsd:annotation>
+            <xsd:documentation>This tags execute a script previously stored in a variable. The script could have been stored by the tag loadProcedure, or storeProcecure. The behaviour of the tag is as the "execute" tag but the "name" attribute referes to a variable name instead of the path of a file.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="loadTagInterpreter">
+        <xsd:annotation>
+            <xsd:documentation/>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:group ref="ExpressionChoice"/>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" ref="parameter"/>
+            </xsd:sequence>
+            <xsd:attribute name="name" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="extern">
+        <xsd:annotation>
+            <xsd:documentation/>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:any processContents="skip"/>
+            </xsd:sequence>
+            <xsd:attribute name="interpreter" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="xml">
+        <xsd:annotation>
+            <xsd:documentation>This tag returns an XML Document. The XML content of this tag is not composed by XML script tags. The document returned evaluating this tag will have as root the child element of this element. Moreover two mechanisms are foreseen to make the content dynamic. An XML document has data in two parts: attribute values and text nodes. Any of these two kinds of nodes can be made context dependent in the following way. The "xml" element has two mandatory attributes: "attributePrefix" and "textTag". The content of the XML element is processed substituting any attribute value starting with the value of the "attributePrefix" value, with the value of the variable named like the remaining part of the attribute value. Moreover every element having a tag equal to the value of the "textTag" attribute value, is substituted with a text node with the value of the variable named as the "name" attribute of the textTag element.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:any processContents="skip"/>
+            </xsd:sequence>
+            <xsd:attribute name="attributePrefix" type="xsd:string" use="required"/>
+            <xsd:attribute name="textTag" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="xmlRequest">
+        <xsd:annotation>
+            <xsd:documentation>It returns the DOM Document of the payload of the SOAP request message received by the TOOLBOX. For asynchronous operations it can be used in all the three scripts.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType/>
+    </xsd:element>
+    <xsd:element name="orderId">
+        <xsd:annotation>
+            <xsd:documentation>It returns the orderId string of the current request</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType/>
+    </xsd:element>
+    <xsd:element name="massHost">
+        <xsd:annotation>
+            <xsd:documentation>It returns the string representing the host where the reponse has to be pushed (as extracted from the SOAP header of the current request).</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType/>
+    </xsd:element>
+    <xsd:element name="xPath">
+        <xsd:annotation>
+            <xsd:documentation>It returns the string obtained by evaluating the XPath expression given by the second enclosed element, on the DOM Document given by the first enclosed element. IMPORTANT: xpath expression evaluating to something different than a string are not supported, if complex XPath operations have to be performed other ways are required (method invocation tags etc. see SUM). See also XPath documentation for details about XPath expressions and their value.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:complexContent>
+                <xsd:extension base="ExpressionCouple">
+                    
+                        <xsd:attribute default="text" name="outputType">
+                            <xsd:simpleType>
+                                <xsd:restriction base="xsd:string">
+                                    <xsd:enumeration value="text"/>
+                                    <xsd:enumeration value="xml"/>
+                                </xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:attribute>
+         
+                </xsd:extension>
+            </xsd:complexContent>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="http">
+        <xsd:annotation>
+            <xsd:documentation>This tag perform a single POST or GET HTTP exchange and returns the result as a string. The addressed host is given by the "host" attribute, the addressed port by the "port" attribute, the HTTP method by the "method" attribute (GET or POST, POST is default). The url is given by the enclosed element of the "url" tagged enclosed element. The following enclosed elements are tagged "parameter" and have a "name" attribute and an enclosed element. These "parameter" elements can be used to set parameters both for GET and for POST requests. In case of GET request, the parameters can be also specified directly in the URL string returned by the "url" element.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="url" type="Expression"/>
+                <xsd:choice>
+                    <xsd:element name="body">
+                        <xsd:complexType>
+                            <xsd:group ref="ExpressionChoice"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="parameter">
+                        <xsd:complexType>
+                            <xsd:group ref="ExpressionChoice"/>
+                            <xsd:attribute name="name" type="xsd:string" use="required"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:choice>
+            </xsd:sequence>
+            <xsd:attribute name="host" type="xsd:string" use="optional"/>
+            <xsd:attribute name="port" type="xsd:string" use="optional"/>
+            <xsd:attribute default="POST" name="method">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="GET"/>
+                        <xsd:enumeration value="POST"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+            <xsd:attribute default="text" name="fileType">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="binary"/>
+                        <xsd:enumeration value="text"/>
+                        <xsd:enumeration value="xml"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+			<!--NSIxsd:attribute default="80" name="port" type="xsd:positiveInteger"/-->
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="loadFile">
+        <xsd:annotation>
+            <xsd:documentation>This tag loads a file whose name is given by the result of the enclosed tag. It returns the file content as a string.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group ref="ExpressionChoice"/>
+            <xsd:attribute default="text" name="fileType">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="text"/>
+                        <xsd:enumeration value="binary"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="dumpFile">
+        <xsd:annotation>
+            <xsd:documentation>This tag dumps, in a file whose name is given by the result of the first child element, the string/bytes given by the second child element. It returns null.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group maxOccurs="2" minOccurs="2" ref="ExpressionChoice"/>
+            <xsd:attribute default="text" name="fileType">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="text"/>
+                        <xsd:enumeration value="binary"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="fileExists" type="Expression">
+        <xsd:annotation>
+            <xsd:documentation>Returns a boolean value corresponding to the existence of the file whose name is given by the enclosed element.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="fileDelete" type="Expression">
+        <xsd:annotation>
+            <xsd:documentation>This tag deletes a file whose name is given by the enclosed element. Returns true if and only if the deletion was possible (for example it returns false if the file didn't exist).</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="mkdir" type="Expression">
+        <xsd:annotation>
+            <xsd:documentation>This tag creates the directory whose name is given by the enclosed element. This works also if the parent directory doesn't exist: the whole path is created</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="rmdir" type="Expression">
+        <xsd:annotation>
+            <xsd:documentation>This tags removes recursively a directory and all its contents. The name of the directory to be removed is given by the enclosed element.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="procedureList">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="procedure">
+                    <xsd:complexType>
+                        <xsd:group ref="ExpressionChoice"/>
+                        <xsd:attribute name="name" type="xsd:string" use="required"/>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+        <xsd:unique name="uniqueProcedure">
+            <xsd:selector xpath="procedure"/>
+            <xsd:field xpath="@name"/>
+        </xsd:unique>
+    </xsd:element>
+    <xsd:element name="set">
+        <xsd:annotation>
+            <xsd:documentation>Sets the LValue given by the first enclosed element, with the value given by the second. LValue can be one of variable, field, arrayLocation</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:group ref="LValueGroup"/>
+                <xsd:group ref="ExpressionChoice"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="setVariable">
+        <xsd:annotation>
+            <xsd:documentation>Sets the variable called as the name attribute with the value given by the enclosed element</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group ref="ExpressionChoice"/>
+            <xsd:attribute name="name" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="base64">
+        <xsd:annotation>
+            <xsd:documentation>returns a Base 64 decoded/encoded string. The direction is defined by the direction attribute.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:group ref="ExpressionChoice"/>
+            </xsd:sequence>
+            <xsd:attribute default="encode" name="direction">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="decode"/>
+                        <xsd:enumeration value="encode"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="throw">
+        <xsd:annotation>
+            <xsd:documentation>Throws a Java exception.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="errorMessage">
+                    <xsd:complexType>
+                        <xsd:choice>
+                            <xsd:group ref="ObjectGroup"/>
+                            <xsd:group ref="StringGroup"/>
+                        </xsd:choice>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="details">
+                    <xsd:complexType>
+                        <xsd:group ref="XMLDocumentGroup"/>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="loadXML">
+        <xsd:annotation>
+            <xsd:documentation>returns the DOM document obtained parsing the file whose name is given by the enclosed element. If the validatingSchema attribute is present the file is validated against the schema loaded by the file given by this attribute.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:group ref="ExpressionChoice"/>
+            </xsd:sequence>
+            <xsd:attribute name="validatingSchema" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="dumpXML">
+        <xsd:annotation>
+            <xsd:documentation>It serializes as XML, in a file whose name is given by the first enclosed element, the DOM document returned by the second enclosed element.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group maxOccurs="2" minOccurs="2" ref="ExpressionChoice"/>
+            <xsd:attribute default="false" name="indent" type="xsd:boolean"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="horizontalMove">
+        <xsd:annotation>
+            <xsd:documentation>This tag moves the cursor along the current line. The cursor is moved according to the integer value (let's call it 'n') returned by the enclosed element and to the value of the "absolute" attribute. If absolute is false (default) the cursor is moved n characters to the right (if n is negative the cursor moves left). If absolute is true, the cursor goes n characters to right of line start if it is non-negative and n characters to the left of line end if it is negative. If the enclosed element is missing, the behaviour is as the returned value was 1. If the result of the move would be on the left of line start the cursor goes to line start. If the result of the move would be on the right of line end the cursor goes to line end.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group minOccurs="0" ref="ExpressionChoice"/>
+            <xsd:attribute default="false" name="absolute" type="xsd:boolean"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="verticalMove">
+        <xsd:annotation>
+            <xsd:documentation>This tag moves the cursor on a different line of the current text context. The cursor is moved according to the integer value (let's call it 'n') returned by the enclosed element, to the value of the "absolute" attribute and to the value of the "position" attribute. If absolute is false (default) the cursor is moved n lines down (if n is negative the cursor moves up). If absolute is true, the cursor goes on line n + 1 if it is non-negative and n lines above the last if it is negative. If the enclosed element is missing, the behaviour is as the returned value was 1. If the result of the move would above first line the cursor goes to first line. If the result of the move would be below last line the cursor goes to last line. The value of the "position" attribute affects the column the cursor will be position after vertical move. The possible values are: column (default), start, end. If the value is start the cursor will go to line start, if the value is end the cursor will go to line end, if the value is column the cursor will remain on the same column it was before moving, unless the destination line is not long enough, in shich case the cursor will go to line end.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group minOccurs="0" ref="ExpressionChoice"/>
+            <xsd:attribute default="false" name="absolute" type="xsd:boolean"/>
+            <xsd:attribute default="column" name="position">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="start"/>
+                        <xsd:enumeration value="column"/>
+                        <xsd:enumeration value="end"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="fieldMove">
+        <xsd:annotation>
+            <xsd:documentation>This tag moves cursor along current line, moving from a field to another. What a field is depends on a list of separator characters. The "separators" attribute is a string containing all the characters used to separate fields (escape sequences \c, where c is a character, have a special meaning see POSIX regular expressions. \b means blank). The "greedy" attribute changes the way separations are calculated: when is true (default), two or more adjacent separator characters are considered a single separation, when is false, an empty field is considered between two adjacent separator characters. The "position" attribute can have two values, start (default) and end, defining where cursor will be positioned after move (field start or field end, where field end means start of next separator). If the move would take the cursor before the first field, it will go on the first field. If the move would take the cursor after the last field, it will go on the last field. The enclosed element gives the number of field to move through (non-negative on the right, negative on the left). The "absolute" attribute has the same meaning it has in the horizontalMove tag.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group minOccurs="0" ref="ExpressionChoice"/>
+            <xsd:attribute default="false" name="absolute" type="xsd:boolean"/>
+            <xsd:attribute name="separators" type="xsd:string" use="required"/>
+            <xsd:attribute default="start" name="position">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="start"/>
+                        <xsd:enumeration value="end"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+            <xsd:attribute default="true" name="greedy" type="xsd:boolean"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="search">
+        <xsd:annotation>
+            <xsd:documentation>This tag searches the n-th occurence of a regular expression (see regular expression documentation) and if it exists the cursor is positioned to the start of such occurence and the tag returns true, otherwise the curos is not moved and the tag returns false. If the "absolute" attribute is true, the search is done from beginning of text, otherwise (default) from the current position. No backward searches are allowed. The first enclosed element must return the regular expression, whilst the second must return a POSITIVE integer that is the occurrence number. The second element is optional (default is 1).</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:group maxOccurs="2" ref="ExpressionChoice"/>
+            </xsd:sequence>
+            <xsd:attribute default="false" name="absolute" type="xsd:boolean"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="lineNumber">
+        <xsd:annotation>
+            <xsd:documentation>Returns the current line number of the current text context</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType/>
+    </xsd:element>
+    <xsd:element name="columnNumber">
+        <xsd:annotation>
+            <xsd:documentation>Returns the current column number of the current text context</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType/>
+    </xsd:element>
+    <xsd:element name="gotoLineStart">
+        <xsd:annotation>
+            <xsd:documentation>moves cursor to line start</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType/>
+    </xsd:element>
+    <xsd:element name="gotoLineEnd">
+        <xsd:annotation>
+            <xsd:documentation>moves cursor to line end</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType/>
+    </xsd:element>
+    <xsd:element name="gotoFileStart">
+        <xsd:annotation>
+            <xsd:documentation>moves cursor to first line, line start</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType/>
+    </xsd:element>
+    <xsd:element name="gotoFileEnd">
+        <xsd:annotation>
+            <xsd:documentation>moves cursor to last line, line end</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType/>
+    </xsd:element>
+    <xsd:element name="mark">
+        <xsd:annotation>
+            <xsd:documentation>Gives a name to current position (line/column), This name is used by the goto and extract tags (see). The name of the mark is given by the "name" attribute.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="name" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="goto">
+        <xsd:annotation>
+            <xsd:documentation>moves the cursor to a previously marked position. The name of the mark is given by the "name" attribute.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="name" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="extract">
+        <xsd:annotation>
+            <xsd:documentation>This tag returns the string between two previously marked positions. The names of the marks are given by the "start" and "end" attributes (it's not important that start points to a position in the text that precedes the end, thay can be swapped). The returned string is the substring starting with the first mark and ending with the second (exclusive).</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="start" type="xsd:string" use="required"/>
+            <xsd:attribute name="end" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="setText">
+        <xsd:annotation>
+            <xsd:documentation>This tag sets the text context for any subsequent text navigation tag in the script. Every time it is evaluated, a text context context is set and returned. If the "new" attribute is set to true (default) the subsequent text navigation tags will apply on the string returned by the enclosed element, otherwise the enclosed element is expected to return an already existent text context. A text context is composed by the text, a cursor (line and column) and a set of marked positions (line/column couple with an associated name). When a new text context is created, the cursor is on line 1, column 1 and no mark is set. When an old text context is used, it has the status it had last time it was used.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group ref="ExpressionChoice"/>
+            <xsd:attribute default="true" name="new" type="xsd:boolean"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="ftpAccount">
+        <xsd:annotation>
+            <xsd:documentation>Creates a new account on the Toolbox FTP server, with a mandatory duration (you can express it through a $variable syntax). After the duration time expires, the Toolbox automatically remove the ftp account (but does not delete any file). You can perform an action filling the onExpire child tag with a Toolbox script snippet. The FTP user is given by the enclosed element of the "user" child element, the password is given by the enclosed element of the "password" child element,  the root directory of the account is given by the enclosed element of the "rootDir" child element, the duration of the account is given by the value of the "duration" attribute. The duration is expressed by a non-negative number followed by a letter (s=second m=minute h=hour d=day w=week). The account is created in read only mode by default. To enable write permissions set to true the "writePermission" attribute</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="user" type="Expression"/>
+                <xsd:element name="password" type="Expression"/>
+                <xsd:element name="rootDir" type="Expression"/>
+                <xsd:element minOccurs="0" name="onExpire" type="Expression"/>
+            </xsd:sequence>
+            <xsd:attribute name="duration" type="ToolboxTime" use="required"/>
+            <xsd:attribute default="false" name="writePermission" type="xsd:boolean"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="ftpRename">
+        <xsd:annotation>
+            <xsd:documentation>This tag performs an FTP rename operation. The from tag contains the path of the file to rename while the to tag cointains its full path after to rename to.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:complexContent>
+                <xsd:extension base="FTPType">
+                    <xsd:sequence>
+                        <xsd:element name="newRemotePath" type="Expression"/>
+                    </xsd:sequence>
+                </xsd:extension>
+            </xsd:complexContent>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="ftpGet">
+        <xsd:annotation>
+            <xsd:documentation>This tag performs an FTP get operation. The "transfer" attribute (ascii/binary) selects the transfer mode. The "pasv" attribute selects among the active (default) or the passive mode transfer. The "host" child contains an element that gives the name of the host to be contacted as FTP server. The "port" child contains an element that must return an integer giving the FTP port. The "user" child contains an element that must return the user name. The "password" child contains an element that must return the password. The "remotePath" child contains an element that must return the remote path of the file or directory to be got. The "localPath" child contains an element that must return the local path where to store the downloaded data.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:complexContent>
+                <xsd:extension base="FTPType">
+                    <xsd:sequence>
+                        <xsd:element name="localPath" type="Expression"/>
+                    </xsd:sequence>
+                </xsd:extension>
+            </xsd:complexContent>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="ftpPut">
+        <xsd:annotation>
+            <xsd:documentation>This tag performs an FTP put operation. The transfer attribute (ascii/binary) selects the transfer mode. The "pasv" attribute selects among the active (default) or the passive mode transfer. The "host" child contains an element that gives the name of the host to be contacted as FTP server. The "port" child contains an element that must return an integer giving the FTP port. The user child contains an element that must return the user name. The password child contains an element that must return the password. The remotePath child contains an element that must return the remote path where to store the file. The localPath child contains an element that must return the local path of the file to be sent.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:complexContent>
+                <xsd:extension base="FTPType">
+                    <xsd:sequence>
+                        <xsd:element name="localPath" type="Expression"/>
+                    </xsd:sequence>
+                </xsd:extension>
+            </xsd:complexContent>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="ftpDelete" type="FTPType">
+        <xsd:annotation>
+            <xsd:documentation>This tag performs an FTP delete operation. The "pasv" attribute selects among the active (default) or the passive mode transfer. The "host" child contains an element that gives the name of the host to be contacted as FTP server. The "port" child contains an element that must return an integer giving the FTP port. The user child contains an element that must return the user name. The password child contains an element that must return the password. The remotePath child contains an element that must return the remote path of the file to be deleted. This tag returns true if it was possible to delete the file.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ftpExists" type="FTPType">
+        <xsd:annotation>
+            <xsd:documentation>This tag controls via FTP if a remote file exists. The "pasv" attribute selects among the active (default) or the passive mode transfer. The "host" child contains an element that gives the name of the host to be contacted as FTP server. The "port" child contains an element that must return an integer giving the FTP port. The user child contains an element that must return the user name. The password child contains an element that must return the password. The remotePath child contains an element that must return the remote path of the file to be checked. This tag returns true if the remote file exists.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="timer">
+        <xsd:annotation>
+            <xsd:documentation>this tag tells the Toolbox to execute a script after a given time. The execution of the timed script is not part of the launching script. The delay is given by the "delay" attribute, the value has the same format as the "duration" of ftpAccount (you can express it through a $variable syntax). The script to be executed is the enclosed element (this is not the value returned by the evaluation of the element, but the DOM sub-tree itself!).</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group ref="ExpressionChoice"/>
+            <xsd:attribute name="delay" type="ToolboxTime" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="xslt">
+        <xsd:annotation>
+            <xsd:documentation>This tag returns the result of an XSLT. The XSL document may contain parameters to be set. The DOM document to be transformed is returned by the first enclosed element, the name of the XSL file to be applied is given by the second enclosed element. The second element may be followed by a list of "parameter" elements each of them having a "name" attibute (representing the parameter name) and containing an element returning the parameter value. The value of the boolean attribute "xmlOutput" of the "xslt" element tells the engine if the output will be XML (default) or not. In the first case a DOM Document is returned, in latter case a string.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:group maxOccurs="2" minOccurs="2" ref="ExpressionChoice"/>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="parameter">
+                    <xsd:complexType>
+                        <xsd:group ref="ExpressionChoice"/>
+                        <xsd:attribute name="name" type="xsd:string"/>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+            <xsd:attribute default="true" name="xmlOutput" type="xsd:boolean"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="command">
+        <xsd:annotation>
+            <xsd:documentation>Executes a system command. The command string is given by the enclosed child element. The value of the asynchronous attribute (default false) tells if the tag evaluation must wait for the command to complete (false) or not (true).</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group ref="ExpressionChoice"/>
+            <xsd:attribute default="false" name="asynchronous" type="xsd:boolean"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="log">
+        <xsd:annotation>
+            <xsd:documentation>Produces a log in the service log. The logged string is given by the enclosed element. The level attribute selectes the log level (available levels in verbosity order: FATAL, WARN, ERROR, INFO, DEBUG, ALL)</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group ref="ExpressionChoice"/>
+            <xsd:attribute default="INFO" name="level" type="LogLevelType"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="localHost">
+        <xsd:annotation>
+            <xsd:documentation>Returns the name of the host where the Toolbox runs</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType/>
+    </xsd:element>
+    <xsd:element name="randomString">
+        <xsd:annotation>
+            <xsd:documentation>Produces a random string using lower and upper case letters, and digits. The length of the string is given by the length attribute.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="length" type="xsd:positiveInteger" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="randomInt">
+        <xsd:annotation>
+            <xsd:documentation>Produces a random integer. If the (optional) "maxExclusive" attribute is present, the returned value is comprised between 0 (inclusive) and the attribute value (exclusive). Otherwise the returned value is comprised between -2^31 (inclusive) and (2^31) - 1 (inclusive).</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="maxExclusive" type="xsd:string" use="optional"/>
+			<!-- xsd:attribute name="maxExclusive" type="xsd:positiveInteger" use="optional"/-->
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="generateError" type="Expression">
+        <xsd:annotation>
+            <xsd:documentation>Produces an error that stops the XML script execution. The error contains the string given by the enclosed element. This causes the script to be aborted unless the error is caught using the try tag.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="sendMail" type="sendMailType">
+        <xsd:annotation>
+            <xsd:documentation>Sends an e-mail. The smpt-server attribute gives the smpt server address to be used. The from child contains a child that must return the mail address to be set as sender of the e-mail. The to child contains a child that must return the mail address of the recipient of the e-mail. The otherRecipients element contains zero or more to, cc or bcc children each containing a child that must give additional recipient e-mail addresses. The subject child contains a child that must return the subject of the e-mail. The text child contains a child that must return the text of the e-mail. Any subsequent attachment element cause an attachment to be added to the e-mail. The name attribute (optional) of such elements gives the name to be given to the attchment in the e-mail. The element enclosed in the attachment element gives the path of the file to be attached.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="setXMLValue">
+        <xsd:annotation>
+            <xsd:documentation>Modifies a value in a DOM Document (text nodes or attribute). The first child must return the Document to be modified. The second child nust return an XPath string to select the node to be modified. The third child return the new value of the node. It is not possible to set non existing nodes.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group maxOccurs="3" minOccurs="3" ref="ExpressionChoice"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="dbConnect">
+        <xsd:annotation>
+            <xsd:documentation>Connects to a DBMS via JDBC. The driver attribute gives the JDBC driver to be used. This driver must be in the classpath. The auto-commit attribute (default true) tells if every update performed on this connection is commited or not. The first child must return the URL to be used for connection. The second child must return the user to be used for connection. The third child must return the password to be used for connection. The return value is a JDBC Connection object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group maxOccurs="3" minOccurs="3" ref="ExpressionChoice"/>
+            <xsd:attribute name="driver" type="xsd:string"/>
+            <xsd:attribute default="true" name="autoCommit" type="xsd:boolean"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="dbClose" type="Expression">
+        <xsd:annotation>
+            <xsd:documentation>Closes a JDBC connection. The connection to be closed is returned by the enclosed element.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="dbCommit" type="Expression">
+        <xsd:annotation>
+            <xsd:documentation>Commits every update operation performed on the connection given by the enclosed element, since last commit, last rollback, or connection creation.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="dbRollback" type="Expression">
+        <xsd:annotation>
+            <xsd:documentation>Performs a rollback of every update operation performed on the connection given by the enclosed element, since last commit, last rollback, or connection creation.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="dbQuery" type="ExpressionCouple">
+        <xsd:annotation>
+            <xsd:documentation>Performs an SQL query on the connection given by the first enclosed element. The SQL query is given by the second enclosed element. This tags return a JDBC ResultSet.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="dbExecute" type="ExpressionCouple">
+        <xsd:annotation>
+            <xsd:documentation>Executes the SQL statement returned by the second enclosed element (which may return multiple results), on the connection returned by the first enclosed element. Returns true if the first result is a ResultSet object; false if it is an update count or there are no results.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="dbExecuteUpdate" type="ExpressionCouple">
+        <xsd:annotation>
+            <xsd:documentation>Executes the SQL statement returned by the second enclosed element (which may be an INSERT, UPDATE, or DELETE statement or an SQL statement that returns nothing, such as an SQL DDL statement), on the connection returned by the first enclosed element. Returns either the row count for INSERT, UPDATE  or DELETE statements, or 0 for SQL statements that return nothing</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="dbUpdate" type="ExpressionCouple">
+        <xsd:annotation>
+            <xsd:documentation>Performs an SQL update on the connection given by the first enclosed element. The SQL string is given by the second enclosed element.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="dbGetColumnCount" type="Expression">
+        <xsd:annotation>
+            <xsd:documentation>Returns the column number of the result set given by the enclosed element.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="dbGetColumnName" type="ExpressionCouple">
+        <xsd:annotation>
+            <xsd:documentation>Returns the column name, given the index, of the result set given by the first enclosed element. The index is given by the second enclosed element.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="dbGetColumnIndex" type="ExpressionCouple">
+        <xsd:annotation>
+            <xsd:documentation>Returns the column index, given the name, of the result set given by the first enclosed element. The name is given by the second enclosed element.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="dbGetValue" type="ExpressionCouple">
+        <xsd:annotation>
+            <xsd:documentation>Returns the string value of a field of current row of the ResultSet givne by the first enclosed element. The filed is selected by the second enclosed element, using an integer (index) or a string (name).</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="dbNextRow" type="Expression">
+        <xsd:annotation>
+            <xsd:documentation>Moves the cursor of the ResultSet given by the enclosed element, to the next row, if possible. The result of this tag is boolean value telling if it was possible to move to next row. This tag has to be used before any dbGetValue, since initially a ResultSet has the cursor BEFORE first row.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="dbGetNumOfRows" type="Expression">
+        <xsd:annotation>
+            <xsd:documentation>Returns the number of rows of the ResultSet given by the enclosed element.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="dbSetCursor" type="ExpressionCouple">
+        <xsd:annotation>
+            <xsd:documentation>Moves the cursor to the position (row number) returned by the first enclosed element within the ResultSet given by the second enclosed element. If the row number is positive, the cursor moves to the given row number with respect to the beginning of the result set. The first row is row 1, the second is row 2, and so on. If the given row number is negative, the cursor moves to an absolute row position with respect to the end of the result set. For example, calling the method absolute(-1) positions the cursor on the last row; calling the method absolute(-2) moves the cursor to the next-to-last row, and so on. An attempt to position the cursor beyond the first/last row in the result set leaves the cursor before the first row or after the last row. Returns true if the cursor is on the result set; false otherwise.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="xmlDocument">
+        <xsd:annotation>
+            <xsd:documentation>This returns an XML Document with dynamic content. For a complete explanation see TOOLBOX SUM.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:choice maxOccurs="unbounded" minOccurs="0">
+                    <xsd:element ref="storeElement"/>
+                    <xsd:element ref="storeFragment"/>
+                </xsd:choice>
+                <xsd:group ref="RootChoice"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:group name="RootChoice">
+        <xsd:choice>
+            <xsd:element ref="element"/>
+            <xsd:element ref="storedElement"/>
+            <xsd:element name="if">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:group ref="ExpressionChoice"/>
+                        <xsd:group maxOccurs="2" minOccurs="2" ref="RootChoice"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:any processContents="skip"/>
+        </xsd:choice>
+    </xsd:group>
+    <xsd:element name="storedFragment">
+        <xsd:complexType>
+            <xsd:attribute name="name" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="storedElement">
+        <xsd:complexType>
+            <xsd:attribute name="name" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="storeElement">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:any processContents="skip"/>
+            </xsd:sequence>
+            <xsd:attribute name="name" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="storeFragment">
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:any maxOccurs="unbounded" minOccurs="0" processContents="skip"/>
+            </xsd:sequence>
+            <xsd:attribute name="name" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="element">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="tag">
+                    <xsd:complexType>
+                        <xsd:group ref="ExpressionChoice"/>
+                        <xsd:attribute name="uri" type="xsd:string"/>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="attributes">
+                    <xsd:complexType>
+                        <xsd:group maxOccurs="unbounded" minOccurs="0" ref="AttributeChoice"/>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element ref="content"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:group name="AttributeChoice">
+        <xsd:choice>
+            <xsd:element name="namespace">
+                <xsd:complexType>
+                    <xsd:attribute name="prefix" type="xsd:string"/>
+                    <xsd:attribute name="uri" type="xsd:string" use="required"/>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="attribute">
+                <xsd:complexType>
+                    <xsd:group ref="ExpressionChoice"/>
+                    <xsd:attribute name="name" type="xsd:string" use="required"/>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="if">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:group ref="ExpressionChoice"/>
+                        <xsd:group maxOccurs="2" ref="AttributeChoice"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:choice>
+    </xsd:group>
+    <xsd:element name="content" type="XMLContent"/>
+    <xsd:complexType mixed="true" name="XMLContent">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded" minOccurs="0">
+                <xsd:element name="text" type="Expression"/>
+                <xsd:element ref="element"/>
+                <xsd:element ref="storeElement"/>
+                <xsd:element ref="storeFragment"/>
+                <xsd:element ref="storedElement"/>
+                <xsd:element ref="storedFragment"/>
+                <xsd:element name="if">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:group ref="ExpressionChoice"/>
+                            <xsd:element name="then" type="XMLContent"/>
+                            <xsd:element minOccurs="0" name="else" type="XMLContent"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="repeat">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:group ref="ExpressionChoice"/>
+                            <xsd:element ref="content"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:any processContents="skip"/>
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="TypeType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="byte"/>
+            <xsd:enumeration value="short"/>
+            <xsd:enumeration value="int"/>
+            <xsd:enumeration value="long"/>
+            <xsd:enumeration value="float"/>
+            <xsd:enumeration value="double"/>
+            <xsd:enumeration value="char"/>
+            <xsd:enumeration value="boolean"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:element name="parameter" type="ExpressionCouple"/>
+    <xsd:group name="TargetChoice">
+        <xsd:choice>
+            <xsd:element name="object" type="Expression"/>
+            <xsd:element name="class" type="Expression"/>
+        </xsd:choice>
+    </xsd:group>
+    <xsd:group name="LValueGroup">
+        <xsd:choice>
+            <xsd:element ref="variable"/>
+            <xsd:element ref="field"/>
+            <xsd:element ref="arrayLocation"/>
+        </xsd:choice>
+    </xsd:group>
+    <xsd:group name="XMLDocumentGroup">
+        <xsd:choice>
+            <xsd:element ref="xml"/>
+            <xsd:element ref="jelly"/>
+            <xsd:element ref="loadXML"/>
+            <xsd:element ref="dumpXML"/>
+            <xsd:element ref="xmlRequest"/>
+            <xsd:element ref="xslt"/>
+            <xsd:element ref="soapCall"/>
+            <xsd:element ref="xmlGetResponse"/>
+        </xsd:choice>
+    </xsd:group>
+    <xsd:group name="StringGroup">
+        <xsd:choice>
+            <xsd:element ref="localHost"/>
+            <xsd:element ref="itoa"/>
+            <xsd:element ref="string"/>
+            <xsd:element ref="massHost"/>
+            <xsd:element ref="jelly"/>
+            <xsd:element ref="stringCat"/>
+            <xsd:element ref="print"/>
+            <xsd:element ref="orderId"/>
+            <xsd:element ref="loadFile"/>
+            <xsd:element ref="xslt"/>
+            <xsd:element ref="parameter"/>
+            <xsd:element ref="randomString"/>
+            <xsd:element ref="dbGetColumnName"/>
+            <xsd:element ref="dbGetValue"/>
+            <xsd:element ref="extract"/>
+            <xsd:element ref="http"/>
+            <xsd:element ref="xPath"/>
+            <xsd:element ref="dateStringFormatter"/>
+            <xsd:element ref="zip"/>
+            <xsd:element ref="dateStringFormatter"/>
+            <xsd:element ref="path"/>
+        </xsd:choice>
+    </xsd:group>
+    <xsd:group name="ObjectGroup">
+        <xsd:choice>
+            <xsd:element ref="sequence"/>
+            <xsd:element ref="methodInvocation"/>
+            <xsd:element ref="newObject"/>
+            <xsd:element ref="null"/>
+            <xsd:element ref="variable"/>
+            <xsd:element ref="execute"/>
+            <xsd:element ref="arrayLocation"/>
+            <xsd:element ref="newInternalObject"/>
+            <xsd:element ref="now"/>
+        </xsd:choice>
+    </xsd:group>
+    <xsd:complexType name="LValue">
+        <xsd:group ref="LValueGroup"/>
+    </xsd:complexType>
+    <xsd:group name="ExpressionChoice">
+        <xsd:choice>
+            <xsd:element ref="null"/>
+            <xsd:element ref="classLiteral"/>
+            <xsd:element ref="primitiveType"/>
+            <xsd:element ref="arrayType"/>
+            <xsd:element ref="literal"/>
+            <xsd:element ref="character"/>
+            <xsd:element ref="string"/>
+            <xsd:element ref="stringLength"/>
+            <xsd:element ref="variable"/>
+            <xsd:element ref="field"/>
+            <xsd:element ref="arrayLocation"/>
+            <xsd:element ref="arrayLength"/>
+            <xsd:element ref="methodInvocation"/>
+            <xsd:element ref="newObject"/>
+            <xsd:element ref="newInternalObject"/>
+            <xsd:element ref="newTypedArray"/>
+            <xsd:element ref="newArray"/>
+            <xsd:element ref="newInitializedTypedArray"/>
+            <xsd:element ref="newInitializedArray"/>
+            <xsd:element ref="set"/>
+            <xsd:element ref="setVariable"/>
+            <xsd:element ref="base64"/>
+            <xsd:element ref="stringCat"/>
+            <xsd:element ref="atoi"/>
+            <xsd:element ref="itoa"/>
+            <xsd:element ref="sleep"/>
+            <xsd:element ref="plus"/>
+            <xsd:element ref="minus"/>
+            <xsd:element ref="multiply"/>
+            <xsd:element ref="divide"/>
+            <xsd:element ref="module"/>
+            <xsd:element ref="inc"/>
+            <xsd:element ref="dec"/>
+            <xsd:element ref="negate"/>
+            <xsd:element ref="lShift"/>
+            <xsd:element ref="rSShift"/>
+            <xsd:element ref="rUShift"/>
+            <xsd:element ref="bitAnd"/>
+            <xsd:element ref="bitOr"/>
+            <xsd:element ref="bitXor"/>
+            <xsd:element ref="not"/>
+            <xsd:element ref="gt"/>
+            <xsd:element ref="gte"/>
+            <xsd:element ref="lt"/>
+            <xsd:element ref="lte"/>
+            <xsd:element ref="eq"/>
+            <xsd:element ref="neq"/>
+            <xsd:element ref="oeq"/>
+            <xsd:element ref="oneq"/>
+            <xsd:element ref="isNull"/>
+            <xsd:element ref="isNotNull"/>
+            <xsd:element ref="and"/>
+            <xsd:element ref="or"/>
+            <xsd:element ref="xor"/>
+            <xsd:element ref="sequence"/>
+            <xsd:element ref="if"/>
+            <xsd:element ref="while"/>
+            <xsd:element ref="for"/>
+            <xsd:element ref="print"/>
+            <xsd:element ref="execute"/>
+            <xsd:element ref="loadProcedure"/>
+            <xsd:element ref="storeProcedure"/>
+            <xsd:element ref="call"/>
+            <xsd:element ref="loadTagInterpreter"/>
+            <xsd:element ref="extern"/>
+            <xsd:element ref="import"/>
+            <xsd:element ref="loadXML"/>
+            <xsd:element ref="throw"/>
+            <xsd:element ref="dumpXML"/>
+            <xsd:element ref="horizontalMove"/>
+            <xsd:element ref="verticalMove"/>
+            <xsd:element ref="fieldMove"/>
+            <xsd:element ref="search"/>
+            <xsd:element ref="gotoLineStart"/>
+            <xsd:element ref="gotoLineEnd"/>
+            <xsd:element ref="gotoFileStart"/>
+            <xsd:element ref="gotoFileEnd"/>
+            <xsd:element ref="mark"/>
+            <xsd:element ref="goto"/>
+            <xsd:element ref="lineNumber"/>
+            <xsd:element ref="columnNumber"/>
+            <xsd:element ref="extract"/>
+            <xsd:element ref="setText"/>
+            <xsd:element ref="xml"/>
+            <xsd:element ref="ftpAccount"/>
+            <xsd:element ref="ftpGet"/>
+            <xsd:element ref="ftpPut"/>
+            <xsd:element ref="ftpDelete"/>
+            <xsd:element ref="ftpExists"/>
+            <xsd:element ref="timer"/>
+            <xsd:element ref="xmlRequest"/>
+            <xsd:element ref="orderId"/>
+            <xsd:element ref="massHost"/>
+            <xsd:element ref="xPath"/>
+            <xsd:element ref="http"/>
+            <xsd:element ref="loadFile"/>
+            <xsd:element ref="dumpFile"/>
+            <xsd:element ref="fileExists"/>
+            <xsd:element ref="fileDelete"/>
+            <xsd:element ref="mkdir"/>
+            <xsd:element ref="rmdir"/>
+            <xsd:element ref="xslt"/>
+            <xsd:element ref="command"/>
+            <xsd:element ref="log"/>
+            <xsd:element ref="localHost"/>
+            <xsd:element ref="xmlDocument"/>
+            <xsd:element ref="randomString"/>
+            <xsd:element ref="generateError"/>
+            <xsd:element ref="try"/>
+            <xsd:element ref="sendMail"/>
+            <xsd:element ref="setXMLValue"/>
+            <xsd:element ref="dbConnect"/>
+            <xsd:element ref="dbClose"/>
+            <xsd:element ref="dbCommit"/>
+            <xsd:element ref="dbRollback"/>
+            <xsd:element ref="dbQuery"/>
+            <xsd:element ref="dbUpdate"/>
+            <xsd:element ref="dbGetColumnCount"/>
+            <xsd:element ref="dbGetColumnIndex"/>
+            <xsd:element ref="dbGetColumnName"/>
+            <xsd:element ref="dbGetValue"/>
+            <xsd:element ref="dbNextRow"/>
+            <xsd:element ref="randomInt"/>
+            <xsd:element ref="soapCall"/>
+            <xsd:element ref="xmlGetResponse"/>
+            <xsd:element ref="cleanupProcedure"/>
+            <xsd:element ref="addCleanupMarker"/>
+            <xsd:element ref="removeCleanupMarker"/>
+            <xsd:element ref="existsVariable"/>
+            <xsd:element ref="dbGetNumOfRows"/>
+            <xsd:element ref="dbSetCursor"/>
+            <xsd:element ref="dbExecute"/>
+            <xsd:element ref="dbExecuteUpdate"/>
+            <xsd:element ref="jelly"/>
+            <xsd:element ref="fork"/>
+            <xsd:element ref="now"/>
+            <xsd:element ref="dateStringFormatter"/>
+            <xsd:element ref="ftpRename"/>
+            <xsd:element ref="isBefore"/>
+            <xsd:element ref="date"/>
+            <xsd:element ref="path"/>
+            <xsd:element ref="addOrderConfirmation"/>
+            <xsd:element ref="checkOrderConfirmation"/>
+            <xsd:element ref="validateDocument"/>
+            <xsd:element ref="return"/>
+            <xsd:element ref="fileInfo"/>
+            <xsd:element ref="timeDifference"/>
+            <xsd:element ref="zip"/>
+            <xsd:element name="updateFtpPermission"/>
+            <xsd:element name="atof"/>
+            <xsd:element name="java"/>
+            <xsd:element name="getOrderError"/>
+            <xsd:element name="toolboxAddress"/>
+        </xsd:choice>
+    </xsd:group>
+    <xsd:group name="DateChoice">
+        <xsd:choice>
+            <xsd:element ref="now"/>
+            <xsd:element ref="date"/>
+        </xsd:choice>
+    </xsd:group>
+    <xsd:complexType name="Expression">
+        <xsd:group ref="ExpressionChoice"/>
+    </xsd:complexType>
+    <xsd:complexType name="ExpressionSequence">
+        <xsd:group maxOccurs="unbounded" minOccurs="0" ref="ExpressionChoice"/>
+    </xsd:complexType>
+    <xsd:complexType name="ExpressionCouple">
+        <xsd:group maxOccurs="2" minOccurs="2" ref="ExpressionChoice"/>
+    </xsd:complexType>
+    <xsd:complexType name="CallType">
+        <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="argument">
+                <xsd:complexType>
+                    <xsd:group ref="ExpressionChoice"/>
+                    <xsd:attribute name="name" use="required"/>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="procedure" type="xsd:string" use="required"/>
+    </xsd:complexType>
+    <xsd:complexType name="FTPType">
+        <xsd:sequence>
+            <xsd:element name="host" type="Expression"/>
+            <xsd:element name="port" type="Expression"/>
+            <xsd:element name="user" type="Expression"/>
+            <xsd:element name="password" type="Expression"/>
+            <xsd:element name="remotePath" type="Expression"/>
+        </xsd:sequence>
+        <xsd:attribute default="false" name="pasv" type="xsd:boolean"/>
+        <xsd:attribute default="ascii" name="transfer">
+            <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="ascii"/>
+                    <xsd:enumeration value="binary"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+        </xsd:attribute>
+    </xsd:complexType>
+    <xsd:complexType name="sendMailType">
+        <xsd:sequence>
+            <xsd:element name="from" type="Expression"/>
+            <xsd:element name="to" type="Expression"/>
+            <xsd:element name="otherRecipients">
+                <xsd:complexType>
+                    <xsd:choice maxOccurs="unbounded" minOccurs="0">
+                        <xsd:element name="to" type="Expression"/>
+                        <xsd:element name="cc" type="Expression"/>
+                        <xsd:element name="bcc" type="Expression"/>
+                    </xsd:choice>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="subject" type="Expression"/>
+            <xsd:choice maxOccurs="1" minOccurs="1">
+                <xsd:element name="text" type="Expression"/>
+                <xsd:element name="htmlbody" type="Expression"/>
+            </xsd:choice>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="attachment">
+                <xsd:complexType>
+                    <xsd:group ref="ExpressionChoice"/>
+                    <xsd:attribute name="name" type="xsd:string"/>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="smtpServer" type="xsd:string" use="required"/>
+        <xsd:attribute default="" name="authUsername" type="xsd:string"/>
+        <xsd:attribute default="" name="authPassword" type="xsd:string"/>
+    </xsd:complexType>
+    <xsd:simpleType name="IntegerVariableType">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="([0-9]+)|($[a-zA-Z0-9]+)"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

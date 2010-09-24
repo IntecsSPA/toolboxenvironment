@@ -1,0 +1,47 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: TOOLBOX Development Environment UI Plug-in
+Bundle-SymbolicName: com.intecs.ToolboxScript.ui; singleton:=true
+Bundle-Version: 1.3.12
+Bundle-Activator: it.intecs.pisa.develenv.ui.Activator
+Bundle-Vendor: Intecs Informatica e Tecnologia del Software
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.debug.core,
+ org.eclipse.debug.ui,
+ org.eclipse.wst.xml.ui,
+ org.eclipse.wst.sse.ui,
+ org.eclipse.core.filesystem,
+ com.intecs.ToolboxScript.model,
+ org.eclipse.wst.common.ui.properties,
+ org.eclipse.wst.rdb.sqleditor,
+ org.eclipse.wst.sse.core,
+ org.eclipse.wst.wsdl.validation,
+ org.eclipse.wst.xml.core,
+ org.eclipse.xsd.editor,
+ com.intecs.ToolboxScript.libraries,
+ org.eclipse.core.runtime.compatibility,
+ org.eclipse.emf.codegen.ecore.ui,
+ org.eclipse.emf.ecore.editor,
+ org.eclipse.emf.ecore.sdo.editor,
+ org.eclipse.emf.mapping.ecore2ecore.editor,
+ org.eclipse.emf.mapping.ecore2xml.ui,
+ org.eclipse.emf.mapping.xsd2ecore.editor,
+ org.eclipse.gef,
+ org.eclipse.ui.views.properties.tabbed,
+ system.bundle
+Eclipse-LazyStart: true
+Plugin-Class: it.intecs.pisa.develenv.ui.Activator
+Bundle-ClassPath: bin/
+Export-Package: it.intecs.pisa.develenv.ui,
+ it.intecs.pisa.develenv.ui.decorators,
+ it.intecs.pisa.develenv.ui.editors,
+ it.intecs.pisa.develenv.ui.exceptions,
+ it.intecs.pisa.develenv.ui.launching,
+ it.intecs.pisa.develenv.ui.model,
+ it.intecs.pisa.develenv.ui.perspectives,
+ it.intecs.pisa.develenv.ui.popup.contextmenu,
+ it.intecs.pisa.develenv.ui.propertyPages,
+ it.intecs.pisa.develenv.ui.views,
+ it.intecs.pisa.develenv.ui.widgets,
+ it.intecs.pisa.develenv.ui.wizards
+

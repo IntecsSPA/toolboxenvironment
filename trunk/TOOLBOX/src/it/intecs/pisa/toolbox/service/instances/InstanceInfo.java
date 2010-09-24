@@ -17,8 +17,10 @@
 package it.intecs.pisa.toolbox.service.instances;
 
 import it.intecs.pisa.common.tbx.Operation;
+import it.intecs.pisa.toolbox.db.ServiceInfo;
 import it.intecs.pisa.toolbox.db.ToolboxInternalDatabase;
 import it.intecs.pisa.toolbox.service.ServiceManager;
+import it.intecs.pisa.toolbox.service.TBXOperation;
 import it.intecs.pisa.toolbox.service.TBXService;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -98,6 +100,22 @@ public class InstanceInfo {
          Operation operation = service.getImplementedInterface().getOperationByName(getOperationNameFromInstanceId(id));
 
          return operation.getSoapAction();
+     }
+
+     public static String getPollingRateFromInstanceId(long id) throws Exception {
+         TBXService service;
+         String serviceName;
+         ServiceManager servMan;
+
+         servMan=ServiceManager.getInstance();
+         serviceName=getServiceNameFromInstanceId(id);
+
+         service=servMan.getService(serviceName);
+         Operation operation = service.getImplementedInterface().getOperationByName(getOperationNameFromInstanceId(id));
+
+         if(operation.isAsynchronous())
+             return operation.getPollingRate();
+         else return "0s";
      }
 
     public static int getRemainingAttempts(long id) throws Exception
@@ -183,5 +201,24 @@ public class InstanceInfo {
             }
         }
         return id;
+    }
+
+    public static TBXService getService(long serviceInstanceId) throws Exception
+    {
+        ServiceManager servMan;
+
+        servMan=ServiceManager.getInstance();
+        return servMan.getService(ServiceInfo.getServiceName(serviceInstanceId));
+    }
+
+    public static TBXOperation getOperation(long serviceInstanceId) throws Exception {
+        TBXService service;
+
+        service=InstanceInfo.getService(serviceInstanceId);
+
+        String operationName;
+        operationName=InstanceInfo.getOperationNameFromInstanceId(serviceInstanceId);
+
+        return service.getOperation(operationName);
     }
 }

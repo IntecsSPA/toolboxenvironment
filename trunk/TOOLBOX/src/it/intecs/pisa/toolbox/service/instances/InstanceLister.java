@@ -27,6 +27,7 @@ import it.intecs.pisa.toolbox.util.ToolboxSimpleDateFormatter;
 import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 import org.w3c.dom.Document;
@@ -354,5 +355,62 @@ public class InstanceLister {
         }
 
         return vector.toArray(new Long[0]);
+    }
+
+    public static Long[] getInstancesWithStatus(byte status) throws Exception
+    {
+        String query;
+        ArrayList<Long> list;
+
+        list=new ArrayList<Long>();
+        query="SELECT ID FROM T_SERVICE_INSTANCES WHERE STATUS="+ new Integer(status);
+
+        Statement stm = ToolboxInternalDatabase.getInstance().getStatement();
+        ResultSet rs = stm.executeQuery(query);
+        while(rs.next())
+        {
+          list.add(new Long(rs.getLong("ID")));
+        }
+
+        return list.toArray(new Long[0]);
+    }
+    
+    public static Long[] getInstancesWithStatusAndNotExpired(byte status) throws Exception
+    {
+        String query;
+        ArrayList<Long> list;
+
+        list=new ArrayList<Long>();
+        Date nowDate = new Date();
+        long now = nowDate.getTime();
+        query="SELECT ID FROM T_SERVICE_INSTANCES WHERE STATUS="+ new Integer(status)+" AND EXPIRATION_DATE>"+now;
+
+        Statement stm = ToolboxInternalDatabase.getInstance().getStatement();
+        ResultSet rs = stm.executeQuery(query);
+        while(rs.next())
+        {
+          list.add(new Long(rs.getLong("ID")));
+        }
+
+        return list.toArray(new Long[0]);
+    }
+
+    public static Long[] getInstancesToRetryPushing() throws Exception {
+        String query;
+        ArrayList<Long> list;
+
+        list=new ArrayList<Long>();
+        Date nowDate = new Date();
+        long now = nowDate.getTime();
+        query="SELECT ID FROM T_SERVICE_INSTANCES WHERE STATUS=12 AND AVAILABLE_PUSH_RETRIES>0";
+
+        Statement stm = ToolboxInternalDatabase.getInstance().getStatement();
+        ResultSet rs = stm.executeQuery(query);
+        while(rs.next())
+        {
+          list.add(new Long(rs.getLong("ID")));
+        }
+
+        return list.toArray(new Long[0]);
     }
 }

@@ -41,6 +41,13 @@ public class TimerManager {
 
                     timer.schedule(tt, new Date(instance.getDue_date()));
                 }
+                else if(instance.getType().equals(TimerInstance.TYPE_FTP))
+                {
+                    ToolboxFTPTimerTask tt;
+                    tt=new ToolboxFTPTimerTask(instance.getService_instance_id(),instance.getExtraValue());
+
+                    timer.schedule(tt, new Date(instance.getDue_date()));
+                }
             }
             Timers.deleteExecutedTimers();
         }

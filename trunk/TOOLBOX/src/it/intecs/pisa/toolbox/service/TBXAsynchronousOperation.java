@@ -10,10 +10,14 @@ import it.intecs.pisa.common.tbx.Operation;
 import it.intecs.pisa.common.tbx.Script;
 import it.intecs.pisa.toolbox.db.ServiceStatuses;
 import it.intecs.pisa.soap.toolbox.exceptions.OperationExecutionException;
+import it.intecs.pisa.toolbox.constants.MiscConstants;
 import it.intecs.pisa.toolbox.db.InstanceStatuses;
 import it.intecs.pisa.toolbox.db.ToolboxInternalDatabase;
 import it.intecs.pisa.toolbox.service.instances.InstanceHandler;
 import it.intecs.pisa.toolbox.service.instances.SOAPHeaderExtractor;
+import it.intecs.pisa.toolbox.timers.TimeoutManager;
+import it.intecs.pisa.util.DateUtil;
+import it.intecs.pisa.util.datetime.TimeInterval;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.StringTokenizer;
@@ -21,10 +25,6 @@ import java.util.StringTokenizer;
 import org.w3c.dom.Document;
 
 public class TBXAsynchronousOperation extends TBXOperation {
-
-    protected PushManager pushManager;
-    protected PushRetryManager pushRetryManager;
-    protected TimeoutManager timeoutManager;
     protected String parentServiceName;
 
     public TBXAsynchronousOperation() {
@@ -41,37 +41,8 @@ public class TBXAsynchronousOperation extends TBXOperation {
 
         super.init();
 
-        try {
-            parentService = getParentService();
-            parentServiceName = parentService.getServiceName();
-
-            pushManager = new PushManager(parentService, name);
-            pushManager.start();
-
-            if (retryRate != null) {
-                pushRetryManager = new PushRetryManager(parentService, name);
-                pushRetryManager.start();
-            }
-
-            timeoutManager = new TimeoutManager(parentService, name);
-            timeoutManager.start();
-        } catch (Exception e) {
-            logger.error("Cannot init asnchronous operation " + name);
-        }
-    }
-
-    @Override
-    public void stop() {
-        pushManager.setStop(true);
-        pushManager.interrupt();
-
-        if (pushRetryManager != null) {
-            pushRetryManager.setStop(true);
-            pushRetryManager.interrupt();
-        }
-
-        timeoutManager.setStop(true);
-        timeoutManager.interrupt();
+         parentService = getParentService();
+         parentServiceName = parentService.getServiceName();
     }
 
     public void suspend() {}
@@ -88,6 +59,13 @@ public class TBXAsynchronousOperation extends TBXOperation {
         InstanceHandler handler;
 
         try {
+            long expireDate;
+
+            expireDate=DateUtil.getFutureDate(TimeInterval.getIntervalAsLong(requestTimeout)).getTime();
+
+            TimeoutManager timeoutMan=TimeoutManager.getInstance();
+            timeoutMan.scheduleTimeout(instanceId, expireDate);
+
             logger.info("New request received: " + soapAction);
             logger.info("Executing response builder script");
 
@@ -107,13 +85,13 @@ public class TBXAsynchronousOperation extends TBXOperation {
                 {
                     TBXAsynchronousOperationFirstScriptExecutor fsExecutor;
 
-                    fsExecutor = new TBXAsynchronousOperationFirstScriptExecutor(instanceId, debugMode, logger);
+                    fsExecutor = new TBXAsynchronousOperationFirstScriptExecutor(instanceId);
                     fsExecutor.start();
 
                     logger.info(orderIdLogString + " First Script executor started, sending response ...");
                 }
             } catch (Exception e) {
-                errorMsg = "Impossible to start executing first script: " + TBXService.CDATA_S + e.getMessage() + TBXService.CDATA_E;
+                errorMsg = "Impossible to start executing first script: " + MiscConstants.CDATA_S + e.getMessage() + MiscConstants.CDATA_E;
                 logger.error(errorMsg);
                 ErrorMailer.send(instanceId,errorMsg);
 
@@ -125,30 +103,6 @@ public class TBXAsynchronousOperation extends TBXOperation {
 
 
     return result;
-    }
-
-    public void destroy() {
-        if (getPushManager() != null) {
-            pushManager.setStop(true);
-            if (getPushManager().isIsSleeping()) {
-                getPushManager().interrupt();
-            }
-        }
-        if (getPushRetryManager() != null) {
-            getPushRetryManager().interrupt();
-        }
-
-        if (timeoutManager != null) {
-            timeoutManager.interrupt();
-        }
-    }
-
-    public PushManager getPushManager() {
-        return pushManager;
-    }
-
-    public PushRetryManager getPushRetryManager() {
-        return pushRetryManager;
     }
 
     private boolean checkIfInstanceKeyUnique(String instanceKey) throws Exception {

@@ -11,6 +11,7 @@ import it.intecs.pisa.toolbox.db.InstanceVariable;
 import it.intecs.pisa.toolbox.db.OperationInfo;
 import it.intecs.pisa.toolbox.resources.XMLResourcesPersistence;
 import it.intecs.pisa.toolbox.service.instances.InstanceHandler;
+import it.intecs.pisa.toolbox.service.instances.InstanceInfo;
 import java.io.File;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
@@ -31,7 +32,7 @@ public class TBXOperationOnErrorActions {
 
         try
         {
-            service=ServiceManager.getService(seviceInstanceId);
+            service=InstanceInfo.getService(seviceInstanceId);
 
             serviceLogger = service.getLogger();
             serviceLogger.error(errorMsg);

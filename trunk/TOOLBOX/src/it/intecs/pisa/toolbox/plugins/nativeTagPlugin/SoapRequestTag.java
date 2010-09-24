@@ -1,7 +1,7 @@
 package it.intecs.pisa.toolbox.plugins.nativeTagPlugin;
 
 import it.intecs.pisa.pluginscore.toolbox.engine.interfaces.IVariableStore;
-import it.intecs.pisa.toolbox.service.TBXService;
+import it.intecs.pisa.toolbox.constants.EngineConstants;
 
 public class SoapRequestTag extends NativeTagExecutor {
 
@@ -11,7 +11,7 @@ public class SoapRequestTag extends NativeTagExecutor {
         
         varStore=this.engine.getVariablesStore();
                 
-        return varStore.getVariable(TBXService.SOAP_REQUEST);
+        return varStore.getVariable(EngineConstants.SOAP_REQUEST);
     }
     
  

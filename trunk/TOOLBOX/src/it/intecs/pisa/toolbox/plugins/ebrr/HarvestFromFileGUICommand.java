@@ -8,7 +8,7 @@ import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.configuration.ToolboxConfiguration;
 import it.intecs.pisa.toolbox.configuration.ToolboxNetwork;
 import it.intecs.pisa.toolbox.constants.MiscConstants;
-import it.intecs.pisa.toolbox.constants.ToolboxFolder;
+import it.intecs.pisa.toolbox.constants.ToolboxFoldersFileConstants;
 import it.intecs.pisa.toolbox.service.TBXService;
 import it.intecs.pisa.toolbox.util.Util;
 import it.intecs.pisa.toolbox.service.ServiceManager;
@@ -41,13 +41,13 @@ public class HarvestFromFileGUICommand extends NativeCommandsManagerPlugin {
 // Dump message on a public directory
         Document harvestDoc = domutil.inputStreamToDocument(harvestFile.getInputStream());
         String filename = java.util.UUID.randomUUID().toString() + ".xml";
-        File harvestDir = new File(toolboxServlet.getRootDir(), ToolboxFolder.HARVEST);
+        File harvestDir = new File(toolboxServlet.getRootDir(), ToolboxFoldersFileConstants.HARVEST);
         File harvest = new File(harvestDir, filename);
         DOMUtil.dumpXML(harvestDoc, harvest);
 
 
 // Calculate the URL
-        String source = ToolboxNetwork.getEndpointURL()+ MiscConstants.SLASH+ToolboxFolder.HARVEST+MiscConstants.SLASH+filename;
+        String source = ToolboxNetwork.getEndpointURL()+ MiscConstants.SLASH+ToolboxFoldersFileConstants.HARVEST+MiscConstants.SLASH+filename;
 
         String servicename = "";
         TBXService service;

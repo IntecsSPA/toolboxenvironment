@@ -12,6 +12,7 @@ import it.intecs.pisa.toolbox.engine.ToolboxEngine;
 import it.intecs.pisa.toolbox.resources.XMLResourcesPersistence;
 import it.intecs.pisa.toolbox.service.ServiceManager;
 import it.intecs.pisa.toolbox.service.TBXService;
+import it.intecs.pisa.toolbox.service.instances.InstanceInfo;
 import java.io.File;
 import java.util.TimerTask;
 import org.apache.log4j.Logger;
@@ -38,14 +39,14 @@ public class ToolboxScriptExecutionTimerTask extends TimerTask{
 
             TBXService service;
             Logger logger;
-            service=ServiceManager.getService(service_instance_id);
+            service=InstanceInfo.getService(service_instance_id);
             logger=service.getLogger();
             
             
             FTPServerManager ftpServerManager;
             ftpServerManager=FTPServerManager.getInstance();
             
-            engine=new ToolboxEngine(logger,ftpServerManager,false);
+            engine=new ToolboxEngine(logger,false);
 
             XMLResourcesPersistence xmlPers;
             xmlPers=XMLResourcesPersistence.getInstance();

@@ -10,6 +10,7 @@ import it.intecs.pisa.common.tbx.Script;
 import it.intecs.pisa.common.communication.ServerDebugConsole;
 import it.intecs.pisa.common.communication.messages.ExecutionCompletedMessage;
 import it.intecs.pisa.toolbox.Toolbox;
+import it.intecs.pisa.toolbox.constants.EngineConstants;
 import it.intecs.pisa.toolbox.util.Util;
 import it.intecs.pisa.toolbox.service.instances.InstanceHandler;
 import it.intecs.pisa.util.DOMUtil;
@@ -60,8 +61,8 @@ public class TBXSynchronousOperation extends TBXOperation {
             tbxScript = (TBXScript) getScript(Script.SCRIPT_TYPE_FIRST_SCRIPT);
             script = tbxScript.getScriptDoc().getDocumentElement();
 
-            if (DOMUtil.hasElement(script, (scriptPrefix = script.getPrefix()) == null ? TBXService.CLEANUP_PROCEDURE : scriptPrefix + ":" + TBXService.CLEANUP_PROCEDURE)) {
-                cleanupProcedure = (Element) (script = ((Element) script.cloneNode(true))).removeChild(DOMUtil.getChildByLocalName(script, TBXService.CLEANUP_PROCEDURE));
+            if (DOMUtil.hasElement(script, (scriptPrefix = script.getPrefix()) == null ? EngineConstants.CLEANUP_PROCEDURE : scriptPrefix + ":" + EngineConstants.CLEANUP_PROCEDURE)) {
+                cleanupProcedure = (Element) (script = ((Element) script.cloneNode(true))).removeChild(DOMUtil.getChildByLocalName(script, EngineConstants.CLEANUP_PROCEDURE));
             } else {
                 cleanupProcedure = null;
             }

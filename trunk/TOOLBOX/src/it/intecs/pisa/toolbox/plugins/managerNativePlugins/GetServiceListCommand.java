@@ -8,9 +8,8 @@ import it.intecs.pisa.common.tbx.Operation;
 import it.intecs.pisa.toolbox.service.ServiceManager;
 import it.intecs.pisa.toolbox.service.TBXService;
 import it.intecs.pisa.pluginscore.exceptions.GenericException;
+import it.intecs.pisa.toolbox.constants.OperationConstants;
 import it.intecs.pisa.util.DOMUtil;
-import java.util.Enumeration;
-import java.util.Hashtable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.w3c.dom.Document;
@@ -81,7 +80,7 @@ public class GetServiceListCommand extends NativeCommandsManagerPlugin {
         operationTag.setAttribute("name", operation.getName());
         operationTag.setAttribute("soapAction", operation.getSoapAction());
 
-        if (operation.getType().equals(TBXService.ASYNCHRONOUS)) {
+        if (operation.getType().equals(OperationConstants.ASYNCHRONOUS)) {
             operationTag.setAttribute("callbackSoapAction", operation.getCallbackSoapAction());
         }
 

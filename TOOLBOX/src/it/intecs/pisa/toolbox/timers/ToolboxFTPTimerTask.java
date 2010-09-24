@@ -9,6 +9,7 @@ import it.intecs.pisa.toolbox.FTPServerManager;
 import it.intecs.pisa.toolbox.db.Timers;
 import it.intecs.pisa.toolbox.service.ServiceManager;
 import it.intecs.pisa.toolbox.service.TBXService;
+import it.intecs.pisa.toolbox.service.instances.InstanceInfo;
 import java.util.TimerTask;
 import org.apache.log4j.Logger;
 
@@ -31,7 +32,7 @@ public class ToolboxFTPTimerTask extends TimerTask{
         {
             TBXService service;
             Logger logger;
-            service=ServiceManager.getService(service_instance_id);
+            service=InstanceInfo.getService(service_instance_id);
             logger=service.getLogger();
 
             FTPServerManager ftpMan;

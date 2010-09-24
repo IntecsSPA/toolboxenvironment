@@ -7,8 +7,8 @@ package it.intecs.pisa.toolbox.constants;
 
 /**
  *
- * @author Massimiliano Fanciulli
+ * @author massi
  */
-public class ToolboxFolder {
-    public static final String HARVEST = "harvest";
+public class RequestsConstants {
+    public static final String REQUEST_PARAMETER_COMMAND = "cmd";
 }

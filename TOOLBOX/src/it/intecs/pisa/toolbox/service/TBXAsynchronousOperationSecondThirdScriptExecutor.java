@@ -26,7 +26,9 @@ import it.intecs.pisa.toolbox.db.ToolboxInternalDatabase;
 import it.intecs.pisa.toolbox.log.ErrorMailer;
 import it.intecs.pisa.toolbox.service.instances.InstanceHandler;
 import it.intecs.pisa.toolbox.service.instances.InstanceInfo;
+import it.intecs.pisa.toolbox.timers.AsynchInstancesSecondScriptWakeUpManager;
 import it.intecs.pisa.util.SOAPUtil;
+import it.intecs.pisa.util.datetime.TimeInterval;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.concurrent.Semaphore;
@@ -45,13 +47,16 @@ public class TBXAsynchronousOperationSecondThirdScriptExecutor extends Thread {
     protected Semaphore mutex = null;
     protected TBXService service;
 
-    public TBXAsynchronousOperationSecondThirdScriptExecutor(long id, boolean dbgMode, Logger log) throws Exception {
+    public TBXAsynchronousOperationSecondThirdScriptExecutor(long id) throws Exception {
         super(Long.toString(id) + "_FirstScriptExecutor");
 
         serviceInstanceId = id;
-        debugMode = dbgMode;
 
-        service = ServiceManager.getService(serviceInstanceId);
+        Toolbox tbxInstance;
+        tbxInstance=Toolbox.getInstance();
+        debugMode=tbxInstance.getInstanceKeyUnderDebug()==id;
+
+        service = InstanceInfo.getService(serviceInstanceId);
         logger = service.getLogger();
     }
 
@@ -63,7 +68,7 @@ public class TBXAsynchronousOperationSecondThirdScriptExecutor extends Thread {
         Document errorResp;
         try {
             try {
-                if(service.isInitialized()==true)
+                if(service.isInitialized()==true && shallStopExecution()==false)
                 {
                     handler = new InstanceHandler(serviceInstanceId);
 
@@ -76,19 +81,24 @@ public class TBXAsynchronousOperationSecondThirdScriptExecutor extends Thread {
                     }
                     catch(Exception e)
                     {
-                        logger.error("Error while executing second script.");
+                        logger.error("Error while executing second script. Details: "+e.getMessage());
                         ErrorMailer.send(serviceInstanceId,"Error while executing second script.");
                         throw e;
                     }
 
-                    if (InstanceStatuses.getInstanceStatus(serviceInstanceId) == InstanceStatuses.STATUS_CANCELLED) {
-                        return;
-                    }
+                    if (shallStopExecution())  return;
 
                     if (checkResult != null && checkResult.booleanValue() == true) {
                         executeThirdScript(handler);
                     } else {
                         InstanceStatuses.updateInstanceStatus(serviceInstanceId, InstanceStatuses.STATUS_PENDING);
+
+                        long delay=0;
+                        String pollingRate=InstanceInfo.getPollingRateFromInstanceId(serviceInstanceId);
+                        delay=TimeInterval.getIntervalAsLong(pollingRate);
+
+                        AsynchInstancesSecondScriptWakeUpManager wakeUpMan=AsynchInstancesSecondScriptWakeUpManager.getInstance();
+                        wakeUpMan.scheduleInstance(serviceInstanceId,delay);
                     }
                 }
 
@@ -119,6 +129,16 @@ public class TBXAsynchronousOperationSecondThirdScriptExecutor extends Thread {
         }
     }
 
+    protected boolean shallStopExecution() throws Exception
+    {
+         byte status=InstanceStatuses.getInstanceStatus(serviceInstanceId);
+         if (status == InstanceStatuses.STATUS_CANCELLED ||
+             status == InstanceStatuses.STATUS_EXPIRED||
+             status == InstanceStatuses.STATUS_PUSH_RETRY)
+             return true;
+         else return false;
+    }
+
     protected void executeThirdScript(InstanceHandler handler) throws Exception {
         Document response;
 
@@ -147,10 +167,6 @@ public class TBXAsynchronousOperationSecondThirdScriptExecutor extends Thread {
             }
 
             try {
-                //TBXService service;
-
-                //service = ServiceManager.getService(serviceInstanceId);
-
                 if (SOAPUtil.isSOAPFault(response) == false && service.getImplementedInterface().isValidationActive()) {
                     response = validateResponse(response);
                 }
@@ -158,7 +174,6 @@ public class TBXAsynchronousOperationSecondThirdScriptExecutor extends Thread {
                 InstanceResources.storeXMLResource(response, serviceInstanceId, InstanceResources.TYPE_OUTPUT_MESSAGE);
             } catch (Exception e) {
                 Document errorResp;
-                e.printStackTrace();
                 logger.error("An error occurred while validating the output message. See catalina.out for further information.");
 
                 InstanceResources.storeXMLResource(response, serviceInstanceId, InstanceResources.TYPE_INVALID_OUTPUT_MESSAGE);
@@ -172,10 +187,8 @@ public class TBXAsynchronousOperationSecondThirdScriptExecutor extends Thread {
                 return;
             }
 
-            try {
-                TBXAsynchronousOperationCommonTasks.sendResponseToClient(serviceInstanceId, response);
-                InstanceStatuses.updateInstanceStatus(serviceInstanceId, InstanceStatuses.STATUS_COMPLETED);
-            } catch (Exception ecc) {}
+            InstanceStatuses.updateInstanceStatus(serviceInstanceId, InstanceStatuses.STATUS_COMPLETED);
+            TBXAsynchronousOperationCommonTasks.sendResponseToClient(serviceInstanceId, response);
         } finally {
             handler.deleteAllVariablesDumped();
         }
@@ -264,19 +277,6 @@ public class TBXAsynchronousOperationSecondThirdScriptExecutor extends Thread {
             return rs.getString("ID");
         } catch (Exception e) {
             return null;
-        }
-    }
-
-    private void removeSecondScriptRefFromDb(String id) throws Exception {
-        Statement stm = null;
-
-        try {
-            stm = ToolboxInternalDatabase.getInstance().getStatement();
-            stm.executeUpdate("DELETE FROM T_INSTANCES_RESOURCES WHERE ID=" + id);
-        } finally {
-            if (stm != null) {
-                stm.close();
-            }
         }
     }
 }

@@ -7,6 +7,7 @@ package it.intecs.pisa.toolbox.util.wsil;
 
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.configuration.ToolboxNetwork;
+import it.intecs.pisa.toolbox.constants.ToolboxFoldersFileConstants;
 import it.intecs.pisa.toolbox.service.ServiceManager;
 import it.intecs.pisa.toolbox.service.TBXSOAPInterface;
 import it.intecs.pisa.toolbox.service.TBXService;
@@ -103,8 +104,8 @@ public class WSILBuilder {
             }
 
         }
-        File wsilDir = new File(toolboxServlet.getRootDir(), Toolbox.WSIL);
-        File deployedWSIL = new File(wsilDir, Toolbox.WSIL_FILE);
+        File wsilDir = new File(toolboxServlet.getRootDir(), ToolboxFoldersFileConstants.WSIL);
+        File deployedWSIL = new File(wsilDir, ToolboxFoldersFileConstants.WSIL_FILE);
         DOMUtil.dumpXML(wsilDoc, deployedWSIL);
 
         logger.info("deployed service WSIL file: " + deployedWSIL.getAbsolutePath());

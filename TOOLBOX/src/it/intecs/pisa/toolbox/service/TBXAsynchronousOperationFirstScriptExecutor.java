@@ -25,6 +25,7 @@ import it.intecs.pisa.toolbox.db.ToolboxInternalDatabase;
 import it.intecs.pisa.toolbox.log.ErrorMailer;
 import it.intecs.pisa.toolbox.service.instances.InstanceHandler;
 import it.intecs.pisa.toolbox.service.instances.InstanceInfo;
+import it.intecs.pisa.toolbox.timers.AsynchInstancesSecondScriptWakeUpManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import org.apache.log4j.Logger;
@@ -40,11 +41,26 @@ public class TBXAsynchronousOperationFirstScriptExecutor extends Thread {
     protected boolean debugMode;
     protected Logger logger;
 
-    public TBXAsynchronousOperationFirstScriptExecutor(long id, boolean dbgMode, Logger log) {
+    public TBXAsynchronousOperationFirstScriptExecutor(long id) {
         super(Long.toString(id) + "_FirstScriptExecutor");
         serviceInstanceId = id;
-        debugMode = dbgMode;
-       logger=log;
+
+        Toolbox tbxInstance;
+        tbxInstance=Toolbox.getInstance();
+        debugMode=tbxInstance.getInstanceKeyUnderDebug()==id;
+
+        try
+        {
+            TBXService service;
+            service=InstanceInfo.getService(id);
+
+            logger=service.getLogger();
+        }
+        catch(Exception e)
+        {
+            logger=Toolbox.getInstance().getLogger();
+            logger.error("An error occurred while retrieving service logger. Now logging in Toolbox log file.");
+        }
     }
 
     @Override
@@ -65,11 +81,9 @@ public class TBXAsynchronousOperationFirstScriptExecutor extends Thread {
                 if(InstanceStatuses.getInstanceStatus(serviceInstanceId)==InstanceStatuses.STATUS_CANCELLED)
                     return;
 
-                //InstanceStatuses.updateInstanceStatus(serviceInstanceId, InstanceStatuses.STATUS_PENDING);
-
-                TBXAsynchronousOperationSecondThirdScriptExecutor secondThirdExec;
-                secondThirdExec=new TBXAsynchronousOperationSecondThirdScriptExecutor(serviceInstanceId,debugMode,logger);
-                secondThirdExec.start();
+                AsynchInstancesSecondScriptWakeUpManager wakeUpMan=AsynchInstancesSecondScriptWakeUpManager.getInstance();
+                wakeUpMan.scheduleInstance(serviceInstanceId,0);
+                
             }catch (DebugTerminatedException terExc) {
                 closeDebugConsole();
                 releaseMutex();

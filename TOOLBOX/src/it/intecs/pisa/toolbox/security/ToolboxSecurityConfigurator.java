@@ -3,16 +3,15 @@ package it.intecs.pisa.toolbox.security;
 import it.intecs.pisa.common.tbx.Service;
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.soap.toolbox.exceptions.ToolboxException;
+import it.intecs.pisa.toolbox.constants.ToolboxFoldersFileConstants;
 import it.intecs.pisa.toolbox.service.ServiceManager;
 import it.intecs.pisa.toolbox.service.TBXService;
 import it.intecs.pisa.toolbox.security.service.ToolboxSecurityWrapper;
 import it.intecs.pisa.util.DOMUtil;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.security.Key;
@@ -432,7 +431,7 @@ public class ToolboxSecurityConfigurator {
      * @return
      */
     public static String getDefaultAsynchResponsePolicyPath(){
-    	File serviceFile = new File(new File(new File(Toolbox.getInstance().getRootDir(), Toolbox.getInstance().WEB_INF),"xml"), "HMAT_WSSecurityPolicy_AsynchResponse.xml");
+    	File serviceFile = new File(new File(new File(Toolbox.getInstance().getRootDir(), ToolboxFoldersFileConstants.WEB_INF),"xml"), "HMAT_WSSecurityPolicy_AsynchResponse.xml");
     	return serviceFile.getAbsolutePath();
     }
 
@@ -466,7 +465,7 @@ public class ToolboxSecurityConfigurator {
     }
     
     public static File getDefaultHMATpolicyFile(){
-    	return new File(new File(new File(Toolbox.getInstance().getRootDir(), Toolbox.getInstance().WEB_INF),"xml"), "HMAT_WSSecurityPolicy.xml");
+    	return new File(new File(new File(Toolbox.getInstance().getRootDir(), ToolboxFoldersFileConstants.WEB_INF),"xml"), "HMAT_WSSecurityPolicy.xml");
     }
     
     /**

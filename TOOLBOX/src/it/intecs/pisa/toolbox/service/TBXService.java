@@ -30,7 +30,6 @@ package it.intecs.pisa.toolbox.service;
 import it.intecs.pisa.toolbox.util.Util;
 import it.intecs.pisa.toolbox.util.TimeUtil;
 import it.intecs.pisa.toolbox.Toolbox;
-import it.intecs.pisa.toolbox.FTPServerManager;
 import it.intecs.pisa.toolbox.db.ServiceStatuses;
 import it.intecs.pisa.toolbox.engine.ToolboxEngine;
 import it.intecs.pisa.common.tbx.Operation;
@@ -53,6 +52,10 @@ import it.intecs.pisa.toolbox.service.tasks.ServiceLifeCycle;
 import it.intecs.pisa.util.wsdl.WSDL;
 import it.intecs.pisa.common.tbx.WSDLBuilder;
 import it.intecs.pisa.toolbox.configuration.ToolboxNetwork;
+import it.intecs.pisa.toolbox.constants.EngineConstants;
+import it.intecs.pisa.toolbox.constants.ServiceConstants;
+import it.intecs.pisa.toolbox.constants.ToolboxFoldersFileConstants;
+import it.intecs.pisa.toolbox.constants.XMLConstants;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.concurrent.Semaphore;
@@ -61,205 +64,6 @@ import java.util.concurrent.Semaphore;
  *  An instance of this class represents a single service deployed on the Toolbox. The main entry point is the {@link #processRequest} method that is invoked by the {@link Toolbox#onMessage} method each time a SOAP request addressed to this TBXService is received.
  */
 public class TBXService extends Service {
-
-    public static final String CDATA_S = "<![CDATA[";
-    public static final String CDATA_E = "]]>";
-    public static final String WRONG_HOST = "Unknown or not allowed host: ";
-    public static final String BACKEND_NOT_RESPONDING = "Back-end not responding";
-    public static final String UNKNOWN_SOAP_PORT = "Unknown SOAP port: ";
-    public static final String INVALID_REQUEST = "Invalid request: ";
-    public static final String INVALID_RESPONSE = "Invalid response: ";
-    public static final String UNKNOWN_OPERATION = "Unknown operation: ";
-    public static final String ORDER_ID_IN_USE = "OrderId in use: ";
-    public static final String MESSAGE_ID_IN_USE = "MessageId in use: ";
-    public static final String UNKNOWN_ORDER_ID = "Unknown OrderId: ";
-    public static final String REQUEST_STATUS = "Request status: ";
-    public static final String ORIGINAL_EXCEPTION = "originalException";
-    public static final String ERROR_CODE = "errorCode";
-    public static final String SERVICE_DEFINITION_SCHEMA = "serviceDefinition.xsd";
-    public static final String SERVICE_DEFINITION = "serviceDefinition";
-    public static final String SERVICE_STATUS_SCHEMA = "serviceStatus.xsd";
-    public static final String SERVICE_STATUS = "serviceStatus.xml";
-    public static final String XML_SCRIPT_SCHEMA = "xmlScript.xsd";
-    public static final String GET_ORDER_ID_XML = "getOrderId.xml";
-    public static final String GET_MASS_SOAP_SERVER_URL_XML = "getMassSOAPServerURL.xml";
-    public static final String PUSH = "push";
-    public static final String POLLING_RATE = "pollingRate";
-    public static final String SERVICE_SCHEMA = "serviceSchema";
-    public static final String REQUEST_TIMEOUT = "requestTimeout";
-    public static final String QUEUING = "queuing";
-    
-    public static final String SUSPEND_MODE = "suspendMode";
-    public static final String REQUEST = "request";
-    public static final String NAME = "name";
-    
-    public static final String PUSH_URL = "pushURL";
-    public static final String HOST_NAME = "hostName";
-    public static final String HOST_IP = "hostIP";
-    public static final String MASS_NAMESPACE = "http://www.esa.int/mass";
-    public static final String XMLNS = "xmlns";
-    public static final String MASS = "mass";
-    
-    public static final String MASS_HOST = "massHost";
-    public static final String MASS_HOST_ADDRESS = "massHostAddress";
-    public static final String IS_AVAILABLE = "isAvailable";
-    public static final String ARRIVAL_DATETIME = "arrivalDateTime";
-    public static final String EXPIRATION_DATETIME = "expirationDateTime";
-    public static final String SERVER_EXPIRATION_DATETIME = "serverExpirationDateTime";
-    public static final String CLIENT_EXPIRATION_DATETIME = "clientExpirationDateTime";
-    public static final String FTP_USER = "ftpUser";
-    public static final String STATUS_PATH = "statusPath";
-    public static final String DOT = ".";
-    public static final String STATUS = "status";
-    public static final String WAITING = "waiting";
-    public static final String EXECUTING = "executing";
-    public static final String PENDING = "pending";
-    public static final String READY = "ready";
-    public static final String ABORTED = "aborted";
-    public static final String CANCELLED = "cancelled";
-    public static final String REJECTED = "rejected";
-    public static final String EXPIRED = "expired";
-    public static final String STOPPED = "stopped";
-    public static final String LEAVING_RESPONSE = "leavingResponse";
-    public static final String RESPONSE_LEAVING = "responseLeaving";
-    public static final String UNPUSHED = "unpushed";
-    public static final String COMPLETED = "completed";
-    public static final String ERROR = "error";
-    public static final String REMAINING_ATTEMPTS = "remainingAttempts";
-    public static final String RETRY_ATTEMPTS = "retryAttempts";
-    public static final String RETRY_RATE = "retryRate";
-    public static final String REASON_FOR_STATUS = "reasonForStatus";
-    public static final String XML_REQUEST = "xmlRequest";
-    public static final String SOAP_REQUEST = "soapRequest";
-    public static final String SUSPENDED = "suspended";
-    public static final String PUSH_RETRY = "pushRetry";
-    public static final String XML = "xml";
-    public static final String TYPE = "type";
-    public static final String VALUE = "value";
-    public static final String TIMER = "timer";
-    public static final String FTP_ACCOUNT = "ftpAccount";
-    public static final String DELAY = "delay";
-    public static final String VARIABLE = "variable";
-    public static final String SCRIPT = "script";
-    public static final String STRING = "string";
-    public static final String SEND = "send";
-    public static final String CHECK = "check";
-    public static final String GET = "get";
-    public static final String RESULT = "Result";
-    public static final int MILLISECONDS = 1000;
-    public static final int SECONDS = 60;
-    public static final int MINUTES = 60;
-    public static final int HOURS = 24;
-    public static final String REQUESTS = "requests";
-    public static final String ADMITTED_HOSTS = "admittedHosts";
-    public static final String ADMITTED_HOST = "admittedHost";
-    public static final String SSL_CERTIFICATE = "sslCertificate";
-    protected static final String TIMER_STATUS_XML = "timerStatus.xml";
-    private static InetAddress localHost = null;
-    public static final String IMPORT = "import";
-    public static final String INCLUDE = "include";
-    public static final String REDEFINE = "redefine";
-    public static final String SCHEMA_LOCATION = "schemaLocation";
-    public static final String SERVICE_MODE = "serviceMode";
-    public static final String SYNCHRONOUS = "synchronous";
-    public static final String VARIABLES = "variables";
-    public static final String INT = "int";
-    public static final String BYTE = "byte";
-    public static final String LONG = "long";
-    public static final String SHORT = "short";
-    public static final String FLOAT = "float";
-    public static final String DOUBLE = "double";
-    public static final String BOOLEAN = "boolean";
-    public static final String CHAR = "char";
-    public static final String CLEANUP_PROCEDURE = "cleanupProcedure";
-    public static final String CLEANUP_MARKERS = "cleanupMarkers";
-    public static final String MARKER = "marker";
-    public static final String WSDL_XSL = "WSDL.xsl";
-    public static final String APACHE_HOST = "apacheHost";
-    public static final String TOMCAT_HOST = "tomcatHost";
-    public static final String MASS_SCHEMA_URL = "massSchemaURL";
-    public static final String SERVICE_SCHEMA_URL = "serviceSchemaURL";
-    public static final String SAMPLE_SERVICE_WSDL = "sampleServiceWSDL.xml";
-    public static final String DOT_WSDL = ".wsdl";
-    public static final String DOT_WSIL = ".wsil";
-    public static final String WSDL = "WSDL";
-    public static final String SERVICE_DEFINITION_NS = "http://pisa.intecs.it/mass/toolbox/serviceDefinition";
-    public static final String SERVICE_DESCRIPTOR_NS = "http://pisa.intecs.it/mass/toolbox/serviceDescriptor";
-    public static final String SERVICE_DESCRIPTOR_FILE = "serviceDescriptor.xml";
-    public static final String SERVICE_DESCRIPTOR_SCHEMA = "serviceDescriptor.xsd";
-    public static final String XML_SCRIPT_NS = "http://pisa.intecs.it/mass/toolbox/xmlScript";
-    public static final String RFQ = "RFQ";
-    public static final String ORDER = "Order";
-    public static final String PORT_8080 = "8080";
-    public static final String PORT_80 = "80";
-    public static final String COLON = ":";
-    public static final String HTTP = "http://";
-    public static final String HTTPS = "https://";
-    public static final String SERVICES = "services";
-    public static final String SLASH = "/";
-    public static final String TOOLBOX = "TOOLBOX";
-    public static final String TARGET_NAMESPACE = "targetNamespace";
-    public static final String XMLNS_TNS = "xmlns:tns";
-    public static final String MASS_SCHEMA = "mass.xsd";
-    public static final String URL = "url";
-    public static final String PROCESS = "process";
-    public static final String SEARCH = "Search";
-    public static final String PRESENT = "Present";
-    public static final String TEST_CONFIGURATION_FILE_NAME = "testConfigurationFileName";
-    public static final String WEB_INF = "WEB-INF";
-    public static final String WSA_URI = "http://schemas.xmlsoap.org/ws/2003/03/addressing";
-    public static final String MESSAGE_ID = "MessageID";
-    public static final String REPLY_TO = "ReplyTo";
-    public static final String ADDRESS = "Address";
-    public static final String SERVICE_NAME_U = "ServiceName";
-    public static final String PORT_TYPE = "PortType";
-    public static final String PORT_TYPE_L = "portType";
-    public static final String RELATES_TO = "RelatesTo";
-    public static final String WSA = "wsa";
-    public static final String XSL = "XSL";
-    public static final String SCHEMAS = "schemas";
-    public static final String SCRIPTS = "scripts";
-    public static final String SOAP_ACTION = "soapAction";
-    public static final String SCRIPT_FILE = "scriptFile";
-    public static final String ASYNCHRONOUS = "asynchronous";
-    public static final String EXPORT_DESCRIPTOR_FILE = "exportDescriptor.xml";
-    public static final String EXPORT_DESCRIPTOR_SCHEMA = "exportDescriptor.xsd";
-    public static final String EXPORT_DESCRIPTOR_NS = "http://pisa.intecs.it/mass/toolbox/exportDescriptor";
-    public static final String SERVICE = "service";
-    public static final String SCHEMA_DOCUMENTS = "schemaDocuments";
-    public static final String WSDL_INFO = "wsdlInfo";
-    public static final String REQUEST_MESSAGE = "requestMessage";
-    public static final String RESPONSE_MESSAGE = "responseMessage";
-    public static final String PUSH_MESSAGE = "pushMessage";
-    public static final String PUSH_RESPONSE = "pushResponse";
-    public static final String NS = "ns";
-    public static final String WSDL_TARGET_NS = "wsdlTargetNS";
-    public static final String OPERATION_MODE = "operationMode";
-    public static final String TMP = "tmp";
-    public static final String ABSTRACT = "abstract";
-    public static final String DESCRIPTION = "description";
-    public static final String EMPTY_STRING = "";
-    public static final String SSE_SCHEMA_VERSION = "SSESchemaVersion";
-    public static final String SSE = "SSE";
-    public static final String SYNCHRONOUS_INSTANCES = "synchronousInstances";
-    public static final String ASYNCHRONOUS_INSTANCES = "asynchronousInstances";
-    public static final String INSTANCE = "instance";
-    public static final String KEY = "key";
-    public static final String DATE = "date";
-    public static final String DOT_LOG = ".log";
-    public static final String RESPONSE_SCRIPT = "executionResult_responseBuilder.xml";
-    public static final String FIRST_SCRIPT = "executionResult_firstScript.xml";
-    public static final String SECOND_SCRIPT = "executionResult_secondScript.xml";
-    public static final String THIRD_SCRIPT = "executionResult_thirdScript.xml";
-    public static final String ERROR_EMAIL = "errorNotificationEmail";
-    public static final String EOLI_SEARCH = "EOLI_Search";
-    public static final String EOLI_PRESENT = "EOLI_Present";
-    public static final String EOLI_NAMESPACE = "http://earth.esa.int/XML/eoli";
-    public static final String ORDERID_LOG_START = "[";
-    public static final String ORDERID_LOG_END = "]";
-
-    
-    private PushManager pushManager;
     private Toolbox toolbox;
     private Logger logger;
     private File root;
@@ -270,14 +74,11 @@ public class TBXService extends Service {
     private File descriptorFile;
     private DocumentBuilder validatingParser;
     private File logFile;
-    private File requestDir;
-    private Hashtable requests = new Hashtable();
-    private FTPServerManager ftpServerManager;
     private Element getOrderIdScript;
     private String orderIdXpath;
     private HashMap soapActions = new HashMap();
     private File logDir;
-    private File timerStatusFile;
+    private static InetAddress localHost = null;
 
     /**
      *
@@ -290,8 +91,6 @@ public class TBXService extends Service {
         Document descriptorDocument;
         Operation[] operations;
         DOMUtil util;
-        TBXOperation tbxo;
-        File schemaRootDir;
 
         util = new DOMUtil();
         toolbox = Toolbox.getInstance();
@@ -299,14 +98,7 @@ public class TBXService extends Service {
         serviceName=serviceRootDir.getName();
         serviceRoot = serviceRootDir;
         publicServiceDir = publicServiceDirectory;
-        ftpServerManager = FTPServerManager.getInstance();
         root = toolbox.getRootDir();
-
-
-        requestDir = new File(serviceRootDir, REQUESTS);
-        if (!requestDir.exists()) {
-            requestDir.mkdir();
-        }
 
         logDir = new File(toolbox.getLogDir(), serviceName);
         if (!logDir.exists()) {
@@ -319,7 +111,7 @@ public class TBXService extends Service {
         logger.info("Service " + serviceName + " created");
 
         /* Loads configuration file into a DOM Document. If configuration file doesn't exists (first service creation), it is copied from the rootEl */
-        descriptorFile = new File(serviceRootDir, SERVICE_DESCRIPTOR_FILE);
+        descriptorFile = new File(serviceRootDir, ServiceConstants.SERVICE_DESCRIPTOR_FILE_NAME);
 
         descriptorDocument = util.fileToDocument(descriptorFile);
         initializeFromXMLDescriptor(descriptorDocument.getDocumentElement());
@@ -328,22 +120,14 @@ public class TBXService extends Service {
 
         for(Operation o:operations)
         {
-            tbxo= (TBXOperation)o;
             this.soapActions.put(new String(o.getSoapAction()), "");
         }
 
         //this is now fixed
         orderIdXpath = "//mass:orderId";
-        this.getOrderIdScript=util.fileToDocument(new File(new File(new File(getRoot(), WEB_INF), "scripts"), "getOrderId.xml")).getDocumentElement();
+        this.getOrderIdScript=util.fileToDocument(new File(new File(new File(getRoot(), ToolboxFoldersFileConstants.WEB_INF), "scripts"), "getOrderId.xml")).getDocumentElement();
 
         logger.info("service configuration loaded");
-
-        schemaRootDir = new File(serviceRootDir, implementedInterface.getSchemaDir());
-        
-        timerStatusFile = new File(serviceRootDir, TIMER_STATUS_XML);
-        if (timerStatusFile.exists() == false) {
-            IOUtil.copyFile(new File(new File(new File(getRoot(), WEB_INF), XML), TIMER_STATUS_XML), timerStatusFile);
-        }
 
         initialized=true;
         logger.info("Started timer manager");
@@ -373,7 +157,6 @@ public class TBXService extends Service {
         }
         catch(Exception e)
         {
-            e.printStackTrace();
             logger.error("Unable to deploy WSDL or schema");
         }
 
@@ -417,9 +200,9 @@ public class TBXService extends Service {
         String schemaFilePath = schemaFile.getAbsolutePath();
         Document schemaDoc = new DOMUtil().fileToDocument(schemaFilePath);
         String schemaDocURI = schemaDoc.getDocumentElement().getNamespaceURI();
-        updateSchemaElements(schemaDoc.getElementsByTagNameNS(schemaDocURI, IMPORT), directory, referredSchemas);
-        updateSchemaElements(schemaDoc.getElementsByTagNameNS(schemaDocURI, INCLUDE), directory, referredSchemas);
-        updateSchemaElements(schemaDoc.getElementsByTagNameNS(schemaDocURI, REDEFINE), directory, referredSchemas);
+        updateSchemaElements(schemaDoc.getElementsByTagNameNS(schemaDocURI, ToolboxFoldersFileConstants.IMPORT), directory, referredSchemas);
+        updateSchemaElements(schemaDoc.getElementsByTagNameNS(schemaDocURI, ToolboxFoldersFileConstants.INCLUDE), directory, referredSchemas);
+        updateSchemaElements(schemaDoc.getElementsByTagNameNS(schemaDocURI, ToolboxFoldersFileConstants.REDEFINE), directory, referredSchemas);
         DOMUtil.dumpXML(schemaDoc, schemaFile);
         logger.info("updated schema file: " + schemaFilePath);
 
@@ -432,13 +215,11 @@ public class TBXService extends Service {
         int backslashLastIndex;
         for (int index = 0; index < list.getLength(); index++) {
             element = (Element) list.item(index);
-            schemaLocation = (element.getAttribute(SCHEMA_LOCATION));
+            schemaLocation = (element.getAttribute(XMLConstants.SCHEMA_LOCATION));
             referredSchemas.add(schemaFile = new File(directory, schemaLocation.substring((backslashLastIndex = schemaLocation.lastIndexOf('\\')) > 0 ? backslashLastIndex + 1 : schemaLocation.lastIndexOf('/') + 1)));
-            element.setAttribute(SCHEMA_LOCATION, Util.getURI(schemaFile.getAbsolutePath()));
+            element.setAttribute(XMLConstants.SCHEMA_LOCATION, Util.getURI(schemaFile.getAbsolutePath()));
         }
-    }
-
-   
+    } 
 
     public File getServiceRoot() {
         return serviceRoot;
@@ -466,7 +247,7 @@ public class TBXService extends Service {
         {
             operation = (TBXOperation) this.implementedInterface.getOperationBySOAPAction(soapAction);
             if (operation==null) {
-                errorStr=UNKNOWN_SOAP_PORT+ soapAction;
+                errorStr="Unknown SOAP port: "+ soapAction;
                 logger.error("[" + serviceName + "] " +errorStr);
                
                 throw new ToolboxException(errorStr);
@@ -516,7 +297,7 @@ public class TBXService extends Service {
 
             toolboxEngine = new ToolboxEngine(logger);
 
-            toolboxEngine.put(XML_REQUEST, requestContent);
+            toolboxEngine.put(EngineConstants.XML_REQUEST, requestContent);
             toolboxEngine.put("orderIdXPath", this.orderIdXpath);
 
             return (String) toolboxEngine.executeScript(getOrderIdScript);
@@ -665,12 +446,12 @@ public class TBXService extends Service {
     }
 
     public void deleteSynchronousIstance(String key) throws Exception {
-        File requestLogDir = new File(new File(getLogDir(), SYNCHRONOUS_INSTANCES), key);
+        File requestLogDir = new File(new File(getLogDir(), ToolboxFoldersFileConstants.SYNCHRONOUS_INSTANCES), key);
         IOUtil.rmdir(requestLogDir);
     }
 
     public void deleteAsynchronousIstance(String key) throws Exception {
-        File requestLogDir = new File(new File(getLogDir(), ASYNCHRONOUS_INSTANCES), key);
+        File requestLogDir = new File(new File(getLogDir(), ToolboxFoldersFileConstants.ASYNCHRONOUS_INSTANCES), key);
         IOUtil.rmdir(requestLogDir);
 
     }
@@ -786,7 +567,7 @@ public class TBXService extends Service {
 
     public InputStream getAsynchronousResource(String instanceId, String resourceKey) throws Exception {
         final String resKey = new String(resourceKey);
-        File requestLogDir = new File(new File(getLogDir(), ASYNCHRONOUS_INSTANCES), instanceId);
+        File requestLogDir = new File(new File(getLogDir(), ToolboxFoldersFileConstants.ASYNCHRONOUS_INSTANCES), instanceId);
         File[] filesArray = requestLogDir.listFiles(new FileFilter() {
 
             public boolean accept(File file) {
@@ -797,7 +578,7 @@ public class TBXService extends Service {
     }
 
     public InputStream getSynchronousResource(String instanceId, String resourceKey) throws Exception {
-        return new FileInputStream(new File(new File(new File(getLogDir(), SYNCHRONOUS_INSTANCES), instanceId), resourceKey));
+        return new FileInputStream(new File(new File(new File(getLogDir(), ToolboxFoldersFileConstants.SYNCHRONOUS_INSTANCES), instanceId), resourceKey));
     }
 
     public InputStream getTimerStatus() throws Exception {
@@ -824,7 +605,7 @@ public class TBXService extends Service {
 
     public InputStream getWSDL() throws Exception {
         try {
-            return new FileInputStream(new File(new File(new File(getRoot(), WSDL), this.getServiceName()), this.getServiceName() + DOT_WSDL));
+            return new FileInputStream(new File(new File(new File(getRoot(), ToolboxFoldersFileConstants.WSDL), this.getServiceName()), this.getServiceName() + ".wsdl"));
         } catch (Exception e) {
             e.printStackTrace(System.out);
             throw e;
@@ -833,7 +614,7 @@ public class TBXService extends Service {
 
     public InputStream getSchema() throws Exception {
         try {
-            return new FileInputStream(new File(new File(new File(getToolbox().getRootDir(), WSDL), this.getServiceName()), this.getServiceName()));
+            return new FileInputStream(new File(new File(new File(getToolbox().getRootDir(), ToolboxFoldersFileConstants.WSDL), this.getServiceName()), this.getServiceName()));
         } catch (Exception e) {
             e.printStackTrace(System.out);
             throw e;
@@ -990,30 +771,6 @@ public class TBXService extends Service {
         this.validatingParser = validatingParser;
     }
 
-    public FTPServerManager getFtpServerManager() {
-        return ftpServerManager;
-    }
-
-    public void setFtpServerManager(FTPServerManager ftpServerManager) {
-        this.ftpServerManager = ftpServerManager;
-    }
-
-    public Hashtable getRequests() {
-        return requests;
-    }
-
-    public void setRequests(Hashtable requests) {
-        this.requests = requests;
-    }
-
-   /* public Document getStatus() {
-        return status;
-    }
-
-    public void setStatus(Document status) {
-        this.status = status;
-    }*/
-
     public File getRoot() {
         return root;
     }
@@ -1021,16 +778,6 @@ public class TBXService extends Service {
     public void setRoot(File root) {
         this.root = root;
     }
-
-    public File getRequestDir() {
-        return requestDir;
-    }
-
-    public void setRequestDir(File requestDir) {
-        this.requestDir = requestDir;
-    }
-
-   
 
     public String getImplementdInterface() {
         it.intecs.pisa.common.tbx.Service descr;
@@ -1152,7 +899,7 @@ public class TBXService extends Service {
 
             TBXAsynchronousOperationFirstScriptExecutor fsExecutor;
 
-            fsExecutor = new TBXAsynchronousOperationFirstScriptExecutor(instanceId, false, logger);
+            fsExecutor = new TBXAsynchronousOperationFirstScriptExecutor(instanceId);
             fsExecutor.start();
 
             logger.info("Instance "+instanceId+" restarted successfully");

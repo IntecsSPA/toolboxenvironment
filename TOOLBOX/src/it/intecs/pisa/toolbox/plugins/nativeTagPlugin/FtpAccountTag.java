@@ -29,7 +29,7 @@ public class FtpAccountTag extends NativeTagExecutor {
         Document doc;
 
         configVarStore = this.engine.getConfigurationVariablesStore();
-        ftpServerManager = (FTPServerManager) configVarStore.getVariable(ToolboxEngineVariablesKeys.CONFIGURATION_FTP_SERVER_MANAGER);
+        
         logger = (Logger) configVarStore.getVariable(ToolboxEngineVariablesKeys.CONFIGURATION_SERVICE_LOGGER);
 
         varStore = this.engine.getVariablesStore();
@@ -51,6 +51,7 @@ public class FtpAccountTag extends NativeTagExecutor {
                 ftpAccount.getAttribute(WRITE_PERMISSION).
                 equals(TRUE)) ? true : false);
 
+        ftpServerManager = FTPServerManager.getInstance();
         ftpServerManager.addUser(
                 user,
                 (String) this.executeChildTag(DOMUtil.getFirstChild((Element) children.next()), passwordTag),

@@ -174,7 +174,7 @@ public class ServiceManager {
             writer.close();
         }
 
-        descriptorFile = new File(serviceRoot, TBXService.SERVICE_DESCRIPTOR_FILE);
+        descriptorFile = new File(serviceRoot, ServiceConstants.SERVICE_DESCRIPTOR_FILE_NAME);
 
         descriptorDocument = descriptor.createServiceDescriptor();
         DOMUtil.dumpXML(descriptorDocument, descriptorFile);
@@ -509,11 +509,6 @@ public class ServiceManager {
 
     }
 
-    public static TBXService getService(long serviceInstanceId) throws Exception
-    {
-      return ServiceManager.getInstance().getService(ServiceInfo.getServiceName(serviceInstanceId));
-    }
-
     public boolean cloneService(String fromName, String toName) {
         File toServiceDir;
         File fromServiceDir;
@@ -534,7 +529,7 @@ public class ServiceManager {
             File descriptorFile;
 
             util=new DOMUtil();
-            descriptorFile=new File(toServiceDir,TBXService.SERVICE_DESCRIPTOR_FILE);
+            descriptorFile=new File(toServiceDir,ServiceConstants.SERVICE_DESCRIPTOR_FILE_NAME);
 
             descriptor=util.fileToDocument(descriptorFile);
             descriptor.getDocumentElement().setAttribute("serviceName", toName);

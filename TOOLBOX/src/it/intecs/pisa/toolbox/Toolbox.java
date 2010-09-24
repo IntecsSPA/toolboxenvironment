@@ -63,6 +63,9 @@ import it.intecs.pisa.toolbox.db.ServiceStatuses;
 import it.intecs.pisa.pluginscore.UIPluginManager;
 import it.intecs.pisa.toolbox.cleanup.AutomaticCleanup;
 import it.intecs.pisa.toolbox.constants.MiscConstants;
+import it.intecs.pisa.toolbox.constants.RequestsConstants;
+import it.intecs.pisa.toolbox.constants.ToolboxFoldersFileConstants;
+import it.intecs.pisa.toolbox.constants.XMLConstants;
 import it.intecs.pisa.toolbox.db.StatisticsUtil;
 import it.intecs.pisa.toolbox.log.ErrorMailer;
 import org.apache.axiom.om.OMElement;
@@ -73,13 +76,17 @@ import org.apache.axis2.transport.http.AxisServlet;
 import org.apache.axis2.util.XMLUtils;
 import it.intecs.pisa.toolbox.plugins.managerNativePlugins.DeployServiceCommand;
 import it.intecs.pisa.toolbox.resources.TextResourcesPersistence;
+import it.intecs.pisa.toolbox.timers.AsynchInstancesSecondScriptWakeUpManager;
+import it.intecs.pisa.toolbox.timers.PushRetryManager;
+import it.intecs.pisa.toolbox.timers.TimeoutManager;
+import it.intecs.pisa.toolbox.timers.TimerManager;
 import it.intecs.pisa.util.json.JsonErrorObject;
 import it.intecs.pisa.util.json.JsonUtil;
 import it.intecs.pisa.util.xml.DocumentError;
 
 public class Toolbox extends AxisServlet implements ServletContextListener {
 
-    public static final String CDATA_S = "<![CDATA[";
+    /*public static final String CDATA_S = "<![CDATA[";
     public static final String CDATA_E = "]]>";
     public static final String ROOT = "/";
     public static final String XSD = ".xsd";
@@ -142,7 +149,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     public static final String ERROR_BOTH = "BOTH";
     protected static final String TRANSFORMER_KEY = "javax.xml.transform.TransformerFactory";
     protected static final String TRANSFORMER_XALAN = "org.apache.xalan.xsltc.trax.TransformerFactoryImpl";
-    protected static final String REQUEST_PARAMETER_COMMAND = "cmd";
+    protected static final String REQUEST_PARAMETER_COMMAND = "cmd";*/
     private static String mailError = null;
     private File rootDir;
     private File logDir;
@@ -179,10 +186,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     public ServerDebugConsole initDebugConsole(int port) {
 
         try {
-            System.out.println("Starting Debug Console");
-
             if (dbgConsole != null) {
-                System.out.println("Found Server console still running.. Closing");
                 TerminateMessage msg;
 
                 msg = new TerminateMessage();
@@ -197,7 +201,6 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
 
 
         } catch (Exception e) {
-            e.printStackTrace();
             dbgConsole = null;
             return null;
         }
@@ -215,7 +218,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         String warnMsg = null;
 
         try {
-            dir = (new File(webinf, FTP_SERVER)).getAbsolutePath();
+            dir = (new File(webinf, ToolboxFoldersFileConstants.FTP_SERVER)).getAbsolutePath();
 
             setFtpServerManager(FTPServerManager.getInstance(dir));
 
@@ -380,7 +383,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         ManagerPluginManager man;
         IManagerPlugin commandPlugin;
         try {
-            cmd = req.getParameter(REQUEST_PARAMETER_COMMAND);
+            cmd = req.getParameter(RequestsConstants.REQUEST_PARAMETER_COMMAND);
             method = req.getMethod();
 
             man = ManagerPluginManager.getInstance();
@@ -413,7 +416,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
                 BufferedReader buf = req.getReader();
                 soapRequestDocument = domUtil.readerToDocument(buf);
             } catch (Exception e) {
-                errorMsg = "Error extracting SOAP payload: " + CDATA_S + e.getMessage() + CDATA_E;
+                errorMsg = "Error extracting SOAP payload: " + MiscConstants.CDATA_S + e.getMessage() + MiscConstants.CDATA_E;
                 logger.error(errorMsg);
                 throw new ToolboxException(errorMsg);
             }
@@ -506,9 +509,9 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         TBXOperation operation = (TBXOperation) service.getImplementedInterface().getOperationBySOAPAction(operationName);
 
         if (operation == null) {
-            logger.error("[" + serviceName + "] " + TBXService.UNKNOWN_SOAP_PORT + operationName);
-            ErrorMailer.send(serviceName, operationName, null, null, "[" + serviceName + "] " + TBXService.UNKNOWN_SOAP_PORT + operationName);
-            throw new ToolboxException(TBXService.UNKNOWN_SOAP_PORT + operationName + " for service " + serviceName);
+            logger.error("[" + serviceName + "] " + "Unknown SOAP port" + operationName);
+            ErrorMailer.send(serviceName, operationName, null, null, "[" + serviceName + "] " + "Unknown SOAP port" + operationName);
+            throw new ToolboxException("Unknown SOAP port" + operationName + " for service " + serviceName);
         }
 
         //**************** Processing Request *********************
@@ -623,8 +626,8 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             servletInstance = this;
             util = new DOMUtil();
 
-            rootDir = new File(getServletContext().getRealPath(ROOT));
-            File webinfDir = new File(rootDir, WEB_INF);
+            rootDir = new File(getServletContext().getRealPath(MiscConstants.ROOT));
+            File webinfDir = new File(rootDir, ToolboxFoldersFileConstants.WEB_INF);
             File libDir = new File(webinfDir, "lib");
             File workingDir = new File(webinfDir, "db");
             File dblock = new File(workingDir, "TOOLBOX.lck");
@@ -704,19 +707,19 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             adjustAllSchemaReferences(); // Adjust the Schema cross references (import and include) paths according to the rootDir
 
             File wsdlDir;
-            if (!(wsdlDir = new File(rootDir, WSDL)).exists()) {
+            if (!(wsdlDir = new File(rootDir, ToolboxFoldersFileConstants.WSDL)).exists()) {
                 wsdlDir.mkdir();
             }
             File exportDir;
-            if (!(exportDir = new File(rootDir, EXPORT)).exists()) {
+            if (!(exportDir = new File(rootDir, ToolboxFoldersFileConstants.EXPORT)).exists()) {
                 exportDir.mkdir();
             }
             File tmpDir;
-            if (!(tmpDir = new File(new File(rootDir, WEB_INF), TMP)).exists()) {
+            if (!(tmpDir = new File(new File(rootDir, ToolboxFoldersFileConstants.WEB_INF), ToolboxFoldersFileConstants.TMP)).exists()) {
                 tmpDir.mkdir();
             }
             File pushDir;
-            if (!(pushDir = new File(rootDir, PUSH)).exists()) {
+            if (!(pushDir = new File(rootDir, ToolboxFoldersFileConstants.PUSH)).exists()) {
                 pushDir.mkdir();
             }
 
@@ -729,7 +732,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             logger.info("Toolbox services started");
 
             if (ftpServerManager != null) {
-                initFtpServer(new File(rootDir, WEB_INF));
+                initFtpServer(new File(rootDir, ToolboxFoldersFileConstants.WEB_INF));
                 ftpServerManager.updatePort(tbxConfig.getConfigurationValue(ToolboxConfiguration.FTP_PORT));
                 logger.info("FTP server started");
             }
@@ -778,8 +781,11 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
 
         try {
             AutomaticCleanup.start();
-            it.intecs.pisa.toolbox.timers.TimerManager timerMan=it.intecs.pisa.toolbox.timers.TimerManager.getInstance();
 
+            TimerManager timerMan=TimerManager.getInstance();
+            AsynchInstancesSecondScriptWakeUpManager wakeupMan=AsynchInstancesSecondScriptWakeUpManager.getInstance();
+            PushRetryManager pushMan=PushRetryManager.getInstance();
+            TimeoutManager timeoutMan=TimeoutManager.getInstance();
         } catch (Exception e) {
             logger.info("Cannot start automatic cleanup service");
         }
@@ -807,16 +813,16 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         proxyPort = tbxConfig.getConfigurationValue(ToolboxConfiguration.PROXY_PORT);
 
         if (proxyHost.length() > 0 && proxyPort.length() > 0) {
-            System.setProperty(PROXY_HOST_KEY, proxyHost);
-            System.setProperty(PROXY_PORT_KEY, proxyPort);
+            System.setProperty(MiscConstants.PROXY_HOST_KEY, proxyHost);
+            System.setProperty(MiscConstants.PROXY_PORT_KEY, proxyPort);
             logger.info("set proxy " + proxyHost + "(port " + proxyPort + ")");
         } else {
             Properties properties = System.getProperties();
-            if (properties.containsKey(PROXY_HOST_KEY)) {
-                properties.remove(PROXY_HOST_KEY);
+            if (properties.containsKey(MiscConstants.PROXY_HOST_KEY)) {
+                properties.remove(MiscConstants.PROXY_HOST_KEY);
             }
-            if (properties.containsKey(PROXY_PORT_KEY)) {
-                properties.remove(PROXY_PORT_KEY);
+            if (properties.containsKey(MiscConstants.PROXY_PORT_KEY)) {
+                properties.remove(MiscConstants.PROXY_PORT_KEY);
             }
         }
 
@@ -828,7 +834,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         if (getFtpServerManager() == null) {
             // We try to activate the FTP server.
             try {
-                setFtpServerManager(FTPServerManager.getInstance(new File(new File(new File(getServletContext().getRealPath(ROOT)), WEB_INF), FTP_SERVER).getAbsolutePath()));
+                setFtpServerManager(FTPServerManager.getInstance(new File(new File(new File(getServletContext().getRealPath(MiscConstants.ROOT)), ToolboxFoldersFileConstants.WEB_INF), ToolboxFoldersFileConstants.FTP_SERVER).getAbsolutePath()));
             } catch (Exception e) {
                 setFtpServerManager(null);
                 logger.error("Unable to create the FTP server. Error details: " + e.getMessage());
@@ -969,31 +975,31 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
      *  Builds the public directory of a TBXService, given its name
      */
     public File getPublicServiceDir(String serviceName) {
-        return new File(new File(getRootDir(), WSDL), serviceName);
+        return new File(new File(getRootDir(), ToolboxFoldersFileConstants.WSDL), serviceName);
     }
 
     /**
      *  Builds the work directory of a TBXService, given its name
      */
     public File getServiceRoot(String serviceName) {
-        return new File(new File(new File(getRootDir(), WEB_INF), SERVICES), serviceName);
+        return new File(new File(new File(getRootDir(), ToolboxFoldersFileConstants.WEB_INF), ToolboxFoldersFileConstants.SERVICES), serviceName);
     }
 
     /**
      *  returns the directory where the axis services are deployed (configured in the axis2.xml)
      */
     public File getAxis2ServicesRoot(String fileName) {
-        return new File(new File(new File(getRootDir(), WEB_INF), AXIS2SERVICES), fileName);
+        return new File(new File(new File(getRootDir(), ToolboxFoldersFileConstants.WEB_INF), ToolboxFoldersFileConstants.AXIS2SERVICES), fileName);
     }
 
     /**
      *  Adjusts the Schema cross references (import and include) paths according to the rootDir in every schema file in the rootDir directory
      */
     private void adjustAllSchemaReferences() throws Exception {
-        File[] schemas = new File(new File(getRootDir(), WEB_INF), SCHEMAS).listFiles(new FileFilter() {
+        File[] schemas = new File(new File(getRootDir(), ToolboxFoldersFileConstants.WEB_INF), ToolboxFoldersFileConstants.SCHEMAS).listFiles(new FileFilter() {
 
             public boolean accept(File file) {
-                return file.getName().endsWith(XSD);
+                return file.getName().endsWith(".xsd");
             }
         });
         for (int index = 0; index < schemas.length; adjustSchemaReferences(schemas[index++]));
@@ -1012,22 +1018,22 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         /* Looks for every import element */
         Element schemaElement = schemaDocument.getDocumentElement();
         String schemaPrefix = schemaElement.getPrefix();
-        Iterator elements = DOMUtil.getChildrenByTagName(schemaElement, schemaPrefix + ':' + IMPORT).iterator();
+        Iterator elements = DOMUtil.getChildrenByTagName(schemaElement, schemaPrefix + ':' + XMLConstants.IMPORT).iterator();
 
         /* For each import element adjust schema location */
         Element element;
         while (elements.hasNext()) {
             element = (Element) elements.next();
-            element.setAttribute(SCHEMA_LOCATION, getSchemaLocation(element.getAttribute(SCHEMA_LOCATION)));
+            element.setAttribute(XMLConstants.SCHEMA_LOCATION, getSchemaLocation(element.getAttribute(XMLConstants.SCHEMA_LOCATION)));
         }
 
         /* Looks for every include element */
-        elements = DOMUtil.getChildrenByTagName(schemaElement, schemaPrefix + ':' + INCLUDE).iterator();
+        elements = DOMUtil.getChildrenByTagName(schemaElement, schemaPrefix + ':' + XMLConstants.INCLUDE).iterator();
 
         /* For each include element adjust schema location */
         while (elements.hasNext()) {
             element = (Element) elements.next();
-            element.setAttribute(SCHEMA_LOCATION, getSchemaLocation(element.getAttribute(SCHEMA_LOCATION)));
+            element.setAttribute(XMLConstants.SCHEMA_LOCATION, getSchemaLocation(element.getAttribute(XMLConstants.SCHEMA_LOCATION)));
         }
 
         /* Saves file */
@@ -1042,7 +1048,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     private String getSchemaLocation(String oldSchemaLocation) {
         int slashIndex = oldSchemaLocation.lastIndexOf(MiscConstants.SLASH); // It is correct to search for SLASH since it is an URI
 
-        return Util.getURI(new File(new File(new File(getRootDir(), WEB_INF), SCHEMAS), oldSchemaLocation.substring(slashIndex + 1)).getAbsolutePath());
+        return Util.getURI(new File(new File(new File(getRootDir(), ToolboxFoldersFileConstants.WEB_INF), ToolboxFoldersFileConstants.SCHEMAS), oldSchemaLocation.substring(slashIndex + 1)).getAbsolutePath());
     }
 
     /**
@@ -1082,8 +1088,17 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             } catch (Exception e) {
             }
 
-            it.intecs.pisa.toolbox.timers.TimerManager timerMan=it.intecs.pisa.toolbox.timers.TimerManager.getInstance();
+            TimerManager timerMan=TimerManager.getInstance();
             timerMan.tearDown();
+
+            AsynchInstancesSecondScriptWakeUpManager wakeUpMan=AsynchInstancesSecondScriptWakeUpManager.getInstance();
+            wakeUpMan.tearDown();
+
+            PushRetryManager timer=PushRetryManager.getInstance();
+            timer.tearDown();
+
+            TimeoutManager timeoutMan=TimeoutManager.getInstance();
+            timeoutMan.tearDown();
 
             serviceManager = null;
             ftpServerManager = null;
@@ -1102,42 +1117,50 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
         try {
 
-            System.out.println("Stopping all services");
+            logger.info("Stopping all services");
             if (serviceManager != null) {
                 serviceManager.tearDownServices();
             }
-            System.out.println("Shutting down FTP server");
+            logger.info("Shutting down FTP server");
             if (ftpServerManager != null) {
                 ftpServerManager.stopServer();
             }
 
-            System.out.println("Shutting down DB");
+            logger.info("Shutting down DB");
             if (isDbRunning) {
                 try {
                     if (internalDatabase != null) {
                         internalDatabase.close();
                     }
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
+                } catch (SQLException ex) {}
             }
 
-            System.out.println("Shutting down debug console");
+            logger.info("Shutting down debug console");
             if (dbgConsole != null) {
                 dbgConsole.close();
 
             }
 
-            it.intecs.pisa.toolbox.timers.TimerManager timerMan=it.intecs.pisa.toolbox.timers.TimerManager.getInstance();
+            TimerManager timerMan=TimerManager.getInstance();
             timerMan.tearDown();
+
+            AsynchInstancesSecondScriptWakeUpManager wakeUpMan=AsynchInstancesSecondScriptWakeUpManager.getInstance();
+            wakeUpMan.tearDown();
+
+            PushRetryManager timer=PushRetryManager.getInstance();
+            timer.tearDown();
+
+            TimeoutManager timeoutMan=TimeoutManager.getInstance();
+            timeoutMan.tearDown();
             
             serviceManager = null;
             ftpServerManager = null;
             dbgConsole = null;
             internalDatabase = null;
             xmlResPersistence = null;
+            logger=null;
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 
@@ -1236,13 +1259,11 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         try {
             service = serviceManager.getService(serviceName);
             if (service == null) {
-                String errorMsg = WRONG_SERVICE + serviceName;
+                String errorMsg = "Unknown service: " + serviceName;
                 logger.error(errorMsg);
                 return false;
             }
         } catch (ToolboxException ex) {
-            //TODO manaage exception
-            ex.printStackTrace();
             return false;
         }
         return service.isWSSecurity();

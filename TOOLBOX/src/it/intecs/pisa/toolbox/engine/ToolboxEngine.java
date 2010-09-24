@@ -10,7 +10,6 @@
 package it.intecs.pisa.toolbox.engine;
 
 import it.intecs.pisa.toolbox.Toolbox;
-import it.intecs.pisa.toolbox.FTPServerManager;
 import it.intecs.pisa.common.communication.ServerDebugConsole;
 import it.intecs.pisa.common.communication.messages.ExecutionTreeMessage;
 import it.intecs.pisa.toolbox.db.InstanceVariable;
@@ -47,7 +46,7 @@ public class ToolboxEngine implements IEngine {
      * @param logger the logger
      */
     public ToolboxEngine(Logger logger) {
-        this(logger,  null, false);
+        this(logger, false);
     }
 
     /**
@@ -57,7 +56,7 @@ public class ToolboxEngine implements IEngine {
      * @param ftpServerManager the ftp server manager
      * @param logger the logger
      */
-    public ToolboxEngine(Logger logger, FTPServerManager ftpServerManager, boolean debugMode) {
+    public ToolboxEngine(Logger logger, boolean debugMode) {
         Document resultScript;
         Element currentNode;
 
@@ -70,7 +69,6 @@ public class ToolboxEngine implements IEngine {
         resultScript.appendChild(currentNode);
 
         configurationVariableStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_SERVICE_LOGGER, logger);
-        configurationVariableStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_FTP_SERVER_MANAGER, ftpServerManager);
         configurationVariableStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_RESULT_SCRIPT, resultScript);
         configurationVariableStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_INSTANCE_UNDER_DEBUG, Boolean.valueOf(debugMode));
         configurationVariableStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_INSTANCE_DEBUG_CONSOLE, Toolbox.getInstance().getDbgConsole());
@@ -85,9 +83,8 @@ public class ToolboxEngine implements IEngine {
      * @param tempDir the temp dir
      * @param logger the logger
      */
-    public ToolboxEngine(Logger logger, 
-            FTPServerManager ftpServerManager, boolean debugMode, File tempDir) {
-        this(logger, ftpServerManager, debugMode);
+    public ToolboxEngine(Logger logger, boolean debugMode, File tempDir) {
+        this(logger, debugMode);
 
         configurationVariableStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_TEMP_DIR, tempDir);
     }
@@ -120,7 +117,7 @@ public class ToolboxEngine implements IEngine {
         IVariableStore newEngineConfVarStore;
 
         newEngine = new ToolboxEngine((Logger) configurationVariableStore.getVariable(ToolboxEngineVariablesKeys.CONFIGURATION_SERVICE_LOGGER),              
-                (FTPServerManager) configurationVariableStore.getVariable(ToolboxEngineVariablesKeys.CONFIGURATION_FTP_SERVER_MANAGER), false,
+                 false,
                 (File) configurationVariableStore.getVariable(ToolboxEngineVariablesKeys.CONFIGURATION_TEMP_DIR));
 
 

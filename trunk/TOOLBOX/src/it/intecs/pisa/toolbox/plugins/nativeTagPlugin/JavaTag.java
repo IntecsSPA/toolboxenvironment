@@ -168,7 +168,7 @@ public class JavaTag extends NativeTagExecutor {
            key=(String) keys.nextElement();
            value=vars.get(key);
            
-           if(value instanceof java.lang.Byte ||
+           /*if(value instanceof java.lang.Byte ||
               value instanceof java.lang.Short ||
               value instanceof java.lang.Integer ||
               value instanceof java.lang.Long ||
@@ -180,12 +180,11 @@ public class JavaTag extends NativeTagExecutor {
                type=value.getClass().getName();
             else if( value instanceof org.w3c.dom.Document)     
                type="org.w3c.dom.Document";
-           else type="";
+           else type="Object";
+           */
+           type=value.getClass().getName();
+           writer.println(type+" "+key+"=("+type+") varStore.getVariable(\""+key+"\");");
            
-           if(type.equals("")==false)
-           {
-               writer.println(type+" "+key+"=("+type+") varStore.getVariable(\""+key+"\");");
-           }
               
        }
 
@@ -208,7 +207,7 @@ public class JavaTag extends NativeTagExecutor {
            key=(String) keys.nextElement();
            value=vars.get(key);
            
-           if(value instanceof java.lang.Byte ||
+           /*if(value instanceof java.lang.Byte ||
               value instanceof java.lang.Short ||
               value instanceof java.lang.Integer ||
               value instanceof java.lang.Long ||
@@ -218,13 +217,14 @@ public class JavaTag extends NativeTagExecutor {
               value instanceof java.lang.Boolean ||
               value instanceof java.lang.String ||
               value instanceof org.w3c.dom.Document )
-               type=value.getClass().getName();
-           else type="";
+               
+           else type="Object";
            
            if(type.equals("")==false)
-           {
+           {*/
+               type=value.getClass().getName();
                writer.println(  "varStore.setVariable(\""+key+"\","+key+");");
-           }
+           //}
               
        }
     }

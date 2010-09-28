@@ -2,14 +2,13 @@ package it.intecs.pisa.toolbox.plugins.nativeTagPlugin;
 
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.saxon.SaxonDocument;
+
 import java.util.Iterator;
-import java.util.List;
+
 import javax.xml.xpath.XPathConstants;
-import net.sf.saxon.om.NodeInfo;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class XPathTag extends NativeTagExecutor {
@@ -23,7 +22,7 @@ public class XPathTag extends NativeTagExecutor {
         Document newDoc=null;
         DOMUtil util;
         String[] outputAsStringArray;
-
+      
         outputType=xPath.getAttribute("outputType");
 
         Element xPathDocElement=xPath.getOwnerDocument().getDocumentElement();
@@ -79,7 +78,7 @@ public class XPathTag extends NativeTagExecutor {
         }
         else{
             String res=(String)saxonDoc.evaluatePath(xPathString, XPathConstants.STRING);
-            
+           
             return res;
 
         }

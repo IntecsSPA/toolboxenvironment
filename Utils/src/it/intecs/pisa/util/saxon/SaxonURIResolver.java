@@ -46,8 +46,10 @@ public class SaxonURIResolver implements URIResolver {
     }
 
      private Source resolveURL(String href, String base) throws TransformerException{
+     Source sourceResult=resolveAbsolute(href,base);
+     if(sourceResult != null)
+         return sourceResult;
 
-     Source sourceResult=null;
         URL sourceURL = null;
         try {
             sourceURL = new URL(this.contextURL + "/" + href);
@@ -63,14 +65,10 @@ public class SaxonURIResolver implements URIResolver {
      }
 
      private Source resolvePATH(String href, String base) throws TransformerException{
-         if(href.startsWith("http://"))
-            try {
-                return new SAXSource(new InputSource((new URL(href)).openStream()));
-           } catch (IOException ex) {
-                throw new TransformerException("Resource URL Error: " +  href);
-            }
+         Source sourceResult=resolveAbsolute(href,base);
+             if(sourceResult != null)
+                 return sourceResult;
 
-         Source sourceResult=null;
          String sourcePath = this.contextPath + "/" + href;
             try {
                 sourceResult=new SAXSource(new InputSource(new FileInputStream(sourcePath)));
@@ -79,6 +77,27 @@ public class SaxonURIResolver implements URIResolver {
             }
              return sourceResult;
 
+
+     }
+
+
+     private Source resolveAbsolute(String href, String base) throws TransformerException{
+         if(href.startsWith("http://"))
+            try {
+                return new SAXSource(new InputSource((new URL(href)).openStream()));
+           } catch (IOException ex) {
+                throw new TransformerException("Resource URL Error: " +  href);
+            }
+
+         if(href.startsWith("file://"))
+            try {
+                String path=href.substring(7, href.length());
+                return new SAXSource(new InputSource(new FileInputStream(path)));
+           } catch (IOException ex) {
+                throw new TransformerException("Resource URL Error: " +  href);
+            }
+         else
+           return null;
 
      }
 

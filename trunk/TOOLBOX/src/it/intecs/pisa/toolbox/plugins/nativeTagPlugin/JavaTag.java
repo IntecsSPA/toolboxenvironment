@@ -93,19 +93,22 @@ public class JavaTag extends NativeTagExecutor {
        File libDir;
        File nativeTagsLibs;
        File classesJar;
-       File toBeRemoved;
+       File xercesLibDir;
        
        tbx=Toolbox.getInstance();
        rootDir=tbx.getServletContext().getRealPath("/");
        libDir=new File(rootDir,"WEB-INF/lib/toolbox.jar");
+       xercesLibDir=new File(rootDir,"WEB-INF/lib/xercesImpl.jar");
        nativeTagsLibs=new File(rootDir,"WEB-INF/plugins/ToolboxNativeTagPlugin/libs/");
        classesJar=new File(rootDir,"WEB-INF/classes");
        /*toBeRemoved=new File(rootDir,"../../../PluginsCore/dist/PluginsCore.jar");*/
        
        classpath =System.getProperty("java.class.path");
        classpath+=File.pathSeparator+libDir.getAbsolutePath();
+       classpath+=File.pathSeparator+xercesLibDir.getAbsolutePath();
        classpath+=File.pathSeparator+nativeTagsLibs.getAbsolutePath();
        classpath+=File.pathSeparator+classesJar.getAbsolutePath();
+       
   /*     classpath+=File.pathSeparator+classesJar.getAbsolutePath();
        if(toBeRemoved.exists())
            classpath+=File.pathSeparator+toBeRemoved.getAbsolutePath();*/
@@ -140,7 +143,7 @@ public class JavaTag extends NativeTagExecutor {
 
     private void writeClassBeginning(PrintWriter writer) {
         String beginning="public class JavaTagOutput implements it.intecs.pisa.toolbox.plugins.nativeTagPlugin.IJavaCompiledClass {"+
-                                         "  public void execute(it.intecs.pisa.soap.toolbox.IVariableStore varStore) { try{";
+                                         "  public void execute(it.intecs.pisa.pluginscore.toolbox.engine.interfaces.IVariableStore varStore) { try{";
         
          writer.println(beginning);
     }
@@ -182,7 +185,7 @@ public class JavaTag extends NativeTagExecutor {
                type="org.w3c.dom.Document";
            else type="Object";
            */
-           type=value.getClass().getName();
+           type=value.getClass().getCanonicalName();
            writer.println(type+" "+key+"=("+type+") varStore.getVariable(\""+key+"\");");
            
               
@@ -222,7 +225,7 @@ public class JavaTag extends NativeTagExecutor {
            
            if(type.equals("")==false)
            {*/
-               type=value.getClass().getName();
+               type=value.getClass().getCanonicalName();
                writer.println(  "varStore.setVariable(\""+key+"\","+key+");");
            //}
               

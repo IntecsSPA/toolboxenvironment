@@ -13,7 +13,10 @@ import it.intecs.pisa.util.ftp.FTPLinkTokenizer;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javawebparts.misc.chain.ChainContext;
 import javawebparts.misc.chain.Command;
 import javawebparts.misc.chain.Result;
@@ -38,7 +41,7 @@ public class DownloadFromFtp implements Command {
         File outFile;
         File webappDir;
         String fileName;
-        String id;
+        String id="";
         Properties prop;
 
         try {
@@ -61,6 +64,12 @@ public class DownloadFromFtp implements Command {
                 cc.setAttribute(CommandsConstants.DOWNLOADED_FILE_NAME, fileName);
             }
         } catch (Exception e) {
+            id=(String) cc.getAttribute(CommandsConstants.ITEM_ID);
+            try {
+                DownloadsDB.updateStatus(id, "DOWNLOAD ERROR");
+            } catch (Exception ex) {
+                Log.logException(ex);
+            }
             Log.logException(e);
             return new Result(Result.FAIL);
         }
@@ -72,11 +81,13 @@ public class DownloadFromFtp implements Command {
         return new Result(Result.SUCCESS);
     }
 
-    private void download(String downloadUrl, File outFile) {
-        FTPClient f;
+    private void download(String downloadUrl, File outFile) throws Exception {
+        FTPClient f=null;
         FTPLinkTokenizer tokenizer;
-
-        try {
+        InputStream stream=null;
+        OutputStream ostream=null;
+        try
+        {
             tokenizer=new FTPLinkTokenizer(downloadUrl);
 
             f = new FTPClient();
@@ -94,12 +105,22 @@ public class DownloadFromFtp implements Command {
                 f.disconnect();
                 return;
             }
-            InputStream stream=f.retrieveFileStream(tokenizer.getPath());
-            IOUtil.copy(stream, new FileOutputStream(outFile));
+            stream=f.retrieveFileStream(tokenizer.getPath());
+            ostream=new FileOutputStream(outFile);
+            IOUtil.copy(stream, ostream);
+        }
+        finally
+        {
+            if(stream!=null)
+                stream.close();
 
-            f.logout();
-        } catch (Exception e) {
-            Log.logException(e);
+            if(ostream!=null)
+            {
+                ostream.flush();
+                ostream.close();
+            }
+            if(f!=null)
+                f.logout();
         }
 
     }

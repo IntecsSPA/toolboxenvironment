@@ -13,7 +13,8 @@ public class SetXMLValueTag extends NativeTagExecutor {
     public Object executeTag(org.w3c.dom.Element setXMLValue) throws Exception {
         Iterator children = DOMUtil.getChildren(setXMLValue).iterator();
         Document document = (Document) this.executeChildTag((Element) children.next());
-
+        
+        String test=DOMUtil.getDocumentAsString(document);
         Element selectedNode;
 
 
@@ -22,9 +23,10 @@ public class SetXMLValueTag extends NativeTagExecutor {
                     (String) executeChildTag((Element) children.next()),
                     setXMLValue);
         } else {
+            String xpath=(String) executeChildTag((Element) children.next());
             selectedNode=(Element) XPathAPI.selectSingleNode(document,
-                    (String) executeChildTag((Element) children.next()),
-                    document.getDocumentElement());
+                    xpath/*,
+                    document.getDocumentElement()*/);
         }
 
         /*

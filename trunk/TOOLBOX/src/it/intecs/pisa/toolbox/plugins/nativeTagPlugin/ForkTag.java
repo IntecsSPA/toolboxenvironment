@@ -47,7 +47,7 @@ public class ForkTag extends NativeTagExecutor {
 
         forkedId=XMLResourcesPersistence.getInstance().getNewResourceFile();
         resultScriptFile=XMLResourcesPersistence.getInstance().getXMLFile(forkedId);
-
+        
         AsynchScriptExecutor asynch = new AsynchScriptExecutor((ToolboxEngine)((ToolboxEngine)engine).clone(), script, resultScriptFile);
         asynch.start();
         

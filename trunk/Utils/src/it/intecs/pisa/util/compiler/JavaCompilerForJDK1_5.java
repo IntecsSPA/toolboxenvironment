@@ -17,6 +17,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.StringTokenizer;
 
 /**
  *
@@ -74,7 +75,16 @@ public class JavaCompilerForJDK1_5 implements JavaCompiler{
                    String[] options = new String[] { "-classpath", classpath, "-d",tempDir,classFile.getAbsolutePath()};
                    Main.compile(options);
 
-                   URL[] urls={tmpDir.toURL()};
+                   StringTokenizer tokenizer;
+                   tokenizer=new StringTokenizer(classpath,":");
+
+                   int size=tokenizer.countTokens();
+                   URL[] urls=new URL[size+1];
+                   urls[0]=tmpDir.toURI().toURL();
+
+                   for(int i=1;i<size+1;i++)
+                    urls[i]=(new File(tokenizer.nextToken())).toURI().toURL();
+
                    URLClassLoader loader=new URLClassLoader(urls,this.getClass().getClassLoader());
 
                     return loader.loadClass(className);

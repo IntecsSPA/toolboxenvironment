@@ -41,6 +41,7 @@ import it.intecs.pisa.toolbox.util.Util;
 import it.intecs.pisa.toolbox.db.InstanceStatuses;
 import it.intecs.pisa.toolbox.db.InstanceVariable;
 import it.intecs.pisa.toolbox.engine.EngineVariablesConstants;
+import it.intecs.pisa.toolbox.engine.ToolboxEngineFactory;
 import it.intecs.pisa.toolbox.service.TBXAsynchronousOperationCommonTasks;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
@@ -146,7 +147,9 @@ public class InstanceHandler {
         op = service.getOperation(operationName);
         script = (TBXScript) op.getScript(scriptType);
 
-        engine = new ToolboxEngine(service.getLogger(), debugMode, new File(new File(service.getToolbox().getRootDir(), ToolboxFoldersFileConstants.WEB_INF), ToolboxFoldersFileConstants.TMP));
+        File tmpDir=new File(new File(service.getToolbox().getRootDir(), ToolboxFoldersFileConstants.WEB_INF), ToolboxFoldersFileConstants.TMP);
+
+        engine = ToolboxEngineFactory.create(service.getServiceName(), debugMode,tmpDir);
 
         try {
             if ((scriptType.equals(TBXScript.SCRIPT_TYPE_FIRST_SCRIPT) && op.isAsynchronous()==true)
@@ -411,8 +414,13 @@ public class InstanceHandler {
 
     public void executeCleanupMarkers() throws Exception {
         Logger logger=null;
+        String serviceName;
+
         try {
-            logger=getService().getLogger();
+            TBXService service;
+            service=getService();
+            serviceName=service.getServiceName();
+            logger=service.getLogger();
 
             String[] markers;
 
@@ -422,7 +430,7 @@ public class InstanceHandler {
                 Document script=InstanceMarkers.getMarkerScript(serviceInstanceId, marker);
 
                 ToolboxEngine engine;
-                engine=new ToolboxEngine(logger);
+                engine=ToolboxEngineFactory.create(serviceName, false);
                 engine.executeScript(script.getDocumentElement());
 
                 logger.info("Marker "+marker+" executed");

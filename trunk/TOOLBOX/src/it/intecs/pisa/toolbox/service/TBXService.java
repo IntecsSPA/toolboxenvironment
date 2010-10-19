@@ -56,6 +56,7 @@ import it.intecs.pisa.toolbox.constants.EngineConstants;
 import it.intecs.pisa.toolbox.constants.ServiceConstants;
 import it.intecs.pisa.toolbox.constants.ToolboxFoldersFileConstants;
 import it.intecs.pisa.toolbox.constants.XMLConstants;
+import it.intecs.pisa.toolbox.engine.ToolboxEngineFactory;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.concurrent.Semaphore;
@@ -295,7 +296,7 @@ public class TBXService extends Service {
         try {
             ToolboxEngine toolboxEngine;
 
-            toolboxEngine = new ToolboxEngine(logger);
+            toolboxEngine = ToolboxEngineFactory.create(serviceName, false);
 
             toolboxEngine.put(EngineConstants.XML_REQUEST, requestContent);
             toolboxEngine.put("orderIdXPath", this.orderIdXpath);

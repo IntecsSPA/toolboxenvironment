@@ -273,7 +273,7 @@ String extImport = (extVers.equalsIgnoreCase("2.0.1") ? extImport2 : extImport3)
               </select> 
             </form></TD> 
 
-          <TD vAlign=center align=right bgColor=#607a92><fmt:message key="revision" bundle="${lang}"/> <%=tbxRevision%></TD>
+          <TD vAlign=center align=right bgColor=#607a92><fmt:message key="revision" bundle="${lang}"/> <%=tbxRevision%> <a href="" onclick="javascript:helpPopup(docUrl, 'RE/main.html_Getting_started')">Changelog</a></TD>
  
                   
         </TR> 

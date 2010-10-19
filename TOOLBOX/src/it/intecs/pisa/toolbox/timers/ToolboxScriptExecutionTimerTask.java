@@ -9,8 +9,8 @@ import it.intecs.pisa.soap.toolbox.AsynchScriptExecutor;
 import it.intecs.pisa.toolbox.FTPServerManager;
 import it.intecs.pisa.toolbox.db.Timers;
 import it.intecs.pisa.toolbox.engine.ToolboxEngine;
+import it.intecs.pisa.toolbox.engine.ToolboxEngineFactory;
 import it.intecs.pisa.toolbox.resources.XMLResourcesPersistence;
-import it.intecs.pisa.toolbox.service.ServiceManager;
 import it.intecs.pisa.toolbox.service.TBXService;
 import it.intecs.pisa.toolbox.service.instances.InstanceInfo;
 import java.io.File;
@@ -42,11 +42,7 @@ public class ToolboxScriptExecutionTimerTask extends TimerTask{
             service=InstanceInfo.getService(service_instance_id);
             logger=service.getLogger();
             
-            
-            FTPServerManager ftpServerManager;
-            ftpServerManager=FTPServerManager.getInstance();
-            
-            engine=new ToolboxEngine(logger,false);
+            engine=ToolboxEngineFactory.create(service.getServiceName(), false);
 
             XMLResourcesPersistence xmlPers;
             xmlPers=XMLResourcesPersistence.getInstance();

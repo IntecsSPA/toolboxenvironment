@@ -3,9 +3,11 @@ package it.intecs.pisa.toolbox.plugins.nativeTagPlugin;
 import it.intecs.pisa.pluginscore.toolbox.engine.interfaces.IEngine;
 import it.intecs.pisa.pluginscore.toolbox.engine.interfaces.IVariableStore;
 import it.intecs.pisa.toolbox.Toolbox;
+import it.intecs.pisa.toolbox.engine.ToolboxEngineVariablesKeys;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.compiler.CompilerFactory;
 import it.intecs.pisa.util.compiler.JavaCompiler;
+import it.intecs.pisa.util.file.LibsFileFilter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
@@ -34,7 +36,8 @@ public class JavaTag extends NativeTagExecutor {
         File tempDir=null;
         IJavaCompiledClass compiledClass=null;
         SimpleDateFormat formatter=null;
-        
+
+        long startime=(new Date()).getTime();
        confStore=this.engine.getVariablesStore();
        formatter=new SimpleDateFormat("yyyyMMddHHmmss");
        
@@ -70,6 +73,11 @@ public class JavaTag extends NativeTagExecutor {
         {
             //leaving the file and directory into the temp dir
         }
+
+        long endtime=(new Date()).getTime();
+        long executionTime=endtime-startime;
+
+        this.offlineDbgTag.setAttribute("executeIn", executionTime+" milliseconds");
         return null;
     }
 
@@ -101,17 +109,29 @@ public class JavaTag extends NativeTagExecutor {
        xercesLibDir=new File(rootDir,"WEB-INF/lib/xercesImpl.jar");
        nativeTagsLibs=new File(rootDir,"WEB-INF/plugins/ToolboxNativeTagPlugin/libs/");
        classesJar=new File(rootDir,"WEB-INF/classes");
-       /*toBeRemoved=new File(rootDir,"../../../PluginsCore/dist/PluginsCore.jar");*/
        
        classpath =System.getProperty("java.class.path");
        classpath+=File.pathSeparator+libDir.getAbsolutePath();
        classpath+=File.pathSeparator+xercesLibDir.getAbsolutePath();
        classpath+=File.pathSeparator+nativeTagsLibs.getAbsolutePath();
        classpath+=File.pathSeparator+classesJar.getAbsolutePath();
-       
-  /*     classpath+=File.pathSeparator+classesJar.getAbsolutePath();
-       if(toBeRemoved.exists())
-           classpath+=File.pathSeparator+toBeRemoved.getAbsolutePath();*/
+
+       IVariableStore confVarStore = this.engine.getConfigurationVariablesStore();
+       String resourcesDirAbsPath=(String) confVarStore.getVariable(ToolboxEngineVariablesKeys.CONFIGURATION_SERVICE_RESOURCE_DIR);
+       if(resourcesDirAbsPath!=null)
+       {
+        File resourcesDir=new File(resourcesDirAbsPath);
+        File jarsDir=new File(resourcesDir,"External Jars");
+        if(jarsDir!=null)
+        {
+            File[] jars = jarsDir.listFiles(new LibsFileFilter());
+
+            for(File jar:jars)
+            {
+                classpath+=File.pathSeparator+jar.getAbsolutePath();
+            }
+        }
+       }
        
        return classpath;
     }

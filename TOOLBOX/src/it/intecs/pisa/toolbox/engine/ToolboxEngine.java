@@ -49,14 +49,7 @@ public class ToolboxEngine implements IEngine {
         this(logger, false);
     }
 
-    /**
-     * The Constructor.
-     *
-     * @param timerManager the timer manager
-     * @param ftpServerManager the ftp server manager
-     * @param logger the logger
-     */
-    public ToolboxEngine(Logger logger, boolean debugMode) {
+    public ToolboxEngine(Logger logger, Boolean debugMode) {
         Document resultScript;
         Element currentNode;
 
@@ -74,6 +67,32 @@ public class ToolboxEngine implements IEngine {
         configurationVariableStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_INSTANCE_DEBUG_CONSOLE, Toolbox.getInstance().getDbgConsole());
         configurationVariableStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_INSTANCE_LOG_LEVEL, Toolbox.getInstance().getLogLevel());
     }
+    
+    /**
+     * The Constructor.
+     *
+     * @param timerManager the timer manager
+     * @param ftpServerManager the ftp server manager
+     * @param logger the logger
+     */
+  /*  public ToolboxEngine(Logger logger, boolean debugMode) {
+        Document resultScript;
+        Element currentNode;
+
+        variablesStore = new ToolboxEngineVariableStore();
+        configurationVariableStore = new ToolboxEngineVariableStore();
+
+        resultScript = new DOMUtil().newDocument();
+
+        currentNode = resultScript.createElement("executionResults");
+        resultScript.appendChild(currentNode);
+
+        configurationVariableStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_SERVICE_LOGGER, logger);
+        configurationVariableStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_RESULT_SCRIPT, resultScript);
+        configurationVariableStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_INSTANCE_UNDER_DEBUG, Boolean.valueOf(debugMode));
+        configurationVariableStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_INSTANCE_DEBUG_CONSOLE, Toolbox.getInstance().getDbgConsole());
+        configurationVariableStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_INSTANCE_LOG_LEVEL, Toolbox.getInstance().getLogLevel());
+    }*/
 
     /**
      * The Constructor.
@@ -83,7 +102,7 @@ public class ToolboxEngine implements IEngine {
      * @param tempDir the temp dir
      * @param logger the logger
      */
-    public ToolboxEngine(Logger logger, boolean debugMode, File tempDir) {
+    public ToolboxEngine(Logger logger, Boolean debugMode, File tempDir) {
         this(logger, debugMode);
 
         configurationVariableStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_TEMP_DIR, tempDir);

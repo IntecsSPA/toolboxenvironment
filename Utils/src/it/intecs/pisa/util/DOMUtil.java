@@ -227,6 +227,28 @@ public class DOMUtil {
         return (Element) element.getElementsByTagName(tag).item(index);
     }
 
+    public static DocumentBuilder getValidatingParser() {
+        final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
+        final String JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
+        final String JAXP_SCHEMA_SOURCE = "http://java.sun.com/xml/jaxp/properties/schemaSource";
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        documentBuilderFactory.setNamespaceAware(true);
+        documentBuilderFactory.setValidating(true);
+        documentBuilderFactory.setExpandEntityReferences(false);
+        documentBuilderFactory.setAttribute(JAXP_SCHEMA_LANGUAGE,
+                W3C_XML_SCHEMA);
+        //documentBuilderFactory.setAttribute(JAXP_SCHEMA_SOURCE, schemaURL);
+        DocumentBuilder documentBuilder = null;
+        try {
+            documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            documentBuilder.setErrorHandler(DOMUtil.getThrowerErrorHandler());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return documentBuilder;
+    }
+
 
     private final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
     private DocumentBuilder documentBuilder;

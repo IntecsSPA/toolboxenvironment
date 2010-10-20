@@ -6,7 +6,6 @@ import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.plugins.wpsPlugin.engine.WPSEngine;
 import it.intecs.pisa.toolbox.service.ServiceManager;
 import it.intecs.pisa.toolbox.service.TBXAsynchronousOperation;
-import it.intecs.pisa.toolbox.service.TBXOperation;
 import it.intecs.pisa.toolbox.service.TBXSOAPInterface;
 import it.intecs.pisa.toolbox.service.TBXService;
 import it.intecs.pisa.toolbox.service.TBXSynchronousOperation;
@@ -384,5 +383,22 @@ public class WPSCommands extends WPSUtil{
        return createResponse.getDocumentResponse();
     }
 
-   
+
+
+    public static void updateWPSFileAfterClone(File serviceClonedFolder, String oldNameService, String newNameService) throws SAXException, Exception{
+       DOMUtil du=new DOMUtil();
+       String clientString, serviceString;
+       File clientFile=new File(serviceClonedFolder, CLIENT_INTERFACE_INFORMATION_PATH);
+       File serviceFile=new File(serviceClonedFolder, SERVICE_EXTERNAL_INFORMATION_PATH);
+
+       clientString=DOMUtil.getDocumentAsString(du.fileToDocument(clientFile));
+       serviceString=DOMUtil.getDocumentAsString(du.fileToDocument(serviceFile));
+
+       clientString=clientString.replaceAll(oldNameService, newNameService);
+       serviceString=serviceString.replaceAll(oldNameService, newNameService);
+
+       IOUtil.copy(new ByteArrayInputStream(clientString.getBytes()), new FileOutputStream(clientFile));
+       IOUtil.copy(new ByteArrayInputStream(serviceString.getBytes()), new FileOutputStream(serviceFile));
+
+    }
 }

@@ -12,6 +12,7 @@ import it.intecs.pisa.soap.toolbox.exceptions.ToolboxException;
 import it.intecs.pisa.toolbox.constants.ServiceConstants;
 import it.intecs.pisa.toolbox.db.ServiceInfo;
 import it.intecs.pisa.toolbox.db.ToolboxInternalDatabase;
+import it.intecs.pisa.toolbox.plugins.wpsPlugin.manager.*;
 import it.intecs.pisa.toolbox.security.ToolboxSecurityConfigurator;
 import it.intecs.pisa.toolbox.service.instances.InstanceHandler;
 import it.intecs.pisa.toolbox.service.tasks.ServiceLifeCycle;
@@ -28,6 +29,7 @@ import java.util.concurrent.Semaphore;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
 
 /**
  * This class handles all services currently deployed under TOOLBOX.
@@ -536,6 +538,9 @@ public class ServiceManager {
             DOMUtil.dumpXML(descriptor, descriptorFile);
             
             createService(toName);
+
+            if (WPSUtil.isWPS(descriptor))
+               WPSCommands.updateWPSFileAfterClone(toServiceDir, fromName, toName);
 
             return true;
         }

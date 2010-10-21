@@ -6,5 +6,6 @@
     <restCommandViaPut cmd="/rest/manager/storeData" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.StoreDataCommand"/>
     <restCommandViaPut cmd="/rest/manager/cloneService" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.CloneServiceCommand"/>
     <restCommandViaDelete cmd="/rest/manager/deleteService/*" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.DeleteServiceCommand"/>
+    <restCommandViaDelete cmd="/rest/manager/deleteInstanceByMsgID/*/*/*" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.DeleteInstanceByMsgIDCommand"/>
 </plugin>
 

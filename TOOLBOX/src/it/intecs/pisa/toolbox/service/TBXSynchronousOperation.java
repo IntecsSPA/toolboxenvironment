@@ -13,8 +13,8 @@ import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.constants.EngineConstants;
 import it.intecs.pisa.toolbox.util.Util;
 import it.intecs.pisa.toolbox.service.instances.InstanceHandler;
+import it.intecs.pisa.toolbox.service.instances.SOAPHeaderExtractor;
 import it.intecs.pisa.util.DOMUtil;
-import it.intecs.pisa.toolbox.util.TimeUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -106,8 +106,12 @@ public class TBXSynchronousOperation extends TBXOperation {
         TBXService parentService;
         String instanceKey;
         Document request;
+        SOAPHeaderExtractor extr = new SOAPHeaderExtractor(soapRequest);
 
-        instanceKey = "tbx" + TimeUtil.getDateTime("", "", "");
+        instanceKey = extr.getMessageId();
+        if (instanceKey == null || instanceKey.equals("")) {
+            instanceKey = Long.toString(seviceInstanceId);
+        }
 
         messageId=instanceKey;
         

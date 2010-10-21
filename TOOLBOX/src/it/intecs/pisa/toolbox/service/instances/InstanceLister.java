@@ -29,7 +29,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Vector;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -339,12 +338,30 @@ public class InstanceLister {
         return instancesList;
     }
 
+    public static Long[] getInstancesByMessageID(String serviceName,String operationName,String messageID) throws Exception
+    {
+        String query;
+        ArrayList<Long> vector;
+
+        vector=new ArrayList<Long>();
+        query="SELECT ID FROM T_SERVICE_INSTANCES WHERE INSTANCE_ID='"+messageID+"' AND SERVICE_NAME='"+serviceName+"' AND OPERATION_NAME='"+operationName+"'";
+
+        Statement stm = ToolboxInternalDatabase.getInstance().getStatement();
+        ResultSet rs = stm.executeQuery(query);
+        while(rs.next())
+        {
+          vector.add(new Long(rs.getLong("ID")));
+        }
+
+        return vector.toArray(new Long[0]);
+    }
+
     public static Long[] getInstancesOlderThan(Date date) throws Exception
     {
         String query;
-        Vector<Long> vector;
+        ArrayList<Long> vector;
 
-        vector=new Vector<Long>();
+        vector=new ArrayList<Long>();
         query="SELECT ID FROM T_SERVICE_INSTANCES WHERE ARRIVAL_DATE<"+date.getTime();
 
         Statement stm = ToolboxInternalDatabase.getInstance().getStatement();

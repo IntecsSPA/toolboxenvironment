@@ -47,7 +47,7 @@ public class ToolboxEngineFactory {
 
             return (ToolboxEngine) con.newInstance(service.getLogger(),debug);
         }
-        else return new ToolboxEngine(service.getLogger(),debug);
+        else return new ToolboxEngine(service.getLogger(),Boolean.valueOf(debug));
 
         
     }
@@ -78,6 +78,6 @@ public class ToolboxEngineFactory {
 
             return (ToolboxEngine) con.newInstance(service.getLogger(),debugMode,tmpDir);
         }
-        else return new ToolboxEngine(service.getLogger(),debugMode,tmpDir);
+        else return new ToolboxEngine(service.getLogger(),Boolean.valueOf(debugMode),tmpDir);
     }
 }

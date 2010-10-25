@@ -11,7 +11,7 @@
       <TD class=footer> 
           <DIV class=menu id=menuBottom><A class=center 
       href="main.jsp"><fmt:message key="footer.home" bundle="${lang}"/></A> <A class=center 
-      href="aboutSSE.jsp"><fmt:message key="footer.about" bundle="${lang}"/></A> <A class=center 
+      href="about.jsp"><fmt:message key="footer.about" bundle="${lang}"/></A> <A class=center 
       href="copyrights.jsp"><fmt:message key="footer.copyright" bundle="${lang}"/></A> <A class=center 
       href="mailto:toolbox@intecs.it"><fmt:message key="footer.contact" bundle="${lang}"/></A> 
           </DIV> 

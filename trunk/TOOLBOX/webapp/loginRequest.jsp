@@ -152,7 +152,7 @@
                                             %>
                                             <FORM name="UserLoginForm"
                                                   onsubmit="return checkMandatoryFields(UserLoginForm)"
-                                                  action="toolboxUpgrade.jsp"
+                                                  action="main.jsp"
                                                   method="post">
                                                 <%                                        }
 

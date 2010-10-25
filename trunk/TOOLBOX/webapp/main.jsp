@@ -23,6 +23,34 @@
     <fmt:setLocale value="${sessionScope.languageReq}" />
     <fmt:setBundle basename="ToolboxBundle" var="lang" scope="page"/>
 </c:if>
+
+<%
+    String userName;
+    String password;
+    String upgradePage = "";
+
+    userName = request.getParameter("userName").trim();
+    password = request.getParameter("password").trim(); 
+    ToolboxConfiguration configuration;
+
+    configuration=ToolboxConfiguration.getInstance();
+    Boolean isFirstCheck;
+
+    isFirstCheck=Boolean.valueOf(configuration.getConfigurationValue(ToolboxConfiguration.FIRST_TIME_CHECK));
+    if ( isFirstCheck )
+               request.setAttribute("firstTime","true");
+      else request.setAttribute("firstTime","false");
+ %>
+ <c:choose>
+ <c:when test="${firstTime=='true'}">
+     <jsp:forward page="configureToolboxRequest.jsp">
+         <jsp:param name="userName" value="<%=userName%>"/>
+         <jsp:param name="password" value="<%=password%>"/>
+         <jsp:param name="pageStatus" value="enabled"/>
+     </jsp:forward>
+ </c:when>
+ </c:choose>
+
 <%
 TBXService[] services = ServiceManager.getInstance().getServicesAsArray();
 boolean isEnabled = services.length>0;
@@ -124,7 +152,7 @@ if (warnAddress)
                             avatars: true,
                             behavior: 'all'
                           }
-                        }).render().setUser('toolboxintecs').start();
+                        }).render().setUser('toolboxsuite').start();
                         </script>
                </div>
                 <DIV class=double> 

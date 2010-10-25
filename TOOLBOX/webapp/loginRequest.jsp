@@ -235,8 +235,8 @@
                         <TD class=footer>
                             <DIV class=menu id=menuBottom><A class=center
                                                                  href="main.jsp?language=<%= languageSet%>"><fmt:message key="footer.home" bundle="${lang}"/></A> <A class=center
-                                                                                                                                    href="aboutSSE.jsp?language=<%= languageSet%>"><fmt:message key="footer.about" bundle="${lang}"/></A> <A class=center
-                                                                                                                                         href="copyrights.jsp?language=<%= languageSet%>"><fmt:message key="footer.copyright" bundle="${lang}"/></A> <A class=center
+                                                                                                                                    href="aboutNotLogged.jsp?language=<%= languageSet%>"><fmt:message key="footer.about" bundle="${lang}"/></A> <A class=center
+                                                                                                                                         href="copyrightsNotLogged.jsp?language=<%= languageSet%>"><fmt:message key="footer.copyright" bundle="${lang}"/></A> <A class=center
                                                                                                                                                href="mailto:toolbox@pisa.intecs.it"><fmt:message key="footer.contact" bundle="${lang}"/></A>
                             </DIV>
                             <DIV>

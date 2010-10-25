@@ -20,7 +20,7 @@
 <!--jsp:include page="header.jsp"/-->
 <%@taglib uri="http://java.sun.com/jstl/core"  prefix="c"%>
 <%@taglib uri="http://java.sun.com/jstl/fmt"  prefix="fmt"%>
-<%@ include file="checkSession.jsp" %>
+<!--%@ include file="checkSession.jsp" %-->
 <c:if test="${sessionScope.languageReq!= null}">
   <fmt:setLocale value="${sessionScope.languageReq}" />
   <fmt:setBundle basename="ToolboxBundle" var="lang" scope="page"/>  

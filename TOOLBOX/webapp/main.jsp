@@ -28,15 +28,17 @@
     String userName;
     String password;
     String upgradePage = "";
+    Boolean isFirstCheck=false;
+    try
+    {
+        userName = request.getParameter("userName").trim();
+        password = request.getParameter("password").trim();
+        ToolboxConfiguration configuration;
 
-    userName = request.getParameter("userName").trim();
-    password = request.getParameter("password").trim(); 
-    ToolboxConfiguration configuration;
+        configuration=ToolboxConfiguration.getInstance();
 
-    configuration=ToolboxConfiguration.getInstance();
-    Boolean isFirstCheck;
-
-    isFirstCheck=Boolean.valueOf(configuration.getConfigurationValue(ToolboxConfiguration.FIRST_TIME_CHECK));
+        isFirstCheck=Boolean.valueOf(configuration.getConfigurationValue(ToolboxConfiguration.FIRST_TIME_CHECK));
+    
     if ( isFirstCheck )
                request.setAttribute("firstTime","true");
       else request.setAttribute("firstTime","false");
@@ -52,6 +54,10 @@
  </c:choose>
 
 <%
+}
+    catch(Exception e)
+    {}
+
 TBXService[] services = ServiceManager.getInstance().getServicesAsArray();
 boolean isEnabled = services.length>0;
 

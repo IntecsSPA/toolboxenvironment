@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This requests registers a bus, which is describe through the passed SensorML's system, to the SOSmobile. Also inserted are the offering and the passed GenericDomainFeature, if they are not contained in the database. -->
+<RegisterSensor service="SOS" version="1.0.0" xmlns="http://www.opengis.net/sos/1.0" xmlns:swe="http://www.opengis.net/swe/1.0.1" xmlns:ows="http://www.opengeospatial.net/ows" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" xmlns:om="http://www.opengis.net/om/1.0" xmlns:sml="http://www.opengis.net/sensorML/1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/sos/1.0
+http://schemas.opengis.net/sos/1.0.0/sosRegisterSensor.xsd http://www.opengis.net/om/1.0 http://schemas.opengis.net/om/1.0.0/extensions/observationSpecialization_override.xsd" >
+<SensorDescription>
+   <sml:System gml:id="##ORDER_ID##">
+         <sml:position name="actualPosition">
+            <swe:Position fixed="false" referenceFrame="urn:ogc:def:crs:EPSG:4326">
+               <swe:location>
+                  <swe:Vector>
+                     <swe:coordinate name="latitude">
+                        <swe:Quantity>
+                           <swe:value>50.22</swe:value>
+                        </swe:Quantity>
+                     </swe:coordinate>
+                     <swe:coordinate name="longitude">
+                        <swe:Quantity>
+                        <swe:value>7.72</swe:value>
+                        </swe:Quantity>
+                     </swe:coordinate>
+                  </swe:Vector>
+               </swe:location>
+            </swe:Position>
+         </sml:position>
+         <sml:inputs>
+            <sml:InputList>
+               <sml:input name="InputPhenomena">
+                  <swe:ObservableProperty definition="urn:ogc:def:phenomenon:OGC:1.0.30:min_no2"/>
+                  <swe:ObservableProperty definition="urn:ogc:def:phenomenon:OGC:1.0.30:max_no2"/>
+                  <swe:ObservableProperty definition="urn:ogc:def:phenomenon:OGC:1.0.30:avg_no2"/>
+                  <swe:ObservableProperty definition="urn:ogc:def:phenomenon:OGC:1.0.30:median_no2"/>
+               </sml:input>
+            </sml:InputList>
+         </sml:inputs>
+         <sml:outputs>
+            <sml:OutputList>
+               <sml:output name="OutputPhenomena">
+                  <swe:Quantity definition="urn:ogc:def:phenomenon:OGC:1.0.30:min_no2"><swe:uom code="�g/m3"/></swe:Quantity>
+                  <swe:Quantity definition="urn:ogc:def:phenomenon:OGC:1.0.30:max_no2"><swe:uom code="�g/m3"/></swe:Quantity>
+                  <swe:Quantity definition="urn:ogc:def:phenomenon:OGC:1.0.30:avg_no2"><swe:uom code="�g/m3"/></swe:Quantity>
+                  <swe:Quantity definition="urn:ogc:def:phenomenon:OGC:1.0.30:median_no2"><swe:uom code="�g/m3"/></swe:Quantity>
+               </sml:output>
+            </sml:OutputList>
+         </sml:outputs>
+      </sml:System>
+</SensorDescription>
+<ObservationTemplate>
+   <om:Measurement>
+      <om:samplingTime/>
+      <om:procedure/>
+      <om:observedProperty/>
+      <om:featureOfInterest/>
+      <om:result uom=""/>
+   </om:Measurement>
+</ObservationTemplate>
+</RegisterSensor>

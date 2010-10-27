@@ -22,7 +22,6 @@ import org.w3c.dom.NodeList;
 public class HttpTag extends NativeTagExecutor {
     // protected String tagName="Http";
 
-     public HttpTag()
      {
          tagName="Http";
      }

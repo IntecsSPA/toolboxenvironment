@@ -352,8 +352,9 @@ public class InstanceHandler {
 
         InstanceResources.storeXMLResource(xmlRequest, serviceInstanceId, InstanceResources.VARIABLE_BODY_REQUEST);
         InstanceResources.storeXMLResource(soapRequest, serviceInstanceId, InstanceResources.VARIABLE_SOAP_REQUEST);
-      
-        toolboxEngine.put(ToolboxEngineVariablesKeys.TARGET_NAMESPACE, interf.getTargetNameSpace());
+
+        if(interf.getTargetNameSpace()!= null)
+            toolboxEngine.put(ToolboxEngineVariablesKeys.TARGET_NAMESPACE, interf.getTargetNameSpace());
 
         servVars = interf.getUserVariable();
 

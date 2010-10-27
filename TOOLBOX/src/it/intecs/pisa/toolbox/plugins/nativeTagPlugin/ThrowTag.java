@@ -17,18 +17,19 @@ public class ThrowTag extends NativeTagExecutor {
         Element errorMessageDebug=null;
         Element detailsDebug=null;
         Document ownerDocument=null;
+
+        Element detailsElement=DOMUtil.getChildByTagName(throwstm, "details");
         
         ownerDocument=this.offlineDbgTag.getOwnerDocument();
         errorMessageDebug=ownerDocument.createElement("erroMessage");
-        detailsDebug=ownerDocument.createElement("details");
-        
         offlineDbgTag.appendChild(errorMessageDebug);
-        offlineDbgTag.appendChild(detailsDebug);
-        
         errorMessage = (String) this.executeChildTag(DOMUtil.getFirstChild(DOMUtil.getChildByTagName(throwstm, "errorMessage")),errorMessageDebug);
-    
-        details = (Document) this.executeChildTag(DOMUtil.getFirstChild(DOMUtil.getChildByTagName(throwstm, "details")),detailsDebug);
-    
-        throw new ToolboxException(errorMessage, details.getDocumentElement());
+
+        if(detailsElement!= null){
+            offlineDbgTag.appendChild(detailsDebug);
+            details = (Document) this.executeChildTag(DOMUtil.getFirstChild(DOMUtil.getChildByTagName(throwstm, "details")),detailsDebug);
+            throw new ToolboxException(errorMessage, details.getDocumentElement());
+        }else
+           throw new ToolboxException(errorMessage);
     }
 }

@@ -125,11 +125,10 @@ public class JavaTag extends NativeTagExecutor {
         if(jarsDir!=null)
         {
             File[] jars = jarsDir.listFiles(new LibsFileFilter());
+            if(jars != null)
+                for(File jar:jars)
+                    classpath+=File.pathSeparator+jar.getAbsolutePath();
 
-            for(File jar:jars)
-            {
-                classpath+=File.pathSeparator+jar.getAbsolutePath();
-            }
         }
        }
        

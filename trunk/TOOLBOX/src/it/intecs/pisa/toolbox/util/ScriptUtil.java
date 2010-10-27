@@ -69,6 +69,8 @@ public class ScriptUtil {
         Element bodyEl=null;
         if(value instanceof Byte)
             bodyEl=getByteEl(doc,(Byte)value);
+        if(value instanceof Integer)
+            bodyEl=getIntegerEl(doc,(Integer)value);
         if(value instanceof Short)
             bodyEl=getShortEl(doc,(Short)value);
         if(value instanceof Long)
@@ -105,6 +107,15 @@ public class ScriptUtil {
         valueEl=doc.createElementNS("http://pisa.intecs.it/mass/toolbox/xmlScript","literal");
         valueEl.setAttribute("type", "byte");
         valueEl.setAttribute("value",Byte.toString(value));
+        return valueEl;
+    }
+
+    private static Element getIntegerEl(Document doc, Integer value) {
+        Element valueEl;
+
+        valueEl=doc.createElementNS("http://pisa.intecs.it/mass/toolbox/xmlScript","literal");
+        valueEl.setAttribute("type", "int");
+        valueEl.setAttribute("value",Integer.toString(value));
         return valueEl;
     }
 

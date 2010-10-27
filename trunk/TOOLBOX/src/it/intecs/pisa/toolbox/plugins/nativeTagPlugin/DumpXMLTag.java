@@ -19,7 +19,7 @@ public class DumpXMLTag extends NativeTagExecutor {
         File outputFile = null;
 
         outputFile = new File(this.executeChildTag((Element) children.next()).toString());
-        OutputStream out = new FileOutputStream(outputFile);
+        OutputStream out = new FileOutputStream(outputFile.getCanonicalPath());
 
         Document root = (Document) executeChildTag((Element) children.next());
         if (this.engine.evaluateString(dumpXML.getAttribute("indent"),IEngine.EngineStringType.ATTRIBUTE).equals("true")) {

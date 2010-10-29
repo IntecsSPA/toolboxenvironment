@@ -11,6 +11,7 @@ import it.intecs.pisa.util.wsdl.Operation;
 import it.intecs.pisa.util.wsdl.Part;
 import it.intecs.pisa.util.wsdl.PortTypes;
 import it.intecs.pisa.util.wsdl.WSDL;
+import java.util.ArrayList;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -35,7 +36,9 @@ public class WSDLBuilder {
         addImports(service,wsdl,schemaBaseUrl);
         addMessages(service, wsdl);
         addPortTypes(service,wsdl);
+        addCallbackPortTypes(service,wsdl);
         addBindings(service,wsdl);
+        addCallbackBindings(service,wsdl);
         return wsdl;
     }
 
@@ -204,7 +207,7 @@ public class WSDLBuilder {
         operations = service.getImplementedInterface().getOperations();
         ports=new PortTypes[1];
         ports[0]=new PortTypes();
-        ports[0].setName("ToolboxSOAPPortForService");
+        ports[0].setName(service.getServiceName()+"_Port");
 
         oper=new Operation[operations.length];
 
@@ -226,6 +229,63 @@ public class WSDLBuilder {
 
     }
 
+    private static void addCallbackPortTypes(Service service, WSDL wsdl) {
+        it.intecs.pisa.common.tbx.Operation[] operations;
+        PortTypes[] ports;
 
+        int i=0;
 
+        operations = service.getImplementedInterface().getOperations();
+
+        ArrayList<Operation> callbackOps=new ArrayList<Operation>();
+        for(it.intecs.pisa.common.tbx.Operation op:operations)
+        {
+            if(op.isAsynchronous())
+            {
+                Operation oper=new Operation();
+                oper.setName(op.getName());
+                oper.setInputNameType(op.getName()+"CallbackRequest");
+                oper.setInputNameNameSpace(op.getCallbackInputTypeNameSpace());
+                oper.setOutputNameNameSpace(op.getCallbackOutputTypeNameSpace());
+                oper.setOutputNameType(op.getName()+"CallbackResponse");
+                callbackOps.add(oper);
+            }
+        }
+
+        
+        if(callbackOps.size()>0)
+        {
+            ports=new PortTypes[1];
+            ports[0]=new PortTypes();
+            ports[0].setName(service.getServiceName()+"_CallbackPort");
+            ports[0].setOperations(callbackOps.toArray(new Operation[0]));
+
+            wsdl.setCallbackPortTypes(ports);
+        }
+    }
+
+    private static void addCallbackBindings(Service service, WSDL wsdl) {
+        it.intecs.pisa.common.tbx.Operation[] operations;
+       
+        int i=0;
+
+        operations = service.getImplementedInterface().getOperations();
+
+        ArrayList<BoundedOperation> callbackBops=new ArrayList<BoundedOperation>();
+        for(it.intecs.pisa.common.tbx.Operation op:operations)
+        {
+            if(op.isAsynchronous())
+            {
+                BoundedOperation oper=new BoundedOperation();
+                oper.setName(op.getName());
+                oper.setSoapAction(op.getCallbackSoapAction());
+                callbackBops.add(oper);
+            }
+        }
+
+        if(callbackBops.size()>0)
+        {
+            wsdl.setCallbackBindings(callbackBops.toArray(new BoundedOperation[0]));
+        }
+   }
 }

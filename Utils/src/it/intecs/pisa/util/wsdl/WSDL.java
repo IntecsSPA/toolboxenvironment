@@ -32,16 +32,18 @@ public class WSDL {
 	private Document wsdlDoc=null;
 	
 	private PortTypes[] ports=null;
+        private PortTypes[] callbackports=null;
+        private Binding[] callbackBindings=null;
 	private Binding[] bindings=null;
 	private Message[] messages=null;
 	
 	private String targetNameSpace=null;
 
 
-    protected String serviceURL;
+        protected String serviceURL;
 	protected String name=null;
-    protected Import[] imports=null;
-    protected Hashtable<String,String> namespaces=null;
+        protected Import[] imports=null;
+        protected Hashtable<String,String> namespaces=null;
 	private DOMUtil domutil;
 
 
@@ -105,6 +107,7 @@ public class WSDL {
         createTypes(wsdl);
         createMessages(wsdl);
         createPortTypes(wsdl);
+        createCallbackPortTypes(wsdl);
         createBindings(wsdl);
         createPorts(wsdl);
         createServices(wsdl);
@@ -155,6 +158,13 @@ public class WSDL {
 
     private void createPortTypes(Document wsdl) {
         for(PortTypes t:this.ports)
+        {
+           t.appendToXML(wsdl);
+        }
+    }
+
+    private void createCallbackPortTypes(Document wsdl) {
+        for(PortTypes t:this.callbackports)
         {
            t.appendToXML(wsdl);
         }
@@ -358,4 +368,14 @@ public class WSDL {
         newArray[count-1]=newImport;
         imports=newArray;
     }
+
+    public void setCallbackPortTypes(PortTypes[] ports) {
+        callbackports=ports;
+    }
+
+    public void setCallbackBindings(Binding[] cbindings) {
+        callbackBindings=cbindings;
+    }
+
+
 }

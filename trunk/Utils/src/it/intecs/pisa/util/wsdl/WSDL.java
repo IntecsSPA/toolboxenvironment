@@ -5,7 +5,6 @@ package it.intecs.pisa.util.wsdl;
 
 import it.intecs.pisa.util.DOMUtil;
 
-import it.intecs.pisa.util.XSD;
 import java.io.File;
 import java.io.FileReader;
 import java.util.Enumeration;
@@ -20,86 +19,79 @@ import org.w3c.dom.Element;
  *
  */
 public class WSDL {
-	
-	private static final String ATTRIBUTE_TARGET_NAMESPACE = "targetNamespace";
 
-	private static final String TAG_MESSAGE = "message";
+    private static final String ATTRIBUTE_TARGET_NAMESPACE = "targetNamespace";
+    private static final String TAG_MESSAGE = "message";
+    private static final String TAG_BINDING = "binding";
+    private static final String TAG_PORT_TYPE = "portType";
+    private Document wsdlDoc = null;
+    private PortType[] ports = null;
+    private PortType[] callbackports = null;
+    private Binding[] callbackBindings = null;
+    private Binding[] bindings = null;
+    private Message[] messages = null;
+    private Service[] services = null;
+    private Service[] callbackServices = null;
+    private String targetNameSpace = null;
+    protected String serviceURL;
+    protected String name = null;
+    protected Import[] imports = null;
+    protected Hashtable<String, String> namespaces = null;
+    private DOMUtil domutil;
 
-	private static final String TAG_BINDING = "binding";
+    /**
+     * Default constructor
+     */
+    public WSDL() {
+        domutil = new DOMUtil();
+        namespaces = new Hashtable<String, String>();
+        imports = new Import[0];
+    }
 
-	private static final String TAG_PORT_TYPE = "portType";
+    /**
+     * This constructor fills the class with WSDL parameters
+     * @param wsdl
+     */
+    public WSDL(File wsdl) {
+        this();
+        try {
+            FileReader reader = new FileReader(wsdl);
 
-	private Document wsdlDoc=null;
-	
-	private PortTypes[] ports=null;
-        private PortTypes[] callbackports=null;
-        private Binding[] callbackBindings=null;
-	private Binding[] bindings=null;
-	private Message[] messages=null;
-	
-	private String targetNameSpace=null;
+            wsdlDoc = domutil.readerToDocument(reader);
 
+            parseWSDL(wsdlDoc);
+        } catch (Exception e) {
+            wsdlDoc = null;
+        }
 
-        protected String serviceURL;
-	protected String name=null;
-        protected Import[] imports=null;
-        protected Hashtable<String,String> namespaces=null;
-	private DOMUtil domutil;
+    }
 
-
-	/**
-	 * Default constructor
-	 */
-	public WSDL()
-	{
-		domutil=new DOMUtil();
-        namespaces=new Hashtable<String,String>();
-        imports=new Import[0];
-	}
-	
-	/**
-	 * This constructor fills the class with WSDL parameters
-	 * @param wsdl
-	 */
-	public WSDL(File wsdl)
-	{
-		this();
-		try {
-			FileReader reader=new FileReader(wsdl);
-			
-			wsdlDoc=domutil.readerToDocument(reader);
-			
-			parseWSDL(wsdlDoc);
-		} catch (Exception e) {
-			wsdlDoc=null;
-		}
-		
-	}
-
-    public Document createWSDL()
-    {
+    public Document createWSDL() {
         Document wsdl;
         Element definitionsEl;
         Enumeration<String> en;
         String key;
 
-        wsdl=domutil.newDocument();
+        wsdl = domutil.newDocument();
 
-        definitionsEl=wsdl.createElement("wsdl:definitions");
+        definitionsEl = wsdl.createElement("wsdl:definitions");
         definitionsEl.setAttribute("xmlns:wsdl", "http://schemas.xmlsoap.org/wsdl/");
         definitionsEl.setAttribute("xmlns:xsd", "http://www.w3.org/2001/XMLSchema");
+        definitionsEl.setAttribute("xmlns:soap", "http://schemas.xmlsoap.org/wsdl/soap/");
+        definitionsEl.setAttribute("xmlns:plnk", "http://schemas.xmlsoap.org/ws/2003/05/partner-link/");
+        definitionsEl.setAttribute("xmlns:tns", targetNameSpace);
         definitionsEl.setAttribute("targetNamespace", targetNameSpace);
 
-        en=this.namespaces.keys();
-        while(en.hasMoreElements())
-        {
-            key=en.nextElement();
-            definitionsEl.setAttribute("xmlns:"+key,namespaces.get(key));
+        en = this.namespaces.keys();
+        while (en.hasMoreElements()) {
+            key = en.nextElement();
+            definitionsEl.setAttribute("xmlns:" + key, namespaces.get(key));
         }
 
 
-        if(name!=null)
+        if (name != null) {
             definitionsEl.setAttribute("name", name);
+        }
 
         wsdl.appendChild(definitionsEl);
 
@@ -109,19 +101,29 @@ public class WSDL {
         createPortTypes(wsdl);
         createCallbackPortTypes(wsdl);
         createBindings(wsdl);
+        createCallbackBindings(wsdl);
         createPorts(wsdl);
         createServices(wsdl);
+        createCallbackServces(wsdl);
+        createPartnerLink(wsdl);
         return wsdl;
     }
 
     public void setMessages(Message[] msgs) {
-        this.messages=msgs;
+        this.messages = msgs;
     }
 
     private void createBindings(Document wsdl) {
-        for(Binding b:this.bindings)
-        {
+        for (Binding b : this.bindings) {
             b.appendToXML(wsdl);
+        }
+    }
+
+    private void createCallbackBindings(Document wsdl) {
+        if (this.callbackBindings != null) {
+            for (Binding b : this.callbackBindings) {
+                b.appendToXML(wsdl);
+            }
         }
     }
 
@@ -131,142 +133,127 @@ public class WSDL {
         Element typesEl;
         Element schemasEl;
 
-        rootEl=wsdl.getDocumentElement();
+        rootEl = wsdl.getDocumentElement();
 
-        typesEl=wsdl.createElement("wsdl:types");
+        typesEl = wsdl.createElement("wsdl:types");
         rootEl.appendChild(typesEl);
 
-        schemasEl=wsdl.createElement("xsd:schema");
+        schemasEl = wsdl.createElement("xsd:schema");
         typesEl.appendChild(schemasEl);
 
 
-        for(Import im:imports)
-        {
+        for (Import im : imports) {
             im.appendToXML(schemasEl);
         }
 
-        
+
     }
 
     private void createMessages(Document wsdl) {
-        for(Message m:this.messages)
-        {
-           m.appendToXML(wsdl);
+        for (Message m : this.messages) {
+            m.appendToXML(wsdl);
         }
 
     }
 
     private void createPortTypes(Document wsdl) {
-        for(PortTypes t:this.ports)
-        {
-           t.appendToXML(wsdl);
+        for (PortType t : this.ports) {
+            t.appendToXML(wsdl);
         }
     }
 
     private void createCallbackPortTypes(Document wsdl) {
-        for(PortTypes t:this.callbackports)
-        {
-           t.appendToXML(wsdl);
+        if (callbackports != null) {
+            for (PortType t : this.callbackports) {
+                t.appendToXML(wsdl);
+            }
         }
     }
 
     private void createPorts(Document wsdl) {
-
     }
 
     private void createServices(Document wsdl) {
-       Element rootEl;
-       Element serviceEl;
-       Element portEl;
-       Element addressEl;
+        for (Service service : services) {
+            service.appendToXML(wsdl);
+        }
+    }
 
-       rootEl=wsdl.getDocumentElement();
-
-       serviceEl=wsdl.createElement("wsdl:service");
-       serviceEl.setAttribute("name", "ToolboxService");
-       rootEl.appendChild(serviceEl);
-
-       portEl=wsdl.createElement("wsdl:port");
-       portEl.setAttribute("name", "ToolboxServicePort");
-       portEl.setAttribute("binding", "tns:ToolboxServiceSOAPBinding");
-       serviceEl.appendChild(portEl);
-
-       addressEl=wsdl.createElement("soap:address");
-       addressEl.setAttribute("location", this.serviceURL);
-       portEl.appendChild(addressEl);
+    private void createCallbackServces(Document wsdl) {
+        if (callbackServices != null) {
+            for (Service service : callbackServices) {
+                service.appendToXML(wsdl);
+            }
+        }
     }
 
     private void createTypes(Document wsdl) {
+    }
+
+    /**
+     * This method parses the WSDL document and extract some informations
+     * @param wsdlDoc2
+     * @throws WSDLException
+     */
+    private void parseWSDL(Document wsdlDoc) throws WSDLException {
+        int count = 0;
+        Element root = null;
+        LinkedList children;
+        Element tag = null;
+
+        //removing previous information
+        ports = null;
+        bindings = null;
+
+        root = wsdlDoc.getDocumentElement();
+
+        //gettting target name space
+        this.targetNameSpace = root.getAttribute(ATTRIBUTE_TARGET_NAMESPACE);
+
+        //parsing message type
+        children = DOMUtil.getChildrenByTagName(root, TAG_MESSAGE);
+
+        count = children.size();
+        messages = new Message[count];
+
+        for (int i = 0; i < count; i++) {
+            tag = (Element) children.get(i);
+            DOMUtil.copyNamespaces(root, tag);
+
+            messages[i] = new Message();
+            messages[i].createFromXMLSnippet(tag);
+        }
+
+
+        //Parsing portTypes
+        children = DOMUtil.getChildrenByTagName(root, TAG_PORT_TYPE);
+
+        count = children.size();
+        ports = new PortType[count];
+
+        for (int i = 0; i < count; i++) {
+            tag = (Element) children.get(i);
+            DOMUtil.copyNamespaces(root, tag);
+
+            ports[i] = new PortType(this);
+            ports[i].createFromXMLSnippet(tag);
+        }
+
+        //		Parsing bindings
+        children = DOMUtil.getChildrenByTagName(root, TAG_BINDING);
+
+        count = children.size();
+        bindings = new Binding[count];
+
+        for (int i = 0; i < count; i++) {
+            tag = (Element) children.get(i);
+            DOMUtil.copyNamespaces(root, tag);
+
+            bindings[i] = new Binding(this);
+            bindings[i].createFromXMLSnippet(tag);
+        }
 
     }
-	
-	/**
-	 * This method parses the WSDL document and extract some informations
-	 * @param wsdlDoc2
-	 * @throws WSDLException 
-	 */
-	private void parseWSDL(Document wsdlDoc) throws WSDLException {
-		int count=0;
-		Element root=null;
-		LinkedList children;
-		Element tag=null;
-		
-		//removing previous information
-		ports=null;
-		bindings=null;
-		
-		root=wsdlDoc.getDocumentElement();
-		
-		//gettting target name space
-		this.targetNameSpace=root.getAttribute(ATTRIBUTE_TARGET_NAMESPACE);
-		
-		//parsing message type
-		children=DOMUtil.getChildrenByTagName(root, TAG_MESSAGE);
-		
-		count=children.size();
-		messages=new Message[count];
-		
-		for(int i=0;i<count;i++)
-		{
-			tag=(Element)children.get(i);
-			DOMUtil.copyNamespaces(root,tag);
-			
-			messages[i]=new Message();
-			messages[i].createFromXMLSnippet(tag);
-		}
-		
-		
-		//Parsing portTypes
-		children=DOMUtil.getChildrenByTagName(root, TAG_PORT_TYPE);
-		
-		count=children.size();
-		ports=new PortTypes[count];
-		
-		for(int i=0;i<count;i++)
-		{
-			tag=(Element)children.get(i);
-			DOMUtil.copyNamespaces(root,tag);
-			
-			ports[i]=new PortTypes(this);
-			ports[i].createFromXMLSnippet(tag);
-		}
-		
-		//		Parsing bindings
-		children=DOMUtil.getChildrenByTagName(root, TAG_BINDING);
-		
-		count=children.size();
-		bindings=new Binding[count];
-		
-		for(int i=0;i<count;i++)
-		{
-			tag=(Element)children.get(i);
-			DOMUtil.copyNamespaces(root,tag);
-			
-			bindings[i]=new Binding(this);
-			bindings[i].createFromXMLSnippet(tag);
-		}
-
-	}
 
     public String getName() {
         return name;
@@ -275,65 +262,60 @@ public class WSDL {
     public void setName(String name) {
         this.name = name;
     }
-	
 
-	public PortTypes[] getPortTypes() {
-		return ports;
-	}
+    public PortType[] getPortTypes() {
+        return ports;
+    }
 
-	public void setPortTypes(PortTypes[] ports) {
-		this.ports = ports;
-	}
+    public void setPortTypes(PortType[] ports) {
+        this.ports = ports;
+    }
 
-	public Binding[] getBindings() {
-		return bindings;
-	}
+    public Binding[] getBindings() {
+        return bindings;
+    }
 
-	public void setBindings(Binding[] bindings) {
-		this.bindings = bindings;
-	}
+    public void setBindings(Binding[] bindings) {
+        this.bindings = bindings;
+    }
 
-	public Binding getBindingByName(String name)
-	{
-		for(Binding bind:this.bindings)
-		{
-			if(bind.getName().equals(name))
-				return bind;
-		}
-		
-		return null;
-	}
-	
-	public PortTypes getPortTypeByID(String id)
-	{
-		for(PortTypes port:ports)
-		{
-			if(port.getID().equals(id))
-				return port;
-		}
-		
-		return null;
-	}
+    public Binding getBindingByName(String name) {
+        for (Binding bind : this.bindings) {
+            if (bind.getName().equals(name)) {
+                return bind;
+            }
+        }
 
-	public String getTargetNameSpace() {
-		return targetNameSpace;
-	}
+        return null;
+    }
 
-	public void setTargetNameSpace(String targetNameSpace) {
-		this.targetNameSpace = targetNameSpace;
+    public PortType getPortTypeByID(String id) {
+        for (PortType port : ports) {
+            if (port.getID().equals(id)) {
+                return port;
+            }
+        }
 
-        namespaces=new Hashtable<String,String>();
+        return null;
+    }
+
+    public String getTargetNameSpace() {
+        return targetNameSpace;
+    }
+
+    public void setTargetNameSpace(String targetNameSpace) {
+        this.targetNameSpace = targetNameSpace;
+
+        namespaces = new Hashtable<String, String>();
         namespaces.put("tns", targetNameSpace);
-       
-	}
-	
-	public String getNameSpaceValue(String name)
-	{
-		return namespaces.get("xmlns:"+name);
-	}
 
-    public Hashtable<String,String> getNameSpaces()
-    {
+    }
+
+    public String getNameSpaceValue(String name) {
+        return namespaces.get("xmlns:" + name);
+    }
+
+    public Hashtable<String, String> getNameSpaces() {
         return namespaces;
     }
 
@@ -345,37 +327,75 @@ public class WSDL {
         this.serviceURL = serviceURL;
     }
 
-    public void addImport(String namespace,String location)
-    {
+    public void addImport(String namespace, String location) {
         Import newImport;
         Import[] newArray;
-        int count=0;
+        int count = 0;
 
-        newImport=new Import();
+        newImport = new Import();
         newImport.setNamespace(namespace);
         newImport.setSchemaLocation(location);
 
-        if(this.imports!=null)
-            count=imports.length;
+        if (this.imports != null) {
+            count = imports.length;
+        }
 
         count++;
 
-        newArray=new Import[count];
+        newArray = new Import[count];
 
-        for(int i=0;i<imports.length;i++)
-            newArray[i]=imports[i];
+        for (int i = 0; i < imports.length; i++) {
+            newArray[i] = imports[i];
+        }
 
-        newArray[count-1]=newImport;
-        imports=newArray;
+        newArray[count - 1] = newImport;
+        imports = newArray;
     }
 
-    public void setCallbackPortTypes(PortTypes[] ports) {
-        callbackports=ports;
+    public void setCallbackPortTypes(PortType[] ports) {
+        callbackports = ports;
     }
 
     public void setCallbackBindings(Binding[] cbindings) {
-        callbackBindings=cbindings;
+        callbackBindings = cbindings;
     }
 
+    public PortType[] getCallbackPortTypes() {
+        return this.callbackports;
+    }
 
+    public void setService(Service[] wsdlService) {
+        this.services=wsdlService;
+    }
+
+    public void setCallbackService(Service[] service) {
+        this.callbackServices=service;
+    }
+
+    private void createPartnerLink(Document wsdl) {
+        if(this.callbackports!=null)
+        {
+            Element plinkRootEl=wsdl.createElement("plnk:partnerLinkType");
+            plinkRootEl.setAttribute("name",name+"_PartnerLink");
+
+            wsdl.getDocumentElement().appendChild(plinkRootEl);
+
+            Element providerRoleEl=wsdl.createElement("plnk:role");
+            providerRoleEl.setAttribute("name", name+"_ProviderRole");
+            plinkRootEl.appendChild(providerRoleEl);
+
+            Element providerPortTypeEl=wsdl.createElement("plnk:portType");
+            providerPortTypeEl.setAttribute("name", "tns:"+name+"_Port");
+            providerRoleEl.appendChild(providerPortTypeEl);
+
+
+            providerRoleEl=wsdl.createElement("plnk:role");
+            providerRoleEl.setAttribute("name", name+"_CallbackProviderRole");
+            plinkRootEl.appendChild(providerRoleEl);
+
+            providerPortTypeEl=wsdl.createElement("plnk:portType");
+            providerPortTypeEl.setAttribute("name", "tns:"+name+"_CallbackPort");
+            providerRoleEl.appendChild(providerPortTypeEl);
+        }
+    }
 }

@@ -14,7 +14,7 @@ import org.w3c.dom.Element;
  * @author Massimiliano
  *
  */
-public class PortTypes {
+public class PortType {
 	private static final String TAG_OPERATION = "operation";
 	private static final String ATTRIBUTE_NAME = "name";
 
@@ -27,14 +27,14 @@ public class PortTypes {
 	private Document myXMLsnippet=null;
 	
 	
-	public PortTypes(WSDL wsdl)
+	public PortType(WSDL wsdl)
 	{
         super();
 		this.wsdl=wsdl;
 		
 	}
 
-    public PortTypes() {
+    public PortType() {
         domutil=new DOMUtil();
     }
 	

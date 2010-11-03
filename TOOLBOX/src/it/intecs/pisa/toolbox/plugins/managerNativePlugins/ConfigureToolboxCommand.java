@@ -69,12 +69,7 @@ public class ConfigureToolboxCommand extends NativeCommandsManagerPlugin {
 
         String boolValue;
 
-        boolValue=getStringFromMimeParts(mimeparts, "toolboxVersionCheck") != null ? "true" :"false";
-        toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.TOOLBOX_VERSION_CHECK, boolValue);
-
-        boolValue=getStringFromMimeParts(mimeparts, "schemaVersionCheck") != null ? "true" :"false";
-        toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.SCHEMA_VERSION_CHECK, boolValue);
-
+        
         boolValue=getStringFromMimeParts(mimeparts, "inputMessagesLog") != null ? "true" :"false";
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.INPUT_MESSAGES_LOG, boolValue);
 

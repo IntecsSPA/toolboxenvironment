@@ -69,12 +69,7 @@ String cleanupEvery=configuration.getConfigurationValue(ToolboxConfiguration.CLE
     if (Boolean.parseBoolean(configuration.getConfigurationValue(ToolboxConfiguration.QUEUING))) {
         queuingChecked = "checked";
     }
-    if (Boolean.parseBoolean(configuration.getConfigurationValue(ToolboxConfiguration.SCHEMA_VERSION_CHECK))) {
-        schemaVersionChecked = "checked";
-    }
-    if (Boolean.parseBoolean(configuration.getConfigurationValue(ToolboxConfiguration.TOOLBOX_VERSION_CHECK))) {
-        toolboxVersionChecked = "checked";
-    }
+    
     if (Boolean.parseBoolean(configuration.getConfigurationValue(ToolboxConfiguration.INPUT_MESSAGES_LOG))) {
         inMsgLogChecked = "checked";
     }
@@ -105,14 +100,7 @@ PropertyResourceBundle messages = (PropertyResourceBundle)ResourceBundle.getBund
                     <td class="tdItem" width="50%" colspan=1 nowrap><fmt:message key="configureToolboxRequest.queue" bundle="${lang}"/></td>
                     <td class="tdForm" nowrap><input name="globalQueuing" type="checkbox" <%=disabled%> <%=queuingChecked%> ></td>
                 </tr>
-                <tr><!-- Row 2 -->
-                    <td class="tdItem" width="50%" colspan=1 nowrap><fmt:message key="configureToolboxRequest.checkVers" bundle="${lang}"/></td>
-                    <td class="tdForm" nowrap><input name="toolboxVersionCheck" type="checkbox" <%=disabled%> <%=toolboxVersionChecked%> ></td>
-                </tr>
-                <tr><!-- Row 2 -->
-                    <td class="tdItem" width="50%" colspan=1 nowrap><fmt:message key="configureToolboxRequest.checkSchema" bundle="${lang}"/></td>
-                    <td class="tdForm" nowrap><input name="schemaVersionCheck" type="checkbox" <%=disabled%> <%=schemaVersionChecked%> ></td>
-                </tr>
+                
                 
                 <tr><!-- Row 4 -->
                     <td class=sortable colspan="2" nowrap><fmt:message key="configureToolboxRequest.FTPSet" bundle="${lang}"/></td>

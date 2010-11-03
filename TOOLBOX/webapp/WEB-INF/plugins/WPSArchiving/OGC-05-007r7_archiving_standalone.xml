@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="windows-1252"?>
 <interface name="OGC-05-007r7" version="1.0.0" type="Archiving" mode="StandAlone">
-    <rootSchemaFile>WPSSoapAll.xsd</rootSchemaFile>
+    <rootSchemaFile>WPSArchivingAll.xsd</rootSchemaFile>
     <schemaSetLocation>schemas/OGC-05-007r7</schemaSetLocation>
     <wsdlFile>/</wsdlFile>
     <targetNameSpace>http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap</targetNameSpace>

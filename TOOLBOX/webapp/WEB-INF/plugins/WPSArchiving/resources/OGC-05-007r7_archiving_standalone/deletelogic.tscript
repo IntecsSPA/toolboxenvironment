@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" 
+		  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		  xmlns:json="http://pisa.intecs.it/toolbox/json" 
+		  xsi:schemaLocation="http://pisa.intecs.it/mass/toolbox/xmlScript file:/home/massi/Programmi/eclipse3.2/TDE/plugins/com.intecs.ToolboxScript.editorFiles_1.3.0/schemas/xmlScript.xsd">
+	
+	<setVariable name="reststatus">
+		<json:RESTDelete>
+			<string>${archivingUrl}/service/delete/${Identifier}</string>
+		</json:RESTDelete>
+	</setVariable>
+	
+
+	<if>
+		<oeq>
+			<variable name="reststatus"/>
+			<literal type="int" value="200"/>
+		</oeq>
+		<setVariable name="Status">
+			<string>Success</string>
+		</setVariable>
+		<if>
+			<oeq>
+				<variable name="reststatus"/>
+				<literal type="int" value="404"/>
+			</oeq>
+			<setVariable name="Status">
+				<string>Item not found</string>
+			</setVariable>
+			<setVariable name="Status">
+				<string>Internal server error</string>
+			</setVariable>
+		</if>
+	</if>
+</sequence>

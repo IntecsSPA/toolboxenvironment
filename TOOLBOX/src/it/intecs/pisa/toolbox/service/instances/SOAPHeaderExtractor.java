@@ -68,12 +68,15 @@ public class SOAPHeaderExtractor {
         soapmes = (SOAPMessage) soapUtil.getSOAPMessage(doc);
 
         header = soapmes.getSOAPHeader();
-        list = header.examineAllHeaderElements();
+        if(header!=null)
+        {
+            list = header.examineAllHeaderElements();
 
-        while (list.hasNext()) {
-            element = (SOAPHeaderElement) list.next();
+            while (list.hasNext()) {
+                element = (SOAPHeaderElement) list.next();
 
-            extractInfoFromElement(element);
+                extractInfoFromElement(element);
+            }
         }
     }
 

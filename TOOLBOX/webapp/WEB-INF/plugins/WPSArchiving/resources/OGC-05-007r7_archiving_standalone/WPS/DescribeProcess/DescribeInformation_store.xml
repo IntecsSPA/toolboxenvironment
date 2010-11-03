@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><ProcessDescription xmlns:wps="http://www.opengis.net/wps/1.0.0" statusSupported="true" storeSupported="true" wps:processVersion="0.1">
+    <ows:Identifier xmlns:ows="http://www.opengis.net/ows/1.1">store</ows:Identifier>
+    <ows:Title xmlns:ows="http://www.opengis.net/ows/1.1">Stores a data</ows:Title>
+    <ows:Abstract xmlns:ows="http://www.opengis.net/ows/1.1">TODO</ows:Abstract>
+    <ows:Metadata xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="store"/>
+    <ows:Metadata xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="data"/>
+    <ows:Metadata xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="metadata"/>
+    <wps:Profile>OGC:WPS:DataArchiving</wps:Profile>
+    <DataInputs>
+      <Input maxOccurs="1" minOccurs="1">
+        <ows:Identifier xmlns:ows="http://www.opengis.net/ows/1.1">Data</ows:Identifier>
+        <ows:Title xmlns:ows="http://www.opengis.net/ows/1.1">Data link</ows:Title>
+        <ows:Abstract xmlns:ows="http://www.opengis.net/ows/1.1">This field contains a link (URL) to data</ows:Abstract>
+        <ComplexData maximumMegabytes="50">
+          <Default>
+            <Format>
+              <MimeType>application/bin</MimeType>
+            </Format>
+          </Default>
+          <Supported>
+            <Format>
+              <MimeType>application/bin</MimeType>
+            </Format>
+  	    <Format>
+              <MimeType>application/shp</MimeType>
+            </Format>
+	    <Format>
+              <MimeType>image/geotiff</MimeType>
+            </Format>
+          </Supported>
+        </ComplexData>
+      </Input>
+      <Input maxOccurs="1" minOccurs="1">
+        <ows:Identifier xmlns:ows="http://www.opengis.net/ows/1.1">InputDatatType</ows:Identifier>
+        <ows:Title xmlns:ows="http://www.opengis.net/ows/1.1">The input data type</ows:Title>
+        <ows:Abstract xmlns:ows="http://www.opengis.net/ows/1.1">The data type of the input file</ows:Abstract>
+        <LiteralData>
+          <ows:AllowedValues xmlns:ows="http://www.opengis.net/ows/1.1">
+            <ows:Value>eo</ows:Value>
+            <ows:Value>iso</ows:Value>
+          </ows:AllowedValues>
+        </LiteralData>
+      </Input>
+      <Input maxOccurs="1" minOccurs="0">
+	<ows:Identifier xmlns:ows="http://www.opengis.net/ows/1.1">Metadata</ows:Identifier>
+	<ows:Title xmlns:ows="http://www.opengis.net/ows/1.1">Metadata link</ows:Title>
+	<ows:Abstract xmlns:ows="http://www.opengis.net/ows/1.1">This field contains a link (URL) to metadata</ows:Abstract>
+	<ComplexData maximumMegabytes="50">
+		<Default>
+			<Format>
+				<MimeType>text/xml</MimeType>
+			</Format>
+		</Default>
+		<Supported>
+			<Format>
+				<MimeType>text/xml</MimeType>
+			</Format>	
+		</Supported>
+	</ComplexData>
+      </Input>
+      <Input maxOccurs="1" minOccurs="0">
+		<ows:Identifier xmlns:ows="http://www.opengis.net/ows/1.1">DataDuration</ows:Identifier>
+		<ows:Title xmlns:ows="http://www.opengis.net/ows/1.1">Duration of data</ows:Title>
+		<ows:Abstract xmlns:ows="http://www.opengis.net/ows/1.1">This field contains an amount of time, expressed in millisecond, after which data is removed from the ARMS</ows:Abstract>
+		<LiteralData>
+			<ows:DataType xmlns:ows="http://www.opengis.net/ows/1.1" ows:reference="http://www.w3.org/TR/xmlschema-2/#int">int</ows:DataType>
+			<ows:AnyValue xmlns:ows="http://www.opengis.net/ows/1.1"/>			
+		</LiteralData>
+	</Input>
+       <Input maxOccurs="6" minOccurs="0">
+        <ows:Identifier xmlns:ows="http://www.opengis.net/ows/1.1">OutputDataType</ows:Identifier>
+        <ows:Title xmlns:ows="http://www.opengis.net/ows/1.1">The output data type</ows:Title>
+        <ows:Abstract xmlns:ows="http://www.opengis.net/ows/1.1">This is a list of protocols under which data and metadata are published.</ows:Abstract>
+        <LiteralData>
+          <ows:AllowedValues xmlns:ows="http://www.opengis.net/ows/1.1">
+            <ows:Value>HTTP</ows:Value>
+            <ows:Value>FTP</ows:Value>
+            <ows:Value>WMS</ows:Value>
+            <ows:Value>WFS</ows:Value>
+            <ows:Value>WCS</ows:Value>
+            <ows:Value>SOS</ows:Value>
+          </ows:AllowedValues>
+        </LiteralData>
+      </Input>
+    </DataInputs>
+    <ProcessOutputs>
+      <Output>
+        <ows:Identifier xmlns:ows="http://www.opengis.net/ows/1.1">Identifier</ows:Identifier>
+        <ows:Title xmlns:ows="http://www.opengis.net/ows/1.1">Transaction identifier</ows:Title>
+        <ows:Abstract xmlns:ows="http://www.opengis.net/ows/1.1">This field constains the transaction identifier associated to the request.</ows:Abstract>
+        <LiteralOutput>
+          <ows:DataType xmlns:ows="http://www.opengis.net/ows/1.1" ows:reference="http://www.w3.org/TR/xmlschema-2/#string">string</ows:DataType>
+        </LiteralOutput>
+      </Output>
+    </ProcessOutputs>
+  </ProcessDescription>

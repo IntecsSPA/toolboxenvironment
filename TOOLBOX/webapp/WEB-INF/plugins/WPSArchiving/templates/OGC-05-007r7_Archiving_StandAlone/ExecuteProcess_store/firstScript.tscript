@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pisa.intecs.it/mass/toolbox/xmlScript file:/home/massi/Progetti/TOOLBOX_rep@Google/toolboxenvironment/trunk/Plugins/DE/com.intecs.ToolboxScript.editorFiles/schemas/xmlScript.xsd">
+	<!-- 
+ 			DataUrl
+  -->
+	<setVariable name="DataUrl">
+		<xPath xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:wpstbx="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" xmlns:xlink="http://www.w3.org/1999/xlink">
+			<xmlRequest/>
+			<string>/wpstbx:ExecuteProcess_store/wpstbx:Data/wps:Reference/@xlink:href</string>
+		</xPath>
+	</setVariable>
+	
+	
+	<!-- 
+ 			MetadataUrl
+  -->
+	<if>
+		<oeq>
+			<xPath xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:wpstbx="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<xmlRequest/>
+				<string>count(/wpstbx:ExecuteProcess_store/wpstbx:Metadata/wps:Reference)</string>
+			</xPath>
+			<string>1</string>
+		</oeq>
+		<setVariable name="MetadataUrl">
+			<xPath xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:wpstbx="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<xmlRequest/>
+				<string>/wpstbx:ExecuteProcess_store/wpstbx:Metadata/wps:Reference/@xlink:href</string>
+			</xPath>
+		</setVariable>
+	</if>
+	
+	<!-- InputType -->
+	<if>
+		<oeq>
+			<xPath xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:wpstbx="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<xmlRequest/>
+				<string>count(/wpstbx:ExecuteProcess_store/wpstbx:InputDataType)</string>
+			</xPath>
+			<string>1</string>
+		</oeq>
+		<setVariable name="InputDataType">
+			<xPath xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:wpstbx="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<xmlRequest/>
+				<string>/wpstbx:ExecuteProcess_store/wpstbx:InputDataType/text()</string>
+			</xPath>
+		</setVariable>
+	</if>
+	
+	<if>
+		<oeq>
+			<xPath xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:wpstbx="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<xmlRequest/>
+				<string>count(/wpstbx:ExecuteProcess_store/wpstbx:Metadata/wps:ComplexData)</string>
+			</xPath>
+			<string>1</string>
+		</oeq>
+		
+		<sequence>
+			<setVariable name="harvestDir">
+				<path startFrom="SERVICE_RESOURCE_DIR">
+					<string>../../../../harvest</string>
+				</path>
+			</setVariable>
+			
+			<mkdir>
+				<variable name="harvestDir"/>
+			</mkdir>
+			
+			<dumpXML>
+				<path>
+					<variable name="harvestDir"/>
+					<string>metadata.xml</string>
+				</path>
+				
+				<xPath outputType="xml" xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:wpstbx="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" xmlns:xlink="http://www.w3.org/1999/xlink">
+					<xmlRequest/>
+					<string>/wpstbx:ExecuteProcess_store/wpstbx:Metadata/wps:ComplexData/*[1]</string>
+				</xPath>
+			</dumpXML>
+			
+			<setVariable name="MetadataUrl">
+				<stringCat>
+					<toolboxAddress/>
+					<string>/harvest/metadata.xml</string>
+				</stringCat>
+			</setVariable>
+		
+		</sequence>
+	</if>
+	
+	<!-- 
+ 			DataDuration
+  -->
+	<if>
+		<oeq>
+			<xPath xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:wpstbx="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<xmlRequest/>
+				<string>count(/wpstbx:ExecuteProcess_store/wpstbx:DataDuration)</string>
+			</xPath>
+			<string>1</string>
+		</oeq>
+		<setVariable name="DataDuration">
+			<atoi>
+				<xPath xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:wpstbx="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" xmlns:xlink="http://www.w3.org/1999/xlink">
+					<xmlRequest/>
+					<string>/wpstbx:ExecuteProcess_store/wpstbx:DataDuration/text()</string>
+				</xPath>
+			</atoi>
+		</setVariable>
+	</if>
+	
+	<!-- MODIFIED FROM ORIGINAL SERVICE LOGIC -->
+	<execute>
+		<procedure>
+			<path startFrom="SERVICE_RESOURCE_DIR">
+				<string>storelogic.tscript</string>
+			</path>
+		</procedure>
+	</execute>
+	
+	<xml attributePrefix="%" textTag="evaluate">
+		<wps:ExecuteResponse xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xlink="http://www.w3.org/1999/xlink" service="WPS" serviceInstance="http://localhost:8080/TOOLBOX/services/WPSexample/GetCapabilities.xml" statusLocation="http://192.168.24.223:8083/TOOLBOX/manager?cmd=getServiceResource&amp;serviceName=wpsAndError&amp;relativePath=Log/24052010183618606/status/executeResponseStatus.xml" version="1.0.0" xml:lang="en" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<wps:Process wps:processVersion="0.1">
+				<ows:Identifier>TestOperation</ows:Identifier>
+				<ows:Title>Convert raster to another format</ows:Title>
+				<ows:Abstract>			Convert a raster to another file format and stores the			resulting raster file.		</ows:Abstract>
+				<wps:Profile>OGC:WPS:RasterFormatConversion</wps:Profile>
+			</wps:Process>
+			<wps:Status creationTime="2010-05-24T18:36:18Z">
+				<wps:ProcessAccepted/>
+			</wps:Status>
+			<wps:ProcessOutputs>
+				<wps:Output>
+					<ows:Identifier>Identifier</ows:Identifier>
+					<ows:Title>Identifier</ows:Title>
+					<ows:Abstract>Identifier</ows:Abstract>
+					<wps:Data>
+						<wps:LiteralData><evaluate name="Identifier"/></wps:LiteralData>
+					</wps:Data>
+				</wps:Output>
+			</wps:ProcessOutputs>
+		</wps:ExecuteResponse>
+	</xml>
+</sequence>

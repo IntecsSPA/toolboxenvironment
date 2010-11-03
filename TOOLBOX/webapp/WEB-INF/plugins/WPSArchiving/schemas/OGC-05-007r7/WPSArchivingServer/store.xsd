@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:wps="http://www.opengis.net/wps/1.0.0" elementFormDefault="qualified" targetNamespace="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+	<xs:import namespace="http://www.opengis.net/wps/1.0.0" schemaLocation="wps/1.0.0/wpsAll.xsd"/>
+	<xs:element name="ExecuteProcess_store">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="1" minOccurs="0" name="Data">
+					<xs:complexType>
+						<xs:choice>
+							<xs:element ref="wps:ComplexData"/>
+							<xs:element ref="wps:Reference"/>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+				<xs:element maxOccurs="1" minOccurs="0" name="InputDataType">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="eo"/>
+							<xs:enumeration value="iso"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element maxOccurs="unbounded" minOccurs="0" name="Metadata">
+					<xs:complexType>
+						<xs:choice>
+							<xs:element ref="wps:ComplexData"/>
+							<xs:element ref="wps:Reference"/>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+				<xs:element maxOccurs="unbounded" minOccurs="0" name="DataDuration">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="uom" use="optional">
+									<xs:simpleType>
+										<xs:restriction base="xs:string"/>
+									</xs:simpleType>
+								</xs:attribute>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element maxOccurs="unbounded" minOccurs="0" name="OutputDataType">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="uom" use="optional">
+									<xs:simpleType>
+										<xs:restriction base="xs:string"/>
+									</xs:simpleType>
+								</xs:attribute>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element maxOccurs="unbounded" minOccurs="0" name="Identifier">
+					<xs:complexType>
+						<xs:attribute name="uom" type="xs:string" use="optional"/>
+						<xs:attribute name="asReference" type="xs:boolean" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="storeExecuteResponse" type="xs:boolean" use="optional"/>
+			<xs:attribute name="lineage" type="xs:boolean" use="optional"/>
+			<xs:attribute name="status" type="xs:boolean" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

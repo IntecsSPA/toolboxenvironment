@@ -52,15 +52,12 @@
         
     </operations>
     <variables>
-            <variable displayedText="Url of the Geoserver instance"
-                    name="geoServerUrl" type="string"
-                    value="http://localhost:8080/geoserver" />
-            <variable displayedText="Url of the catalogue instance"
-                    name="catalogueUrl" type="string"
-                    value="http://localhost:8080/TOOLBOX/services/cat_eo" />
-            <variable displayedText="Url of the archiving server"
-                    name="archivingUrl" type="string"
-                    value="http://localhost:8080/ArchivingServer" />
+            <variable displayedText="Allow publishing data via WMS,WFS and WCS" name="allowGeoserver" type="boolean" value="true"/>
+            <variable displayedText="Allow publishing data via FTP" name="allowFTP" type="boolean" value="true"/>
+            <variable displayedText="Allow publishing data via HTTP" name="allowHTTP" type="boolean" value="true"/>
+            <variable displayedText="Url of the Geoserver instance" name="geoServerUrl" type="string" value=""/>
+            <variable displayedText="Url of the catalogue instance" name="catalogueUrl" type="string" value=""/>
+            <variable displayedText="Url of the archiving server" name="archivingUrl" type="string" value=""/>
     </variables>
     <lifeCycleScripts>
         <build path="lifeCycleScripts/OGC-05-007r7_Archiving_StandAlone/servicecreation.xml"/>

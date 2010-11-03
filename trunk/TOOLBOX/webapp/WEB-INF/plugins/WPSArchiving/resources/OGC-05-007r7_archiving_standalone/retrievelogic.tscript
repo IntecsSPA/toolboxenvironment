@@ -77,6 +77,22 @@
 					</json:xPath>
 				</setVariable>
 			</if>
+			
+			<if>
+				<oeq>
+					<json:xPathExists>
+						<variable name="jsonResponse"/>
+						<string>/geoserver[1]</string>
+					</json:xPathExists>
+					<literal type="boolean" value="true"/>
+				</oeq>
+				<setVariable name="GeoserverLink">
+					<json:xPath>
+						<variable name="jsonResponse"/>
+						<string>/geoserver[1]</string>
+					</json:xPath>
+				</setVariable>
+			</if>
 		</sequence>
 		
 		<sequence>
@@ -86,6 +102,16 @@
 					<string>/errorReason</string>
 				</json:xPath>
 			</setVariable>
+			
+			<if>
+				<oeq>
+					<variable name="DownloadStatus"/>
+					<string>Item not available</string>
+				</oeq>
+				<setVariable name="DownloadStatus">
+					<string>ITEM NOT AVAILABLE</string>
+				</setVariable>
+			</if>
 		</sequence>
 	</if>
 </sequence>

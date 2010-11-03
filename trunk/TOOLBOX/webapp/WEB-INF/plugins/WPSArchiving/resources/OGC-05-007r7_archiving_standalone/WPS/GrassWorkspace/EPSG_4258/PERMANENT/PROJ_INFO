@@ -1,5 +1,0 @@
-name: Lat/Lon
-proj: ll
-datum: etrs89
-ellps: grs80
-no_defs: defined

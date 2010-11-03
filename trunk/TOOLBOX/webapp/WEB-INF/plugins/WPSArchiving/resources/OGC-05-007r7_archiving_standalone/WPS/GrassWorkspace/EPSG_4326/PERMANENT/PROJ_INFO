@@ -1,5 +1,0 @@
-name: Lat/Lon
-proj: ll
-datum: wgs84
-ellps: wgs84
-no_defs: defined

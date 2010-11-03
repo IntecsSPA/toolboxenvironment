@@ -25,6 +25,18 @@
 	</if>
 	
 	<if>
+		<existsVariable name="InputDataType" />
+		<setVariable name="archivingRequest">
+			<stringCat>
+				<variable name="archivingRequest"/>
+				<string>,"type":"</string>
+				<variable name="InputDataType"/>
+				<string>"</string>
+			</stringCat>
+		</setVariable>	
+	</if>
+	
+	<if>
 		<existsVariable name="DataDuration" />
 		<setVariable name="archivingRequest">
 			<stringCat>
@@ -39,9 +51,166 @@
 	<setVariable name="archivingRequest">
 		<stringCat>
 			<variable name="archivingRequest"/>
-			<string>,"publish":{"publishCatalogue":["</string>
+			<string>,"publish":{</string>
+		</stringCat>
+	</setVariable>
+	
+	
+	<!-- ######################### HTTP ###########################-->
+	<if>
+		<and>
+			<gt>
+				<atoi>
+					<xPath xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+						<xmlRequest/>
+						<string>count(//wps:OutputDataType[text()='HTTP'])</string>
+					</xPath>
+				</atoi>
+				<literal type="int" value="0"/>
+			</gt>
+			<oeq>
+				<variable name="allowHTTP"/>
+				<literal type="boolean" value="true"/>
+			</oeq>
+		</and>
+		<sequence>
+			<setVariable name="archivingRequest">
+				<string>${archivingRequest}"Http":true</string>
+			</setVariable>
+			
+			<setVariable name="needsComma">
+				<literal type="boolean" value="true"/>
+			</setVariable>
+		</sequence>
+	</if>
+	
+	<!-- ######################### FTP ###########################-->
+	<if>
+		<and>
+			<gt>
+				<atoi>
+					<xPath xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+						<xmlRequest/>
+						<string>count(//wps:OutputDataType[text()='FTP'])</string>
+					</xPath>
+				</atoi>
+				<literal type="int" value="0"/>
+			</gt>
+			<oeq>
+				<variable name="allowFTP"/>
+				<literal type="boolean" value="true"/>
+			</oeq>
+		</and>
+		<sequence>
+			<if>
+				<oeq>
+					<literal type="boolean" value="true"/>
+					<variable name="needsComma"/>
+				</oeq>
+				<setVariable name="archivingRequest">
+					<string>${archivingRequest},</string>
+				</setVariable>
+			</if>
+			
+			<setVariable name="archivingRequest">
+				<string>${archivingRequest}"Ftp":["ftp:"]</string>
+			</setVariable>
+			
+			<setVariable name="needsComma">
+				<literal type="boolean" value="true"/>
+			</setVariable>
+		</sequence>
+	</if>
+	
+	<!-- ######################### Geoserver ###########################-->
+	<if>
+		<and>
+			<oeq>
+				<variable name="allowGeoserver"/>
+				<literal type="boolean" value="true"/>
+			</oeq>
+			<oneq>
+				<variable name="geoServerUrl"/>
+				<string></string>
+			</oneq>
+			<or>
+				<gt>
+					<atoi>
+						<xPath xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+							<xmlRequest/>
+							<string>count(//wps:OutputDataType[text()='WMS'])</string>
+						</xPath>
+					</atoi>
+					<literal type="int" value="0"/>
+				</gt>
+				<gt>
+					<atoi>
+						<xPath xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+							<xmlRequest/>
+							<string>count(//wps:OutputDataType[text()='WFS'])</string>
+						</xPath>
+					</atoi>
+					<literal type="int" value="0"/>
+				</gt>
+				<gt>
+					<atoi>
+						<xPath xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+							<xmlRequest/>
+							<string>count(//wps:OutputDataType[text()='WCS'])</string>
+						</xPath>
+					</atoi>
+					<literal type="int" value="0"/>
+				</gt>
+			</or>
+		</and>
+		<sequence>
+			<if>
+				<oeq>
+					<literal type="boolean" value="true"/>
+					<variable name="needsComma"/>
+				</oeq>
+				<setVariable name="archivingRequest">
+					<string>${archivingRequest},</string>
+				</setVariable>
+			</if>
+			
+			<setVariable name="archivingRequest">
+				<string>${archivingRequest}"GeoServer":["${geoServerUrl}"]</string>
+			</setVariable>
+			
+			<setVariable name="needsComma">
+				<literal type="boolean" value="true"/>
+			</setVariable>
+		</sequence>
+	</if>
+	
+	<!-- ######################### ebRIM catalogue ###########################-->
+	<if>
+		<oneq>
 			<variable name="catalogueUrl"/>
-			<string>"]}}</string>
+			<string></string>
+		</oneq>	
+		<sequence>
+			<if>
+				<oeq>
+					<literal type="boolean" value="true"/>
+					<variable name="needsComma"/>
+				</oeq>
+				<setVariable name="archivingRequest">
+					<string>${archivingRequest},</string>
+				</setVariable>
+			</if>
+			
+			<setVariable name="archivingRequest">
+				<string>${archivingRequest}"ebRIMCatalogue":["${catalogueUrl}"]</string>
+			</setVariable>
+		</sequence>
+	</if>
+	
+	<setVariable name="archivingRequest">
+		<stringCat>
+			<variable name="archivingRequest"/>
+			<string>}}</string>
 		</stringCat>
 	</setVariable>
 	

@@ -2,15 +2,14 @@
 <installation version="1.0">
     <info>
         <appname>Toolbox Runtime Environment</appname>
-        <appversion>8.0</appversion>
+        <appversion>9.0</appversion>
         <authors>
             <author email="toolbox@intecs.it" name="Toolbox Team"/>
         </authors>
-        <url>http://toolbox.esrin.esa.int/Download</url>
+        <url>http://code.google.com/p/toolboxenvironment/</url>
         <uninstaller name="Uninstaller.jar" write="yes"/>
         <javaversion>1.5</javaversion>
         <requiresjdk>yes</requiresjdk>
-        <webdir>http://toolbox.esrin.esa.int/Download/toolbox/</webdir>
         <writeinstallationinformation>no</writeinstallationinformation>
         <run-privileged condition="izpack.windowsinstall.vista|izpack.windowsinstall.7"/>
     </info>
@@ -26,8 +25,8 @@
         <langpack iso3="fra"/>
     </locale>
     <resources>
-        <res id="LicencePanel.licence" parse="yes" src="/home/massi/Progetti/TOOLBOX_rep/trunk/Installer/data/gpl-3.0.txt"/>
-        <res id="installer.langsel.img" src="/home/massi/Progetti/TOOLBOX_rep/trunk/Installer/data/logo.png"/>
+        <res id="LicencePanel.licence" parse="yes" src="/home/massi/Progetti/TOOLBOX_rep@Google/toolboxenvironment/trunk/Installer/data/gpl-3.0.txt"/>
+        <res id="installer.langsel.img" src="/home/massi/Progetti/TOOLBOX_rep@Google/toolboxenvironment/trunk/Installer/data/logo.png"/>
     </resources>
     <panels>
         <panel classname="HelloPanel"/>
@@ -41,12 +40,12 @@
         <pack name="Toolbox" preselected="yes" required="yes">
             <description>This package contains the Toolbox application.</description>
             <file override="update"
-                src="/home/massi/Progetti/TOOLBOX_rep/trunk/BuildScripts/TOOLBOX" targetdir="$INSTALL_PATH/webapps"/>
+                src="/home/massi/Progetti/TOOLBOX_rep@Google/toolboxenvironment/trunk/BuildScripts/TOOLBOX.war" targetdir="$INSTALL_PATH/webapps"/>
         </pack>
         <pack name="ToolboxGisClient" preselected="yes" required="yes">
             <description>This package contains the GIS client application.</description>
             <file override="update"
-                src="/home/massi/Progetti/TOOLBOX_rep/trunk/BuildScripts/ToolboxGisClient" targetdir="$INSTALL_PATH/webapps/"/>
+                src="/home/massi/Progetti/TOOLBOX_rep@Google/toolboxenvironment/trunk/BuildScripts/ToolboxGisClient.war" targetdir="$INSTALL_PATH/webapps/"/>
         </pack>
     </packs>
 </installation>

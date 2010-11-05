@@ -327,6 +327,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             commandPlugin.executeCommand(req, resp);
             resp.setStatus(resp.SC_OK);
         } catch (Exception e) {
+            e.printStackTrace(System.out);
             resp.sendError(resp.SC_INTERNAL_SERVER_ERROR);
         }
 

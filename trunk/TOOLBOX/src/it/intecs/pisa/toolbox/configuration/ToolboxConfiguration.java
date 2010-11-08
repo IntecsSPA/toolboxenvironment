@@ -20,6 +20,7 @@ package it.intecs.pisa.toolbox.configuration;
 import it.intecs.pisa.toolbox.db.ToolboxInternalDatabase;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
@@ -243,118 +244,35 @@ public  class ToolboxConfiguration {
         }
      }
 
-   /* public void loadConfiguration() throws Exception
-    {
-        File configFile;
-        Document doc;
-        DOMUtil util;
-        Element rootEl;
-        Element ftpEl;
-        Element errorEl;
-        Element ebrrEl;
+    public String[] getConfigurationKeys() throws Exception {
+        ToolboxInternalDatabase db=null;
+        Statement stm=null;
+        ResultSet rs=null;
 
-        util=new DOMUtil();
-        configFile=getConfigurationFile();
+        try
+        {
+            db=ToolboxInternalDatabase.getInstance();
+            stm=db.getStatement();
+            rs=stm.executeQuery("SELECT NAME FROM T_TOOLBOX_CONFIGURATION");
 
-        doc=util.fileToDocument(configFile);
-        rootEl=doc.getDocumentElement();
+            ArrayList<String> keys;
+            keys=new ArrayList<String>();
 
-        configValues.put(APACHE_ADDRESS, rootEl.getAttribute(APACHE_ADDRESS));
-        configValues.put(APACHE_PORT, rootEl.getAttribute(APACHE_PORT));
-        configValues.put(INPUT_MESSAGES_LOG, rootEl.getAttribute(INPUT_MESSAGES_LOG));
-        configValues.put(OUTPUT_MESSAGES_LOG, rootEl.getAttribute(OUTPUT_MESSAGES_LOG));
-        configValues.put(LOG_DIR, rootEl.getAttribute(LOG_DIR));
-        configValues.put(LOG_LEVEL, rootEl.getAttribute(LOG_LEVEL));
-        configValues.put(LOG_PATTERN, rootEl.getAttribute(LOG_PATTERN));
-        configValues.put(PROXY_HOST, rootEl.getAttribute(PROXY_HOST));
-        configValues.put(PROXY_PORT, rootEl.getAttribute(PROXY_PORT));
-        configValues.put(QUEUING, rootEl.getAttribute(QUEUING));
-        configValues.put(TOMCAT_PORT, rootEl.getAttribute(TOMCAT_PORT));
-        configValues.put(TOMCAT_SSL_PORT, rootEl.getAttribute(TOMCAT_SSL_PORT));
-        configValues.put(TOOLBOX_VERSION_CHECK, rootEl.getAttribute(TOOLBOX_VERSION_CHECK));
-        configValues.put(SCHEMA_VERSION_CHECK, rootEl.getAttribute(SCHEMA_VERSION_CHECK));
-        configValues.put(GLOBAL_KEYSTORE, rootEl.getAttribute(GLOBAL_KEYSTORE));
+            while(rs.next())
+            {
+               keys.add(rs.getString("NAME"));
+            }
 
-        ftpEl=DOMUtil.getChildByLocalName(rootEl, "FTPServer");
-        configValues.put(FTP_ADMIN_DIR, ftpEl.getAttribute(FTP_ADMIN_DIR));
-        configValues.put(FTP_ADMIN_PASSWORD, ftpEl.getAttribute(FTP_ADMIN_PASSWORD));
-        configValues.put(FTP_PORT, ftpEl.getAttribute(FTP_PORT));
-        configValues.put(FTP_POOL_PORT, ftpEl.getAttribute(FTP_POOL_PORT));
+            return keys.toArray(new String[0]);
+        }
+        finally
+        {
+            if(rs!=null)
+                rs.close();
 
-        errorEl=DOMUtil.getChildByLocalName(rootEl, "errorReport");
-        configValues.put(COMPANY_CONTACT, errorEl.getAttribute(COMPANY_CONTACT));
-        configValues.put(COMPANY_NAME, errorEl.getAttribute(COMPANY_NAME));
-        configValues.put(MAIL_ERROR, errorEl.getAttribute(MAIL_ERROR));
-        configValues.put(RECIPIENTS, errorEl.getAttribute(RECIPIENTS));
-        configValues.put(SENDER, errorEl.getAttribute(SENDER));
-        configValues.put(SMTP_SERVER, errorEl.getAttribute(SMTP_SERVER));
-
-        ebrrEl=DOMUtil.getChildByLocalName(rootEl, "ebRR");
-        configValues.put(COMPANY_CONTACT, errorEl.getAttribute(COMPANY_CONTACT));
+            if(stm!=null)
+                stm.close();
+        }
     }
-
-    public void saveConfiguration()
-    {
-        File configFile;
-        DOMUtil util;
-        Document doc;
-        Element rootEl;
-        Element ftpEl;
-        Element errorEl;
-        Element ebrrEl;
-
-        util= new DOMUtil();
-        doc=util.newDocument();
-
-        rootEl=doc.createElement("toolboxConfiguration");
-        doc.adoptNode(rootEl);
-
-        rootEl.setAttribute("xmlns", "http://pisa.intecs.it/mass/toolbox/toolboxConfiguration");
-        rootEl.setAttribute(APACHE_ADDRESS,configValues.get(APACHE_ADDRESS));
-        rootEl.setAttribute(APACHE_PORT,configValues.get(APACHE_PORT));
-        rootEl.setAttribute(INPUT_MESSAGES_LOG,configValues.get(INPUT_MESSAGES_LOG));
-        rootEl.setAttribute(OUTPUT_MESSAGES_LOG,configValues.get(OUTPUT_MESSAGES_LOG));
-        rootEl.setAttribute(LOG_DIR,configValues.get(LOG_DIR));
-        rootEl.setAttribute(LOG_LEVEL,configValues.get(LOG_LEVEL));
-        rootEl.setAttribute(LOG_PATTERN,configValues.get(LOG_PATTERN));
-        rootEl.setAttribute(PROXY_HOST,configValues.get(PROXY_HOST));
-        rootEl.setAttribute(PROXY_PORT,configValues.get(PROXY_PORT));
-        rootEl.setAttribute(QUEUING,configValues.get(QUEUING));
-        rootEl.setAttribute(TOMCAT_PORT,configValues.get(TOMCAT_PORT));
-        rootEl.setAttribute(TOMCAT_SSL_PORT,configValues.get(TOMCAT_SSL_PORT));
-        rootEl.setAttribute(TOOLBOX_VERSION_CHECK,configValues.get(TOOLBOX_VERSION_CHECK));
-        rootEl.setAttribute(SCHEMA_VERSION_CHECK,configValues.get(SCHEMA_VERSION_CHECK));
-        rootEl.setAttribute(GLOBAL_KEYSTORE,configValues.get(GLOBAL_KEYSTORE));
-
-        ftpEl=doc.createElement("FTPServer");
-        rootEl.appendChild(ftpEl);
-
-        ftpEl.setAttribute(FTP_ADMIN_DIR, configValues.get(FTP_ADMIN_DIR));
-        ftpEl.setAttribute(FTP_ADMIN_PASSWORD, configValues.get(FTP_ADMIN_PASSWORD));
-        ftpEl.setAttribute(FTP_PORT, configValues.get(FTP_PORT));
-        ftpEl.setAttribute(FTP_POOL_PORT, configValues.get(FTP_POOL_PORT));
-
-        errorEl=doc.createElement("errorReport");
-        rootEl.appendChild(errorEl);
-
-
-
-        configFile=getConfigurationFile();
-
-        
-    }
-
-    protected File getConfigurationFile()
-    {
-        Toolbox tbxServlet;
-        File rootDir;
-        File configFile;
-
-        tbxServlet=Toolbox.getInstance();
-        rootDir=tbxServlet.getRootDir();
-        configFile=new File(rootDir,"WEB-INF/xml/toolboxConfiguration.xml");
-
-        return configFile;
-    }*/
 
 }

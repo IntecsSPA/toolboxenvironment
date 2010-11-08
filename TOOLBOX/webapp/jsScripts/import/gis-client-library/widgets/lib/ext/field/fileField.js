@@ -33,7 +33,7 @@
   }else
    submitLabel=field.submitLabel;
 
-
+ 
           var fileUpload=new Ext.ux.form.FileUploadField({
                         id: field.id+"_file",
                         width: eval(field.size),
@@ -42,6 +42,7 @@
                         autoUploadURL: field.autoUploadURL,
                         name: field.id+"_file",
                         labelIcon: "Label"+field.id,
+                        onSuccessMethod: field.onSuccessMethod,
                         iconWait: field.iconWait,
                         fileValue: "",
                         buttonText: '',
@@ -68,8 +69,10 @@
                                         method: 'POST',
                                         iconSuccess: this.iconSuccess,
                                         iconFailure: this.iconFailure,
+                                       
                                         success: function(form, action){
                                             var jsonResponseObj=eval('new Object(' + action.response.responseText + ')');
+                                      
                                             if(form.iconSuccess){
                                               if(jsonResponseObj.id){
                                                 var idField=form.findField(form.fieldID);
@@ -83,14 +86,15 @@
                                                 var editAreaDoc = editArea.contentWindow.document;
                                                 var textResp=eval("'"+jsonResponseObj.content+"'");
                                                 
-                                                var decode=decodeURIComponent(textResp.replace(/\+/g,  " "));
+                                                //var decode=decodeURIComponent(textResp.replace(/\+/g,  " "));
 
-                                                editAreaDoc.setValue(decode);
+                                                editAreaDoc.setValue(textResp.replace(/\+/g,  " "));
                                            }
 
                                           var file=form.findField(form.fileID);
                                           file.fileInput.dom.value="";
 
+                                          eval(form.onSuccessMethod+"('"+jsonResponseObj.id+"');");
                                         },
                                         failure: function(form, action) {
                                           
@@ -155,6 +159,7 @@
                     width: '100%',
                     iconSuccess: field.iconSuccess,
                     iconFailure: field.iconFailure,
+                    onSuccessMethod: field.onSuccessMethod,
                     labelIcon: "Label"+field.id,
                     fieldID: field.id+"UploadID",
                     fileID: field.id+"_file",
@@ -163,83 +168,6 @@
                     items: [contentForm]
                 });
 
-
-
-
-
-   /*var formFileLabel=new Ext.form.Field({
-                        autoCreate: {tag: 'div', cn:{tag:'div'}},
-                        id: "Label"+field.id,
-                        name: "Label"+field.id,
-                        fileID: field.id,
-                        width: eval(field.size),
-                        emptyText: field.blankText,
-                        hideLabel: true,
-                        iconCls: field.icon,
-                        autoUploadURL: field.autoUploadURL,
-                        fieldLabel: field.label,
-                        renderForm: renderFileUploadForm,
-                        listeners: {
-                            "afterrender": function(){
-                                alert("afterrender");
-                                this.renderForm();
-
-                            }
-
-                        },
-                        setValue:function(val) {
-                            this.value = val;
-                            if(this.rendered){
-                                this.el.child('div').update(
-                                this.value);
-                        }
-                      }
-                   });
-
-   formFileLabel.setValue("<div id='testRendering'/>");
-   formField[u]={
-             colspan: 1,
-             layout: "form",
-             items: [formFileLabel]
-          };
-
-    if(field.autoUploadURL){
-        formField[u].items[0].on('fileChange', this.filechanged);
-        formField[u+1]={colspan: 1,
-                     layout: "form",
-                     items: [new Ext.form.TextField({
-				name: field.id+"UploadID",
-                                value: "",
-                                hideLabel: true,
-                                hidden: true,
-                                id: field.id+"UploadID"
-			})]
-                   };
-
-    }else
-        if(field.action)
-          formField[u+1].items[1]=new Ext.Button({
-                    text: field.submitLabel,
-                  //  renderTo: 'fi-basic-btn',
-                    handler: eval(field.action)
-                  });*/
-
-
-   /*formField[u+1]={
-      colspan: 1,
-      layout: "form",
-        html: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-   };
-
-   formField[u+2]={
-             colspan: 1,
-             layout: "form",
-             items: [new Ext.Button({
-                text: field.submitLabel,
-              //  renderTo: 'fi-basic-btn',
-                handler: eval(field.action)
-              })]
-       };*/
   return(fileUploadFormPanel);
 
 }

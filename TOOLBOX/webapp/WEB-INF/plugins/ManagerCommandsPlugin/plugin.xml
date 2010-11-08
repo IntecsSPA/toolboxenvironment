@@ -62,7 +62,10 @@
     <commandViaGet cmd="getAllServiceInstances" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.GetAllServiceInstancesCommand"/>
     <commandViaGet cmd="importGroupServices" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.ImportServicesGroupCommand"/>
     <commandViaGet cmd="exportGroupServices" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.ExportServicesGroupCommand"/>
+    <commandViaGet cmd="getServicesListFromServices" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.GetServicesListFromServicesGroupCommand"/>
+
     <commandViaGet cmd="getServiceResource" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.GetServiceResourceCommand"/>
+    <commandViaGet cmd="deleteServiceResource" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.DeleteServiceResourceCommand"/>
     <commandViaGet cmd="getLog" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.GetLogCommand"/>
 </plugin>
 

@@ -72,7 +72,6 @@
                                     if(this.remoteValuesURL &&
                                        this.remoteValuesDataElement &&
                                        this.remoteValuesProperties){
-
                                           var remoteStore=getStore(this.remoteValuesType, //storeType
                                                                  this.id+"_store", //storeID
                                                                  this.remoteValuesURL, //remoteDataURL
@@ -84,7 +83,8 @@
                                            rec=remoteStore[zz];
                                            itemsArray.push( {boxLabel: rec["boxLabel"], name: rec["name"]});
                                           }
-                                  }
+                                  }else
+                                      return;
 
                                 var buttonCG=Ext.getCmp(this.id+"_button");
                                 
@@ -190,6 +190,12 @@
                                 this.remove(this.id+"_button");
                                 this.renderCheckBoxGroup();
                                 this.doLayout();
+                            },
+                            updateRemoteUrl: function(newRemoteUrl){
+                                this.remoteValuesURL=newRemoteUrl;
+                                this.renderCheckBoxGroup();
+                                this.doLayout();
+
                             }
       })]
   };

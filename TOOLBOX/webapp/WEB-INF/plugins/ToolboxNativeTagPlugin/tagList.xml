@@ -57,6 +57,7 @@
     <tag name="existsVariable" class="it.intecs.pisa.toolbox.plugins.nativeTagPlugin.ExistsVariableTag"/>
     <tag name="localHost" class="it.intecs.pisa.toolbox.plugins.nativeTagPlugin.LocalhostTag"/>
     <tag name="stringCat" class="it.intecs.pisa.toolbox.plugins.nativeTagPlugin.StringCatTag"/>
+    <tag name="stringSplit" class="it.intecs.pisa.toolbox.plugins.nativeTagPlugin.StringSplitTag"/>
     <tag name="field" class="it.intecs.pisa.toolbox.plugins.nativeTagPlugin.FieldTag"/>
     <tag name="generateError" class="it.intecs.pisa.toolbox.plugins.nativeTagPlugin.GenerateErrorTag"/>
     <tag name="print" class="it.intecs.pisa.toolbox.plugins.nativeTagPlugin.PrintTag"/>
@@ -72,6 +73,8 @@
     <tag name="randomString" class="it.intecs.pisa.toolbox.plugins.nativeTagPlugin.RandomStringTag"/>
     <tag name="stringLength" class="it.intecs.pisa.toolbox.plugins.nativeTagPlugin.StringLengthTag"/>
     <tag name="arrayType" class="it.intecs.pisa.toolbox.plugins.nativeTagPlugin.ArrayTypeTag"/>
+    <tag name="arrayToString" class="it.intecs.pisa.toolbox.plugins.nativeTagPlugin.ArrayToStringTag"/>
+    <tag name="arrayUnion" class="it.intecs.pisa.toolbox.plugins.nativeTagPlugin.ArrayUnionTag"/>
     <tag name="arrayLength" class="it.intecs.pisa.toolbox.plugins.nativeTagPlugin.ArrayLengthTag"/>
     <tag name="arrayLocation" class="it.intecs.pisa.toolbox.plugins.nativeTagPlugin.ArrayLocationTag"/>
     <tag name="newArray" class="it.intecs.pisa.toolbox.plugins.nativeTagPlugin.NewArrayTag"/>

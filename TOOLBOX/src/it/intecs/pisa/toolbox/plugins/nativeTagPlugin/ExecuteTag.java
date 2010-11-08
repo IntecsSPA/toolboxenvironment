@@ -4,6 +4,7 @@ import it.intecs.pisa.pluginscore.exceptions.ReturnTagException;
 import it.intecs.pisa.util.DOMUtil;
 import java.io.File;
 import java.util.Iterator;
+import java.util.LinkedList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -27,7 +28,7 @@ public class ExecuteTag extends NativeTagExecutor {
         domUtil = new DOMUtil();
 
         try {
-            namespaceURI = tagEl.getNamespaceURI();
+          /*  namespaceURI = tagEl.getNamespaceURI();
             procedureTag = (Element) tagEl.getElementsByTagNameNS(namespaceURI, PROCEDURE).item(0);
             procedureTagChildElement = DOMUtil.getFirstChild(procedureTag);
 
@@ -40,7 +41,30 @@ public class ExecuteTag extends NativeTagExecutor {
             this.offlineDbgTag.setAttribute("externalLink", externalFilePath);
             
             argumentIterator = DOMUtil.getChildrenByLocalName(tagEl, ARGUMENT).iterator();
-            setArguments(argumentIterator);
+            setArguments(argumentIterator);*/
+
+
+            LinkedList children=DOMUtil.getChildren(tagEl);
+
+            procedureTag = (Element) children.get(0);
+            procedureTagChildElement = DOMUtil.getFirstChild(procedureTag);
+
+            procedureTagForDebug = addDebugInfoForProcedureTag();
+            Object procedureObj=executeChildTag(procedureTagChildElement, procedureTagForDebug);
+            if(procedureObj instanceof String){
+              externalFilePath=(String) procedureObj;
+              externalFile=new File(externalFilePath);
+              externalScriptDoc = domUtil.fileToDocument(externalFilePath);
+            }else
+                if(procedureObj instanceof Document){
+                    externalScriptDoc=(Document) procedureObj;
+                }
+
+            if(children.size()>1){
+                argumentIterator = children.iterator();
+                argumentIterator.next();
+                setArguments(argumentIterator);
+            }
 
             externalFileDebugEl=getExternalFileDebugDoc();
             

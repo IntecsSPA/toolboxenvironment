@@ -47,7 +47,7 @@ public class NETCDFRaster implements RasterData{
 
     private RasterInstance getSourceRasterByNameRef(NodeList sourceNodes, String rasterRefName) throws Exception{
         int i;
-        String sourceName,className;
+        String sourceName,dataClassName;
         Element currentSource=null;
         Object classInstance;
         Class sourceRasterClass = null;
@@ -59,8 +59,8 @@ public class NETCDFRaster implements RasterData{
            currentSource=(Element) sourceNodes.item(i);
            sourceName=currentSource.getAttribute(SOURCE_NAME);
            if(rasterRefName.equalsIgnoreCase(PREFIX_SOURCE_REFERENCE+sourceName)){
-              className=RASTER_DATA_CLASSES_PACKAGE.concat(currentSource.getAttribute(SOURCE_TYPE));
-              sourceRasterClass = Class.forName(className);
+              dataClassName=RASTER_DATA_CLASSES_PACKAGE.concat(currentSource.getAttribute(SOURCE_TYPE));
+              sourceRasterClass = Class.forName(dataClassName);
               try{
                   classInstance= sourceRasterClass.newInstance();
                   sourceRaster= (RasterInstance) classInstance;
@@ -68,7 +68,7 @@ public class NETCDFRaster implements RasterData{
                  t.printStackTrace();
               }
               //System.out.println("TIFF " +sourceName+": "+currentSource.getAttribute(SOURCE_URL).replaceAll("&amp;", "&"));
-              sourceRaster.setSource(new URL(currentSource.getAttribute(SOURCE_URL).replaceAll("&amp;","&")));
+              sourceRaster.setSource(new URL(currentSource.getAttribute(SOURCE_URL).replaceAll("&amp;","&").replace("demo1", "demo")));
               break;
            }
          }
@@ -90,7 +90,7 @@ public class NETCDFRaster implements RasterData{
               currentNode=(Element) dimensionNodes.item(u);
               nodeAttributeValue=currentNode.getAttribute(DIMENSION_VALUE);
               if(nodeAttributeValue.contains(PREFIX_SOURCE_REFERENCE+"")){
-                 sourceRaster=this.getSourceRasterByNameRef(sourceNodes, nodeAttributeValue);
+                 sourceRaster=this.getSourceRasterByNameRef(sourceNodes, nodeAttributeValue.split(PREFIX_ATTRIBUTE_SOURCE_REFERENCE)[0]);
                  informationIntValue=(Integer) sourceRaster.getInformation(nodeAttributeValue.split(PREFIX_ATTRIBUTE_SOURCE_REFERENCE)[1]);
                  this.netcdfRaster.setDimensionAttribute(currentNode.getAttribute(DIMENSION_NAME), informationIntValue);
               }else

@@ -1,6 +1,7 @@
 
 package it.intecs.pisa.toolbox.plugins.managerNativePlugins;
 
+import it.intecs.pisa.toolbox.constants.ServiceConstants;
 import it.intecs.pisa.toolbox.plugins.wpsPlugin.manager.WPSCommands;
 import it.intecs.pisa.toolbox.plugins.wpsPlugin.manager.WPSUtil;
 import it.intecs.pisa.toolbox.service.ServiceManager;
@@ -9,8 +10,8 @@ import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.IOUtil;
 import it.intecs.pisa.util.SchemaSetRelocator;
 import it.intecs.pisa.util.Zip;
-import it.intecs.pisa.util.DateUtil;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -28,74 +29,100 @@ import org.w3c.dom.Element;
  */
 public class ImportServicesGroupCommand extends NativeCommandsManagerPlugin {
 
-
     private static String ID_PARAMETER="id";
-
+    private static String NEW_SERVICE_NAMES_PARAMETER="newServicesName";
+    private static String OLD_SERVICE_NAMES_PARAMETER="oldServicesName";
     private static String FILES_STORED_FOLDER_PATH="../GUIManagerPlugin/resources/storedData/";
 
     public void executeCommand(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
-        //FileItem item = null;
         ZipEntry entry= null;
         String entryFileName;
+        File tempFile= null;
+        Enumeration entries;
         int i;
-        /*DiskFileUpload upload = new DiskFileUpload();
-        List items = upload.parseRequest(req);*/
-
 
         String storedZipFileID=req.getParameter(ID_PARAMETER);
+        String newServiceNames=req.getParameter(NEW_SERVICE_NAMES_PARAMETER);
+        String oldServiceNames=req.getParameter(OLD_SERVICE_NAMES_PARAMETER);
+        
         Boolean allServicesDeployed=true;
         ArrayList notDeployedService= new ArrayList();
         ArrayList notDeployedServiceError= new ArrayList();
-        
-        /*File packageFile = new File(System.getProperty("java.io.tmpdir"), item.getName());
-        item.write(packageFile);*/
+ 
         ZipFile zipFile = new ZipFile(new File(pluginDir, FILES_STORED_FOLDER_PATH+ storedZipFileID));
+        entry=zipFile.getEntry(ServiceConstants.SERVICE_DESCRIPTOR_FILE_NAME);
 
-        File tempFile= null;
-        Enumeration entries = zipFile.entries();
+        if(entry !=null){
 
-        while(entries.hasMoreElements()) {
-              entry = (ZipEntry)entries.nextElement();
-
-              entryFileName=entry.getName().substring(0,entry.getName().indexOf("."));
-              tempFile= File.createTempFile(entryFileName, "zip");
-              IOUtil.copy(zipFile.getInputStream(entry), new FileOutputStream(tempFile));
-              try {
-                  if(this.isNewService(entryFileName))
-                    deployServiceWithZipPackage(tempFile, entryFileName, resp);
-                  else{
-                    allServicesDeployed=false;
-                    notDeployedService.add(entryFileName);
-                    notDeployedServiceError.add("Service already defined");
-                  }
-              } catch (Exception e) {
+            /*Single Service*/
+            tempFile= File.createTempFile(newServiceNames, "zip");
+            IOUtil.copy(new FileInputStream(
+                    new File(pluginDir, FILES_STORED_FOLDER_PATH+ storedZipFileID)),
+                    new FileOutputStream(tempFile));
+            try {
+                 if(this.isNewService(newServiceNames))
+                    deployServiceWithZipPackage(tempFile, newServiceNames, resp);
+                 else{
+                   allServicesDeployed=false;
+                   notDeployedService.add(newServiceNames);
+                   notDeployedServiceError.add("Service already defined");
+                }
+             } catch (Exception e) {
                 allServicesDeployed=false;
-                notDeployedService.add(entryFileName);
-                notDeployedServiceError.add(e.getMessage());
+                notDeployedService.add(newServiceNames);
+                notDeployedServiceError.add(e.toString());
             }
 
-        }
-      zipFile.close();
+        }else{
 
- 
-      String result;
-      if(allServicesDeployed)
-          result="All Services have been deployed";
-      else{
-        result="The following services are not deployed: \n";
-        for(i=0; i<notDeployedService.size(); i++){
-            result+=" - Service \""+notDeployedService.get(i)+"\"  --> " + notDeployedServiceError.get(i)+"\n";
+           /*Service Group*/
+           i=0;
+           entries=zipFile.entries();
+           String[] newServices=newServiceNames.split(",");
+           String[] oldServices=oldServiceNames.split(",");
+            while(entries.hasMoreElements() && i<oldServices.length) {
+                  entry = (ZipEntry)entries.nextElement();
+                  entryFileName=entry.getName().substring(0,entry.getName().indexOf("."));
+                  if(entryFileName.equals(oldServices[i])){
+                      tempFile= File.createTempFile(newServices[i], "zip");
+                      IOUtil.copy(zipFile.getInputStream(entry), new FileOutputStream(tempFile));
+                      try {
+                          if(this.isNewService(newServices[i]))
+                            deployServiceWithZipPackage(tempFile, newServices[i], resp);
+                          else{
+                            allServicesDeployed=false;
+                            notDeployedService.add(newServices[i]);
+                            notDeployedServiceError.add("Service already defined");
+                          }
+                      } catch (Exception e) {
+                        allServicesDeployed=false;
+                        notDeployedService.add(newServices[i]);
+                        notDeployedServiceError.add(e.toString());
+                    }
+                    i++;
+                }
+            }
+          zipFile.close();
+          
         }
 
-      }
-      PrintWriter out = resp.getWriter();
-      out.println(result);
-     resp.setStatus(resp.SC_OK);
+
+        String result;
+        if(allServicesDeployed)
+              result="All Services have been deployed";
+        else{
+            result="The following services are not deployed: \n";
+            for(i=0; i<notDeployedService.size(); i++)
+                result+=" - Service \""+notDeployedService.get(i)+"\"  --> " + notDeployedServiceError.get(i)+"\n";
+        }
+        PrintWriter out = resp.getWriter();
+        out.println(result);
+        resp.setStatus(resp.SC_OK);
 
     }
 
-    private void deployServiceWithZipPackage(File packageFile, String serviceName, HttpServletResponse resp) throws Exception {
+   private void deployServiceWithZipPackage(File packageFile, String serviceName, HttpServletResponse resp) throws Exception {
         ServiceManager serviceManager;
         serviceManager=ServiceManager.getInstance();
 
@@ -128,7 +155,7 @@ public class ImportServicesGroupCommand extends NativeCommandsManagerPlugin {
             schemaDir.mkdir();
             SchemaSetRelocator.updateSchemaLocationToAbsolute(schemaDir, schemaDir.toURI());
 
-            descriptorFile = new File(packageDeployDir, "serviceDescriptor.xml");
+            descriptorFile = new File(packageDeployDir, ServiceConstants.SERVICE_DESCRIPTOR_FILE_NAME);
      
             descriptor = util.fileToDocument(descriptorFile);
 
@@ -137,6 +164,8 @@ public class ImportServicesGroupCommand extends NativeCommandsManagerPlugin {
             if (name.equals(serviceName) == false) {
                 root.setAttribute("serviceName", serviceName);
             }
+
+            util.dumpXML(descriptor, descriptorFile);
 
             if(WPSUtil.isWPS(descriptor)){
                 WPSCommands commands= new WPSCommands();
@@ -185,5 +214,6 @@ public class ImportServicesGroupCommand extends NativeCommandsManagerPlugin {
    }
 
 
+    
   
 }

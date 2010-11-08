@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2006 sp1 U (http://www.altova.com) by Massimiliano (In) -->
 <!--
  -
@@ -20,10 +20,10 @@
              elementFormDefault="qualified"
              attributeFormDefault="unqualified">
 
-    <xsd:import namespace="http://pisa.intecs.it/toolbox/ebrr" schemaLocation="ebrrTags.xsd"/>
+    <!--<xsd:import namespace="http://pisa.intecs.it/toolbox/ebrr" schemaLocation="ebrrTags.xsd"/>
     <xsd:import namespace="http://pisa.intecs.it/toolbox/geoserver" schemaLocation="geoServerTags.xsd"/>
     <xsd:import namespace="http://pisa.intecs.it/toolbox/security" schemaLocation="securityTags.xsd"/>
-    <xsd:import namespace="http://pisa.intecs.it/toolbox/json" schemaLocation="jsonTags.xsd"/>
+    <xsd:import namespace="http://pisa.intecs.it/toolbox/json" schemaLocation="jsonTags.xsd"/>-->
 
     <xsd:simpleType name="ToolboxTime">
         <xsd:restriction base="xsd:string">
@@ -363,6 +363,16 @@
             <xsd:documentation>Returns the length of the array returned by the element enclosed in this element.</xsd:documentation>
         </xsd:annotation>
     </xsd:element>
+    <xsd:element name="arrayToString">
+        <xsd:annotation>
+            <xsd:documentation>Returns a string representation of the contents of the specified array. The string representation consists of a list of the array's elements, enclosed in square brackets ("[]"). Adjacent elements are separated by the characters ", " (a comma followed by a space). Elements are converted to strings as by String.valueOf(boolean). Returns "null" if a is null. </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="arrayUnion">
+        <xsd:annotation>
+            <xsd:documentation>Returns a array representation of the union of a given arrays. </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
     <xsd:element name="methodInvocation">
         <xsd:annotation>
             <xsd:documentation>Invokes a method of an object or a static method of a class and returns the value returned by that method. The name of the method is taken from the "methodName" attribute. If the first enclosed element has tag "object", the method is called on the object returned by the element enclosed in the "object" element, otherwise it has tag "class" and the static method of the Class object returned by the element enclosed in the "class" element is invoked. The element tagged "parameter" are used to distinguish between overloaded methods and to retrieve the parameters to be passed to the method, see the "parameter" element.</xsd:documentation>
@@ -431,6 +441,11 @@
     <xsd:element name="stringCat" type="ExpressionSequence">
         <xsd:annotation>
             <xsd:documentation>Returns a string obtained concatenating the strings returned by each of the enclosed elements. The enclosed elements can return any object, as they are converted to a string using the String.valueOf method.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="stringSplit">
+        <xsd:annotation>
+            <xsd:documentation>Splits this string around matches of the given regular expression. Returns the array of strings computed by splitting this string around matches of the given regular expression </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
     <xsd:element name="atoi" type="Expression">
@@ -1594,6 +1609,7 @@
             <xsd:element ref="massHost"/>
             <xsd:element ref="jelly"/>
             <xsd:element ref="stringCat"/>
+            <xsd:element ref="arrayToString"/>
             <xsd:element ref="print"/>
             <xsd:element ref="orderId"/>
             <xsd:element ref="loadFile"/>
@@ -1641,6 +1657,8 @@
             <xsd:element ref="field"/>
             <xsd:element ref="arrayLocation"/>
             <xsd:element ref="arrayLength"/>
+            <xsd:element ref="arrayToString"/>
+            <xsd:element ref="arrayUnion"/>
             <xsd:element ref="methodInvocation"/>
             <xsd:element ref="newObject"/>
             <xsd:element ref="newInternalObject"/>
@@ -1652,6 +1670,7 @@
             <xsd:element ref="setVariable"/>
             <xsd:element ref="base64"/>
             <xsd:element ref="stringCat"/>
+            <xsd:element ref="stringSplit"/>
             <xsd:element ref="atoi"/>
             <xsd:element ref="itoa"/>
             <xsd:element ref="sleep"/>

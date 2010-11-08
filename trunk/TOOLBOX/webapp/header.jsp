@@ -28,10 +28,12 @@
         int loadDefer = (request.getParameter("loadDefer") == null ? 0 : new Integer(request.getParameter("loadDefer")));
         boolean loadPanel = (request.getParameter("loadPanel") == null ? false : new Boolean(request.getParameter("loadPanel")));
         boolean firebugControl = (request.getParameter("firebugControl") == null ? false : new Boolean(request.getParameter("firebugControl")));
-        String extImport3 = "<link rel=\"stylesheet\" type=\"text/css\" href=\"jsScripts/import/gis-client-library/import/ext/resources/css/ext-all.css\" >\n" //      +"<link rel=\"stylesheet\" type=\"text/css\" href=\"jsScripts/import/gis-client-library/import/ext/resources/css/xtheme-gray.css\" >\n"
+        String extImport3 = "<link rel=\"stylesheet\" type=\"text/css\" href=\"jsScripts/import/gis-client-library/import/ext/resources/css/ext-all.css\" >\n"
+                +"<link rel=\"stylesheet\" type=\"text/css\" href=\"jsScripts/import/gis-client-library/import/ext/resources/css/xtheme-slate.css\" >\n"
                 + "<script type=\"text/javascript\" src=\"jsScripts/import/gis-client-library/import/ext/adapter/ext/ext-base.js\"></script>\n" + "<script type=\"text/javascript\" src=\"jsScripts/import/gis-client-library/import/ext/ext-all.js\"></script>\n";
 
-        String extImport2 = "<link rel=\"stylesheet\" type=\"text/css\" href=\"jsScripts/ext-2.0.1/resources/css/ext-all.css\">\n" //     +"<link rel=\"stylesheet\" type=\"text/css\" href=\"jsScripts/import/gis-client-library/import/ext/resources/css/xtheme-gray.css\" >\n"
+        String extImport2 = "<link rel=\"stylesheet\" type=\"text/css\" href=\"jsScripts/ext-2.0.1/resources/css/ext-all.css\">\n"
+                +"<link rel=\"stylesheet\" type=\"text/css\" href=\"jsScripts/import/gis-client-library/import/ext/resources/css/xtheme-slate.css\" >\n"
                 + "<script type=\"text/javascript\" src=\"jsScripts/ext-2.0.1/adapter/ext/ext-base.js\"></script>\n" + "<script type=\"text/javascript\" src=\"jsScripts/ext-2.0.1/ext-all.js\"></script>\n";
 
         String extImport = (extVers.equalsIgnoreCase("2.0.1") ? extImport2 : extImport3);

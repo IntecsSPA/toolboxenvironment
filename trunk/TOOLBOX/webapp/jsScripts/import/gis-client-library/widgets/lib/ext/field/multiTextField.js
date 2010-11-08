@@ -65,6 +65,18 @@
                            
                             return objValue;
                         },
+                        getStringValues: function(){
+                            var textArray=this.find("xtype", "textfield");
+                            var stringValue="";
+                            for(var i=0; i<textArray.length;i++){
+                                stringValue+=textArray[i].getValue();
+                                if(i<textArray.length-1)
+                                    stringValue+=",";
+
+                            }
+
+                            return stringValue;
+                        },
                         
                         addTextField: function(textID, textLabel, textValue){
                                    this.add(

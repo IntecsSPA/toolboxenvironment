@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <inputInterface xmlns="http://gisClient.pisa.intecs.it/gisClient">
-    <section name="TOOLBOX Import Services">
+    <section name="TOOLBOX Import Services" cols="10">
         <group label="Load the services zip file:">
-          <input type="file" name="zipServices" hideLabel="false" id="zipServices" 
+          <input type="file" name="zipServices" hideLabel="false" id="zipServices" colSpan="10"
            optional="true"
            size="300"
            autoUploadURL="rest/gui/storeData"
@@ -14,9 +14,24 @@
            iconFailure="images/fail.png"
            iconSuccess="images/success.png"
            submitLabel="Import Services"
-           editAreaID="test"/>
+           onSuccessMethod="importServices.updateListServicesGroup"/>
+           <input type="checkboxgroup" name="importGroupServices" hideLabel="false" size="25" id="importGroupServices" optional="true" colSpan="2"
+              selDeslAll="true"
+              columns="1"
+              onChange="importServices.onCheckService"
+              selDeslAllLabel="&lt;b&gt; Select / Deselect all services &lt;/b&gt;"
+              remoteValuesType="xml"
+              remoteValuesDataElement="serviceList/service"
+              remoteValuesProperties="boxLabel:@name,name:@name"
+              dataEmptyMessage="Get Service List ERROR">
+            </input>
+            <!--  button="true" buttonLabel="Duplicate Services" buttonHandler="duplicateServices.onDuplicateServices"
+            remoteValuesURL="manager?cmd=GetServiceList" -->
+           <input type="multitext" name="DuplicateNameImport" id="DuplicateNameImport" optional="true" size="40" labelAlign="top"/>
         </group>
+        
     </section>
+
     <requestInformations>
         <buttons>
             <button name="importServicesButton" id="importServicesButton" label="Import Services" iconImage="" onclick="importServices.onImportServices"/>

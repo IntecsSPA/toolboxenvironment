@@ -1414,7 +1414,8 @@ function createExjFormByElement(title, formDataElement, numCols, localizationObj
                  iconSuccess: inputFormElements[i].getAttribute("iconSuccess"),
                  iconFailure: inputFormElements[i].getAttribute("iconFailure"),
             adaptButtonLabel: inputFormElements[i].getAttribute("adaptButtonLabel"),
-                  editAreaID: inputFormElements[i].getAttribute("editAreaID")
+                  editAreaID: inputFormElements[i].getAttribute("editAreaID"),
+             onSuccessMethod: inputFormElements[i].getAttribute("onSuccessMethod")
 
 
                   };

@@ -8,6 +8,6 @@
     <restCommandViaDelete cmd="/rest/manager/deleteService/*" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.DeleteServiceCommand"/>
     <restCommandViaDelete cmd="/rest/manager/deleteInstanceByMsgID/*/*/*" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.DeleteInstanceByMsgIDCommand"/>
     <restCommandViaGet cmd="/rest/manager/getConfiguration" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.GetConfigurationCommand"/>
-
+    <restCommandViaPut cmd="/rest/manager/setConfiguration" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.SetConfigurationCommand"/>
 </plugin>
 

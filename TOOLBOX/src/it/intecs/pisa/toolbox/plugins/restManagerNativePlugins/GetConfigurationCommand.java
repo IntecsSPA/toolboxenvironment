@@ -6,21 +6,12 @@
 package it.intecs.pisa.toolbox.plugins.restManagerNativePlugins;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import it.intecs.pisa.pluginscore.InterfacePluginManager;
 import it.intecs.pisa.pluginscore.RESTManagerCommandPlugin;
 import it.intecs.pisa.toolbox.configuration.ToolboxConfiguration;
-import it.intecs.pisa.util.DOMUtil;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Hashtable;
-import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 /**
  *

@@ -81,7 +81,7 @@ public class ToolboxInternalDatabase {
                 throw new Exception(ERROR_NOT_INITED);
 
             jdbcConnectString="jdbc:hsqldb:"+databasePath+";shutdown=true";
-            System.out.println("Connecting to database with JDBC string: "+jdbcConnectString);
+
             conn = DriverManager.getConnection(jdbcConnectString,"TOOLBOX","intecs");
             conn.setAutoCommit(true);
             isConnected=true;

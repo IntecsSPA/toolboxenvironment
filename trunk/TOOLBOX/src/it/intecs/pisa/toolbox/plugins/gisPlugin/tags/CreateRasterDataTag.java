@@ -73,7 +73,7 @@ public class CreateRasterDataTag extends NativeTagExecutor {
     protected static final String RASTER_TYPE = "type";
     protected static final String RASTER_PATH = "rasterPath";
     protected static final String RASTER_CONTENT = "rasterContent";
-    protected static final String CREATE_RASTER_CLASSES_PACKAGE = "it.intecs.pisa.toolbox.plugins.gisPlugin.";
+    protected static final String CREATE_RASTER_CLASSES_PACKAGE = "it.intecs.pisa.toolbox.plugins.gisPlugin.util.";
     protected static final String CREATE_RASTER_CLASS_NAME_SUFFIX="Raster";
 
 

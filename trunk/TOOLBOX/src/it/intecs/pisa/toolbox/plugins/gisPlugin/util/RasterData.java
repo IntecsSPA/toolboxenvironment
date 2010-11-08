@@ -7,7 +7,7 @@ package it.intecs.pisa.toolbox.plugins.gisPlugin.util;
  * @author Andrea Marongiu
  */
 public interface RasterData {
-    static final String RASTER_DATA_CLASSES_PACKAGE = "it.pisa.intecs.raster.instance.";
+    static final String RASTER_DATA_CLASSES_PACKAGE = "it.intecs.pisa.gis.raster.instance.";
     static final String SOURCE_NODE = "source";
     static final String SOURCE_TYPE = "type";
     static final String SOURCE_NAME = "name";

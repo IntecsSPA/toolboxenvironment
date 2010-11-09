@@ -287,7 +287,7 @@ function createServiceInterface(){
        var accordionCreateServicePanel=new Ext.Panel({
                           split:true,
                           autoScroll : true,
-                          bodyStyle : {background: "#79a3cb"},
+                          bodyStyle : {background: "#E4E7E7"},
                           anchor:'100% 80%',
                           margins:'5 0 5 5',
                                   layout:'accordion',

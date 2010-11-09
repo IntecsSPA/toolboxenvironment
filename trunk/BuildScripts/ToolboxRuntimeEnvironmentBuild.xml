@@ -41,12 +41,16 @@
 	<target name="compileTBX" depends="init" description="compile the source ">
 		<mkdir dir="${temp}"/>
 		<javac srcdir="${src}" destdir="${temp}" classpathref="build.classpath" nowarn="yes" target="1.5"/>
+		
+		<mkdir dir="${temp}/it/intecs/pisa/toolbox/plugins/wpsPlugin/resources"/>
+		<copyfile src="${src}/it/intecs/pisa/toolbox/plugins/wpsPlugin/resources/plugin.xml" dest="${temp}/it/intecs/pisa/toolbox/plugins/wpsPlugin/resources/plugin.xml"/>
+
 		<jar jarfile="TOOLBOX/webapp/WEB-INF/lib/toolbox.jar">
 			<fileset dir="${temp}">
 				
 			</fileset>
 		</jar>
-		<jar jarfile="TOOLBOX/webapp/WEB-INF/plugins/GeoServerTagPlugin/libs/GeoServerTagPlugin.jar">
+		<!--jar jarfile="TOOLBOX/webapp/WEB-INF/plugins/GeoServerTagPlugin/libs/GeoServerTagPlugin.jar">
 			<fileset dir="${temp}">
 				<include name="it/intecs/pisa/toolbox/plugins/geoServerTagPlugin/**/*.class"/>
 			</fileset>
@@ -55,7 +59,7 @@
 			<fileset dir="${temp}">
 				<include name="it/intecs/pisa/toolbox/plugins/managerNativePlugins/**/*.class"/>
 			</fileset>
-		</jar>
+		</jar-->
 		<delete dir="${temp}"/>
 	</target>
 

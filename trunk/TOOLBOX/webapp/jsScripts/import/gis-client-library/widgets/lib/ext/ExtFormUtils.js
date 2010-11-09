@@ -102,7 +102,7 @@ function createPanelExjFormByXml(xmlDocument,lang){
   if(requestInformationsNodes.length > 0){
     backgroundColor=requestInformationsNodes[0].getAttribute("backgroundColor");  
     if(!backgroundColor)
-       backgroundColor='#99bbe8';
+       backgroundColor='#E4E7E7';
 
     buttonElements=inputInterfaceXml.selectNodes("/gis:inputInterface/gis:requestInformations/gis:buttons/gis:button");     
     var type,onclickFunction,disabled,disableIfNotMandatoryFields;  
@@ -148,7 +148,7 @@ function createPanelExjFormByXml(xmlDocument,lang){
             closable:false});
      }
   }else
-    backgroundColor='#99bbe8';
+    backgroundColor='#E4E7E7';
     
       
   

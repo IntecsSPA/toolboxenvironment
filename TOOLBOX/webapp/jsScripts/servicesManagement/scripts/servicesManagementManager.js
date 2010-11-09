@@ -53,7 +53,7 @@ function managerGroupServices(){
                             border: true,
                             autoScroll : true,
                             id: "exportServicePanel",
-                            bodyColor: '#79a3cb',
+                            bodyColor: '#E4E7E7',
                             listeners: {
                                 "beforeexpand": function(){
                                     var checkboxGroup=Ext.getCmp("services_cont");
@@ -69,7 +69,7 @@ function managerGroupServices(){
                             border: true,
                             autoScroll : true,
                             id: "importServicePanel",
-                            bodyColor: '#79a3cb',
+                            bodyColor: '#E4E7E7',
                             html: "<div id='importServicesInterface'>",
                             iconCls: 'import'
                    });
@@ -79,7 +79,7 @@ function managerGroupServices(){
                             border: true,
                             autoScroll : true,
                             id: "duplicateServicePanel",
-                            bodyColor: '#79a3cb',
+                            bodyColor: '#E4E7E7',
                             listeners: {
                                 "beforeexpand": function(){
                                     var checkboxGroup=Ext.getCmp("dupServices_cont");
@@ -95,7 +95,7 @@ function managerGroupServices(){
                             border: true,
                             autoScroll : true,
                             id: "deleteServicePanel",
-                            bodyColor: '#79a3cb',
+                            bodyColor: '#E4E7E7',
                             listeners: {
                                 "beforeexpand": function(){
                                     var checkboxGroup=Ext.getCmp("servicesDel_cont");
@@ -108,7 +108,7 @@ function managerGroupServices(){
 
         var accordionImportExportServicesPanel= new Ext.Panel({
                                   split:true,
-                                  bodyStyle : {background: "#79a3cb"},
+                                  bodyStyle : {background: "#E4E7E7"},
                                   anchor:'100% 80%',
                                   autoScroll : true,
                                   margins:'5 0 5 5',
@@ -273,7 +273,7 @@ function createServiceInterface(){
                             border: true,
                             autoScroll : true,
                             id: servicesXMLInterface[i].name+"ServicePanel",
-                            bodyColor: '#79a3cb',
+                            bodyColor: '#E4E7E7',
                             html: "<div id='"+servicesXMLInterface[i].name+"ServiceInterface'>",
                             iconCls: servicesXMLInterface[i].name+'cls'
                    }));

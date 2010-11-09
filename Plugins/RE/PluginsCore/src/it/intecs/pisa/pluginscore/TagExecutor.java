@@ -26,6 +26,7 @@ import it.intecs.pisa.pluginscore.toolbox.engine.interfaces.IVariableStore;
 import it.intecs.pisa.pluginscore.exceptions.DebugTerminatedException;
 import it.intecs.pisa.pluginscore.exceptions.ReturnTagException;
 import it.intecs.pisa.pluginscore.exceptions.TagException;
+import it.intecs.pisa.pluginscore.exceptions.ThrowTagException;
 import it.intecs.pisa.util.DOMUtil;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -148,7 +149,7 @@ public class TagExecutor implements ITagExecutor {
         return executeChildTag(element, offlineDbgTag);
     }
 
-    protected Object executeTagTrapped(Element tagEl, Element debugTag, Element excTag, Document doc, Element excDetailsTag) throws DOMException, ReturnTagException, TagException, DebugTerminatedException {
+    protected Object executeTagTrapped(Element tagEl, Element debugTag, Element excTag, Document doc, Element excDetailsTag) throws Exception {
         Object returnValue;
 
         try {
@@ -157,7 +158,10 @@ public class TagExecutor implements ITagExecutor {
             throw tagException;
         } catch (ReturnTagException retTagException) {
             throw retTagException;
-        } catch (DebugTerminatedException dbgTerminatedException) {
+        }catch (ThrowTagException throwTagException) {
+            throw throwTagException;
+        }
+        catch (DebugTerminatedException dbgTerminatedException) {
             throw dbgTerminatedException;
         } catch (Exception exEcc) {
             if (offlineDbgTag != null) {

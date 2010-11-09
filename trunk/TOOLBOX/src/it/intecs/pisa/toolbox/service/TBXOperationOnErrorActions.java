@@ -46,7 +46,9 @@ public class TBXOperationOnErrorActions {
             InstanceResources.storeResourceEntry(id, seviceInstanceId,type);
 
             InstanceVariable.storeVarIntoDB(seviceInstanceId, "errorMessage", InstanceVariable.STRING, errorMsg);
-            InstanceVariable.storeVarIntoDB(seviceInstanceId, "targetNamespace", InstanceVariable.STRING, service.getImplementedInterface().getTargetNameSpace());
+
+            if(service.getImplementedInterface()!=null && service.getImplementedInterface().getTargetNameSpace()!=null)
+                InstanceVariable.storeVarIntoDB(seviceInstanceId, "targetNamespace", InstanceVariable.STRING, service.getImplementedInterface().getTargetNameSpace());
 
             InstanceHandler handler;
 

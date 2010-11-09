@@ -1,6 +1,6 @@
 package it.intecs.pisa.toolbox.plugins.nativeTagPlugin;
 
-import it.intecs.pisa.soap.toolbox.exceptions.ToolboxException;
+import it.intecs.pisa.pluginscore.exceptions.ThrowTagException;
 import it.intecs.pisa.util.DOMUtil;
 import java.util.LinkedList;
 import org.w3c.dom.Document;
@@ -28,8 +28,8 @@ public class ThrowTag extends NativeTagExecutor {
         if(detailsElement!= null){
             offlineDbgTag.appendChild(detailsDebug);
             details = (Document) this.executeChildTag(DOMUtil.getFirstChild(DOMUtil.getChildByTagName(throwstm, "details")),detailsDebug);
-            throw new ToolboxException(errorMessage, details.getDocumentElement());
+            throw new ThrowTagException(errorMessage, details.getDocumentElement());
         }else
-           throw new ToolboxException(errorMessage);
+           throw new ThrowTagException(errorMessage);
     }
 }

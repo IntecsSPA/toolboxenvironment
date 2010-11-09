@@ -19,6 +19,7 @@ package it.intecs.pisa.toolbox.service;
 import it.intecs.pisa.common.communication.ServerDebugConsole;
 import it.intecs.pisa.common.communication.messages.ExecutionCompletedMessage;
 import it.intecs.pisa.pluginscore.exceptions.DebugTerminatedException;
+import it.intecs.pisa.pluginscore.exceptions.ThrowTagException;
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.db.InstanceStatuses;
 import it.intecs.pisa.toolbox.db.ToolboxInternalDatabase;
@@ -30,6 +31,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import org.apache.log4j.Logger;
 import java.util.concurrent.Semaphore;
+import org.w3c.dom.Document;
 
 /**
  *
@@ -66,6 +68,7 @@ public class TBXAsynchronousOperationFirstScriptExecutor extends Thread {
     @Override
     public void run() {
         InstanceHandler handler=null;
+        Document errorResp;
         try {
             try {
                 handleQueuing();
@@ -104,6 +107,17 @@ public class TBXAsynchronousOperationFirstScriptExecutor extends Thread {
                logger.error(errorStr);
                ErrorMailer.send(serviceInstanceId,errorStr);
 
+               String errMes;
+
+               if(e instanceof ThrowTagException)
+                    errMes=((ThrowTagException)e).getMessage();
+               else errMes="An error occurred while executing the service logic";
+
+                errorResp = TBXOperationOnErrorActions.processErrorRequest(serviceInstanceId, TBXScript.SCRIPT_TYPE_GLOBAL_ERROR, errMes);
+                TBXAsynchronousOperationCommonTasks.sendResponseToClient(serviceInstanceId, errorResp);
+
+                handler = new InstanceHandler(serviceInstanceId);
+                handler.deleteAllVariablesDumped();
                 releaseMutex();
             }
         } catch (Exception ecc) {

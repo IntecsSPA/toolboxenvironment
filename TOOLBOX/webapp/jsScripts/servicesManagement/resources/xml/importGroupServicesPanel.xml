@@ -2,7 +2,7 @@
 
 <inputInterface xmlns="http://gisClient.pisa.intecs.it/gisClient">
     <section name="TOOLBOX Import Services" cols="10">
-        <group label="Load the services zip file:">
+        <group label="Select the services:">
           <input type="file" name="zipServices" hideLabel="false" id="zipServices" colSpan="10"
            optional="true"
            size="300"

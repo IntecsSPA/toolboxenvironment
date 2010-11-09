@@ -126,7 +126,7 @@ function managerGroupServices(){
                             });
 
         importExportGroupServiceWin = new WebGIS.Panel.WindowInterfacePanel({
-                        title: 'Import / Export  Services',
+                        title: 'Manager  Services',
                         id: 'importExportGroupServiceWin',
                         border: false,
                         animCollapse : true,

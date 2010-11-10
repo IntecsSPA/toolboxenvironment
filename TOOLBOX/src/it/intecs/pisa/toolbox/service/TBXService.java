@@ -78,7 +78,6 @@ public class TBXService extends Service {
     private Element getOrderIdScript;
     private String orderIdXpath;
     private HashMap soapActions = new HashMap();
-    private File logDir;
     private static InetAddress localHost = null;
 
     /**
@@ -100,11 +99,6 @@ public class TBXService extends Service {
         serviceRoot = serviceRootDir;
         publicServiceDir = publicServiceDirectory;
         root = toolbox.getRootDir();
-
-        logDir = new File(toolbox.getLogDir(), serviceName);
-        if (!logDir.exists()) {
-            logDir.mkdir();
-        }
 
         logger=LogResourcesPersistence.getInstance().getRollingLogForService(serviceName);
 
@@ -446,7 +440,7 @@ public class TBXService extends Service {
 
     }
 
-    public void deleteSynchronousIstance(String key) throws Exception {
+   /* public void deleteSynchronousIstance(String key) throws Exception {
         File requestLogDir = new File(new File(getLogDir(), ToolboxFoldersFileConstants.SYNCHRONOUS_INSTANCES), key);
         IOUtil.rmdir(requestLogDir);
     }
@@ -467,7 +461,7 @@ public class TBXService extends Service {
         logger.removeAllAppenders();
 
         IOUtil.rmdir(getLogDir());
-    }
+    }*/
 
     /**
      *  Returns a stream directly connected with statusEl descriptor file on disk.
@@ -549,7 +543,7 @@ public class TBXService extends Service {
     /**
      *  Make a back up copy of the log files and restart logging from scratch
      */
-    public void clearLog() throws Exception {
+   /* public void clearLog() throws Exception {
         String _LOG = ".log";
         File bkDir = new File(logDir, serviceName + "-" + TimeUtil.getDateTime("-", "T", "-"));
         bkDir.mkdir();
@@ -564,9 +558,9 @@ public class TBXService extends Service {
             fileToCopy.delete();
             index++;
         }
-    }
+    }*/
 
-    public InputStream getAsynchronousResource(String instanceId, String resourceKey) throws Exception {
+   /* public InputStream getAsynchronousResource(String instanceId, String resourceKey) throws Exception {
         final String resKey = new String(resourceKey);
         File requestLogDir = new File(new File(getLogDir(), ToolboxFoldersFileConstants.ASYNCHRONOUS_INSTANCES), instanceId);
         File[] filesArray = requestLogDir.listFiles(new FileFilter() {
@@ -576,11 +570,11 @@ public class TBXService extends Service {
             }
         });
         return new FileInputStream(filesArray[0]);
-    }
+    }*/
 
-    public InputStream getSynchronousResource(String instanceId, String resourceKey) throws Exception {
+   /* public InputStream getSynchronousResource(String instanceId, String resourceKey) throws Exception {
         return new FileInputStream(new File(new File(new File(getLogDir(), ToolboxFoldersFileConstants.SYNCHRONOUS_INSTANCES), instanceId), resourceKey));
-    }
+    }*/
 
     public InputStream getTimerStatus() throws Exception {
         return null; //this.getTimerManager().getTimerStatus();
@@ -748,13 +742,13 @@ public class TBXService extends Service {
         return op.getType();
     }
 
-    public File getLogDir() {
+   /* public File getLogDir() {
         return logDir;
     }
 
     public void setLogDir(File logDir) {
         this.logDir = logDir;
-    }
+    }*/
 
     public Toolbox getToolbox() {
         return toolbox;

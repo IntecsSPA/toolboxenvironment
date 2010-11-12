@@ -84,9 +84,7 @@ public class GetServicesListFromServicesGroupCommand extends NativeCommandsManag
 
         root.appendChild(serviceTag);
 
-       /* operations=service.getImplementedInterface().getOperations();
-        for(Operation op: operations)
-            addOperationToServiceList(serviceTag, op);*/
+       
 
     }
 

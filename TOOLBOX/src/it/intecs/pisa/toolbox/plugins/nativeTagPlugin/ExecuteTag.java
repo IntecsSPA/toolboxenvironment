@@ -1,6 +1,7 @@
 package it.intecs.pisa.toolbox.plugins.nativeTagPlugin;
 
 import it.intecs.pisa.pluginscore.exceptions.ReturnTagException;
+import it.intecs.pisa.toolbox.resources.XMLResourcesPersistence;
 import it.intecs.pisa.util.DOMUtil;
 import java.io.File;
 import java.util.Iterator;
@@ -88,11 +89,10 @@ public class ExecuteTag extends NativeTagExecutor {
         {
             if(externalFileDebugEl!=null)
             {
-                externalDebugFileName=externalFile.getName();
-                externalDebugFileName=externalDebugFileName.substring(0,externalDebugFileName.indexOf('.'));
-                externalDebugFileName+=".xml";
-                dumpExternalFileExecutionTree(externalDebugFileName,externalFileDebugEl.getOwnerDocument());
-                addResourceLinkToDebugTree(new File(externalDebugFileName));
+                XMLResourcesPersistence store=XMLResourcesPersistence.getInstance();
+                String id=store.storeXML(externalFileDebugEl.getOwnerDocument());
+                
+                addResourceLinkToDebugTree(store.getXMLFile(new Long(id)));
             }
         }
         return result;

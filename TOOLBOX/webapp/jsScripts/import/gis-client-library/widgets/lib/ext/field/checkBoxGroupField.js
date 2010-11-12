@@ -192,6 +192,7 @@
                                 this.doLayout();
                             },
                             updateRemoteUrl: function(newRemoteUrl){
+                                this.removeAll(false);
                                 this.remoteValuesURL=newRemoteUrl;
                                 this.renderCheckBoxGroup();
                                 this.doLayout();

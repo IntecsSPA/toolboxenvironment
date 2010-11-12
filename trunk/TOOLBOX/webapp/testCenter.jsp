@@ -13,6 +13,7 @@
 </c:if>
 
 <%
+String serviceName = request.getParameter("serviceName") == null ? "": request.getParameter("serviceName");
 PropertyResourceBundle messages = (PropertyResourceBundle)ResourceBundle.getBundle("ToolboxBundle", new Locale((String)session.getAttribute("languageReq")));
 String home = (String)messages.getObject("testCenter.home");
 String testCenter = (String)messages.getObject("testCenter.testCenter"); 
@@ -26,9 +27,8 @@ String toolboxUrl=ToolboxNetwork.getTOOLBOXEndpointURL();
             <TD class=pageBody id=main>
                 <SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT>
                 <SCRIPT>addHelp("RE/main.html_Run-time_environment*blankpage.html_tasks*blankpage.html_Test_Center*");</SCRIPT>
-
                 <DIV class=portletItem id=01> 
-                    <DIV> <!--%= response.encodeURL("../ToolboxGisClient/testCenter.html")  %-->
+                    <DIV>
                         <A href="javascript:fullScreenPopup ('../ToolboxGisClient/clientTest.jsp?tbxUrl=<%=toolboxUrl%>&service=<%=serviceName%>', 'Toolbox Test Client');"><fmt:message key="testCenter.sendSOAP" bundle="${lang}"/> &nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
                     </DIV> 
                     <P> 
@@ -37,7 +37,7 @@ String toolboxUrl=ToolboxNetwork.getTOOLBOXEndpointURL();
                     </P> 
                 </DIV> 
                 <DIV class=portletItem id=02> 
-                    <DIV> <!-- <!-- %= response.encodeURL("catalogueSelection.jsp") % --> 
+                    <DIV> 
                         <A href="javascript:fullScreenPopup ('../ToolboxGisClient/catalogues.html', 'Toolbox Catalogues Client');"><fmt:message key="testCenter.testCatalogue" bundle="${lang}"/> &nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
                     </DIV> 
                     <P><A href="javascript:fullScreenPopup ('../ToolboxGisClient/catalogues.html', 'Toolbox Catalogues Client');"><IMG class=labelHomePage title="catalogue" alt="Test a catalogue" src="images/catalogueSearch.png" align=middle border=0></A><fmt:message key="testCenter.testCatalogueDescr" bundle="${lang}"/>
@@ -45,18 +45,18 @@ String toolboxUrl=ToolboxNetwork.getTOOLBOXEndpointURL();
                 </DIV> 
                 <DIV class=portletItem id=03> 
                     <DIV> 
-                        <A href="<%= response.encodeURL("validateScriptRequest.jsp") %>"><fmt:message key="testCenter.validate" bundle="${lang}"/> &nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
+                        <A href="<%= response.encodeURL("validateScriptRequest.jsp?serviceName=" + serviceName) %>"><fmt:message key="testCenter.validate" bundle="${lang}"/> &nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
                     </DIV> 
                     <P> 
-                        <A href="<%= response.encodeURL("validateScriptRequest.jsp") %>"><IMG class=labelHomePage title=validate alt="Validate a script" src="images/validateXML.png" align=middle border=0></A>
+                        <A href="<%= response.encodeURL("validateScriptRequest.jsp?serviceName=" + serviceName) %>"><IMG class=labelHomePage title=validate alt="Validate a script" src="images/validateXML.png" align=middle border=0></A>
                     <fmt:message key="testCenter.validateDescr" bundle="${lang}"/> </P> 
                 </DIV> 
                 <DIV class=portletItem id=04> 
                     <DIV> 
-                        <A href="<%= response.encodeURL("viewPushedMsg.jsp") %>"><fmt:message key="testCenter.Push" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN> 
+                        <A href="<%= response.encodeURL("viewPushedMsg.jsp?serviceName=" + serviceName) %>"><fmt:message key="testCenter.Push" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
                     </DIV> 
                     <P> 
-                        <A href="<%= response.encodeURL("viewPushedMsg.jsp") %>"><IMG class=labelHomePage title=validate alt="Validate a script" src="images/pushServer.png" align=middle border=0></A>
+                        <A href="<%= response.encodeURL("viewPushedMsg.jsp?serviceName=" + serviceName) %>"><IMG class=labelHomePage title=validate alt="Validate a script" src="images/pushServer.png" align=middle border=0></A>
                     <fmt:message key="testCenter.PushDescr" bundle="${lang}"/></P> 
                 </DIV>
  </TD>

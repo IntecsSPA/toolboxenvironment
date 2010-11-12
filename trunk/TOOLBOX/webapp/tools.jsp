@@ -11,6 +11,8 @@
 </c:if>
 
 <%
+String serviceName = request.getParameter("serviceName") == null ? "": request.getParameter("serviceName");
+
 PropertyResourceBundle messages = (PropertyResourceBundle)ResourceBundle.getBundle("ToolboxBundle", new Locale((String)session.getAttribute("languageReq")));
 String bc = "<a href='main.jsp'>Home</a>&nbsp;&gt;&nbsp;Tools";
 String toolboxUrl=ToolboxNetwork.getEndpointURL();
@@ -19,15 +21,6 @@ String toolboxUrl=ToolboxNetwork.getEndpointURL();
     <TBODY> 
         <TR> 
             <TD class=pageBody id=main><SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT>
-                <DIV class=portletItem id=05>
-                    <DIV>
-                        <A href="<%= response.encodeURL("marketplaceList.jsp") %>"><fmt:message key="tools.marketplace" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
-                    </DIV>
-                    <P>
-                        <A href="<%= response.encodeURL("marketplaceList.jsp") %>"><IMG class=labelHomePage title=validate alt="<fmt:message key="tools.marketplace" bundle="${lang}"/>" src="images/harvestFromDisk.png" align=middle border=0></A>
-                    <fmt:message key="tools.marketplace" bundle="${lang}"/></P>
-                </DIV>
-
                 <DIV class=portletItem id=01>
                     <DIV>
                         <A href="createEbRRDB.jsp"><fmt:message key="tools.createebRRDB" bundle="${lang}"/> &nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>

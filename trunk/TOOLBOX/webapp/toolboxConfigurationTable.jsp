@@ -34,6 +34,8 @@ String toolboxVersionChecked = "";
 String schemaVersionChecked = "";
 String inMsgLogChecked = "";
 String outMsgLogChecked = "";
+String dockChecked = "";
+
 
 String currLogDir = configuration.getConfigurationValue(ToolboxConfiguration.LOG_DIR);
 String currLogLevel = configuration.getConfigurationValue(ToolboxConfiguration.LOG_LEVEL);
@@ -66,7 +68,11 @@ String cleanupEvery=configuration.getConfigurationValue(ToolboxConfiguration.CLE
     if (Boolean.parseBoolean(configuration.getConfigurationValue(ToolboxConfiguration.FIRST_TIME_CHECK))) {
         firstTimeChecked = "checked";
     }
-    if (Boolean.parseBoolean(configuration.getConfigurationValue(ToolboxConfiguration.QUEUING))) {
+    if (!Boolean.parseBoolean(configuration.getConfigurationValue(ToolboxConfiguration.CLASSIC_HEADER))) {
+        dockChecked = "checked";
+    }
+
+  if (Boolean.parseBoolean(configuration.getConfigurationValue(ToolboxConfiguration.QUEUING))) {
         queuingChecked = "checked";
     }
     
@@ -93,6 +99,16 @@ PropertyResourceBundle messages = (PropertyResourceBundle)ResourceBundle.getBund
 
 %>
 <table width="90%" bordercolor="#808080" cellspacing="1" cellpadding="1" border="0" align="center">
+
+
+                <tr><!-- Row 1 -->
+                    <td class=sortable colspan="2" nowrap><fmt:message key="configureToolboxRequest.lookFeel" bundle="${lang}"/></td>
+                </tr>
+                <tr><!-- Row 2 -->
+                    <td class="tdItem" width="50%" colspan=1 nowrap><fmt:message key="configureToolboxRequest.dock" bundle="${lang}"/></td>
+                    <td class="tdForm" nowrap><input name="dock" type="checkbox" <%=disabled%> <%=dockChecked%> ></td>
+                </tr>
+
                 <tr><!-- Row 1 -->
                     <td class=sortable colspan="2" nowrap><fmt:message key="configureToolboxRequest.fSetting" bundle="${lang}"/></td>
                 </tr>

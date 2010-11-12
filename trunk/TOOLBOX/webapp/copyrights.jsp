@@ -47,6 +47,11 @@ request.setAttribute("languageReq", request.getAttribute("languageReq"));
 		<p><fmt:message key="copyrights.distributed" bundle="${lang}"/></p>
 		<p><fmt:message key="copyrights.See" bundle="${lang}"/><a href="gpl.txt"><fmt:message key="copyrights.GNU" bundle="${lang}"/></a></p>
             
+            <p>
+                <fmt:message key="copyrights.dockIcon" bundle="${lang}"/>
+                Alert64 <a href="http://alert84.deviantart.com/">http://alert84.deviantart.com/</a>
+            </p>
+
             </TD> 
             </TR> 
           </TBODY> 

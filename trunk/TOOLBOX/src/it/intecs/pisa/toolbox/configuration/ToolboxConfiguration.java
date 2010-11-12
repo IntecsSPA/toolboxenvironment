@@ -45,6 +45,7 @@ public  class ToolboxConfiguration {
     public static final String SCHEMA_VERSION_CHECK = "schemaVersionCheck";
     public static final String GLOBAL_KEYSTORE="globalKeyStore";
     public static final String FIRST_TIME_CHECK = "firstTimeCheck";
+    public static final String CLASSIC_HEADER = "classicHeader";
     public static final String FTP_ADMIN_DIR = "adminDir";
     public static final String FTP_ADMIN_PASSWORD = "adminPassword";
     public static final String FTP_PORT = "port";
@@ -75,7 +76,7 @@ public  class ToolboxConfiguration {
 
 
 
-    protected static final int CONFIG_VALUES_COUNT=42;
+    protected static final int CONFIG_VALUES_COUNT=43;
 
     protected Hashtable<String,String> configValues;
     protected static ToolboxConfiguration instance=new ToolboxConfiguration();
@@ -213,6 +214,7 @@ public  class ToolboxConfiguration {
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+SENDER+"','')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+SMTP_SERVER+"','')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+FIRST_TIME_CHECK+"','true')");
+               stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+CLASSIC_HEADER+"','true')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+FTP_SERVER_HOST+"','localhost')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+EBRR_REPO_HOME+"','/tmp')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+SSE_PORTAL+"','services.eoportal.org')");

@@ -202,7 +202,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         JsonUtil.writeJsonToStream(jsonResp, resp.getOutputStream());
     }
 
-    protected void executeRestCommandStream(HttpServletRequest req, HttpServletResponse resp,IRESTManagerPlugin commandPlugin, String formatLessCmd) throws IOException {
+    protected void executeRestCommandStream(HttpServletRequest req, HttpServletResponse resp, IRESTManagerPlugin commandPlugin, String formatLessCmd) throws IOException {
         InputStream response;
         boolean res = commandPlugin.authenticate(formatLessCmd, req.getInputStream());
         if (res == true) {
@@ -257,7 +257,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
 
     private void executeRestCommandServletInterface(HttpServletRequest req, HttpServletResponse resp, IRESTManagerPlugin commandPlugin) throws Exception {
         DOMUtil util;
-        InputStream errorResp=null;
+        InputStream errorResp = null;
 
         boolean res = commandPlugin.authenticate(req, resp);
         if (res == true) {
@@ -271,8 +271,9 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             errorResp = new ByteArrayInputStream("Could not authenticate request".getBytes());
         }
 
-        if(errorResp!=null)
+        if (errorResp != null) {
             IOUtil.copy(errorResp, resp.getOutputStream());
+        }
     }
 
     private void debugServiceRequest(HttpServletResponse resp, HttpServletRequest req, String requestURI) throws IOException {
@@ -443,7 +444,6 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         service = (TBXService) this.serviceManager.getService(serviceName);
 
         TBXOperation operation = (TBXOperation) service.getImplementedInterface().getOperationBySOAPAction(operationName);
-
         if (operation == null) {
             logger.error("[" + serviceName + "] " + "Unknown SOAP port" + operationName);
             ErrorMailer.send(serviceName, operationName, null, null, "[" + serviceName + "] " + "Unknown SOAP port" + operationName);
@@ -469,6 +469,123 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         return responseDocument;
     }
 
+
+    /**
+     *
+     * @author Stefano
+     * @param operationName
+     * @param soapRequestDoc
+     * @param requestURI
+     * @param debugMode
+     * @return
+     * @throws IOException
+     * @throws ToolboxException
+     */
+    public Document executeServiceRequest(Document soapRequestDoc, String requestURI, boolean debugMode) throws IOException, ToolboxException {
+
+        Document responseDocument = null;
+        String errorMsg = null;
+        String serviceName = null;
+        TBXService service = null;
+
+        serviceName = requestURI.substring(requestURI.lastIndexOf("/") + 1);
+        service = (TBXService) this.serviceManager.getService(serviceName);
+        
+        //EXTRACT THE BODY CHILD TAG NAMESPACE AND LOCAL NAME
+        Element body = (Element)soapRequestDoc.getElementsByTagNameNS("http://schemas.xmlsoap.org/soap/envelope/", "Body").item(0);
+        Node tag = body.getFirstChild();
+        String namespace = tag.getNamespaceURI();
+        String tagName = tag.getLocalName();
+        TBXOperation operation = (TBXOperation) service.getImplementedInterface().getOperationByMainTag(namespace, tagName);
+
+        if (operation == null) {
+            logger.error("[" + serviceName + "] " + "Unknown message: the following element is not recognized" + namespace + ":" + tagName);
+            ErrorMailer.send(serviceName, tagName, null, null, "[" + serviceName + "] " + "Unknown message: the following element is not recognized" + namespace + ":" + tagName);
+            throw new ToolboxException("Unknown message: the following element is not recognized" + namespace + ":" + tagName);
+        }
+
+        //**************** Processing Request *********************
+
+        try {
+            if (debugMode) {
+                System.out.println("Process new Debug instance");
+            } else {
+                System.out.println("Process new Run instance");
+            }
+            responseDocument = service.processRequest(operation, soapRequestDoc, debugMode);
+            logger.info("[" + serviceName + "] Processing request successful");
+        } catch (Exception e) {
+            errorMsg = "[" + serviceName + "] " + e.getMessage();
+            logger.error(errorMsg);
+            throw new ToolboxException(errorMsg);
+        }
+
+        return responseDocument;
+    }
+
+    private void executeHttpPost(HttpServletRequest req, HttpServletResponse resp, String requestURI) throws IOException {
+        Document doc = null;
+        Document responseDocument = null;
+        Document soapRequestDocument = null;
+        String errorMsg = null;
+        PrintWriter writer = null;
+        DOMUtil domUtil = null;
+        String soapaction = null;
+
+        try {
+            resp.setContentType("text/xml");
+            writer = resp.getWriter();
+            domUtil = new DOMUtil(true);
+
+            try {
+                BufferedReader buf = req.getReader();
+                soapRequestDocument = domUtil.readerToDocument(buf);
+            } catch (Exception e) {
+                errorMsg = "Error reading the post message content: " + MiscConstants.CDATA_S + e.getMessage() + MiscConstants.CDATA_E;
+                logger.error(errorMsg);
+                throw new ToolboxException(errorMsg);
+            }
+            //String operationName = "";
+
+            //HANDLE THE DEBUG_MODE
+            //ADD THE SOAP HEADER TO THE POST BODY
+            Util.addSOAPEnvelope(soapRequestDocument);
+
+            //GET THE OPERATION NAME
+            //operationName = requestURI.substring(requestURI.lastIndexOf("/") + 1);
+
+//            responseDocument = executeServiceRequest(operationName, soapRequestDocument, requestURI.substring(0,requestURI.lastIndexOf("/")), false);
+            responseDocument = executeServiceRequest(soapRequestDocument, requestURI, false);
+
+            try {
+                new XMLSerializer2(writer).serialize(responseDocument);
+                writer.flush();
+                writer.close();
+            } catch (Exception e) {
+                errorMsg = "Error while serializing response document:: " + e.getMessage();
+                logger.error(errorMsg);
+                ErrorMailer.send(null, soapaction, null, null, errorMsg);
+                throw new ToolboxException(errorMsg);
+            }
+
+        } catch (Exception e) {
+            //******** an exception has been thrown, sending a SOAP Fault ********************
+
+            try {
+                if (e instanceof ToolboxException) {
+                    doc = Util.getSOAPFault((ToolboxException) e);
+                } else {
+                    doc = Util.getSOAPFault(e.getMessage());
+                }
+                Util.addSOAPEnvelope(doc);
+                new XMLSerializer2(writer).serialize(doc);
+            } catch (Exception ex) {
+                ex.printStackTrace(System.out);
+            }
+            writer.close();
+        }
+    }
+
     private void handleGetRepository(HttpServletRequest request, HttpServletResponse response, String serviceName) throws Exception {
         TBXService service;
         ServiceManager servMan;
@@ -477,8 +594,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         service = servMan.getService(serviceName);
 
         interf = service.getImplementedInterface();
-        if (interf.getName().equals("OGC-06-131r6") && interf.getVersion().equals("0.2.4")
-                && interf.getType().equals("Catalogue") && interf.getMode().equals("StandAlone")) {
+        if (interf.getName().equals("OGC-06-131r6") && interf.getVersion().equals("0.2.4") && interf.getType().equals("Catalogue") && interf.getMode().equals("StandAlone")) {
 
 
 
@@ -718,10 +834,10 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         try {
             AutomaticCleanup.start();
 
-            TimerManager timerMan=TimerManager.getInstance();
-            AsynchInstancesSecondScriptWakeUpManager wakeupMan=AsynchInstancesSecondScriptWakeUpManager.getInstance();
-            PushRetryManager pushMan=PushRetryManager.getInstance();
-            TimeoutManager timeoutMan=TimeoutManager.getInstance();
+            TimerManager timerMan = TimerManager.getInstance();
+            AsynchInstancesSecondScriptWakeUpManager wakeupMan = AsynchInstancesSecondScriptWakeUpManager.getInstance();
+            PushRetryManager pushMan = PushRetryManager.getInstance();
+            TimeoutManager timeoutMan = TimeoutManager.getInstance();
         } catch (Exception e) {
             logger.info("Cannot start automatic cleanup service");
         }
@@ -806,13 +922,17 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
                 executeRestCommand(req, resp);
             }
 
+            if (requestURI.startsWith("/TOOLBOX/http")) {
+                StatisticsUtil.incrementStatistic(StatisticsUtil.STAT_ARRIVED);
+                //executeHttpGet(req, resp);
+                return;
+            }
+
             id = req.getParameter("id");
             service = req.getParameter("service");
             request = req.getParameter("request");
 
-            if (id != null && id.equals("") == false
-                    && service != null && service.equals("CSW-ebRIM")
-                    && request != null && request.equals("GetRepositoryItem")) {
+            if (id != null && id.equals("") == false && service != null && service.equals("CSW-ebRIM") && request != null && request.equals("GetRepositoryItem")) {
                 handleGetRepository(req, resp, getTargetedServiceName(req));
             } else {
                 requestURI = req.getRequestURI();
@@ -834,8 +954,8 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         String requestURI = request.getRequestURI();
 
         if (requestURI.startsWith("/TOOLBOX/rest")) {
-                executeRestCommand(request, response);
-            }
+            executeRestCommand(request, response);
+        }
     }
 
     protected String getTargetedServiceName(HttpServletRequest req) {
@@ -875,6 +995,11 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         } else if (requestURI.startsWith("/TOOLBOX/services")) {
             StatisticsUtil.incrementStatistic(StatisticsUtil.STAT_ARRIVED);
             super.doPost(req, resp);
+            return;
+        } else if (requestURI.startsWith("/TOOLBOX/http")) {
+            StatisticsUtil.incrementStatistic(StatisticsUtil.STAT_ARRIVED);
+//            super.doPost(req, resp);
+            executeHttpPost(req, resp, requestURI);
             return;
         }
         if (requestURI.startsWith("/TOOLBOX/debug")) {
@@ -1024,16 +1149,16 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             } catch (Exception e) {
             }
 
-            TimerManager timerMan=TimerManager.getInstance();
+            TimerManager timerMan = TimerManager.getInstance();
             timerMan.tearDown();
 
-            AsynchInstancesSecondScriptWakeUpManager wakeUpMan=AsynchInstancesSecondScriptWakeUpManager.getInstance();
+            AsynchInstancesSecondScriptWakeUpManager wakeUpMan = AsynchInstancesSecondScriptWakeUpManager.getInstance();
             wakeUpMan.tearDown();
 
-            PushRetryManager timer=PushRetryManager.getInstance();
+            PushRetryManager timer = PushRetryManager.getInstance();
             timer.tearDown();
 
-            TimeoutManager timeoutMan=TimeoutManager.getInstance();
+            TimeoutManager timeoutMan = TimeoutManager.getInstance();
             timeoutMan.tearDown();
 
             serviceManager = null;
@@ -1068,7 +1193,8 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
                     if (internalDatabase != null) {
                         internalDatabase.close();
                     }
-                } catch (SQLException ex) {}
+                } catch (SQLException ex) {
+                }
             }
 
             logger.info("Shutting down debug console");
@@ -1077,26 +1203,25 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
 
             }
 
-            TimerManager timerMan=TimerManager.getInstance();
+            TimerManager timerMan = TimerManager.getInstance();
             timerMan.tearDown();
 
-            AsynchInstancesSecondScriptWakeUpManager wakeUpMan=AsynchInstancesSecondScriptWakeUpManager.getInstance();
+            AsynchInstancesSecondScriptWakeUpManager wakeUpMan = AsynchInstancesSecondScriptWakeUpManager.getInstance();
             wakeUpMan.tearDown();
 
-            PushRetryManager timer=PushRetryManager.getInstance();
+            PushRetryManager timer = PushRetryManager.getInstance();
             timer.tearDown();
 
-            TimeoutManager timeoutMan=TimeoutManager.getInstance();
+            TimeoutManager timeoutMan = TimeoutManager.getInstance();
             timeoutMan.tearDown();
-            
+
             serviceManager = null;
             ftpServerManager = null;
             dbgConsole = null;
             internalDatabase = null;
             xmlResPersistence = null;
-            logger=null;
+            logger = null;
         } catch (Exception e) {
-            
         }
     }
 
@@ -1339,11 +1464,11 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
                 commandPlugin = (IRESTManagerPlugin) man.getCommand(formatLessCmd, ManagerPluginManager.METHOD_REST_PUT);
             } else if (method.equals("DELETE")) {
                 commandPlugin = (IRESTManagerPlugin) man.getCommand(formatLessCmd, ManagerPluginManager.METHOD_REST_DELETE);
-            }else {
+            } else {
                 throw new Exception("Method " + method + " not supported");
             }
 
-            Map<String,String> headers, parameters;
+            Map<String, String> headers, parameters;
 
             headers = parseRequestHeaders(req);
             parameters = parseHeaderParameters(req);
@@ -1359,10 +1484,10 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
                 try {
                     executeRestCommandStream(req, resp, commandPlugin, formatLessCmd);
                 } catch (UnsupportedOperationException ex) {
-                    executeRestCommandServletInterface(req, resp,commandPlugin);
+                    executeRestCommandServletInterface(req, resp, commandPlugin);
                 }
             }
-            
+
             setOutputHeaders(commandPlugin, resp);
 
             resp.setStatus(resp.SC_OK);
@@ -1398,6 +1523,4 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
 
         return headers;
     }
-
-    
 }

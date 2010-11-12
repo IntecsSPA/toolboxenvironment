@@ -398,6 +398,20 @@ public class Interface {
         return null;
     }
 
+    public Operation getOperationByMainTag(String namespace, String localName) {
+        Operation[] operationsArray = null;
+
+        operationsArray = this.getOperations();
+        for (Operation op : operationsArray) {
+            if (op.getInputType().equals(localName) && op.getInputTypeNameSpace().equals(namespace)) {
+                return op;
+            }
+        }
+        return null;
+    }
+
+
+
     public Operation getOperationByName(String selectedOperationName) {
         Operation[] operationsArray = null;
 

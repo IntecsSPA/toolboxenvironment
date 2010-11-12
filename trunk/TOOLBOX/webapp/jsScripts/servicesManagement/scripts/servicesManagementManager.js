@@ -87,7 +87,7 @@ function managerGroupServices(){
                                 }
                             },
                             html: "<div id='duplicateServicesInterface'>",
-                            iconCls: 'export'
+                            iconCls: 'duplicate'
                    });
 
         var deleteServicesPanel=new Ext.Panel({
@@ -103,7 +103,7 @@ function managerGroupServices(){
                                 }
                             },
                             html: "<div id='deleteServicesInterface'>",
-                            iconCls: 'export'
+                            iconCls: 'delete'
                    });
 
         var accordionImportExportServicesPanel= new Ext.Panel({

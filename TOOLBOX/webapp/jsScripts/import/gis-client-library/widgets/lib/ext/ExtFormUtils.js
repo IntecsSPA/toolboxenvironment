@@ -164,7 +164,10 @@ function createPanelExjFormByXml(xmlDocument,lang){
     var items= new Array();
     
     for(var i=0;i<sectionInterfaceElements.length;i++){
-        nameTab =sectionInterfaceElements[i].getAttribute("name"); 
+        if(loc)
+             nameTab=loc.getLocalMessage(sectionInterfaceElements[i].getAttribute("name"));
+        else
+             nameTab=sectionInterfaceElements[i].getAttribute("name");
         cols =sectionInterfaceElements[i].getAttribute("cols");
 
         if(!cols)
@@ -2809,158 +2812,6 @@ function generateCheckBoxField(field){
   return(formField);
 }
 
-/*function generateCheckBoxGroupField(field){
-  var formField=new Array();
-  var colSpan=0;
-  if (field.colSpan)
-    colSpan=(parseFloat(field.colSpan)-1)*numberColsField;
-  else
-    colSpan=1;
-  var u=0;
-  //var enableInputFunction,alternativeCheckFunction,checkEvent="";
-
-  var label;
-  if(field.localization && field.label!="" && field.label){
-    label=field.localization.getLocalMessage(field.label);
-  }else
-   label=field.label;
-
-   var itemsArray=new Array();
-   var checkInfo;
-   var valuesArray= null;
-  
-  if(field.valueList){
-      valuesArray=field.valueList.split(",");
-      for(var ii=0; ii<valuesArray.length; ii++){
-          checkInfo=valuesArray[ii].split(":");
-          if(checkInfo.length == 2)
-             itemsArray.push( {boxLabel: checkInfo[0], name: checkInfo[1]});
-          else
-             itemsArray.push({boxLabel: checkInfo[0], name: checkInfo[1], checked: eval(checkInfo[2])});
-      }
-  } else
-      if(field.remoteValuesURL && field.remoteValuesDataElement && field.remoteValuesProperties){
-          var remoteStore=getStore(field.remoteValuesType, //storeType
-                                 field.id+"_store", //storeID
-                                 field.remoteValuesURL, //remoteDataURL
-                                 field.remoteValuesProperties,
-                                 field.remoteValuesDataElement,
-                                 null, field.dataEmptyMessage);
-        var rec;
-       
-        for(var zz=0; zz<remoteStore.length; zz++){
-           rec=remoteStore[zz];
-           
-           itemsArray.push( {boxLabel: rec["boxLabel"], name: rec["name"]});
-        }
-       
-      }
-  var checkboxGroupField=new Array();
-  var i=0;
-
-  checkboxGroupField[i] = {
-                        id:field.id+"_container",
-                        colspan: 40,
-                        xtype: 'container',
-                        layout: "form",
-                        items: new Array()
-  };
-
-    if(field.button =="true"){
-
-checkboxGroupField[checkboxGroupField.length-1].items.push(
-                                    new Ext.Button({
-                                          id: field.id+"_button",
-                                          name: field.name+"_button",
-                                          text: field.buttonLabel,
-                                          buttonHandler: field.buttonHandler,
-                                          handler: function(){
-                                              if(this.buttonHandler)
-                                                  eval(field.buttonHandler+"()");
-                                          }
-
-                                          })
-                               
-                        );
-                          
-     checkboxGroupField[checkboxGroupField.length-1].items.push(new Ext.form.Field({
-                                    autoCreate: {tag: 'div', cn:{tag:'div'}},
-                                    id: field.id+"label",
-                                    name: field.id+"label",
-                                    hideLabel: true,
-                                    value: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-                           }));
-
-  }
- 
-  if(field.selDeslAll=="true"){
-     checkboxGroupField[checkboxGroupField.length-1].items.push(new Ext.form.Checkbox({
-				name: field.id+"_selDelAll",
-                               //vtype: 'checkboxgroupcontrol',
-                                //typeAhead: true,
-                                msgTarget : 'qtip',
-                                boxLabel: field.selDeslAllLabel,
-                                onChange: field.onChange,
-                                //label: field.label,
-                                checked: field.value,
-                                hideLabel: true,
-                                chekboxGroupId: field.id,
-                                checkBoxGroupDim: itemsArray.length,
-                                listeners: {
-                                    check: function() {
-                                        
-                                        var group=this.findParentByType("form").getForm().findField(this.chekboxGroupId);
-                                        for(var i=0; i<this.checkBoxGroupDim; i++){
-                                            group.items.items[i].setValue(this.checked);
-                                        }
-
-                                        
-                                    }
-
-                                },
-                                id: field.id+"_selDelAll"
-			}));
-          
-  }
- 
-  var columns=1;
-  if(field.columns){
-      columns=new Array();
-      for(var kz=0; kz<field.columns;kz++){
-          columns.push(300);
-      }
-
-  }
-
-
-  checkboxGroupField[checkboxGroupField.length-1].items.push(new Ext.form.CheckboxGroup({
-                            id:field.id,
-                            colspan: 40,
-                            layout: "form",
-                            msgTarget : 'qtip',
-                            onChange: field.onChange,
-                            getSelected: function(){
-                                var checkgroupvalue= new Array();
-                                   for(var kk=0; kk<this.items.length; kk++){
-                                       if(this.items.items[kk].checked){
-                                           checkgroupvalue.push(this.items.items[kk].name);
-                                       }
-                                   }
-                               return checkgroupvalue;
-                            },
-                            listeners:{
-                                change: function(){
-                                    if(this.onChange)
-                                        eval(this.onChange+'()');
-                                }
-                            },
-                            columns: columns,
-                            items: itemsArray
-                          }));
-                        
-  
-  return(checkboxGroupField);
-}*/
 
 function generateRadioGroupField(field){
   var formField=new Array();

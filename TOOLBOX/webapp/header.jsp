@@ -1,6 +1,7 @@
 <%@ page import="it.intecs.pisa.util.*,
          it.intecs.pisa.toolbox.service.*,
          it.intecs.pisa.toolbox.util.*,
+         it.intecs.pisa.toolbox.configuration.*,
          it.intecs.pisa.toolbox.*,
          java.util.*"  errorPage="errorPage.jsp" %>
 <%@taglib uri="http://java.sun.com/jstl/core"  prefix="c"%>
@@ -10,6 +11,12 @@
     <fmt:setBundle basename="ToolboxBundle" var="lang" scope="page"/>
 </c:if>
 <%
+        ToolboxConfiguration configuration;
+
+        configuration=ToolboxConfiguration.getInstance();
+
+        Boolean isFirstCheck=Boolean.valueOf(configuration.getConfigurationValue(ToolboxConfiguration.FIRST_TIME_CHECK));
+
         String serviceName = (request.getParameter("serviceName") == null ? "" : request.getParameter("serviceName"));
         String error = (request.getParameter("error") == null ? "" : request.getParameter("error"));
         String info = (request.getParameter("info") == null ? "" : request.getParameter("info"));
@@ -24,7 +31,7 @@
         String tbxRevision = tbxServlet.getToolboxRevision();
 
 
-        String extVers = (request.getParameter("extVers") == null ? "2.0.1" : request.getParameter("extVers"));
+        String extVers = (request.getParameter("extVers") == null ? "3" : request.getParameter("extVers"));
         int loadDefer = (request.getParameter("loadDefer") == null ? 0 : new Integer(request.getParameter("loadDefer")));
         boolean loadPanel = (request.getParameter("loadPanel") == null ? false : new Boolean(request.getParameter("loadPanel")));
         boolean firebugControl = (request.getParameter("firebugControl") == null ? false : new Boolean(request.getParameter("firebugControl")));
@@ -64,12 +71,40 @@
     <META http-equiv=Cache-Control content="no-store, no-cache, must-revalidate, post-check=0, pre-check=0">
     <META http-equiv=Expires content=0>
     <SCRIPT type="text/javascript" src="jsScripts/CommonScript.js"></SCRIPT>
+    
+
+    <!--link rel="stylesheet" type="text/css" href="jsScripts/import/gis-client-library/widgets/style/css/webgis.css" />
+    <script type="text/javascript" src="jsScripts/import/gis-client-library/import/OpenLayers/lib/OpenLayers.js"></script>
+    <link rel="stylesheet" type="text/css" href="jsScripts/import/gis-client-library/import/ext/ux/fileuploadfield/css/fileuploadfield.css"/>
+
+    <script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/ux/fileuploadfield/FileUploadField.js"></script>
+    <script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/ux/Spotlight.js"></script>
+    <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/openlayers/Format/XMLKeyValue.js"></script>
+
+    <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/webgis/Panel/WindowInterfacePanel.js"></script>
+    <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/general.js"></script-->
     <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/manager.js"></script>
+    <!--script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/localization.js"></script>
+    <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/browserDetect.js"></script>
+    <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/XmlDoc.js"></script>
+    <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/ext/ExtFormUtils.js"></script>
+    <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/ext/ExtFormType.js"></script>
+    <script type="text/javascript" src="jsScripts/import/gis-client-library/import/sarissa/Sarissa.js"></script>
+    <script type="text/javascript" src="jsScripts/import/gis-client-library/import/sarissa/sarissa_ieemu_xpath.js"></script-->
+
+
+
+
+
+
+
+    <script type="text/javascript" src="jsScripts/toolboxConfiguration/script/toolboxConfiguration.js"></script>
     <META content="MSHTML 6.00.2900.2873" name=GENERATOR>
 
     <script language="Javascript" type="text/javascript">
-        var gcManager= new GisClientManager("eng", "jsScripts/import/gis-client-library");
+        var gcManager= new GisClientManager("en", "jsScripts/import/gis-client-library");
         var currentService="<%=serviceName%>";
+        var isFirstCheck=<%=isFirstCheck%>;
         var error="";
     <% if (!error.equalsIgnoreCase("")) {%>
         error= "<%=error%>";
@@ -84,6 +119,14 @@
 
 
         function init(){
+       
+            var location=""+window.location;
+      
+            var controlPageArray=location.split("/");
+            
+            if(isFirstCheck &&  controlPageArray[controlPageArray.length-1]!="configureToolboxRequest.jsp?pageStatus=enabled"){
+                window.location = "configureToolboxRequest.jsp?pageStatus=enabled";
+            }else
             if(error=="" && info==""){
 
                 <% if (loadPanel) {%>
@@ -96,7 +139,7 @@
                                 if(window.console && window.console.firebug && ! cp.get('hideFBWarning')){
                                     Ext.Msg.show({
                                         title:'Firebug Warning',
-                                        msg: 'Firebug is known to cause performance issues with the TOOLBOX 7.1 Application.',
+                                        msg: 'Firebug is known to cause performance issues with the TOOLBOX 9 Application.',
                                         buttons: Ext.Msg.OK,
                                         icon: Ext.MessageBox.WARNING
                                     });
@@ -216,8 +259,8 @@
                             <TD colSpan=3 height=1><IMG src="images/1x1.gif"></TD>
                         </TR>
                         <%
-        TBXService[] services = ServiceManager.getInstance().getServicesAsArray();
-        boolean isEnabled = services.length > 0;
+                        TBXService[] services = ServiceManager.getInstance().getServicesAsArray();
+                        boolean isEnabled = services.length > 0;
                         %>
                         <TR bgColor=#000000 height=10>
                             <TD bgColor=#000000 colSpan=2 height=12>
@@ -244,9 +287,9 @@
                             <TD colSpan=3 height=1><IMG height=1 alt="" src="images/1x1.gif" border=0></TD>
                         </TR>
                         <TR class=flagcolour>
-                            <TD colSpan=3> <DIV class=mnu>
+                            <TD colSpan=3> <DIV class=mnu> <!-- javascript:toolboxConfigurationManager() -->
                                     <TABLE id=menuTop width="100%" align=center bgColor=#0000 border=0>
-                                        <TR align=middle>
+                                        <TR align=middle> 
                                             <TD align=left width="18%"><A class=itm
                                                                           href="<%= response.encodeURL("toolboxConfiguration.jsp")%>"><fmt:message key="header.configure" bundle="${lang}"/></A></TD>
                                             <TD align=left width="18%"><A class=itm

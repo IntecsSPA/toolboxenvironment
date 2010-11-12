@@ -25,9 +25,7 @@
               remoteValuesProperties="boxLabel:@name,name:@name"
               dataEmptyMessage="Get Service List ERROR">
             </input>
-            <!--  button="true" buttonLabel="Duplicate Services" buttonHandler="duplicateServices.onDuplicateServices"
-            remoteValuesURL="manager?cmd=GetServiceList" -->
-           <input type="multitext" name="DuplicateNameImport" id="DuplicateNameImport" optional="true" size="40" labelAlign="top"/>
+           <input type="multitext" name="DuplicateNameImport" id="DuplicateNameImport" optional="true" size="40" labelAlign="top" remoteControlURL="rest/gui/creationWizard/validate/serviceName.json"/>
         </group>
         
     </section>

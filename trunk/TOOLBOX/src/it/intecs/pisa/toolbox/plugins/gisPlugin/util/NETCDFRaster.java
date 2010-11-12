@@ -25,6 +25,7 @@ public class NETCDFRaster implements RasterData{
         NodeList generalInformationNodes=content.getElementsByTagName(GENERAL_INFORMATION_NODE);
         int i,u;
         try{
+
             this.netcdfRaster=new NETCDF(this.netCdfPathFile, true);
         }catch(Throwable t){
             t.printStackTrace();
@@ -89,7 +90,8 @@ public class NETCDFRaster implements RasterData{
            for(u=0;u<dimensionNodes.getLength();u++){
               currentNode=(Element) dimensionNodes.item(u);
               nodeAttributeValue=currentNode.getAttribute(DIMENSION_VALUE);
-              if(nodeAttributeValue.contains(PREFIX_SOURCE_REFERENCE+"")){
+              if(nodeAttributeValue.contains(PREFIX_SOURCE_REFERENCE+"") &&
+                 nodeAttributeValue.contains(PREFIX_ATTRIBUTE_SOURCE_REFERENCE+"")){
                  sourceRaster=this.getSourceRasterByNameRef(sourceNodes, nodeAttributeValue.split(PREFIX_ATTRIBUTE_SOURCE_REFERENCE)[0]);
                  informationIntValue=(Integer) sourceRaster.getInformation(nodeAttributeValue.split(PREFIX_ATTRIBUTE_SOURCE_REFERENCE)[1]);
                  this.netcdfRaster.setDimensionAttribute(currentNode.getAttribute(DIMENSION_NAME), informationIntValue);
@@ -116,28 +118,29 @@ public class NETCDFRaster implements RasterData{
            for(u=0;u<layerNodes.getLength();u++){
               currentNode=(Element) layerNodes.item(u);
               nodeAttributeValue=currentNode.getAttribute(LAYER_VALUE);
-              if(!( nodeAttributeValue.equals(null)||nodeAttributeValue.equals("")) ){
+              stringType=currentNode.getAttribute(LAYER_TYPE);
+              layerDimensionsList=currentNode.getAttribute(LAYER_ATTRIBUTE_DIMENSION_LIST);
+              if(layerDimensionsList == null||layerDimensionsList.equals(""))
+                 dimensionsList=netcdfRaster.getDimensions();
+              else
+                 dimensionsList=netcdfRaster.getDimensionsByName(layerDimensionsList);
+              if(!( nodeAttributeValue == null||nodeAttributeValue.equals("")) ){
                   if(nodeAttributeValue.contains(PREFIX_SOURCE_REFERENCE+"")){
-                     sourceRaster=this.getSourceRasterByNameRef(sourceNodes, nodeAttributeValue);
-                     layerDimensionsList=currentNode.getAttribute(LAYER_ATTRIBUTE_DIMENSION_LIST);
-                     if(layerDimensionsList.equals(null)||layerDimensionsList.equals(""))
-                        dimensionsList=netcdfRaster.getDimensions();
-                     else
-                        dimensionsList=netcdfRaster.getDimensionsByName(layerDimensionsList);
-                     stringType=currentNode.getAttribute(LAYER_TYPE);
-                     netcdfRaster.add2DLayerfromRaster(currentNode.getAttribute(LAYER_NAME), dimensionsList, stringType, sourceRaster.getRaster());
+                     if(!nodeAttributeValue.contains(PREFIX_ATTRIBUTE_SOURCE_REFERENCE+"")){
+                        sourceRaster=this.getSourceRasterByNameRef(sourceNodes, nodeAttributeValue);
+                        netcdfRaster.add2DLayerfromRaster(currentNode.getAttribute(LAYER_NAME), dimensionsList, stringType, sourceRaster.getRaster());
+                     }else{
+                        sourceRaster=this.getSourceRasterByNameRef(sourceNodes,nodeAttributeValue.split(PREFIX_ATTRIBUTE_SOURCE_REFERENCE)[0]); 
+                        netcdfRaster.addLayer(currentNode.getAttribute(LAYER_NAME), stringType, dimensionsList);
+                        informationStringValue=(String) sourceRaster.getInformation(nodeAttributeValue.split(PREFIX_ATTRIBUTE_SOURCE_REFERENCE)[1]);
+                        netcdfRaster.setLayerValue(currentNode.getAttribute(LAYER_NAME), stringType, informationStringValue);
+                     }
                   }else{
-                     stringType=currentNode.getAttribute(LAYER_TYPE);
-                     layerDimensionsList=currentNode.getAttribute(LAYER_ATTRIBUTE_DIMENSION_LIST);
-                     if(layerDimensionsList.equals(null)||layerDimensionsList.equals(""))
-                        dimensionsList=netcdfRaster.getDimensions();
-                     else
-                        dimensionsList=netcdfRaster.getDimensionsByName(layerDimensionsList);
-                      netcdfRaster.addLayer(currentNode.getAttribute(LAYER_NAME), stringType, dimensionsList);
-                      informationStringValue=(String) sourceRaster.getInformation(nodeAttributeValue.split(PREFIX_ATTRIBUTE_SOURCE_REFERENCE)[1]);
-                      netcdfRaster.setLayerValue(currentNode.getAttribute(LAYER_NAME), stringType, informationStringValue);
+                    netcdfRaster.addLayer(currentNode.getAttribute(LAYER_NAME), stringType, dimensionsList);
+                    netcdfRaster.setLayerValue(currentNode.getAttribute(LAYER_NAME), stringType, nodeAttributeValue);
                   }
-              }
+              
+               
               
               // Layer Attribute Parser -- Start
               NodeList layerAttributes=((Element)layerNodes.item(u)).getElementsByTagName(LAYER_ATTRIBUTE_NODE);
@@ -159,6 +162,8 @@ public class NETCDFRaster implements RasterData{
                 }
               }
               // Layer Attribute Parser -- End
+           }
+
            }
            
            // General Information Parser -- Start

@@ -97,10 +97,10 @@
 	background-image:url(../images/slate/button/btn-sprite.gif);
 }
 .x-btn-over button{
-	color:#fff;
+	color:#000;
 }
 .x-btn-focus button{
-	color:#fff;
+	color:#000;
 }
 .x-btn-text-icon .x-btn-with-menu .x-btn-center em {
 	background:transparent url(../images/slate/toolbar/btn-arrow.gif) no-repeat scroll right 3px;

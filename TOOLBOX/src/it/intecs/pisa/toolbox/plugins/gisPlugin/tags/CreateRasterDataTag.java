@@ -4,6 +4,7 @@ package it.intecs.pisa.toolbox.plugins.gisPlugin.tags;
 import it.intecs.pisa.toolbox.plugins.gisPlugin.util.RasterData;
 import it.intecs.pisa.toolbox.plugins.nativeTagPlugin.NativeTagExecutor;
 import it.intecs.pisa.util.DOMUtil;
+import java.io.File;
 import org.w3c.dom.Element;
 
 /**
@@ -85,7 +86,8 @@ public class CreateRasterDataTag extends NativeTagExecutor {
       org.w3c.dom.Element content= (Element) createRasterData.getElementsByTagName(RASTER_CONTENT).item(0);
       Class createRasterClass = Class.forName(CREATE_RASTER_CLASSES_PACKAGE+dataType+CREATE_RASTER_CLASS_NAME_SUFFIX);
       RasterData rasterData = (RasterData) createRasterClass.newInstance();
-      rasterData.setRasterPath((String)executeChildTag(DOMUtil.getFirstChild(path)));
+      File f=new File((String)executeChildTag(DOMUtil.getFirstChild(path)));
+      rasterData.setRasterPath(f.getCanonicalPath());
       rasterData.create(content);
       return null;
     }

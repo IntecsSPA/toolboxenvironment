@@ -4,6 +4,7 @@ package it.intecs.pisa.gis.raster.instance;
 import java.awt.image.DataBuffer;
 import java.awt.image.Raster;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class NETCDF implements RasterInstance {
        this.netCDFPathFile=ncPathFile;
         try {
             this.ncfile = NetcdfFileWriteable.createNew(ncPathFile);
+            
         } catch (IOException ex) {
             Logger.getLogger(NETCDF.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -257,12 +259,12 @@ public class NETCDF implements RasterInstance {
 
     Class typeClass=this.getClassForType(layerType);
 
-    if(noData != null){
+  /*  if(noData != null){
          IndexIterator iter = dataArray.getIndexIterator();
          while (iter.hasNext()) {
             iter.setObjectCurrent(typeClass.getConstructor(String.class).newInstance(noData));
         }
-    }
+    }*/
 
     dataArrayIndex=dataArray.getIndex();
     //for(i=0; i<db.getSize(); i++){

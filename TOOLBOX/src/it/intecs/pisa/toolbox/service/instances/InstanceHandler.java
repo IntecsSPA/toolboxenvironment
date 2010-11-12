@@ -184,6 +184,8 @@ public class InstanceHandler {
                  if(executeCleanup==true)
                     executeCleanupMarkers();
             }
+
+            System.gc();
         }
         return response;
     }

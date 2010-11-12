@@ -24,6 +24,7 @@ String resetServiceFilesRequest = "manager?cmd=resetServiceFiles&&serviceName=" 
 PropertyResourceBundle messages = (PropertyResourceBundle)ResourceBundle.getBundle("ToolboxBundle", new Locale((String)session.getAttribute("languageReq")));
 String home = (String)messages.getObject("serviceConfiguration.home");
 String serviceConf = (String)messages.getObject("serviceConfiguration.serviceConf");
+String rssFeed = "manager?cmd=getServiceRSS&serviceName=" + service;
 
 String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;" +
         "&nbsp;"+ serviceConf;
@@ -93,7 +94,20 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;" +
                         <fmt:message key="serviceConfiguration.remoteDeploymentDescription" bundle="${lang}"/>.
                         
                     </P> 
-                </DIV> 
+                </DIV>
+                <DIV class=portletItem id=06>
+                    <DIV>
+                        <A href="<%= response.encodeURL(rssFeed)%>"><fmt:message key="serviceConfiguration.RSS" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
+                    </DIV>
+                    <P>
+                        <A href="<%= response.encodeURL(rssFeed)%>">
+                            <IMG class=labelHomePage title="RSS" alt="RSS" src="images/RSS.png" align=middle border=0>
+                        </A>
+                        <fmt:message key="serviceConfiguration.RSSDescription" bundle="${lang}"/>.
+
+                    </P>
+                </DIV>
+
                  <%
                     TBXService serv;
                     ServiceManager servMan;
@@ -105,7 +119,7 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;" +
                     if(serv !=null && serv.getImplementdInterface().startsWith("OGC-06-131"))
                     {
                 %>
-                <DIV class=portletItem id=06>
+                <DIV class=portletItem id=07>
                     <DIV>
                         <A href="<%= response.encodeURL("catalogueSetCapabilities.jsp?serviceName="+service) %>"><fmt:message key="serviceConfiguration.configureCapabilities" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
                     </DIV>

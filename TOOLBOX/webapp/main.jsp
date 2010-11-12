@@ -1,6 +1,6 @@
 <!-- 
  -
- -  Copyright 2003-2004 Intecs
+ -  Copyright 2003-2010 Intecs
  -
  -  This file is part of TOOLBOX.
  -  TOOLBOX is free software; you can redistribute it andOr modify
@@ -67,6 +67,7 @@ String warnAddressError="";
 
 
 %>
+
 <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center> 
     <TBODY> 
         <TR> 
@@ -212,11 +213,9 @@ if (warnAddress)
         </TR>
         <TR>
             <TD>
-               
+
             <TD>
         </TR>
     </TBODY> 
 </TABLE>
-
-                    
 <jsp:include page="footer.jsp"/>

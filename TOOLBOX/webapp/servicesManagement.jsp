@@ -117,6 +117,13 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;&nbsp;" + serviceManag;
 .export {
             background: url('images/export_blk.png') no-repeat 0 0 !important;
         }
+.duplicate {
+            background: url('images/duplicate_blk.png') no-repeat 0 0 !important;
+        }
+.delete {
+            background: url('images/delete_blk.png') no-repeat 0 0 !important;
+        }
+
 </style>
 
 

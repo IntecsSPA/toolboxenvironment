@@ -2,7 +2,7 @@
 <%@page import="it.intecs.pisa.toolbox.configuration.ToolboxConfiguration"%>
 <!-- 
  -
- -  Copyright 2003-2004 Intecs
+ -  Copyright 2003-2010 Intecs
  -
  -  This file is part of TOOLBOX.
  -  TOOLBOX is free software; you can redistribute it andOr modify
@@ -121,7 +121,7 @@ function deleteOp(service, operation)
 								</tr>
                                             <tr>
                                                 <% if(serv.getFullSchemaPath().contains("WPSSoapAll.xsd")){ %>
-                                                       <td colspan="2" rowspan="2" nowrap align="right"><input id="buttonLabel" type="button" value="Add WPS Processing >>" onClick="wpsProcessingWizardManager()" > <!-- editDescribeProcess('wpsE', 'TestOperation')  -->
+                                                       <td colspan="2" rowspan="2" nowrap align="right"><input id="buttonLabel" type="button" value="<fmt:message key="manageOperations.addWPS" bundle="${lang}"/> >>" onClick="wpsProcessingWizardManager()" > <!-- editDescribeProcess('wpsE', 'TestOperation')  -->
                                                 <%}else{ %>
                                                        <td colspan="2" rowspan="2" nowrap align="right"><input id="buttonLabel" type="button" value="<fmt:message key="manageOperations.addOperation" bundle="${lang}"/> >>" onClick="gothere()" >
                                                 <% }%>

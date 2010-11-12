@@ -1,6 +1,6 @@
 <!-- 
  -
- -  Copyright 2003-2004 Intecs
+ -  Copyright 2003-2010 Intecs
  -
  -  This file is part of TOOLBOX.
  -  TOOLBOX is free software; you can redistribute it andOr modify

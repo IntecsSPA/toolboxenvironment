@@ -52,6 +52,7 @@ public class ConfigureToolboxCommand extends NativeCommandsManagerPlugin {
         String companyContact=getStringFromMimeParts(mimeparts, "companyContact");
         String mailFrom=getStringFromMimeParts(mimeparts, "mailFrom");
         String cleanupEvery=getStringFromMimeParts(mimeparts,"cleanupEvery");
+        boolean dock = (getStringFromMimeParts(mimeparts, "dock") != null);
         boolean mailErrorSSE = (getStringFromMimeParts(mimeparts, "mailErrorSSE") != null);
         boolean mailErrorSP = (getStringFromMimeParts(mimeparts, "mailErrorSP") != null);
 
@@ -103,7 +104,12 @@ public class ConfigureToolboxCommand extends NativeCommandsManagerPlugin {
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.EBRR_REPO_HOME, ebRRRepoHome);
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.FIRST_TIME_CHECK, "false");
         toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.CLEANUP_EVERY, cleanupEvery);
-        
+
+        if(dock)
+            toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.CLASSIC_HEADER, "false");
+        else
+            toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.CLASSIC_HEADER, "true");
+
         if (mailErrorSSE && mailErrorSP) {
             toolboxConfiguration.setConfigurationValue(ToolboxConfiguration.MAIL_ERROR,"BOTH");
         } else if (mailErrorSSE) {

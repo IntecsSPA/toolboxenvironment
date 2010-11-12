@@ -53,6 +53,7 @@
                         remoteControlURL: field.remoteControlURL,
                         colspan: 1,
                         getValues: function(){
+                            this.doLayout();
                             var textArray=this.find("xtype", "textfield");
                             var objValue=new Array();
                             for(var i=0; i<textArray.length;i++){

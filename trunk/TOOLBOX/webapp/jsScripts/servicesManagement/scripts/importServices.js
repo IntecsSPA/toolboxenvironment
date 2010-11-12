@@ -67,8 +67,7 @@ ImportServicesInterface=function(){
 
                 var multiText=Ext.getCmp("DuplicateNameImport");
 
-                multiText.removeAll(true);
-                multiText.doLayout();
+              
              
                 var onSubmit=sendXmlHttpRequestTimeOut("GET",
                      "manager?cmd=importGroupServices&id="+formValuesImport.zipServices.uploadID+

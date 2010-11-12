@@ -40,6 +40,8 @@ public class WPSUtil {
     public static String  WPS_TARGET_SCHEMA ="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap";
     private static String SERVICE_DESCRIPTOR_TARGET_NAMESPACE_NODENAME ="targetNameSpace";
     private static String SERVICE_DESCRIPTOR_INTERFACE_NODENAME ="interface";
+    private static String SERVICE_DESCRIPTOR_INTERFACE_TYPE_ATTRIBUTE ="type";
+    private static String WPS_INTERFACE_TYPE ="Standard";
 
     
     private static String SERVICE_DESCRIPTOR_FILE_NAME="serviceDescriptor.xml";
@@ -215,16 +217,19 @@ public class WPSUtil {
 
    public static boolean isWPS(Document serviceDescriptor){
     Element root = serviceDescriptor.getDocumentElement();
+
     NodeList interfaceList=root.getElementsByTagNameNS(
                             ((Node)root).getNamespaceURI(),
                             SERVICE_DESCRIPTOR_INTERFACE_NODENAME);
+
+    String type=((Element)interfaceList.item(0)).getAttribute(SERVICE_DESCRIPTOR_INTERFACE_TYPE_ATTRIBUTE);
 
     NodeList tnsList=((Element)interfaceList.item(0)).getElementsByTagNameNS(
                             ((Node)root).getNamespaceURI(),
                             SERVICE_DESCRIPTOR_TARGET_NAMESPACE_NODENAME);
     
     String targetNameSpace=tnsList.item(0).getTextContent();
-    return targetNameSpace.equalsIgnoreCase(WPS_TARGET_SCHEMA);
+    return targetNameSpace.equalsIgnoreCase(WPS_TARGET_SCHEMA)&& type.equalsIgnoreCase(WPS_INTERFACE_TYPE);
    }
 
 

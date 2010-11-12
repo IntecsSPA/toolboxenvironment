@@ -38,20 +38,11 @@
         configuration=ToolboxConfiguration.getInstance();
 
         isFirstCheck=Boolean.valueOf(configuration.getConfigurationValue(ToolboxConfiguration.FIRST_TIME_CHECK));
-    
-    if ( isFirstCheck )
-               request.setAttribute("firstTime","true");
-      else request.setAttribute("firstTime","false");
+        System.out.println("isFirstCheck: " + isFirstCheck);
+
+            
  %>
- <c:choose>
- <c:when test="${firstTime=='true'}">
-     <jsp:forward page="configureToolboxRequest.jsp">
-         <jsp:param name="userName" value="<%=userName%>"/>
-         <jsp:param name="password" value="<%=password%>"/>
-         <jsp:param name="pageStatus" value="enabled"/>
-     </jsp:forward>
- </c:when>
- </c:choose>
+ 
 
 <%
 }
@@ -130,7 +121,10 @@ if (warnAddress)
                  <div class="searchDivTwitter twitter">
                     
                     <script src="http://widgets.twimg.com/j/2/widget.js"></script>
-                        <script>
+                    <script>
+                        
+
+
                         new TWTR.Widget({
                           version: 2,
                           type: 'profile',
@@ -159,7 +153,7 @@ if (warnAddress)
                             behavior: 'all'
                           }
                         }).render().setUser('toolboxsuite').start();
-                        </script>
+                  </script>
                </div>
                 <DIV class=double> 
                     <DIV class="searchDiv itemDark"> 

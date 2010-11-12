@@ -50,6 +50,7 @@
                         size: size,
                         layout: 'form',
                         id: field.id,
+                        remoteControlURL: field.remoteControlURL,
                         colspan: 1,
                         getValues: function(){
                             var textArray=this.find("xtype", "textfield");
@@ -90,6 +91,7 @@
                                                     autocomplete: "off"
                                                 },
                                                 xtype: "textfield",
+                                                remoteControlURL: this.remoteControlURL,
                                                 value: textValue,
                                                 hideLabel: false,
                                                 id: textID,

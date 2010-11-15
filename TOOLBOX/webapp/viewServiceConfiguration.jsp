@@ -171,7 +171,7 @@
 						</tr>
 						<tr><!-- Row 8 -->
 							<td class="sortable" width="50%" colspan=1 nowrap><fmt:message key="viewServiceConfiguration.suspMode" bundle="${lang}"/></td>
-							<td class="sortable" nowrap><%= (tbxservice.getSuspendMode() != null && tbxservice.getSuspendMode().equals("soft")) ? "SOFT" : "HARD" %></td>
+							<td class="sortable" nowrap><%= (tbxservice.getSuspendMode() != null && tbxservice.getSuspendMode().equals("SOFT")) ? "SOFT" : "HARD" %></td>
 						</tr>
 						<tr><!-- Row 14 -->
 							<td class="sortable" width="50%" colspan=1 nowrap><fmt:message key="viewServiceConfiguration.SSLCert" bundle="${lang}"/></td>

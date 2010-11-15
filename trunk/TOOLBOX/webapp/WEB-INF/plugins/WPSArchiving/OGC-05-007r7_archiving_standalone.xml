@@ -48,6 +48,10 @@
             <outputType namespace="http://www.opengis.net/wps/1.0.0" type="ExecuteResponse" />
             <scriptFile overrideByUser="false" path="templates/OGC-05-007r7_Archiving_StandAlone/ExecuteProcess_delete/firstScript.tscript" type="FIRST_SCRIPT" />
             <scriptFile overrideByUser="false" path="templates/OGC-05-007r7_Archiving_StandAlone/ExecuteProcess_delete/globalError.tscript" type="GLOBAL_ERROR" />
+            <lifeCycleScripts>
+                <build path="lifeCycleScripts/OGC-05-007r7_Archiving_StandAlone/deletecreation.xml"/>
+                <delete path="lifeCycleScripts/OGC-05-007r7_Archiving_StandAlone/deletedeletion.xml"/>
+            </lifeCycleScripts>
         </operation>
         
     </operations>

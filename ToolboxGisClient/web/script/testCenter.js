@@ -602,7 +602,7 @@ ToolboxTestCenter.Application = function()
                   border: false,
                   layout:'anchor',
                   anchor:'100% 94%',
-                  html: "<TABLE BGCOLOR='#617992' width='100%' height='100%'><tr><td align='center'><img height='"+(screen.heigth*0.2)+"' width='"+(screen.width*0.4)+"' src='"+desktopImageURL+"'/></tr></td></TABLE>"
+                  html: "<TABLE BGCOLOR='#000' width='100%' height='100%'><tr><td align='center'><img height='"+(screen.heigth*0.2)+"' width='"+(screen.width*0.4)+"' src='"+desktopImageURL+"'/></tr></td></TABLE>"
                });
 
              }

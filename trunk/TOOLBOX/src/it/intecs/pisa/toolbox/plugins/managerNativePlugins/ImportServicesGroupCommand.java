@@ -149,11 +149,6 @@ public class ImportServicesGroupCommand extends NativeCommandsManagerPlugin {
             File statusFile= new File(packageDeployDir,"serviceStatus.xml");
             if(statusFile.exists())
                statusFile.delete();
-            
-            //updating schemas
-            schemaDir = new File(packageDeployDir, "Schemas");
-            schemaDir.mkdir();
-            SchemaSetRelocator.updateSchemaLocationToAbsolute(schemaDir, schemaDir.toURI());
 
             descriptorFile = new File(packageDeployDir, ServiceConstants.SERVICE_DESCRIPTOR_FILE_NAME);
      

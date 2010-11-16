@@ -238,55 +238,36 @@ public class WPSCommands extends WPSUtil{
 }
     public Document updateWPSDescribeProcess(Document describeDocument, String serviceName, String processingName, String engineType, boolean currentAsync, File pluginDir) throws Exception {
         Document parseResponse=parseWPSDescribeProcess(describeDocument,serviceName, pluginDir);
+        String asynchronous="", newProcessingName="";
         NodeList errors=parseResponse.getElementsByTagName("ErrorValidation");
 
-      //  Toolbox.getToolboxConfigurator().deleteOperation(serviceName,operationName);
-        Document updateResponse=null;
         if(errors.getLength()==0){
-            boolean newAsync;
             File newServicePath=tbxServlet.getServiceRoot(serviceName);
-            File describeFolder=new File(newServicePath, DESCRIBE_PROCESS_PATH);
-            File infoFolder=new File(newServicePath, INFO_PROCESS_PATH);
-            infoFolder.mkdirs();
+            String processingNameAsync="ExecuteProcess_"+processingName+"_ASYNC";
             ServiceManager serviceManager;
             serviceManager=ServiceManager.getInstance();
             TBXService service = serviceManager.getService(serviceName);
-            newAsync=Boolean.parseBoolean(parseResponse.getElementsByTagName("Asynchronous").item(0).getTextContent());
-            if(currentAsync && !newAsync){
-              service.deleteOperation("ExecuteProcess_"+processingName+"_ASYNC");
-              createWPSProcessingInformationDocument(infoFolder, serviceName, processingName, engineType, newAsync);
-            }else
-              if(!currentAsync && newAsync){
-                Class wpsEngineClass = Class.forName(ENGINE_CLASS_PACKAGE+ENGINE_PREFIX+engineType);
-                WPSEngine wpsEngine = (WPSEngine) wpsEngineClass.newInstance();
-                File originalScript=new File(newServicePath,SERVICE_RESOURCES_PATH+"/execute_"+processingName+"_script");
-                wpsEngine.setScriptEngine(new FileInputStream(originalScript));
-                Operation operationAsyncDescr=wpsEngine.createWPSAsyncOperation(newServicePath,processingName);
-                service.addOperation(new TBXAsynchronousOperation(operationAsyncDescr));
-                createWPSProcessingInformationDocument(infoFolder, serviceName, processingName, engineType, newAsync);
-              }
-              
-            String describeProcessingName=((Element)parseResponse.getElementsByTagName("ProcessingName").item(0)).getTextContent();
-           
+
+            File originalScript=new File(newServicePath,SERVICE_RESOURCES_PATH+"/execute_"+processingName+"_script");
+            service.deleteOperation("ExecuteProcess_"+processingName);
+            if(service.getOperation(processingNameAsync)!=null)
+               service.deleteOperation(processingNameAsync);
+
+            Element processDescription=DOMUtil.getElementByXPath(DESCRIBE_PROCESS_DESCRIPTION_XPATH, describeDocument);
+            Element identifier=DOMUtil.getElementByXPath(DESCRIBE_PROCESS_DESCRIPTION_IDENTIFIER_XPATH, describeDocument);
+            asynchronous=processDescription.getAttribute(DESCRIBE_PROCESS_STORE_SUPPORTED_ATRRIBUTE);
+            newProcessingName=DOMUtil.getTextFromNode(identifier);
+
+            createWPSProcess(serviceName, newProcessingName,
+                    Boolean.valueOf(asynchronous), engineType, new FileInputStream(originalScript));
             
-            describeFolder.mkdirs();
-            File tempDescribe=new File(infoFolder, DESCRIBE_FILE_PREFIX+processingName+"temp.xml");
-            if(describeProcessingName.equalsIgnoreCase(processingName)){
-               if(tempDescribe.exists()){
-                   File describe=new File(describeFolder, DESCRIBE_FILE_PREFIX+processingName+".xml");
-                   IOUtil.copy(new FileInputStream(tempDescribe), new FileOutputStream(describe));
-                }
-               updateResponse=parseResponse;
-            }else{
+           /* 
                WPSCommandResponse updateCommandResponse=new WPSCommandResponse(PARSE_DESCRIBE_OP);
                updateCommandResponse.insertErrorValidation("It is not allowed modify the process identifier");
-               updateResponse=updateCommandResponse.getDocumentResponse();
-            }
-            if(tempDescribe.exists())
-                tempDescribe.delete();
-        }else
-          updateResponse=parseResponse;
-        return updateResponse;
+               updateResponse=updateCommandResponse.getDocumentResponse();*/
+        }
+        
+        return parseResponse;
     }
 
     public Document createWPSProcess(String serviceName, String processingName, boolean async, String engineType, InputStream script) throws Exception{

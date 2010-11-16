@@ -24,6 +24,7 @@ import org.w3c.dom.Text;
 public class JavaTag extends NativeTagExecutor {
     protected static final String TAG_CODE = "code";
     protected static final String TAG_IMPORTS = "imports";
+    protected static final String LIB_PATH="WEB-INF/lib/";
 
     @Override
     public Object executeTag(org.w3c.dom.Element javaTagEl) throws Exception {
@@ -98,26 +99,29 @@ public class JavaTag extends NativeTagExecutor {
        String classpath;
        Toolbox tbx;
        String rootDir;
-       File libDir;
        File nativeTagsLibs;
        File classesJar;
-     //  File util;
-       File xercesLibDir;
+       File [] javaImportLibArray= null;
+
+       int i;
+
+ 
        
        tbx=Toolbox.getInstance();
        rootDir=tbx.getServletContext().getRealPath("/");
-       libDir=new File(rootDir,"WEB-INF/lib/toolbox.jar");
-       xercesLibDir=new File(rootDir,"WEB-INF/lib/xercesImpl.jar");
        nativeTagsLibs=new File(rootDir,"WEB-INF/plugins/ToolboxNativeTagPlugin/libs/");
        classesJar=new File(rootDir,"WEB-INF/classes/");
 
-       
        classpath =System.getProperty("java.class.path");
-       classpath+=File.pathSeparator+libDir.getAbsolutePath();
-       classpath+=File.pathSeparator+xercesLibDir.getAbsolutePath();
        classpath+=File.pathSeparator+nativeTagsLibs.getAbsolutePath();
        classpath+=File.pathSeparator+classesJar.getAbsolutePath();
-     //  classpath+=File.pathSeparator+util.getAbsolutePath();
+
+
+       javaImportLibArray = new File(rootDir, LIB_PATH).listFiles();
+       for(i=0; i<javaImportLibArray.length; i++){
+          if (!javaImportLibArray[i].isDirectory())
+              classpath+=File.pathSeparator+javaImportLibArray[i].getAbsolutePath();
+       }
 
        IVariableStore confVarStore = this.engine.getConfigurationVariablesStore();
        String resourcesDirAbsPath=(String) confVarStore.getVariable(ToolboxEngineVariablesKeys.CONFIGURATION_SERVICE_RESOURCE_DIR);

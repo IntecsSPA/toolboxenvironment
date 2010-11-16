@@ -107,11 +107,12 @@ function managerGroupServices(){
                    });
 
         var accordionImportExportServicesPanel= new Ext.Panel({
-                                  split:true,
+                                  
                                   bodyStyle : {background: "#E4E7E7"},
                                   anchor:'100% 80%',
                                   autoScroll : true,
                                   margins:'5 0 5 5',
+                                  split:true,
                                   layout:'accordion',
                                   layoutConfig: {
                                         fill : false,
@@ -292,7 +293,7 @@ function createServiceInterface(){
                           margins:'5 0 5 5',
                                   layout:'accordion',
                                   layoutConfig: {
-                                        titleCollapse: false,
+                                        titleCollapse: true,
                                         animate: false,
                                         hideCollapseTool: false,
                                         fill : false
@@ -350,7 +351,6 @@ function createServiceInterface(){
             accordionCreateServicePanel.layout.setActiveItem(i);
             servicesInterfaces[i].formsPanel.render(document.getElementById(servicesXMLInterface[i].name+"ServiceInterface"));
             servicesInterfaces[i].render();
-
         }
     
 

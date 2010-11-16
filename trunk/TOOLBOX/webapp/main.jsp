@@ -38,7 +38,7 @@
         configuration=ToolboxConfiguration.getInstance();
 
         isFirstCheck=Boolean.valueOf(configuration.getConfigurationValue(ToolboxConfiguration.FIRST_TIME_CHECK));
-        System.out.println("isFirstCheck: " + isFirstCheck);
+        
 
             
  %>

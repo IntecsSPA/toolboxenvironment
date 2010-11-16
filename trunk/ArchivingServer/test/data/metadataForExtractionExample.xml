@@ -4,7 +4,7 @@
 		<gco:CharacterString>3e879e8be7c6a9872321c29fa54af8f88ca6e997</gco:CharacterString>
 	</fileIdentifier>
 	<parentIdentifier>
-		<gco:CharacterString>de.dlr.wdc.POLYPHEMUS_CHEM.L4.VMR.DAILY.NO2</gco:CharacterString>
+		<gco:CharacterString>de.dlr.wdc.POLYPHEMUS_CHEM.L4.ARMS_ISO_DOWNLOAD</gco:CharacterString>
 	</parentIdentifier>
 	<hierarchyLevel>
 		<MD_ScopeCode codeList="MD_ScopeCode" codeListValue="dataset"/>

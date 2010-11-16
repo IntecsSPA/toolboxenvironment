@@ -163,8 +163,8 @@ public class PublishToEbRIMCatalogue implements Command {
 
         /*resourceTypeEl=doc.createElement("csw:ResourceType");
         resourceTypeEl.setTextContent("urn:x-ogc:specification:csw-ebrim:ObjectType:EO:EOProduct");
-        rootEl.appendChild(resourceTypeEl);
-        */return doc;
+        rootEl.appendChild(resourceTypeEl);*/
+        return doc;
     }
 
     private String extractRIMIdFromHarvestResponse(Document resp) throws TransformerException {
@@ -280,6 +280,6 @@ public class PublishToEbRIMCatalogue implements Command {
             return urls[0];
         }
 
-        return "http://pippoplutopaerino";
+        return "http://www.google.it";
     }
 }

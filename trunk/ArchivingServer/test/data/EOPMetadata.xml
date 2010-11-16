@@ -11,7 +11,7 @@
     <gml:metaDataProperty>
         <eop:EarthObservationMetaData>
             <eop:identifier>urn:ogc:def:EOP:ESA.EECF.SPOT_ESA_MULTI:SP4-99123009560121-902.HIM</eop:identifier>
-            <eop:parentIdentifier>urn:ogc:def:EOP:ESA.EECF.SPOT_ESA_MULTI</eop:parentIdentifier>
+            <eop:parentIdentifier>urn:ogc:def:EOP:ESA.EECF.SPOT_ARMS</eop:parentIdentifier>
             <eop:acquisitionType>NOMINAL</eop:acquisitionType>
             <eop:productType>HRI1_X__1P</eop:productType>
             <eop:status>ACQUIRED</eop:status>

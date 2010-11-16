@@ -3717,7 +3717,7 @@ declare namespace ns3='http://www.opengis.net/ows/1.1';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20101116135954882</wps:Identifier>
+         <wps:Identifier>20101116142639008</wps:Identifier>
 	 
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
@@ -3739,7 +3739,7 @@ declare namespace tbxwps='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20101116135954882</wps:Identifier>
+         <wps:Identifier>20101116142639008</wps:Identifier>
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="XPath Match" name="check HTTP Link"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -3766,11 +3766,11 @@ declare namespace tbxwps='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
 //wps:Output/wps:Data/wps:ComplexData/tbxwps:ItemDetails/tbxwps:HttpLink/text()</con:sourcePath><con:targetType>Endpoint</con:targetType><con:targetStep>Check HTTP link</con:targetStep><con:targetPath/></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferChildNodes="false" entitize="false" transferToAll="false"><con:name>Copy http link for deletion checking</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Check Response</con:sourceStep><con:sourcePath>declare namespace wps='http://www.opengis.net/wps/1.0.0';
 declare namespace ows='http://www.opengis.net/ows/1.1';
 declare namespace tbxwps='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
-//wps:Output/wps:Data/wps:ComplexData/tbxwps:ItemDetails/tbxwps:HttpLink/text()</con:sourcePath><con:targetType>Endpoint</con:targetType><con:targetStep>Check HTTP link for deletion</con:targetStep><con:targetPath/></con:transfers></con:config></con:testStep><con:testStep type="httprequest" name="Check HTTP link"><con:settings/><con:config method="HEAD" xsi:type="con:HttpRequest" name="Check HTTP link" postQueryString="false" mediaType="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:endpoint>http://genesis.pisa.intecs.it/ArchivingServer/storagearea/20101116135954882/armscoverage.tiff</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion"><con:configuration><scriptText>assert messageExchange.responseStatusCode==200</scriptText></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:testStep type="request" name="Delete"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ToolboxServiceSOAPBinding</con:interface><con:operation>ExecuteProcess_delete</con:operation><con:request name="Delete"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://genesis.pisa.intecs.it/TOOLBOX/services/WPSArchiving</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+//wps:Output/wps:Data/wps:ComplexData/tbxwps:ItemDetails/tbxwps:HttpLink/text()</con:sourcePath><con:targetType>Endpoint</con:targetType><con:targetStep>Check HTTP link for deletion</con:targetStep><con:targetPath/></con:transfers></con:config></con:testStep><con:testStep type="httprequest" name="Check HTTP link"><con:settings/><con:config method="HEAD" xsi:type="con:HttpRequest" name="Check HTTP link" postQueryString="false" mediaType="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:endpoint>http://genesis.pisa.intecs.it/ArchivingServer/storagearea/20101116142639008/armscoverage.tiff</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion"><con:configuration><scriptText>assert messageExchange.responseStatusCode==200</scriptText></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:testStep type="request" name="Delete"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ToolboxServiceSOAPBinding</con:interface><con:operation>ExecuteProcess_delete</con:operation><con:request name="Delete"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://genesis.pisa.intecs.it/TOOLBOX/services/WPSArchiving</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_delete lineage="true" storeExecuteResponse="true" status="true">
-		<wps:Identifier>20101116135954882</wps:Identifier>
+		<wps:Identifier>20101116142639008</wps:Identifier>
 	</wps:ExecuteProcess_delete>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="XPath Match"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -3778,11 +3778,11 @@ declare namespace ows='http://www.opengis.net/ows/1.1';
 declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
 declare namespace fo='http://www.w3.org/1999/XSL/Format';
 declare namespace wps='http://www.opengis.net/wps/1.0.0';
-//wps:Output[ows:Identifier='Status']/wps:Data/wps:LiteralData/text()</path><content>Success</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="delay" name="Delay 1"><con:settings/><con:config><delay>10000</delay></con:config></con:testStep><con:testStep type="httprequest" name="Check HTTP link for deletion"><con:settings/><con:config method="HEAD" xsi:type="con:HttpRequest" name="Check HTTP link for deletion" postQueryString="false" mediaType="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:endpoint>http://genesis.pisa.intecs.it/ArchivingServer/storagearea/20101116135954882/armscoverage.tiff</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion"><con:configuration><scriptText>assert messageExchange.responseStatusCode==404</scriptText></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:testStep type="request" name="Retrieve for deletion check"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ToolboxServiceSOAPBinding</con:interface><con:operation>ExecuteProcess_retrieve</con:operation><con:request name="Retrieve for deletion check"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://genesis.pisa.intecs.it/TOOLBOX/services/WPSArchiving</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+//wps:Output[ows:Identifier='Status']/wps:Data/wps:LiteralData/text()</path><content>Success</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="delay" name="Delay 1"><con:settings/><con:config><delay>10000</delay></con:config></con:testStep><con:testStep type="httprequest" name="Check HTTP link for deletion"><con:settings/><con:config method="HEAD" xsi:type="con:HttpRequest" name="Check HTTP link for deletion" postQueryString="false" mediaType="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:endpoint>http://genesis.pisa.intecs.it/ArchivingServer/storagearea/20101116142639008/armscoverage.tiff</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion"><con:configuration><scriptText>assert messageExchange.responseStatusCode==404</scriptText></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:testStep type="request" name="Retrieve for deletion check"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ToolboxServiceSOAPBinding</con:interface><con:operation>ExecuteProcess_retrieve</con:operation><con:request name="Retrieve for deletion check"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://genesis.pisa.intecs.it/TOOLBOX/services/WPSArchiving</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20101116135954882</wps:Identifier>
+         <wps:Identifier>20101116142639008</wps:Identifier>
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="XPath Match"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -3849,7 +3849,7 @@ declare namespace ns3='http://www.opengis.net/ows/1.1';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20101116140047802</wps:Identifier>
+         <wps:Identifier>20101116142655585</wps:Identifier>
 </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="goto" name="Conditional Goto"><con:settings/><con:config xsi:type="con:GotoStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:condition><con:name>Condition 1</con:name><con:type>XPATH</con:type><con:expression>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -3870,7 +3870,7 @@ declare namespace tbxwps='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20101116140047802</wps:Identifier>
+         <wps:Identifier>20101116142655585</wps:Identifier>
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="XPath Match" name="check HTTP Link"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -3894,7 +3894,7 @@ count(//wps:Output/wps:Data/wps:ComplexData/tbxwps:ItemDetails/tbxwps:GeoServerL
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_delete lineage="true" storeExecuteResponse="true" status="true">
-		<wps:Identifier>20101116140047802</wps:Identifier>
+		<wps:Identifier>20101116142655585</wps:Identifier>
 	</wps:ExecuteProcess_delete>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="XPath Match"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -3906,7 +3906,7 @@ declare namespace wps='http://www.opengis.net/wps/1.0.0';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20101116140047802</wps:Identifier>
+         <wps:Identifier>20101116142655585</wps:Identifier>
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="XPath Match"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -3991,7 +3991,7 @@ declare namespace ns3='http://www.opengis.net/ows/1.1';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20101116140200758</wps:Identifier>
+         <wps:Identifier>20101116142711607</wps:Identifier>
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="goto" name="Conditional Goto"><con:settings/><con:config xsi:type="con:GotoStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:condition><con:name>Condition 1</con:name><con:type>XPATH</con:type><con:expression>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -4012,7 +4012,7 @@ declare namespace tbxwps='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20101116140200758</wps:Identifier>
+         <wps:Identifier>20101116142711607</wps:Identifier>
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="XPath Match" name="check HTTP Link"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -4090,7 +4090,7 @@ declare namespace ns6='http://www.opengis.net/ogc';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_delete lineage="true" storeExecuteResponse="true" status="true">
-		<wps:Identifier>20101116140200758</wps:Identifier>
+		<wps:Identifier>20101116142711607</wps:Identifier>
 	</wps:ExecuteProcess_delete>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="XPath Match"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -4102,7 +4102,7 @@ declare namespace wps='http://www.opengis.net/wps/1.0.0';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20101116140200758</wps:Identifier>
+         <wps:Identifier>20101116142711607</wps:Identifier>
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="XPath Match"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -4184,7 +4184,7 @@ RETRIEVE FOR DELETION CHECK: this step tests that asking the Archiving Server fo
 DATA LINK CHECK FOR DELETION: this step checks that the data link is no more valid.
 
 CHECK ON CATALOGUE FOR DELETION: This step checks that metadata is removed from the catalogue after a delete command is
-issued to the ARMS.</con:description><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.panels.testcase.JTestRunLog$OptionsForm@max_rows">1000</con:setting><con:setting id="com.eviware.soapui.impl.wsdl.panels.testcase.JTestRunLog$OptionsForm@errors_only">false</con:setting></con:settings><con:testStep type="properties" name="Properties"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>datalink</con:name><con:value>http://genesis.pisa.intecs.it/ArchivingServer/storagearea/20101116140245293/armscoverage.tiff</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="httprequest" name="Check on Catalogue before extraction" disabled="true"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" name="Check on Catalogue before extraction" postQueryString="false" mediaType="text/xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="SOAPAction" value="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecords" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>http://localhost:8080/TOOLBOX/services/cat_eo</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.opengis.net/cat/csw/2.0.2">
+issued to the ARMS.</con:description><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.panels.testcase.JTestRunLog$OptionsForm@max_rows">1000</con:setting><con:setting id="com.eviware.soapui.impl.wsdl.panels.testcase.JTestRunLog$OptionsForm@errors_only">false</con:setting></con:settings><con:testStep type="properties" name="Properties"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>datalink</con:name><con:value>http://genesis.pisa.intecs.it/ArchivingServer/storagearea/20101116142727992/armscoverage.tiff</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="httprequest" name="Check on Catalogue before extraction" disabled="true"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" name="Check on Catalogue before extraction" postQueryString="false" mediaType="text/xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="SOAPAction" value="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecords" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>http://localhost:8080/TOOLBOX/services/cat_eo</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.opengis.net/cat/csw/2.0.2">
    <soapenv:Header/>
    <soapenv:Body>
       <csw:GetRecords service="CSW" version="2.0.2" resultType="hits" outputFormat="application/xml" outputSchema="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" startPosition="1" maxRecords="200" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" xmlns:ogc="http://www.opengis.net/ogc">
@@ -4257,7 +4257,7 @@ declare namespace ns3='http://www.opengis.net/ows/1.1';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20101116140245293</wps:Identifier>
+         <wps:Identifier>20101116142727992</wps:Identifier>
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="goto" name="Conditional Goto"><con:settings/><con:config xsi:type="con:GotoStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:condition><con:name>Condition 1</con:name><con:type>XPATH</con:type><con:expression>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -4283,7 +4283,7 @@ declare namespace ns3='http://www.opengis.net/ows/1.1';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20101116140245293</wps:Identifier>
+         <wps:Identifier>20101116142727992</wps:Identifier>
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="XPath Match" name="check HTTP Link"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -4297,12 +4297,14 @@ declare namespace ows='http://www.opengis.net/ows/1.1';
 declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
 declare namespace fo='http://www.w3.org/1999/XSL/Format';
 declare namespace wps='http://www.opengis.net/wps/1.0.0';
-count(//wps:Output/ows:Identifier[text()='FtpLink'])</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:assertion type="XPath Match" name="check GeoServer Link"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
+declare namespace tbxwps='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
+count(//wps:Output/wps:Data/wps:ComplexData/tbxwps:ItemDetails/tbxwps:FtpLink)</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:assertion type="XPath Match" name="check GeoServer Link"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
 declare namespace ows='http://www.opengis.net/ows/1.1';
 declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
 declare namespace fo='http://www.w3.org/1999/XSL/Format';
 declare namespace wps='http://www.opengis.net/wps/1.0.0';
-count(//wps:Output/ows:Identifier[text()='GeoServerLink'])</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:assertion type="XPath Match" name="check Catalogue Link"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
+declare namespace tbxwps='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
+count(//wps:Output/wps:Data/wps:ComplexData/tbxwps:ItemDetails/tbxwps:GeoserverLink)</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:assertion type="XPath Match" name="check Catalogue Link"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
 declare namespace ows='http://www.opengis.net/ows/1.1';
 declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
 declare namespace fo='http://www.w3.org/1999/XSL/Format';
@@ -4323,7 +4325,7 @@ declare namespace ns1='http://www.intecs.it/TOOLBOX/service/WPSArchiving/wsdl';
 declare namespace wps='http://www.opengis.net/wps/1.0.0';
 declare namespace ows='http://www.opengis.net/ows/1.1';
 declare namespace tbxwps='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
-//wps:Output/wps:Data/wps:ComplexData/tbxwps:ItemDetails/tbxwps:CatalogueLink/text()</con:sourcePath><con:targetType>Endpoint</con:targetType><con:targetStep>Check on Catalogue for download link</con:targetStep><con:targetPath xsi:nil="true"/></con:transfers></con:config></con:testStep><con:testStep type="httprequest" name="Check on Catalogue"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" name="Check on Catalogue" postQueryString="false" mediaType="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="SOAPAction" value="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecords" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>http://genesis.pisa.intecs.it/ergorrcim/webservice</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.opengis.net/cat/csw/2.0.2">
+//wps:Output/wps:Data/wps:ComplexData/tbxwps:ItemDetails/tbxwps:CatalogueLink/text()</con:sourcePath><con:targetType>Endpoint</con:targetType><con:targetStep>Check on Catalogue for download link</con:targetStep><con:targetPath xsi:nil="true"/></con:transfers></con:config></con:testStep><con:testStep type="httprequest" name="Check on Catalogue"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" name="Check on Catalogue" postQueryString="false" mediaType="text/xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="SOAPAction" value="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecords" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>http://genesis.pisa.intecs.it/ergorrcim/webservice</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.opengis.net/cat/csw/2.0.2">
    <soapenv:Header/>
    <soapenv:Body>
       <csw:GetRecords service="CSW" version="2.0.2" resultType="hits" outputFormat="application/xml" outputSchema="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" startPosition="1" maxRecords="200" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" xmlns:ogc="http://www.opengis.net/ogc">
@@ -4360,18 +4362,25 @@ declare namespace ns1='http://www.opengis.net/cat/csw/2.0.2';
 declare namespace ns2='http://purl.org/dc/elements/1.1/';
 declare namespace ns8='http://www.opengis.net/cat/wrs/1.0';
 declare namespace ns6='http://www.opengis.net/ogc';
-//ns1:SearchResults/@numberOfRecordsMatched</path><content>1</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="Check on Catalogue for download link"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" name="Check on Catalogue for download link" postQueryString="false" mediaType="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="SOAPAction" value="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecords" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>http://genesis.pisa.intecs.it/ergorrcim/webservice</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.opengis.net/cat/csw/2.0.2">
+//ns1:SearchResults/@numberOfRecordsMatched</path><content>1</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="Check on Catalogue for download link"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" name="Check on Catalogue for download link" postQueryString="false" mediaType="text/xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="SOAPAction" value="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecords" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>http://genesis.pisa.intecs.it/ergorrcim/webservice</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.opengis.net/cat/csw/2.0.2">
    <soapenv:Header/>
    <soapenv:Body>
       <csw:GetRecords service="CSW" version="2.0.2" resultType="hits" outputFormat="application/xml" outputSchema="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" startPosition="1" maxRecords="200" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" xmlns:ogc="http://www.opengis.net/ogc">
          <csw:Query typeNames="rim:ExtrinsicObject">
             <csw:ElementSetName typeNames="rim:ExtrinsicObject">summary</csw:ElementSetName>
             <csw:Constraint version="1.1.0">
-               <ogc:Filter> <ogc:PropertyIsEqualTo>
+               <ogc:Filter>
+                  <ogc:And>
+                     <ogc:PropertyIsEqualTo>
                         <ogc:PropertyName>/rim:ExtrinsicObject/@objectType</ogc:PropertyName>
                         <ogc:Literal>urn:ogc:def:objectType:OGC-CSW-ebRIM-CIM::DataMetadata</ogc:Literal>
                      </ogc:PropertyIsEqualTo>
-                     </ogc:Filter>
+                     <ogc:PropertyIsEqualTo>
+                        <ogc:PropertyName>/rim:ExtrinsicObject/rim:Slot[@name='http://purl.org/dc/terms/references']</ogc:PropertyName>
+                        <ogc:Literal>${dataLink}</ogc:Literal>
+                     </ogc:PropertyIsEqualTo>
+                  </ogc:And>
+               </ogc:Filter>
             </csw:Constraint>
          </csw:Query>
       </csw:GetRecords>
@@ -4404,25 +4413,11 @@ declare namespace ns11='http://www.opengis.net/cat/wrs/1.0';
 declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
 declare namespace ns3='http://www.w3.org/1999/xlink';
 declare namespace ns13='http://www.opengis.net/ogc';
-count(//ns10:Slot[@name='http://purl.org/dc/terms/references'])</path><content>1</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:assertion type="XPath Match" name="XPath Match "><con:configuration><path>declare namespace ns8='http://purl.org/dc/elements/1.1/';
-declare namespace ns6='http://earth.esa.int/sar';
-declare namespace ns5='http://earth.esa.int/opt';
-declare namespace ns7='http://earth.esa.int/atm';
-declare namespace ns10='urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0';
-declare namespace ns4='http://earth.esa.int/eop';
-declare namespace ns9='http://purl.org/dc/terms/';
-declare namespace ns12='http://www.opengis.net/ows';
-declare namespace ns14='http://www.opengis.net/cat/csw/2.0.2';
-declare namespace ns2='http://www.opengis.net/gml';
-declare namespace ns11='http://www.opengis.net/cat/wrs/1.0';
-declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
-declare namespace ns3='http://www.w3.org/1999/xlink';
-declare namespace ns13='http://www.opengis.net/ogc';
-(//ns10:Slot[@name='http://purl.org/dc/terms/references'])/ns10:ValueList/ns10:Value/text()</path><content>${dataLink}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="Data link check"><con:settings/><con:config method="HEAD" xsi:type="con:HttpRequest" name="Data link check" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:endpoint>${dataLink}</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion"><con:configuration><scriptText>assert messageExchange.responseStatusCode==200</scriptText></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:testStep type="request" name="Delete"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ToolboxServiceSOAPBinding</con:interface><con:operation>ExecuteProcess_delete</con:operation><con:request name="Delete"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://genesis.pisa.intecs.it/TOOLBOX/services/WPSArchiving</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+count(//ns10:Slot[@name='http://purl.org/dc/terms/references'])</path><content>1</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="Data link check"><con:settings/><con:config method="HEAD" xsi:type="con:HttpRequest" name="Data link check" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:endpoint>${dataLink}</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion"><con:configuration><scriptText>assert messageExchange.responseStatusCode==200</scriptText></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:testStep type="request" name="Delete"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ToolboxServiceSOAPBinding</con:interface><con:operation>ExecuteProcess_delete</con:operation><con:request name="Delete"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://genesis.pisa.intecs.it/TOOLBOX/services/WPSArchiving</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_delete lineage="true" storeExecuteResponse="true" status="true">
-		<wps:Identifier>20101116140245293</wps:Identifier>
+		<wps:Identifier>20101116142727992</wps:Identifier>
 	</wps:ExecuteProcess_delete>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="XPath Match"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -4434,7 +4429,7 @@ declare namespace wps='http://www.opengis.net/wps/1.0.0';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20101116140245293</wps:Identifier>
+         <wps:Identifier>20101116142727992</wps:Identifier>
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="XPath Match"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -4442,7 +4437,8 @@ declare namespace ows='http://www.opengis.net/ows/1.1';
 declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
 declare namespace fo='http://www.w3.org/1999/XSL/Format';
 declare namespace wps='http://www.opengis.net/wps/1.0.0';
-//wps:Output[ows:Identifier='DownloadStatus']/wps:Data/wps:LiteralData</path><content>Item not available</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="httprequest" name="Data link check for deletion"><con:settings/><con:config method="HEAD" xsi:type="con:HttpRequest" name="Data link check for deletion" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:endpoint>${dataLink}</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion"><con:configuration><scriptText>assert messageExchange.responseStatusCode==404</scriptText></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="Check on Catalogue for deletion" disabled="true"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" name="Check on Catalogue for deletion" postQueryString="false" mediaType="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="SOAPAction" value="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecords" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>http://genesis.pisa.intecs.it/ergorrcim/webservice</con:endpoint><con:request>http://localhost:8090/ergorrcim/webservice</con:request><con:assertion type="XPath Match"><con:configuration><path>declare namespace ns5='http://www.w3.org/1999/xlink';
+declare namespace tbxwps='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
+//wps:Output/wps:Data/wps:ComplexData/tbxwps:ItemDetails/tbxwps:Status</path><content>ITEM NOT AVAILABLE</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="httprequest" name="Data link check for deletion"><con:settings/><con:config method="HEAD" xsi:type="con:HttpRequest" name="Data link check for deletion" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:endpoint>${dataLink}</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion"><con:configuration><scriptText>assert messageExchange.responseStatusCode==404</scriptText></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="Check on Catalogue for deletion" disabled="true"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" name="Check on Catalogue for deletion" postQueryString="false" mediaType="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="SOAPAction" value="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecords" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>http://genesis.pisa.intecs.it/ergorrcim/webservice</con:endpoint><con:request>http://localhost:8090/ergorrcim/webservice</con:request><con:assertion type="XPath Match"><con:configuration><path>declare namespace ns5='http://www.w3.org/1999/xlink';
 declare namespace ns7='http://www.opengis.net/gml';
 declare namespace ns12='http://earth.esa.int/sar';
 declare namespace ns4='http://purl.org/dc/terms/';
@@ -4489,7 +4485,7 @@ RETRIEVE FOR DELETION CHECK: this step tests that asking the Archiving Server fo
 DATA LINK CHECK FOR DELETION: this step checks that the data link is no more valid.
 
 CHECK ON CATALOGUE FOR DELETION: This step checks that metadata is removed from the catalogue after a delete command is
-issued to the ARMS.</con:description><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.panels.testcase.JTestRunLog$OptionsForm@max_rows">1000</con:setting><con:setting id="com.eviware.soapui.impl.wsdl.panels.testcase.JTestRunLog$OptionsForm@errors_only">false</con:setting></con:settings><con:testStep type="properties" name="Properties"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>dataLink</con:name><con:value>http://genesis.pisa.intecs.it/ArchivingServer/storagearea/20101116140349572/armscoverage.tiff</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="httprequest" name="Check on Catalogue before extraction" disabled="true"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" name="Check on Catalogue before extraction" postQueryString="false" mediaType="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+issued to the ARMS.</con:description><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.panels.testcase.JTestRunLog$OptionsForm@max_rows">1000</con:setting><con:setting id="com.eviware.soapui.impl.wsdl.panels.testcase.JTestRunLog$OptionsForm@errors_only">false</con:setting></con:settings><con:testStep type="properties" name="Properties"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>dataLink</con:name><con:value>http://genesis.pisa.intecs.it/ArchivingServer/storagearea/20101116142744479/armscoverage.tiff</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="httprequest" name="Check on Catalogue before extraction" disabled="true"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" name="Check on Catalogue before extraction" postQueryString="false" mediaType="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
   &lt;con:entry key="SOAPAction" value="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecords"/>
   &lt;con:entry key="Content-Type" value="text/xml"/>
 &lt;/xml-fragment></con:setting></con:settings><con:endpoint>http://localhost:8080/TOOLBOX/services/cat_eo</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.opengis.net/cat/csw/2.0.2">
@@ -4715,7 +4711,7 @@ declare namespace ns3='http://www.opengis.net/ows/1.1';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20101116140349572</wps:Identifier>
+         <wps:Identifier>20101116142744479</wps:Identifier>
 	 <wps:DownloadStatus/>
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
@@ -4737,7 +4733,7 @@ declare namespace tbxwps='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20101116140349572</wps:Identifier>
+         <wps:Identifier>20101116142744479</wps:Identifier>
 
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
@@ -4899,11 +4895,11 @@ declare namespace ns1='http://www.opengis.net/cat/csw/2.0.2';
 declare namespace ns2='http://purl.org/dc/elements/1.1/';
 declare namespace ns8='http://www.opengis.net/cat/wrs/1.0';
 declare namespace ns6='http://www.opengis.net/ogc';
-//ns1:GetRecordsResponse/ns1:SearchResults/ns8:ExtrinsicObject/ns13:Slot[@name='urn:ogc:def:ebRIM-Slot:OGC-06-131:fileName']/ns13:ValueList/ns13:Value</con:sourcePath><con:targetType>Endpoint</con:targetType><con:targetStep>Data link check for deletion</con:targetStep></con:transfers></con:config></con:testStep><con:testStep type="httprequest" name="Data link check"><con:settings/><con:config method="HEAD" xsi:type="con:HttpRequest" name="Data link check" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:endpoint>http://genesis.pisa.intecs.it/ArchivingServer/storagearea/20101116140349572/armscoverage.tiff</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion"><con:configuration><scriptText>assert messageExchange.responseStatusCode==200</scriptText></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:testStep type="request" name="Delete"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ToolboxServiceSOAPBinding</con:interface><con:operation>ExecuteProcess_delete</con:operation><con:request name="Delete"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://genesis.pisa.intecs.it/TOOLBOX/services/WPSArchiving</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+//ns1:GetRecordsResponse/ns1:SearchResults/ns8:ExtrinsicObject/ns13:Slot[@name='urn:ogc:def:ebRIM-Slot:OGC-06-131:fileName']/ns13:ValueList/ns13:Value</con:sourcePath><con:targetType>Endpoint</con:targetType><con:targetStep>Data link check for deletion</con:targetStep></con:transfers></con:config></con:testStep><con:testStep type="httprequest" name="Data link check"><con:settings/><con:config method="HEAD" xsi:type="con:HttpRequest" name="Data link check" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:endpoint>http://genesis.pisa.intecs.it/ArchivingServer/storagearea/20101116142744479/armscoverage.tiff</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion"><con:configuration><scriptText>assert messageExchange.responseStatusCode==200</scriptText></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:testStep type="request" name="Delete"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ToolboxServiceSOAPBinding</con:interface><con:operation>ExecuteProcess_delete</con:operation><con:request name="Delete"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://genesis.pisa.intecs.it/TOOLBOX/services/WPSArchiving</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_delete lineage="true" storeExecuteResponse="true" status="true">
-		<wps:Identifier>20101116140349572</wps:Identifier>
+		<wps:Identifier>20101116142744479</wps:Identifier>
 	</wps:ExecuteProcess_delete>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="XPath Match"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -4915,7 +4911,7 @@ declare namespace wps='http://www.opengis.net/wps/1.0.0';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20101116140349572</wps:Identifier>
+         <wps:Identifier>20101116142744479</wps:Identifier>
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="XPath Match"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -4924,7 +4920,7 @@ declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
 declare namespace fo='http://www.w3.org/1999/XSL/Format';
 declare namespace wps='http://www.opengis.net/wps/1.0.0';
 declare namespace tbxwps='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
-//wps:Output/wps:Data/wps:ComplexData/tbxwps:ItemDetails/tbxwps:Status</path><content>ITEM NOT AVAILABLE</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="httprequest" name="Data link check for deletion"><con:settings/><con:config method="HEAD" xsi:type="con:HttpRequest" name="Data link check for deletion" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:endpoint>http://genesis.pisa.intecs.it/ArchivingServer/storagearea/20101116140349572/armscoverage.tiff</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion"><con:configuration><scriptText>assert messageExchange.responseStatusCode==404</scriptText></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:testStep type="transfer" name="Property Transfer 5" disabled="true"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false"><con:name>Url</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Check Response</con:sourceStep><con:sourcePath>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+//wps:Output/wps:Data/wps:ComplexData/tbxwps:ItemDetails/tbxwps:Status</path><content>ITEM NOT AVAILABLE</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="httprequest" name="Data link check for deletion"><con:settings/><con:config method="HEAD" xsi:type="con:HttpRequest" name="Data link check for deletion" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:endpoint>http://genesis.pisa.intecs.it/ArchivingServer/storagearea/20101116142744479/armscoverage.tiff</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion"><con:configuration><scriptText>assert messageExchange.responseStatusCode==404</scriptText></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:testStep type="transfer" name="Property Transfer 5" disabled="true"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false"><con:name>Url</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Check Response</con:sourceStep><con:sourcePath>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
 declare namespace ns1='http://www.intecs.it/TOOLBOX/service/WPSArchiving/wsdl';
 declare namespace wps='http://www.opengis.net/wps/1.0.0';
 declare namespace ows='http://www.opengis.net/ows/1.1';
@@ -5029,7 +5025,7 @@ declare namespace ns3='http://www.opengis.net/ows/1.1';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20101116140533305</wps:Identifier>
+         <wps:Identifier>20101116142802122</wps:Identifier>
 
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
@@ -5051,7 +5047,7 @@ declare namespace tbxwps='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20101116140533305</wps:Identifier>
+         <wps:Identifier>20101116142802122</wps:Identifier>
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="XPath Match" name="check HTTP Link"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -5083,7 +5079,7 @@ declare namespace fo='http://www.w3.org/1999/XSL/Format';
 declare namespace wps='http://www.opengis.net/wps/1.0.0';
 declare namespace tbxwps='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
 //wps:Output/wps:Data/wps:ComplexData/tbxwps:ItemDetails/tbxwps:GeoserverLink/text()</con:sourcePath><con:targetType>Endpoint</con:targetType><con:targetStep>Download layer</con:targetStep><con:targetPath>
-</con:targetPath></con:transfers></con:config></con:testStep><con:testStep type="httprequest" name="Download layer"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" name="Download layer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:endpoint>http://192.168.31.5:8023/geoserver/rest/layers/20101116140533312.json</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion"><con:configuration><scriptText>assert messageExchange.responseStatusCode==200</scriptText></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:testStep type="properties" name="Properties"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>deployName</con:name><con:value>20101116140533312</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="transfer" name="Property Transfer for deployName"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false"><con:name>deployName</con:name><con:sourceType>ResponseAsXml</con:sourceType><con:sourceStep>Download layer</con:sourceStep><con:sourcePath>//*:layer/*:name/text()</con:sourcePath><con:targetType>deployName</con:targetType><con:targetStep>Properties</con:targetStep><con:targetPath>
+</con:targetPath></con:transfers></con:config></con:testStep><con:testStep type="httprequest" name="Download layer"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" name="Download layer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:endpoint>http://192.168.31.5:8023/geoserver/rest/layers/20101116142802128.json</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion"><con:configuration><scriptText>assert messageExchange.responseStatusCode==200</scriptText></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:testStep type="properties" name="Properties"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>deployName</con:name><con:value>20101116142802128</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="transfer" name="Property Transfer for deployName"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false"><con:name>deployName</con:name><con:sourceType>ResponseAsXml</con:sourceType><con:sourceStep>Download layer</con:sourceStep><con:sourcePath>//*:layer/*:name/text()</con:sourcePath><con:targetType>deployName</con:targetType><con:targetStep>Properties</con:targetStep><con:targetPath>
 
 </con:targetPath></con:transfers></con:config></con:testStep><con:testStep type="transfer" name="Property Transfer for endpoint"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false"><con:name>wms</con:name><con:sourceType>geoserverWMSURL</con:sourceType><con:sourceStep>#TestSuite#</con:sourceStep><con:targetType>Endpoint</con:targetType><con:targetStep>Check WMS capabilities</con:targetStep></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true"><con:name>wfs</con:name><con:sourceType>geoserverWFSURL</con:sourceType><con:sourceStep>#TestSuite#</con:sourceStep><con:targetType>Endpoint</con:targetType><con:targetStep>Check WFS capabilities</con:targetStep></con:transfers></con:config></con:testStep><con:testStep type="httprequest" name="Check WFS capabilities"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" name="Check WFS capabilities" postQueryString="false" mediaType="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:endpoint>http://192.168.31.5:8023/geoserver/wfs?service=wfs&amp;version=1.1.0&amp;request=GetCapabilities</con:endpoint><con:request>&lt;GetCapabilities
   service="WCS"
@@ -5101,7 +5097,7 @@ count(//Layer/Name[text()='archivingserver:${deployName}'])</path><content>1</co
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_delete lineage="true" storeExecuteResponse="true" status="true">
-		<wps:Identifier>20101116140533305</wps:Identifier>
+		<wps:Identifier>20101116142802122</wps:Identifier>
 	</wps:ExecuteProcess_delete>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="XPath Match"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -5180,7 +5176,7 @@ declare namespace ns3='http://www.opengis.net/ows/1.1';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20101116140631902</wps:Identifier>
+         <wps:Identifier>20101116142817199</wps:Identifier>
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="goto" name="Conditional Goto"><con:settings/><con:config xsi:type="con:GotoStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:condition><con:name>Condition 1</con:name><con:type>XPATH</con:type><con:expression>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -5201,7 +5197,7 @@ declare namespace tbxwps='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20101116140631902</wps:Identifier>
+         <wps:Identifier>20101116142817199</wps:Identifier>
 	
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
@@ -5236,7 +5232,7 @@ declare namespace fo='http://www.w3.org/1999/XSL/Format';
 declare namespace wps='http://www.opengis.net/wps/1.0.0';
 declare namespace tbxwps='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
 //wps:Output/wps:Data/wps:ComplexData/tbxwps:ItemDetails/tbxwps:GeoserverLink/text()</con:sourcePath><con:targetType>Endpoint</con:targetType><con:targetStep>Download layer</con:targetStep><con:targetPath>
-</con:targetPath></con:transfers></con:config></con:testStep><con:testStep type="httprequest" name="Download layer"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" name="Download layer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:endpoint>http://192.168.31.5:8023/geoserver/rest/layers/20101116140631914.json</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion"><con:configuration><scriptText>assert messageExchange.responseStatusCode==200</scriptText></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:testStep type="properties" name="Properties"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>deployName</con:name><con:value>20101116140631914</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="transfer" name="Property Transfer for deployName"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false"><con:name>deployName</con:name><con:sourceType>ResponseAsXml</con:sourceType><con:sourceStep>Download layer</con:sourceStep><con:sourcePath>//*:layer/*:name/text()</con:sourcePath><con:targetType>deployName</con:targetType><con:targetStep>Properties</con:targetStep><con:targetPath>
+</con:targetPath></con:transfers></con:config></con:testStep><con:testStep type="httprequest" name="Download layer"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" name="Download layer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:endpoint>http://192.168.31.5:8023/geoserver/rest/layers/20101116142817219.json</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion"><con:configuration><scriptText>assert messageExchange.responseStatusCode==200</scriptText></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:testStep type="properties" name="Properties"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>deployName</con:name><con:value>20101116142817219</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="transfer" name="Property Transfer for deployName"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false"><con:name>deployName</con:name><con:sourceType>ResponseAsXml</con:sourceType><con:sourceStep>Download layer</con:sourceStep><con:sourcePath>//*:layer/*:name/text()</con:sourcePath><con:targetType>deployName</con:targetType><con:targetStep>Properties</con:targetStep><con:targetPath>
 
 </con:targetPath></con:transfers></con:config></con:testStep><con:testStep type="transfer" name="Property Transfer for endpoint"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false"><con:name>wms</con:name><con:sourceType>geoserverWMSURL</con:sourceType><con:sourceStep>#TestSuite#</con:sourceStep><con:targetType>Endpoint</con:targetType><con:targetStep>Check WMS capabilities</con:targetStep></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true"><con:name>wcs</con:name><con:sourceType>geoserverWCSUrl</con:sourceType><con:sourceStep>#TestSuite#</con:sourceStep><con:targetType>Endpoint</con:targetType><con:targetStep>Check WCS capabilities</con:targetStep></con:transfers></con:config></con:testStep><con:testStep type="httprequest" name="Check WCS capabilities"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" name="Check WCS capabilities" postQueryString="false" mediaType="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:endpoint>http://192.168.31.5:8023/geoserver/wcs</con:endpoint><con:request>&lt;GetCapabilities
   service="WCS"
@@ -5257,7 +5253,7 @@ count(//Layer/Name[text()='archivingserver:${deployName}'])</path><content>1</co
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_delete lineage="true" storeExecuteResponse="true" status="true">
-		<wps:Identifier>20101116140631902</wps:Identifier>
+		<wps:Identifier>20101116142817199</wps:Identifier>
 	</wps:ExecuteProcess_delete>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="XPath Match"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -5334,7 +5330,7 @@ declare namespace ns3='http://www.opengis.net/ows/1.1';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20101116135543122</wps:Identifier>
+         <wps:Identifier>20101116142834584</wps:Identifier>
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="goto" name="Conditional Goto"><con:settings/><con:config xsi:type="con:GotoStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:condition><con:name>Condition 1</con:name><con:type>XPATH</con:type><con:expression>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -5355,7 +5351,7 @@ declare namespace tbxwps='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20101116135543122</wps:Identifier>
+         <wps:Identifier>20101116142834584</wps:Identifier>
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="XPath Match" name="check HTTP Link"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -5433,7 +5429,7 @@ declare namespace ns6='http://www.opengis.net/ogc';
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>20101116135543122</wps:Identifier>
+         <wps:Identifier>20101116142834584</wps:Identifier>
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="XPath Match"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
@@ -5479,28 +5475,140 @@ declare namespace ns1='http://www.opengis.net/cat/csw/2.0.2';
 declare namespace ns2='http://purl.org/dc/elements/1.1/';
 declare namespace ns8='http://www.opengis.net/cat/wrs/1.0';
 declare namespace ns6='http://www.opengis.net/ogc';
-//ns1:SearchResults/@numberOfRecordsMatched</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:properties><con:property><con:name>geoserverURL</con:name><con:value>http://192.168.31.5:8023/geoserver</con:value></con:property><con:property><con:name>toolboxURL</con:name><con:value>http://genesis.pisa.intecs.it/TOOLBOX</con:value></con:property><con:property><con:name>coverageURL</con:name><con:value>http://pisa007.pisa.intecs.it/testFiles/ARMS/armscoverage.tiff</con:value></con:property><con:property><con:name>metadataURL</con:name><con:value>http://pisa007.pisa.intecs.it/testFiles/ARMS/EOPMetadata.xml</con:value></con:property><con:property><con:name>catalogueURL</con:name><con:value>http://genesis.pisa.intecs.it/ergorrcim/webservice</con:value></con:property><con:property><con:name>vectorURL</con:name><con:value>http://pisa007.pisa.intecs.it/testFiles/ARMS/armsvector.zip</con:value></con:property><con:property><con:name>geoserverWCSUrl</con:name><con:value>http://192.168.31.5:8023/geoserver/wcs</con:value></con:property><con:property><con:name>geoserverWMSURL</con:name><con:value>http://192.168.31.5:8023/geoserver/wms?request=getCapabilities</con:value></con:property><con:property><con:name>geoserverWFSURL</con:name><con:value>http://192.168.31.5:8023/geoserver/wfs?service=wfs&amp;version=1.1.0&amp;request=GetCapabilities</con:value></con:property></con:properties></con:testSuite><con:testSuite name="BasicFunctionalities"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Download" searchProperties="true" id="4296bd15-01ee-483c-879a-49692efbe713"><con:settings/><con:testStep type="request" name="store"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ToolboxServiceSOAPBinding</con:interface><con:operation>ExecuteProcess_store</con:operation><con:request name="store"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://genesis.pisa.intecs.it/TOOLBOX/services/WPSArchiving</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <ExecuteProcess_store xmlns="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" xmlns:xlink="http://www.w3.org/1999/xlink">
-         <Data>
-            <Reference mimeType="text/xml" xlink:href="ftp://arms:arms@genesis1.spacebel.be/util.jar" xmlns="http://www.opengis.net/wps/1.0.0"/>
-         </Data>
-         <InputDataType>iso</InputDataType>
-	 <OutputDataType>HTTP</OutputDataType>
-         <OutputDataType>FTP</OutputDataType>
-      </ExecuteProcess_store>
-   </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="transfer" name="Identifier copy"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false"><con:name>identifier</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>store</con:sourceStep><con:sourcePath>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:SearchResults/@numberOfRecordsMatched</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:properties><con:property><con:name>geoserverURL</con:name><con:value>http://192.168.31.5:8023/geoserver</con:value></con:property><con:property><con:name>toolboxURL</con:name><con:value>http://genesis.pisa.intecs.it/TOOLBOX</con:value></con:property><con:property><con:name>coverageURL</con:name><con:value>http://pisa007.pisa.intecs.it/testFiles/ARMS/armscoverage.tiff</con:value></con:property><con:property><con:name>metadataURL</con:name><con:value>http://pisa007.pisa.intecs.it/testFiles/ARMS/EOPMetadata.xml</con:value></con:property><con:property><con:name>catalogueURL</con:name><con:value>http://genesis.pisa.intecs.it/ergorrcim/webservice</con:value></con:property><con:property><con:name>vectorURL</con:name><con:value>http://pisa007.pisa.intecs.it/testFiles/ARMS/armsvector.zip</con:value></con:property><con:property><con:name>geoserverWCSUrl</con:name><con:value>http://192.168.31.5:8023/geoserver/wcs</con:value></con:property><con:property><con:name>geoserverWMSURL</con:name><con:value>http://192.168.31.5:8023/geoserver/wms?request=getCapabilities</con:value></con:property><con:property><con:name>geoserverWFSURL</con:name><con:value>http://192.168.31.5:8023/geoserver/wfs?service=wfs&amp;version=1.1.0&amp;request=GetCapabilities</con:value></con:property></con:properties></con:testSuite><con:testSuite name="BasicFunctionalities"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Large file download" searchProperties="true" id="7303b9a1-9a3c-4691-8738-ea02b01d5221"><con:description>This test case perform store-retrieve-delete cycle and performs basic checks.
+STEPS:
+
+STORE: the request asks for storing the data given as URL and for publishing it via HTTP. 
+Being accessed through the ArchivingServer TOOLBOX service, the ARMS servlet is instrumented to
+store data locally. Data is then stored under a Tomcat folder and thus is made available through 
+HTTP protocol.
+
+RETRIEVE: the status of the request is retrieved, using the identifier returned by the STORE step.
+The retrieve will provide a status string which is compared in the Conditional Goto step. In case of completion
+executes to the following steps, otherwise executes the Retrieve step.
+
+CHECK HTTP LINK: this step checks the url link returned in the RETRIEVE step in order to verify that data is accessible via HTTP.
+
+DELETE: this step asks for data deletion. The identifier is taken from the STORE response message.
+
+CHECK HTTP LINK FOR DELETION: After a fixed delay, the HTTP link is checked again in order to verify that data is no longer availabe.
+
+RETRIEVE FOR DELETION CHECK: this step tests that asking the Archiving Server for the deleted data leads to a predefined message.
+
+</con:description><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.panels.testcase.JTestRunLog$OptionsForm@max_rows">1000</con:setting><con:setting id="com.eviware.soapui.impl.wsdl.panels.testcase.JTestRunLog$OptionsForm@errors_only">false</con:setting></con:settings><con:testStep type="transfer" name="Property Transfer data URL"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="true" transferChildNodes="false" disabled="true"><con:name>url</con:name><con:sourceType>coverageURL</con:sourceType><con:sourceStep>#TestSuite#</con:sourceStep><con:targetType>Request</con:targetType><con:targetStep>Store</con:targetStep><con:targetPath>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
 declare namespace ns1='http://www.intecs.it/TOOLBOX/service/WPSArchiving/wsdl';
 declare namespace ns2='http://www.opengis.net/wps/1.0.0';
 declare namespace ns3='http://www.opengis.net/ows/1.1';
-//ns2:ProcessOutputs/ns2:Output/ns2:Data/ns2:LiteralData</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>retrieve</con:targetStep><con:targetPath>declare namespace ns4='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
-//ns4:ExecuteProcess_retrieve/ns4:Identifier</con:targetPath></con:transfers></con:config></con:testStep><con:testStep type="request" name="retrieve"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ToolboxServiceSOAPBinding</con:interface><con:operation>ExecuteProcess_retrieve</con:operation><con:request name="retrieve"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://genesis.pisa.intecs.it/TOOLBOX/services/WPSArchiving</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+declare namespace xlink="http://www.w3.org/1999/xlink";
+//ns2:Reference/@xlink:href
+
+</con:targetPath></con:transfers></con:config></con:testStep><con:testStep type="request" name="Store"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ToolboxServiceSOAPBinding</con:interface><con:operation>ExecuteProcess_store</con:operation><con:request name="Store"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://genesis.pisa.intecs.it/TOOLBOX/services/WPSArchiving</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <wps:ExecuteProcess_store lineage="true" storeExecuteResponse="true" status="true">
+         <wps:Data>
+            <wps:Reference method="GET" mimeType="image/geotiff" xlink:href="ftp://anonymous:intecs@debian.fastweb.it/debian-cd/3.1_r2/i386/iso-cd/debian-31r2-i386-binary-1.iso" xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:xlink="http://www.w3.org/1999/xlink"/> 
+	 </wps:Data>
+	 <wps:InputDataType>eo</wps:InputDataType>
+	<wps:OutputDataType>HTTP</wps:OutputDataType>
+      </wps:ExecuteProcess_store>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion"/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="transfer" name="Property Transfer"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferChildNodes="false" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false"><con:name>Copy identifier</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Store</con:sourceStep><con:sourcePath>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace ns1='http://www.intecs.it/TOOLBOX/service/WPSArchiving/wsdl';
+declare namespace ns2='http://www.opengis.net/wps/1.0.0';
+declare namespace ns3='http://www.opengis.net/ows/1.1';
+//ns2:ProcessOutputs/ns2:Output/ns2:Data/ns2:LiteralData</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>Retrieve</con:targetStep><con:targetPath>declare namespace ns4='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
+//ns4:ExecuteProcess_retrieve/ns4:Identifier</con:targetPath></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true"><con:name>Copy identifier for deletion</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Store</con:sourceStep><con:sourcePath>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace ns1='http://www.intecs.it/TOOLBOX/service/WPSArchiving/wsdl';
+declare namespace ns2='http://www.opengis.net/wps/1.0.0';
+declare namespace ns3='http://www.opengis.net/ows/1.1';
+//ns2:ProcessOutputs/ns2:Output/ns2:Data/ns2:LiteralData</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>Delete</con:targetStep><con:targetPath>declare namespace ns4='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
+//ns4:ExecuteProcess_delete/ns4:Identifier</con:targetPath></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true"><con:name>Copy identifier for check response</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Store</con:sourceStep><con:sourcePath>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace ns1='http://www.intecs.it/TOOLBOX/service/WPSArchiving/wsdl';
+declare namespace ns2='http://www.opengis.net/wps/1.0.0';
+declare namespace ns3='http://www.opengis.net/ows/1.1';
+//ns2:ProcessOutputs/ns2:Output/ns2:Data/ns2:LiteralData</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>Check Response</con:targetStep><con:targetPath>declare namespace ns4='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
+//ns4:ExecuteProcess_retrieve/ns4:Identifier</con:targetPath></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" entitize="false" transferToAll="false"><con:name>Copy identifier for checking deletion</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Store</con:sourceStep><con:sourcePath>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace ns1='http://www.intecs.it/TOOLBOX/service/WPSArchiving/wsdl';
+declare namespace ns2='http://www.opengis.net/wps/1.0.0';
+declare namespace ns3='http://www.opengis.net/ows/1.1';
+//ns2:ProcessOutputs/ns2:Output/ns2:Data/ns2:LiteralData</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>Retrieve for deletion check</con:targetStep><con:targetPath>declare namespace ns4='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
+//ns4:ExecuteProcess_retrieve/ns4:Identifier</con:targetPath></con:transfers></con:config></con:testStep><con:testStep type="delay" name="Delay"><con:settings/><con:config><delay>3000</delay></con:config></con:testStep><con:testStep type="request" name="Retrieve"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ToolboxServiceSOAPBinding</con:interface><con:operation>ExecuteProcess_retrieve</con:operation><con:request name="Retrieve"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://genesis.pisa.intecs.it/TOOLBOX/services/WPSArchiving</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
    <soapenv:Header/>
    <soapenv:Body>
       <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
-         <wps:Identifier>2010102132323124136742</wps:Identifier>
+         <wps:Identifier>20101116143242887</wps:Identifier>
+	 
       </wps:ExecuteProcess_retrieve>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/></con:soapui-project>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="goto" name="Conditional Goto"><con:settings/><con:config xsi:type="con:GotoStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:condition><con:name>Condition 1</con:name><con:type>XPATH</con:type><con:expression>declare namespace xlink='http://www.w3.org/1999/xlink';
+declare namespace ows='http://www.opengis.net/ows/1.1';
+declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace fo='http://www.w3.org/1999/XSL/Format';
+declare namespace wps='http://www.opengis.net/wps/1.0.0';
+declare namespace tbxwps='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
+//tbxwps:Status='DOWNLOADING'
+</con:expression><con:targetStep>Delay</con:targetStep></con:condition><con:condition><con:name>Condition 2</con:name><con:type>XPATH</con:type><con:expression>declare namespace xlink='http://www.w3.org/1999/xlink';
+declare namespace ows='http://www.opengis.net/ows/1.1';
+declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace fo='http://www.w3.org/1999/XSL/Format';
+declare namespace wps='http://www.opengis.net/wps/1.0.0';
+declare namespace tbxwps='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
+//tbxwps:Status='DOWNLOAD COMPLETE'
+</con:expression><con:targetStep>Delay</con:targetStep></con:condition></con:config></con:testStep><con:testStep type="request" name="Check Response"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ToolboxServiceSOAPBinding</con:interface><con:operation>ExecuteProcess_retrieve</con:operation><con:request name="Check Response"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://genesis.pisa.intecs.it/TOOLBOX/services/WPSArchiving</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
+         <wps:Identifier>20101116143242887</wps:Identifier>
+      </wps:ExecuteProcess_retrieve>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="XPath Match" name="check HTTP Link"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
+declare namespace ows='http://www.opengis.net/ows/1.1';
+declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace fo='http://www.w3.org/1999/XSL/Format';
+declare namespace wps='http://www.opengis.net/wps/1.0.0';
+declare namespace tbxwps='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
+count(//wps:Output/wps:Data/wps:ComplexData/tbxwps:ItemDetails/tbxwps:HttpLink)</path><content>1</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:assertion type="XPath Match" name="check FTP Link"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
+declare namespace ows='http://www.opengis.net/ows/1.1';
+declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace fo='http://www.w3.org/1999/XSL/Format';
+declare namespace wps='http://www.opengis.net/wps/1.0.0';
+declare namespace tbxwps='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
+count(//wps:Output/wps:Data/wps:ComplexData/tbxwps:ItemDetails/tbxwps:FtpLink)</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:assertion type="XPath Match" name="check GeoServer Link"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
+declare namespace ows='http://www.opengis.net/ows/1.1';
+declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace fo='http://www.w3.org/1999/XSL/Format';
+declare namespace wps='http://www.opengis.net/wps/1.0.0';
+declare namespace tbxwps='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
+count(//wps:Output/wps:Data/wps:ComplexData/tbxwps:ItemDetails/tbxwps:GeoServerLink)</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="transfer" name="Property Transfer 3"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferChildNodes="false" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false"><con:name>Copy http link</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Check Response</con:sourceStep><con:sourcePath>declare namespace wps='http://www.opengis.net/wps/1.0.0';
+declare namespace ows='http://www.opengis.net/ows/1.1';
+declare namespace tbxwps='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
+//wps:Output/wps:Data/wps:ComplexData/tbxwps:ItemDetails/tbxwps:HttpLink/text()</con:sourcePath><con:targetType>Endpoint</con:targetType><con:targetStep>Check HTTP link</con:targetStep><con:targetPath/></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferChildNodes="false" entitize="false" transferToAll="false"><con:name>Copy http link for deletion checking</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Check Response</con:sourceStep><con:sourcePath>declare namespace wps='http://www.opengis.net/wps/1.0.0';
+declare namespace ows='http://www.opengis.net/ows/1.1';
+declare namespace tbxwps='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
+//wps:Output/wps:Data/wps:ComplexData/tbxwps:ItemDetails/tbxwps:HttpLink/text()</con:sourcePath><con:targetType>Endpoint</con:targetType><con:targetStep>Check HTTP link for deletion</con:targetStep><con:targetPath/></con:transfers></con:config></con:testStep><con:testStep type="httprequest" name="Check HTTP link"><con:settings/><con:config method="HEAD" xsi:type="con:HttpRequest" name="Check HTTP link" postQueryString="false" mediaType="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:endpoint>http://genesis.pisa.intecs.it/ArchivingServer/storagearea/20101116143242887/armscoverage.tiff</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion"><con:configuration><scriptText>assert messageExchange.responseStatusCode==200</scriptText></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:testStep type="request" name="Delete"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ToolboxServiceSOAPBinding</con:interface><con:operation>ExecuteProcess_delete</con:operation><con:request name="Delete"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://genesis.pisa.intecs.it/TOOLBOX/services/WPSArchiving</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <wps:ExecuteProcess_delete lineage="true" storeExecuteResponse="true" status="true">
+		<wps:Identifier>20101116143242887</wps:Identifier>
+	</wps:ExecuteProcess_delete>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="XPath Match"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
+declare namespace ows='http://www.opengis.net/ows/1.1';
+declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace fo='http://www.w3.org/1999/XSL/Format';
+declare namespace wps='http://www.opengis.net/wps/1.0.0';
+//wps:Output[ows:Identifier='Status']/wps:Data/wps:LiteralData/text()</path><content>Success</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="delay" name="Delay 1"><con:settings/><con:config><delay>10000</delay></con:config></con:testStep><con:testStep type="httprequest" name="Check HTTP link for deletion"><con:settings/><con:config method="HEAD" xsi:type="con:HttpRequest" name="Check HTTP link for deletion" postQueryString="false" mediaType="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:endpoint>http://genesis.pisa.intecs.it/ArchivingServer/storagearea/20101116143242887/armscoverage.tiff</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion"><con:configuration><scriptText>assert messageExchange.responseStatusCode==404</scriptText></con:configuration></con:assertion><con:parameters/></con:config></con:testStep><con:testStep type="request" name="Retrieve for deletion check"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ToolboxServiceSOAPBinding</con:interface><con:operation>ExecuteProcess_retrieve</con:operation><con:request name="Retrieve for deletion check"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://genesis.pisa.intecs.it/TOOLBOX/services/WPSArchiving</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <wps:ExecuteProcess_retrieve lineage="true" storeExecuteResponse="true" status="true">
+         <wps:Identifier>20101116143242887</wps:Identifier>
+      </wps:ExecuteProcess_retrieve>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="XPath Match"><con:configuration><path>declare namespace xlink='http://www.w3.org/1999/xlink';
+declare namespace ows='http://www.opengis.net/ows/1.1';
+declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace fo='http://www.w3.org/1999/XSL/Format';
+declare namespace wps='http://www.opengis.net/wps/1.0.0';
+declare namespace tbxwps='http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap';
+//wps:Output/wps:Data/wps:ComplexData/tbxwps:ItemDetails/tbxwps:Status/text()</path><content>ITEM NOT AVAILABLE</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences></con:configuration></con:assertion><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/></con:soapui-project>

@@ -8,7 +8,6 @@ import it.intecs.pisa.toolbox.service.ServiceManager;
 import it.intecs.pisa.toolbox.service.TBXService;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.IOUtil;
-import it.intecs.pisa.util.SchemaSetRelocator;
 import it.intecs.pisa.util.Zip;
 import java.io.File;
 import java.io.FileInputStream;
@@ -131,7 +130,6 @@ public class ImportServicesGroupCommand extends NativeCommandsManagerPlugin {
             File servicesDir;
             File packageDeployDir = null;
             File descriptorFile;
-            File schemaDir;
             Document descriptor;
             DOMUtil util;
             String name;
@@ -160,7 +158,7 @@ public class ImportServicesGroupCommand extends NativeCommandsManagerPlugin {
                 root.setAttribute("serviceName", serviceName);
             }
 
-            util.dumpXML(descriptor, descriptorFile);
+            DOMUtil.dumpXML(descriptor, descriptorFile);
 
             if(WPSUtil.isWPS(descriptor)){
                 WPSCommands commands= new WPSCommands();

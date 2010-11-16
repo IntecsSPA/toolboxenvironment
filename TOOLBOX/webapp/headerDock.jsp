@@ -176,49 +176,42 @@ jQuery(document).ready(function($){
 
 
 
-        #loading-mask{
-            position:absolute;
-            left:0;
-            top:0;
-            width:100%;
-            height:100%;
-            z-index:20000;
+         #loading-mask{
+        position:absolute;
+        left:0;
+        top:0;
+        width:100%;
+        height:100%;
+        z-index:20000;
 
-        }
-        #loading{
-            position:absolute;
-            left:40%;
-            top:40%;
-            padding:2px;
-            z-index:20001;
-            height:auto;
-        }
-        #loading a {
-            filter:alpha(opacity=50);
-            -moz-opacity:0.5;
-            -khtml-opacity: 0.5;
-            opacity: 0.5;
-
-
-        }
-        #loading .loading-indicator{
-
-
-            font:bold 13px tahoma,arial,helvetica;
-            padding:10px;
-            margin:0;
-            height:auto;
-
-
-        }
-        #loading-msg {
-            font: normal 10px arial,tahoma,sans-serif;
-            padding:90px;
-            color: white;
-        }
-        #loading-img {
-            padding:120px;
-        }
+    }
+    #loading{
+        position:absolute;
+        left:40%;
+        top:40%;
+        padding:2px;
+        z-index:20001;
+        height:auto;
+    }
+    #loading a {
+        color:#225588;
+    }
+    #loading .loading-indicator{
+        background:#617995;
+        color:#444;
+        font:bold 13px tahoma,arial,helvetica;
+        padding:10px;
+        margin:0;
+        height:auto;
+    }
+    #loading-msg {
+        font: normal 10px arial,tahoma,sans-serif;
+        padding:90px;
+        color: white;
+    }
+    #loading-img {
+         padding:120px;
+    }
     </style>
     <% }%>
 </HEAD>

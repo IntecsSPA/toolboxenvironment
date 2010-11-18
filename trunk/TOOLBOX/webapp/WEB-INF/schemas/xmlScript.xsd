@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2006 sp1 U (http://www.altova.com) by Massimiliano (In) -->
 <!--
  -
@@ -1296,6 +1296,16 @@
             <xsd:attribute name="xmlOutput" type="xsd:boolean" default="true"/>
         </xsd:complexType>
     </xsd:element>
+    <xsd:element name="copyFile">
+        <xsd:annotation>
+            <xsd:documentation>This tag copies a file on the filesystem. The filrst child shal return the path of the file to copy while th esecond shall return the destination path</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:group ref="ExpressionChoice" minOccurs="2" maxOccurs="2"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
     <xsd:element name="command">
         <xsd:annotation>
             <xsd:documentation>Executes a system command. The command string is given by the enclosed child element. The value of the asynchronous attribute (default false) tells if the tag evaluation must wait for the command to complete (false) or not (true).</xsd:documentation>
@@ -1802,6 +1812,7 @@
             <xsd:element name="java"/>
             <xsd:element name="getOrderError"/>
             <xsd:element name="toolboxAddress"/>
+            <xsd:element ref="copyFile"/>
             <xsd:element name="putCoverage"/>
             <xsd:element name="SOAPFault"/>
             <xsd:element ref="sec:encrypt"/>

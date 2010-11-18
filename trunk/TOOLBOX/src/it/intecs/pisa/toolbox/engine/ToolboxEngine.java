@@ -324,12 +324,14 @@ public class ToolboxEngine implements IEngine {
     private Object executeTag(Element expression) throws ReturnTagException, Exception {
         TagPluginManager manager;
         ITagPlugin plugin = null;
+        Document resultScript;
         ITagExecutor executor = null;
         String tagNamespace = null;
         String tagName = null;
         Document resultDocument;
         Element resultEl;
         Boolean debugMode;
+        Object retObj=null;
 
         debugMode = (Boolean) this.configurationVariableStore.getVariable(ToolboxEngineVariablesKeys.CONFIGURATION_INSTANCE_UNDER_DEBUG);
 
@@ -343,7 +345,18 @@ public class ToolboxEngine implements IEngine {
 
         resultDocument = (Document) this.configurationVariableStore.getVariable(ToolboxEngineVariablesKeys.CONFIGURATION_RESULT_SCRIPT);
         resultEl = resultDocument.getDocumentElement();
-        return executor.executeTag(expression, resultEl, debugMode);
+
+       // System.out.println("****************** TEST *******************     expression: " + expression.getLocalName());
+        retObj=executor.executeTag(expression, resultEl, debugMode);
+
+       /* if(true){
+            resultScript = (Document) configurationVariableStore.getVariable(ToolboxEngineVariablesKeys.CONFIGURATION_RESULT_SCRIPT);
+            if (resultScript != null)
+                DOMUtil.dumpXML(resultScript, new File("/tmp/resultScript.xml"));
+        }*/
+       
+
+        return retObj;
     }
 
     public String evaluateString(String strToBeEvaluated, EngineStringType type) {

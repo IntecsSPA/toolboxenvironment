@@ -42,7 +42,7 @@ public class ExtensionFunctions {
 
     public static String getDepthRangeList (String list, String start, String end){
 
-        String rangeList="";
+        String rangeList=",";
         String [] arrayList=list.split(",");
         Double temp;
 
@@ -57,7 +57,7 @@ public class ExtensionFunctions {
             }
         }
 
-        return rangeList.substring(0,rangeList.length()-1);
+        return rangeList.substring(1,rangeList.length()-1);
     }
 
     public static String getFirstValueList (String list){

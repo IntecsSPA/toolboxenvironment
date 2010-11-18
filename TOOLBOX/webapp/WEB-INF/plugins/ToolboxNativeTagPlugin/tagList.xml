@@ -155,5 +155,6 @@
     <tag name="toolboxAddress" class="it.intecs.pisa.toolbox.plugins.nativeTagPlugin.ToolboxAddressTag"/>
     <tag name="putCoverage" class="it.intecs.pisa.toolbox.plugins.nativeTagPlugin.PutCoverageTag"/>
     <tag name="SOAPFault" class="it.intecs.pisa.toolbox.plugins.nativeTagPlugin.SOAPFaultTag"/>
+    <tag name="copyFile" class="it.intecs.pisa.toolbox.plugins.nativeTagPlugin.CopyFileTag"/>
     
 </tagList>

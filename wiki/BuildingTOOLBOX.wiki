@@ -1,0 +1,10 @@
+= Building TOOLBOX using the Ant file =
+
+TOOLBOX can be built using an Ant file. The file will take care of downloading all needed resources and compile them.
+In order to build TOOLBOX follow the below steps:
+
+  * Open a shell and move to a temporary folder.
+  * Execute the command svn export http://toolboxenvironment.googlecode.com/svn/trunk/BuildScripts/ToolboxRuntimeEnvironmentBuild.xml
+  * ant -f ToolboxRuntimeEnvironmentBuild.xml
+
+ As a result the directory will contain two .war files ready for deployment under Tomcat.

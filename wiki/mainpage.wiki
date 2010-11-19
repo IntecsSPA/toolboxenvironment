@@ -1,13 +1,40 @@
 #summary One-sentence summary of this page.
 
-= Introduction =
-
-Add your content here.
+http://code.google.com/p/toolboxenvironment/source/browse/wiki/images/toolboxLogo.png
 
 
-= Details =
+= The context=
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+The TOOLBOX has been initially developed under the [http://wiki.services.eoportal.org SSE] project and then upgraded within the [http://www.genesis-fp7.eu/ GENESIS].
+
+SSE integrates service providers (having variety of component models or middle-ware suited for their different platforms or environments) through XML, i.e. using SOAP and WSDL transported over a variety of transport mechanisms, i.e. IP, HTTP, and HTTPS. Thus, any service to be integrated within the SSE infrastructure must expose a SOAP interface (described by a WSDL file) according to the SSE Interface Control Document (SSE ICD). The TOOLBOX helps the service provider to convert its service in a SOAP based service compliant with the SSE ICD.
+
+The GENESIS FP7 Integrated Project has been launched by DG INFSO in September 2008. The duration of the project is 3 years. The GENESIS consortium comprehends the 33 partners involved in the project ; the Coordinator of the project is Thales Alenia Space France. The GENESIS Consortium brings a wide panel of multidisciplinary skills and experiences :
+
+    * participants skilled and experienced in ICT and related domains are key actors to define a reference collaborative architecture, and to make an efficient and sustainable solution;
+    * participants skilled and experienced in environmental domains as well as in health issues are key actors for the identification of users requirements, definition and implementation of the pilots, evaluation and take-up of the solution.
+
+Relying on standards and harmonization processes, GENESIS will provide a thematic-independant innovative solution : made of a generic software package. It is used as an "information system set-up framework", which provides the interoperability layer to existing information systems, so that they can access to environmental databases or services available at regional, national or European levels. The proposed solution, highly flexible and scalable, can be easily instantiated and customized to various thematic fields and various contexts all over Europe. The GENESIS framework is based on a Service Oriented Architecture (SOA), where software components are grouped in classes of services; each class providing a particular type of function.
+
+From the W3C specification:
+
+    SOAP is a lightweight protocol for exchanging structured information in a decentralized, distributed environment. It is an XML based protocol that consists of three parts: an envelope that defines a framework for describing what is in a message and how to process it, a set of encoding rules for expressing instances of application-defined datatypes, and a convention for representing remote procedure calls and responses. 
+
+The Toolbox is composed by two application, a development environment and a run-time environment
+
+    * The run-time environment is a web application which allows the deployment of generic and OGC compliant Web Services by means of some XML scripts which describe the operations that have to be done when the service is invoked
+    * The development environment is an Eclipse plugin which provides some tools to easily creates the TOOLBOX services , editing its script files and resources and automatic deploy the services in the run-time environment.
+
+The run-time and development environment can be used separately. The XML scripts can be created with any tool supporting XML or with a text editor (the scripts have to be compliant to the XMLScript Schema). 
+
+=Copyrights=
+
+The TOOLBOX war file contains free and Open Source software. It includes software developed under the Apache License (http://www.apache.org/licenses/); code licensed from RSA Security, Inc.; some portions licensed from IBM are available at http://oss.software.ibm.com/icu4j/, see the license; the edtFTPj ftp client licensed under the LGPL, the GNU Lesser General Public License.
+
+All trademarks and registered trademarks mentioned herein are the property of their respective owners.
+
+Copyright 2003-2010 Intecs
+
+TOOLBOX is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
+
+TOOLBOX is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.

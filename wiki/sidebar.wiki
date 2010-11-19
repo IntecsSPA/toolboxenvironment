@@ -2,5 +2,5 @@
 
 = Menu =
 
-  *[http://code.google.com/p/toolboxenvironment/wiki/contributing Contributing]
-  *[http://code.google.com/p/toolboxenvironment/wiki/BuildingTOOLBOX Build instructions]
+  [http://code.google.com/p/toolboxenvironment/wiki/contributing Contributing]
+  [http://code.google.com/p/toolboxenvironment/wiki/BuildingTOOLBOX Build instructions]

@@ -1,6 +1,3 @@
-#summary One-sentence summary of this page.
-
-= Menu =
-
-  [http://code.google.com/p/toolboxenvironment/wiki/contributing Contributing]
-  [http://code.google.com/p/toolboxenvironment/wiki/BuildingTOOLBOX Build instructions]
+  * Wiki
+    * [Contributing Contributing]
+    * [BuildingTOOLBOX Build instructions]  

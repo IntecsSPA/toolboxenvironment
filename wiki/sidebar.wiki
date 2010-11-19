@@ -2,4 +2,4 @@
 
 = Menu =
 
-http://code.google.com/p/toolboxenvironment/wiki/contributing
+[http://code.google.com/p/toolboxenvironment/wiki/contributing Contributing][http://code.google.com/p/toolboxenvironment/wiki/BuildingTOOLBOX Build instructions]

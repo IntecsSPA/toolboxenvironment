@@ -8,3 +8,12 @@ In order to build TOOLBOX follow the below steps:
   * ant -f ToolboxRuntimeEnvironmentBuild.xml
 
  As a result the directory will contain two .war files ready for deployment under Tomcat.
+
+= Building TOOLBOX using the Netbeans project =
+
+The SVN repository contains the Netbeans project files. In order to import the project into Netbeans you have to:
+
+  * Download the TOOLBOX folder. e.g. svn export http://toolboxenvironment.googlecode.com/svn/trunk/TOOLBOX
+  * Open Netbeans
+  * Select the "Open project" menu and provide the TOOLBOX folder. This should visualize the TOOLBOX project.
+  * Once opened, update the project paths if needed. 

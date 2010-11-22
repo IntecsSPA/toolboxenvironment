@@ -13,12 +13,16 @@
  *  Deliver the processing output in FTP, WMS, WFS and WCS format
 
 =Catalogue support=
+
+http://toolboxenvironment.googlecode.com/svn/wiki/images/catalogue1.png
  
 It allows the publication of OGC compliant catalogues based on the buddata open source engine. The following profiles are  supported:
 •	Cataloguing of ISO Metadata (CIM) - Using the ebRIM profile of CS-W
 •	EO Products Extension Package for ebRIM Profile of CSW 2.0 
 
 =Legacy Catalogue integration=
+
+http://toolboxenvironment.googlecode.com/svn/wiki/images/catalogue2.png
  
 It allows the creation of gateways towards legacy catalogues to expose them as OGC compliant catalogues. The following interfaces are supported:
 The following profiles are supported:
@@ -26,33 +30,49 @@ The following profiles are supported:
 •	EO Products Extension Package for ebRIM Profile of CSW 2.0
 
 =INSPIRE façade=
+
+http://toolboxenvironment.googlecode.com/svn/wiki/images/inspire.png
  
 It allows the publication of an OGC ebRIM CIM catalogue as an INSPIRE compliant catalogue by means of a facade. 
 
 =Web Processing Services support=
+
+http://toolboxenvironment.googlecode.com/svn/wiki/images/wps.png
  
 It allows the publication of OGC Web Processing services. It can be easily connected to some common open source processing tools (currently GRASS, OCTAVE and OpenMath integration is under development) but it can be also integrate custom processing executable. 
 
 =Generic Web Services= 
+
+http://toolboxenvironment.googlecode.com/svn/wiki/images/customInterfaces.png
  
 It allows deployment of generic Web Services by means of an XML based scripting language. 
 
 =Result publication= 
  
+http://toolboxenvironment.googlecode.com/svn/wiki/images/publish.png
+
 It support the publication of the results of a processing/service on different servers: FTP (built-in), HTTP (built-in), WMS, WFS and WCS (via GeoServer) 
 
 =Testing= 
  
+http://toolboxenvironment.googlecode.com/svn/wiki/images/test.png
+
 It provides a web based testing tool. The test tool can be used to perform test on a local installation as well as on a remote installation. 
 
 =Monitoring= 
  
+http://toolboxenvironment.googlecode.com/svn/wiki/images/monitoring.png
+
 It provides a web based monitoring tool allowing listing all the incoming requests, to inspect the processing and see the results sent back to the client. Moreover some statistics on the service execution can be generated. 
 
 =Security= 
  
+http://toolboxenvironment.googlecode.com/svn/wiki/images/security.png
+
 It implements a Policy Enforcement Point and a Policy Decision Point compliant with the OGC 07-118r8 “User Management Interfaces for Earth Observation Services” best practice to protect both internal as well as external services
 
 =Development supoprt= 
  
+http://toolboxenvironment.googlecode.com/svn/wiki/images/development.png
+
 For advanced users, it includes a development environment as eclipse plugin that can be used to create new web services and deploy them automatically in the run time environment running on Tomcat. The development environment provides a way to handle all the service resources and createS the XML needed to define the service logic. Moreover it allows defining, organizing and performing test.

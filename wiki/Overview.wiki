@@ -14,7 +14,7 @@
 
 =Catalogue support=
 
-http://toolboxenvironment.googlecode.com/svn/wiki/images/catalogue1.png
+http://toolboxenvironment.googlecode.com/svn/wiki/images/catalogue1.png||
  
 It allows the publication of OGC compliant catalogues based on the buddata open source engine. The following profiles are  supported:
 •	Cataloguing of ISO Metadata (CIM) - Using the ebRIM profile of CS-W

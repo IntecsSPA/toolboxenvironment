@@ -262,7 +262,7 @@ public class ToolboxEngine implements IEngine {
 
             this.configurationVariableStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_RESULT_SCRIPT_FILE, resultScriptFile);
             this.configurationVariableStore.setVariable(ToolboxEngineVariablesKeys.INSTANCE_DIRECTORY, instancePath);
-
+            System.out.println("SCRIPT FILE: " + resultScriptFile.getCanonicalPath());
             returnObject = executeScript(expression);
         } finally {
             if (resultScript != null) {
@@ -346,14 +346,10 @@ public class ToolboxEngine implements IEngine {
         resultDocument = (Document) this.configurationVariableStore.getVariable(ToolboxEngineVariablesKeys.CONFIGURATION_RESULT_SCRIPT);
         resultEl = resultDocument.getDocumentElement();
 
-       // System.out.println("****************** TEST *******************     expression: " + expression.getLocalName());
+       
         retObj=executor.executeTag(expression, resultEl, debugMode);
 
-       /* if(true){
-            resultScript = (Document) configurationVariableStore.getVariable(ToolboxEngineVariablesKeys.CONFIGURATION_RESULT_SCRIPT);
-            if (resultScript != null)
-                DOMUtil.dumpXML(resultScript, new File("/tmp/resultScript.xml"));
-        }*/
+      
        
 
         return retObj;

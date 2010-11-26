@@ -27,6 +27,7 @@ import it.intecs.pisa.pluginscore.exceptions.DebugTerminatedException;
 import it.intecs.pisa.pluginscore.exceptions.ReturnTagException;
 import it.intecs.pisa.pluginscore.exceptions.TagException;
 import it.intecs.pisa.pluginscore.exceptions.ThrowTagException;
+import it.intecs.pisa.toolbox.engine.ToolboxEngineVariablesKeys;
 import it.intecs.pisa.util.DOMUtil;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -178,6 +179,24 @@ public class TagExecutor implements ITagExecutor {
             }
 
             throw new TagException(this.getClass());
+        } finally{
+
+            if(this.logLevel.equals(Level.DEBUG)){
+                 File scriptFile=(File) this.engine.getConfigurationVariablesStore().getVariable(ToolboxEngineVariablesKeys.CONFIGURATION_RESULT_SCRIPT_FILE);
+                 
+                 if(scriptFile!=null)
+                    DOMUtil.dumpXML(offlineDbgTag.getOwnerDocument(), scriptFile);
+
+
+
+            }
+             /* if(true){
+            resultScript = (Document) configurationVariableStore.getVariable(ToolboxEngineVariablesKeys.CONFIGURATION_RESULT_SCRIPT);
+            if (resultScript != null)
+                DOMUtil.dumpXML(resultScript, new File("/tmp/resultScript.xml"));
+            }*/
+
+
         }
 
         return returnValue;

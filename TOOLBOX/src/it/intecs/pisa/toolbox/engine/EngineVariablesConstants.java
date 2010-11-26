@@ -26,4 +26,5 @@ public class EngineVariablesConstants {
     public static final String OPERATION_NAME = "operation";
     public static final String ORDER_ID = "orderId";
     public static final String INSTANCE_KEY="instanceKey";
+    public static final String REPLY_TO="replyTo";
 }

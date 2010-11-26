@@ -169,12 +169,17 @@ public class NativeTagExecutor extends TagExecutor {
         this.offlineDbgTag.appendChild(usernameTag);
         this.offlineDbgTag.appendChild(passwordTag);
 
-        FTPClient ftpClient = new FTPClient((String) this.executeChildTag(DOMUtil.getFirstChild((Element) children.next()), hostTag),
-                ((Integer) executeChildTag(DOMUtil.getFirstChild((Element) children.next()), portTag)).intValue());
+        String remoteHost=(String) this.executeChildTag(DOMUtil.getFirstChild((Element) children.next()), hostTag);
+        int port=((Integer) executeChildTag(DOMUtil.getFirstChild((Element) children.next()), portTag)).intValue();
+        String user=(String) executeChildTag(DOMUtil.getFirstChild((Element) children.next()), usernameTag);
+        String password=(String) executeChildTag(DOMUtil.getFirstChild((Element) children.next()), passwordTag);
+        FTPClient ftpClient = new FTPClient(remoteHost,port);
 
-        ftpClient.login(
-                (String) executeChildTag(DOMUtil.getFirstChild((Element) children.next()), usernameTag),
-                (String) executeChildTag(DOMUtil.getFirstChild((Element) children.next()), passwordTag));
+
+                
+
+        ftpClient.login(user,password);
+              
 
         ftpClient.setType(ftp.getAttribute(TRANSFER).equals(ASCII) ? FTPTransferType.ASCII : FTPTransferType.BINARY);
 
@@ -183,6 +188,7 @@ public class NativeTagExecutor extends TagExecutor {
         } else {
             ftpClient.setConnectMode(FTPConnectMode.ACTIVE);
         }
+        ftpClient.setConnectMode(FTPConnectMode.ACTIVE);
         return ftpClient;
     }
 

@@ -298,7 +298,8 @@ public class InstanceHandler {
         resPers=XMLResourcesPersistence.getInstance();
         try {
             sql = "SELECT SI.ORDER_ID AS ORDER_ID, SI.SERVICE_NAME AS SERVICER_NAME," +
-                    "SI.OPERATION_NAME AS OPERATION_NAME, SI.INSTANCE_ID AS INSTANCE_ID FROM " +
+                    "SI.OPERATION_NAME AS OPERATION_NAME, SI.INSTANCE_ID AS INSTANCE_ID , SI.PUSH_HOST AS REPLY_TO"+
+                    " FROM " +
                     "T_SERVICE_INSTANCES AS SI,T_INSTANCES_RESOURCES AS SR WHERE ID=" + serviceInstanceId +
                     " AND SI.ID=SR.INSTANCE_ID";
 
@@ -311,6 +312,7 @@ public class InstanceHandler {
             toolboxEngine.put(EngineVariablesConstants.OPERATION_NAME, rs.getString("OPERATION_NAME"));
             toolboxEngine.put(EngineVariablesConstants.ORDER_ID, rs.getString("ORDER_ID"));
             toolboxEngine.put(EngineVariablesConstants.INSTANCE_KEY, rs.getString("INSTANCE_ID"));
+            toolboxEngine.put(EngineVariablesConstants.REPLY_TO, rs.getString("REPLY_TO"));
         } finally {
             if (rs != null) {
                 rs.close();

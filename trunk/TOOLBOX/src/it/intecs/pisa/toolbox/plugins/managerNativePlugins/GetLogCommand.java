@@ -29,6 +29,6 @@ public class GetLogCommand extends NativeCommandsManagerPlugin{
                     }
 
 
-    }
+    } 
 
 }

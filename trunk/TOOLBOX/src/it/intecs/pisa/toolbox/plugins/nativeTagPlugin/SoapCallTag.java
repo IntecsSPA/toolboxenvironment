@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import it.intecs.pisa.soap.toolbox.AxisSOAPClient;
+import org.apache.axis2.addressing.RelatesTo;
 
 public class SoapCallTag extends NativeTagExecutor {
     protected String tagName="soapCall";
@@ -15,6 +16,7 @@ public class SoapCallTag extends NativeTagExecutor {
     @Override
     public Object executeTag(org.w3c.dom.Element soapCall) throws Exception {
         String messageID=null;
+        String relateTo=null;
         Document request;
         Document headerDoc;
         Element el;
@@ -33,6 +35,7 @@ public class SoapCallTag extends NativeTagExecutor {
         soapParams= DOMUtil.getChildren(soapCall);
         url = new URL((String) this.executeChildTag((Element) soapParams.get(0)));
         messageID=evaluateAttribute(soapCall, "messageId");
+        relateTo=evaluateAttribute(soapCall, "relateTo");
 
         soapAction = (soapCall.hasAttribute(OPERATION) ? evaluateAttribute(soapCall,OPERATION) : "");
         
@@ -64,11 +67,20 @@ public class SoapCallTag extends NativeTagExecutor {
         try
         {
         if (soapCall.hasAttribute(SSL_CERTIFICATE_LOCATION)) {
-            soapResponse=AxisSOAPClient.secureExchange(url,request.getDocumentElement(), headers, soapAction,messageID,evaluateAttribute(soapCall,SSL_CERTIFICATE_LOCATION));
-           
+            if(relateTo== null)
+                soapResponse=AxisSOAPClient.secureExchange(url,request.getDocumentElement(), headers, soapAction,messageID,evaluateAttribute(soapCall,SSL_CERTIFICATE_LOCATION));
+            else
+                soapResponse=AxisSOAPClient.secureExchange(url,request.getDocumentElement(), headers, soapAction,messageID,evaluateAttribute(soapCall,SSL_CERTIFICATE_LOCATION));
         } else {
+            if(relateTo== null)
               soapResponse=AxisSOAPClient.sendReceive(url, request.getDocumentElement() , headers,soapAction,messageID);
-              
+            else{
+              RelatesTo rel2 = new RelatesTo();
+              rel2.setValue(relateTo);
+              RelatesTo[] arrRelatesTo = new RelatesTo[]{rel2};
+              soapResponse=AxisSOAPClient.sendReceive(url, request.getDocumentElement() , headers,soapAction,messageID);
+            //  soapResponse=AxisSOAPClient.sendReceive(url, el, headers, soapAction, messageID)url, request.getDocumentElement(), soapAction, rels2)
+            }
         }
         }
         catch(Exception e)

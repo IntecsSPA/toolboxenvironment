@@ -248,7 +248,16 @@ public class WPSCommands extends WPSUtil{
             serviceManager=ServiceManager.getInstance();
             TBXService service = serviceManager.getService(serviceName);
 
-            File originalScript=new File(newServicePath,SERVICE_RESOURCES_PATH+"/execute_"+processingName+"_script");
+            Class wpsEngineClass = Class.forName(ENGINE_CLASS_PACKAGE+ENGINE_PREFIX+engineType);
+            WPSEngine wpsEngine = (WPSEngine) wpsEngineClass.newInstance();
+
+            File originalScriptTemp=File.createTempFile(serviceName+"_"+processingName, "xml");
+
+            File originalScript=new File(newServicePath, wpsEngine.getOriginalScriptPathforProcessingName(processingName));
+
+            IOUtil.copy(new FileInputStream(originalScript),
+                                        new FileOutputStream(originalScriptTemp));
+               
             service.deleteOperation("ExecuteProcess_"+processingName);
             if(service.getOperation(processingNameAsync)!=null)
                service.deleteOperation(processingNameAsync);
@@ -259,7 +268,7 @@ public class WPSCommands extends WPSUtil{
             newProcessingName=DOMUtil.getTextFromNode(identifier);
 
             createWPSProcess(serviceName, newProcessingName,
-                    Boolean.valueOf(asynchronous), engineType, new FileInputStream(originalScript));
+                    Boolean.valueOf(asynchronous), engineType, new FileInputStream(originalScriptTemp));
             
            /* 
                WPSCommandResponse updateCommandResponse=new WPSCommandResponse(PARSE_DESCRIBE_OP);

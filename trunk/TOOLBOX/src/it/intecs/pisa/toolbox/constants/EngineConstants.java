@@ -15,4 +15,6 @@ public class EngineConstants {
     public static final String CLEANUP_PROCEDURE = "cleanupProcedure";
     public static final String SERVICE_MODE = "serviceMode";
     public static final String OPERATION_MODE = "operationMode";
+    public static final String MESSAGE_ID="MessageID";
+    public static final String REPLY_TO="replyTo";
 }

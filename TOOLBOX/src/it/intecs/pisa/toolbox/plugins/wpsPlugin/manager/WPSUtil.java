@@ -223,7 +223,8 @@ public class WPSUtil {
                             SERVICE_DESCRIPTOR_INTERFACE_NODENAME);
 
     String type=((Element)interfaceList.item(0)).getAttribute(SERVICE_DESCRIPTOR_INTERFACE_TYPE_ATTRIBUTE);
-
+    if(type == null || type.equals(""))
+        type =WPS_INTERFACE_TYPE;
     NodeList tnsList=((Element)interfaceList.item(0)).getElementsByTagNameNS(
                             ((Node)root).getNamespaceURI(),
                             SERVICE_DESCRIPTOR_TARGET_NAMESPACE_NODENAME);

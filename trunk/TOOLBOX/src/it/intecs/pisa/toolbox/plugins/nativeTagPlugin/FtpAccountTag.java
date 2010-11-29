@@ -75,7 +75,7 @@ public class FtpAccountTag extends NativeTagExecutor {
             if (onExpireTag != null) {
                 long script_id=ScriptUtil.createScriptFromLinkedList(DOMUtil.getChildren(onExpireTag), engine.getVariablesStore());
 
-                timerManager.addTimerInstance(service_instance_id, script_id, due_date, "FTPExpire_"+due_date);
+                timerManager.addTimerInstance(service_instance_id, script_id, due_date, "FTPExpire_"+due_date,"FTP tag");
 
                 logger.info("Added a timer for handling the onExpire tag.");
             }

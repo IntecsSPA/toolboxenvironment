@@ -376,25 +376,25 @@ public class WSDL {
         if(this.callbackports!=null)
         {
             Element plinkRootEl=wsdl.createElement("plnk:partnerLinkType");
-            plinkRootEl.setAttribute("name",name+"_PartnerLink");
+            plinkRootEl.setAttribute("name",name);
 
             wsdl.getDocumentElement().appendChild(plinkRootEl);
 
             Element providerRoleEl=wsdl.createElement("plnk:role");
-            providerRoleEl.setAttribute("name", name+"_ProviderRole");
+            providerRoleEl.setAttribute("name", name+"ServiceProvider");
             plinkRootEl.appendChild(providerRoleEl);
 
             Element providerPortTypeEl=wsdl.createElement("plnk:portType");
-            providerPortTypeEl.setAttribute("name", "tns:"+name+"_Port");
+            providerPortTypeEl.setAttribute("name", "tns:"+name);
             providerRoleEl.appendChild(providerPortTypeEl);
 
 
             providerRoleEl=wsdl.createElement("plnk:role");
-            providerRoleEl.setAttribute("name", name+"_CallbackProviderRole");
+            providerRoleEl.setAttribute("name", name+"ServiceRequester");
             plinkRootEl.appendChild(providerRoleEl);
 
             providerPortTypeEl=wsdl.createElement("plnk:portType");
-            providerPortTypeEl.setAttribute("name", "tns:"+name+"_CallbackPort");
+            providerPortTypeEl.setAttribute("name", "tns:"+name+"Callback");
             providerRoleEl.appendChild(providerPortTypeEl);
         }
     }

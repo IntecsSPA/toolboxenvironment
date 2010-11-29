@@ -1277,6 +1277,7 @@
             <xsd:group ref="ExpressionChoice"/>
             <xsd:attribute name="delay" type="ToolboxTime" use="required"/>
             <xsd:attribute name="name" type="xsd:string" use="optional"/>
+            <xsd:attribute name="description" type="xsd:string" use="optional"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="xslt">

@@ -68,13 +68,14 @@ public class TimerManager {
             timer.cancel();
     }
 
-    public void addTimerInstance(long service_instance_id, long script_id, long due_date, String extra) throws Exception {
+    public void addTimerInstance(long service_instance_id, long script_id, long due_date, String extra, String description) throws Exception {
         TimerInstance timerInstance=new TimerInstance(0);
         timerInstance.setType(TimerInstance.TYPE_TIMER);
         timerInstance.setService_instance_id(service_instance_id);
         timerInstance.setScript_id(script_id);
         timerInstance.setDue_date(due_date);
         timerInstance.setExtraValue(extra);
+        timerInstance.setTimerDescription(description);
         timerInstance.store();
 
         ToolboxScriptExecutionTimerTask tt;

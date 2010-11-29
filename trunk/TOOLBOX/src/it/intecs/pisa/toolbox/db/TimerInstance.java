@@ -21,11 +21,11 @@ public class TimerInstance {
     protected long script_id;
     protected long due_date;
     protected String extraValue;
+    protected String timerDescription;
 
     public TimerInstance(long instance_id) throws Exception
     {
-        id=instance_id;
-        
+        id=instance_id;        
     }
 
     public void load() throws Exception
@@ -45,6 +45,7 @@ public class TimerInstance {
             script_id=rs.getLong("SCRIPT");
             due_date=rs.getLong("DUE_DATE");
             extraValue=rs.getString("EXTRA_VALUE");
+            timerDescription=rs.getString("EXTRA_VALUE");
         }
         finally
         {
@@ -64,7 +65,7 @@ public class TimerInstance {
 
         try
         {
-            sql = "INSERT INTO T_TIMERS VALUES (null,'" + type + "'," + service_instance_id + ","+script_id+","+due_date+",'"+extraValue+"')";
+            sql = "INSERT INTO T_TIMERS VALUES (null,'" + type + "'," + service_instance_id + ","+script_id+","+due_date+",'"+extraValue+"','"+timerDescription+"')";
             db = ToolboxInternalDatabase.getInstance();
             stm = db.getStatement();
             stm.executeUpdate(sql);
@@ -116,4 +117,13 @@ public class TimerInstance {
     public void setExtraValue(String description) {
         this.extraValue = description;
     }
+
+    public String getTimerDescription() {
+        return timerDescription;
+    }
+
+    public void setTimerDescription(String description) {
+        this.timerDescription = description;
+    }
+
 }

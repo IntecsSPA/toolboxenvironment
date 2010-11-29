@@ -9,5 +9,12 @@
     <restCommandViaDelete cmd="/rest/manager/deleteInstanceByMsgID/*/*/*" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.DeleteInstanceByMsgIDCommand"/>
     <restCommandViaGet cmd="/rest/manager/getConfiguration" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.GetConfigurationCommand"/>
     <restCommandViaPut cmd="/rest/manager/setConfiguration" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.SetConfigurationCommand"/>
+
+    <restCommandViaGet cmd="/rest/manager/getServiceTimerList/*" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.GetServiceTimerList"/>
+    <restCommandViaGet cmd="/rest/manager/getInstanceTimerList/*" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.GetInstanceTimerList"/>
+    <restCommandViaGet cmd="/rest/manager/deleteTimerByTimerId/*" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.DeleteTimerByTimerId"/>
+    <restCommandViaGet cmd="/rest/manager/deleteTimerByInstanceId/*" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.DeleteTimerByInstanceId"/>
+
+
 </plugin>
 

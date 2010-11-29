@@ -52,6 +52,9 @@ public class GetServiceTimerList extends RESTManagerCommandPlugin {
             res = stm.executeQuery(sql);
 
             JsonObject timers = null;
+
+            int resSize = 0;
+            
             while (res.next()) {
 
                 extra=(Long) res.getLong("extra_value");
@@ -68,8 +71,10 @@ public class GetServiceTimerList extends RESTManagerCommandPlugin {
                 timers.add("description", new JsonPrimitive(description));
 
                 array.add(timers);
+                resSize++;
                 outputJson.add("values", array);
             }
+            outputJson.addProperty("results", resSize);
             stm.close();
             outputJson.addProperty("success", true);
             return outputJson;

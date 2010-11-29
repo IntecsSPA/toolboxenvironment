@@ -18,7 +18,10 @@ public class BoundedOperation {
 	
 	private String name=null;
     private String soapAction;
-	
+    private Boolean isAsynchronous = false;
+    private Boolean isCallBack = false;
+
+
 	public BoundedOperation()
 	{
 		
@@ -31,7 +34,25 @@ public class BoundedOperation {
 			throw new WSDLException("No binding name");
 	}
 
-	public String getName() {
+	public void setCallBack() {
+		isCallBack = true;
+	}
+
+	public void setSynchronous() {
+		isAsynchronous = false;
+	}
+
+	public void setAsynchronous() {
+		isAsynchronous = true;
+	}
+
+
+    public Boolean isAsyncronous() {
+		return isAsynchronous;
+	}
+
+
+    public String getName() {
 		return name;
 	}
 
@@ -54,7 +75,7 @@ public class BoundedOperation {
         Element inputEl;
         Element outputEl;
         Element bodyEl;
-
+        Element headerEl;
         Document wsdl;
 
         wsdl=bindingEl.getOwnerDocument();
@@ -69,6 +90,23 @@ public class BoundedOperation {
 
         inputEl=wsdl.createElement("wsdl:input");
         bopEl.appendChild(inputEl);
+
+        if (isAsynchronous == true) {
+            headerEl = wsdl.createElement("soap:header");
+            headerEl.setAttribute("message", "tns:StartHeader");
+            headerEl.setAttribute("part", "MessageID");
+            headerEl.setAttribute("use", "literal");
+            inputEl.appendChild(headerEl);
+        }
+
+        if (isCallBack == true) {
+            headerEl = wsdl.createElement("soap:header");
+            headerEl.setAttribute("message", "tns:ContinueHeader");
+            headerEl.setAttribute("part", "RelatesTo");
+            headerEl.setAttribute("use", "literal");
+            inputEl.appendChild(headerEl);
+        }
+
 
         bodyEl=wsdl.createElement("soap:body");
         bodyEl.setAttribute("use", "literal");

@@ -29,6 +29,7 @@ public class NativeTagExecutor extends TagExecutor {
     protected static final String OBJECT = "object";
     protected static final String ARRAY_LOCATION = "arrayLocation";
     protected static final String NAME = "name";
+    protected static final String DESCRIPTION = "description";
     protected static final String BYTE = "byte";
     protected static final String SHORT = "short";
     protected static final String INT = "int";

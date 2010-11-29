@@ -61,7 +61,47 @@ public class WSDLBuilder {
            else messageCount+=2;
         }
 
+        //add the message for the header in the request and in the response
+        //check if this is really needed
+        //  <message name="StartHeader">
+        //		<part element="wsa:MessageID" name="MessageID"/>
+        //		<part element="wsa:ReplyTo" name="ReplyTo"/>
+        //	</message>
+
+        //we have to add two messages for the header
+        messageCount+=2;
         msgs=new Message[messageCount];
+
+        //we should add this only if there are asynchronous operations... to be updated
+           msgs[i]=new Message();
+           msgs[i].setName("StartHeader");
+
+           parts=new Part[2];
+           parts[0]=new Part();
+           parts[0].setName("MessageID");
+           parts[0].setElementNameSpace("http://schemas.xmlsoap.org/ws/2003/03/addressing");
+           parts[0].setElementType("MessageID");
+
+           parts[1]=new Part();
+           parts[1].setName("ReplyTo");
+           parts[1].setElementNameSpace("http://schemas.xmlsoap.org/ws/2003/03/addressing");
+           parts[1].setElementType("ReplyTo");
+
+           msgs[i].setParts(parts);
+           i++;
+
+           msgs[i]=new Message();
+           msgs[i].setName("ContinueHeader");
+
+           parts=new Part[1];
+           parts[0]=new Part();
+           parts[0].setName("RelatesTo");
+           parts[0].setElementNameSpace("http://schemas.xmlsoap.org/ws/2003/03/addressing");
+           parts[0].setElementType("RelatesTo");
+
+           msgs[i].setParts(parts);
+           i++;
+
         for (it.intecs.pisa.common.tbx.Operation op : operations) {
            msgs[i]=new Message();
            msgs[i].setName(op.getName()+"Request");
@@ -153,8 +193,8 @@ public class WSDLBuilder {
         bind=new Binding[1];
         bind[0]=new Binding();
 
-        bind[0].setName(service.getServiceName()+"_Binding");
-        bind[0].setType("tns:"+service.getServiceName()+"_Port");
+        bind[0].setName(service.getServiceName()+"SoapBinding");
+        bind[0].setType("tns:"+service.getServiceName());
 
         operations=service.getImplementedInterface().getOperations();
         boundedOperations=new BoundedOperation[operations.length];
@@ -166,6 +206,8 @@ public class WSDLBuilder {
             boundedOperations[i]=new BoundedOperation();
             boundedOperations[i].setName(op.getName());
             boundedOperations[i].setSoapAction(op.getSoapAction());
+            if (op.isAsynchronous())
+                boundedOperations[i].setAsynchronous();
             i++;
         }
 
@@ -188,13 +230,15 @@ public class WSDLBuilder {
 
         try
         {
+            //For WS-Addressing
+            wsdl.addImport("http://schemas.xmlsoap.org/ws/2003/03/addressing", "http://schemas.xmlsoap.org/ws/2003/03/addressing/");
+
             implInterf=service.getImplementedInterface();
 
             schemaRoot=implInterf.getSchemaRoot();
             namespace=implInterf.getTargetNameSpace();
 
             schemaUrl=schemaBaseUrl+"/WSDL/"+service.getServiceName()+"/"+schemaRoot;
-
             wsdl.addImport(namespace, schemaUrl);
         }
         catch(Exception e)
@@ -212,7 +256,7 @@ public class WSDLBuilder {
         operations = service.getImplementedInterface().getOperations();
         ports=new PortType[1];
         ports[0]=new PortType();
-        ports[0].setName(service.getServiceName()+"_Port");
+        ports[0].setName(service.getServiceName());
 
         oper=new Operation[operations.length];
 
@@ -248,7 +292,7 @@ public class WSDLBuilder {
             if(op.isAsynchronous())
             {
                 Operation oper=new Operation();
-                oper.setName(op.getName()+"_Callback");
+                oper.setName(op.getName()+"Callback");
                 oper.setInputNameType(op.getName()+"CallbackRequest");
                 oper.setInputNameNameSpace(op.getCallbackInputTypeNameSpace());
                 oper.setOutputNameNameSpace(op.getCallbackOutputTypeNameSpace());
@@ -262,7 +306,7 @@ public class WSDLBuilder {
         {
             ports=new PortType[1];
             ports[0]=new PortType();
-            ports[0].setName(service.getServiceName()+"_CallbackPort");
+            ports[0].setName(service.getServiceName()+"Callback");
             ports[0].setOperations(callbackOps.toArray(new Operation[0]));
 
             wsdl.setCallbackPortTypes(ports);
@@ -282,16 +326,17 @@ public class WSDLBuilder {
             if(op.isAsynchronous())
             {
                 BoundedOperation oper=new BoundedOperation();
-                oper.setName(op.getName()+"_Callback");
+                oper.setName(op.getName()+"Callback");
                 oper.setSoapAction(op.getCallbackSoapAction());
+                oper.setCallBack();
                 callbackBops.add(oper);
             }
         }
 
         Binding callbackBinding=new Binding();
         callbackBinding.setBoundedOperations(callbackBops.toArray(new BoundedOperation[0]));
-        callbackBinding.setName(service.getServiceName()+"_CallbackBinding");
-        callbackBinding.setType("tns:"+service.getServiceName()+"_CallbackPort");
+        callbackBinding.setName(service.getServiceName()+"CallbackSoapBinding");
+        callbackBinding.setType("tns:"+service.getServiceName()+"Callback");
 
         if(callbackBops.size()>0)
         {
@@ -303,11 +348,11 @@ public class WSDLBuilder {
         it.intecs.pisa.util.wsdl.Service wsdlService;
 
         wsdlService=new it.intecs.pisa.util.wsdl.Service();
-        wsdlService.setName(service.getServiceName()+"_Service");
+        wsdlService.setName(service.getServiceName());
 
         HashMap<String,String> attributes=new HashMap<String,String>();
-        attributes.put("binding", "tns:"+service.getServiceName()+"_Binding");
-        attributes.put("name", service.getServiceName()+"_ServicePort");
+        attributes.put("binding", "tns:"+service.getServiceName()+"SoapBinding");
+        attributes.put("name", service.getServiceName());
         attributes.put("location", wsdl.getServiceURL());
         
         wsdlService.setPort(attributes);
@@ -320,13 +365,12 @@ public class WSDLBuilder {
         if(wsdl.getCallbackPortTypes()!=null)
         {
             wsdlService=new it.intecs.pisa.util.wsdl.Service();
-            wsdlService.setName(service.getServiceName()+"_CallbackService");
+            wsdlService.setName(service.getServiceName()+"Callback");
 
             HashMap<String,String> attributes=new HashMap<String,String>();
-            attributes.put("binding", "tns:"+service.getServiceName()+"_CallbackBinding");
-            attributes.put("name", service.getServiceName()+"_CallbackServicePort");
+            attributes.put("binding", "tns:"+service.getServiceName()+"CallbackSoapBinding");
+            attributes.put("name", service.getServiceName()+"Callback");
             attributes.put("location", "http://openuri.org");
-
             wsdlService.setPort(attributes);
             wsdl.setCallbackService(new it.intecs.pisa.util.wsdl.Service[]{wsdlService});
         }

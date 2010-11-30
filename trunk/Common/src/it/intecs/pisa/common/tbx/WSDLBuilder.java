@@ -30,7 +30,8 @@ public class WSDLBuilder {
         wsdl = new WSDL();
 
         wsdl.setName(service.getServiceName());
-        wsdl.setTargetNameSpace("http://www.intecs.it/TOOLBOX/service/" + service.getServiceName() + "/wsdl");
+//        wsdl.setTargetNameSpace("http://www.intecs.it/TOOLBOX/service/" + service.getServiceName() + "/wsdl");
+        wsdl.setTargetNameSpace("http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap");
         wsdl.setServiceURL(serviceURL);
 
         namespaces=wsdl.getNameSpaces();
@@ -104,7 +105,8 @@ public class WSDLBuilder {
 
         for (it.intecs.pisa.common.tbx.Operation op : operations) {
            msgs[i]=new Message();
-           msgs[i].setName(op.getName()+"Request");
+//           msgs[i].setName(op.getName()+"Request");
+           msgs[i].setName(op.getName()+"Input");
 
            parts=new Part[1];
            parts[0]=new Part();
@@ -116,7 +118,8 @@ public class WSDLBuilder {
            i++;
 
            msgs[i]=new Message();
-           msgs[i].setName(op.getName()+"Response");
+//           msgs[i].setName(op.getName()+"Response");
+           msgs[i].setName(op.getName()+"Output");
 
            parts=new Part[1];
            parts[0]=new Part();
@@ -217,8 +220,6 @@ public class WSDLBuilder {
         if (service.hasWSSecurity()){
         	bind[0].setWSSPolicy(service.getWSSPolicy());
         }
-
-
     }
 
     private static void addImports(Service service, WSDL wsdl,String schemaBaseUrl) {
@@ -264,10 +265,10 @@ public class WSDLBuilder {
         {
             oper[i]=new Operation();
             oper[i].setName(op.getName());
-            oper[i].setInputNameType(op.getName()+"Request");
+            oper[i].setInputNameType(op.getName()+"Input");
             oper[i].setInputNameNameSpace(op.getInputTypeNameSpace());
             oper[i].setOutputNameNameSpace(op.getOutputTypeNameSpace());
-            oper[i].setOutputNameType(op.getName()+"Response");
+            oper[i].setOutputNameType(op.getName()+"Output");
 
             i++;
         }
@@ -292,7 +293,9 @@ public class WSDLBuilder {
             if(op.isAsynchronous())
             {
                 Operation oper=new Operation();
-                oper.setName(op.getName()+"Callback");
+
+//                oper.setName(op.getName()+"Callback");
+                oper.setName(op.getName()+"_statusUpdate");
                 oper.setInputNameType(op.getName()+"CallbackRequest");
                 oper.setInputNameNameSpace(op.getCallbackInputTypeNameSpace());
                 oper.setOutputNameNameSpace(op.getCallbackOutputTypeNameSpace());
@@ -326,7 +329,7 @@ public class WSDLBuilder {
             if(op.isAsynchronous())
             {
                 BoundedOperation oper=new BoundedOperation();
-                oper.setName(op.getName()+"Callback");
+                oper.setName(op.getName()+"_statusUpdate");
                 oper.setSoapAction(op.getCallbackSoapAction());
                 oper.setCallBack();
                 callbackBops.add(oper);

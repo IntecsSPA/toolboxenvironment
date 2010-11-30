@@ -36,7 +36,7 @@ public class ConfigureOperationCommand extends NativeCommandsManagerPlugin {
         TBXScript script;
         DOMUtil util;
         FileItem item;
-        File tmpFile;
+        File tmpFile=null;
 
         try {
             util=new DOMUtil();
@@ -71,10 +71,10 @@ public class ConfigureOperationCommand extends NativeCommandsManagerPlugin {
             scriptsNeededTypes=operationDescr.getNeededScriptsType();
             for (String type : scriptsNeededTypes)
             {
+                script=(TBXScript) operationDescr.getScript(type);
+                script.getScriptDoc();
               if(operationDescr.scriptMustBeOverridden(type))
-              {
-                  script=(TBXScript) operationDescr.getScript(type);
-
+              {                  
                   if(mimeparts.get(type)!=null)
                   {
                       try
@@ -84,12 +84,13 @@ public class ConfigureOperationCommand extends NativeCommandsManagerPlugin {
                           item=mimeparts.get(type);
                           item.write(tmpFile);
                           script.setScriptDoc(util.fileToDocument(tmpFile));
-                          tmpFile.delete();
                       }
                       catch(Exception ecc)
                       {
-
+                          System.out.println("ecc" );
                       }
+                      finally{
+                              tmpFile.delete();}
                   }
 
               }

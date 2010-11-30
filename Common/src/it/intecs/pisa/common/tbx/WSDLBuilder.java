@@ -79,12 +79,12 @@ public class WSDLBuilder {
            parts=new Part[2];
            parts[0]=new Part();
            parts[0].setName("MessageID");
-           parts[0].setElementNameSpace("http://schemas.xmlsoap.org/ws/2003/03/addressing");
+           parts[0].setElementNameSpace(getNameSpacePrefix("http://schemas.xmlsoap.org/ws/2003/03/addressing",wsdl));
            parts[0].setElementType("MessageID");
 
            parts[1]=new Part();
            parts[1].setName("ReplyTo");
-           parts[1].setElementNameSpace("http://schemas.xmlsoap.org/ws/2003/03/addressing");
+           parts[1].setElementNameSpace(getNameSpacePrefix("http://schemas.xmlsoap.org/ws/2003/03/addressing",wsdl));
            parts[1].setElementType("ReplyTo");
 
            msgs[i].setParts(parts);
@@ -96,7 +96,7 @@ public class WSDLBuilder {
            parts=new Part[1];
            parts[0]=new Part();
            parts[0].setName("RelatesTo");
-           parts[0].setElementNameSpace("http://schemas.xmlsoap.org/ws/2003/03/addressing");
+           parts[0].setElementNameSpace(getNameSpacePrefix("http://schemas.xmlsoap.org/ws/2003/03/addressing",wsdl));
            parts[0].setElementType("RelatesTo");
 
            msgs[i].setParts(parts);

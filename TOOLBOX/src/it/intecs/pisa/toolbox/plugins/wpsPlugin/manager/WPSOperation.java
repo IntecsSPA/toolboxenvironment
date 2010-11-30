@@ -48,7 +48,7 @@ public class WPSOperation {
         operationAsyncDescr.setOutputTypeNameSpace(WPSEngine.EXECUTE_POST_TARGET_NAMESPACE);
         operationAsyncDescr.setCallbackInputType(WPSEngine.EXECUTE_ASYNC_PUSH_MESSAGE_NAME); //response third
         operationAsyncDescr.setCallbackOutputType(WPSEngine.EXECUTE_ASYNC_PUSH_RESPONSE_NAME); //ack
-        operationAsyncDescr.setCallbackSoapAction(execupteOperationAsyncName+"CallBack"); // Soap Action Execute
+        operationAsyncDescr.setCallbackSoapAction(execupteOperationAsyncName+"_statusUpdate"); // Soap Action Execute
         operationAsyncDescr.setCallbackInputTypeNameSpace(WPSEngine.EXECUTE_POST_TARGET_NAMESPACE); // namespace third
         operationAsyncDescr.setCallbackOutputTypeNameSpace(WPSEngine.EXECUTE_POST_TARGET_NAMESPACE); // namespace ack
 

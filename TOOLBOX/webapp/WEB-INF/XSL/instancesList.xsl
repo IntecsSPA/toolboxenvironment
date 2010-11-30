@@ -75,7 +75,7 @@
                 </td>
                 <td class="sortable">
                     <a>
-                        <xsl:attribute name="href">viewServiceInstances.jsp?serviceName=<xsl:value-of select="$serviceName"/>&amp;orderBy=INSTANCE_ID&amp;order=<xsl:value-of select="$inverseOrder"/>&amp;page=<xsl:value-of select="$page"/></xsl:attribute>
+                        <xsl:attribute name="href">viewServiceInstances.jsp?serviceName=<xsl:value-of select="$serviceName"/>&amp;orderBy=INSTANCE_ID&amp;order=<xsl:value-of select="$inverseOrder"/>&amp;page=<xsl:value-of select="$page"/>&amp;instanceType=<xsl:value-of select="$type"/></xsl:attribute>
                         <xsl:value-of select="$instanceTxt"/>
                         <xsl:if test="$orderBy='INSTANCE_ID' and $order='ASC' "><img src="images/down.gif" border="0"/></xsl:if>
 			<xsl:if test="$orderBy='INSTANCE_ID' and $order='DESC' "><img src="images/up.gif" border="0"/></xsl:if>
@@ -83,7 +83,7 @@
                 </td>
                 <td class="sortable">
                     <a>
-                        <xsl:attribute name="href">viewServiceInstances.jsp?serviceName=<xsl:value-of select="$serviceName"/>&amp;orderBy=ORDER_ID&amp;order=<xsl:value-of select="$inverseOrder"/>&amp;page=<xsl:value-of select="$page"/></xsl:attribute>
+                        <xsl:attribute name="href">viewServiceInstances.jsp?serviceName=<xsl:value-of select="$serviceName"/>&amp;orderBy=ORDER_ID&amp;order=<xsl:value-of select="$inverseOrder"/>&amp;page=<xsl:value-of select="$page"/>&amp;instanceType=<xsl:value-of select="$type"/></xsl:attribute>
                         <xsl:value-of select="$ordTxt"/>
                         <xsl:if test="$orderBy='ORDER_ID' and $order='ASC' "><img src="images/down.gif" border="0"/></xsl:if>
 			<xsl:if test="$orderBy='ORDER_ID' and $order='DESC' "><img src="images/up.gif" border="0"/></xsl:if>
@@ -91,7 +91,7 @@
                 </td>
                 <td class="sortable">
                     <a>
-                        <xsl:attribute name="href">viewServiceInstances.jsp?serviceName=<xsl:value-of select="$serviceName"/>&amp;orderBy=SOAP_ACTION&amp;order=<xsl:value-of select="$inverseOrder"/>&amp;page=<xsl:value-of select="$page"/></xsl:attribute>
+                        <xsl:attribute name="href">viewServiceInstances.jsp?serviceName=<xsl:value-of select="$serviceName"/>&amp;orderBy=SOAP_ACTION&amp;order=<xsl:value-of select="$inverseOrder"/>&amp;page=<xsl:value-of select="$page"/>&amp;instanceType=<xsl:value-of select="$type"/></xsl:attribute>
                         <xsl:value-of select="$actTxt"/>
                         <xsl:if test="$orderBy='SOAP_ACTION' and $order='ASC' "><img src="images/down.gif" border="0"/></xsl:if>
 			<xsl:if test="$orderBy='SOAP_ACTION' and $order='DESC' "><img src="images/up.gif" border="0"/></xsl:if>
@@ -100,7 +100,7 @@
                 </td>
                 <td class="sortable">
                     <a>
-                        <xsl:attribute name="href">viewServiceInstances.jsp?serviceName=<xsl:value-of select="$serviceName"/>&amp;orderBy=ARRIVAL_DATE&amp;order=<xsl:value-of select="$inverseOrder"/>&amp;page=<xsl:value-of select="$page"/></xsl:attribute>
+                        <xsl:attribute name="href">viewServiceInstances.jsp?serviceName=<xsl:value-of select="$serviceName"/>&amp;orderBy=ARRIVAL_DATE&amp;order=<xsl:value-of select="$inverseOrder"/>&amp;page=<xsl:value-of select="$page"/>&amp;instanceType=<xsl:value-of select="$type"/></xsl:attribute>
                         <xsl:value-of select="$arrivalTxt"/>
                         <xsl:if test="$orderBy='ARRIVAL_DATE' and $order='ASC' "><img src="images/down.gif" border="0"/></xsl:if>
 			<xsl:if test="$orderBy='ARRIVAL_DATE' and $order='DESC' "><img src="images/up.gif" border="0"/></xsl:if>
@@ -110,7 +110,7 @@
                         <xsl:when test="$type='A'">
                             <td class="sortable">
                                <a>
-                                    <xsl:attribute name="href">viewServiceInstances.jsp?serviceName=<xsl:value-of select="$serviceName"/>&amp;orderBy=EXPIRATION_DATE&amp;order=<xsl:value-of select="$inverseOrder"/>&amp;page=<xsl:value-of select="$page"/></xsl:attribute>
+                                    <xsl:attribute name="href">viewServiceInstances.jsp?serviceName=<xsl:value-of select="$serviceName"/>&amp;orderBy=EXPIRATION_DATE&amp;order=<xsl:value-of select="$inverseOrder"/>&amp;page=<xsl:value-of select="$page"/>&amp;instanceType=<xsl:value-of select="$type"/></xsl:attribute>
                                     <xsl:value-of select="$beTxt"/>
                                     <xsl:if test="$orderBy='EXPIRATION_DATE' and $order='ASC' "><img src="images/down.gif" border="0"/></xsl:if>
                                     <xsl:if test="$orderBy='EXPIRATION_DATE' and $order='DESC' "><img src="images/up.gif" border="0"/></xsl:if>
@@ -118,7 +118,7 @@
                             </td>
                             <td class="sortable">
                                <a>
-                                    <xsl:attribute name="href">viewServiceInstances.jsp?serviceName=<xsl:value-of select="$serviceName"/>&amp;orderBy=PUSH_HOST&amp;order=<xsl:value-of select="$inverseOrder"/>&amp;page=<xsl:value-of select="$page"/></xsl:attribute>
+                                    <xsl:attribute name="href">viewServiceInstances.jsp?serviceName=<xsl:value-of select="$serviceName"/>&amp;orderBy=PUSH_HOST&amp;order=<xsl:value-of select="$inverseOrder"/>&amp;page=<xsl:value-of select="$page"/>&amp;instanceType=<xsl:value-of select="$type"/></xsl:attribute>
                                     <xsl:value-of select="$hostTxt"/>
                                     <xsl:if test="$orderBy='PUSH_HOST' and $order='ASC' "><img src="images/down.gif" border="0"/></xsl:if>
                                     <xsl:if test="$orderBy='PUSH_HOST' and $order='DESC' "><img src="images/up.gif" border="0"/></xsl:if>
@@ -129,7 +129,7 @@
 
                 <td class="sortable">
                    <a>
-                        <xsl:attribute name="href">viewServiceInstances.jsp?opType=<xsl:value-of select="$type"/>&amp;serviceName=<xsl:value-of select="$serviceName"/>&amp;orderBy=STATUS&amp;order=<xsl:value-of select="$inverseOrder"/>&amp;page=<xsl:value-of select="$page"/></xsl:attribute>
+                        <xsl:attribute name="href">viewServiceInstances.jsp?opType=<xsl:value-of select="$type"/>&amp;serviceName=<xsl:value-of select="$serviceName"/>&amp;orderBy=STATUS&amp;order=<xsl:value-of select="$inverseOrder"/>&amp;page=<xsl:value-of select="$page"/>&amp;instanceType=<xsl:value-of select="$type"/></xsl:attribute>
                         <xsl:value-of select="$statusTxt"/>
                         <xsl:if test="$orderBy='STATUS' and $order='ASC' "><img src="images/down.gif" border="0"/></xsl:if>
                         <xsl:if test="$orderBy='STATUS' and $order='DESC' "><img src="images/up.gif" border="0"/></xsl:if>

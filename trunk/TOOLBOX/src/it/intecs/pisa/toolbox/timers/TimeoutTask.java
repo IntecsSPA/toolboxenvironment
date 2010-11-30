@@ -24,8 +24,15 @@ public class TimeoutTask extends TimerTask{
     public void run() {
         try
         {
+            byte status=InstanceStatuses.getInstanceStatus(service_instance_id);
+            if (status == InstanceStatuses.STATUS_CHECKING ||
+             status == InstanceStatuses.STATUS_EXECUTING ||
+             status == InstanceStatuses.STATUS_PENDING ||
+             status == InstanceStatuses.STATUS_QUEUED ||
+             status == InstanceStatuses.STATUS_READY ){
             InstanceStatuses.updateInstanceStatus(service_instance_id, InstanceStatuses.STATUS_EXPIRED);
-            TBXAsynchronousOperationCommonTasks.executeErrorScriptAndSendToClient(service_instance_id);
+            TBXAsynchronousOperationCommonTasks.executeErrorScriptAndSendToClient(service_instance_id);            
+            }
         }
         catch(Exception e)
         {

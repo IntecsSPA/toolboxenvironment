@@ -17,8 +17,11 @@ ExportServicesInterface=function(){
 
      this.onExportServices=function(){
             var exportInterfaceValues= this.formInterface.getFormValues();
-            var httpGetRequest=exportInterfaceValues['ServiceUrl']+"&services="+exportInterfaceValues['services'];
-            window.location.href = httpGetRequest;
+            if(exportInterfaceValues!=''){
+               var httpGetRequest=exportInterfaceValues['ServiceUrl']+"&services="+exportInterfaceValues['services'];
+               window.location.href = httpGetRequest;
+            }
+            
     };
 
 };

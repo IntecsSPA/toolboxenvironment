@@ -303,8 +303,8 @@
                                         <tr><!-- Row 6 -->
                                             <td class="sortable" width="50%" colspan=1 nowrap><fmt:message key="configureServiceRequest.Suspend" bundle="${lang}"/></td>
                                             <td class="sortable" nowrap>
-                                                <input type="radio" name="suspendMode" value="SOFT" <%= suspendMode.equals("SOFT") ? "checked" : ""%>> <fmt:message key="configureServiceRequest.SOFT" bundle="${lang}"/> <br>
-                                                <input type="radio" name="suspendMode" value="HARD" <%= suspendMode.equals("HARD") ? "checked" : ""%>> <fmt:message key="configureServiceRequest.HARD" bundle="${lang}"/>
+                                                <input type="radio" name="suspendMode" value="SOFT" <%= suspendMode.equalsIgnoreCase("SOFT") ? "checked" : ""%>> <fmt:message key="configureServiceRequest.SOFT" bundle="${lang}"/> <br>
+                                                <input type="radio" name="suspendMode" value="HARD" <%= suspendMode.equalsIgnoreCase("HARD") ? "checked" : ""%>> <fmt:message key="configureServiceRequest.HARD" bundle="${lang}"/>
                                             </td>
                                         </tr>
 

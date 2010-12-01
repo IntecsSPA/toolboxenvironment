@@ -36,23 +36,26 @@ DeleteServicesInterface=function(){
             for(var i=0; i<serviceArray.length-1; i++){
 
                 deleteServiceFunction=function(response){
-                     var jsonResp=JSON.parse(response);
-                   
-                      if(jsonResp.success){
-                         var checkboxGroup=Ext.getCmp("servicesDel_cont");
-                         checkboxGroup.updateValues();
-                      }else
-                        {
-                          deleteAllServices=false;
-                          Ext.Msg.show({
-                                    title:'Delete service: Error',
-                                    buttons: Ext.Msg.OK,
-                                    msg: 'Reason: ' + jsonResp.reason,
-                                    animEl: 'elId',
-                                    icon: Ext.MessageBox.ERROR
-                                });
+                     if(response)
+                         if(response!=''){
+                             var jsonResp=JSON.parse(response);
+                              if(jsonResp.success){
+                                 var checkboxGroup=Ext.getCmp("servicesDel_cont");
+                                 checkboxGroup.updateValues();
+                              }else
+                                {
+                                  deleteAllServices=false;
+                                  Ext.Msg.show({
+                                            title:'Delete service: Error',
+                                            buttons: Ext.Msg.OK,
+                                            msg: 'Reason: ' + jsonResp.reason,
+                                            animEl: 'elId',
+                                            icon: Ext.MessageBox.ERROR
+                                        });
 
-                        }
+                                }
+                         }
+                     
                 }
 
                 deleteServiceTimeOut=function(response){
@@ -68,7 +71,7 @@ DeleteServicesInterface=function(){
 
                 var onSubmit=sendXmlHttpRequestTimeOut("DELETE",
                  exportInterfaceValues['restDeleteRequestURL']+serviceArray[i]+".json",
-                 true, null, 800000,
+                 false, null, 800000,
                  deleteServiceFunction,
                  deleteServiceTimeOut,["Accept,text/json"]);
 

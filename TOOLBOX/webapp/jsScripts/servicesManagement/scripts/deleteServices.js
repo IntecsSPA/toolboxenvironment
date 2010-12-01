@@ -29,8 +29,6 @@ DeleteServicesInterface=function(){
             else
                 serviceArray=exportInterfaceValues['servicesDel'].split(",");
 
-     
-
             var deleteServiceFunction, deleteServiceTimeOut;
 
             for(var i=0; i<serviceArray.length-1; i++){
@@ -40,8 +38,7 @@ DeleteServicesInterface=function(){
                          if(response!=''){
                              var jsonResp=JSON.parse(response);
                               if(jsonResp.success){
-                                 var checkboxGroup=Ext.getCmp("servicesDel_cont");
-                                 checkboxGroup.updateValues();
+                                 
                               }else
                                 {
                                   deleteAllServices=false;
@@ -75,11 +72,10 @@ DeleteServicesInterface=function(){
                  deleteServiceFunction,
                  deleteServiceTimeOut,["Accept,text/json"]);
 
-                
             }
 
-            if(deleteAllServices)
-                Ext.Msg.show({
+            if(deleteAllServices){
+              Ext.Msg.show({
                      title: 'Delete Group Services',
                      buttons: Ext.Msg.OK,
                      width: Math.floor((screen.width/100)*50),
@@ -89,6 +85,10 @@ DeleteServicesInterface=function(){
                      },*/
                      icon: Ext.MessageBox.INFO
                 });
+              var checkboxGroup=Ext.getCmp("servicesDel_cont");
+              checkboxGroup.updateValues();
+            }
+                
            
     };
 

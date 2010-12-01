@@ -51,6 +51,7 @@
                         layout: 'form',
                         id: field.id,
                         remoteControlURL: field.remoteControlURL,
+                        vtype: field.vtype,
                         colspan: 1,
                         getValues: function(){
                             this.doLayout();
@@ -93,6 +94,7 @@
                                                 },
                                                 xtype: "textfield",
                                                 remoteControlURL: this.remoteControlURL,
+                                                vtype: this.vtype,
                                                 value: textValue,
                                                 hideLabel: false,
                                                 id: textID,

@@ -11,11 +11,17 @@ DuplicateServicesInterface=function(){
      this.formInterface=createPanelExjFormByXml(this.xmlInterface);
 
      this.onCheckService=function(){
+         var rand_no;
          var currentSelection=this.formInterface.formsArray[0].getForm().findField("dupServices").getSelected();
          var multiText=Ext.getCmp("DuplicateName");
          multiText.removeAll(false);
-         for(var i=0; i<currentSelection.length; i++)
-           multiText.addTextField(currentSelection[i],"<b>\""+currentSelection[i]+"\"</b> New name",currentSelection[i]+"_2");
+         for(var i=0; i<currentSelection.length; i++){
+             rand_no = Math.random();
+             rand_no = rand_no * 100;
+             rand_no = Math.ceil(rand_no);
+             multiText.addTextField(currentSelection[i],"<b>\""+currentSelection[i]+"\"</b> New name",currentSelection[i]+"_"+rand_no);
+         }
+           
            multiText.doLayout();
     };
 

@@ -719,8 +719,8 @@ public class TBXService extends Service {
         schemaDir=new File(this.serviceRoot,"Schemas");
 
         path=schemaDir.getAbsolutePath();
-        if(path.endsWith("/")==false)
-            path+="/";
+        if(path.endsWith(File.separator)==false)
+            path+=File.separator;
         return IOUtil.listDir(schemaDir, path);
     }
 

@@ -8,6 +8,7 @@ package it.intecs.pisa.toolbox.timers;
 import it.intecs.pisa.toolbox.db.TimerInstance;
 import it.intecs.pisa.toolbox.db.Timers;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.Timer;
 
 /**
@@ -19,6 +20,8 @@ public class TimerManager {
 
     protected static TimerManager instance=new TimerManager();
     protected static Timer timer;
+    protected static Hashtable tasks;
+
 
     protected TimerManager()
     {
@@ -40,6 +43,7 @@ public class TimerManager {
                     tt=new ToolboxScriptExecutionTimerTask(instance.getService_instance_id(), instance.getScript_id());
 
                     timer.schedule(tt, new Date(instance.getDue_date()));
+                    tasks.put(instance.getExtraValue(),tt);
                 }
                 else if(instance.getType().equals(TimerInstance.TYPE_FTP))
                 {
@@ -47,6 +51,7 @@ public class TimerManager {
                     tt=new ToolboxFTPTimerTask(instance.getService_instance_id(),instance.getExtraValue());
 
                     timer.schedule(tt, new Date(instance.getDue_date()));
+                    //tasks.put(instance.getExtraValue(),tt);
                 }
             }
             Timers.deleteExecutedTimers();
@@ -68,6 +73,12 @@ public class TimerManager {
             timer.cancel();
     }
 
+
+    public void deleteTask(String taskID)
+    {
+        ((ToolboxScriptExecutionTimerTask) tasks.get(taskID)).cancel();
+    }
+
     public void addTimerInstance(long service_instance_id, long script_id, long due_date, String extra, String description) throws Exception {
         TimerInstance timerInstance=new TimerInstance(0);
         timerInstance.setType(TimerInstance.TYPE_TIMER);
@@ -82,6 +93,7 @@ public class TimerManager {
         tt=new ToolboxScriptExecutionTimerTask(service_instance_id,script_id);
 
         timer.schedule(tt, new Date(due_date));
+
     }
 
     public void addFTPTimer(long service_instance_id, long due_date, String username) throws Exception {

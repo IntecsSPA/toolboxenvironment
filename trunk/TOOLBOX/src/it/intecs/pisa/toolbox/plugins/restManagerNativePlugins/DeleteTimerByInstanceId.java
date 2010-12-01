@@ -9,6 +9,7 @@ package it.intecs.pisa.toolbox.plugins.restManagerNativePlugins;
 import com.google.gson.JsonObject;
 import it.intecs.pisa.pluginscore.RESTManagerCommandPlugin;
 import it.intecs.pisa.toolbox.db.ToolboxInternalDatabase;
+import it.intecs.pisa.toolbox.timers.TimerManager;
 import it.intecs.pisa.util.json.JsonErrorObject;
 import it.intecs.pisa.util.json.JsonSuccessObject;
 import java.sql.Statement;
@@ -31,6 +32,7 @@ public class DeleteTimerByInstanceId extends RESTManagerCommandPlugin{
             tokenizer.nextToken();
             tokenizer.nextToken();
             String instanceID=tokenizer.nextToken();
+            TimerManager.getInstance().deleteTask(instanceID);
 
             sql = "DELETE FROM T_TIMERS WHERE TYPE='TIMER' and INSTANCE_ID="+ instanceID;
 

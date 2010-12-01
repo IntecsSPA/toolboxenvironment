@@ -110,7 +110,7 @@ public class WSDLBuilder {
 
            parts=new Part[1];
            parts[0]=new Part();
-           parts[0].setName("body");
+           parts[0].setName("parameters");
            parts[0].setElementNameSpace(getNameSpacePrefix(op.getInputTypeNameSpace(),wsdl));
            parts[0].setElementType(op.getInputType());
 
@@ -123,7 +123,7 @@ public class WSDLBuilder {
 
            parts=new Part[1];
            parts[0]=new Part();
-           parts[0].setName("body");
+           parts[0].setName("parameters");
            parts[0].setElementNameSpace(getNameSpacePrefix(op.getOutputTypeNameSpace(),wsdl));
            parts[0].setElementType(op.getOutputType());
 
@@ -133,11 +133,11 @@ public class WSDLBuilder {
            if(op.isAsynchronous())
            {
                msgs[i]=new Message();
-               msgs[i].setName(op.getName()+"CallbackRequest");
+               msgs[i].setName(op.getName()+"_statusUpdateInput");
 
                parts=new Part[1];
                parts[0]=new Part();
-               parts[0].setName("body");
+               parts[0].setName("parameters");
                parts[0].setElementNameSpace(getNameSpacePrefix(op.getCallbackInputTypeNameSpace(),wsdl));
                parts[0].setElementType(op.getCallbackInputType());
 
@@ -145,11 +145,11 @@ public class WSDLBuilder {
                i++;
 
                msgs[i]=new Message();
-               msgs[i].setName(op.getName()+"CallbackResponse");
+               msgs[i].setName(op.getName()+"_statusUpdateOutput");
 
                parts=new Part[1];
                parts[0]=new Part();
-               parts[0].setName("body");
+               parts[0].setName("parameters");
                parts[0].setElementNameSpace(getNameSpacePrefix(op.getCallbackOutputTypeNameSpace(),wsdl));
                parts[0].setElementType(op.getCallbackOutputType());
 
@@ -296,10 +296,12 @@ public class WSDLBuilder {
 
 //                oper.setName(op.getName()+"Callback");
                 oper.setName(op.getName()+"_statusUpdate");
-                oper.setInputNameType(op.getName()+"CallbackRequest");
+//                oper.setInputNameType(op.getName()+"CallbackRequest");
+                oper.setInputNameType(op.getName()+"_statusUpdateInput");
                 oper.setInputNameNameSpace(op.getCallbackInputTypeNameSpace());
                 oper.setOutputNameNameSpace(op.getCallbackOutputTypeNameSpace());
-                oper.setOutputNameType(op.getName()+"CallbackResponse");
+//                oper.setOutputNameType(op.getName()+"CallbackResponse");
+                oper.setOutputNameType(op.getName()+"_statusUpdateOutput");
                 callbackOps.add(oper);
             }
         }

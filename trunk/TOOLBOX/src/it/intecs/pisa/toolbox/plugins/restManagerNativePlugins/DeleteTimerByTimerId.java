@@ -45,7 +45,7 @@ public class DeleteTimerByTimerId extends RESTManagerCommandPlugin {
 
             return JsonSuccessObject.get();
         } catch (Exception e) {
-            return JsonErrorObject.get("Unable to delete service");
+            return JsonErrorObject.get("Unable to delete timer task");
         }
     }
 }

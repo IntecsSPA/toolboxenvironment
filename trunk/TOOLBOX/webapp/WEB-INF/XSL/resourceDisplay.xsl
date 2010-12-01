@@ -74,6 +74,12 @@ margin-bottom:0px;
 					<xsl:value-of select="."/>
 			       </a>
 				</xsl:when>
+				<xsl:when test="name()='schemaLocation'">
+                               <a class="a" href="#" ONCLICK="javascript:parent.openTab('xml','Tab', 'manager?cmd=getXMLRemoteResource&amp;location={.}&amp;output=text','XML '+'{.}')">
+					<xsl:value-of select="."/>
+			       </a>
+				</xsl:when>
+
                                 <xsl:when test="name()='resourceLink'">
                                <a class="a" href="#" ONCLICK="javascript:parent.openTab('xml','Tab', 'getResource.jsp?serviceName={$serviceName}&amp;instanceType={$instanceType}&amp;instanceId={$instanceId}&amp;resourceKey={.}','XML '+'{.}')">
 					Click here to display resource

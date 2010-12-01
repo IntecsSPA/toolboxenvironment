@@ -29,6 +29,7 @@ public class TimerManager {
         try
         {
             timer=new Timer(THREAD_NAME);
+            tasks=new Hashtable();
 
             instances=Timers.getTimers();
             for(Long instance_id:instances)
@@ -76,7 +77,8 @@ public class TimerManager {
 
     public void deleteTask(String taskID)
     {
-        ((ToolboxScriptExecutionTimerTask) tasks.get(taskID)).cancel();
+        ToolboxScriptExecutionTimerTask tt =((ToolboxScriptExecutionTimerTask) tasks.get(taskID));
+        tt.cancel();
     }
 
     public void addTimerInstance(long service_instance_id, long script_id, long due_date, String extra, String description) throws Exception {
@@ -92,6 +94,7 @@ public class TimerManager {
         ToolboxScriptExecutionTimerTask tt;
         tt=new ToolboxScriptExecutionTimerTask(service_instance_id,script_id);
 
+        tasks.put(extra,tt);
         timer.schedule(tt, new Date(due_date));
 
     }

@@ -44,6 +44,7 @@ import org.apache.axis2.util.XMLUtils;
 import org.apache.axis2.wsdl.WSDLConstants;
 import org.w3c.dom.*;
 
+
 // imports needed for the SSL communication
 import javax.xml.soap.SOAPMessage;
 
@@ -52,16 +53,12 @@ import java.security.Security;
 import it.intecs.pisa.util.*;
 import java.util.Iterator;
 import java.util.LinkedList;
-import javax.xml.soap.SOAPConstants;
 import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMAttribute;
 import org.apache.axiom.om.OMNamespace;
 import org.apache.axiom.soap.SOAP11Constants;
-import org.apache.axiom.soap.SOAP12Constants;
 import org.apache.axiom.soap.SOAPHeaderBlock;
 import org.apache.axiom.soap.impl.llom.soap11.SOAP11Factory;
-import org.apache.axis2.description.TransportInDescription;
-import org.apache.axis2.description.TransportOutDescription;
 
 public class AxisSOAPClient {
     private static final String USAGE = "USAGE: java [-cp $CLASSPATH] AxisSOAPClient <url> <message_path> <is_message_body> [soap_action]";
@@ -261,6 +258,41 @@ Read more: http://kickjava.com/src/org/apache/axis2/engine/SOAPversionTest.java.
         return responseMsgCtx.getEnvelope();
     }
 
+
+    /**
+     *
+     * @author Stefano
+     * @param url
+     * @param inEnvelope
+     * @param soapAction
+     * @param rels2 WSA relatesTo parameters
+     * @return
+     * @throws Exception
+     */
+    public static SOAPEnvelope sendReceive(URL url, SOAPEnvelope inEnvelope, String soapAction) throws Exception{
+
+    	ServiceClient client = new ServiceClient();
+
+        Options options = new Options();
+        client.setOptions(options);
+        options.setTo(new EndpointReference(url.toString()));
+
+        options.setAction(soapAction);
+        options.setProperty(org.apache.axis2.transport.http.HTTPConstants.CHUNKED, Boolean.FALSE);
+//        options.setProperty(org.apache.axis2.addressing.AddressingConstants.WS_ADDRESSING_VERSION, org.apache.axis2.addressing.AddressingConstants.Submission.WSA_NAMESPACE);
+        options.setProperty(org.apache.axis2.addressing.AddressingConstants.DISABLE_ADDRESSING_FOR_OUT_MESSAGES, Boolean.TRUE);
+
+        MessageContext msgctx = new MessageContext();
+        msgctx.setEnvelope(inEnvelope);
+
+        OperationClient opClient = client.createClient(ServiceClient.ANON_OUT_IN_OP);
+        opClient.addMessageContext(msgctx);
+        opClient.execute(true);
+        MessageContext responseMsgCtx = opClient.getMessageContext(WSDLConstants.MESSAGE_LABEL_IN_VALUE);
+        return responseMsgCtx.getEnvelope();
+    }
+
+
     
     
     /**
@@ -326,6 +358,20 @@ Read more: http://kickjava.com/src/org/apache/axis2/engine/SOAPversionTest.java.
         return sendReceive(url, envelope, soapAction, rels2);
     }
 
+    public static SOAPEnvelope secureExchange(URL url, SOAPEnvelope envelope, String soapAction, String SSLCertificateLocation) throws Exception {
+        // specify the location of where to find key material for the default TrustManager
+        System.setProperty("javax.net.ssl.trustStore",SSLCertificateLocation);
+        // use Sun's reference implementation of a URL handler for the "https" URL protocol type.
+        System.setProperty("java.protocol.handler.pkgs","com.sun.net.ssl.internal.www.protocol");
+        // dynamically register sun's ssl provider
+        Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+
+        // note that the url is using https protocol and not http
+        return sendReceive(url, envelope, soapAction);
+    }
+
+
+
     public static Element secureExchange(URL url, Element documentElement, Element[] soapHeaders, String soapAction, String messageID, String SSLCertificateLocation) throws Exception {
          // specify the location of where to find key material for the default TrustManager
         System.setProperty("javax.net.ssl.trustStore",SSLCertificateLocation);
@@ -350,13 +396,9 @@ Read more: http://kickjava.com/src/org/apache/axis2/engine/SOAPversionTest.java.
         inStream= DOMUtil.getNodeAsInputStream(header);
         omHeader=(OMElement)XMLUtils.toOM(inStream);
 
-
-        //OMNamespace omNs = factory.createOMNamespace("http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd","wsse");
-
         nodeNamespace=omHeader.getNamespace();
 
-        block=factory.createSOAPHeaderBlock(omHeader.getLocalName(),
-                      factory.createOMNamespace(nodeNamespace.getNamespaceURI(),nodeNamespace.getPrefix()));
+        block=factory.createSOAPHeaderBlock(omHeader.getLocalName(),factory.createOMNamespace(nodeNamespace.getNamespaceURI(),nodeNamespace.getPrefix()));
 
         //adding all namespaces
         Iterator namespaces;

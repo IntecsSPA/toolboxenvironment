@@ -36,6 +36,7 @@ public class SOAPHeaderExtractor {
     protected static final String NAMESPACE_ADDRESSING_2 ="http://www.w3.org/2005/08/addressing";
     protected static final String ELEMENT_MESSAGE_ID = "MessageID";
     protected static final String ELEMENT_REPLY_TO = "ReplyTo";
+    private String namespace;
     private String messageId;
     private String replyTo_address;
 
@@ -56,6 +57,14 @@ public class SOAPHeaderExtractor {
     public String getReplyTo_address() {
         return replyTo_address;
     }
+
+    /**
+     * @return the namespace
+     */
+    public String getNamespace() {
+        return namespace;
+    }
+
 
     private void extractInfo(Document doc) throws Exception {
         SOAPUtils soapUtil;
@@ -82,17 +91,16 @@ public class SOAPHeaderExtractor {
 
     private void extractInfoFromElement(SOAPHeaderElement element) {
         QName qname;
-        String namespaceUri;
         String elName;
         Iterator iter;
         SOAPElement subElement;
 
         
             qname = element.getElementQName();
-            namespaceUri = qname.getNamespaceURI();
+            namespace = qname.getNamespaceURI();
             elName = qname.getLocalPart();
 
-            if (namespaceUri.equals(NAMESPACE_ADDRESSING) || namespaceUri.equals(NAMESPACE_ADDRESSING_2)) {
+            if (namespace.equals(NAMESPACE_ADDRESSING) || namespace.equals(NAMESPACE_ADDRESSING_2)) {
                 if (elName.equals(ELEMENT_MESSAGE_ID)) {
                     messageId = element.getValue();
                 } else if (elName.equals(ELEMENT_REPLY_TO)) {

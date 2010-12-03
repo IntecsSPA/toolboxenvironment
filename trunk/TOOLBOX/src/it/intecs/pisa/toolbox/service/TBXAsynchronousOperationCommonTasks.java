@@ -39,7 +39,7 @@ public class TBXAsynchronousOperationCommonTasks {
         String inputMessageId;
         Document inputMessage;
         SOAPHeaderExtractor extractor;
-        Toolbox toolbox;
+        String namespace="";
         TBXSOAPInterface implInterf;
         TBXAsynchronousOperation asynchOp;
         String soapAction="";
@@ -57,7 +57,7 @@ public class TBXAsynchronousOperationCommonTasks {
             extractor = new SOAPHeaderExtractor(inputMessage);
             relatesTo = extractor.getMessageId();
             replyToAddress = extractor.getReplyTo_address();
-
+            namespace = extractor.getNamespace();
             TBXAsynchronousOperation operation;
             operation=(TBXAsynchronousOperation) InstanceInfo.getOperation(serviceInstanceId);
             soapAction = operation.getCallbackSoapAction();
@@ -75,27 +75,21 @@ public class TBXAsynchronousOperationCommonTasks {
 
             if(admitted==true)
             {
-            RelatesTo rel2 = new RelatesTo();
-            rel2.setValue(relatesTo);
-            RelatesTo[] arrRelatesTo = new RelatesTo[]{rel2};
-
-            soapEnv = Util.getSOAPEnvelope(response, true);
+                // Create the response getting the WSA version from the client
+                soapEnv = Util.getSOAPEnvelope(response,replyToAddress,soapAction,relatesTo,namespace, true);
 
             if (service.hasWSSecurity()) {
                 logger.info("Trying secure communication. URL: " + replyToAddress);
-                soapEnvResp = AxisSOAPClient.secureExchange(new URL(replyToAddress), soapEnv, soapAction, sslCertificateLocation, arrRelatesTo);
+                soapEnvResp = AxisSOAPClient.secureExchange(new URL(replyToAddress), soapEnv, soapAction, sslCertificateLocation);
 
             } else {
 
                 if (sslCertificateLocation != null && new URL(replyToAddress).getProtocol().equals("https")) {
                     logger.info("Trying secure communication. URL: " + replyToAddress);
-                    //STE pushSOAPResponse = AxisSOAPClient.secureExchange(url, soapResponse, soapAction, sslCertificateLocation);
-                    soapEnvResp = AxisSOAPClient.secureExchange(new URL(replyToAddress), soapEnv, soapAction, sslCertificateLocation, arrRelatesTo);
+                    soapEnvResp = AxisSOAPClient.secureExchange(new URL(replyToAddress), soapEnv, soapAction, sslCertificateLocation);
                 } else {
                     logger.info("Trying unsecure communication. URL: " + replyToAddress);
-
-                    //STE pushSOAPResponse = AxisSOAPClient.exchange(url, soapResponse, soapAction);
-                    soapEnvResp = AxisSOAPClient.sendReceive(new URL(replyToAddress), soapEnv, soapAction, arrRelatesTo);
+                    soapEnvResp = AxisSOAPClient.sendReceive(new URL(replyToAddress), soapEnv, soapAction);
                 }
             }
             }

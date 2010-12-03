@@ -44,6 +44,7 @@ public class GetXMLRemoteResourceCommand extends NativeCommandsManagerPlugin{
             else
             {
                 IOUtil.copy(docStream, resp.getOutputStream());
+                resp.setContentType("text/xml");
             }
         } catch (Exception ex) {
             String errorMsg = "Error getting XML resource: " + CDATA_S + ex.getMessage() + CDATA_E;           

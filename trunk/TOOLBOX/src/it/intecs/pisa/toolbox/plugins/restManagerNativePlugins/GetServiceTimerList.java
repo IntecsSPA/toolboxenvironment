@@ -13,7 +13,9 @@ import it.intecs.pisa.util.json.JsonErrorObject;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.SimpleTimeZone;
 import java.util.StringTokenizer;
 
 /**
@@ -25,7 +27,7 @@ public class GetServiceTimerList extends RESTManagerCommandPlugin {
     @Override
     public JsonObject executeCommand(String method, JsonObject request) throws Exception {
         StringTokenizer tokenizer;
-        SimpleDateFormat toFormatter = new SimpleDateFormat();
+        SimpleDateFormat toFormatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         JsonObject outputJson = new JsonObject();
         JsonArray array = new JsonArray();
         ToolboxInternalDatabase db;
@@ -65,9 +67,13 @@ public class GetServiceTimerList extends RESTManagerCommandPlugin {
                 dueDate = toFormatter.format(new Date(duedate)).toString();
                 timers = new JsonObject();
 
+                Calendar cal = Calendar.getInstance(new SimpleTimeZone(0, "GMT"));
+                toFormatter.setCalendar(cal);
+
+                timers.add("dueDateGMT", new JsonPrimitive(toFormatter.format(new Date(duedate)).toString()));
                 timers.add("dueDate", new JsonPrimitive(dueDate));
-                timers.add("timerId", new JsonPrimitive(extra));
-                timers.add("instanceId", new JsonPrimitive(instanceID));
+                timers.add("timerId", new JsonPrimitive(""+extra));
+                timers.add("instanceId", new JsonPrimitive(""+instanceID));
                 timers.add("description", new JsonPrimitive(description));
 
                 array.add(timers);

@@ -211,6 +211,7 @@
         <xsd:complexType>
             <xsd:group ref="ExpressionChoice"/>
             <xsd:attribute name="format" type="xsd:string" use="required"/>
+            <xsd:attribute name="gmt" type="xsd:boolean" default="false"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="isBefore" type="ExpressionCouple">
@@ -255,6 +256,7 @@
         <xsd:complexType>
             <xsd:group ref="ObjectGroup"/>
             <xsd:attribute name="format" type="xsd:string" use="required"/>
+            <xsd:attribute name="gmt" type="xsd:boolean" default="false"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="null">

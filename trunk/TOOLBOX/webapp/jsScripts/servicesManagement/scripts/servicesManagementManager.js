@@ -12,9 +12,12 @@
 var servicesXMLInterface= new Array();
 var arrayPlugin= new Array();
 
+var accordionCreateServicePanel= null;
+
 
 var servicesAccordionPanels=new Array();
 var servicesInterfaces=new Array();
+var serviceInterfacesPanelIDs= new Array();
 
 /* Service Management Interface Objects */
 var duplicateServices;
@@ -285,7 +288,7 @@ function createServiceInterface(){
 
         }
 
-       var accordionCreateServicePanel=new Ext.Panel({
+       accordionCreateServicePanel=new Ext.Panel({
                           split:true,
                           autoScroll : true,
                           bodyStyle : {background: "#E4E7E7"},
@@ -350,6 +353,7 @@ function createServiceInterface(){
         for(i=0; i<servicesXMLInterface.length;i++){
             accordionCreateServicePanel.layout.setActiveItem(i);
             servicesInterfaces[i].formsPanel.render(document.getElementById(servicesXMLInterface[i].name+"ServiceInterface"));
+            serviceInterfacesPanelIDs[i]=servicesXMLInterface[i].name+"ServicePanel";
             servicesInterfaces[i].render();
         }
     
@@ -435,16 +439,18 @@ function createServiceRequest(){
   var genValidate=false;
   for(var i=0;i<servicesInterfaces.length;i++){
      validate=true;
-     for(j=0;j<servicesInterfaces[i].formsArray.length;j++)
-        validate=validate && servicesInterfaces[i].formsArray[j].getForm().isValid();
-     if(validate){
-        genValidate=true;
-        var interfaceActionMethod=servicesXMLInterface[i].actionMethod;
-        interfaceActionMethod=replaceAll(interfaceActionMethod, "this", "servicesInterfaces[i]");
-        
-        eval(interfaceActionMethod);
-        
+     if(accordionCreateServicePanel.layout.activeItem.id == serviceInterfacesPanelIDs[i]){
+         for(j=0;j<servicesInterfaces[i].formsArray.length;j++)
+            validate=validate && servicesInterfaces[i].formsArray[j].getForm().isValid();
+         if(validate){
+            genValidate=true;
+            var interfaceActionMethod=servicesXMLInterface[i].actionMethod;
+            interfaceActionMethod=replaceAll(interfaceActionMethod, "this", "servicesInterfaces[i]");
 
+            eval(interfaceActionMethod);
+
+
+         }
      }
 
   }
@@ -460,8 +466,8 @@ function createServiceRequest(){
 }
 
 
-function createToolboxService(formCrateService){
-    var xmlRequest=formCrateService.getXmlKeyValueDocument('String', false);
+function createToolboxService(formCreateService){
+    var xmlRequest=formCreateService.getXmlKeyValueDocument('String', false);
 
     //alert(xmlRequest);
     var serviceCreateControl=function(response){

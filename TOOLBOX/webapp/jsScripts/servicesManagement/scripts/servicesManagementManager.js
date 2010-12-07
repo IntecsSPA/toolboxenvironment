@@ -481,7 +481,7 @@ function createToolboxService(formCrateService){
                 responseDocument=new XmlDoc(responseDocument);
 
                 var newServiceName=responseDocument.selectNodes("response/serviceName")[0].childNodes[0].nodeValue;
-                window.location="configureService.jsp?serviceName="+newServiceName+"&info=servicecreated";
+                window.location="configureService.jsp?serviceName="+newServiceName+"&info=servicecreated&requestComingFromServiceCreationWizard=true";
                }
 
            };

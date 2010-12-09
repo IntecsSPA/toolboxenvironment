@@ -52,6 +52,7 @@
     <commandViaGet cmd="cancelInstance" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.CancelInstanceCommand"/>
     <commandViaPost cmd="bulkOperationAdd" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.BulkOperationAddCommand"/>
     <commandViaGet cmd="getXMLResource" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.GetXMLResourcesCommand"/>
+    <commandViaGet cmd="getXMLRemoteResource" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.GetXMLRemoteResourceCommand"/>
     <commandViaGet cmd="delAllInstances" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.DeleteAllInstancesCommand"/>
     <commandViaGet cmd="isServiceNameAvailable" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.IsServiceNameAvailableCommand"/>
     <commandViaGet cmd="isOperationNameAvailable" class="it.intecs.pisa.toolbox.plugins.managerNativePlugins.IsOperationNameAvailableCommand"/>

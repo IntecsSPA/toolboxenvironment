@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import http.utils.multipartrequest.MultipartRequest;
 import http.utils.multipartrequest.ServletMultipartRequest;
 import it.intecs.pisa.pluginscore.RESTManagerCommandPlugin;
+import it.intecs.pisa.toolbox.constants.MiscConstants;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.DateUtil;
 import it.intecs.pisa.util.IOUtil;
@@ -34,7 +35,7 @@ public class PushAndRetrieveDataCommand extends RESTManagerCommandPlugin{
     public void executeCommand(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         MultipartRequest parser;
 
-        parser = new ServletMultipartRequest(req, MultipartRequest.MAX_READ_BYTES, MultipartRequest.IGNORE_FILES_IF_MAX_BYES_EXCEEDED, null);
+        parser = new ServletMultipartRequest(req, MiscConstants.MAX_READ_BYTES, MultipartRequest.ABORT_IF_MAX_BYES_EXCEEDED, null);
 
         File outputFile;
         String id = DateUtil.getCurrentDateAsUniqueId();

@@ -17,7 +17,7 @@ ExportServicesInterface=function(){
 
      this.onExportServices=function(){
             var exportInterfaceValues= this.formInterface.getFormValues();
-            if(exportInterfaceValues!=''){
+            if(exportInterfaceValues['services']){
                var httpGetRequest=exportInterfaceValues['ServiceUrl']+"&services="+exportInterfaceValues['services'];
                window.location.href = httpGetRequest;
             }

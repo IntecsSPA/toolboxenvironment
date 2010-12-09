@@ -6,6 +6,7 @@
 package it.intecs.pisa.toolbox;
 
 import http.utils.multipartrequest.*;
+import it.intecs.pisa.toolbox.constants.MiscConstants;
 import it.intecs.pisa.util.IOUtil;
 import java.io.File;
 import java.io.FileInputStream;
@@ -126,14 +127,14 @@ public class Tools extends HttpServlet {
             response.setContentType("text/html");
             if(modality.equalsIgnoreCase("VIEW")){
                response.setContentType("text");
-               parser = new ServletMultipartRequest(request, MultipartRequest.MAX_READ_BYTES, MultipartRequest.IGNORE_FILES_IF_MAX_BYES_EXCEEDED, null);
+               parser = new ServletMultipartRequest(request, MiscConstants.MAX_READ_BYTES, MultipartRequest.IGNORE_FILES_IF_MAX_BYES_EXCEEDED, null);
                IOUtil.copy(parser.getFileContents("FILE"), response.getOutputStream());
             }else  
                 if(modality.equalsIgnoreCase("EDIT")){
                     String rows = request.getParameter("rows");
                     String cols = request.getParameter("cols");
                     response.getOutputStream().println("<HTML><HEAD>"+editAreaSection+"</HEAD><BODY><textarea id=\"textarea\" name=\"textarea\" rows=\""+rows+"\" cols=\""+cols+"\">");
-                    parser = new ServletMultipartRequest(request, MultipartRequest.MAX_READ_BYTES, MultipartRequest.IGNORE_FILES_IF_MAX_BYES_EXCEEDED, null);
+                    parser = new ServletMultipartRequest(request, MiscConstants.MAX_READ_BYTES, MultipartRequest.IGNORE_FILES_IF_MAX_BYES_EXCEEDED, null);
                     IOUtil.copy(parser.getFileContents("FILE"), response.getOutputStream());
                     response.getOutputStream().println("</textarea></BODY></HTML>");
             }

@@ -147,7 +147,7 @@ public class NETCDFRaster implements RasterData{
               for(j=0;j<layerAttributes.getLength();j++){
                  currentAttribute=(Element) layerAttributes.item(j);
                  nodeAttributeValue=currentAttribute.getAttribute(LAYER_ATTRIBUTE_VALUE);
-                 if(nodeAttributeValue.contains(PREFIX_SOURCE_REFERENCE+"")){
+                 if(nodeAttributeValue.contains(PREFIX_SOURCE_REFERENCE+"") && (! nodeAttributeValue.equalsIgnoreCase(PREFIX_SOURCE_REFERENCE+""))){
                     sourceRaster=this.getSourceRasterByNameRef(sourceNodes, nodeAttributeValue);
                     stringType=currentAttribute.getAttribute(LAYER_ATTRIBUTE_TYPE);
                     informationStringValue=(String) sourceRaster.getInformation(nodeAttributeValue.split(PREFIX_ATTRIBUTE_SOURCE_REFERENCE)[1]);
@@ -247,7 +247,7 @@ public class NETCDFRaster implements RasterData{
                  currentAttribute=(Element) layerAttributes.item(k);
                  nodeAttributeValue=currentAttribute.getAttribute(LAYER_ATTRIBUTE_VALUE);
              
-                 if(nodeAttributeValue.contains(PREFIX_SOURCE_REFERENCE+"")){
+                 if(nodeAttributeValue.contains(PREFIX_SOURCE_REFERENCE+"") && (! nodeAttributeValue.equalsIgnoreCase(PREFIX_SOURCE_REFERENCE+""))){
                   currentSource= (Element) sourceNodes.item(0);
                   sourceName=currentSource.getAttribute(SOURCE_NAME);
                   Class sourceRasterClass = Class.forName(RASTER_DATA_CLASSES_PACKAGE+currentSource.getAttribute(SOURCE_TYPE));

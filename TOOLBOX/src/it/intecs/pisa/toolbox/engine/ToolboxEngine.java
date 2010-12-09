@@ -262,6 +262,7 @@ public class ToolboxEngine implements IEngine {
 
             this.configurationVariableStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_RESULT_SCRIPT_FILE, resultScriptFile);
             this.configurationVariableStore.setVariable(ToolboxEngineVariablesKeys.INSTANCE_DIRECTORY, instancePath);
+
             System.out.println("SCRIPT FILE: " + resultScriptFile.getCanonicalPath());
             returnObject = executeScript(expression);
         } finally {

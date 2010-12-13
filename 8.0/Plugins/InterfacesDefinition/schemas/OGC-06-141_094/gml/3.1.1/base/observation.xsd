@@ -8,9 +8,9 @@
 	</annotation>
 	<!-- =================================================================== -->
 	<!-- ===       includes and imports ============================================ -->
-	<include schemaLocation="feature.xsd"/>
-	<include schemaLocation="direction.xsd"/>
-	<include schemaLocation="valueObjects.xsd"/>
+	<include schemaLocation="gml/3.1.1/base/feature.xsd"/>
+	<include schemaLocation="gml/3.1.1/base/direction.xsd"/>
+	<include schemaLocation="gml/3.1.1/base/valueObjects.xsd"/>
 	<!-- =================================================================== -->
 	<!-- =================== properties =================================== -->
 	<element name="using" type="gml:FeaturePropertyType">

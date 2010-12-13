@@ -8,7 +8,7 @@
 	For conditions, see OGC Software Notice http://www.opengeospatial.org/about/?page=ipr</documentation>
 	</annotation>
 	<!-- =========================================================== -->
-	<include schemaLocation="geometryBasic2d.xsd"/>
+	<include schemaLocation="gml/3.1.1/base/geometryBasic2d.xsd"/>
 	<!-- =========================================================== -->
 	<element name="Curve" type="gml:CurveType" substitutionGroup="gml:_Curve"/>
 	<!-- =========================================================== -->

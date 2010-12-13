@@ -20,8 +20,8 @@
 	<!-- ==============================================================
        includes and imports
 	============================================================== -->
-	<include schemaLocation="basicTypes.xsd"/>
-	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="../../../xlink/1.0.0/xlinks.xsd"/>
+	<include schemaLocation="gml/3.1.1/base/basicTypes.xsd"/>
+	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink/1.0.0/xlinks.xsd"/>
 	<!-- =========================================================== -->
 	<!-- ==================== Objects ================================ -->
 	<!-- =========================================================== -->

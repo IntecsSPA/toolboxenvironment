@@ -6,7 +6,7 @@
 		<documentation>Copyright (c) 2001-2005 OGC, All Rights Reserved.
 	For conditions, see OGC Software Notice http://www.opengeospatial.org/about/?page=ipr</documentation>
 	</annotation>
-	<include schemaLocation="geometryPrimitives.xsd"/>
+	<include schemaLocation="gml/3.1.1/base/geometryPrimitives.xsd"/>
 	<!-- =========================================================== -->
 	<!-- aggregate geometry objects -->
 	<!-- =========================================================== -->

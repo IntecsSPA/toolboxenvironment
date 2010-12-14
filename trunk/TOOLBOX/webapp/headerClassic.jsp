@@ -239,7 +239,7 @@
                         %>
                         <TR bgColor=#000000 height=10>
                             <TD bgColor=#000000 colSpan=2 height=12>
-                                <form name="service" method="post" action="<%= response.encodeURL("serviceConfiguration.jsp")%>">
+                                <form name="service" method="get" action="<%= response.encodeURL("serviceConfiguration.jsp")%>">
                                     <select name="serviceName" size="1" <%= isEnabled ? "" : "disabled"%> onChange="javascript:document.service.submit();">
                                         <option value=""></option>
                                         <%

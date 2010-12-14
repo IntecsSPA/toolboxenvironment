@@ -1,19 +1,15 @@
 <%@ page language="java"  import="it.intecs.pisa.toolbox.service.*" errorPage="errorPage.jsp" %>
 <%@ include file="checkAccount.jsp" %>
-<jsp:include page="header.jsp" /> 
+<jsp:include page="header.jsp" />
 <%@taglib uri="http://java.sun.com/jstl/core"  prefix="c"%>
 <%@taglib uri="http://java.sun.com/jstl/fmt"  prefix="fmt"%>
 <c:if test="${sessionScope.languageReq!= null}">
     <fmt:setLocale value="${sessionScope.languageReq}" />
     <fmt:setBundle basename="ToolboxBundle" var="lang" scope="page"/>  
 </c:if>
+
 <%
 String service = request.getParameter("serviceName");
-if (service.equals("")) {
-%>
-<jsp:forward page="main.jsp"/>
-<%
-}
 String viewServiceConfiguration = "viewServiceConfiguration.jsp?serviceName=" + service;
 String configureServiceRequest = "configureService.jsp?serviceName=" + service;
 String exportServiceDescriptor = "manager?cmd=getServiceDescriptor&&serviceName=" + service;
@@ -111,11 +107,8 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;" +
                  <%
                     TBXService serv;
                     ServiceManager servMan;
-
                     servMan=ServiceManager.getInstance();
-
                     serv=servMan.getService(service);
-
                     if(serv !=null && serv.getImplementdInterface().startsWith("OGC-06-131"))
                     {
                 %>

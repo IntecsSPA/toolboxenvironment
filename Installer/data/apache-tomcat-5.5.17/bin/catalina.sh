@@ -43,6 +43,9 @@
 # -----------------------------------------------------------------------------
 
 # OS specific support.  $var _must_ be set to either true or false.
+
+export CATALINA_OPTS="-Xms512m -Xmx1024m -XX:MaxPermSize=128m -XX:+UseConcMarkSweepGC -XX:+CMSPermGenSweepingEnabled -XX:+CMSClassUnloadingEnabled"
+
 cygwin=false
 os400=false
 darwin=false

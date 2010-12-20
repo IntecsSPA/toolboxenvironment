@@ -94,7 +94,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     private boolean configurationProcessed;
     private Object processingRequest;
     private static boolean isDbRunning = false;
-    private long instanceKeyUnderDebug;
+    private long instanceKeyUnderDebug = -1;
     private ServerDebugConsole dbgConsole;
     private TagPluginManager tagPluginManager;
     private InterfacePluginManager interfacePluginManager;
@@ -144,7 +144,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     public void signalDebugConsoleClosed() {
         dbgConsole.close();
         dbgConsole = null;
-        this.instanceKeyUnderDebug = 0;
+        this.instanceKeyUnderDebug = -1;
         System.gc();
     }
 

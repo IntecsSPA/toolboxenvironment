@@ -122,7 +122,8 @@
 
         }
 
-        for (String ss : serviceSchemas) {
+        for (String aa : serviceSchemas) {
+            String ss = aa.replace("\\", "/");
             boolean isRootSchema = false;
 
             isRootSchema = serviceSchemaName != null && serviceSchemaName.equals(ss);

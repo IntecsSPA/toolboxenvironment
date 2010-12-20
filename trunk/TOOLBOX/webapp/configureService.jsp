@@ -246,7 +246,8 @@
 
         }
 
-        for (String ss : schemas) {
+        for (String aa : schemas) {
+            String ss = aa.replace("\\", "/");
             boolean isRootSchema = false;
             String isMainSchema;
 

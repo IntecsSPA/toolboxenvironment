@@ -77,7 +77,11 @@ XmlElement = function (objectElement){
 
     selectNodes: function (xpath){
         if(BrowserDetect.browser == "Firefox" || BrowserDetect.browser == "Explorer")
-           return this.xmlElement.selectNodes(xpath);
+           if (this.xmlElement)
+            return this.xmlElement.selectNodes(xpath);
+           else
+               return null;
+
         else{
 
             var elementsName=xpath.split('/');

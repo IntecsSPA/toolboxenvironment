@@ -3,6 +3,7 @@ package it.intecs.pisa.toolbox.plugins.gisPlugin.util;
 
 import it.intecs.pisa.gis.raster.instance.RasterInstance;
 import it.intecs.pisa.gis.raster.instance.NETCDF;
+import it.intecs.pisa.toolbox.configuration.ToolboxConfiguration;
 import java.awt.image.Raster;
 import java.net.URL;
 import java.util.ArrayList;
@@ -30,15 +31,27 @@ public class NETCDFRaster implements RasterData{
         }catch(Throwable t){
             t.printStackTrace();
         }
-        System.out.println("GeoTiff: " + sourceNodes.getLength());
-        System.out.println("****************************PARSE For DIMENSION: *****************************************************************");
-        this.setNETCDFDimensions (sourceNodes, dimensionNodes);
-        System.out.println("****************************PARSE For SIMPLE LAYER: *****************************************************************");
+        ToolboxConfiguration tc=ToolboxConfiguration.getInstance();
+
+            String logLevel=tc.getConfigurationValue(ToolboxConfiguration.LOG_LEVEL);
+            if(logLevel.equalsIgnoreCase("DEBUG")){
+                System.out.println("GeoTiff: " + sourceNodes.getLength());
+                System.out.println("****************************PARSE For DIMENSION: *****************************************************************");
+            }
+            
+            this.setNETCDFDimensions (sourceNodes, dimensionNodes);
+            if(logLevel.equalsIgnoreCase("DEBUG")){
+                System.out.println("****************************PARSE For SIMPLE LAYER: *****************************************************************");
+            }
         this.setNETCDFLayersAndInfo(sourceNodes, layerNodes, generalInformationNodes);
-        System.out.println("****************************PARSE For COMPLEX LAYER: *****************************************************************");
-        this.setNETCDFComplexLayer(sourceNodes, layerNodes);
-        System.out.println("****************************CREATE NETCDF: *****************************************************************");
-        this.netcdfRaster.create();
+            if(logLevel.equalsIgnoreCase("DEBUG")){
+             System.out.println("****************************PARSE For COMPLEX LAYER: *****************************************************************");
+           }
+            this.setNETCDFComplexLayer(sourceNodes, layerNodes);
+            if(logLevel.equalsIgnoreCase("DEBUG")){
+                System.out.println("****************************CREATE NETCDF: *****************************************************************");
+            }
+                this.netcdfRaster.create();
     }
 
     public void setRasterPath(String RasterPath) throws Exception {
@@ -68,8 +81,11 @@ public class NETCDFRaster implements RasterData{
               }catch(Throwable t){
                  t.printStackTrace();
               }
-              //System.out.println("TIFF " +sourceName+": "+currentSource.getAttribute(SOURCE_URL).replaceAll("&amp;", "&"));
-              sourceRaster.setSource(new URL(currentSource.getAttribute(SOURCE_URL).replaceAll("&amp;","&").replace("demo1", "demo")));
+              ToolboxConfiguration tc=ToolboxConfiguration.getInstance();
+              String logLevel=tc.getConfigurationValue(ToolboxConfiguration.LOG_LEVEL);
+              if(logLevel.equalsIgnoreCase("DEBUG"))
+                System.out.println("TIFF " +sourceName+": "+currentSource.getAttribute(SOURCE_URL).replaceAll("&amp;", "&"));
+              sourceRaster.setSource(new URL(currentSource.getAttribute(SOURCE_URL).replaceAll("&amp;","&")));
               break;
            }
          }
@@ -192,6 +208,8 @@ public class NETCDFRaster implements RasterData{
       String stringType,layerDimensionsList, currentRasterName, currentRasterPosition, sourceName;
       NodeList contentLayerList=null, rasterNodeList=null;
       Element currentNode=null, currentRaster=null, currentSource=null;
+      ToolboxConfiguration tc=ToolboxConfiguration.getInstance();
+      String logLevel=tc.getConfigurationValue(ToolboxConfiguration.LOG_LEVEL);
       Element currentAttribute=null;
       String nodeAttributeValue,informationStringValue;
       int [][] rastersArrayIndex;
@@ -230,7 +248,9 @@ public class NETCDFRaster implements RasterData{
                         if(sourceName.equalsIgnoreCase(currentRasterName)){
                            Class sourceRasterClass = Class.forName(RASTER_DATA_CLASSES_PACKAGE+currentSource.getAttribute(SOURCE_TYPE));
                             RasterInstance sourceRaster=(RasterInstance) sourceRasterClass.newInstance();
-                            //System.out.println("TIFF " +i+": "+currentSource.getAttribute(SOURCE_URL).replaceAll("&amp;", "&"));
+                            if(logLevel.equalsIgnoreCase("DEBUG")){
+                                System.out.println("TIFF " +i+": "+currentSource.getAttribute(SOURCE_URL).replaceAll("&amp;", "&"));
+                            }
                             sourceRaster.setSource(new URL(currentSource.getAttribute(SOURCE_URL).replaceAll("&amp;", "&")));
                             rasterArray[i]=sourceRaster.getRaster();
                             break;

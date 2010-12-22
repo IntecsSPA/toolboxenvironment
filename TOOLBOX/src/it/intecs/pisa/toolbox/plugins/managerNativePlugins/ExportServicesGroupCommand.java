@@ -85,13 +85,10 @@ public class ExportServicesGroupCommand extends NativeCommandsManagerPlugin{
 
 
             out=resp.getOutputStream();
-            if(zipPackageServiceGroup.getTotalSpace() < MiscConstants.MAX_READ_BYTES)
+         //   if(zipPackageServiceGroup.getTotalSpace() < MiscConstants.MAX_READ_BYTES)
               IOUtil.copy(new FileInputStream(zipPackageServiceGroup), out);
-            else{
-              resp.setContentType("text/html");
-              out.write("The Export zip file is too large.".getBytes());
-
-            }
+          //  else
+            //  out.write("The Export zip file is too large.".getBytes());
             out.flush();
             out.close();
 

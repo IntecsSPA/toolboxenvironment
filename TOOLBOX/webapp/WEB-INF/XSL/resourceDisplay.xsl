@@ -70,8 +70,8 @@ margin-bottom:0px;
 		<SPAN class="att">
 			<xsl:choose>
 				<xsl:when test="name()='resourceKey'">
-                               <a class="a" href="#" ONCLICK="javascript:parent.openTab('xml','Tab', 'getResource.jsp?serviceName={$serviceName}&amp;instanceType={$instanceType}&amp;instanceId={$instanceId}&amp;resourceKey={.}','XML '+'{.}')">
-					<xsl:value-of select="."/>
+                               <a class="a" href="#" ONCLICK="javascript:parent.openTab('xml','Tab', 'manager?cmd=getResource&amp;id={.}','XML '+'{.}')">
+					Click here to display resource
 			       </a>
 				</xsl:when>
 				<xsl:when test="name()='schemaLocation'">
@@ -81,7 +81,7 @@ margin-bottom:0px;
 				</xsl:when>
 
                                 <xsl:when test="name()='resourceLink'">
-                               <a class="a" href="#" ONCLICK="javascript:parent.openTab('xml','Tab', 'getResource.jsp?serviceName={$serviceName}&amp;instanceType={$instanceType}&amp;instanceId={$instanceId}&amp;resourceKey={.}','XML '+'{.}')">
+                               <a class="a" href="#" ONCLICK="javascript:parent.openTab('xml','Tab', 'manager?cmd=getResource&amp;id={.}','XML '+'{.}')">
 					Click here to display resource
 			       </a>
 				</xsl:when>

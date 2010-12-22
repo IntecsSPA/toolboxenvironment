@@ -263,7 +263,9 @@ public class ToolboxEngine implements IEngine {
             this.configurationVariableStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_RESULT_SCRIPT_FILE, resultScriptFile);
             this.configurationVariableStore.setVariable(ToolboxEngineVariablesKeys.INSTANCE_DIRECTORY, instancePath);
 
-            System.out.println("SCRIPT FILE: " + resultScriptFile.getCanonicalPath());
+            Level logLevel=(Level) this.getConfigurationVariablesStore().getVariable(ToolboxEngineVariablesKeys.CONFIGURATION_INSTANCE_LOG_LEVEL);
+            if(logLevel.equals(Level.DEBUG))
+                System.out.println("SCRIPT FILE: " + resultScriptFile.getCanonicalPath());
             returnObject = executeScript(expression);
         } finally {
             if (resultScript != null) {
@@ -273,7 +275,7 @@ public class ToolboxEngine implements IEngine {
                 if (console != null) {
                     execMsg = new ExecutionTreeMessage(resultScriptFile.getName(), resultScript);
                     console.sendCommand(execMsg);
-                    System.out.println("TREE SENT!!");
+                    //System.out.println("TREE SENT!!");
                 }
             }
         }

@@ -1,6 +1,8 @@
 
 package it.intecs.pisa.gis.raster.instance;
 
+import it.intecs.pisa.toolbox.configuration.ToolboxConfiguration;
+import it.intecs.pisa.toolbox.engine.ToolboxEngineVariablesKeys;
 import java.awt.image.DataBuffer;
 import java.awt.image.Raster;
 import java.io.FileNotFoundException;
@@ -175,9 +177,10 @@ public class NETCDF implements RasterInstance {
               rasterMultiD[i] = ((Dimension)dimensions.get(i)).getLength();
        Class dataArrayClass=this.getClassArrayForType(layerType);
        dataArray=(Array) dataArrayClass.getConstructors()[0].newInstance(rasterMultiD);
-       System.out.println("***** Insert Raster Data ******");
+       ToolboxConfiguration tc=ToolboxConfiguration.getInstance();
+       
+
        for (i=0; i< rastersData.length; i++){
-            //System.out.println("number:" + i);
             this.copyRasterToMultiDArray(rastersData[i], layerType, dataArray, rasterMultiD, rasterDataPositions[i], noData);
        }
 
@@ -205,8 +208,11 @@ public class NETCDF implements RasterInstance {
 
     public void create () throws IOException, InvalidRangeException{
         this.ncfile.create();
+        ToolboxConfiguration tc=ToolboxConfiguration.getInstance();
         for(int i=0; i<this.writeLayersName.size(); i++){
-            System.out.println("LAYER: " + i);
+            String logLevel=tc.getConfigurationValue(ToolboxConfiguration.LOG_LEVEL);
+            if(logLevel.equalsIgnoreCase("DEBUG"))
+                System.out.println("LAYER: " + i);
             this.ncfile.write((String)this.writeLayersName.get(i), (Array)this.writeLayersData.get(i));
         }
 

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence>
+	<!-- Start Variable depending on the installation machine-->
+	<setVariable name="instDir">
+		<string>/home/toolbox/ACS/</string>
+	</setVariable>
+	<!-- End Variable depending on the installation machine-->
+	<execute>
+		<procedure>
+			<stringCat>
+				<variable name="instDir"/>
+				<string>customizeScript.xml</string>
+			</stringCat>
+		</procedure>
+	</execute>
+	<setVariable name="xml2sql">
+		<stringCat>
+			<variable name="instDir"/>
+			<string>Present2SQL.xsl</string>
+		</stringCat>
+	</setVariable>
+	<setVariable name="resTitle">
+		<sequence>
+			<setText>
+				<xslt xmlOutput="false">
+					<xmlRequest/>
+					<stringCat>
+						<variable name="instDir"/>
+						<string>ExtractResTitle.xsl</string>
+					</stringCat>
+				</xslt>
+			</setText>
+			<mark name="stringStart"/>
+			<horizontalMove absolute="true">
+				<literal value="-1"/>
+			</horizontalMove>
+			<mark name="stringEnd"/>
+			<extract start="stringStart" end="stringEnd"/>
+		</sequence>
+	</setVariable>
+	<setVariable name="presentation">
+		<xPath xmlns:eoli="http://earth.esa.int/XML/eoli" xmlns:mass="http://www.esa.int/mass">
+			<xmlRequest/>
+			<string>mass:processPresentInputMsg/eoli:presentRequest/eoli:presentation</string>
+		</xPath>
+	</setVariable>
+	<setVariable name="DBURL">
+		<string>jdbc:informix-sqli://www.acsys.it:1537/kes:INFORMIXSERVER=wwwInformix</string>
+	</setVariable>
+	<setVariable name="password">
+		<string>tseug</string>
+	</setVariable>
+	<setVariable name="userName">
+		<string>guest</string>
+	</setVariable>
+	<setVariable name="connection">
+		<dbConnect autoCommit="false" driver="com.informix.jdbc.IfxDriver">
+			<variable name="DBURL"/>
+			<variable name="userName"/>
+			<variable name="password"/>
+		</dbConnect>
+	</setVariable>
+	<setVariable name="queryString">
+		<xslt xmlOutput="false">
+			<xmlRequest/>
+			<variable name="xml2sql"/>
+			<parameter name="roi">
+				<variable name="ROI"/>
+			</parameter>
+			<parameter name="httpBasePath">
+				<variable name="HTTP_BASE_PATH"/>
+			</parameter>
+			<parameter name="databladeScaleX">
+				<variable name="DATABLADE_SCALE_X"/>
+			</parameter>
+			<parameter name="databladeScaleY">
+				<variable name="DATABLADE_SCALE_Y"/>
+			</parameter>
+			<parameter name="databladeInterp">
+				<variable name="DATABLADE_INTERP"/>
+			</parameter>
+			<parameter name="serverPath">
+				<variable name="SERVER_PATH"/>
+			</parameter>
+			<parameter name="substringStartIndex">
+				<variable name="SUBSTRING_START_IDEX"/>
+			</parameter>
+			<parameter name="requestedResultSetSize">
+				<variable name="requestedResultSetSize"/>
+			</parameter>
+			<parameter name="resTitle">
+				<variable name="resTitle"/>
+			</parameter>
+		</xslt>
+	</setVariable>
+	<!-- start part having ONLY debug purposes-->
+	<dumpFile>
+		<string>/home/toolbox/ACS/queryString.txt</string>
+		<variable name="queryString"/>
+	</dumpFile>
+	<!-- end part having ONLY debug purposes-->
+	<setVariable name="sqlResult">
+		<dbQuery>
+			<variable name="connection"/>
+			<variable name="queryString"/>
+		</dbQuery>
+	</setVariable>
+	<try>
+		<sequence>
+			<execute>
+				<procedure>
+					<stringCat>
+						<variable name="instDir"/>
+						<variable name="presentation"/>
+						<string>Present</string>
+						<string>Script.xml</string>
+					</stringCat>
+				</procedure>
+			</execute>
+		</sequence>
+		<ifError errorMessageName="errorMessage">
+			<sequence>
+				<!-- start part having ONLY debug purposes-->
+				<log level="INFO">
+					<string>Error</string>
+				</log>
+				<!-- end part having ONLY debug purposes-->
+				<dbClose>
+					<variable name="connection"/>
+				</dbClose>
+				<xml textTag="error" attributePrefix="x">
+					<mass:processPresentOutputMsg xmlns:mass="http://www.esa.int/mass">
+						<mass:searchOutput>
+							<mass:statusInfo>
+								<mass:statusId>1</mass:statusId>
+								<mass:statusMsg>
+									<error name="errorMessage"/>
+								</mass:statusMsg>
+							</mass:statusInfo>
+						</mass:searchOutput>
+					</mass:processPresentOutputMsg>
+				</xml>
+			</sequence>
+		</ifError>
+	</try>
+</sequence>

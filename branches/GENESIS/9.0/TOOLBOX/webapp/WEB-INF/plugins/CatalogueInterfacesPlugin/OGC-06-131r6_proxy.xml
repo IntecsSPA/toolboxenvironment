@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<interface name="OGC-06-131r6" version="0.2.4" type="Catalogue" mode="Proxy">
+    <rootSchemaFile>csw/2.0.2/CSW-publication.xsd</rootSchemaFile>
+    <schemaSetLocation>schemas/OGC-06-131r6</schemaSetLocation>
+    <wsdlFile>CatalogueInterfacesPlugin/wsdl/</wsdlFile>
+    <targetNameSpace>http://www.opengis.net/cat/csw/2.0.2</targetNameSpace>
+    <operations>
+            <operation name="GetCapabilities" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#GetCapabilities">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetCapabilitiesRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetCapabilitiesResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-131r6_Proxy/GetCapabilities/getCapabilities.tscript" overrideByUser="false"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-131r6_Proxy/GetCapabilities/getCapabilities_globalError.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-06-131r6_StandAlone/GetCapabilities/test_getCapabilities.xml</testFiles>
+            </operation>
+            <operation name="DescribeRecord" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#DescribeRecord">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="DescribeRecordRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="DescribeRecordResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-131r6_Proxy/DescribeRecord/describeRecord.tscript" overrideByUser="false"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-131r6_Proxy/DescribeRecord/describeRecord_errorScript.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-06-131r6_StandAlone/CSW-Discovery.DescribeRecord/test_describeRecords.xml</testFiles>
+            </operation>
+            <operation name="GetRecords" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecords">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordsRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordsResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-131r6_Proxy/GetRecords/getRecords.tscript" overrideByUser="false"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-131r6_Proxy/GetRecords/getRecords_errorScript.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-06-131r6_StandAlone/GetRecords/test_getRecords.xml</testFiles>
+            </operation>
+            <operation name="GetRecordById" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecordById">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordByIdRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordByIdResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-131r6_Proxy/GetRecordById/getRecordById.tscript" overrideByUser="false"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-131r6_Proxy/GetRecordById/getRecordById_errorScript.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-06-131r6_StandAlone/GetRecordById/test_getRecordById.xml</testFiles>
+            </operation>           
+            <operation name="Harvest" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#Harvest">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="HarvestRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="HarvestResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-131r6_Proxy/Harvest/harvest.tscript" overrideByUser="false"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-131r6_Proxy/Harvest/harvest_errorScript.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-06-131r6_StandAlone/Harvest/test_harvest.xml</testFiles>
+            </operation>
+        </operations>
+    <variables>
+                    <variable name="remoteUrl" value="http://" type="string" displayedText="URL of the SOAP endpoint"/>
+                    <variable name="forwardMessageWithClearToken" value="false" type="boolean" displayedText="Forward message with security token unencrypted"/>
+                    <variable name="forwardMessageWithCryptedToken" value="false" type="boolean" displayedText="Forward message with security token encrypted (this will override all forwarding options)"/>
+                    <variable name="keyAlias" value="" type="string" displayedText="Alias of the key to be used for encryption"/>
+                </variables>
+</interface>

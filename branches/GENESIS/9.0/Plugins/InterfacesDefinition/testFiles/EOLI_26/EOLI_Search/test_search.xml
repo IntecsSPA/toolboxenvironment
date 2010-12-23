@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<searchRequest xmlns="http://earth.esa.int/XML/eoli" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="">
+	<simpleQuery>
+		<dataExt>
+			<geoEle operator="">
+				<geoBndBox>
+					<westBL/>
+					<eastBL/>
+					<southBL/>
+					<northBL/>
+				</geoBndBox>
+			</geoEle>
+			<tempEle operator="">
+				<exTemp>
+					<beginEnd>
+						<begin/>
+						<end/>
+					</beginEnd>
+				</exTemp>
+			</tempEle>
+		</dataExt>
+		<satelliteDomainConditions>
+			<plaInsIdCondition operator="EQUAL">
+				<plaInsId>
+					<platfSNm/>
+					<platfSer/>
+				</plaInsId>
+			</plaInsIdCondition>
+			<cloudCoverCondition operator="LESS EQUAL">
+				<cloudCovePerc/>
+			</cloudCoverCondition>
+			<genericCondition operator="EQUAL">
+				<attributeId/>
+				<attributeValue/>
+			</genericCondition>
+		</satelliteDomainConditions>
+	</simpleQuery>
+	<resultType/>
+	<iteratorSize/>
+	<cursor/>
+	<presentation/>
+	<collectionId/>
+</searchRequest>

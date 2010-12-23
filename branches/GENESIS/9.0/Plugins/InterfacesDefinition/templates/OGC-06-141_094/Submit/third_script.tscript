@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="">
+
+	<!-- **********************************
+			Creating the response message 
+		 ********************************** -->
+	<xml attributePrefix="x" textTag="evaluate">
+		<UpdateStatus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://earth.esa.int/hma/ordering">
+			<orderId><evaluate name="orderId" /></orderId>
+			<orderReference><evaluate name="orderReference" /></orderReference>
+			<orderItem>
+				<!-- Fill it with data -->
+			</orderItem>
+			<orderStatusInfo>
+					<orderState>Completed</orderState>
+			</orderStatusInfo>
+		</UpdateStatus>
+	</xml>
+</sequence>

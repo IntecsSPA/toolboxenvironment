@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<inputInterface xmlns="http://gisClient.pisa.intecs.it/gisClient">
+   <section name="WPS Processing Script">
+        <group label="Update a Engine Script for the WPS Process: ">
+            <input type="file" name="scriptUpdateProcessFile" hideLabel="false" id="scriptUpdateProcessFile"
+               optional="true"
+               size="300"
+               autoUploadURL="rest/gui/pushAndRetrieveData"
+               iconImage="upload-icon"
+               blankText="Load WPS Process Engine Script File"
+               label="Select WPS Process Engine Script File"
+               iconWait="images/loaderFile.gif"
+               iconFailure="images/fail.png"
+               iconSuccess="images/success.png"
+               editAreaID="processUpdateScriptEngineContent"/>
+           <input type="editarea" name="processUpdateScriptEngineContent" id="processUpdateScriptEngineContent"  hidden="true" hideLabel="true"
+                adaptButtonLabel="Adapt to screen" syntax="xml"
+                height="wpsEngineScriptEditorWindow.getSize().height/1.7"/>
+        </group>
+   </section>
+   <requestInformations>
+        <buttons>
+            <button name="createUpdateProcessButton" id="createUpdateProcessButton" label="Change WPS Processing Engine Script" iconImage="" onclick="changeWPSEngineScriptRequest"/>
+        </buttons>
+    </requestInformations>
+</inputInterface>

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://pisa007.pisa.intecs.it/toolbox/GISClient"
+xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:gis="http://pisa007.pisa.intecs.it/toolbox/GISClient"
+targetNamespace="http://pisa007.pisa.intecs.it/toolbox/GISClient">
+	<xs:element name="sources">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="source" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="source">
+		<xs:complexType>
+			<xs:attribute name="url" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="type" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="GEOTIFF"/>
+						<xs:enumeration value="NETCDF"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="name" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="layers">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="layer" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="layer">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="attribute" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="value" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="type" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:short">
+						<xs:enumeration value="1"/>
+						<xs:enumeration value="2"/>
+						<xs:enumeration value="3"/>
+						<xs:enumeration value="4"/>
+						<xs:enumeration value="5"/>
+                                                <xs:enumeration value="6"/>
+                                                <xs:enumeration value="7"/>
+                                                <xs:enumeration value="8"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="name" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="generalInformation">
+		<xs:complexType>
+			<xs:attribute name="value" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="type" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:short">
+						<xs:enumeration value="1"/>
+						<xs:enumeration value="2"/>
+						<xs:enumeration value="3"/>
+						<xs:enumeration value="4"/>
+						<xs:enumeration value="5"/>
+                                                <xs:enumeration value="6"/>
+                                                <xs:enumeration value="7"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="name" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="dimensions">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="dimension" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="dimension">
+		<xs:complexType>
+			<xs:attribute name="value" type="xs:int" use="required"/>
+			<xs:attribute name="name" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="attribute">
+		<xs:complexType>
+			<xs:attribute name="value" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="type" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:short">
+						<xs:enumeration value="1"/>
+						<xs:enumeration value="2"/>
+						<xs:enumeration value="3"/>
+						<xs:enumeration value="4"/>
+						<xs:enumeration value="5"/>
+                                                <xs:enumeration value="6"/>
+                                                <xs:enumeration value="7"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="name" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="rasterPath">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:any namespace="##other" processContents="strict"/>
+                </xsd:sequence>
+            </xsd:complexType>
+	</xs:element>
+	<xs:element name="rasterContent">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="sources"/>
+				<xs:element ref="dimensions"/>
+				<xs:element ref="layers"/>
+				<xs:element ref="generalInformation" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="createRasterData">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="rasterPath"/>
+				<xs:element ref="rasterContent"/>
+			</xs:sequence>
+			<xs:attribute name="type" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="NETCDF"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

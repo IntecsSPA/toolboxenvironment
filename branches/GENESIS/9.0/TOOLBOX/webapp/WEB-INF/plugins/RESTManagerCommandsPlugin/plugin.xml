@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin name="RESTManagerCommandsPlugin" version="1.0">
+    <restCommandViaGet cmd="/rest/manager/authenticate" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.AuthenticateCommand"/>
+    <restCommandViaGet cmd="/rest/manager/getInterfacesTypes" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.GetInterfacesTypesCommand"/>
+    <restCommandViaGet cmd="/rest/manager/getInterfaceModes/*/*/*" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.GetInterfaceModesCommand"/>
+    <restCommandViaPut cmd="/rest/manager/storeData" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.StoreDataCommand"/>
+    <restCommandViaPut cmd="/rest/manager/cloneService" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.CloneServiceCommand"/>
+    <restCommandViaDelete cmd="/rest/manager/deleteService/*" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.DeleteServiceCommand"/>
+    <restCommandViaDelete cmd="/rest/manager/deleteInstanceByMsgID/*/*/*" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.DeleteInstanceByMsgIDCommand"/>
+    <restCommandViaGet cmd="/rest/manager/getConfiguration" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.GetConfigurationCommand"/>
+    <restCommandViaPut cmd="/rest/manager/setConfiguration" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.SetConfigurationCommand"/>
+
+    <restCommandViaGet cmd="/rest/manager/getServiceTimerList/*" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.GetServiceTimerList"/>
+    <restCommandViaGet cmd="/rest/manager/getInstanceTimerList/*" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.GetInstanceTimerList"/>
+    <restCommandViaGet cmd="/rest/manager/deleteTimerByTimerId/*" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.DeleteTimerByTimerId"/>
+    <restCommandViaGet cmd="/rest/manager/deleteTimerByInstanceId/*" class="it.intecs.pisa.toolbox.plugins.restManagerNativePlugins.DeleteTimerByInstanceId"/>
+
+
+</plugin>
+

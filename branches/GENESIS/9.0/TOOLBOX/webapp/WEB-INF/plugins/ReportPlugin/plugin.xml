@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin name="ebRRPlugin" version="1.0">
+    <commandViaGet cmd="getReport" class="it.intecs.pisa.toolbox.plugins.reports.GetReportCommand"/>
+</plugin>

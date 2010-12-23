@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<interface name="OGC-06-131r6" version="0.2.4" type="Catalogue" mode="Gateway">
+    <rootSchemaFile>csw/2.0.2/CSW-publication.xsd</rootSchemaFile>
+    <schemaSetLocation>schemas/OGC-06-131r6</schemaSetLocation>
+    <wsdlFile>CatalogueInterfacesPlugin/wsdl/</wsdlFile>
+    <targetNameSpace>http://www.opengis.net/cat/csw/2.0.2</targetNameSpace>
+    <operations>
+            <operation name="GetCapabilities" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#GetCapabilities">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetCapabilitiesRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetCapabilitiesResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-131r6_Gateway/GetCapabilities/getCapabilities.tscript" overrideByUser="true"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-131r6_Gateway/GetCapabilities/getCapabilities_globalError.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-06-131r6_Gateway/GetCapabilities/test_getCapabilities.xml</testFiles>
+            </operation>
+            <operation name="DescribeRecord" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#DescribeRecord">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="DescribeRecordRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="DescribeRecordResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-131r6_Gateway/DescribeRecord/describeRecord.tscript" overrideByUser="true"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-131r6_Gateway/DescribeRecord/describeRecord_errorScript.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-06-131r6_Gateway/CSW-Discovery.DescribeRecord/test_describeRecords.xml</testFiles>
+            </operation>
+            <operation name="GetRecords" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecords">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordsRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordsResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-131r6_Gateway/GetRecords/getRecords.tscript" overrideByUser="true"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-131r6_Gateway/GetRecords/getRecords_errorScript.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-06-131r6_Gateway/GetRecords/test_getRecords.xml</testFiles>
+            </operation>
+            <operation name="GetRecordById" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecordById">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordByIdRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="GetRecordByIdResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-131r6_Gateway/GetRecordById/getRecordById.tscript" overrideByUser="true"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-131r6_Gateway/GetRecordById/getRecordById_errorScript.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-06-131r6_Gateway/GetRecordById/test_getRecordById.xml</testFiles>
+            </operation>
+            <operation name="Harvest" type="synchronous" SOAPAction="http://www.opengis.net/cat/csw/2.0.2/requests#Harvest">
+                <inputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="HarvestRequest"/>
+                <outputType namespace="http://www.opengis.net/cat/csw/2.0.2" type="HarvestResponse"/>
+                <scriptFile type="FIRST_SCRIPT" path="templates/OGC-06-131r6_Gateway/Harvest/harvest.tscript" overrideByUser="true"/>
+                <scriptFile type="GLOBAL_ERROR" path="templates/OGC-06-131r6_Gateway/Harvest/harvest_errorScript.tscript" overrideByUser="false"/>
+                <testFiles>testFiles/OGC-06-131r2_Gateway/Harvest/test_harvest.xml</testFiles>
+            </operation>
+        </operations>
+    <variables>
+        <variable name="maxRecords" value="10" type="integer" displayedText="Maximum number of records returned"/>
+    </variables>
+</interface>

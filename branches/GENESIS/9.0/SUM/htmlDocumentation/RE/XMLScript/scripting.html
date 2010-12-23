@@ -1,0 +1,98 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>XML Script Tags Reference</title>
+<link type="text/css" href="../images/page.css" rel="stylesheet">
+
+</head>
+
+<body text="#000000" bgcolor="#ffffff">
+<h1>XML 
+                        Script Tags reference</h1> 
+                      <p>The TOOLBOX can be configured by means of an XML scripting 
+                        language. The TOOLBOX supports two XML scripting languages: 
+                        one is a language whose interpreter comes with the TOOLBOX 
+                        libraries and the other is the Jelly XML scripting language.<br>
+                        Both the Jelly and the TOOLBOX XML scripting language 
+                        provide a set of TAGs that allows describing the operation 
+                        needed to implement the service on the backside.<br>
+                        The description of the Jelly XML scripting language is 
+                        out of the scope of this document: for more details about 
+                        this concern please see the documentation available on 
+                        the <a href="http://jakarta.apache.org/commons/jelly/" target="_blank">Jelly 
+                        Web Site</a>.<br>
+                        The TOOLBOX Engine is a set of Java classes that actually 
+                        execute the instructions contained in the XML service 
+                        scripting files. The used XML language is de-facto a programming 
+                        language, validated by a schema and executed by the Engine 
+                        in a similar manner as the JVM does with Java classes.</p>
+                      <p>The XML TAGs can be logically grouped as follows:
+                        </div>
+                    </p>
+                    <ul>
+                      <li> 
+                        <div align="justify">The core group is based on the Java 
+                          Reflection and allows creation of new Java Objects and 
+                          primitive types, as well as the method invocation on 
+                          the Java objects. This group could be enough to define 
+                          virtually any complex behavior but imply a good knowledge 
+                          of Java language and libraries. Moreover, XML scripts 
+                          using just this sets of TAGs, although very powerful, 
+                          tend to be quite verbose and difficult to read and maintain. 
+                          A good use of these TAGs is to integrate existing Java 
+                          API. If some Java classes are available to implement 
+                          the complex logic of the service, the XML script will 
+                          be used just to link them to the TOOLBOX logic, leading 
+                          to very simple and efficient XML scripts.</div>
+                      </li>
+                      <li> 
+                        <div align="justify">The assignment group contains two 
+                          tags allowing storing variables.</div>
+                      </li>
+                      <li> 
+                        <div align="justify">The control flow group contains tags 
+                          allowing conditionally or repeatedly executing an excerpt 
+                          of script and tags changing the normal, sequential flow 
+                          of control. Thus, this group includes tag “simulating” 
+                          the “if”, “while”, “for” statements of any programming 
+                          language as well as the “try and catch” statement of 
+                          the Java language. This last tag is for handling errors 
+                          occurred during the script execution.</div>
+                      </li>
+                      <li> 
+                        <div align="justify">The conditional group contains tags 
+                          to perform conditional operations on tags returning 
+                          Boolean values.</div>
+                      </li>
+                      <li> 
+                        <div align="justify">The script invocation group contains 
+                          tags allowing loading at runtime portions of XML script 
+                          from different files and/or store frequently used procedures 
+                          in variables that can be recalled at any time without 
+                          repeating XML chunks and without loading overhead.</div>
+                      </li>
+                      <li> 
+                        <div align="justify">The text handling group include tags 
+                          for text manipulation.</div>
+                      </li>
+                      <li> 
+                        <div align="justify">The File Handling group include tags 
+                          allowing storing and loading files, as well as creating 
+                          and removing directories from the disk.</div>
+                      </li>
+                      <li> 
+                        <div align="justify">The XML/XSL handling group contains 
+                          tag allowing creation, navigation and storing of XML 
+                          documents, such as XSL transformations.</div>
+                      </li>
+                      <li> 
+                        <div align="justify">The remaining groups (SOAP, EMAIL, 
+                          HTTP, FTP, JDBC) implement the back-end communication 
+                          mechanisms supported by the TOOLBOX.</div>
+                      </li>
+                    </ul>
+                    <p>Before uploading the Script have to be validated using 
+                      the TOOLBOX <a href="../validatingAScript.html">validate 
+                      </a>function or using the <a href="../schema.htm">XML Script 
+                      Schema</a> in a standard XML editor.</p>
+
+</body></html>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://pisa.intecs.it/toolbox/ebrr"
+            xmlns:ebrr="http://pisa.intecs.it/toolbox/ebrr"
+            elementFormDefault="qualified">
+
+    <xsd:element name="catalogueConnection">
+        <xsd:annotation>
+            <xsd:documentation>This tag is used to create a connection to the ebRR catalogue</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="url" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="directCatalogueConnection">
+        <xsd:annotation>
+            <xsd:documentation>This tag is used to create a direct connection to the ebRR catalogue</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="dbUrl" type="xsd:string" use="required"/>
+            <xsd:attribute name="dbName" type="xsd:string" use="required"/>
+            <xsd:attribute name="dbUser" type="xsd:string" use="required"/>
+            <xsd:attribute name="dbPassword" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="abstractQuery">
+        <xsd:annotation>
+            <xsd:documentation>This tag is used to create an abstract query object starting from an xml</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:any namespace="##other" processContents="strict"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="getCapabilities">
+        <xsd:annotation>
+            <xsd:documentation>This tag is used to get capabilities from the ebRR catalogue</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+
+    <xsd:element name="getRecords">
+        <xsd:annotation>
+            <xsd:documentation>This tag is used to get matching records</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:choice>
+                    <xsd:element ref="ebrr:catalogueConnection"/>
+                    <xsd:element ref="ebrr:directCatalogueConnection"/>
+                </xsd:choice>
+                <xsd:element ref="ebrr:abstractQuery"/>
+            </xsd:sequence>
+            <xsd:attribute name="maxRecords" type="xsd:string"/>
+            <xsd:attribute name="startPosition" type="xsd:string"/>
+            <xsd:attribute name="resultType" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="getRecordById">
+        <xsd:annotation>
+            <xsd:documentation>This tag is used to get matching records</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:choice>
+                    <xsd:element ref="ebrr:catalogueConnection"/>
+                    <xsd:element ref="ebrr:directCatalogueConnection"/>
+                </xsd:choice>
+                <xsd:any namespace="##other" processContents="strict" minOccurs="1" maxOccurs="unbounded"/>
+            </xsd:sequence>
+            <xsd:attribute name="elementSetName" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="describeRecord">
+        <xsd:annotation>
+            <xsd:documentation>This tag is used to retrieve a description of the type</xsd:documentation>
+        </xsd:annotation>
+
+    </xsd:element>
+
+    <xsd:element name="harvest">
+        <xsd:annotation>
+            <xsd:documentation>This tag is used to harvest data from the network</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:choice>
+                    <xsd:element ref="ebrr:catalogueConnection"/>
+                    <xsd:element ref="ebrr:directCatalogueConnection"/>
+                </xsd:choice>
+                <xsd:any namespace="##other" processContents="strict" minOccurs="1" maxOccurs="unbounded"/>
+            </xsd:sequence>
+            <xsd:attribute name="resourceType" type="xsd:string" use="optional"/>
+            <xsd:attribute name="harvestInterval" type="xsd:string" use="optional"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="transaction">
+        <xsd:annotation>
+            <xsd:documentation>This tag is used to transact data into the registry</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:choice>
+                    <xsd:element ref="ebrr:catalogueConnection"/>
+                    <xsd:element ref="ebrr:directCatalogueConnection"/>
+                </xsd:choice>
+                <xsd:any namespace="##other" processContents="strict" minOccurs="1" maxOccurs="unbounded"/>
+            </xsd:sequence>
+            <xsd:attribute name="type" type="xsd:string">
+                <xsd:restriction base="xs:string">
+                    <xsd:enumeration value="DELETE"/>
+                    <xsd:enumeration value="INSERT"/>
+                </xsd:restriction>
+           </xsd:attribute>
+           <xsd:attribute name="typeName" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

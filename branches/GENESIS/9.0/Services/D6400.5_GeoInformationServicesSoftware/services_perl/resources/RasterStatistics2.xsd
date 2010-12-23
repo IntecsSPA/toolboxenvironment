@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--==============================================================
+    File:			RasterStatistics.xsd
+    Version:	v1.0.0 2010 
+    Author:		Tim Vander Borght
+    Company:	G.I.M. Geographic Information Management nv
+    ==============================================================-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:rs="http://www.gim.be/genesis/RasterStatistics" xmlns:gml="http://www.opengis.net/gml" xmlns:gmlsf="http://www.opengis.net/gmlsf" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://www.gim.be/genesis/RasterStatistics" elementFormDefault="qualified" version="1.0">
+	<xsd:annotation>
+		<xsd:appinfo>srfeatures.xsd v4.0.0 2006-09-28</xsd:appinfo>
+		<xsd:appinfo source="gml/profiles/gmlsfProfile/gmlsfLevels.xsd">
+			<gmlsf:ComplianceLevel>0</gmlsf:ComplianceLevel>
+		</xsd:appinfo>
+		<xsd:documentation>GML v3 Schema for Impact Features.</xsd:documentation>
+	</xsd:annotation>
+	<!--==============================================================
+    Import constructs from the GML Feature and Geometry schemas
+    ==============================================================-->
+	<xsd:import namespace="http://www.opengis.net/gml" schemaLocation="http://einstein.gim.be/schemas/Test/gml/3.1.1/base/gml.xsd"/>
+	<!--==============================================================
+    Global element Declarations
+    ==============================================================-->
+	<xsd:element name="BandFeatureCollection" type="rs:BandFeatureCollectionType" substitutionGroup="gml:_FeatureCollection"/>
+	<!--==============================================================
+    Private element Declarations 
+    ==============================================================-->
+	<xsd:element name="BandFeature" type="rs:BandFeatureType" substitutionGroup="gml:_Feature"/>
+	<!--==============================================================
+    Type definitions
+    ==============================================================-->
+	<xsd:complexType name="BandFeatureCollectionType">
+		<xsd:complexContent>
+			<xsd:restriction base="gml:AbstractFeatureCollectionType">
+				<xsd:sequence>
+					<xsd:element ref="gml:boundedBy" minOccurs="0"/>
+					<xsd:element ref="gml:featureMember" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+				<xsd:attribute ref="gml:id" use="required"/>
+			</xsd:restriction>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="BandCollection" substitutionGroup="gml:FeatureCollection"/>
+	<xsd:element name="featureMember" substitutionGroup="gml:featureMember">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="gml:FeaturePropertyType">
+					<xsd:sequence>
+						<xsd:element ref="rs:BandFeature"/>
+					</xsd:sequence>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="RestrictedAbstractFeatureType" abstract="true">
+		<xsd:complexContent>
+			<xsd:restriction base="gml:AbstractFeatureType">
+				<xsd:sequence>
+					<xsd:element ref="gml:boundedBy" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute ref="gml:id" use="required"/>
+			</xsd:restriction>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="BandFeatureType">
+		<xsd:complexContent>
+			<xsd:extension base="rs:RestrictedAbstractFeatureType">
+				<xsd:sequence>
+					<xsd:element ref="gml:name"/>
+					<xsd:element ref="gml:description"/>
+					<xsd:element name="bandNumber" type="xsd:int"/>
+					<xsd:element name="timestamp" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="numberOfCells" type="xsd:int" minOccurs="0"/>
+					<xsd:element name="numberOfNullCells" type="xsd:int" minOccurs="0"/>
+					<xsd:element name="minimum" type="xsd:double" minOccurs="0"/>
+					<xsd:element name="maximum" type="xsd:double" minOccurs="0"/>
+					<xsd:element name="range" type="xsd:double" minOccurs="0"/>
+					<xsd:element name="arithmeticMean" type="xsd:double" minOccurs="0"/>
+					<xsd:element name="meanOfAbsoluteValues" type="xsd:double" minOccurs="0"/>
+					<xsd:element name="standardDeviation" type="xsd:double" minOccurs="0"/>
+					<xsd:element name="variance" type="xsd:double" minOccurs="0"/>
+					<xsd:element name="coefficientOfVariation" type="xsd:double" minOccurs="0"/>
+					<xsd:element name="sum" type="xsd:double" minOccurs="0"/>
+					<xsd:element name="firstQuartile" type="xsd:double" minOccurs="0"/>
+					<xsd:element name="median" type="xsd:double" minOccurs="0"/>
+					<xsd:element name="thirdQuartile" type="xsd:double" minOccurs="0"/>
+					<xsd:element name="geometry" type="gml:GeometryPropertyType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<inputInterface xmlns="http://gisClient.pisa.intecs.it/gisClient" localization="yes" pathLocalization="jsScripts/toolboxConfiguration/resources/xml/localization/">
+
+    <section name="lookAndFellLabel">
+        <group label="themeTypeLabel">
+            <input type="text" name="ftpAdminDir" id="ftp_AdminDir" label="ftpAdminFlderLabel" optional="false" value=""/>
+
+        </group>
+    </section>
+    <section name="networkSettingsLabel">
+        <group label="ftpSettingsLabel">
+            <input type="text" name="ftpAdminDir" id="ftp_AdminDir" label="ftpAdminFlderLabel" optional="false" value=""/>
+        
+        </group>
+    </section>
+    <section name="networkSettingsLabel2">
+        <group label="ftpSettingsLabel">
+            <input type="text" name="ftpAdminDir2" id="ftp_AdminDir2" label="ftpAdminFlderLabel" optional="false" value=""/>
+
+        </group>
+    </section>
+
+
+
+    <requestInformations>
+        <buttons>
+            <button name="saveConfigurationButton" id="saveConfigurationButton" label="saveConfigurationLabel" iconImage="" onclick="saveTOOLBOXConfiguration"/>
+        </buttons>
+    </requestInformations>
+</inputInterface>

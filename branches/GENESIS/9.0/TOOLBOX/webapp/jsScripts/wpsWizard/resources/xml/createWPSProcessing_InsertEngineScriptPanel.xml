@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<inputInterface xmlns="http://gisClient.pisa.intecs.it/gisClient">
+   <section name="WPS Processing Script">
+        <group label="Insert a Engine Script for the WPS Process: ">
+            <input type="combo" optional="false" name="wpsEngineType" id="wpsEngineType" store="VALUES" size="40"
+               storeFields="['engineTitle', 'engineName']" label="Engine Type"
+               storeData="[['Grass Engine', 'GrassEngine'],['Shell Engine','ShellEngine'],['TOOLBOX Engine', 'ToolboxEngine']]" value=""/>
+            <input type="button" id="getTemplateButton" name="getTemplateButton" label="Load Template Script Engine" onclick="onChangeEngineType"/>
+            <input type="file" name="scriptProcessFile" hideLabel="false" id="scriptProcessFile"
+               optional="true"
+               size="300"
+               autoUploadURL="rest/gui/pushAndRetrieveData"
+               iconImage="upload-icon"
+               blankText="Load WPS Process Engine Script File"
+               label="Select WPS Process Engine Script File"
+               iconWait="images/loaderFile.gif"
+               iconFailure="images/fail.png"
+               iconSuccess="images/success.png"
+               editAreaID="processScriptEngineContent"/>
+           <input type="editarea" name="processScriptEngineContent" id="processScriptEngineContent"  hidden="true" hideLabel="true"
+                adaptButtonLabel="Adapt to screen" syntax="xml"
+                height="insertEngineScriptWizardWindow.getSize().height/1.7"/>
+        </group>
+   </section>
+   <requestInformations>
+        <buttons>
+            <button name="createProcessButton" id="createProcessButton" label="Create WPS Process" iconImage="" onclick="createWPSProcessingRequest"/>
+        </buttons>
+    </requestInformations>
+</inputInterface>

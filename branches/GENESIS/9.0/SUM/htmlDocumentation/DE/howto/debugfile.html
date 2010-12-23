@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Debug a file</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link type="text/css" href="../images/page.css" rel="stylesheet">
+</head>
+
+<body>
+<h1>How to debug a Toolbox script file </h1>
+<p>The debugging session let the user explore the execution of the script into the engine, stopping it in specified points and inspecting internal variable in order to see and eventually set their value. </p>
+<p>Before starting the debug session it is necessary to set at least one breakpoint. If zero breakpoints are specified, the debug session is meaningless and is equivalent to a run session (click <a href="runfile.html">here</a> for details on running a script).</p>
+<p>To add a breakpoint double-click on the gray column on the left of the editor, at the level of the tag where a stop of the execution is requested. When done, a blue bullet is shown. </p>
+<p align="center"><img src="../images/eclipse_script_debug_1.png" width="824" height="663"></p>
+<p align="left">After setting breakpoints, the debug session can be started, selecting one of the available launch configurations (click <a href="createlaunchconfig.html">here</a> to know how to create one) on the menu that appears clicking on the arrow on the right of the debug icon (represented on the IDE as a green bug). </p>
+<p align="center"><img src="../images/eclipse_script_debug_2.png" width="199" height="152"></p>
+<p align="left">Clicking on the launch configuration, the debug session is immediately started. If the current perspective is not the debug one, it is possible to move to it, clicking on the perspective icon on the right of the IDE. </p>
+<p align="center"><img src="../images/eclipse_script_debug_3.png" width="234" height="179"></p>
+<p align="left">The debug perspective gives to the user all tools and all views necessary to efficiently debug and inspect a TOOLBOX script. As showed by the following image, the debug perspective lat the user interact with the debug engine, visualize and interact with each executing thread, view and inspect variables as currently contained by the Toolbox engine and at last add/remove/enable/disable breakpoints. Looking at all this, it is obvious that this perspective (or an equivalent one) is the center of the debug session. </p>
+<p align="center"><img src="../images/eclipse_script_debug_4.png" width="1280" height="994"></p>
+<p align="left">Once started, the debug session executes the script until a breakpoint is reached. When this happens, the execution is suspended and the perspective is updated. The executing thread view is updated with the execution stack while the variables view is updated with all engine's variables. </p>
+<p align="center"><img src="../images/eclipse_script_debug_11.png" width="634" height="299"></p>
+<p align="center"><img src="../images/eclipse_script_debug_8.png" width="633" height="299"></p>
+<p>When updating the variable view, the value and the Java type of variables is also fetched from the engine, in order to visualize these information too. This part of the perspective is one of the central point for debugging: variables can be inspected, looking for their value, and also modified in order to correct on-the-fly the execution behavior of the script.</p>
+<p>To change the value of a variable, select it and right click on it. A menu is shown. Select &quot;Change value&quot;. </p>
+<p align="center"><img src="../images/eclipse_script_debug_9.png" width="635" height="301"></p>
+<p align="left">A new frame is shown, filled with the current value of the select variable. To modify it, type the new value and click &quot;Ok&quot;.</p>
+<p align="center"><img src="../images/eclipse_script_debug_10.png" width="401" height="214"></p>
+<p>When stopped at a breakpoint, the execution can be resumed in several ways, depending on the specific point. In all cases the execution can be resumed clicking on the resume icon (top image) causing the engine execute until another breakpoint is hit or the end of the script is reached.</p>
+<p>Depending from the point of stop, the execution can be resumed in the step mode. Clicking on the arrows icon (the three icons in the bottom image) it is possible to:</p>
+<ul>
+  <li> step into the current tag, causing the engine stop at the first child tag if existing</li>
+  <li> step next, causing the engine run and stop at the next tag at the same level (or at the parent one if no next children are found at the same level)</li>
+  <li> step out from the current tag, causing the engine execute and stop at the parent tag. </li>
+</ul>
+<p align="center"><img src="../images/eclipse_script_debug_5.png" width="90" height="70"> <img src="../images/eclipse_script_debug_7.png" width="90" height="70"></p>
+<p align="left">If the execution of the script is no longer necessary, it is possible to stop it clicking on the stop icon. </p>
+<p align="center"><img src="../images/eclipse_script_debug_6.png" width="90" height="70"></p>
+<p align="left">Once requested to stop, both debug thread and debug engine are stopped in a safe way. </p>
+<p align="center"><img src="../images/eclipse_script_debug_12.png" width="634" height="299"></p>
+<p align="left">During all the lifecycle of the debugging session, the Console view shows the output of the debug engine, including the output of the execution. </p>
+<p><img src="../images/eclipse_script_debug_13.png" width="1270" height="223"> </p>
+</body>
+</html>

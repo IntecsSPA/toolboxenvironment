@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>XML Script Tags Reference</title>
+
+<link type="text/css" href="../images/page.css" rel="stylesheet"></head>
+
+<body text="#000000" bgcolor="#ffffff">
+<h1>Logical Operators</h1> 
+
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>bitAnd<a name="bitAnd"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Returns the integer 
+                        obtained performing a bit to bit and operation among each 
+                        integer returned by the enclosed elements. If only one 
+                        element is enclosed, it is returned as is, if no element 
+                        is enclosed, -1 is returned</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;bitAnd/&gt;</pre>
+                        <font><em>Returns -1.</em></font> <pre>&lt;bitAnd&gt;<br>	&lt;literal value=&quot;3&quot;/&gt;<br>&lt;/bitAnd&gt;</pre>
+                        <font><em>Returns 3.</em></font> <pre>&lt;bitAnd&gt;<br>	&lt;literal value=&quot;3&quot;/&gt;<br>	&lt;literal value=&quot;2&quot;/&gt;<br>&lt;/bitAnd&gt;</pre>
+                        <font><em>Returns 2.</em></font> <pre>&lt;bitAnd&gt;<br>	&lt;literal value=&quot;-1&quot;/&gt;<br>	&lt;literal value=&quot;2&quot;/&gt;<br>&lt;/bitAnd&gt;</pre>
+                        <font><em>Returns 2.</em></font> <pre>&lt;bitAnd&gt;<br>	&lt;literal value=&quot;0&quot;/&gt;<br>	&lt;literal value=&quot;2&quot;/&gt;<br>&lt;/bitAnd&gt;</pre>
+                        <font><em>Returns 0</em>.</font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>bitOr<a name="bitOr"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Returns the integer 
+                        obtained performing a bit to bit or operation among each 
+                        integer returned by the enclosed elements. If only one 
+                        element is enclosed, it is returned as is, if no element 
+                        is enclosed, 0 is returned</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;bitOr/&gt;</pre>
+                        <font><em>Returns -0.</em></font> <pre>&lt;bitOr&gt;<br>	&lt;literal value=&quot;3&quot;/&gt;<br>&lt;/bitOr&gt;</pre>
+                        <font><em>Returns 3.</em></font> <pre>&lt;bitOr&gt;<br>	&lt;literal value=&quot;3&quot;/&gt;<br>	&lt;literal value=&quot;2&quot;/&gt;<br>&lt;/bitOr&gt;</pre>
+                        <font><em>Returns 3.</em></font> <pre>&lt;bitOr&gt;<br>	&lt;literal value=&quot;-1&quot;/&gt;<br>	&lt;literal value=&quot;2&quot;/&gt;<br>&lt;/bitOr&gt;</pre>
+                        <font><em>Returns -1.</em></font> <pre>&lt;bitOr&gt;<br>	&lt;literal value=&quot;0&quot;/&gt;<br>	&lt;literal value=&quot;2&quot;/&gt;<br>&lt;/bitOr&gt;</pre>
+                        <font><em>Returns 2</em>.</font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>bitXor<a name="bitXor"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Returns the integer 
+                        obtained performing a bit to bit xor operation among each 
+                        integer returned by the enclosed elements. If only one 
+                        element is enclosed, it is returned as is, if no element 
+                        is enclosed, 0 is returned</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0" ><pre>&lt;bitXor/&gt;</pre>
+                        <font><em>Returns 0.</em></font> <pre>&lt;bitXor&gt;<br>	&lt;literal value=&quot;3&quot;/&gt;<br>&lt;/bitXor&gt;</pre>
+                        <font><em>Returns 3.</em></font> <pre>&lt;bitXor&gt;<br>	&lt;literal value=&quot;3&quot;/&gt;<br>	&lt;literal value=&quot;2&quot;/&gt;<br>&lt;/bitXor&gt;</pre>
+                        <font><em>Returns 1.</em></font> <pre>&lt;bitOr&gt;<br>	&lt;literal value=&quot;-1&quot;/&gt;<br>	&lt;literal value=&quot;2&quot;/&gt;<br>&lt;/bitOr&gt;</pre>
+                        <font><em>Returns -1.</em></font> <pre>&lt;bitOr&gt;<br>	&lt;literal value=&quot;0&quot;/&gt;<br>	&lt;literal value=&quot;2&quot;/&gt;<br>&lt;/bitOr&gt;</pre>
+                        <font><em>Returns 2</em>.</font></td>
+                    </tr>
+                  </tbody>
+</table>
+                </body></html>

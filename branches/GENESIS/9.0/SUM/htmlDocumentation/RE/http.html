@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>HTTP Service integration</title>
+
+<link type="text/css" href="images/page.css" rel="stylesheet"></head>
+
+<body text="#000000" bgcolor="#ffffff">
+<h1>Dummy HTTP based service</h1>
+                  <div class="content"> 
+                  <p align="justify">This scenario is applicable when the provided 
+                    Service is already a Web Application. It is not a real service. 
+                    In this case the TOOLBOX can be configured to act as an HTTP 
+                    client. The incoming SOAP message will be converted into an 
+                    HTTP request to be sent to the Service Provider Web server. 
+                    The HTTP response is an HTML page. It will be analysed using 
+                    the text management functionality provided by the TOOLBOX 
+                    and converted into a SOAP response to be sent to the client.</p>
+                  <p>Let us suppose a Dummy service sells satellite images. It 
+                    accepts RQFs through the following input form page:</p>
+                    <p align="center"><img src="images/http.jpg" width="444" height="349"></p>
+                    <p>When the Price button is pushed the index.jsp page invokes 
+                      the service.jsp page passing the parameters included in 
+                      the form (ROI, DATE, INSTRUMENT and FORMAT). The service.jsp 
+                      page accesses the service resources and if the product ia 
+                      available returns an HTML page</p>
+                    <pre><font color="#0000FF">&lt;html&gt;<br>&lt;head&gt;<br>&lt;title&gt;SUCCESSFUL response page&lt;/title&gt;<br>&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=iso-8859-1&quot;&gt;<br>&lt;/head&gt;<br>&lt;body bgcolor=&quot;#FFFFFF&quot; leftmargin=&quot;0&quot; topmargin=&quot;0&quot;
+ marginwidth=&quot;0&quot; marginheight=&quot;0&quot;&gt;<br>&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;<br>  &lt;tr&gt; <br>    &lt;td bgcolor=&quot;#333366&quot;&gt;&lt;FONT COLOR=&quot;#FFFFFF&quot;&gt;RFQ RESPONSE&lt;/FONT&gt;&lt;/td&gt;<br>  &lt;/tr&gt; <br>  &lt;tr&gt; <br>    &lt;td bgcolor=&quot;#333366&quot;&gt;&lt;FONT COLOR=&quot;#FFFFFF&quot;&gt;Product File Name&lt;/FONT&gt;
+    &lt;/td&gt;<br>    &lt;td&gt;V1KRNS10__20010101_NDVI_Africa.ZIP&lt;/td&gt; <br>  &lt;/tr&gt;<br>  &lt;tr&gt; <br>    &lt;td bgcolor=&quot;#333366&quot;&gt;&lt;FONT COLOR=&quot;#FFFFFF&quot;&gt;Product Size&lt;/FONT&gt;&lt;/td&gt;<br>    &lt;td&gt;23.5&lt;/td&gt;<br>    &lt;td&gt;Mb&lt;/td&gt;<br>  &lt;/tr&gt;<br>  &lt;tr&gt;<br>    &lt;td bgcolor=&quot;#333366&quot;&gt;&lt;FONT COLOR=&quot;#FFFFFF&quot;&gt;Available User Quota&lt;/FONT&gt;
+  &lt;/td&gt;<br>    &lt;td&gt;9.6&lt;/td&gt;<br>    &lt;td&gt;Gb&lt;/td&gt;<br>   &lt;/tr&gt;<br> &lt;/table&gt;<br>&lt;/body&gt;<br>&lt;/html&gt;</font></pre>
+                    <p>If the product is not available the service.jsp page returns 
+                      an error message.</p>
+                    <p>Let us suppose that the service is published in synchronous 
+                      mode and the payloads of the SOAP messages incoming from 
+                      SSE are expected to be the as in following (these are just 
+                      examples, the correct format of the SOAP messages exchanged 
+                      with SSE has to be specified according to the <a href="icd.html">SSE 
+                      ICD</a>)</p>
+                    <pre><font color="#0000FF">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>&lt;processRFQInputMsg xmlns=&quot;http://www.esa.int/mass&quot; 
+ xmlns:aoi=&quot;http://www.esa.int/xml/schemas/mass/aoifeatures&quot;
+ xmlns:gml=&quot;http://www.opengis.net/gml&quot;&gt;<br>	&lt;commonInput&gt;<br>		&lt;orderId&gt;TESTID&lt;/orderId&gt;<br>	&lt;/commonInput&gt;<br>	&lt;sendRFQInput&gt;<br>		&lt;aoi:areaOfInterest&gt;<br>		&lt;gml:boundedBy&gt;<br>		&lt;gml:null&gt;unavailable&lt;/gml:null&gt;<br>		&lt;/gml:boundedBy&gt;<br>		&lt;gml:featureMember&gt;<br>		&lt;aoi:Feature&gt;<br>				&lt;gml:boundedBy&gt;<br>				&lt;gml:Box srsName=&quot;EPSG:4326&quot;&gt;<br>				&lt;gml:coordinates&gt;-20,34.9305 40
+                 ,81.8519&lt;/gml:coordinates&gt;<br>					&lt;/gml:Box&gt;<br>				&lt;/gml:boundedBy&gt;<br>				&lt;aoi:Code&gt;AF&lt;/aoi:Code&gt;<br>				&lt;aoi:Label&gt;Africa&lt;/aoi:Label&gt;<br>				&lt;aoi:Geometry&gt;<br>				&lt;gml:Polygon srsName=&quot;EPSG:4326&quot;&gt;<br>					&lt;gml:outerBoundaryIs&gt;<br>					&lt;gml:LinearRing&gt;<br>					&lt;gml:coordinates&gt;-20,34.9305 -20,81.8519 4
+                        0,81.8519 40,34.9305 -20,34.9305
+                    &lt;/gml:coordinates&gt;<br>					&lt;/gml:LinearRing&gt;<br>					&lt;/gml:outerBoundaryIs&gt;<br>					&lt;/gml:Polygon&gt;<br>				&lt;/aoi:Geometry&gt;<br>				&lt;/aoi:Feature&gt;<br>			&lt;/gml:featureMember&gt;<br>		&lt;/aoi:areaOfInterest&gt;<br>		&lt;userId&gt;mass&lt;/userId&gt;<br>		&lt;date&gt;2001-07-21&lt;/date&gt;<br>		&lt;instrument&gt;VGT1&lt;/instrument&gt;<br>		&lt;format&gt;Radio&lt;/format&gt;<br>	&lt;/sendRFQInput&gt;<br>&lt;/processRFQInputMsg&gt;</font></pre>
+                    <p>Here is a sample service definition file allowing the Dummy 
+                      service, based on HTTP communication, to communicate with 
+                      SSE:</p>
+                    <pre><font color="#0000FF">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br></font><font color="#0000FF">&lt;sequence xmlns=&quot;http://pisa.intecs.it/mass/toolbox/xmlScript&quot;&gt;<br>	&lt;!<font color="#000000">--THE TOOLBOX EXTRACTS THE NEEDED INFORMATION FROM THE MASS<br>REQUEST, STORES IT INTO VARIABLES AND LOGS IT--&gt;</font><br>	&lt;setVariable name=&quot;roi&quot;&gt;<br>		&lt;xPath&gt;<br>			&lt;xmlRequest/&gt;<br>			&lt;string&gt;/:processRFQInputMsg/:sendRFQInput/aoi:<br>			areaOfInterest/gml:featureMember/
+            aoi:Feature/aoi:Label&lt;/string&gt;<br>		&lt;/xPath&gt;<br>	&lt;/setVariable&gt;<br>	&lt;setVariable name=&quot;date&quot;&gt;<br>		&lt;xPath&gt;<br>			&lt;xmlRequest/&gt;<br>			&lt;string&gt;/:processRFQInputMsg/:sendRFQInput/
+            :date&lt;/string&gt;<br>		&lt;/xPath&gt;<br>	&lt;/setVariable&gt;<br>	&lt;setVariable name=&quot;instrument&quot;&gt;<br>		&lt;xPath&gt;<br>			&lt;xmlRequest/&gt;<br>			&lt;string&gt;/:processRFQInputMsg/:sendRFQInput/
+             :instrument&lt;/string&gt;<br>		&lt;/xPath&gt;<br>	&lt;/setVariable&gt;<br>	&lt;setVariable name=&quot;format&quot;&gt;<br>		&lt;xPath&gt;<br>			&lt;xmlRequest/&gt;<br>			&lt;string&gt;/:processRFQInputMsg/:sendRFQInput
+            /:format&lt;/string&gt;<br>		&lt;/xPath&gt;<br>	&lt;/setVariable&gt;<br>	&lt;setVariable name=&quot;orderID&quot;&gt;<br>		&lt;orderId/&gt;<br>	&lt;/setVariable&gt;<br>	&lt;!<font color="#000000">-- PERFORMS THE http POST EXCHANGE WITH THE<br>           /S10/service.jsp DEPLOYED ON pisa007.pisa.intecs.it ON PORT 80<br>           USING THE PARAMETERS EXTRACTED FROM THE REQUEST. THE RESULT HTTP<br>           MESSAGE IS SET IN THE TEXT CONTEXT--&gt;</font><br>	&lt;setText&gt;<br>		&lt;http host=&quot;pisa007.pisa.intecs.it&quot; 
+        method=&quot;POST&quot; port=&quot;8080&quot;&gt;<br>			&lt;url&gt;<br>				&lt;string&gt;/S10/service.jsp&lt;/string&gt;<br>			&lt;/url&gt;<br>			&lt;parameter name=&quot;ROI&quot;&gt;<br>				&lt;variable name=&quot;roi&quot;/&gt;<br>			&lt;/parameter&gt;<br>			&lt;parameter name=&quot;DATE&quot;&gt;<br>				&lt;variable name=&quot;date&quot;/&gt;<br>			&lt;/parameter&gt;<br>			&lt;parameter name=&quot;INSTRUMENT&quot;&gt;<br>				&lt;variable name=&quot;instrument&quot;/&gt;<br>			&lt;/parameter&gt;<br>			&lt;parameter name=&quot;FORMAT&quot;&gt;<br>				&lt;variable name=&quot;format&quot;/&gt;<br>			&lt;/parameter&gt;<br>		&lt;/http&gt;<br>	&lt;/setText&gt;<br>	&lt;if&gt;<br>		&lt;!<font color="#000000">-- CHECKS (&lt;search&gt;) IF THE SUCCESSFUL STRING IS PRESENT<br>           IN THE HTML RESPONSE FILE (WHICH <br>           REPRESENTS THE CURRENT TEXT CONTEXT)--&gt;</font><br>		&lt;search&gt;<br>			&lt;string&gt;SUCCESSFUL&lt;/string&gt;<br>		&lt;/search&gt;<br>		&lt;sequence&gt;<br>			&lt;!<font color="#000000">--THE TOOLBOX LOOKS FOR THE Product Price string, THEN LOOKS<br>FOR THE &lt;td&gt; TAG AND MARKS (&lt;mark name=End&gt;) THE START AND THE<br>END OF THE STRING TO EXTRACT; FINALLY EXTRACTS (&lt;extract&gt;) THE PRICE<br>AND STORES IT IN A VARIABLE--&gt;</font><br>			&lt;search&gt;<br>				&lt;string&gt;tr&lt;/string&gt;<br>				&lt;literal value=&quot;4&quot;/&gt;<br>			&lt;/search&gt;<br>			&lt;search&gt;<br>				&lt;string&gt;Product Size&lt;/string&gt;<br>			&lt;/search&gt;<br>			&lt;search&gt;<br>				&lt;string&gt;&amp;lt;td&amp;gt;&lt;/string&gt;<br>			&lt;/search&gt;<br>			&lt;horizontalMove&gt;<br>				&lt;literal value=&quot;4&quot;/&gt;<br>			&lt;/horizontalMove&gt;<br>			&lt;mark name=&quot;fStart&quot;/&gt;<br>			&lt;search&gt;<br>				&lt;string&gt;&amp;lt;&lt;/string&gt;<br>			&lt;/search&gt;<br>			&lt;mark name=&quot;fEnd&quot;/&gt;<br>			&lt;setVariable name=&quot;fileSize&quot;&gt;<br>				&lt;extract end=&quot;fEnd&quot; start=&quot;fStart&quot;/&gt;<br>			&lt;/setVariable&gt;<br>			&lt;search&gt;<br>				&lt;string&gt;Available User Quota&lt;/string&gt;<br>			&lt;/search&gt;<br>			&lt;search&gt;<br>				&lt;string&gt;&amp;lt;td&amp;gt;&lt;/string&gt;<br>			&lt;/search&gt;<br>			&lt;horizontalMove&gt;<br>				&lt;literal value=&quot;4&quot;/&gt;<br>			&lt;/horizontalMove&gt;<br>			&lt;mark name=&quot;fStart&quot;/&gt;<br>			&lt;search&gt;<br>				&lt;string&gt;&amp;lt;&lt;/string&gt;<br>			&lt;/search&gt;<br>			&lt;mark name=&quot;fEnd&quot;/&gt;<br>			&lt;setVariable name=&quot;availableQuota&quot;&gt;<br>				&lt;extract end=&quot;fEnd&quot; start=&quot;fStart&quot;/&gt;<br>			&lt;/setVariable&gt;<br>			&lt;!<font color="#000000">--THE TOOLBOX BUILDS A SUCCESSFUL MESSAGE--&gt;</font><br>			&lt;xmlGetResponse&gt;<br>			&lt;xml attributePrefix=&quot;attribute$&quot; textTag=&quot;evaluate&quot;&gt;<br>			&lt;mass:getRFQOutput 
+              xmlns:mass=&quot;http://www.esa.int/mass&quot;&gt;<br>					&lt;mass:statusInfo&gt;<br>					&lt;mass:statusId&gt;0&lt;/mass:statusId&gt;<br>					&lt;mass:statusMsg&gt;Successful&lt;/mass:statusMsg&gt;<br>					&lt;/mass:statusInfo&gt;<br>					&lt;mass:rfqOutput&gt;<br>						&lt;mass:productSize&gt;<br>						&lt;evaluate name=&quot;fileSize&quot;/&gt;<br>						&lt;/mass:productSize&gt;<br>						&lt;mass:userQuota&gt;<br>						&lt;evaluate name=&quot;availableQuota&quot;/&gt;<br>						&lt;/mass:userQuota&gt;<br>					&lt;/mass:rfqOutput&gt;<br>			&lt;/mass:getRFQOutput&gt;<br>		&lt;/xml&gt;<br>	&lt;/xmlGetResponse&gt;<br>	&lt;/sequence&gt;<br>	&lt;!<font color="#000000">--THE TOOLBOX BUILDS A &quot;PRODUCT NOT FOUND&quot; MESSAGE--&gt;</font><br>	&lt;xmlGetResponse&gt;<br>		&lt;xml attributePrefix=&quot;attribute$&quot; textTag=&quot;evaluate&quot;&gt;<br>			&lt;mass:getRFQOutput
+              xmlns:mass=&quot;http://www.esa.int/mass&quot;&gt;<br>				&lt;mass:statusInfo&gt;<br>				&lt;mass:statusId&gt;300&lt;/mass:statusId&gt;<br>				&lt;mass:statusMsg&gt;Product Not Found&lt;/mass:statusMsg&gt;<br>				&lt;/mass:statusInfo&gt;<br>			&lt;/mass:getRFQOutput&gt;<br>		&lt;/xml&gt;<br>	&lt;/xmlGetResponse&gt;<br>&lt;/if&gt;<br>&lt;/sequence&gt;<br></font></pre>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                  </div>
+</body></html>

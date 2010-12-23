@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin name="GeoServerTagPlugin" version="1.0">
+     <tagPlugin namespace="http://pisa.intecs.it/mass/toolbox/GeoServer" class="it.intecs.pisa.toolbox.plugins.geoServerTagPlugin.GeoServerTagPlugin"/>
+</plugin>

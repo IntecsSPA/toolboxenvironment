@@ -1,0 +1,422 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>XML Script Tags Reference</title>
+
+<link type="text/css" href="../images/page.css" rel="stylesheet"></head>
+
+<body text="#000000" bgcolor="#ffffff">
+<h1>JDBC</h1>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>dbClose<a name="dbClose"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Closes a JDBC connection. 
+                        The connection to be closed is returned by the enclosed 
+                        element.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0" ><pre>&lt;sequence&gt;<br>	&lt;setVariable name=&quot;connection&quot;&gt;<br>		&lt;dbConnect driver=&quot;com.mysql.jdbc.Driver&quot;&gt;<br>			&lt;variable name=&quot;URL&quot;/&gt;<br>			&lt;variable name=&quot;userName&quot;/&gt;<br>			&lt;variable name=&quot;password&quot;/&gt;<br>		&lt;/dbConnect&gt;<br>	&lt;/setVariable&gt;<br>	.<br>	.<br>	.<br>	&lt;dbClose&gt;<br>		&lt;variable name=&quot;connection&quot;/&gt;<br>	&lt;/dbClose&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>At the end of the sequence the connection "connection" 
+                        is closed.</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>dbCommit<a name="dbCommit"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Commits every update 
+                        operation performed on the connection given by the enclosed 
+                        element, since last commit, last rollback, or connection 
+                        creation.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;sequence&gt;<br>	&lt;setVariable name=&quot;connection&quot;&gt;<br>		&lt;dbConnect autoCommit=&quot;false&quot; driver=&quot;com.mysql.jdbc.Driver&quot;&gt;<br>			&lt;variable name=&quot;URL&quot;/&gt;<br>			&lt;variable name=&quot;userName&quot;/&gt;<br>			&lt;variable name=&quot;password&quot;/&gt;<br>		&lt;/dbConnect&gt;<br>	&lt;/setVariable&gt;<br>	.<br>	.<br>	.<br>	&lt;dbCommit&gt;<br>		&lt;variable name=&quot;connection&quot;/&gt;<br>	&lt;/dbCommit&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>At the end of the sequence a commit is performed.</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>dbConnect<a name="dbConnect"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Attributes</td>
+                      <td align="center" bgcolor="#F0F0F0"><table border="1" width="100%" bgcolor="#F0F0F0" cellspacing="0">
+                          <tbody>
+                            <tr> 
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Name</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Type</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Use</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Default</td>
+                              <td width="20%" align="center" bgcolor="#CCCCCC">Description</td>
+                            </tr>
+                            <tr> 
+                              <td align="center">driver</td>
+                              <td align="center">xsd:string</td>
+                              <td align="center"></td>
+                              <td align="center"></td>
+                              <td align="justify" >The JDBC driver to be used</td>
+                            </tr>
+                            <tr> 
+                              <td align="center">autoCommit</td>
+                              <td align="center">xsd:boolean</td>
+                              <td align="center"></td>
+                              <td align="center">true</td>
+                              <td align="justify">Flag indicating whether every 
+                                update performed on the connection is commited 
+                                (default) or not (&quot;autoCommit&quot; set to 
+                                &quot;false&quot;).</td>
+                            </tr>
+                          </tbody>
+                        </table></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Connects to a DBMS 
+                        via JDBC. The driver attribute gives the JDBC driver to 
+                        be used. This driver must be in the classpath. The auto-commit 
+                        attribute (default true) tells if every update performed 
+                        on this connection is commited or not. The first child 
+                        must return the URL to be used for connection. The second 
+                        child must return the user to be used for connection. 
+                        The third child must return the password to be used for 
+                        connection. The return value is a JDBC Connection object.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0" ><pre>&lt;dbConnect driver=&quot;com.mysql.jdbc.Driver&quot;&gt;<br>	&lt;variable name=&quot;URL&quot;/&gt;<br>	&lt;variable name=&quot;userName&quot;/&gt;<br>	&lt;variable name=&quot;password&quot;/&gt;<br>&lt;/dbConnect&gt;</pre>
+                        <font><em>Connects to the DBMS at the URL "URL" using 
+                        the driver "com.mysql.jdbc.Driver". Every update performed 
+                        is commit.</em></font> <pre>&lt;dbConnect driver=&quot;com.mysql.jdbc.Driver&quot; autoCommit=&quot;false&quot;&gt;<br>	&lt;variable name=&quot;URL&quot;/&gt;<br>	&lt;variable name=&quot;userName&quot;/&gt;<br>	&lt;variable name=&quot;password&quot;/&gt;<br>&lt;/dbConnect&gt;</pre>
+                        <font><em>Connects to the DBMS at the URL "URL" using 
+                        the driver "com.mysql.jdbc.Driver". Commits are not automatically 
+                        performed.</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>dbExecute<a name="dbExecute"></a></strong></font></td>
+                    </tr>                    
+                  <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      
+                    <td align="justify" bgcolor="#F0F0F0">Executes the SQL statement 
+                      returned by the second enclosed element (which may return 
+                      multiple results), on the connection returned by the first 
+                      enclosed element. Returns true if the first result is a 
+                      ResultSet object; false if it is an update count or there 
+                      are no results.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      
+                    <td align="left" bgcolor="#F0F0F0" >See <a href="#dbUpdate">dbUpdate</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>dbExecuteUpdate<a name="dbExecuteUpdate" id="dbExecuteUpdate"></a></strong></font></td>
+                    </tr>                    
+                  <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      
+                    <td align="justify" bgcolor="#F0F0F0">Executes the SQL statement 
+                      returned by the second enclosed element (which may be an 
+                      INSERT, UPDATE, or DELETE statement or an SQL statement 
+                      that returns nothing, such as an SQL DDL statement), on 
+                      the connection returned by the first enclosed element. Returns 
+                      either the row count for INSERT, UPDATE or DELETE statements, 
+                      or 0 for SQL statements that return nothing.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      
+                    <td align="left" bgcolor="#F0F0F0" >See <a href="#dbUpdate">dbUpdate</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>dbGetNumOfRows<a name="dbGetNumOfRows" id="dbGetNumOfRows"></a></strong></font></td>
+                    </tr>                    
+                  <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      
+                    <td align="justify" bgcolor="#F0F0F0">Returns the number of 
+                      rows of the ResultSet given by the enclosed element.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      
+                    <td align="left" bgcolor="#F0F0F0" ><pre>&lt;dbGetNumOfRows&gt;<br>	&lt;variable name=&quot;sqlResult&quot;/&gt;<br>&lt;/dbGetNumOfRows&gt;<br></pre>
+                      <p>Returns the number of rows in the Result Set contained 
+                        in the variable &quot;sqlResult&quot;.</p></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="10%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="90%" bgcolor="#F0F0F0"><font color="#993300"><strong>dbGetColumnCount<a name="dbGetColumnCount"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Returns the column 
+                        number of the result set given by the enclosed element.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" valign="top" bgcolor="#F0F0F0"><pre>&lt;sequence&gt;<br>	&lt;setVariable name=&quot;queryResult&quot;&gt;<br>		&lt;dbQuery&gt;<br>			&lt;variable name=&quot;connection&quot;/&gt;<br>			&lt;variable name=&quot;queryString&quot;/&gt;<br>		&lt;/dbQuery&gt;<br>	&lt;/setVariable&gt;<br>	&lt;dbGetColumnCount&gt;<br>		&lt;variable name=&quot;queryResult&quot;/&gt;<br>	&lt;/dbGetColumnCount&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>Returns the number of columns in the Result 
+                        Set stored in the variable "queryResult".</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="10%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="90%" bgcolor="#F0F0F0"><font color="#993300"><strong>dbGetColumnIndex<a name="dbGetColumnIndex"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Returns the column 
+                        index, given the name, of the result set given by the 
+                        first enclosed element. The name is given by the second 
+                        enclosed element.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;sequence&gt;<br>	&lt;setVariable name=&quot;sqlResult&quot;&gt;<br>		&lt;dbQuery&gt;<br>			&lt;variable name=&quot;connection&quot;/&gt;<br>			&lt;variable name=&quot;queryString&quot;/&gt;<br>		&lt;/dbQuery&gt;<br>	&lt;/setVariable&gt;<br>	&lt;setVariable name=&quot;columnIndexOfProductPrice&quot;&gt;<br>		&lt;dbGetColumnIndex&gt;<br>			&lt;variable name=&quot;sqlResult&quot;/&gt;<br>			&lt;string&gt;productPrice&lt;/string&gt;<br>		&lt;/dbGetColumnIndex&gt;<br>	&lt;/setVariable&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>The index of the column "productPrice" is stored 
+                        in the variable "columnIndexOfProductPrice".</em></font> 
+                        <font>&nbsp;</font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>dbGetColumnName<a name="dbGetColumnName"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Returns the column 
+                        name, given the index, of the result set given by the 
+                        first enclosed element. The index is given by the second 
+                        enclosed element.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;sequence&gt;<br>	&lt;setVariable name=&quot;sqlResult&quot;&gt;<br>		&lt;dbQuery&gt;<br>			&lt;variable name=&quot;connection&quot;/&gt;<br>			&lt;variable name=&quot;queryString&quot;/&gt;<br>		&lt;/dbQuery&gt;<br>	&lt;/setVariable&gt;<br>	&lt;setVariable name=&quot;SecondColumnName&quot;&gt;<br>		&lt;dbGetColumnName&gt;<br>			&lt;variable name=&quot;sqlResult&quot;/&gt;<br>			&lt;literal value=&quot;2&quot;/&gt;<br>		&lt;/dbGetColumnName&gt;<br>	&lt;/setVariable&gt;<br>&lt;/sequence&gt;</pre>
+                        <em><font>The name of the second column of the result 
+                        set stored in the variable "sqlResult" is stoerd in the 
+                        variable &quot;SecondColumnName&quot;.</font></em></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>dbGetValue<a name="dbGetValue"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Returns the string 
+                        value of a field of current row of the ResultSet givne 
+                        by the first enclosed element. The field is selected by 
+                        the second enclosed element, using an integer (index) 
+                        or a string (name).</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;sequence&gt;<br>	&lt;setVariable name=&quot;sqlResult&quot;&gt;<br>		&lt;dbQuery&gt;<br>			&lt;variable name=&quot;connection&quot;/&gt;<br>			&lt;variable name=&quot;queryString&quot;/&gt;<br>		&lt;/dbQuery&gt;<br>	&lt;/setVariable&gt;<br>	&lt;dbNextRow&gt;<br>		&lt;variable name=&quot;sqlResult&quot;/&gt;<br>	&lt;/dbNextRow&gt;<br>	&lt;dbGetValue&gt;<br>		&lt;variable name=&quot;sqlResult&quot;/&gt;<br>		&lt;string&gt;productPrice&lt;/string&gt;<br>	&lt;/dbGetValue&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>Returns the value of the field "productSize" 
+                        in the first row of the result set stored in the variable 
+                        "sqlResult".</em></font> <pre>&lt;sequence&gt;<br>	&lt;setVariable name=&quot;sqlResult&quot;&gt;<br>		&lt;dbQuery&gt;<br>			&lt;variable name=&quot;connection&quot;/&gt;<br>			&lt;variable name=&quot;queryString&quot;/&gt;<br>		&lt;/dbQuery&gt;<br>	&lt;/setVariable&gt;<br>	&lt;dbNextRow&gt;<br>		&lt;variable name=&quot;sqlResult&quot;/&gt;<br>	&lt;/dbNextRow&gt;<br>	&lt;dbGetValue&gt;<br>		&lt;variable name=&quot;sqlResult&quot;/&gt;<br>		&lt;literal value=&quot;2&quot;/&gt;<br>	&lt;/dbGetValue&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>Returns the value of the second field in the 
+                        first row of the result set stored in the variable "sqlResult".</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>dbNextRow<a name="dbNextRow"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Moves the cursor of 
+                        the ResultSet given by the enclosed element, to the next 
+                        row, if possible. The result of this tag is boolean value 
+                        telling if it was possible to move to next row. This tag 
+                        has to be used before any dbGetValue, since initially 
+                        a ResultSet has the cursor BEFORE first row.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0" ><pre>&lt;sequence&gt;<br>	&lt;setVariable name=&quot;sqlResult&quot;&gt;<br>		&lt;dbQuery&gt;<br>			&lt;variable name=&quot;connection&quot;/&gt;<br>			&lt;variable name=&quot;queryString&quot;/&gt;<br>		&lt;/dbQuery&gt;<br>	&lt;/setVariable&gt;<br>	&lt;dbNextRow&gt;<br>		&lt;variable name=&quot;sqlResult&quot;/&gt;<br>	&lt;/dbNextRow&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>The cursor of the result set stored in the variable 
+                        "sqlResult" is moved to the first row.</em></font> <pre>&lt;sequence&gt;<br>	&lt;setVariable name=&quot;sqlResult&quot;&gt;<br>		&lt;dbQuery&gt;<br>			&lt;variable name=&quot;connection&quot;/&gt;<br>			&lt;variable name=&quot;queryString&quot;/&gt;<br>		&lt;/dbQuery&gt;<br>	&lt;/setVariable&gt;<br>	&lt;if&gt;<br>		&lt;dbNextRow&gt;<br>			&lt;variable name=&quot;sqlResult&quot;/&gt;<br>		&lt;/dbNextRow&gt;<br>		&lt;print&gt;<br>			&lt;string&gt;Query produced results!&lt;/string&gt;<br>		&lt;/print&gt;<br>		&lt;print&gt;<br>			&lt;string&gt;Query response is empty!&lt;/string&gt;<br>		&lt;/print&gt;<br>	&lt;/if&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><font><em>If the Result set stored in the variable 
+                        "sqlResult" is not empty (i.e. it is possible to move 
+                        to the first row) the string "Query produced results!" 
+                        is printed on video, otherwise the string "Query response 
+                        is empty" is printed on video.</em></font></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>dbQuery<a name="dbQuery"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Performs an SQL query 
+                        on the connection given by the first enclosed element. 
+                        The SQL query is given by the second enclosed element. 
+                        This tags return a JDBC ResultSet.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;sequence&gt;<br>	&lt;setVariable name=&quot;connection&quot;&gt;<br>		&lt;dbConnect autoCommit=&quot;false&quot; driver=&quot;db.driver&quot;&gt;<br>			&lt;variable name=&quot;URL&quot;/&gt;<br>			&lt;variable name=&quot;username&quot;/&gt;<br>			&lt;variable name=&quot;password&quot;/&gt;<br>		&lt;/dbConnect&gt;<br>	&lt;/setVariable&gt;<br>	&lt;setVariable name=&quot;sqlResult&quot;&gt;<br>		&lt;dbQuery&gt;<br>			&lt;variable name=&quot;connection&quot;/&gt;<br>			&lt;variable name=&quot;queryString&quot;/&gt;<br>		&lt;/dbQuery&gt;<br>	&lt;/setVariable&gt;<br>&lt;/sequence&gt;</pre>
+                        <font><em>Performs a query on the connection whose name 
+                        is stored in the variable "connection" and store the result 
+                        set in the variable "queryResult".</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="6%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="94%" bgcolor="#F0F0F0"><font color="#993300"><strong>dbRollback<a name="dbRollback"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Performs a rollback 
+                        of every update operation performed on the connection 
+                        given by the enclosed element, since last commit, last 
+                        rollback, or connection creation.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;setVariable name=&quot;connection&quot;&gt;<br>	&lt;dbConnect autoCommit=&quot;false&quot; driver=&quot;db.driver&quot;&gt;<br>		&lt;variable name=&quot;URL&quot;/&gt;<br>		&lt;variable name=&quot;username&quot;/&gt;<br>		&lt;variable name=&quot;password&quot;/&gt;<br>	&lt;/dbConnect&gt;<br>&lt;/setVariable&gt;<br>	.<br>	.<br>	.<br>&lt;dbRollback&gt;<br>	&lt;variable name=&quot;connection&quot;/&gt;<br>&lt;/dbRollback&gt;</pre>
+                        <font><em>Performs a rollback on the connection whose 
+                        name is stored in the variable "connection".</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="8%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="92%" bgcolor="#F0F0F0"><font color="#993300"><strong>dbSetCursor<a name="dbSetCursor" id="dbSetCursor"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td height="218" align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Moves the cursor to 
+                        the position (row number) returned by the first enclosed 
+                        element within the ResultSet given by the second enclosed 
+                        element. If the row number is positive, the cursor moves 
+                        to the given row number with respect to the beginning 
+                        of the result set. The first row is row 1, the second 
+                        is row 2, and so on. If the given row number is negative, 
+                        the cursor moves to an absolute row position with respect 
+                        to the end of the result set. For example, calling the 
+                        method absolute(-1) positions the cursor on the last row; 
+                        calling the method absolute(-2) moves the cursor to the 
+                        next-to-last row, and so on. An attempt to position the 
+                        cursor beyond the first/last row in the result set leaves 
+                        the cursor before the first row or after the last row. 
+                        Returns true if the cursor is on the result set; false 
+                        otherwise.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;if&gt;
+  &lt;dbSetCursor&gt;<br>     &lt;literal value=&quot;3&quot;/&gt;<br>     &lt;variable name=&quot;sqlResult&quot;/&gt;<br>  &lt;/dbSetCursor&gt;
+  &lt;sequence&gt;
+     .
+     .
+  &lt;/sequence&gt; <br>&lt;/if&gt;		</pre> 
+                        <font><em>Tries to move the cursor to the third (absolute 
+                        position) row of the result set stored in the variable 
+                        &quot;resultSet&quot;. If motion was possible, the evaluation 
+                        of the tag &quot;dbSetCursor&quot; returns &quot;true&quot; 
+                        and the tag &quot;sequence&quot; is executed. Otherwise, 
+                        the cursor is not moved within the result set and &quot;false&quot; 
+                        is returned by the evaluation of the tag &quot;dbSetCursor&quot;. 
+                        The tag &quot;sequence&quot; is not executed.</em></font><pre>&lt;if&gt;
+  &lt;dbSetCursor&gt;<br>     &lt;literal value=&quot;-3&quot;/&gt;<br>     &lt;variable name=&quot;sqlResult&quot;/&gt;<br>  &lt;/dbSetCursor&gt;
+  &lt;sequence&gt;
+     .
+     .
+  &lt;/sequence&gt; <br>&lt;/if&gt;	
+	</pre>
+                        <p>The behaviour is similar to the above example except 
+                          for the fact that the cursor is tried to be moved on 
+                          the last but two row of the result set stored in the 
+                          variable &quot;resultSet&quot;.</p></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                <table border="1" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr> 
+                      <td width="8%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+                      <td width="92%" bgcolor="#F0F0F0"><font color="#993300"><strong>dbUpdate<a name="dbUpdate"></a></strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+                      <td align="justify" bgcolor="#F0F0F0">Performs an SQL update 
+                        on the connection given by the first enclosed element. 
+                        The SQL string is given by the second enclosed element.</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+                      <td align="left" bgcolor="#F0F0F0"><pre>&lt;setVariable name=&quot;connection&quot;&gt;<br>	&lt;dbConnect autoCommit=&quot;false&quot; driver=&quot;db.driver&quot;&gt;<br>		&lt;variable name=&quot;URL&quot;/&gt;<br>		&lt;variable name=&quot;username&quot;/&gt;<br>		&lt;variable name=&quot;password&quot;/&gt;<br>	&lt;/dbConnect&gt;<br>&lt;/setVariable&gt;<br>	.<br>	.<br>	.<br>&lt;dbUpdate&gt;<br>	&lt;variable name=&quot;connection&quot;/&gt;<br>	&lt;string&gt;CREATE TABLE prices (idx INT NOT NULL, productPrice INT, PRIMARY KEY(idx));&lt;/string&gt;<br>&lt;/dbUpdate&gt;</pre>
+                        <font><em>Creates the table "price" in the database of 
+                        the connection whose name is stored in the variable "connection".</em></font></td>
+                    </tr>
+                  </tbody>
+                </table>
+</body></html>

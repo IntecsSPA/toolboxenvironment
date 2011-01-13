@@ -24,7 +24,8 @@ public class Prefs {
     public static final String PUBLISH_LOCAL_HTTP_ENABLE="publish.local.http.enable";
     public static final String PUBLISH_LOCAL_FTP_ENABLE="publish.local.ftp.enable";
     public static final String PUBLISH_LOCAL_FTP_ROOT_DIR="publish.local.ftp.rootdir";
-    public static final String PUBLISH_LOCAL_FOLDER_DIR="publish.local.folder.dir";
+    public static final String PUBLISH_LOCAL_FOLDER_DIR="publish.local.folder.dirs";
+    public static final String PUBLISH_LOCAL_FOLDER_TYPES="publish.local.folder.types";
     public static final String PUBLISH_LOCAL_FOLDER_INTERVAL="publish.local.folder.interval";
  
     public static Properties load(File webappDir) throws FileNotFoundException, IOException

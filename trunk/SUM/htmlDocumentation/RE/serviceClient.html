@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Additional Utilities</title>
+
+  
+  
+  <link type="text/css" href="images/page.css" rel="stylesheet">
+
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);">
+<h1>Toolbox services client</h1>
+
+
+<div class="content">
+<div style="text-align: left;"></div>
+
+<p>Open the &quot;Toolbox Application Cient&quot; and click on the following link <img src="images/TEST_AC1.png" width="139" height="25"> to open the Toolbox Service Client </p>
+<p>Insert the Toolbox URL (it should already be filled if the Toolbox has been correctly installed). Click on Retrieve Services </p>
+<p align="center"><img src="images/TEST_AC2.png" width="528" height="427"></p>
+<p>The client connects to the toolbox and retrieve the list of the available services. Select the service you want to test</p>
+<p align="center"><img src="images/TEST_AC3.png" width="528" height="427"></p>
+<p>The client retrieves the list of the operations available for the selected service </p>
+<p align="center"><img src="images/TEST_AC4.png" width="528" height="427"></p>
+<p>Select the operation you want to test and click on Create Request. A new interface is displayed.</p>
+<p align="center"><img src="images/TEST_AC5.png" width="935" height="518"></p>
+<p>In this step you have to provide the test message and to select one of the available SOAP MEssage Content type:</p>
+<ul>
+  <li><strong>Synchronous Payload</strong>: this option have to be selected if the operation you are testing is synchronous. </li>
+<li>      <strong>Asynchronous Payload</strong>: this option have to be selected if the operation you are testing is asynchronous and the message you are going to provide is the content of the SOAP Body (WS-Addressing informatio will be added by the Client).      </li>
+<li><strong>SOAP message</strong>: this option have to be selected if the operation you are testing is asynchronous and the message you are going to provide is the complete SOAP message (including the WS-Addressing information).</li>
+</ul>
+<p>Select the content type, load the request from disk or paste it directly on the text area, then click on Send request </p>
+<p align="center"><img src="images/TEST_AC6.png" width="936" height="519"></p>
+<p>The message is sent and the response is displayed in a new tab page for investigation.</p>
+<p><strong><img src="images/note.gif" height="17" width="17"> See the <a href="pushServer.html">Push Server</a> page to know how to use the push server to test asynchronous operations.</strong></p>
+<p><br>
+  </p>
+</div>
+
+</body></html>

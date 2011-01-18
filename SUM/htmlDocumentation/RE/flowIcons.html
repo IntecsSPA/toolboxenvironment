@@ -1,75 +1,177 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Service Management</title>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Service Management</title>
+        <link type="text/css" href="images/page.css" rel="stylesheet">
+    </head>
+    <body text="#000000" bgcolor="#ffffff">
+    	<div class="content">
+        <h1>Flow icons description</h1>
+        
+            <p align="justify">
+                In the following a description of the flow icons and their meaning for synchronous and asynchronous instances is reported.
+            </p>
+            <p align="justify">
+                <img src="images/email-icon.jpg" width="18" height="18"/>This icon is displayed only if the error email report is activated. By clicking on this icon it is possible to display a copy of the error report email sent to the SSE or to the other recipients defined in the TOOLBOX configuration procedure. 
+            </p>
+            <p align="justify">
+                <img src="images/garrow.waiting.jpg" width="19" height="33"/>This icon is displayed only when a request is in waiting status: the SOAP message has been received but the 
+                the TOOLBOX has not yet  
+                executed the First script corresponding to the request. 
+                This can happen in the following two cases: the queuing  
+                mechanism is on and the request has not been scheduled 
+                yet; the service is suspended in SOFT mode;
+            </p>
+            <p align="justify">
+                <img src="images/tree-icon.jpg" width="18" height="18"/>This icon allows displaying an instance resource (input message, output message, execution results) in a tree format. 
+            </p>
+            <p align="center">
+                <img src="images/image202.jpg"/>
+            </p>
+            <p align="justify">
+                <img src="images/xml-icon.jpg" width="18" height="18"/>This icon allows displaying an instance resource (input message, output message, execution results) in XML format.
+            </p>
+            <p align="center">
+                <img src="images/image201.jpg"/>
+            </p>
+            <p>
+                <strong><img src="images/note.gif" width="17" height="17"/>In Windows explorer the &quot;Copy to clipboard&quot; functionality is provided for the XML format. Click on the &quot;Copy to clipboard&quot; link to copy the content of the window in the clipboard.</strong>
+            </p>
+            <p>
+                <strong><img src="images/map.png" width="16" height="16"/></strong>This icon is shown is shown when a service result -&gt; GML stylesheet is associated to the service. Clicking on this button will display a map where result items are graphically overimposed. The following picture gives an example:
+            </p>
+            <p align="center">
+                <img src="images/serviceResultToGML.png" width="701" height="401"/>
+            </p>
+            <p align="left">
+                <img src="images/sse.png" width="35" height="19"/>This icon is shown is shown when an SSE stylesheet is associated to the service. Clicking on this button will display the instance result using the SSE stylesheet. The following picture gives an example:
+            </p>
+            <p align="center">
+                <img src="images/serviceResultSSEportalLike.png" width="601" height="502"/>
+            </p><h2 align="justify"><strong>Synchronous instance flow</strong></h2>
+            <p align="justify">
+                <strong>Receive</strong>
+            </p>
+            <p align="justify">
+                <img src="images/receive.active.jpg" width="65" height="53"/>The TOOLBOX is receiving the SOAP message. 
+            </p>
 
-<link type="text/css" href="images/page.css" rel="stylesheet">
-</head>
-
-<body text="#000000" bgcolor="#ffffff">
-<h1>Flow icons description</h1>
-<div class="content">
-  <p align="justify">In the following a description of the flow icons and their meaning for synchronous and asynchronous instances is reported.</p>
-  <p align="justify"><img src="images/email-icon.jpg" width="18" height="18"> This icon is displayed only if the error email report is activated. By clicking on this icon it is possible to display a copy of the error report email sent to the SSE or to the other recipients defined in the TOOLBOX configuration procedure. </p>
-  <p align="justify"><img src="images/garrow.waiting.jpg" width="19" height="33"> This icon is displayed only when a request is in waiting status: the SOAP message has been received but the 
-the TOOLBOX has not yet 
-                            executed the First script corresponding to the request. 
-                            This can happen in the following two cases: the queuing 
-                            mechanism is on and the request has not been scheduled 
-                            yet; the service is suspended in SOFT mode;</p>
-  <p align="justify"><img src="images/tree-icon.jpg" width="18" height="18"> This icon allows displaying an instance resource (input message, output message, execution results) in a tree format. </p>
-  <p align="center"><img src="images/image202.jpg"></p>
-  <p align="justify"><img src="images/xml-icon.jpg" width="18" height="18"> This icon allows displaying an instance resource (input message, output message, execution results) in XML format.</p>
-  <p align="center"><img src="images/image201.jpg"></p>
-  <p></p>
-  <p><strong><img src="images/note.gif" width="17" height="17"> In Windows explorer the &quot;Copy to clipboard&quot; functionality is provided for the XML format. Click on the &quot;Copy to clipboard&quot; link to copy the content of the window in the clipboard.</strong></p>
-  <p><strong><img src="images/map.png" width="16" height="16"></strong> This icon is shown is shown when a service result -&gt; GML stylesheet is associated to the service. Clicking on this button will display a map where result items are graphically overimposed. The following picture gives an example:</p>
-  <p align="center"><img src="images/serviceResultToGML.png" width="701" height="401"></p>
-  <p align="left"><img src="images/sse.png" width="35" height="19"> This icon is shown is shown when an SSE stylesheet is associated to the service. Clicking on this button will display the instance result using the SSE stylesheet. The following picture gives an example:</p>
-  <p align="center"><img src="images/serviceResultSSEportalLike.png" width="601" height="502"> </p>
-  <h2 align="justify"><strong>Synchronous instance flow</strong></h2>
-  <p align="justify"><strong>Receive</strong></p>
-  <p align="justify"><img src="images/receive.active.jpg" width="65" height="53"> The TOOLBOX is receiving the SOAP message. </p>
-  <p align="justify"></p>
-  <p align="justify"><img src="images/receive.default.jpg" width="65" height="53">The SOAP message has been received and correctly handled.</p>
-  <p align="justify"></p>
-  <p align="justify"><img src="images/receive.faulted.jpg" width="65" height="53">The SOAP message has been received but an error is occurred.</p>
-  <p align="justify"><strong>Execute</strong></p>
-  <p align="justify"><img src="images/execute.disabled.jpg" width="65" height="53">The TOOLBOX is not executing yet the script. </p>
-  <p align="justify"><img src="images/execute.active.jpg" width="65" height="53">The TOOLBOX is executing the script related to the SOAP message received in the previous step. </p>
-  <p align="justify"><img src="images/execute.default.jpg" width="65" height="53">The script related to the SOAP message received in the previous step has been correctly executed.</p>
-  <p align="justify"><img src="images/execute.faulted.jpg" width="65" height="53">An error occurred while executing the script related to the SOAP message received in the previous step.</p>
-  <p align="justify"><strong>Send</strong></p>
-  <p align="justify"><img src="images/send.disabled.jpg" width="65" height="53"> The response has not bee sent to the SOAP client yet.</p>
-  <p align="justify"><img src="images/send.active.jpg" width="65" height="53">The TOOLBOX is sending back the response to the SOAP client </p>
-  <p align="justify"><img src="images/send.default.jpg" width="65" height="53">The response has bee sent to the SOAP client.</p>
-  <p align="justify"><img src="images/send.faulted.jpg" width="65" height="53">An error occurred while sending back the response to the SOAP client (i.e. validation error).</p>
-  <h2 align="justify"><strong>Asynchronous instance flow</strong></h2>
-<p align="justify"><strong>Receive</strong></p>
-  <p align="justify"><img src="images/receive.disabled.jpg" width="65" height="53">This task is not active yet.</p>
-  <p align="justify"><img src="images/receive.active.jpg" width="65" height="53"> The TOOLBOX is receiving the SOAP message. </p>
-  <p align="justify"></p>
-  <p align="justify"><img src="images/receive.default.jpg" width="65" height="53">The SOAP message has been received and correctly handled.</p>
-  <p align="justify"></p>
-  <p align="justify"><img src="images/receive.faulted.jpg" width="65" height="53">The SOAP message has been received but an error is occurred.</p>
-  <p align="justify"><strong>Execute first script </strong></p>
-  <p align="justify"><img src="images/execute1.disabled.jpg" width="65" height="53">This task is not active yet.</p>
-  <p align="justify"><img src="images/execute1.active.jpg" width="65" height="53">The TOOLBOX is executing the first script related to the SOAP message received in the previous step. </p>
-  <p align="justify"><img src="images/execute1.default.jpg" width="65" height="53">The first script related to the SOAP message received in the previous step has been correctly executed.</p>
-  <p align="justify"><img src="images/execute1.faulted.jpg" width="65" height="53">An error occurred while executing the script related to the SOAP message received in the previous step.</p>
-  <p align="justify"><strong>Execute second script </strong></p>
-  <p align="justify"><img src="images/execute2.disabled.jpg" width="65" height="53">This task is not active yet.</p>
-  <p align="justify"><img src="images/execute2.active.jpg" width="65" height="53">The TOOLBOX is executing the second script related to the SOAP message received in the previous step. </p>
-  <p align="justify"><img src="images/execute2.default.jpg" width="65" height="53">The second script related to the SOAP message received in the previous step has been correctly executed.</p>
-  <p align="justify"><img src="images/execute2.faulted.jpg" width="65" height="53">An error occurred while executing the second script related to the SOAP message received in the previous step.</p>
-  <p align="justify"><strong>Execute third script </strong></p>
-  <p align="justify"><img src="images/execute3.disabled.jpg" width="65" height="53">This task is not active yet.</p>
-  <p align="justify"><img src="images/execute3.active.jpg" width="65" height="53">The TOOLBOX is executing the third script related to the SOAP message received in the previous step. </p>
-  <p align="justify"><img src="images/execute3.default.jpg" width="65" height="53">The third script related to the SOAP message received in the previous step has been correctly executed.</p>
-  <p align="justify"><img src="images/execute3.faulted.jpg" width="65" height="53">An error occurred while executing the third script related to the SOAP message received in the previous step.</p>
-  <p align="justify"><strong>Send</strong></p>
-  <p align="justify"><img src="images/send.disabled.jpg" width="65" height="53"> The response has not bee sent to the SOAP client yet.</p>
-  <p align="justify"><img src="images/send.active.jpg" width="65" height="53">The TOOLBOX is sending back the response to the SOAP client. The number of retry still available is displayed. </p>
-  <p align="justify"><img src="images/send.default.jpg" width="65" height="53">The response has bee sent to the SOAP client.</p>
-  <p align="justify"><img src="images/send.faulted.jpg" width="65" height="53">An error occurred while sending back the response to the SOAP client (i.e. validation error, unable to push back he response).</p>
-</div>
-</body></html>
+            <p align="justify">
+                <img src="images/receive.default.jpg" width="65" height="53"/>The SOAP message has been received and correctly handled.
+            </p>
+            <p align="justify">
+                <img src="images/receive.faulted.jpg" width="65" height="53"/>The SOAP message has been received but an error is occurred.
+            </p>
+            <p align="justify">
+                <strong>Execute</strong>
+            </p>
+            <p align="justify">
+                <img src="images/execute.disabled.jpg" width="65" height="53"/>The TOOLBOX is not executing yet the script. 
+            </p>
+            <p align="justify">
+                <img src="images/execute.active.jpg" width="65" height="53"/>The TOOLBOX is executing the script related to the SOAP message received in the previous step. 
+            </p>
+            <p align="justify">
+                <img src="images/execute.default.jpg" width="65" height="53"/>The script related to the SOAP message received in the previous step has been correctly executed.
+            </p>
+            <p align="justify">
+                <img src="images/execute.faulted.jpg" width="65" height="53"/>An error occurred while executing the script related to the SOAP message received in the previous step.
+            </p>
+            <p align="justify">
+                <strong>Send</strong>
+            </p>
+            <p align="justify">
+                <img src="images/send.disabled.jpg" width="65" height="53"/>The response has not bee sent to the SOAP client yet.
+            </p>
+            <p align="justify">
+                <img src="images/send.active.jpg" width="65" height="53"/>The TOOLBOX is sending back the response to the SOAP client 
+            </p>
+            <p align="justify">
+                <img src="images/send.default.jpg" width="65" height="53"/>The response has bee sent to the SOAP client.
+            </p>
+            <p align="justify">
+                <img src="images/send.faulted.jpg" width="65" height="53"/>An error occurred while sending back the response to the SOAP client (i.e. validation error).
+            </p><h2 align="justify"><strong>Asynchronous instance flow</strong></h2>
+            <p align="justify">
+                <strong>Receive</strong>
+            </p>
+            <p align="justify">
+                <img src="images/receive.disabled.jpg" width="65" height="53"/>This task is not active yet.
+            </p>
+            <p align="justify">
+                <img src="images/receive.active.jpg" width="65" height="53"/>The TOOLBOX is receiving the SOAP message. 
+            </p>
+            <p align="justify">
+            </p>
+            <p align="justify">
+                <img src="images/receive.default.jpg" width="65" height="53"/>The SOAP message has been received and correctly handled.
+            </p>
+            <p align="justify">
+            </p>
+            <p align="justify">
+                <img src="images/receive.faulted.jpg" width="65" height="53"/>The SOAP message has been received but an error is occurred.
+            </p>
+            <p align="justify">
+                <strong>Execute first script </strong>
+            </p>
+            <p align="justify">
+                <img src="images/execute1.disabled.jpg" width="65" height="53"/>This task is not active yet.
+            </p>
+            <p align="justify">
+                <img src="images/execute1.active.jpg" width="65" height="53"/>The TOOLBOX is executing the first script related to the SOAP message received in the previous step. 
+            </p>
+            <p align="justify">
+                <img src="images/execute1.default.jpg" width="65" height="53"/>The first script related to the SOAP message received in the previous step has been correctly executed.
+            </p>
+            <p align="justify">
+                <img src="images/execute1.faulted.jpg" width="65" height="53"/>An error occurred while executing the script related to the SOAP message received in the previous step.
+            </p>
+            <p align="justify">
+                <strong>Execute second script </strong>
+            </p>
+            <p align="justify">
+                <img src="images/execute2.disabled.jpg" width="65" height="53"/>This task is not active yet.
+            </p>
+            <p align="justify">
+                <img src="images/execute2.active.jpg" width="65" height="53"/>The TOOLBOX is executing the second script related to the SOAP message received in the previous step. 
+            </p>
+            <p align="justify">
+                <img src="images/execute2.default.jpg" width="65" height="53"/>The second script related to the SOAP message received in the previous step has been correctly executed.
+            </p>
+            <p align="justify">
+                <img src="images/execute2.faulted.jpg" width="65" height="53"/>An error occurred while executing the second script related to the SOAP message received in the previous step.
+            </p>
+            <p align="justify">
+                <strong>Execute third script </strong>
+            </p>
+            <p align="justify">
+                <img src="images/execute3.disabled.jpg" width="65" height="53"/>This task is not active yet.
+            </p>
+            <p align="justify">
+                <img src="images/execute3.active.jpg" width="65" height="53"/>The TOOLBOX is executing the third script related to the SOAP message received in the previous step. 
+            </p>
+            <p align="justify">
+                <img src="images/execute3.default.jpg" width="65" height="53"/>The third script related to the SOAP message received in the previous step has been correctly executed.
+            </p>
+            <p align="justify">
+                <img src="images/execute3.faulted.jpg" width="65" height="53"/>An error occurred while executing the third script related to the SOAP message received in the previous step.
+            </p>
+            <p align="justify">
+                <strong>Send</strong>
+            </p>
+            <p align="justify">
+                <img src="images/send.disabled.jpg" width="65" height="53"/>The response has not bee sent to the SOAP client yet.
+            </p>
+            <p align="justify">
+                <img src="images/send.active.jpg" width="65" height="53"/>The TOOLBOX is sending back the response to the SOAP client. The number of retry still available is displayed. 
+            </p>
+            <p align="justify">
+                <img src="images/send.default.jpg" width="65" height="53"/>The response has bee sent to the SOAP client.
+            </p>
+            <p align="justify">
+                <img src="images/send.faulted.jpg" width="65" height="53"/>An error occurred while sending back the response to the SOAP client (i.e. validation error, unable to push back he response).
+            </p>
+        </div>
+    </body>
+</html>

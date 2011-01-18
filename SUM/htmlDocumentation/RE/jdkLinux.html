@@ -1,50 +1,70 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>JDK Installation</title>
-<link type="text/css" href="images/page.css" rel="stylesheet">
-<style type="text/css">
-<!--
-.Stile1 {font-style: italic}
-.Stile2 {font-size: 80%}
--->
-</style>
-</head>
-<body text="#000000" bgcolor="#ffffff"> 
-<h1>JDK for Linux</h1> 
-<div class="content"><div style="border: 2px none ; margin-left: 0pt;">
-  
-    <h2>System requirements</h2> 
-    <p> JDK 5.0 is supported on i586 Intel and 100% compatible platforms running Linux. For supported versions of Linux and desktop managers, along with disk and RAM requirements, see <a href="http://java.sun.com/j2se/1.5.0/system-configurations.html">System Configurations</a>.
-    <p> For issues, see the <a href="http://java.sun.com/j2se/1.5.0/install-linux.html#troubleshooting">Troubleshooting</a> section below and the <a href="http://java.sun.com/j2se/1.5.0/relnotes.html#linux">Linux Notes</a> section of the Release Notes.</p>
- 
-    <h2>Installing the JDK</h2> 
-    <p>To install the JDK the following steps must be performed.</p> 
-    <p>1)<a href="http://java.sun.com/javase/downloads/index_jdk5.jsp">Download</a> and check the download file size to ensure that you have downloaded the full, uncorrupted software bundle.</p>
-    <ul>
-        <li>You can download to any directory you choose; it does not have to be the directory where you want to install the JDK.
-            Before you download the file, notice its byte size provided on the download page on the web site. Once the download has completed, compare that file size to the size of the downloaded file to make sure they are equal. </li>
-    </ul>
-    <p>2)Make sure that execute permissions are set on the self-extracting binary. Run this command:</p> 
-    <ul> 
-        <li><em>chmod +x jdk-1_5_0_&lt;version&gt;-linux-i586.bin</em> </li> 
-    </ul> 
-    <p>3)Change directory to the location where you would like the files to be installed.</p> 
-    <ul>
-        <li>The next step installs the JDK into the current directory.</li> 
-    </ul>  
-    <p>4) Run the self-extracting binary. Execute the downloaded file, prepended by the path to it. For example, if the file is in the current directory, prepend it with "./" (necessary if "." is not in the PATH environment variable):</p> 
-    <ul> 
-        <li><em>./jdk-1_5_0_&lt;version&gt;-linux-i586.bin</em></li> 
-    </ul> 
-    <p> The binary code license is displayed, and you are prompted to agree to its terms. </p> 
-    <p> he JDK files are installed in a directory called <em>jdk1.5.0_&lt;version&gt;</em> in the current directory. Follow this link to see its directory structure. The JDK documentation is a separate download.</p> 
-    </div> 
-</div> 
-<div class="content">
-  <div style="border: 2px none ; margin-left: 0pt;"></div> 
-  <div class="attribution"></div> 
-</div> 
-</body>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JDK Installation</title>
+        <link type="text/css" href="images/page.css" rel="stylesheet">
+        <style type="text/css">
+        </style>
+    </head>
+    <body text="#000000" bgcolor="#ffffff">
+        <div class="content">
+            <h1>JDK for Linux</h1>
+            <div style="border: 2px none ; margin-left: 0pt;">
+                <h2>System requirements</h2>
+                <p>
+                JDK 5.0 is supported on i586 Intel and 100% compatible platforms running Linux. For supported versions of Linux and desktop managers, along with disk and RAM requirements, see <a href="http://java.sun.com/j2se/1.5.0/system-configurations.html">System Configurations</a>.
+                <p>
+                    For issues, see the <a href="http://java.sun.com/j2se/1.5.0/install-linux.html#troubleshooting">Troubleshooting</a>
+                    section below and the <a href="http://java.sun.com/j2se/1.5.0/relnotes.html#linux">Linux Notes</a>
+                    section of the Release Notes.
+                </p>
+                <h2>Installing the JDK</h2>
+                <p>
+                    To install the JDK the following steps must be performed.
+                </p>
+                <p>
+                    1)<a href="http://java.sun.com/javase/downloads/index_jdk5.jsp">Download</a>
+                    and check the download file size to ensure that you have downloaded the full, uncorrupted software bundle.
+                </p>
+                <ul>
+                    <li>
+                        You can download to any directory you choose; it does not have to be the directory where you want to install the JDK. 
+                        Before you download the file, notice its byte size provided on the download page on the web site. Once the download has completed, compare that file size to the size of the downloaded file to make sure they are equal. 
+                    </li>
+                </ul>
+                <p>
+                    2)Make sure that execute permissions are set on the self-extracting binary. Run this command:
+                </p>
+                <ul>
+                    <li>
+                        <em>chmod +x jdk-1_5_0_&lt;version&gt;-linux-i586.bin</em>
+                    </li>
+                </ul>
+                <p>
+                    3)Change directory to the location where you would like the files to be installed.
+                </p>
+                <ul>
+                    <li>
+                        The next step installs the JDK into the current directory.
+                    </li>
+                </ul>
+                <p>
+                    4) Run the self-extracting binary. Execute the downloaded file, prepended by the path to it. For example, if the file is in the current directory, prepend it with "./" (necessary if "." is not in the PATH environment variable):
+                </p>
+                <ul>
+                    <li>
+                        <em>./jdk-1_5_0_&lt;version&gt;-linux-i586.bin</em>
+                    </li>
+                </ul>
+                <p>
+                    The binary code license is displayed, and you are prompted to agree to its terms. 
+                </p>
+                <p>
+                    he JDK files are installed in a directory called <em>jdk1.5.0_&lt;version&gt;</em>
+                    in the current directory. Follow this link to see its directory structure. The JDK documentation is a separate download.
+                </p>
+            </div>
+        </div>
+    </body>
 </html>

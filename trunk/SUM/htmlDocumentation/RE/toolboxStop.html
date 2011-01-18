@@ -1,116 +1,134 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>TOOLBOX Management</title>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>TOOLBOX Management</title>
+        <link type="text/css" href="images/page.css" rel="stylesheet">
+    </head>
+    <body text="#000000" bgcolor="#ffffff">
+        <div class="content">
 
-<link type="text/css" href="images/page.css" rel="stylesheet">
-</head>
-
-<body text="#000000" bgcolor="#ffffff">
-<h1>Stopping the TOOLBOX</h1>
-<div class="content"><div style="border: 2px none ; margin-left: 0pt;">
-                    <p>The Toolbox can be stopped stopping all the components.</p>
-                    <h2>Stopping Apache on a Windows machine</h2>
-                    <p><strong><img src="images/note.gif" width="17" height="17"> 
-                      This step has to be performed only if the Apache Server 
-                      has been used as a proxy server.</strong></p>
-                    <p>Apache is assumed installed as a service. After the installation 
-                      Apache is running in the background and will start automatically 
-                      when the machine boots. Apache stopping can be controlled 
-                      in four ways:</p>
-                  </div>
-                </div>
-                <ul>
-                  <li> 
-                    <div class="content"> 
-                      <div style="border: 2px none ; margin-left: 0pt;">by the 
-                        Start menu, selecting &quot;Start&quot;--&gt;&quot;Programs&quot;--&gt;&quot;Apache 
+        <h1>Stopping the TOOLBOX</h1>
+            <div style="border: 2px none ; margin-left: 0pt;">
+                <p>
+                    The Toolbox can be stopped stopping all the components.
+                </p>
+                <h2>Stopping Apache on a Windows machine</h2>
+                <p>
+                    <strong><img src="images/note.gif" width="17" height="17">This step has to be performed only if the Apache Server 
+                        has been used as a proxy server.</strong>
+                </p>
+                <p>
+                    Apache is assumed installed as a service. After the installation 
+                    Apache is running in the background and will start automatically  
+                    when the machine boots. Apache stopping can be controlled 
+                    in four ways:
+                </p>
+            </div>
+        <ul>
+            <li>
+                    <div style="border: 2px none ; margin-left: 0pt;">
+                        by the 
+                        Start menu, selecting &quot;Start&quot;--&gt;&quot;Programs&quot;--&gt;&quot;Apache  
                         HTTP Server 2.0.43&quot;--&gt; &quot;Control Apache Server&quot; 
-                        and finally &quot;Stop&quot;.</div>
+                        and finally &quot;Stop&quot;.
                     </div>
-                  </li>
-                  <li> 
-                    <div class="content"> 
-                      <div style="border: 2px none ; margin-left: 0pt;"> by clicking 
-                        on the &quot;Apache Monitor&quot; icon on the Windows 
-                        Tool bar and selecting &quot;Stop&quot;. </div>
+            </li>
+            <li>
+                    <div style="border: 2px none ; margin-left: 0pt;">
+                        by clicking 
+                        on the &quot;Apache Monitor&quot; icon on the Windows  
+                        Tool bar and selecting &quot;Stop&quot;. 
                     </div>
-                  </li>
-                  <li> 
-                    <div class="content"> 
-                      <div style="border: 2px none ; margin-left: 0pt;">by opening 
-                        the &quot;Services&quot; window (in the &quot;Control 
+            </li>
+            <li>
+                    <div style="border: 2px none ; margin-left: 0pt;">
+                        by opening 
+                        the &quot;Services&quot; window (in the &quot;Control  
                         Panel&quot; on Windows NT, in &quot;Control Panel&quot; 
                         --&gt; &quot;Administration tools&quot; on Windows 2000), 
-                        selecting &quot;Apache2&quot;, and then clicking on Stop.</div>
+                        selecting &quot;Apache2&quot;, and then clicking on Stop.
                     </div>
-                  </li>
-                  <li> 
-                    <div class="content"> 
-                      <div style="border: 2px none ; margin-left: 0pt;">by command 
-                        line. Open a DOS prompt and move into the directory C:\Program 
+            </li>
+            <li>
+                    <div style="border: 2px none ; margin-left: 0pt;">
+                        by command 
+                        line. Open a DOS prompt and move into the directory C:\Program  
                         Files\Apache Group\Apache2\bin, then run one of the following: 
-                        $ apache –k stop<br>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-                <div class="content"> 
-                  <div style="border: 2px none ; margin-left: 0pt;"> 
-                    <h2>Stopping Apache on a Linux machine</h2>
-                    <p>To stop and restart Apache by the apachectl script, type 
-                      one of the following:</p>
-                  </div>
+                        $ apache –k stop
+                        <br>
                 </div>
+            </li>
+        </ul>
+            <div style="border: 2px none ; margin-left: 0pt;">
+                <h2>Stopping Apache on a Linux machine</h2>
+                <p>
+                    To stop and restart Apache by the apachectl script, type 
+                    one of the following:
+                </p>
+            </div>
+        <ul>
+            <li>
+                    <div style="border: 2px none ; margin-left: 0pt;">
+                        $ apachectl 
+                        stop (STOP NOW)
+                    </div>
+            </li>
+            <li>
+                    <div style="border: 2px none ; margin-left: 0pt;">
+                        $ apachectl 
+                        graceful (GRACEFUL RESTART)
+                    </div>
+            </li>
+            <li>
+                    <div style="border: 2px none ; margin-left: 0pt;">
+                        $ apachectl 
+                        restart (RESTART NOW)
+                    </div>
+            </li>
+        </ul>
+            <div style="border: 2px none ; margin-left: 0pt;">
+                <h2>Stopping Tomcat on a Windows machine</h2>
+                <p>
+                    To stop Tomcat, in a dos shell run:
+                </p>
                 <ul>
-                  <li> 
-                    <div class="content"> 
-                      <div style="border: 2px none ; margin-left: 0pt;">$ apachectl 
-                        stop (STOP NOW)</div>
-                    </div>
-                  </li>
-                  <li> 
-                    <div class="content"> 
-                      <div style="border: 2px none ; margin-left: 0pt;">$ apachectl 
-                        graceful (GRACEFUL RESTART)</div>
-                    </div>
-                  </li>
-                  <li> 
-                    <div class="content"> 
-                      <div style="border: 2px none ; margin-left: 0pt;">$ apachectl 
-                        restart (RESTART NOW)</div>
-                    </div>
-                  </li>
+                    <li>
+                        <em>$CATALINA_HOME\bin\shutdown.bat</em>
+                    </li>
                 </ul>
-                <div class="content"> 
-                  <div style="border: 2px none ; margin-left: 0pt;"> 
-                    <h2>Stopping Tomcat on a Windows machine</h2>
-                    <p>To stop Tomcat, in a dos shell run:</p>
-                    <ul>
-                      <li><em>$CATALINA_HOME\bin\shutdown.bat</em></li>
-                    </ul>
-                    <p>where <em>$CATALINA_HOME</em> is the full path to the Tomcat installation directory</p>
-                    <p>Starting from TOMCAT 5.0 the <em>shutdown.bat</em> scripts is no more provided. Thus the server can be stopped via the shortcut Monitor Tomcat in Console placed to Start Menu --&gt; Programs --&gt; Apache Tomcat 5.X --&gt; Monitor Tomcat. This will add an icon in the toolbar. Double click on the new icon and stop the server by clicking on the Stop button.</p>
-                    <h2>Stopping Tomcat on Linux machine</h2>
-                    <p>To stop Tomcat, perform:</p>
-                  </div>
-                </div>
-                <ul>
-                  <li> 
-                    <div class="content"> 
-                      <div style="border: 2px none ; margin-left: 0pt;">$ cd Root_Directory_Of_Tomcat 
-                        /bin</div>
+                <p>
+                    where <em>$CATALINA_HOME</em>
+                    is the full path to the Tomcat installation directory
+                </p>
+                <p>
+                    Starting from TOMCAT 5.0 the <em>shutdown.bat</em>
+                    scripts is no more provided. Thus the server can be stopped via the shortcut Monitor Tomcat in Console placed to Start Menu --&gt; Programs --&gt; Apache Tomcat 5.X --&gt; Monitor Tomcat. This will add an icon in the toolbar. Double click on the new icon and stop the server by clicking on the Stop button.
+                </p>
+                <h2>Stopping Tomcat on Linux machine</h2>
+                <p>
+                    To stop Tomcat, perform:
+                </p>
+        </div>
+        <ul>
+            <li>
+                    <div style="border: 2px none ; margin-left: 0pt;">
+                        $ cd Root_Directory_Of_Tomcat 
+                        /bin
                     </div>
-                  </li>
-                  <li> 
-                    <div class="content"> 
-                      <div style="border: 2px none ; margin-left: 0pt;">$ shutdown.sh</div>
+            </li>
+            <li>
+                    <div style="border: 2px none ; margin-left: 0pt;">
+                        $ shutdown.sh
                     </div>
-                  </li>
-                </ul>
-                <div class="content"> 
-                  <div style="border: 2px none ; margin-left: 0pt;"> 
-                    <p>where Root_Directory_Of_Tomcat is the Tomcat installation 
-                      directory.</p>
-                  </div>
-                  </div>
-</body></html>
+            </li>
+        </ul>
+            <div style="border: 2px none ; margin-left: 0pt;">
+                <p>
+                    where Root_Directory_Of_Tomcat is the Tomcat installation 
+                    directory.
+                </p>
+            </div>
+            </div>
+    </body>
+</html>

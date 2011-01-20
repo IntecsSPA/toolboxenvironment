@@ -143,6 +143,7 @@ public class NETCDFRaster implements RasterData{
               if(!( nodeAttributeValue == null||nodeAttributeValue.equals("")) ){
                   if(nodeAttributeValue.contains(PREFIX_SOURCE_REFERENCE+"")){
                      if(!nodeAttributeValue.contains(PREFIX_ATTRIBUTE_SOURCE_REFERENCE+"")){
+
                         sourceRaster=this.getSourceRasterByNameRef(sourceNodes, nodeAttributeValue);
                         netcdfRaster.add2DLayerfromRaster(currentNode.getAttribute(LAYER_NAME), dimensionsList, stringType, sourceRaster.getRaster());
                      }else{

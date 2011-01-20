@@ -2,12 +2,11 @@
 package it.intecs.pisa.gis.raster.instance;
 
 import it.intecs.pisa.toolbox.configuration.ToolboxConfiguration;
-import it.intecs.pisa.toolbox.engine.ToolboxEngineVariablesKeys;
 import java.awt.image.DataBuffer;
 import java.awt.image.Raster;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,6 @@ import ucar.ma2.ArrayInt;
 import ucar.ma2.ArrayObject;
 import ucar.ma2.ArrayShort;
 import ucar.ma2.Index;
-import ucar.ma2.IndexIterator;
 import ucar.nc2.Dimension;
 import ucar.nc2.NetcdfFileWriteable;
 import ucar.nc2.Variable;
@@ -118,16 +116,17 @@ public class NETCDF implements RasterInstance {
         this.ncfile.addGlobalAttribute(newAttribute);
     }
 
-   public void add2DLayerfromRaster(String variableName, ArrayList dimensions, String layerType, Raster rasterData) throws FileNotFoundException, IOException, InvalidRangeException, ClassNotFoundException{
+   public void add2DLayerfromRaster(String variableName, ArrayList dimensions, String layerType, Raster rasterData) throws FileNotFoundException, IOException, InvalidRangeException, ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
          DataType variableDataType=null;
          DataBuffer rasterDataBuffer=rasterData.getDataBuffer();
          Array dataArray=null;
          int i;
+       
          int[] raster2D = new int[2];
          for (i=0; i<dimensions.size(); i++)
               raster2D[i] = ((Dimension)dimensions.get(i)).getLength();
      
-             int dataType=rasterDataBuffer.getDataType();
+            /* int dataType=rasterDataBuffer.getDataType();
              switch(dataType){
                case DataBuffer.TYPE_BYTE:
                    dataArray=new ArrayInt(raster2D);
@@ -157,11 +156,14 @@ public class NETCDF implements RasterInstance {
                     dataArray=new ArrayInt(raster2D);
                     variableDataType=DataType.INT;
                  break;
-             }
+             }*/
+         
+         Class dataArrayClass=this.getClassArrayForType(layerType);
+         dataArray=(Array) dataArrayClass.getConstructors()[0].newInstance(raster2D);
 
-
-         this.addVariable(variableName, variableDataType, dimensions);
-         this.copyDataBufferTo2DArray(rasterDataBuffer, dataArray, raster2D);
+         this.copyDataBufferTo2DArray(rasterData, layerType, dataArray, raster2D);
+         this.addVariable(variableName, this.getVariableDataTypeFromStringLayerType(layerType), dimensions);
+         
          this.writeLayersData.add(dataArray);
           this.writeLayersName.add(variableName);
     }
@@ -233,17 +235,29 @@ public class NETCDF implements RasterInstance {
       return dimensions;
     }
 
-   private void copyDataBufferTo2DArray(DataBuffer db, Array dataArray, int[] arrayDimensions){
-    int i,x,y;
+   private void copyDataBufferTo2DArray(Raster raster, String layerType, Array dataArray, int[] arrayDimensions) throws NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException{
+    int i,x,y,u;
     Index dataArrayIndex;
     dataArrayIndex=dataArray.getIndex();
-    for(i=0; i<db.getSize(); i++){
+    int indexArray[]= new int[arrayDimensions.length];
+    Class typeClass=this.getClassForType(layerType);
+   /* for(i=0; i<db.getSize(); i++){
       x= i%arrayDimensions[1];
       y= i/arrayDimensions[1];
       if(y<arrayDimensions[0])
          dataArray.setObject(dataArrayIndex.set(y, x),db.getElem(i));
       else
          break;
+    }*/
+     
+    for(i=0; i<(arrayDimensions[1]); i++)
+       for(u=0; u<(arrayDimensions[0]); u++){
+           x= i;
+           y= (arrayDimensions[0])-u;
+           indexArray[0]=y-1;
+           indexArray[1]=x;
+           dataArray.setObject(dataArrayIndex.set(indexArray), typeClass.getConstructor(String.class).newInstance(""+raster.getSampleFloat(i, u, 0)));
+
     }
 
    }

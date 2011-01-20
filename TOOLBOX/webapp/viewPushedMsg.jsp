@@ -125,7 +125,7 @@ function closeggg()
 					%>
 
 						<tr><!-- Row 2 -->
-                                                        <%String href= ("/TOOLBOX/Push/" + fileName);%>
+                                                        <%String href= ("/TOOLBOX/Push?cmd=GetPushedMessage&MessageId=" + fileName);%>
 							<td class="sortable" colspan=1 nowrap><a href="<%=href%>"><%= fileName %></a></td>
 							<td align="left" class="sortable" width='20%' colspan=1 nowrap><%=new Date(file.lastModified()).toString()%></td>
 							<td class="sortable" align="left" width='20%'>

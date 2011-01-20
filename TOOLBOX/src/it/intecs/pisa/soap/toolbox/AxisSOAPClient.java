@@ -225,6 +225,74 @@ Read more: http://kickjava.com/src/org/apache/axis2/engine/SOAPversionTest.java.
         return XMLUtils.toDOM(result);
     }
 
+
+        /**
+     * This method invokes SOAP request using AXIS2 as SOAP engine.
+     * @author Messimiliano Fanciulli
+     * @param url
+     * @param message is the Element representing the body of the SOAP message to be sent
+     * @param soapAction
+     * @return the Element representing the body of the SOAP response
+     * @throws Exception
+     */
+     /*options.setTransportIn(new TransportInDescription(Constants.TRANSPORT_HTTP));
+        options.setTransportOut(new TransportOutDescription(Constants.TRANSPORT_HTTP));*/
+    public static Element sendReceive(URL url, Element message, Element[] soapHeaders, String soapAction, String messageID, String relatesTo) throws Exception {
+
+        Options options = new Options();
+        ServiceClient client = new ServiceClient();
+
+        InputStream inStream;
+        options.setTo(new EndpointReference(url.toString()));
+
+        options.setAction(soapAction);
+        options.setTimeOutInMilliSeconds(600000);
+
+        //Blocking invocation
+        options.setSoapVersionURI(SOAP11Constants.SOAP_ENVELOPE_NAMESPACE_URI);
+        options.setTransportInfo(Constants.TRANSPORT_HTTP, Constants.TRANSPORT_HTTP, false);
+        options.setProperty(org.apache.axis2.transport.http.HTTPConstants.CHUNKED, Boolean.FALSE);
+
+        client.setOptions(options);
+
+        if(relatesTo!=null && relatesTo.equals("")==false ){
+            RelatesTo rel2 = new RelatesTo();
+            rel2.setValue(relatesTo);
+            RelatesTo[] arrRelatesTo = new RelatesTo[]{rel2};
+            options.setRelationships(arrRelatesTo);
+        }
+
+
+        if(messageID!=null && messageID.equals("")==false)
+            options.setMessageId(messageID);
+
+
+        if(soapHeaders!=null)
+        {
+            for(Element header:soapHeaders)
+            {
+                addHeader(header,client);
+
+            }
+        }
+
+        inStream=DOMUtil.getDocumentAsInputStream(message.getOwnerDocument());
+        OMElement result=null;
+        OMElement inputMsg;
+        try
+        {
+            inputMsg=(OMElement)XMLUtils.toOM(inStream);
+            result = client.sendReceive(inputMsg);
+
+        }
+        catch(Exception ecc)
+        {
+            ecc.printStackTrace();
+        }
+        return XMLUtils.toDOM(result);
+    }
+
+
   
     /**
      *

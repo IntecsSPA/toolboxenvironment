@@ -3,12 +3,9 @@ package it.intecs.pisa.toolbox.plugins.nativeTagPlugin;
 import it.intecs.pisa.util.DOMUtil;
 import java.net.URL;
 import java.util.LinkedList;
-
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import it.intecs.pisa.soap.toolbox.AxisSOAPClient;
-import org.apache.axis2.addressing.RelatesTo;
 
 public class SoapCallTag extends NativeTagExecutor {
     protected String tagName="soapCall";
@@ -35,7 +32,7 @@ public class SoapCallTag extends NativeTagExecutor {
         soapParams= DOMUtil.getChildren(soapCall);
         url = new URL((String) this.executeChildTag((Element) soapParams.get(0)));
         messageID=evaluateAttribute(soapCall, "messageId");
-        relateTo=evaluateAttribute(soapCall, "relateTo");
+        relateTo=evaluateAttribute(soapCall, "relatesTo");
 
         soapAction = (soapCall.hasAttribute(OPERATION) ? evaluateAttribute(soapCall,OPERATION) : "");
         
@@ -75,11 +72,7 @@ public class SoapCallTag extends NativeTagExecutor {
             if(relateTo== null)
               soapResponse=AxisSOAPClient.sendReceive(url, request.getDocumentElement() , headers,soapAction,messageID);
             else{
-              RelatesTo rel2 = new RelatesTo();
-              rel2.setValue(relateTo);
-              RelatesTo[] arrRelatesTo = new RelatesTo[]{rel2};
-              soapResponse=AxisSOAPClient.sendReceive(url, request.getDocumentElement() , headers,soapAction,messageID);
-            //  soapResponse=AxisSOAPClient.sendReceive(url, el, headers, soapAction, messageID)url, request.getDocumentElement(), soapAction, rels2)
+              soapResponse=AxisSOAPClient.sendReceive(url, request.getDocumentElement() , headers,soapAction,messageID,relateTo);
             }
         }
         }

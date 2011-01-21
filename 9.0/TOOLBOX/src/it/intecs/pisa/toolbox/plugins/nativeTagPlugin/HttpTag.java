@@ -38,6 +38,8 @@ public class HttpTag extends NativeTagExecutor {
         Element urlTag = DOMUtil.getChildByTagName(http, "url");
         urlStr = (String) this.executeChildTag(DOMUtil.getFirstChild(urlTag));
 
+
+        urlStr=urlStr.replaceAll("&amp;", "&");
        // Create an instance of HttpClient.
        HttpClient client = new HttpClient();
 

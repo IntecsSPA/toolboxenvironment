@@ -34,6 +34,7 @@ import org.w3c.dom.*;
 
 
 import it.intecs.pisa.util.*;
+import java.util.Date;
 import java.util.StringTokenizer;
 
 public class PushServer extends HttpServlet {
@@ -59,7 +60,7 @@ public class PushServer extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
-        String messageId = null;
+        String relatesTo = null;
         Document soapRequestDocument = null;
 
         try {
@@ -81,32 +82,34 @@ public class PushServer extends HttpServlet {
                         }
                     }
 
-                    messageId = tokenizer.nextToken();
+                    relatesTo = tokenizer.nextToken();
                 } catch (Exception e) {
-                    messageId = null;
+                    relatesTo = null;
                 }
             }
 
 
             try {
-                if (messageId == null) {
-                    messageId = getModifiedMessageId(soapRequestDocument.getElementsByTagNameNS("http://schemas.xmlsoap.org/ws/2003/03/addressing", "RelatesTo").item(0).getFirstChild().getNodeValue());
+                if (relatesTo == null) {
+                    relatesTo = soapRequestDocument.getElementsByTagNameNS("http://schemas.xmlsoap.org/ws/2003/03/addressing", "RelatesTo").item(0).getFirstChild().getNodeValue();
                 }
             } catch (Exception e) {
-                messageId = null;
+                relatesTo = null;
             }
 
             try {
-                if (messageId == null) {
-                    messageId = getModifiedMessageId(soapRequestDocument.getElementsByTagNameNS("http://www.w3.org/2005/08/addressing", "RelatesTo").item(0).getFirstChild().getNodeValue());
+                if (relatesTo == null) {
+                    relatesTo = soapRequestDocument.getElementsByTagNameNS("http://www.w3.org/2005/08/addressing", "RelatesTo").item(0).getFirstChild().getNodeValue();
                 }
             } catch (Exception ecc) {
-                messageId = null;
+                relatesTo = null;
             }
 
-            if(messageId==null)
-                messageId = "noMessageId";
+            if(relatesTo==null)
+                relatesTo = "noRelatesTo";
 
+            Date messageDate= new Date();
+            relatesTo=getModifiedRelatesTo(relatesTo+"_"+messageDate.toString()); 
             response.setContentType("text/xml");
             response.setCharacterEncoding(request.getCharacterEncoding());
             
@@ -115,7 +118,7 @@ public class PushServer extends HttpServlet {
             new XMLSerializer2(writer).serialize(soapRequestDocument);
             writer.close();
 
-            dumpMessage(soapRequestDocument, new File(new File(root, PUSH), messageId + ".xml"));
+            dumpMessage(soapRequestDocument, new File(new File(root, PUSH), relatesTo + ".xml"));
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
@@ -146,8 +149,8 @@ public class PushServer extends HttpServlet {
         }
     }
 
-    private String getModifiedMessageId(String messageId) {
-        return messageId.replaceAll("[/\\\\:*?<>|]", "_");
+    private String getModifiedRelatesTo(String messageId) {
+        return messageId.replaceAll("[/\\\\:*?<>| ]", "_");
     }
 
     /**
@@ -159,9 +162,9 @@ public class PushServer extends HttpServlet {
         String modifiedMesssageId;
         File pushedMessage;
 
-        modifiedMesssageId = getModifiedMessageId(messageId);
+        modifiedMesssageId = getModifiedRelatesTo(messageId);
 
-        pushedMessage = new File(new File(root, PUSH), modifiedMesssageId + ".xml");
+        pushedMessage = new File(new File(root, PUSH), modifiedMesssageId);
         return pushedMessage;
     }
 }

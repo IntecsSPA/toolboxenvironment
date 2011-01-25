@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Map;
 
 /**
  *
@@ -232,7 +231,7 @@ public class WSDLBuilder {
         try
         {
             //For WS-Addressing
-            wsdl.addImport("http://schemas.xmlsoap.org/ws/2003/03/addressing", "http://schemas.xmlsoap.org/ws/2003/03/addressing/");
+            wsdl.addImport("http://schemas.xmlsoap.org/ws/2003/03/addressing", "http://schemas.xmlsoap.org/ws/2003/03/addressing/addressing.xsd");
 
             implInterf=service.getImplementedInterface();
 

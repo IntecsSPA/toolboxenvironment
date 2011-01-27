@@ -41,7 +41,7 @@
       <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
       <td align="left" bgcolor="#F0F0F0"><pre>&lt;addCleanupMarker value=&quot;A_Marker&quot;&gt;</pre>
           <p><font>Adds the marker "A_Marker".</font></p>
-          <p><font>SEE ALSO <a href="../../overview.html#cleanup">Cleanup section</a></font></p></td>
+      </td>
     </tr>
   </tbody>
 </table>
@@ -65,8 +65,7 @@
           <font>In case of failure of the script checks if the marker "Marker_One" exsists: if so, the first cleanup script is executed. The same procedure is performed for the other two cleanup scripts.</font>
           <pre>&lt;cleanupProcedure&gt;<br>	&lt;cleanup&gt;<br>		&lt;!-- cleanup script --&gt;<br>	&lt;/cleanup&gt;<br>	&lt;cleanup marker=&quot;Marker_One&quot;&gt;<br>		&lt;!-- cleanup script related to the marker Marker_One --&gt;<br>	&lt;/cleanup&gt;<br>	&lt;cleanup marker=&quot;Marker_Two&quot;&gt;<br>		&lt;!--cleanup script related to the marker Marker_Two--&gt;<br>	&lt;/cleanup&gt;<br>	&lt;cleanup marker=&quot;Marker_Three&quot;&gt;<br>		&lt;!--cleanup script related to the marker Marker_Three--&gt;<br>	&lt;/cleanup&gt;<br>&lt;/cleanupProcedure&gt;</pre>
           <font>In case of failure of the script, executes the first cleanup script (without performing any check on the existent markers), then checks if the marker "Marker_One" exsists: if so, the second cleanup script is executed. The some procedure is performed for the other two cleanup scripts.</font>
-          <p></p>
-          <p><font>SEE ALSO <a href="../../overview.html#cleanup">Cleanup section</a></font></p></td>
+      </td>
     </tr>
   </tbody>
 </table>
@@ -107,7 +106,7 @@
       <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
       <td align="left" bgcolor="#F0F0F0"><pre>&lt;removeCleanupMarker value=&quot;A_Marker&quot;&gt;</pre>
           <p><font>Removes the marker "A_Marker".</font></p>
-          <p><font>SEE ALSO <a href="../../overview.html#cleanup">Cleanup section</a></font></p></td>
+      </td>
     </tr>
   </tbody>
 </table>

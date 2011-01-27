@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.opengis.net/cat/csw/2.0.2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <csw:GetRecordById service="CSW" version="2.0.2" outputSchema="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" xmlns:wrs="http://www.opengis.net/cat/wrs/1.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0">
+         <csw:Id>urn:urn:ogc:def:EOP:ESA.EECF.ENVISAT:ASA:GMI:1S:EN1-07010100292384-14233.XG0:pkg</csw:Id>
+         <csw:ElementSetName typeNames="rim:RegistryPackage">summary</csw:ElementSetName>
+      </csw:GetRecordById>
+   </soapenv:Body>
+</soapenv:Envelope>

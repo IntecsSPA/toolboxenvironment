@@ -2,28 +2,65 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Additional Utilities</title>
 
-<link type="text/css" href="images/page.css" rel="stylesheet"></head>
+<link type="text/css" href="images/page.css" rel="stylesheet">
+</head>
 
 <body text="#000000" bgcolor="#ffffff">
 <h1>Testing a Catalogue</h1>
 <div class="content">
                   <p>Click on the &quot;Test center&quot; link on the toolbar. The browser should display</p>
-                  <p align="center">&nbsp;</p>
+                  <p align="center"><img src="images/TEST01.png" width="936" height="272"></p>
                   <p>Click on the &quot;Test a catalogue&quot; section link. </p>
-                  <p>This page allows testing a catalogue exposing a SOAP interface 
-                    compliant with the <a href="icd.html">SSE ICD</a> and with the EOLI ICD</p>
-                  <p align="center">&nbsp;</p>
-                  <p>Select the operation you want to test from the list and click on the &quot;Next&gt;&gt;&quot; button.</p>
-                  <p>If a Search operation has been selected the following page should be displayed</p>
-                  <p align="center">&nbsp;</p>
-                  <p>Fill the &quot;Query parameters&quot; and the &quot;SOAP 
-                    call parameters&quot;.</p>
-                  <p>Push the &quot;send&quot; button. The 
-                    browser should display the response page.</p>
-                  <p>If a Present operation has been selected the following page should be displayed</p>
-<p align="center">&nbsp;</p>
-                  <p>Fill the &quot;Query parameters&quot; and the &quot;SOAP call parameters&quot;.</p>
-                  <p>Push the &quot;send&quot; button. The browser should display the response page.</p>
+                  <p>A catalogue client is displayed in a new window.</p>
+                  <p align="center"><img src="images/TEST_CAT2.png" width="936" height="419"> </p>
+                  <p><img src="images/note.gif" width="17" height="17"> <strong>This page can be open also from the Toolbox Application client selecting the following link <img src="images/TEST_CAT1.png" width="114" height="24"></strong>.</p>
+                  <p>Select the catalogue interface you want to test</p>
+                  <p align="center"><img src="images/TEST_CAT3.png" width="389" height="222"></p>
+                  <p>A new menu should appear. The menu content depends on the interface you have selected. In the following we report a description of the interface for the CSW-ebRIM-EO_Profile-06-131r6 interface. </p>
+                  <p align="center"><img src="images/TEST_CAT4.png" width="389" height="369"></p>
+                  <p>In the Protocol Parameters section select the SOAP options</p>
+                  <ul>
+                    <li>Catalogue Url: SOAP end point of the catalogue to be accessed. </li>
+                    <li>SOAP Version: SOAP version to be used to compose the catalogue request. </li>
+                  </ul>
+                  <p align="center"><img src="images/TEST_CAT6.png" width="445" height="621"></p>
+                  <p>In the Basic tab set the following parameters </p>
+                  <ul>
+                    <li>Collection: enter the collection to be used in the search criteria </li>
+                    <li>Spatial Coverage: click on SetAOI and draw a rectangle on the map to define the area of interest to be used in the search criteria </li>
+                    <li>Temporal Coverage. Enter the time window to be used in the search criteria                   
+                      <ul>
+                        <li>From: select a date. The time will be automatically set to 00:00:00 </li>
+                      <li>To: select a date. The time will be automatically set to 23:59:59</li>
+                      </ul>
+                    </li>
+                    <li>Presentation: select one of the available presentation to modify the ontent of the response message </li>
+                    <li>Retrieve: define the number of elements to be returned in the response message </li>
+                    <li>Starting from : define the cursor to allow the pagination of the results</li>
+                  </ul>
+                  <p align="center"><img src="images/TEST_CAT5.png" width="445" height="303"> </p>
+                  <p>In the Advanced tab select </p>
+                  <ul>
+                    <li>Platform:
+                      <ul>
+                        <li>Short Name: short name of the platform</li>
+                      <li>Serial Number: Serial Number of the platform </li>
+                      </ul>
+                    </li>
+                    <li>Cloud Coverage:</li>
+                  </ul>
+                  <p align="center"><img src="images/TEST_CAT7.png" width="937" height="552"></p>
+                  <p>When all the parameters you want to include in the query have been set click on Send Request.</p>
+                  <p align="center"><img src="images/TEST_CAT8.png" width="936" height="551"></p>
+                  <p>A response slide bar is open and a waiting icon is displayed.</p>
+                  <p align="center"><img src="images/TEST_CAT9.png" width="926" height="545"> </p>
+                  <p>If a successful resposne is received the Response slide bar should now display the results returned by the catalogue. The map should also display the coverage of each result. click on the &quot;+&quot; on the left of the table to apoen a menurelated to the raw selected. </p>
+                  <p align="center"><img src="images/TEST_CAT10.png" width="58" height="34"></p>
+                  <p>The two icons allows you to:</p>
+                  <ul>
+                    <li>get detailed information related to the item selected</li>
+                    <li>identify the item on the map </li>
+                  </ul>
                   <p>&nbsp;</p>
 </div>
 </body></html>

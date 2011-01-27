@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.opengis.net/cat/csw/2.0.2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <GetRecords maxRecords="10" outputFormat="application/xml" outputSchema="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" resultType="results" service="CSW" startPosition="1" version="2.0.2" xmlns="http://www.opengis.net/cat/csw/2.0.2" xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" xmlns:wrs="http://www.opengis.net/cat/wrs/1.0">
+         <Query typeNames="rim:RegistryPackage rim:ExtrinsicObject rim:Association">
+            <ElementSetName typeNames="rim:RegistryPackage">full</ElementSetName>
+            <Constraint version="1.1.0">
+               <Filter xmlns="http://www.opengis.net/ogc">
+                  <And>
+                     <!--START - Associatate the ExtrinsicObject to the RegistryPackage-->
+                     <ogc:PropertyIsEqualTo>
+                        <ogc:PropertyName>/rim:Association/@targetObject</ogc:PropertyName>
+                        <ogc:PropertyName>/wrs:ExtrinsicObject/@id</ogc:PropertyName>
+                     </ogc:PropertyIsEqualTo>
+                     <ogc:PropertyIsEqualTo>
+                        <ogc:PropertyName>/rim:Association/@sourceObject</ogc:PropertyName>
+                        <ogc:PropertyName>/rim:RegistryPackage/@id</ogc:PropertyName>
+                     </ogc:PropertyIsEqualTo>
+                     <!--END-->
+                     <PropertyIsEqualTo>
+                        <PropertyName>/rim:ExtrinsicObject/@objectType</PropertyName>
+                        <Literal>urn:x-ogc:specification:csw-ebrim:ObjectType:EO:EOProduct</Literal>
+                     </PropertyIsEqualTo>
+                     <PropertyIsGreaterThanOrEqualTo>
+                        <PropertyName>/rim:ExtrinsicObject/rim:Slot[@name="urn:ogc:def:ebRIM-Slot:OGC-06-131:beginPosition"]/rim:ValueList/rim:Value[1]</PropertyName>
+                        <Literal>2007-01-01T00:00:00.000</Literal>
+                     </PropertyIsGreaterThanOrEqualTo>
+                     <PropertyIsLessThanOrEqualTo>
+                        <PropertyName>/rim:ExtrinsicObject/rim:Slot[@name="urn:ogc:def:ebRIM-Slot:OGC-06-131:endPosition"]/rim:ValueList/rim:Value[1]</PropertyName>
+                        <Literal>2007-01-01T23:59:59.000</Literal>
+                     </PropertyIsLessThanOrEqualTo>
+                     <BBOX>
+                        <PropertyName>/rim:ExtrinsicObject/rim:Slot[@name="urn:ogc:def:ebRIM-Slot:OGC-06-131:multiExtentOf"]/wrs:ValueList/wrs:AnyValue[1]</PropertyName>
+                        <Envelope srsName="EPSG:4326" xmlns="http://www.opengis.net/gml" xmlns:sch="http://www.ascc.net/xml/schematron" xmlns:xlink="http://www.w3.org/1999/xlink">
+                           <lowerCorner>-61.5262 -60.9539</lowerCorner>
+                           <upperCorner>81.5580 165.1192</upperCorner>
+                        </Envelope>
+                     </BBOX>
+                     <PropertyIsEqualTo>
+                        <PropertyName>/rim:ExtrinsicObject/rim:Slot[@name="urn:ogc:def:ebRIM-Slot:OGC-06-131:parentIdentifier"]/rim:ValueList/rim:Value[1]</PropertyName>
+                        <Literal>urn:ogc:def:EOP:ESA.EECF.ENVISAT_ASA_GMI_1S</Literal>
+                     </PropertyIsEqualTo>
+                  </And>
+               </Filter>
+            </Constraint>
+         </Query>
+      </GetRecords>
+   </soapenv:Body>
+</soapenv:Envelope>

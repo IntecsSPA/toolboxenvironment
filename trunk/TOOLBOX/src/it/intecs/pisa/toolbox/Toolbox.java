@@ -350,20 +350,16 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             domUtil = new DOMUtil(true);
 
             try {
-                BufferedReader buf = req.getReader();
-                soapRequestDocument = domUtil.readerToDocument(buf);
+                soapRequestDocument =   domUtil.inputStreamToDocument(req.getInputStream());
             } catch (Exception e) {
                 errorMsg = "Error extracting SOAP payload: " + MiscConstants.CDATA_S + e.getMessage() + MiscConstants.CDATA_E;
                 logger.error(errorMsg);
                 throw new ToolboxException(errorMsg);
             }
-
             //TODO this only works for SOAP1.1
-            soapaction = req.getHeader("soapaction");
+            soapaction = req.getHeader("soapaction").replaceAll("\"", "");
             MessageContext msgCtx = new MessageContext();
-
             responseDocument = executeServiceRequest(soapaction, soapRequestDocument, requestURI, debugMode);
-
             try {
                 Util.addSOAPEnvelope(responseDocument);
                 new XMLSerializer2(writer).serialize(responseDocument);

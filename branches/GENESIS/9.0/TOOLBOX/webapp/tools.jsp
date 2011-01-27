@@ -17,6 +17,36 @@ PropertyResourceBundle messages = (PropertyResourceBundle)ResourceBundle.getBund
 String bc = "<a href='main.jsp'>Home</a>&nbsp;&gt;&nbsp;Tools";
 String toolboxUrl=ToolboxNetwork.getEndpointURL();
 %>
+
+<style type="text/css">
+
+.upload-icon {
+            background: url('images/image_add.png') no-repeat 0 0 !important;
+        }
+
+</style>
+
+<link rel="stylesheet" type="text/css" href="jsScripts/import/gis-client-library/widgets/style/css/webgis.css" />
+<script type="text/javascript" src="jsScripts/import/gis-client-library/import/OpenLayers/lib/OpenLayers.js"></script>
+<link rel="stylesheet" type="text/css" href="jsScripts/import/gis-client-library/import/ext/ux/fileuploadfield/css/fileuploadfield.css"/>
+
+<script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/ux/fileuploadfield/FileUploadField.js"></script>
+<script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/ux/Spotlight.js"></script>
+<script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/openlayers/Format/XMLKeyValue.js"></script>
+
+<script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/webgis/Panel/WindowInterfacePanel.js"></script>
+<script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/general.js"></script>
+<script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/manager.js"></script>
+<script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/browserDetect.js"></script>
+<script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/XmlDoc.js"></script>
+<script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/ext/ExtFormUtils.js"></script>
+<script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/ext/ExtFormType.js"></script>
+<script type="text/javascript" src="jsScripts/import/gis-client-library/import/sarissa/Sarissa.js"></script>
+<script type="text/javascript" src="jsScripts/import/gis-client-library/import/sarissa/sarissa_ieemu_xpath.js"></script>
+
+<script type="text/javascript" src="jsScripts/serviceTools/scripts/serviceToolsManager.js"></script>
+
+
 <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center> 
     <TBODY> 
         <TR> 
@@ -58,7 +88,8 @@ String toolboxUrl=ToolboxNetwork.getEndpointURL();
                 %>
                 <DIV class=portletItem id=05>
                     <DIV>
-                        <A href="<%= response.encodeURL("ebrrHarvest.jsp?serviceName="+serviceName) %>"><fmt:message key="ebrr.harvest" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
+
+                        <A href=# onclick="javascript:harvestFromUrlInterface('<%=serviceName%>');"><fmt:message key="ebrr.harvest" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
                     </DIV>
                     <P>
                         <A href="<%= response.encodeURL("ebrrHarvest.jsp?serviceName="+serviceName) %>"><IMG class=labelHomePage title=validate alt="" src="images/harvest.png" align=middle border=0></A>
@@ -66,10 +97,12 @@ String toolboxUrl=ToolboxNetwork.getEndpointURL();
                 </DIV>
                 <DIV class=portletItem id=05>
                     <DIV>
-                        <A href="<%= response.encodeURL("ebrrHarvestFromDisk.jsp?serviceName="+serviceName) %>"><fmt:message key="ebrr.harvestfromdisk" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
+                        <!-- <A href=" response.encodeURL("ebrrHarvestFromDisk.jsp?serviceName="+serviceName) ">-->
+                        <A href=# onclick="javascript:harvestFromFileInterface('<%=serviceName%>');">
+                        <fmt:message key="ebrr.harvestfromdisk" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
                     </DIV>
                     <P>
-                        <A href="<%= response.encodeURL("ebrrHarvestFromDisk.jsp?serviceName="+serviceName) %>"><IMG class=labelHomePage title=validate alt="<fmt:message key="ebrr.harvestfromdisk" bundle="${lang}"/>" src="images/harvestFromDisk.png" align=middle border=0></A>
+                       <A href=# onclick="javascript:harvestFromFileInterface('<%=serviceName%>');"><IMG class=labelHomePage title=validate alt="<fmt:message key="ebrr.harvestfromdisk" bundle="${lang}"/>" src="images/harvestFromDisk.png" align=middle border=0></A>
                     <fmt:message key="ebrr.harvestfromdisk.description" bundle="${lang}"/></P>
                 </DIV>
 

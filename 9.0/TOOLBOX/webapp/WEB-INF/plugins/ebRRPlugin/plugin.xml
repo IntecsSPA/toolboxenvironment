@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin name="ebRRPlugin" version="1.0">
     <tagPlugin namespace="http://pisa.intecs.it/toolbox/ebrr" class="it.intecs.pisa.toolbox.plugins.ebrr.EbrrTagPlugin"/>
-    <commandViaPost cmd="ebRRHarvest" class="it.intecs.pisa.toolbox.plugins.ebrr.HarvestFromGUICommand"/>
-    <commandViaPost cmd="ebRRHarvestFile" class="it.intecs.pisa.toolbox.plugins.ebrr.HarvestFromFileGUICommand"/>
+    <commandViaGet cmd="ebRRHarvest" class="it.intecs.pisa.toolbox.plugins.ebrr.HarvestFromGUICommand"/>
+    <commandViaGet cmd="ebRRHarvestFile" class="it.intecs.pisa.toolbox.plugins.ebrr.HarvestFromFileGUICommand"/>
     <commandViaPost cmd="ebRRCapabilitiesSet" class="it.intecs.pisa.toolbox.plugins.ebrr.ConfigureCapabilitiesCommand"/>
     <commandViaPost cmd="ebRRDBcreate" class="it.intecs.pisa.toolbox.plugins.ebrr.CreateEbRRDBCommand"/>
 </plugin>

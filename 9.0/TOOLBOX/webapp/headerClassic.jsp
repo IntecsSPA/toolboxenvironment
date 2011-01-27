@@ -96,7 +96,7 @@
 
 
         function init(){
-
+            
             var location=""+window.location;
 
             var controlPageArray=location.split("/");
@@ -276,7 +276,7 @@
                                             <TD align=left width="18%"><A class=itm
                                                                           href="<%= response.encodeURL("testCenter.jsp?serviceName=" + serviceName)%>"><fmt:message key="header.test" bundle="${lang}"/></A></TD>
                                             <TD align=left width="10%"><A class=itm
-                                                                          href="<%= response.encodeURL("tools.jsp?serviceName=" + serviceName)%>"><fmt:message key="header.tools" bundle="${lang}"/></A></TD>
+                                                                          href="<%= response.encodeURL("tools.jsp?extVers=3&serviceName=" + serviceName)%>"><fmt:message key="header.tools" bundle="${lang}"/></A></TD>
                                             <TD align=right width="10%"><A class=itm
                                                                            href="javascript: confirm('logout.jsp','<fmt:message key="header.logout" bundle="${lang}"/>','<fmt:message key="header.logout" bundle="${lang}"/>');"><fmt:message key="header.logout" bundle="${lang}"/></A></TD>                                        </TR>
                                         <%
@@ -303,6 +303,7 @@
                                             <%
                                            String serviceConfiguration = "serviceConfiguration.jsp?serviceName=" + serviceName;
                                            String manageOperations = "manageOperations.jsp?extVers=3&serviceName=" + serviceName;
+
                                            
                                            //String deleteService = "deleteServiceRequest.jsp?serviceName=" + serviceName;
 %> 

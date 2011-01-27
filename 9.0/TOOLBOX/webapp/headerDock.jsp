@@ -251,7 +251,7 @@ jQuery(document).ready(function($){
     <a href='<%= response.encodeURL("testCenter.jsp?serviceName=" + serviceName)%>' title='<fmt:message key="header.test" bundle="${lang}"/>'>
       <img src='images/testDK.png' alt='' />
     </a>
-    <a href='<%= response.encodeURL("tools.jsp?serviceName=" + serviceName)%>' title='<fmt:message key="header.tools" bundle="${lang}"/>'>
+    <a href='<%= response.encodeURL("tools.jsp?extVers=3&serviceName=" + serviceName)%>' title='<fmt:message key="header.tools" bundle="${lang}"/>'>
       <img src='images/toolsDK.png' alt='' />
     </a>
 

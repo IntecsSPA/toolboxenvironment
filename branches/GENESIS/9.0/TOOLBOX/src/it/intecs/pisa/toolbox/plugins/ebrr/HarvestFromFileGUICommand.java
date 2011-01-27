@@ -16,18 +16,13 @@ import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.IOUtil;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.fileupload.FileItem;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -37,6 +32,9 @@ import org.w3c.dom.Element;
  * @author Andrea Manrongiu
  */
 public class HarvestFromFileGUICommand extends NativeCommandsManagerPlugin {
+
+    private static String ID_PARAMETER="id";
+    private static String SERVICE_NAME="serviceName";
 
     private static final String RESOURCE_TYPE_NAME = "EarthObservation";
     private static final String HARVEST_SOAP_ACTION = "http://www.opengis.net/cat/csw/2.0.2/requests#Harvest";
@@ -50,29 +48,33 @@ public class HarvestFromFileGUICommand extends NativeCommandsManagerPlugin {
     private static final String SOURCE_ELEMENT_NAME = "Source";
     private static final String RESOURCE_TYPE_ELEMENT_NAME = "ResourceType";
     private static final String SERVICE_EXCEPTION_ELEMENT_NAME = "ServiceExceptionReport";
+    private static String FILES_STORED_FOLDER_PATH="../GUIManagerPlugin/resources/storedData/";
 
     public void executeCommand(HttpServletRequest req, HttpServletResponse resp) throws Exception{
-        Hashtable<String, FileItem> mimeparts;
-        FileItem harvestFile;
-        mimeparts = parseMultiMime(req);
-        harvestFile = mimeparts.get("filepath");
+        
+
         DOMUtil domutil = new DOMUtil();
-        Toolbox toolboxServlet = Toolbox.getInstance();
-        logger = toolboxServlet.getLogger();
+        ServiceManager serviceManager=ServiceManager.getInstance();
+        String responseMessage="";
+        String javascriptResponse="";
         Document harvestDoc=null;
-        String servicename = getStringFromMimeParts(mimeparts, "serviceName");
+        String servicename = req.getParameter(SERVICE_NAME)/*getStringFromMimeParts(mimeparts, "serviceName")*/;
+        String metadataFileID=req.getParameter(ID_PARAMETER);
+        logger = serviceManager.getService(servicename).getLogger();
         ZipFile zipFile=null;
         boolean harvestResult=false;
         boolean list=true;
         int countMetadata=0;
+        int listSize=0;
 
-        File harvestData= File.createTempFile(java.util.UUID.randomUUID().toString(), "dat");
-        IOUtil.copy(harvestFile.getInputStream(), new FileOutputStream(harvestData));
+        File harvestData= new File(pluginDir, FILES_STORED_FOLDER_PATH+ metadataFileID);/*File.createTempFile(java.util.UUID.randomUUID().toString(), "dat");
+        IOUtil.copy(harvestFile.getInputStream(), new FileOutputStream(harvestData));*/
         try {
              zipFile = new ZipFile(harvestData);
         } catch (ZipException exZip) {
             /*Single Metadata*/
                 list=false;
+                listSize=1;
                 harvestDoc = domutil.inputStreamToDocument(new FileInputStream(harvestData));
                 try {
                     harvestResult=this.harvestDocument(servicename, harvestDoc);
@@ -90,6 +92,7 @@ public class HarvestFromFileGUICommand extends NativeCommandsManagerPlugin {
             ZipEntry entry= null;
             Enumeration entries=zipFile.entries();
             while(entries.hasMoreElements()) {
+                  listSize++;
                   entry = (ZipEntry)entries.nextElement();
                   harvestDoc = domutil.inputStreamToDocument(zipFile.getInputStream(entry));
                   try {
@@ -97,16 +100,30 @@ public class HarvestFromFileGUICommand extends NativeCommandsManagerPlugin {
                   } catch (Exception ex) {
                     harvestResult=false;
                   }
-                  if(harvestResult)
+                  if(harvestResult){
                      countMetadata++;
+                     logger.debug(entry.getName()+" harvested");
+                  } else {
+                    logger.error("Unable to harvest the following file: " + entry.getName());
+                  }
             }
             zipFile.close();
         }
-            
-        if(countMetadata==0)
-            resp.sendRedirect("ebrrHarvestFromDisk.jsp?serviceName="+servicename+"&error="+resp.encodeRedirectURL("An error occurred while harvesting data from disk"));
-        else
-            resp.sendRedirect("ebrrHarvestFromDisk.jsp?serviceName="+servicename+"&info="+resp.encodeRedirectURL("Harvest Completed"));
+        OutputStream out=resp.getOutputStream();
+        if(countMetadata==0){
+            javascriptResponse=resp.encodeRedirectURL("An error occurred while harvesting data from disk.");
+            responseMessage="{error : ";
+        } else{
+            javascriptResponse=resp.encodeRedirectURL("<br> Number of Metadata to harvest: "+listSize+
+                              " <br> Number of Metadata harvested: " + countMetadata);
+            responseMessage="{info : ";
+        } 
+        if(countMetadata<listSize)
+            javascriptResponse+=" <br> See the service Log.";
+
+        responseMessage+="\""+javascriptResponse+"\", serviceName :\""+servicename+"\"}";
+        out.write(responseMessage.getBytes());
+        out.close();
     }
 
 
@@ -120,6 +137,7 @@ public class HarvestFromFileGUICommand extends NativeCommandsManagerPlugin {
         Element resourceTypeEl;
         ServiceManager serviceManager;
         Toolbox toolboxServlet = Toolbox.getInstance();
+
 
         String filename = java.util.UUID.randomUUID().toString() + ".xml";
         String metadateNamespace=harvestDocument.getDocumentElement().getNamespaceURI();
@@ -160,12 +178,13 @@ public class HarvestFromFileGUICommand extends NativeCommandsManagerPlugin {
         DOMUtil.dumpXML(soapMessage, tmpFile);
         Document harvestResponse=service.processRequest(HARVEST_SOAP_ACTION, util.fileToDocument(tmpFile), false);
 
+
          // clean the HARVEST directory
          if(harvest.exists())
             harvest.delete();
 
         if(harvestResponse.getDocumentElement().getLocalName().equalsIgnoreCase(SERVICE_EXCEPTION_ELEMENT_NAME))
-           return false;
+            return false;
         else
            return true;
     }

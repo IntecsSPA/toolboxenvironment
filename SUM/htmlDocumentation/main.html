@@ -1,27 +1,22 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html><head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>MASS TOOLBOX Home</title>
-        
-
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>TOOLBOX Home</title>
         <link type="text/css" href="RE/images/page.css" rel="stylesheet">
-        <style type="text/css">
-            <!--
-            .Stile1 {
-                font-size: x-small;
-                font-weight: bold;
-                color: #000066;
-            }
-            -->
-        </style></head><body bgcolor="#ffffff" text="#000000">
-
+    </head>
+    <body bgcolor="#ffffff" text="#000000">
         <h1>Getting started </h1>
         <div class="content">
             <h2>The context</h2>
-            <p>The TOOLBOX has been developed under the SSE project.</p>
-            <p align="justify"><a href="http://services.eoportal.org/" target="_blank">SSE</a>
-                integrates service providers (having variety of component
-                models or middle-ware suited for their different platforms
-                or environments) through <a href="http://www.w3.org/TR/REC-xml" target="_blank">XML</a>,
+            <p>
+                The TOOLBOX has been initially developed under the SSE project and then upgraded within the GENESIS .
+            </p>
+            <p align="justify">
+                <a href="http://services.eoportal.org/" target="_blank">SSE</a>
+                integrates service providers (having variety of component 
+                models or middle-ware suited for their different platforms 
+                or environments) through <a href="http://www.w3.org/TR/REC-xml" target="_blank">XML</a>, 
                 i.e. using <a href="http://www.w3.org/TR/SOAP" target="_blank">SOAP</a>
                 and <a href="http://www.w3.org/TR/wsdl" target="_blank">WSDL</a>
                 transported over a variety of transport mechanisms, i.e.
@@ -29,117 +24,213 @@
                 within the SSE infrastructure must expose a SOAP interface
                 (described by a WSDL file) according to the SSE Interface
                 Control Document (<a href="RE/icd.html">SSE ICD</a>). The <a href="overview.html">TOOLBOX</a>
-                helps the service provider to convert its service in a SOAP
+                helps the service provider to convert its service in a SOAP 
                 based service compliant with the <a href="RE/icd.html">SSE
-            ICD</a>.</p>
-            <p>From the draft W3C specification:
-            </p><blockquote>SOAP
-is a lightweight protocol for exchanging structured information in a
-decentralized, distributed environment. It is an XML based protocol
-that consists of three parts: an envelope that defines a framework for
-describing what is in a message and how to process it, a set of
-encoding rules for expressing instances of application-defined
-datatypes, and a convention for representing remote procedure calls and
-responses.</blockquote>
-            <p></p>
-            <p align="justify">The Toolbox is composed by two application, a <a href="DE/main.html">development environment</a> and a <a href="RE/main.html">run-time environment</a></p>
+                    ICD</a>.
+            </p>
+            <p align="justify">
+                The <a href="http://www.genesis-fp7.eu/" target="_blank">GENESIS</a>
+                FP7 Integrated Project has been launched by DG INFSO in September 2008. The duration of the project is 3 years. 
+                The GENESIS consortium comprehends the 33 partners involved in the project ; the Coordinator of the project is Thales Alenia Space France.
+                The GENESIS Consortium brings a wide panel of multidisciplinary skills and experiences :
+          <ul>
+                    <li>
+                        participants skilled and experienced in ICT and related domains are key actors to define a reference collaborative architecture, and to make an efficient and sustainable solution;
+                    </li>
+                    <li>
+                        participants skilled and experienced in environmental domains as well as in health issues are key actors for the identification of users requirements, definition and implementation of the pilots, evaluation and take-up of the solution.
+                    </li>
+          </ul>
+                Relying on standards and harmonization processes, GENESIS will provide a thematic-independant innovative solution : made of a generic software package. It is used as an "information system set-up framework", which provides the interoperability layer to existing information systems, so that they can access to environmental databases or services available at regional, national or European levels. The proposed solution, highly flexible and scalable, can be easily instantiated and customized to various thematic fields and various contexts all over Europe. The GENESIS framework is based on a Service Oriented Architecture (SOA), where software components are grouped in classes of services; each class providing a particular type of function.
+            </p>
+            <p>
+                From the W3C specification:
+            </p>
+            <blockquote>
+                SOAP
+                is a lightweight protocol for exchanging structured information in a
+                decentralized, distributed environment. It is an XML based protocol
+                that consists of three parts: an envelope that defines a framework for
+                describing what is in a message and how to process it, a set of
+                encoding rules for expressing instances of application-defined
+                datatypes, and a convention for representing remote procedure calls and
+                responses.
+            </blockquote>
+            <p>
+            </p>
+            <p align="justify">
+                The Toolbox is composed by two application, a <a href="DE/main.html">development environment</a>
+                and a <a href="RE/main.html">run-time environment</a>
+            </p>
             <ul>
-                <li>The
-run-time environment is a web application which allows the deployment
-of SOAP interfaces compliant with the SSE ICD by means of some XML
-scripts which describe the operations that have to be done when the
-service is invoked</li>
-                <li> The development
-environment is an Eclipse plugin which provides some tool to easily
-creates the TOOLBOX services, editing its script files and resources. </li>
+                <li>
+                    The run-time environment is a web application which allows the deployment
+                    of generic and OGC compliant Web Services by means of some XML
+                    scripts which describe the operations that have to be done when the
+                    service is invoked
+                </li>
+                <li>
+                    The development environment is an Eclipse plugin which provides some tools
+                    to easily creates the TOOLBOX services ,
+                    editing its script files and resources and automatic deploy the services 
+                    in the run-time environment. 
+                </li>
             </ul>
-            <p><strong><img src="RE/images/note.gif"></strong> <strong>The
-run-time and development environment can be used separately. The XML
-scripts can be created with any tool supporting XML or with a text
-editor (the scripts have to be compliant to the <a href="RE/schema.htm">XMLScript Schema</a>).</strong></p>
+            <p>
+                <strong><img src="RE/images/note.gif"></strong><strong>The
+                    run-time and development environment can be used separately. The XML 
+                    scripts can be created with any tool supporting XML or with a text 
+                    editor (the scripts have to be compliant to the <a href="RE/Schema/xmlScript.xsd">XMLScript Schema</a>).</strong>
+            </p>
         </div>
         <div class="content">
             <div style="border: 2px none ; margin-left: 0pt;">
                 <h2>Copyrights</h2>
-                <p align="justify">The TOOLBOX war file contains free and
-                    Open Source software. It includes software developed under
+                <p align="justify">
+                    The TOOLBOX war file contains free and 
+                    Open Source software. It includes software developed under 
                     the <a href="http://www.apache.org/" target="_blank">Apache</a>
-                    License (<a href="http://www.apache.org/licenses/" target="_blank">http://www.apache.org/licenses/</a>);
-                    code licensed from RSA Security, Inc.; some portions licensed
-                    from IBM are available at <a href="http://oss.software.ibm.com/icu4j/" target="_blank">http://oss.software.ibm.com/icu4j/</a>,
-                    see the <a href="http://oss.software.ibm.com/cvs/icu/%7Echeckout%7E/icu/license.html" target="_blank">license</a>;
+                    License (<a href="http://www.apache.org/licenses/" target="_blank">http://www.apache.org/licenses/</a>); 
+                    code licensed from RSA Security, Inc.; some portions licensed 
+                    from IBM are available at <a href="http://oss.software.ibm.com/icu4j/" target="_blank">http://oss.software.ibm.com/icu4j/</a>, 
+                    see the <a href="http://oss.software.ibm.com/cvs/icu/%7Echeckout%7E/icu/license.html" target="_blank">license</a>; 
                     the <a href="http://www.enterprisedt.com/" target="_blank">edtFTPj</a>
                     ftp client licensed under the LGPL, the GNU Lesser General
-                Public License.</p>
-                <p align="justify"><em>All trademarks and registered trademarks
-                mentioned herein are the property of their respective owners.</em></p>
-                <p align="justify">Copyright 2003-2008 Intecs</p>
-                <p>TOOLBOX is free software; you can redistribute it and/or
+                    Public License.
+                </p>
+                <p align="justify">
+                    <em>All trademarks and registered trademarks
+                        mentioned herein are the property of their respective owners.</em>
+                </p>
+                <p align="justify">
+                    Copyright 2003-2010 Intecs
+                </p>
+                <p>
+                    TOOLBOX is free software; you can redistribute it and/or
                     modify it under the terms of the GNU General Public License
                     as published by the Free Software Foundation; either version
-                2 of the License, or (at your option) any later version.</p>
-                <p>TOOLBOX is distributed in the hope that it will be useful,
+                    2 of the License, or (at your option) any later version.
+                </p>
+                <p>
+                    TOOLBOX is distributed in the hope that it will be useful,
                     but WITHOUT ANY WARRANTY; without even the implied warranty
                     of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-                See the GNU General Public License for more details.</p>
-                <p>See the <a href="RE/gpl.txt">GNU General Public License</a></p>
+                    See the GNU General Public License for more details.
+                </p>
+                <p>
+                    See the <a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License</a>
+                </p>
                 <h2>Software User Manual references </h2>
                 <div class="content Stile1">
                     <div align="right">
                         <table style="border: 1px dashed rgb(204, 204, 204);" border="0" cellpadding="1" cellspacing="1" width="520">
-                            <tbody><tr>
-                                <td bgcolor="#cccccc" width="217"><div align="right">Id:</div></td>
-                                <td width="296">ERG-SUM-3100-INT</td>
-                            </tr>
-                            <tr>
-                                <td bgcolor="#cccccc"><div align="right">Issue: </div></td>
-                                <td>1.1</td>
-                            </tr>
-                            <tr>
-                                <td bgcolor="#cccccc"><div align="right">Date:</div></td>
-                                <td>09/12/2009</td>
-                            </tr>
-                            <tr>
-                                <td bgcolor="#cccccc"><div align="right">Toolbox reference version:</div></td>
-                                <td>8.0</td>
-                            </tr>
-                            <tr bgcolor="#ffffff">
-                                <td colspan="2">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td bgcolor="#cccccc" width="217"><div align="right">
-                                        <p>Authors:<br>
+                            <tbody>
+                                <tr>
+                                    <td bgcolor="#cccccc" width="217">
+                                        <div align="right">
+                                            Id:
+                                        </div>
+                                    </td>
+                                    <td width="296">
+                                        GENESIS_D6800.3-4_PU_Intecs_PR2
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td bgcolor="#cccccc">
+                                        <div align="right">
+                                            Issue: 
+                                        </div>
+                                    </td>
+                                    <td>
+                                        1.1
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td bgcolor="#cccccc">
+                                        <div align="right">
+                                            Date:
+                                        </div>
+                                    </td>
+                                    <td>
+                                        09/12/2009
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td bgcolor="#cccccc">
+                                        <div align="right">
+                                            Toolbox reference version:
+                                        </div>
+                                    </td>
+                                    <td>
+                                        8.0
+                                    </td>
+                                </tr>
+                                <tr bgcolor="#ffffff">
+                                    <td colspan="2">&nbsp;
+                                        
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td bgcolor="#cccccc" width="217">
+                                        <div align="right">
+                                            <p>
+                                                Authors:
+                                                <br>
+                                                <br>
+                                                M.Fanciulli
+                                            </p>
+                                            <p>
+                                                A. Marongiu
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td width="296">&nbsp;
+                                        
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td bgcolor="#cccccc" width="217">
+                                        <div align="right">
+                                            Reviewed by:
                                             <br>
-                                        M.Fanciulli</p>
-                                        <p>A. Marongiu</p>
-                                </div></td>
-                                <td width="296">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td bgcolor="#cccccc" width="217"><div align="right"> Reviewed by:<br>
-                                        <br>
-                                P. Nencioni </div></td>
-                                <td width="296">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td bgcolor="#cccccc" width="217"><div align="right"> Authorised by:<br>
-                                        <br>
-                                S.Gianfranceschi </div></td>
-                                <td width="296">&nbsp;</td>
-                            </tr>
-                        </tbody></table>
+                                            <br>
+                                            P. Nencioni 
+                                        </div>
+                                    </td>
+                                    <td width="296">&nbsp;
+                                        
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td bgcolor="#cccccc" width="217">
+                                        <div align="right">
+                                            Authorised by:
+                                            <br>
+                                            <br>
+                                            S.Gianfranceschi 
+                                        </div>
+                                    </td>
+                                    <td width="296">&nbsp;
+                                        
+                                  </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <h2>Change Log</h2>
-                <p>The following pages have been added/modified/removed:</p>
-                
+                <p>
+                    The following pages have been added/modified/removed:
+                </p>
                 <ul>
-                    <li>This page (updated)</li>
-  <li>Updated documentation according to issue report #265, assigned to Toolbox 7.1. Version 8.0 was affected too.</li>
-  <li>Updated XML reference section with new and updated tags description.</li>
-  <li><br>
-  </li>
-</ul>
+                    <li>
+                        This page (updated)
+                    </li>
+                    <li>
+                        Updated documentation for the new release 9.0.
+                    </li>
+                </ul>
             </div>
         </div>
-    </body></html>
+    </body>
+</html>

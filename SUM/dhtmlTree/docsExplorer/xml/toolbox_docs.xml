@@ -48,9 +48,9 @@
 							<userdata name="thisurl">RE/toolboxInstallationTomcat.html</userdata>
 						</item>
 						<!--RE/main.html_Run-time_environment*RE/main.html_Getting_started*RE/blankpage.html_Installation*RE/blankpage.html_TOOLBOX*RE/toolboxInstallation.html_Installing_the_TOOLBOX*RE/toolboxUpgrade.html_Upgrading_the_TOOLBOX*-->
-						<item text="Upgrading the TOOLBOX" id="RE/toolboxUpgrade.html_Upgrading_the_TOOLBOX" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<!--item text="Upgrading the TOOLBOX" id="RE/toolboxUpgrade.html_Upgrading_the_TOOLBOX" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 							<userdata name="thisurl">RE/toolboxUpgrade.html</userdata>
-						</item>
+						</item-->
 						<!--RE/main.html_Run-time_environment*RE/main.html_Getting_started*RE/blankpage.html_Installation*RE/blankpage.html_TOOLBOX*RE/toolboxInstallation.html_Installing_the_TOOLBOX*RE/setTomcatAsDaemon.html_Setup_Tomcat_as_daemon*-->
 						<item text="Setup Tomcat as daemon" id="RE/setTomcatAsDaemon.html_Setup_Tomcat_as_daemon" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 							<userdata name="thisurl">RE/setTomcatAsDaemon.html</userdata>
@@ -128,27 +128,83 @@
 				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceCreation.html_Service_creation*-->
 				<item text="Service creation" id="RE/serviceCreation.html_Service_creation" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/serviceCreation.html</userdata>
-					<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceCreation.html_Service_creation*RE/serviceCreating.html_Creating_a_Service*-->
-					<item text="Creating a Service" id="RE/serviceCreating.html_Creating_a_Service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-						<userdata name="thisurl">RE/serviceCreating.html</userdata>
+					
+					<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceCreationWPS.html_Service_creation*RE/serviceCreating.html_Creating_a_Service*-->
+					<item text="Creating a WPS Service" id="RE/serviceCreatingWPS.html_Creating_a_Service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">RE/serviceCreatingWPS.html</userdata>
+					</item>					
+					
+					<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceCreatingORDER_PROXY.html_Service_creation*RE/serviceCreatingORDER_PROXY.html_Creating_a_Service*-->
+					<item text="Creating an Ordering Proxy Service" id="RE/serviceCreatingORDER_PROXY.html_Creating_a_Service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">RE/serviceCreatingORDER_PROXY.html</userdata>
 					</item>
-					<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceCreation.html_Service_creation*RE/serviceImporting.html_Importing_a_Service*-->
-					<item text="Importing a Service" id="RE/serviceImporting.html_Importing_a_Service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-						<userdata name="thisurl">RE/serviceImporting.html</userdata>
+					
+					<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceCreatingORDER_STANDARD.html_Service_creation*REserviceCreatingORDER_STANDARD.html_Creating_a_Service*-->
+					<item text="Creating an Ordering Service" id="RE/serviceCreatingORDER_STANDARD.html_Creating_a_Service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">RE/serviceCreatingORDER_STANDARD.html</userdata>
 					</item>
-					<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceCreation.html_Service_creation*RE/importASchemaSet.html_Importing_a_Schema_set_from_a_zip_file*-->
-					<item text="Importing a Schema set from a zip file" id="RE/importASchemaSet.html_Importing_a_Schema_set_from_a_zip_file" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-						<userdata name="thisurl">RE/importASchemaSet.html</userdata>
+
+					<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceCreatingORDER_STANDARD.html_Service_creation*REserviceCreatingORDER_STANDARD.html_Creating_a_ServiceCAT*-->
+					<item text="Creating Catalogue Service" id="RE/serviceCreatingCAT.html_Creating_a_ServiceCAT" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">RE/serviceCreatingCAT.html</userdata>
 					</item>
-					<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceCreation.html_Service_creation*RE/downloadSchemaSetFromSSE.html_Importing_a_Schema_set_from_the_SSE_portal*-->
-					<item text="Importing a Schema set from the SSE portal" id="RE/downloadSchemaSetFromSSE.html_Importing_a_Schema_set_from_the_SSE_portal" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-						<userdata name="thisurl">RE/downloadSchemaSetFromSSE.html</userdata>
+
+					<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceCreatingORDER_STANDARD.html_Service_creation*REserviceCreatingORDER_STANDARD.html_Creating_a_ServiceCAT*-->
+					<item text="Creating a Stand Alone Catalogue Service" id="RE/serviceCreatingCAT_SO.html_Creating_a_ServiceCAT_SO" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">RE/serviceCreatingCAT_SO.html</userdata>
 					</item>
+
+					<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceCreatingORDER_STANDARD.html_Service_creation*REserviceCreatingORDER_STANDARD.html_Creating_a_ServiceCAT*-->
+					<item text="Creating Catalogue Proxy Service" id="RE/serviceCreatingCAT_PR.html_Creating_a_ServiceCAT_PR" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+						<userdata name="thisurl">RE/serviceCreatingCAT_PR.html</userdata>
+					</item>
+
+
+					
 				</item>
 				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceExporting.html_Exporting_a_Service*-->
-				<item text="Exporting a Service" id="RE/serviceExporting.html_Exporting_a_Service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<item text="Exporting Services" id="RE/serviceExporting.html_Exporting_Services" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/serviceExporting.html</userdata>
 				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceImporting.html_Importing_a_Service*-->
+				<item text="Importing Services" id="RE/serviceImporting.html_Importing_Services" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/serviceImporting.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceDeleting.html_Deleting_a_service*-->
+				<item text="Deleting Services" id="RE/serviceDeleting.html_Deleting_Services" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/serviceDeleting.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceDeleting.html_Deleting_a_service*-->
+				<item text="Duplicating Services" id="RE/serviceDuplicating.html_DuplicatingServices" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/serviceDuplicating.html</userdata>
+				</item>
+
+
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceSelecting.html_Selecting_a_Service*-->
+				<item text="Selecting a Service" id="RE/serviceSelecting.html_Selecting_a_Service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/serviceSelecting.html</userdata>
+				</item>
+
+
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceConfiguring.html_Configuring_a_Service*-->
+				<item text="Configuring a Service" id="RE/serviceConfiguring.html_Configuring_a_Service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/serviceConfiguring.html</userdata>
+				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceViewingConfiguration.html_Viewing_a_service_configuration*-->
+				<item text="Viewing a service configuration" id="RE/serviceViewingConfiguration.html_Viewing_a_service_configuration" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/serviceViewingConfiguration.html</userdata>
+				</item>
+
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceSecurityConfiguration.html_Configuring_service_security_enforcement*-->
+				<item text="Configuring service security enforcement" id="RE/serviceSecurityConfiguration.html_Configuring_service_security_enforcement" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/serviceSecurityConfiguration.html</userdata>
+				</item>
+
+
+
+
+
+
 				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceStartingAll.html_Starting_all_services*-->
 				<item text="Starting all services" id="RE/serviceStartingAll.html_Starting_all_services" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/serviceStartingAll.html</userdata>
@@ -160,22 +216,6 @@
 				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/managerServiceStatusAll.html_Manager_all_services_status*-->
 				<item text="Manager all services status" id="RE/managerServiceStatusAll.html_Manager_all_services_status" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/managerServiceStatusAll.html</userdata>
-				</item>
-				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceSelecting.html_Selecting_a_Service*-->
-				<item text="Selecting a Service" id="RE/serviceSelecting.html_Selecting_a_Service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-					<userdata name="thisurl">RE/serviceSelecting.html</userdata>
-				</item>
-				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceViewingConfiguration.html_Viewing_a_service_configuration*-->
-				<item text="Viewing a service configuration" id="RE/serviceViewingConfiguration.html_Viewing_a_service_configuration" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-					<userdata name="thisurl">RE/serviceViewingConfiguration.html</userdata>
-				</item>
-				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceConfiguring.html_Configuring_a_Service*-->
-				<item text="Configuring a Service" id="RE/serviceConfiguring.html_Configuring_a_Service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-					<userdata name="thisurl">RE/serviceConfiguring.html</userdata>
-				</item>
-				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceSecurityConfiguration.html_Configuring_service_security_enforcement*-->
-				<item text="Configuring service security enforcement" id="RE/serviceSecurityConfiguration.html_Configuring_service_security_enforcement" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-					<userdata name="thisurl">RE/serviceSecurityConfiguration.html</userdata>
 				</item>
 				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceStarting.html_Starting_a_service*-->
 				<item text="Starting a service" id="RE/serviceStarting.html_Starting_a_service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
@@ -193,10 +233,6 @@
 				<item text="Resuming a service" id="RE/serviceResuming.html_Resuming_a_service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/serviceResuming.html</userdata>
 				</item>
-				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceManagement.html_Service_management*RE/serviceDeleting.html_Deleting_a_service*-->
-				<item text="Deleting a service" id="RE/serviceDeleting.html_Deleting_a_service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-					<userdata name="thisurl">RE/serviceDeleting.html</userdata>
-				</item>
 			</item>
 			<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/operationManagement.html_Operations_management*-->
 			<item text="Operations management" id="RE/operationManagement.html_Operations_management" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
@@ -205,10 +241,15 @@
 				<item text="Listing the service operations" id="RE/operationListing.html_Listing_the_service_operations" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/operationListing.html</userdata>
 				</item>
+				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/operationManagement.html_Operations_management*RE/createOperationWPS.html_Add_a_WPS_operation*-->
+				<item text="Add a WPS operation" id="RE/createOperation.html_Add_a_WPS_operation" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/createOperationWPS.html</userdata>
+				</item>
 				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/operationManagement.html_Operations_management*RE/createOperation.html_Add_an_operation*-->
 				<item text="Add an operation" id="RE/createOperation.html_Add_an_operation" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/createOperation.html</userdata>
 				</item>
+
 				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/operationManagement.html_Operations_management*RE/operationReconfiguring.html_Re-configuring_an_operation*-->
 				<item text="Re-configuring an operation" id="RE/operationReconfiguring.html_Re-configuring_an_operation" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/operationReconfiguring.html</userdata>
@@ -217,30 +258,27 @@
 				<item text="Deleting an operation" id="RE/operationDeleting.html_Deleting_an_operation" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/operationDeleting.html</userdata>
 				</item>
-				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/operationManagement.html_Operations_management*RE/operationWSDL.html_WSDL*-->
-				<item text="WSDL" id="RE/operationWSDL.html_WSDL" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-					<userdata name="thisurl">RE/operationWSDL.html</userdata>
-					<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/operationManagement.html_Operations_management*RE/operationWSDL.html_WSDL*RE/operationWSDLAdding.html_Adding_an_operation_to_the_WSDL_file*-->
-					<item text="Adding an operation to the WSDL file" id="RE/operationWSDLAdding.html_Adding_an_operation_to_the_WSDL_file" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-						<userdata name="thisurl">RE/operationWSDLAdding.html</userdata>
-					</item>
-					<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/operationManagement.html_Operations_management*RE/operationWSDL.html_WSDL*RE/operationWSDLDisplayingInfo.html_Displaying_the_WSDL_information*-->
-					<item text="Displaying the WSDL information" id="RE/operationWSDLDisplayingInfo.html_Displaying_the_WSDL_information" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-						<userdata name="thisurl">RE/operationWSDLDisplayingInfo.html</userdata>
-					</item>
-					<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/operationManagement.html_Operations_management*RE/operationWSDL.html_WSDL*RE/operationWSDLChanging.html_Changing_the_WSDL_information*-->
-					<item text="Changing the WSDL information" id="RE/operationWSDLChanging.html_Changing_the_WSDL_information" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-						<userdata name="thisurl">RE/operationWSDLChanging.html</userdata>
-					</item>
-				</item>
 				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/operationManagement.html_Operations_management*RE/updateGetCapabilities.html_Update_GetCapabilities_information*-->
 				<item text="Update GetCapabilities information" id="RE/updateGetCapabilities.html_Update_GetCapabilities_information" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/updateGetCapabilities.html</userdata>
 				</item>
 			</item>
 			<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/secure.html_Secure_communication*-->
-			<item text="Secure communication" id="RE/secure.html_Secure_communication" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+			<item text="Secure communication" id="RE/security.html_Secure_communication" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">RE/security.html</userdata>
+
+			<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/serviceSecurityConfiguration.html_Secure_communication*-->
+			<item text="SOAP level Security settings" id="RE/serviceSecurityConfiguration.html_Secure_communication" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+				<userdata name="thisurl">RE/serviceSecurityConfiguration.html</userdata>
+			</item>
+
+			<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/secure.html_Secure_communication*-->
+			<item text="HTTP level Security settings" id="RE/secure.html_Secure_communication" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 				<userdata name="thisurl">RE/secure.html</userdata>
+			</item>
+
+
+
 			</item>
 			<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/ftpManagement.html_FTP_management*-->
 			<item text="FTP management" id="RE/ftpManagement.html_FTP_management" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
@@ -329,31 +367,24 @@
 			<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/tutorial.html_Tutorial*-->
 			<item text="Tutorial" id="RE/tutorial.html_Tutorial" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 				<userdata name="thisurl">RE/tutorial.html</userdata>
-				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/tutorial.html_Tutorial*RE/vito.html_File_exchange_based_service*-->
-				<item text="File exchange based service" id="RE/vito.html_File_exchange_based_service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-					<userdata name="thisurl">RE/vito.html</userdata>
+
+				<item text="GRASS based WPS" id="RE_tutorial_WPS_GRASS.html" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/tutorial/WPS_GRASS.html</userdata>
 				</item>
-				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/tutorial.html_Tutorial*RE/acs.html_JDBC_based_service(1)*-->
-				<item text="JDBC based service(1)" id="RE/acs.html_JDBC_based_service(1)" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-					<userdata name="thisurl">RE/acs.html</userdata>
+
+				<item text="SHELL script based WPS" id="RE_tutorial_WPS_SHELL.html" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/tutorial/WPS_SHELL.html</userdata>
 				</item>
-				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/tutorial.html_Tutorial*RE/acs2.html_JDBC_based_service(2)*-->
-				<item text="JDBC based service(2)" id="RE/acs2.html_JDBC_based_service(2)" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-					<userdata name="thisurl">RE/acs2.html</userdata>
+
+				<item text="Creating an EOP catalogue" id="RE_tutorial_CAT_EOP_SO.html" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+					<userdata name="thisurl">RE/tutorial/CAT_EOP_SO.html</userdata>
 				</item>
-				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/tutorial.html_Tutorial*RE/gim.html_Real_HTTP_based_service*-->
-				<item text="Real HTTP based service" id="RE/gim.html_Real_HTTP_based_service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-					<userdata name="thisurl">RE/gim.html</userdata>
-				</item>
-				<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/tutorial.html_Tutorial*RE/http.html_Dummy_HTTP_based_service*-->
-				<item text="Dummy HTTP based service" id="RE/http.html_Dummy_HTTP_based_service" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-					<userdata name="thisurl">RE/http.html</userdata>
-				</item>
+
 			</item>
 			<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/jelly.html_Using_Jelly*-->
-			<item text="Using Jelly" id="RE/jelly.html_Using_Jelly" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+			<!--item text="Using Jelly" id="RE/jelly.html_Using_Jelly" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 				<userdata name="thisurl">RE/jelly.html</userdata>
-			</item>
+			</item-->
 			<!--RE/main.html_Run-time_environment*RE/blankpage.html_Reference*RE/faq.html_FAQ*-->
 			<item text="FAQ" id="RE/faq.html_FAQ" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 				<userdata name="thisurl">RE/faq.html</userdata>
@@ -997,11 +1028,10 @@
 		</item>
 	</item>
 	<!--blankpage.html_Video_Tutorials*-->
-	<item text="Video Tutorials" id="blankpage.html_Video_Tutorials" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+	<!--item text="Video Tutorials" id="blankpage.html_Video_Tutorials" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 		<userdata name="thisurl">blankpage.html</userdata>
-		<!--blankpage.html_Video_Tutorials*http://wiki.services.eoportal.org/tiki-index.php?page=Toolbox+Video+Tutorial_Video_Tutorials*-->
 		<item text="Video Tutorials" id="http://wiki.services.eoportal.org/tiki-index.php?page=Toolbox+Video+Tutorial_Video_Tutorials" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 			<userdata name="thisurl">http://wiki.services.eoportal.org/tiki-index.php?page=Toolbox+Video+Tutorial</userdata>
 		</item>
-	</item>
+	</item-->
 </tree>

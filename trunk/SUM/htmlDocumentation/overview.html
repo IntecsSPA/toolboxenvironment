@@ -1,476 +1,186 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Overview</title>
-<link type="text/css" href="RE/images/page.css" rel="stylesheet">
-<style type="text/css">
-<!--
-.Stile1 {font-size: 90%}
--->
-</style>
-</head>
-<body text="#000000" bgcolor="#ffffff">
-<h1>The TOOLBOX</h1>
-<div class="content">
-  <p class="Stile1">This section provides an overview of the TOOLBOX (Runtime and Development Environment), focusing on how it is used to integrate services into the SSE framework.</p>
-  <p class="Stile1">In the following we refer to the TOOLBOX Runtime Environment with TOOLBOX RE.</p>
-  <p class="Stile1">In the following we refer to the TOOLBOX Development Environment with TOOLBOX DE.</p>
-</div>
-<h4><span class="content">Service Integration Overview <font size="-1">(extracted from the <a href="RE/icd.html">SSE ICD</a>)</font></span></h4>
-<p><span class="content">An excerpt of the <a href="RE/icd.html" target="_blank">SSE ICD</a> ranking the different steps needed to integrate a service into the SSE is reported in the following.</span></p>
-<div class="content">
-  <ol>
-    <li>
-      <div class="content">
-        <div><span class="content"><em>Define the schema of the service to be integrated into the SSE</em></span></div>
-        <span class="content"> The Service Provider should define the XML schema for his service. To do that, he has to answer to the following questions:</span></div>
-      <ul>
-        <li>
-          <div class="content"><span class="content"> Does my service needs an Area Of Interest as input parameter?</span></div>
-        </li>
-        <li>
-          <div class="content"><span class="content">Does my service results contain geographical information to be displayed on a Web Map viewer ?</span></div>
-        </li>
-        <li>
-          <div class="content"><span class="content"> Does my service need a Request For Quotation function in order to give some information on price or on the different items available?</span></div>
-        </li>
-        <li>
-          <div class="content"><span class="content">What is the information needed by my service to be able to answer to an RFQ or an Order request ?</span></div>
-        </li>
-        <li>
-          <div class="content"><span class="content">What is the result of the RFQ and the Order ?</span></div>
-        </li>
-        <li>
-          <div class="content"><span class="content">For each operation, is my system able to return immediately (synchronous communication) the response and does it need some time to process the request (asynchronous communication)?</span></div>
-        </li>
-      </ul>
-      <div class="content"><span class="content">The answer to all these questions should be formalized in the XML service schema following the conventions described in the current document (<a href="RE/icd.html">SSE ICD</a>). </span></div>
-    </li>
-    <li>
-      <div class="content"><span class="content"><em>Select one of the integration mechanisms provided by the SSE TOOLBOX RE(this step applies only to basic services integration). See below</em></span></div>
-    </li>
-    <li>
-      <div class="content">
-        <div><span class="content"><em>Integrate the Service with the Toolbox RE(this step applies only to basic services integration)</em></span></div>
-        <span class="content"> According to the selected integration mechanism and the service schema :</span></div>
-      <ul>
-        <li>
-          <div class="content"><span class="content">Install the SSE TOOLBOX RE</span></div>
-        </li>
-        <li>
-          <div class="content"><span class="content">Create the XML scripts describing the operations the TOOLBOX RE must perform any time it receives a request incoming from the SSE portal </span></div>
-        </li>
-        <li>
-          <div class="content"><span class="content">Configure the SSE TOOLBOX RE to integrate the service</span></div>
-        </li>
-        <li>
-          <div class="content"><span class="content">If needed, implement the glue between the TOOLBOX RE and the service.</span></div>
-        </li>
-      </ul>
-    </li>
-    <li>
-      <div class="content">
-        <div><span class="content"><em>Become a Service Provider</em></span></div>
-        <span class="content"> If you are not yet a registered user, go on the SSE Portal:</span></div>
-      <ul>
-        <li>
-          <div class="content"><span class="content">Register yourself on the SSE Portal</span></div>
-        </li>
-        <li>
-          <div class="content"><span class="content">Login on the SSE Portal</span></div>
-        </li>
-        <li>
-          <div class="content"><span class="content">Update your profile and apply to become a Service Provider</span></div>
-        </li>
-        <li>
-          <div class="content"><span class="content">After the SSE administrator e-mail confirmation, register your company on the SSE Portal.</span></div>
-        </li>
-        <li>
-          <div class="content"><span class="content">From now, you can follow the “Monitor Orders” link to login into the Oracle Workflow monitoring tool using the same account than the one used to login on the SSE Portal.<br>
-            </span></div>
-        </li>
-      </ul>
-      <div class="content"><span class="content">For the details concerning these operations, see the online SSE user manual available following the “help” link on the SSE site (chapters “User Commands” and “Service Provider Commands”).</span></div>
-    </li>
-    <li>
-      <div class="content">
-        <div><span class="content"><em> Design you service workflow (this step only applies if your service is a chained service) </em> </span></div>
-        <span class="content"> If your service is a basic service, the default workflow can be used (see next step). </span>
-        <ul>
-          <li><span class="content">Download the Oracle BPEL Designer tool from the software section of the SSE Portal <a href="http://services.eoportal.org/portal/DownloadUtil.jsp" target="_blank">http://services.eoportal.org/portal/DownloadUtil.jsp</a> while logged in as Service Provider.</span></li>
-          <li><span class="content">Design your workflow.</span></li>
-        </ul>
-      </div>
-    </li>
-    <li>
-      <div class="content">
-        <div><span class="content"><em> Register your service on the SSE Portal</em> </span></div>
-        <span class="content"> In order to prepare your service registration on the SSE Portal, you should define: </span>
-        <ul>
-          <li><span class="content">the WSDL file describing your service based on your service schema definition. The WSDL file will be automatically generated by the SSE Toolbox RE. (This step applies only if your service is a basic service.) </span></li>
-          <li><span class="content">the style sheet that will allow to handle your service specific input and output parameters (as defined in your service schema). </span></li>
-        </ul>
-        <span class="content"> When these files are ready, you can register your service based on the SSE Portal. In the service registration form, set the status of your service to “testing” so that only you can order the service. <br>
-        If your service is a <strong>basic</strong> service, in the service registration page, select the default workflow for each operations implemented by your service. Don't forget to specify if the operations are synchronous or asynchronous. <br>
-        If your service is a <strong>chained</strong> service, in the service registration page, the workflow you have just deployed will appear in the workflow selection lists. Select the workflow associated to each operations implemented by your service. Don't forget to specify if the operations are synchronous or asynchronous. <br>
-        For the details concerning these operations, see the SSE tutorial following the “help” link on the SSE Portal. </span></div>
-    </li>
-    <li>
-      <div class="content"><span class="content"><em>Test your service on the SSE Portal</em> </span>
-        <div><span class="content">Go to the SSE service directory and check that you can retrieve your service and the associated description.<br>
-          Test the integration of your service with the SSE Portal by ordering your service following the different steps if applicable : Search, RFQ, Order. </span></div>
-      </div>
-    </li>
-    <li>
-      <div class="content"><span class="content"><em>Publish your service</em> </span>
-        <div><span class="content">When your service is operational, you can change the status of your service to “enable” on the Service Update page.<br>
-          </span></div>
-      </div>
-    </li>
-  </ol>
-</div>
-<div class="content">
-  <p><span class="content">In brief, here is the file list required by the integration of a service within SSE: </span></p>
-  <table width="90%" border="0" cellpadding="1">
-    <tr bgcolor="#000000">
-      <td width="20%" height="47"><span class="content"><font color="#FFFFFF"><strong>File</strong></font></span></td>
-      <td width="24%"><span class="content"><font color="#FFFFFF"><strong>Description</strong></font></span></td>
-      <td width="29%"><span class="content"><font color="#FFFFFF"><strong>Use</strong></font></span></td>
-      <td width="27%"><span class="content"><font color="#FFFFFF"><strong>File creation</strong></font></span></td>
-    </tr>
-    <tr valign="top" bgcolor="#CCCCCC">
-      <td><span class="content">service schema</span></td>
-      <td><span class="content"><font size="-1">defines the structure and the content of the payload of the SOAP messages exchanged between the TOOLBOX RE and the SSE</font></span></td>
-      <td><span class="content"><font size="-1">it must be provided to the SSE during the service registration and to the TOOLBOX RE during the service creation</font></span></td>
-      <td><p><span class="content"><font size="-1">this file must be created by the service provider.</font></span></p>
-        <p><span class="content"><font size="-1"><strong>Help on creation can be found in <a href="RE/icd.html">SSE ICD</a> and is outside the scope of this tutorial.</strong></font></span></p></td>
-    </tr>
-    <tr valign="top" bgcolor="#CCCCCC">
-      <td><span class="content">WSDL file</span></td>
-      <td><span class="content"><font size="-1">describes the SOAP interface of the service based on service schema definition</font></span></td>
-      <td><span class="content"><font size="-1">it must be provided to the SSE during the service registration</font></span></td>
-      <td><p><span class="content"><font size="-1">this file is automatically created by the TOOLBOX RE during the service creation if the service provider inserts all the required information (see the <a href="RE/serviceCreating.html">service management section</a>). The file can be find on the TOOLBOX</font></span><span style="font : small Verdana, Helvetica, sans-serif;" #invalid_attr_id="5px 5px 5px 10px"><font size="-1"> RE </font></span><span class="content"><font size="-1">machine at the following URL: <font size="-2"><em>http://&lt;TOMCAT_HOST&gt;[:TOMCAT_PORT]/TOOLBOX/WSDL/&lt;SERVICE_NAME&gt;/</em></font><em><font size="-2">&lt;SERVICE_NAME&gt;</font>.wsdl</em></font> <font size="-1">where <font size="-2"><em>&lt;TOMCAT_HOST&gt;</em></font> is the host where the TOMCAT hosting the TOOLBOX RE is installed on.</font></span></p>
-        <p><span class="content"><font size="-1"><img src="RE/images/warning.gif">Before providing this file to the SSE Portal, the service provider must check whether this file has been correctly created by the TOOLBOX RE, indeed, if the machine hosting the TOOLBOX RE has not been well-configured some HTTP address contained in the WSDL file might be wrong.</font></span></p>
-        <p><span class="content"><font size="-1"><strong>Help on creation can be found in <a href="RE/icd.html">SSE ICD</a> and is outside the scope of this tutorial.</strong></font></span></p></td>
-    </tr>
-    <tr valign="top" bgcolor="#CCCCCC">
-      <td><span class="content">Service style sheet</span></td>
-      <td><span class="content"><font size="-1">allows the SSE to handle the service specific input and output parameters (as defined in the service schema) </font></span></td>
-      <td><span class="content"><font size="-1">it must be provided to the SSE during the service registration</font></span></td>
-      <td><p><span class="content"><font size="-1">this file must be created by the service provider.</font></span></p>
-        <p><span class="content"><font size="-1"><strong>Help on creation can be found in <a href="RE/icd.html">SSE ICD</a> and is outside the scope of this tutorial.</strong></font></span></p></td>
-    </tr>
-    <tr valign="top" bgcolor="#CCCCCC">
-      <td><span class="content">service XML script file(s)</span></td>
-      <td><span class="content"><font size="-1">describe(s) the operations performed by the service deployed on the TOOLBOX RE.</font></span></td>
-      <td><span class="content"><font size="-1">it must be provided to the TOOLBOX RE during the service creation</font></span></td>
-      <td><p><span class="content"><font size="-1">this file(s) must be created by the service provider.</font></span></p>
-        <p><span class="content"><font size="-1"><strong>Understanding of the service XML scripts can be found in the following sections.</strong></font></span></p></td>
-    </tr>
-  </table>
-</div>
-<div class="content">
-  <h4><span class="content">The TOOLBOX RE.</span></h4>
-  <div class="content">
-    <div style="border: 2px none ; margin-left: 0pt;">
-      <p align="justify"><span class="content">The TOOLBOX RE is a configurable application that help the Service Provider to easily convert its service into a SOAP based service. The TOOLBOX RE can be used to integrate different kind of services into the SSE infrastructure. Different kinds of back-end communication systems are foreseen:</span></p>
-    </div>
-  </div>
-  <ul>
-    <li>
-      <div class="content">
-        <div style="border: 2px none ; margin-left: 0pt;"><span class="content"> File exchange</span></div>
-      </div>
-    </li>
-    <li>
-      <div class="content">
-        <div style="border: 2px none ; margin-left: 0pt;"><span class="content">File Transfer Protocol</span></div>
-      </div>
-    </li>
-    <li>
-      <div class="content">
-        <div style="border: 2px none ; margin-left: 0pt;"><span class="content">Hyper Text Transfer Protocol</span></div>
-      </div>
-    </li>
-    <li>
-      <div class="content">
-        <div style="border: 2px none ; margin-left: 0pt;"><span class="content">API support</span></div>
-      </div>
-    </li>
-    <li>
-      <div class="content">
-        <div style="border: 2px none ; margin-left: 0pt;"><span class="content">Script support</span></div>
-      </div>
-    </li>
-    <li>
-      <div class="content">
-        <div style="border: 2px none ; margin-left: 0pt;"><span class="content">JDBC </span></div>
-      </div>
-    </li>
-    <li>
-      <div class="content">
-        <div style="border: 2px none ; margin-left: 0pt;"><span class="content">SOAP</span></div>
-      </div>
-    </li>
-    <li>
-      <div class="content">
-        <div style="border: 2px none ; margin-left: 0pt;"><span class="content">Email</span></div>
-      </div>
-    </li>
-  </ul>
-  <div class="content">
-    <div style="border: 2px none ; margin-left: 0pt;">
-      <p ><span class="content">Furthermore the TOOLBOX RE provides an easy mechanism to convert the incoming XML files into other files (based on XML or on a proprietary format) or data structures suitable to be used for the communication with the back-end systems.</span></p>
-      <p align="justify"><span class="content"> According to the <a href="RE/icd.html">SSE ICD</a>, SSE supports both a synchronous and an asynchronous mechanism.<br>
-        The TOOLBOX RE supports both the solutions:</span></p>
-    </div>
-  </div>
-  <ul>
-    <li>
-      <div class="content">
-        <div style="border: 2px none ; margin-left: 0pt;">
-          <div align="justify"><span class="content">Synchronous: in this solution, the <a href="http://services.eoportal.org/" target="_blank">SSE Portal</a> is a SOAP client and the TOOLBOX RE acts only as a SOAP server. It only responds to SOAP requests. The XML response is sent back to the SSE Portal during the same HTTP exchange.</span></div>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Overview</title>
+        <link type="text/css" href="RE/images/page.css" rel="stylesheet">
+        <style type="text/css">
+        </style>
+    </head>
+    <body text="#000000" bgcolor="#ffffff">
+        <h1>The TOOLBOX</h1>
+        <div class="content">
+            <p>
+                This section provides an overview of the TOOLBOX capabilities. In the following we refer to the TOOLBOX Runtime Environment with TOOLBOX RE and TOOLBOX Development Environment with TOOLBOX DE.
+            </p>
+            The TOOLBOX RE allows deploying legacy application, custom processing, legacy catalogues as OGC compliant services. 
+            The following pre-defined services can be deployed out of the box:
+            <ul>
+                <li>
+                    Catalogue services: The OpenGIS Catalogue Services Interface Standard (CAT) supports the ability to publish and search collections of descriptive information (metadata) about geospatial data, services and related resources. A provider of resources use catalogues to register metadata that conform to the provider's choice of an information model; such models include descriptions of spatial references and thematic information. Client applications can then search for geospatial data and services in very efficient ways. The following profiles are supported by the Toolbox: 
+                    <ul>
+                        <li>
+                            EO Products Extension Package for ebRIM (ISO/TS 15000-3) Profile of CSW 2.0 (0.1.9), 06-131r4 and higher
+                        </li>
+                        <li>
+                            OGC Cataloguing of ISO Metadata (CIM) using the ebRIM profile of CS-W (0.1.10), 07-038 and higher
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    Ordering Services: this king of services allow the ordering of Earth Observation (EO) data products either from previously identified data set collections via a typical catalogue interaction or from future acquisitions specified via a Programming service. 
+                </li>
+                <li>
+                    Web Processing Services: the OGC Web Processing Service (WPS) 1.0.0 standard provides distributed spatial data processing analyses for arbitrary geoprocessing functionalities using a standardized web service-based interface. Additionally, the standard offers the ability to define and use so-called WPS Profiles in a recyclable way for semantically-driven interoperable processing.
+                </li>
+                <li>
+                    Archiving Services: this service provides simple and more advanced functionalities to archive, restore or delete final or intermediate result of computations in a data store. Simple management will consist of storing data in a simple local server and manage a rolling archive where files are deleted automatically after a configurable amount of time. Advanced functionalities will allow the automatic result deployment on a predefined set of server: FTP, WMS, WFS and WCS, HTTP. The input data can be deployed on the different servers depending on the registered servers and on the user inputs. For example a GeoTIFF output of a processing could be stored in an FTP server as well as on a GeoServer. Moreover the service will allow the automatic metadata extraction (if applicable, if not the metadata will be provided as input to the processing in a known format, GML or ISO) and the metadata publication on a connected catalogue. Data deletion and update will implies an automatic update of the metadata, thus maintaining the environment up to date. The service is exposed as OGC WPS allowing it to be handled in a standardized way by other GENESIS services, notably the Workflow Orchestration Service.
+                </li>
+            </ul>
+            Moreover the Toolbox implements a Policy Enforcement Point and a Policy Decision Point compliant with the OGC 07-118r8 "User Management Interfaces for Earth Observation Services" best practice to protect both internal as well as external services. 
+            The framework allows also defining and implementing Web Serviced based on custom interfaces via the TOOLBOX DE Eclipse plu-in.
+            <p>
+                In the following the main capabilities
+            </p>
+            <table cellpadding="60" cellspacing="4">
+                <tr>
+                    <td width="50%" valign="top">
+                        <div align="center">
+                            <h2>Catalogue support</h2>
+                            <img src="RE/images/overview1.png"/>
+                        </div>
+                        <div align="justify">
+                            <p>
+                                It allows the publication of OGC compliant catalogues based on the buddata open source engine. The following profiles are  supported:
+                                <ul>
+                                    <li>
+                                        EO Products Extension Package for ebRIM (ISO/TS 15000-3) Profile of CSW 2.0 (0.1.9), 06-131r4 and higher
+                                    </li>
+                                    <li>
+                                        OGC Cataloguing of ISO Metadata (CIM) using the ebRIM profile of CS-W (0.1.10), 07-038 and higher
+                                    </li>
+                                </ul>
+                            </p>
+                        </div>
+                    </td>
+                    <td width="50%" valign="top">
+                        <div align="center">
+                            <h2>Legacy Catalogue integration</h2>
+                            <img src="RE/images/overview2.png"/>
+                        </div>
+                        <div align="justify">
+                            <p>
+                                It allows the creation of gateways towards legacy catalogues to expose them as OGC compliant catalogues. The following interfaces are supported:
+                                The following profiles are supported:
+                                <ul>
+                                    <li>
+                                        EO Products Extension Package for ebRIM (ISO/TS 15000-3) Profile of CSW 2.0 (0.1.9), 06-131r4 and higher
+                                    </li>
+                                    <li>
+                                        OGC Cataloguing of ISO Metadata (CIM) using the ebRIM profile of CS-W (0.1.10), 07-038 and higher
+                                    </li>
+                                </ul>
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">
+                        <div align="center">
+                            <h2>INSPIRE facade</h2>
+                            <img src="RE/images/overview3.png"/>
+                        </div>
+                        <div align="justify">
+                            <p>
+                                It allows the publication of an OGC ebRIM CIM catalogue as an INSPIRE compliant catalogue by means of a facade.
+                            </p>
+                        </div>
+                    </td>
+                    <td width="50%" valign="top">
+                        <div align="center">
+                            <h2>Web Processing Services support</h2>
+                            <img src="RE/images/overview4.png"/>
+                        </div>
+                        <div align="justify">
+                            <p>
+                                It allows the publication of OGC Web Processing services. It can be easily connected to some common open source processing tools (currently GRASS, OCTAVE and OpenMath integration is under development) but it can be also integrate custom processing executable.
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">
+                        <div align="center">
+                            <h2>Generic Web Services</h2>
+                            <img src="RE/images/overview5.png"/>
+                        </div>
+                        <div align="justify">
+                            <p>
+                                It allows deployment of generic Web Services by means of an XML based scripting language.
+                            </p>
+                        </div>
+                    </td>
+                    <td width="50%" valign="top">
+                        <div align="center">
+                            <h2>Result publication</h2>
+                            <img src="RE/images/overview6.png"/>
+                        </div>
+                        <div align="justify">
+                            <p>
+                                It support the publication of the results of a processing/service on different servers: FTP (built-in), HTTP (built-in), WMS, WFS and WCS (via GeoServer) 
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">
+                        <div align="center">
+                            <h2>Testing</h2>
+                            <img src="RE/images/overview7.png"/>
+                        </div>
+                        <div align="justify">
+                            <p>
+                                It provides a web based testing tool. The test tool can be used to perform test on a local installation as well as on a remote installation. 
+                            </p>
+                        </div>
+                    </td>
+                    <td width="50%" valign="top">
+                        <div align="center">
+                            <h2>Monitoring</h2>
+                            <img src="RE/images/overview8.png"/>
+                        </div>
+                        <div align="justify">
+                            <p>
+                                It provides a web based monitoring tool allowing listing all the incoming requests, to inspect the processing and see the results sent back to the client. Moreover some statistics on the service execution can be generated. 
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">
+                        <div align="center">
+                            <h2>Security</h2>
+                            <img src="RE/images/overview9.png"/>
+                        </div>
+                        <div align="justify">
+                            <p>
+                                It implements a Policy Enforcement Point and a Policy Decision Point compliant with the OGC 07-118r8 "User Management Interfaces for Earth Observation Services" best practice to protect both internal as well as external services 
+                            </p>
+                        </div>
+                    </td>
+                    <td width="50%" valign="top">
+                        <div align="center">
+                            <h2>Development supoprt</h2>
+                            <img src="RE/images/overview10.png"/>
+                        </div>
+                        <div align="justify">
+                            <p>
+                                For advanced users, it includes a development environment as eclipse plugin that can be used to create new web services and deploy them automatically in the run time environment running on Tomcat. The development environment provides a way to handle all the service resources and createS the XML needed to define the service logic. Moreover it allows defining, organizing and performing test. 
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
-      </div>
-    </li>
-    <li>
-      <div class="content">
-        <div style="border: 2px none ; margin-left: 0pt;">
-          <div align="justify"><span class="content">Asynchronous: in this solution, the <a href="http://services.eoportal.org/" target="_blank">SSE Portal</a> is a SOAP client as well as a SOAP server. The service provider sends a SOAP message back to SSE when a result is ready. Thus the TOOLBOX RE implements a SOAP server as well as a SOAP client. The TOOLBOX RE uses the <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnglobspec/html/ws-addressing.asp" target="_blank">WS-Addressing</a> protocol.</span></div>
-        </div>
-      </div>
-    </li>
-  </ul>
-  <div class="content">
-    <div style="border: 2px none ; margin-left: 0pt;">
-      <p align="justify"><span class="content">The approach used to build a configurable application that will help the Service Provider to easily convert its service into a SOAP based service is based on XML scripting. In order to convert a legacy Service into a SOAP service suitable to be plugged into the SSE framework the Service Provider has to provide one or three XML scripting files. These files will describe the operations needed to complete a request coming from SSE. More details about the service XML Script(s) can be found in the section <a href="RE/tutorial.html">&quot;Tutorial&quot;</a>.</span></p>
-      <p align="justify"><span class="content"> The configuration of the TOOLBOX RE, as well as the configuration and monitoring of the services, occur through the “TOOLBOX ADMINISTRATOR” Web application coming with the TOOLBOX RE.</span></p>
-    </div>
-  </div>
-  <h4><span class="content">Services and operations deployed on the TOOLBOX RE.</span></h4>
-  <p align="justify"><span class="content">From the TOOLBOX RE perspective, a service is a collection of operations. Each operation is associated with one or several XML script files (which must be valid according to the TOOLBOX XML scripting language <a href="RE/schema.htm">schema</a>), depending on the mode the operation is published (synchronous or asynchronous). Further any operation is associated with a &quot;soapAction&quot;: any HTTP request including a SOAP request for a certain operation must have the HTTP header &quot;SOAPAction&quot; set to that string value. Each operation can be compliant with the <a href="RE/icd.html">SSE ICD</a> and EOLI ICD or not. This means that the TOOLBOX RE can be used also to deploy services outside from the SSE framework. Each service can support contemporary both SSE compliant and not SSE compliant operations.</span></p>
-  <p align="justify">Synchronous operations have a number of 2 scripts associated to them. These must be provided in order to let Toolbox Runtime Environment execute all tasks. The scripts are referred to with the following name and have these function:</p>
-  <table width="83%" border="0" cellpadding="1">
-    <tr align="center" bgcolor="#000000">
-      <td width="30%"><font color="#FFFFFF"><strong>Script</strong></font></td>
-      <td width="70%"><font color="#FFFFFF"><strong>Function</strong></font></td>
-    </tr>
-    <tr align="center" valign="top" bgcolor="#CCCCCC">
-      <td><font size="-1">First script </font></td>
-      <td><font size="-1">Main script for the synchronous operation. Executed as soon as the message is received. This script shall return an XML type object. </font></td>
-    </tr>
-    <tr align="center" valign="top" bgcolor="#CCCCCC">
-      <td><font size="-1">Error script </font></td>
-      <td><font size="-1">This script is executed every time the main script exits for an error. This script should return an Interface specific error message to the client. </font></td>
-    </tr>
-  </table>
-  <p align="justify">Asynchronous operation have a number of 6 scripts associated to them. These must be provided in order to let Toolbox Runtime Environment execute all tasks. The scripts are referred to with the following name and have these function:</p>
-  <table width="83%" border="0" cellpadding="1">
-    <tr align="center" bgcolor="#000000">
-      <td width="30%"><font color="#FFFFFF"><strong>Script</strong></font></td>
-      <td width="70%"><font color="#FFFFFF"><strong>Function</strong></font></td>
-    </tr>
-    <tr align="center" valign="top" bgcolor="#CCCCCC">
-      <td>Response builder script </td>
-      <td>This script is executed as soon as the input message is received. It creates the acknowledge message to be sent back.</td>
-    </tr>
-    <tr align="center" valign="top" bgcolor="#CCCCCC">
-      <td>Response Builder Error </td>
-      <td>This script is executed every time an error occurs during the response builder script execution. It is used to return an interface compliant error message to the client. </td>
-    </tr>
-    <tr align="center" valign="top" bgcolor="#CCCCCC">
-      <td><font size="-1">First script </font></td>
-      <td><font size="-1">This is the first script executed just after the response builder. It should be used to perform all main tasks. </font></td>
-    </tr>
-    <tr align="center" valign="top" bgcolor="#CCCCCC">
-      <td>Second script </td>
-      <td>This script is executed until it return a &quot;TRUE&quot; boolean value. This script should be used to check all operation condition before completing the execution. This script shall always return a Boolean type value </td>
-    </tr>
-    <tr align="center" valign="top" bgcolor="#CCCCCC">
-      <td>Third script </td>
-      <td>This script is used to create the response message to be sent back to the client. This script shall return an XML type object. </td>
-    </tr>
-    <tr align="center" valign="top" bgcolor="#CCCCCC">
-      <td><font size="-1">Error script </font></td>
-      <td><font size="-1">This script is executed every time the main script exits for an error. This script should return an Interface specific error message to the client. </font></td>
-    </tr>
-  </table>
-  <p align="justify">Depending on the situation the Toolbox Runtime Environment or Development Environment should show or ask for a subset of these files. It is wrong to think that only those are the files associated to the operation since the software may supply automatically some of these files for those interfaces whose messages have a static structure (e.g. HMA). These automatically provided file have a predefined structured that peforms the task required (e.g. sending back an acknowledge message). </p>
-  <p align="justify">&nbsp;</p>
-  <h4><span class="content">The XML scripts</span></h4>
-  <p><span class="content">An XML script is an XML document which is valid according to the TOOLBOX <strong>XML scripting language</strong> <a href="RE/schema.htm">schema</a>. This document contains the operations performed by the TOOLBOX RE. The operations correspond to the tag elements of the grammar defined by the <a href="RE/schema.htm">schema</a>.</span> </p>
-  <p><span class="content"><img src="RE/images/note.gif"><strong>For synchronous operations the XML script must return an XML Document.</strong> For SSE operations, such XML Document represents the response to be sent back to the SSE and must be valid according to the service schema. What a script returns depends on the root tag contained in it (to know what a tag returns please see the <a href="RE/XMLScript/scripting.html">Tag documentation</a>).</span></p>
-  <p><span class="content"> <strong> <img src="RE/images/note.gif">For asynchronous operations: the First script can return everything, the Second script must return a Boolean value (true/false), the Third script must return an XML Document.</strong> </span></p>
-  <h4><span class="content">Request processing</span></h4>
-  <p><span class="content">The TOOLBOX RE distinguishes the service recipient of a request by the <strong>URL</strong> the request is sent to. Indeed a request for a service deployed on the TOOLBOX RE with the name of &quot;MyService&quot; must be sent to the following URL:</span></p>
-  <p align="justify"><span class="content"><em>&quot;http://&lt;HOST_ADDRESS&gt;/TOOLBOX/services/MyService&quot;</em> (where &lt;HOST_ADDRESS&gt; depends on the way the machine hosting the TOOLBOX RE is visible from the network).</span></p>
-  <p><span class="content">Further, the TOOLBOX RE recognizes the requested operation from the HTTP &quot;SOAPAction&quot; header contained in the HTTP message sent to the URL above.</span></p>
-  <div class="content">
-    <div>
-      <p align="justify"><span class="content">Thus, what the TOOLBOX RE performs when it receives a SOAP request is:</span></p>
-    </div>
-  </div>
-  <ol>
-    <li>
-      <div align="justify" class="content">
-        <div style="border: 2px none ; margin-left: 0pt;"><span class="content">to extract from the URI the name of the service the request is addressed to;</span></div>
-      </div>
-    </li>
-    <li>
-      <div align="justify" class="content">
-        <div style="border: 2px none ; margin-left: 0pt;"><span class="content">to extract the value of the HTTP header &quot;SOAPAction&quot;;</span></div>
-      </div>
-    </li>
-    <li>
-      <div align="justify" class="content">
-        <div ><span class="content">to execute the script(s) the service provider has associated to that SOAP Action for the addressed service.</span></div>
-      </div>
-    </li>
-  </ol>
-  <p><span class="content">Step 3. depends on the way the operation (associated with the extracted SOAP Action) is deployed, i.e. in synchronous or in asynchronous mode. The description of the TOOLBOX RE behavior any time a request arrives is reported in the following table:</span></p>
-  <table width="75%" border="0" cellpadding="1">
-    <tr bgcolor="#CCCCCC">
-      <td width="26%" align="center" valign="top" bgcolor="#666666"><span class="content"><font color="#FFFFFF" size="-1">synchronous operations</font></span></td>
-      <td width="74%" align="left" valign="top"><span class="content"><font size="-1">The TOOLBOX RE executes the <strong> XML script</strong> corresponding to the operation and returns the response (as built in the script, if no error occurs) in the same HTTP exchange.</font></span><span style="font : small Verdana, Helvetica, sans-serif;" #invalid_attr_id="5px 5px 5px 10px"><font size="-1"> If the execution exits with an exception the error script is executed. </font></span></td>
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <td align="center" valign="top" bgcolor="#666666"><span class="content"><font color="#FFFFFF" size="-1">asynchronous operations</font></span></td>
-      <td align="left" valign="top"><p><span class="content"><font size="-1">The TOOLBOX RE returns an &quot;acknowledgment&quot; response to the </font></span><span style="font : small Verdana, Helvetica, sans-serif;" #invalid_attr_id="5px 5px 5px 10px"><font size="-1">client</font></span><span style="font : small Verdana, Helvetica, sans-serif;" #invalid_attr_id="5px 5px 5px 10px"><font size="-1">. This message is created executing the Response builder script.</font></span></p>
-        <p><font size="-1">S</font><font size="-1">tart executing the First script.</font></p>
-        <p><span class="content"><font size="-1"><strong>If</strong> the First script is successful, the Second script is executed.</font></span></p>
-        <p><span class="content"><font size="-1"><strong>If</strong> the Second script is executed:</font></span></p>
-        
-          <p><span class="content"><font size="-1"><strong>If </strong>no error occurs the Second Script is executed until it returns true;</font></span></p>
-        <p><span class="content"><font size="-1"><strong>If</strong> the Second script successfully returns true, the TOOLBOX RE executes the Third script and sends the response (as built in the script) to the </font></span><span style="font : small Verdana, Helvetica, sans-serif;" #invalid_attr_id="5px 5px 5px 10px"><font size="-1">client</font></span><span class="content"><font size="-1">.</font></span></p>
-        <p><font size="-1">In all these cases if an exception is thrown the global error script is executed creating an error message to be sent back to the client.</font></p></td>
-    </tr>
-  </table>
-  <p><span class="content"><strong><img src="RE/images/note.gif" > For examples of services to deploy to the TOOLBOX RE see the section <a href="RE/tutorial.html">&quot;Tutorial&quot;</a></strong>.</span></p>
-  <h4><span class="content">XML script execution: persistence of variables and cleanup mechanism.</span></h4>
-  <p align="justify"><span class="content">For asynchronous operations, the TOOLBOX supports the <strong>persistence of some types of variable</strong> among the executions of the three XML scripts related to the same request (identified by the messageId contained in the SOAP Header of the SOAP message containing the request).</span></p>
-  <p align="justify"><span class="content">Within an XML script, creation and manipulation of the variables occurs through the following two <a href="RE/XMLScript/scripting.html">XML Script</a> tags:</span></p>
-  <table width="91%" border="0" cellpadding="1">
-    <tr bgcolor="#CCCCCC">
-      <td width="42%" align="left" bgcolor="#666666"><pre><span class="content"><font color="#FFFFFF">&lt;setVariable name=&quot;variableName&quot;&gt;<br>	&lt;!-- element returning an object --&gt;
-&lt;/setVariable&gt;<br></font></span></pre></td>
-      <td width="58%"><span class="content">Sets the variable named &quot;variableName&quot; with the value given by the enclosed element</span></td>
-    </tr>
-    <tr bgcolor="#CCCCCC">
-      <td width="42%" align="left" bgcolor="#666666"><pre><span class="content"><font color="#FFFFFF">&lt;variable name=&quot;variableName&quot;/&gt;<br><br></font></span></pre></td>
-      <td><span class="content">Returns the object stored in variable named &quot;variableName&quot;. If nothing has been stored with that name, it returns null.</span></td>
-    </tr>
-  </table>
-  <p align="justify"><span class="content">So, a variable defined in the First script can be referred, e.g., in the Second Script.</span></p>
-  <p><span class="content"><strong><font color="#000000"><img src="RE/images/warning.gif" width="28" height="21"></font></strong>Persistence concerns the following variable types:</span></p>
-</div>
-<ul>
-  <li>
-    <div class="content">
-      <div style="border: 2px none ; margin-left: 0pt;"><span class="content">byte (whose value is an integer number comprised between -27 and 27-1)</span></div>
-    </div>
-  </li>
-  <li>
-    <div class="content">
-      <div style="border: 2px none ; margin-left: 0pt;"><span class="content">short (whose value is an integer number comprised between - 215 and 215-1)</span></div>
-    </div>
-  </li>
-  <li>
-    <div class="content">
-      <div style="border: 2px none ; margin-left: 0pt;"><span class="content">integer (whose value is an integer number comprised between – 231 and 231-1)</span></div>
-    </div>
-  </li>
-  <li>
-    <div class="content">
-      <div style="border: 2px none ; margin-left: 0pt;"><span class="content">long (whose value is an integer number comprised between – 263 and 263-1)</span></div>
-    </div>
-  </li>
-  <li>
-    <div class="content">
-      <div style="border: 2px none ; margin-left: 0pt;"><span class="content">float (largest positive finite value: (2-2-23)·2127, smallest positive nonzero value: 2-149)</span></div>
-    </div>
-  </li>
-  <li>
-    <div class="content">
-      <div style="border: 2px none ; margin-left: 0pt;"><span class="content">double (largest positive finite value: (2-2-52)·21023, smallest positive nonzero value: 2-1074)</span></div>
-    </div>
-  </li>
-  <li>
-    <div class="content">
-      <div style="border: 2px none ; margin-left: 0pt;"><span class="content">char (16-bit Unicode character)</span></div>
-    </div>
-  </li>
-  <li>
-    <div class="content">
-      <div style="border: 2px none ; margin-left: 0pt;"><span class="content">boolean (true/false)</span></div>
-    </div>
-  </li>
-  <li>
-    <div class="content">
-      <div style="border: 2px none ; margin-left: 0pt;"><span class="content">string</span></div>
-    </div>
-  </li>
-  <li>
-    <div class="content">
-      <div style="border: 2px none ; margin-left: 0pt;"><span class="content">XML Document </span></div>
-    </div>
-  </li>
-</ul>
-<div class="content">
-  <div style="border: 2px none ; margin-left: 0pt;">
-    <p align="justify"><span class="content"><a name="cleanup"></a>The TOOLBOX supports a <strong>cleanup mechanism</strong> allowing the service provider to specify the wished status in case of failure of a script.</span></p>
-    <p align="justify"><span class="content">This mechanism foresees the use of three <a href="RE/XMLScript/scripting.html">XML Script</a> tags:</span></p>
-    <table width="69%" border="0" cellpadding="1">
-      <tr bgcolor="#CCCCCC">
-        <td width="19%" align="left" valign="top" bgcolor="#666666"><pre><span class="content"><font color="#FFFFFF">&lt;cleanupProcedure&gt;<br>	&lt;cleanup marker=&quot;Marker_One&quot;&gt;<br>		.<br>		.<br>	&lt;/cleanup&gt;<br>	&lt;cleanup marker=&quot;Marker_Two&quot;&gt;<br>		.<br>		.<br>	<br>	&lt;/cleanup&gt;<br>	&lt;cleanup marker=&quot;Marker_Three&quot;&gt;<br>		.<br>		.<br>	&lt;/cleanup&gt;<br>&lt;/cleanupProcedure&gt;<br></font></span></pre></td>
-        <td width="81%" align="left" valign="top"><div align="justify"><span class="content">The &lt;cleanupProcedure&gt; tag is a sequence of &lt;cleanup&gt; tags. </span></div>
-          <p align="justify"><span class="content">Any &lt;cleanup&gt; tag encloses an element containing the operation(s) to be executed in case of failure. If the optional “marker” attribute is specified, the execution is subordinated to the existence of such marker (see &lt;addCleanupMarker&gt; and &lt;removeCleanupMarker&gt;), otherwise the execution occurs in any case.<br>
-            </span></p></td>
-      </tr>
-      <tr bgcolor="#CCCCCC">
-        <td width="19%" align="left" valign="top" bgcolor="#666666"><pre><span class="content"><font color="#FFFFFF">&lt;addCleanupMarker value=&quot;A_Marker&quot;/&gt;<br><br><br></font></span></pre></td>
-        <td align="left" valign="top"><p align="justify"><span class="content">It is used to mark a point of a script whose achievement is required by the execution of the related &lt;cleaunup&gt; tag. For example, let’s suppose the deletion of a file created during the execution of the First script is wished in case of failure: the execution of the &lt;cleanup&gt; tag deleting that file must occur only if the file was created, i.e. the failure occurred after its creation.</span></p>
-          <p><span class="content">EXAMPLE of First script: </span></p>
-          <pre><span class="content">&lt;sequence 
-xmlns=&quot;http://pisa.intecs.it/mass/toolbox/xmlScript&quot;&gt;<br>		.<br>		.<br>	&lt;setVariable name=&quot;fileName&quot;&gt;<br>		&lt;string&gt;/home/toolbox/request.xml&lt;/string&gt;<br>	&lt;/setVariable&gt;<br>	&lt;dumpXML&gt;<br>		&lt;variable name=&quot;fileName&quot;/&gt;<br>		&lt;xmlRequest/&gt;<br>	&lt;/dumpXML&gt;<br>	&lt;addCleanupMarker value=&quot;A_Marker&quot;/&gt;<br>		.<br>		.<br>	&lt;cleanupProcedure&gt;<br>		&lt;cleanup marker=&quot;A_Marker&quot;&gt;<br>			&lt;fileDelete&gt;<br>				&lt;variable name=&quot;fileName&quot;/&gt;<br>			&lt;/fileDelete&gt;<br>		&lt;/cleanup&gt;<br>		&lt;cleanup marker=&quot;Another_Marker&quot;/&gt;<br>	&lt;/cleanupProcedure&gt;<br>&lt;/sequence&gt;<br></span></pre>
-          <span class="content">
-          </p>
-          Existence of the &quot;A_Marker&quot; marker ensures existence of the file named &quot;fileName&quot;. </span></td>
-      </tr>
-      <tr bgcolor="#CCCCCC">
-        <td width="19%" align="left" valign="top" bgcolor="#666666"><pre><span class="content"><font color="#FFFFFF">&lt;removeCleanupMarker value=&quot;A_Marker&quot;/&gt;<br><br><br><br></font></span></pre></td>
-        <td align="left" valign="top"><p align="justify"><span class="content">This tag removes a tag previously added. It is used to mark a point of a script (First, Second, Third) whose achievement removes the need to execute the cleanup tag(s) associated with that marker.</span></p>
-          <p><span class="content">EXAMPLE.</span></p>
-          <pre><span class="content">&lt;sequence 
-xmlns=&quot;http://pisa.intecs.it/mass/toolbox/xmlScript&quot;&gt;<br>		.<br>		.<br>	&lt;setVariable name=&quot;fileName&quot;&gt;<br>		&lt;string&gt;/home/toolbox/request.xml&lt;/string&gt;<br>	&lt;/setVariable&gt;<br>	&lt;dumpXML&gt;<br>		&lt;variable name=&quot;fileName&quot;/&gt;<br>		&lt;xmlRequest/&gt;<br>	&lt;/dumpXML&gt;<br>	&lt;addCleanupMarker value=&quot;A_Marker&quot;/&gt;<br>		.<br>		.<br>	&lt;fileDelete&gt;<br>		&lt;variable name=&quot;fileName &quot;/&gt;<br>	&lt;/fileDelete&gt;<br>	&lt;removeCleanupMarker value=&quot;A_Marker&quot;/&gt;<br>		.<br>		.<br>	&lt;cleanupProcedure&gt;<br>		&lt;cleanup marker=&quot;A_Marker&quot;&gt;<br>			&lt;fileDelete&gt;<br>				&lt;variable name=&quot;fileName&quot;/&gt;<br>			&lt;/fileDelete&gt;<br>		&lt;/cleanup&gt;<br>		&lt;cleanup marker=&quot;Another_marker&quot;/&gt;<br>	&lt;/cleanupProcedure&gt;<br>&lt;/sequence&gt;
-</span></pre>
-          <div align="justify"><span class="content">In this case the send script itself foresees the deletion of the file named &quot;fileName&quot;: if the failure occurs after the deletion the cleanup tag marked with &quot;A_Marker&quot; must not be executed. </span></div></td>
-      </tr>
-    </table>
-    <p align="justify"><span class="content"><strong><img src="RE/images/note.gif" >For asynchronous operations, a marker created in a script can be used also in the other script. </strong> </span></p>
-    <span class="content">
-    <h4>Writing an XML script using TOOLBOX DE </h4>
-    <p>Any XML or Text editor can be used to write a valid TOOLBOX XML script to deploy into the TOOLBOX RE. To reduce the development time, the TOOLBOX DE can be used to create XML scripts, exploiting built-in features like graphical vs textual visualization, tag suggestion, online validation. The TOOLBOX DE is an Eclipse plugin, wirtten in Java, that extends some already existing functionality of the IDE itself and some other exported by the WTP plugin. </p>
-    <p>Coming functionality, provided by future versions of Eclipse, WTP or TOOLBOX will be available to already installed TOOLBOX DE through powerful and easy to use upgrade procedures. Built over the Eclipse functionality, upgrade an already existing installation of the TOOLBOX DE is an easy and fast task that removes also the problem of dependecy check and download. </p>
-    <p>A common development path, using the TOOLBOX DE, follows these few points:</p>
-    <ul>
-      <li>Creation of a service project.</li>
-      <li>Definition of all scripts logic. </li>
-      <li>Import of all resources and files needed by the service (if any) </li>
-      <li>Deploy of the service directly into the Toolbox RE. </li>
-      <li>Execution or debug of one of the operations of the service.</li>
-      <li>Visualization and inspection of the execution output.</li>
-    </ul>
-    <p>The creation of a service project is done in Eclipse in the same manner a Java project is created. Wizards lead the end user through the creation of the project and its structure. Once created, a new project already contains all operations files and schema set (if an interface has been selected). </p>
-    <p>Scripts and resources documents can be edited through TOOLBOX DE using some available functionality that help the user validate the script (an online validation is done while the user write the script, warning him when errors are present), find errors (each error discovered through the process of validation is marked graphically), insert tag or attributes through a list (a list of possible tag or attribute is ginven to the user in order to select them graphically). All editing features, like Cut Paste &amp; Copy and Drag &amp; Drop, available in XML editor (an generally in editors) can be found into the TOOLBOX DE. </p>
-    <p>The TOOLBOX DE allows the final user to test one operation at time even if each TOOLBOX DE service project can contain a potentially unlimited number of operations. If more than one operation have been created into a service project, it is possible to run and debug them singularly creating a launch configuration for each one. </p>
-    <p>A normal execution (run) of an operation is done quickly clicking on a launch configuration on the Run submenu. When running an operation the Toolbox DE connects to the Toolbox RE and starts the execution sending an input message. The output of the execution is stored on the project directory and can be inspected as a text or an XML file. </p>
-    <p>A debug execution of an operation is done quickly clicking on a launch configuration on the Debug submenu. When debugging an operation the Toolbox DE connects to the Toolbox RE activating the debug mode and starting the execution sending an input message The execution of operation is stopped each time a breakpoint (previously set and transferred to the RE) is hit. When this happens the user can view the execution stack and inspect all variables name, type and value as stored into the Toolbox RE.  Each time the engine stops the stack frame and the variable view are refreshed. When the execution ends, the output is stored on the project directory and can be inspected in offline mode. </p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p align="justify"><br>
-    </p>
-    </span> </div>
-</div>
-</body>
+    </body>
 </html>

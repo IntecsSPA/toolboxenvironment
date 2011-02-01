@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>TOOLBOX Installation</title>
+
+  
+  
+  <link type="text/css" href="images/page.css" rel="stylesheet">
+
+  
+  <style type="text/css">
+            <!--
+            .Stile1 {color: #FFFFFF}
+            -->
+        </style>
+</head><body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);">
+<div class="content">
+<div style="border: 2px none ; margin-left: 0pt;">
+<h1>System requirements</h1>
+<p>The TOOLBOX can be installed using different configurations. Apache
+can be used as a proxy server and Tomcat as a servlet engine.
+Alternatively the TOOLBOX can be installed using only Tomcat.
+Furthermore Apache and Tomcat can be installed on the same machine or
+on two different machines.</p>
+<p>Thus the system requirements depend on the TOOLBOX components
+configuration. In the following a list of the system requirements for
+each component both for a Windows and a Linux machine is reported. The
+TOOLBOX system requirement can be calculated depending on the
+configuration used.</p>
+<h5>Windows machine system requirements</h5>
+<!--p>The TOOLBOX can be run on different versions of Tomcat. The following configurations have been tested:</p-->
+<ol>
+  <li>J2SE Development Kit 6.0 (JDK 6.0) + Tomcat 6.0.30</li>
+  <div>
+  <table border="0" cellpadding="2" cellspacing="2" width="920">
+    <tbody>
+      <tr>
+        <th scope="row" bgcolor="#000000" width="188"><span class="Stile1"> J2SE Development Kit 6.0 (JDK 6.0) </span></th>
+        <td bgcolor="#cccccc" width="718">
+        <p>See supported <a href="http://www.oracle.com/technetwork/java/javase/system-configurations-135212.html">System Configurations </a> for information about supported platforms, operating systems, desktop managers, and browsers. </p>
+        <p>The minimum physical RAM is required to run graphically based applications. More RAM is recommended for applets running within a browser using the Java Plugin. Running with less memory may cause disk swapping which has a severe effect on performance. Very large programs may require more RAM for adequate performance. </p>
+        <p>This installation requires Windows Installer 2.0 to be on your machine. For more details, see the <a href="http://www.oracle.com/technetwork/java/javase/install-windows-189425.html#troubleshooting">Troubleshooting the Installation </a> section . </p>
+        <p>For the amount of disk space required, see <a href="http://www.oracle.com/technetwork/java/javase/windows-diskspace-140460.html">Windows Disk Space Requirements </a>. </p>
+
+        Note - The JDK has two version numbers -- external version number (6) and an internal version number (1.6.0).
+        <p>Note - Trying to install the JDK on a non-supported version of Microsoft Windows or on a machine that doesn't have a sufficiently up-to-date Service Pack will cause the installer to generate this warning: "We recommend that you do not install this Java platform for the following reasons: This Java platform does not support the operating system or operating-system service pack on this machine." See the <a href="http://www.oracle.com/technetwork/java/javase/install-windows-189425.html#requirements">system requirements </a> above for information on supported configurations of Microsoft Windows. </p></td>
+      </tr>
+      <tr>
+        <th scope="row" bgcolor="#000000"><span class="Stile1">Tomcat
+6.0.30</span></th>
+        <td bgcolor="#cccccc">At least 512 MB RAM and 100 MB of free
+disk (once the TOOLBOX has been installed on it).</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</ol>
+<p>&nbsp;</p>
+<p>Apache: </p>
+<ul>
+  <li>The
+primary Windows platform for running Apache 2.0 is Windows NT. The
+binary installer only works with the x86 family of processors, such as
+Intel and AMD processors. Running Apache on Windows 9x is not
+thoroughly tested, and it is never recommended on production systems.</li>
+  <li>On
+all operating systems, TCP/IP networking must be installed and working.
+If running on Windows 95, the Winsock 2 upgrade must be installed. On
+Windows NT 4.0, installing Service Pack 6 is strongly recommended, as
+Service Pack 4 created known issues with TCP/IP and Winsock integrity
+that were resolved in later Service Packs. For further details please
+see <a href="http://httpd.apache.org/docs/2.0/platform/windows.html" target="_blank">Using Apache with Microsoft Windows.</a></li>
+</ul>
+<h5>Linux machine system requirements</h5>
+<!--p>The TOOLBOX can be run on different versions of Tomcat. The following configurations have been tested:</p-->
+<ol>
+  <li>J2SE Development Kit 6.0 (JDK 6.0) + Tomcat 6.0.30</li>
+  <div>
+  <table border="0" cellpadding="2" cellspacing="2" width="920">
+    <tbody>
+      <tr>
+        <th scope="row" bgcolor="#000000" width="188"><span class="Stile1"> J2SE Development Kit 6.0 (JDK 6.0) </span></th>
+        <td bgcolor="#cccccc" width="718">
+        <p> Some Linux platforms, such as Red Hat and SuSE, are RPM-based, which provide an automated way to install software. Some Linux distributions, such as Ubuntu, are not RPM-based. For these Linux systems, you must manually install the Java platform by using a self-extracting binary file. </p>
+        <p>&nbsp;</p>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row" bgcolor="#000000"><span class="Stile1">Tomcat
+5.5.9 </span></th>
+        <td bgcolor="#cccccc">At least 512 MB RAM and 100 MB of free
+disk (once the TOOLBOX has been installed on it).</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</ol>
+<p>&nbsp;</p>
+<p>Apache: </p>
+<ul>
+  <li>Disk
+Space - Make sure you have at least 50 MB of temporary free disk space
+available. After installation Apache occupies approximately 10 MB of
+disk space. The actual disk space requirements will vary considerably
+based on your chosen configuration options and any third-party modules.</li>
+  <li>ANSI-C Compiler and Build System - Make sure you have an ANSI-C
+compiler installed. The <a href="http://www.gnu.org/software/gcc/gcc.html" target="_blank">GNU C
+compiler (GCC)</a> from the <a href="http://www.gnu.org/" target="_blank">Free Software Foundation (FSF)</a>
+is recommended (version 2.7.2 is fine). If you don't have GCC then at
+least make sure your vendor's compiler is ANSI compliant. In addition,
+your PATH must contain basic build tools such as make.</li>
+</ul>
+</div>
+</div>
+
+<div class="content">
+
+</div>
+In
+the case a local instance of the EOP catalogue is required, PostgreSQL
+8.4 and PostGis 1.5 must be installed and configured on the machine.
+Once done multiple
+database instances can be created following the procedure described <a href="createebRRDBinstance.html">here</a>.<br>
+In case one or more Toolbox services must be protected enforcing
+security, an additional Java library shall de downloaded and installed.
+For further information, please read <a href="serviceSecurityConfiguration.html">this</a>.<br>
+<br>
+
+</body></html>

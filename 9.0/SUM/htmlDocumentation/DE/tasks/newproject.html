@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>New project creation.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link type="text/css" href="../images/page.css" rel="stylesheet">
+</head>
+
+<body>
+<h1>Create a new service project</h1>
+<p>A new service project will let you build a new TOOLBOX service. To create a new project, click on the File menu and select &quot;New/Project&quot;.</p>
+<p>A dialog showing all project types is shown to the user. Select the &quot;TOOLBOX/Service/Service&quot; item in the category tree. Now, click &quot;Next&quot;.</p>
+<p align="center"><img src="../images/new-project_001.png" width="500" height="500"></p>
+<p align="left">The project wizard is shown to the user. Through several pages, the wizard will let you specify all informations needed to build the service. </p>
+<p align="left">The first wizard page will ask you to provide a name for your service. Put it on the &quot;Service Name&quot; field and click on &quot;Next&quot;.</p>
+<p align="center"><img src="../images/new-project_002.png" width="500" height="500" align="middle"></p>
+<p align="left">The second page will ask you to provide an abstract and a description for the service. You can  provide it as free text or you can select an external file to import. NOTE: currently only free text will be visible from the TOOLBOX RE pages. In any case, provided information will be stored into the service project. </p>
+<p align="center"><img src="../images/new-project_003.png" width="500" height="500"> </p>
+<p align="left">The third page will let you specify the interface to associate and implement on your service. The figure below shows that it is possible to select one of those available on the list on the bottom or it is possible to specify a new interface. The latter choice will let you create the interface from scratch, adding schema sets, providing all  information when needed. Selecting the interface from the list, all these steps are performed automatically since all these information are stored into the Interface Repository. For more informations about the Interface Repository go here. </p>
+<p align="center"><img src="../images/new-project_004.png" width="500" height="500"></p>
+<p align="left">If you choose to implement an interface available into the Interface Repository, you have to select the &quot;One of the following interfaces&quot; radio button, select one of the interfaces and then click on &quot;Next&quot;. A new wizard page (see below) is shown, allowing you to choose which operations to implement. In order to complete the task of creating a new service at least one operation must be created. The flow describe by the figures show you how to create an SSE service that implements an asynchronous RFQ operation. Always keep in mind that operations can be created and deleted at any time through the IDE GUI while it is not possible to modify the interface associated to the service (you have to recreate it). </p>
+<p align="center"><img src="../images/new-project_005.png" width="500" height="500"> </p>
+<p align="left">Clicking on &quot;Next&quot; or selecting the &quot;New interface&quot; radio button on the previous step, the below wizard page is shown. Here some service specific information can be set. </p>
+<p align="left">The &quot;Toolbox host&quot; field can be filled with the URL of the TOOLBOX RE (version 7.0 or above) where the service shall be deployed and tested. The URL shall be provided in the form: http://&lt;address&gt;:&lt;port&gt;/TOOLBOX</p>
+<p align="left">The &quot;username&quot; and &quot;password&quot; fields can be filled with login infos. The user to be specify shall be the same used to login into the Toolbox Runtime Environment Administration Web Pages </p>
+<p align="left">The &quot;Secure communication&quot; field can be set to specify a cretifcate to be used in case of secure communication. The file path can be provided both typing it on the text field or selecting through a file dialog (shown clicking on the &quot;Browse&quot; button).</p>
+<p align="left">The &quot;Queue incoming service requests&quot; checkbox will let you activate the queuing functionality for incoming messages. This functionality has a service scope.</p>
+<p align="left">The &quot;suspend mode&quot; radio button lets you specify the suspend mode for the service. Below information about suspend modes: </p>
+<ul>
+  <li>HARD mode: the &quot;first scripts&quot; are not executed, the request is put in rejected status and the get result will be information of such rejection. </li>
+  <li>SOFT mode: requests are queued on a dedicated queue before executing &quot;first scripts&quot; and before and after the normal queuing mechanism. Each request in suspend queue is served when the service is resumed.</li>
+</ul>
+<p align="center"><img src="../images/new-project_006.png" width="635" height="527"></p>
+<p>Clicking on &quot;Finish&quot; the service is created into the workspace as shown below.</p>
+<p align="center"><img src="../images/new-project_007.png" width="251" height="889"></p>
+<p align="center">&nbsp;</p>
+</body>
+</html>

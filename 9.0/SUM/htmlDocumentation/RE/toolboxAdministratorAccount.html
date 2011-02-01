@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>TOOLBOX Administrator Account</title>
+        <link type="text/css" href="images/page.css" rel="stylesheet">
+    </head>
+    <body text="#000000" bgcolor="#ffffff">
+        <div class="content">
+            <div style="border: 2px none ; margin-left: 0pt;">
+                <h1>Creating the TOOLBOX ADMINISTRATOR account</h1>
+                <p>
+                    The TOOLBOX is released with a TOOLBOX ADMINISTRATOR Web application account having the following parameters:
+                </p>
+                <ul>
+                    <li>
+                        username=&quot;admin&quot;
+                    </li>
+                    <li>
+                        password=&quot;admin&quot;
+                    </li>
+                </ul>
+                <p>
+                    Even though you can choose to keep and use this account, its deletion is strongly recommended in order to prevent unauthorized accesses.
+                </p>
+                <p>
+                    One or more administrator accounts can be created.
+                </p>
+                <p>
+                    To create a new account, open the adminUsers.xml file under: <em>Root_Directory_Of_Tomcat/TOOLBOX/WEB-INF/xml/</em>
+                    with any text/XML editor. You will find its content is:
+                </p>
+                <pre class="Stile1">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;adminUsers xmlns=&quot;http://pisa.intecs.it/mass/toolbox/adminUsers&quot;&gt;
+   &lt;adminUser userName=&quot;admin&quot; password=&quot;admin&quot;/&gt;
+&lt;/adminUsers&gt;</pre>
+                In order to substitute the release account with a new one, simply replace the attribute values of userName and password of the &lt;/adminUser&gt; tag with new values:<pre class="Stile1">
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;adminUsers xmlns=&quot;http://pisa.intecs.it/mass/toolbox/adminUsers&quot;&gt;
+   &lt;adminUser userName=&quot;userDefinedUserName&quot; password=&quot;userDefinedpassword&quot;/&gt;
+&lt;/adminUsers&gt;</pre>
+                <p>
+                    In order to add an account, copy and paste the element &lt;adminUser userName=&quot;userDefinedUserName&quot; password=&quot;userDefinedpassword&quot;/&gt; and replace &quot;userDefinedUserName&quot; and &quot;userDefinedpassword&quot; with new values:
+                </p>
+                <pre class="Stile1">
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>&lt;adminUsers xmlns=&quot;http://pisa.intecs.it/mass/toolbox/adminUsers&quot;&gt;<br>   &lt;adminUser userName=&quot;userDefinedUserName&quot; password=&quot;userDefinedpassword&quot;/&gt; 
+   &lt;adminUser userName=&quot;anotherUserDefinedUserName&quot; password=&quot;anotherUserDefinedpassword&quot;/&gt; 
+&lt;/adminUsers&gt;</pre>
+                <p>
+                    <strong><img src="images/warning.gif" width="28" height="21">Be careful not to change the file structure during these operations. This XML file is validated by the TOOLBOX ADMISTRATOR Web application according to a schema. If the structure changes an Exception is thrown when attempt to login and there is no other way to proceed until the adminUsers.xml file is valid.</strong>
+                </p>
+            </div>
+        </div>
+    </body>
+</html>

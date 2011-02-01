@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+  
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title>Create EOP database instance</title>
+  <link type="text/css" href="images/page.css" rel="stylesheet">
+</head>
+<body>
+<h1>EOP catalogue database instance creation</h1>
+
+Starting from Toolbox 8.0&nbsp; ebRIM catalogues are supported. In
+particular a service can be instantiated in a way to implemented an EOP
+ebRIM catalogue without the need of providing any scripting logic (
+mandatory in other cases). The finalization of this kind of services foresees the 
+definition of a database schema. The user shall provide the name of an instance already 
+available in Postgres. If a new db instance shall be created, a Toolbox wizard will perform 
+the task automatically, except for a step which shall be executed manually once
+for each postgres installation.<br>
+
+<br>
+
+This step depend highly on how Postgres and Postgis have been
+installed. In the following we describe the step to perform
+in case the tools have been installed under Ubuntu using the
+apt-get command.<br>
+
+<br>
+
+<ul>
+  <li>Login as postgres user using the following command:</li>
+</ul>
+<br>
+<div style="margin-left: 40px;">$&gt; sudo su postgres<br></div>
+<br>
+<ul>
+  <li>Create the template database using the following command:</li>
+</ul>
+<br>
+
+<div style="margin-left: 40px;">$&gt; createdb template_postgis<br></div>
+<br>
+<ul>
+  <li>Enable plpqsql on the newly created database using the following command::</li>
+</ul>
+<br>
+<div style="margin-left: 40px;">$&gt; createlang plpgsql template_postgis<br></div>
+<br>
+<ul>
+  <li>Run the postgis scripts on database "template_postgis" to enable
+spatial functionality</li>
+</ul>
+<br>
+<div style="margin-left: 40px;">$&gt; psql -d template_postgis -f /usr/share/postgresql-8.3-postgis/lwpostgis.sql<br>
+</div>
+
+<div style="margin-left: 40px;">$&gt; psql -d template_postgis -f /usr/share/postgresql-8.3-postgis/spatial_ref_sys.sql<br>
+</div>
+
+<br>
+
+The name of the template database (template_postgis in the steps above) can be freely chosen.<br>
+
+Once the template database have been created, multiple catalogue
+database schemas can be created through the Toolbox administration web
+pages.<br>
+
+To perform this task access the administration web pages, click on
+Tools and the click on "Create EOP database instance" link.<br>
+
+A form is shown<br>
+
+<br>
+
+<div style="text-align: center;"><img style="width: 506px; height: 180px;" alt="" src="images/createebRRDB1.png"><br>
+</div>
+
+<br>
+The following paramenters shall be provided:<br>
+<ul>
+  <li>Database host: address of the host where Postgres is installed</li>
+  <li>Port: listening port for Postgres</li>
+  <li>Username: username of a user with rights for database schema creation (e.g. postgres)</li>
+  <li>Password: password of the user provided in the previous step</li>
+  <li>Database name: name of the new database schema</li>
+  <li>PostGIS template name: name of the template schema.</li>
+</ul>
+To trigger database creation simply click on the "create" button. The
+page is refreshed providing the execution result of the procedure.<br>
+
+</body></html>

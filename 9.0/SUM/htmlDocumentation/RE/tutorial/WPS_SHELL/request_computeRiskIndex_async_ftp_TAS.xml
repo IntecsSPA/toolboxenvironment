@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+	<soapenv:Header>
+		<MessageID xmlns="http://schemas.xmlsoap.org/ws/2003/03/addressing">WPS_ComputeRiskIndex_async_test_message_R2</MessageID>
+		<ReplyTo xmlns="http://schemas.xmlsoap.org/ws/2003/03/addressing">
+			<Address>http://hrt-11.pisa.intecs.it/TOOLBOX/Push</Address>
+			<PortType xmlns="http://toolbox.pisa.intecs.it/soap/WPS/WPSSoap">WPS_ComputeRiskIndexCallback</PortType>
+			<ServiceName xmlns="http://toolbox.pisa.intecs.it/soap/WPS/WPSSoap">WPS_ComputeRiskIndexCallback</ServiceName>
+		</ReplyTo>
+	</soapenv:Header>
+	<soapenv:Body>
+		<ExecuteProcess_computeRiskIndex xmlns="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" lineage="true" storeExecuteResponse="true" status="true">
+			<InputPollutant>
+				<wps:Reference xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" method="GET" mimeType="application/x-netcdf3" xlink:href="ftp://genesis:genesis,;@ftp.alcasat.net/wp8000/Automatic-Test-Case/CHIMERE_V200501H_AMARC3.nc"/>
+			</InputPollutant>
+			<OutputRiskIndex asReference="true" mimeType="application/x-netcdf3"/>
+		</ExecuteProcess_computeRiskIndex>
+	</soapenv:Body>
+</soapenv:Envelope>

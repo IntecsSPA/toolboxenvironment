@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Service Management</title>
+
+<link type="text/css" href="images/page.css" rel="stylesheet"></head>
+
+<body text="#000000" bgcolor="#ffffff">
+<h1>Suspending a 
+service</h1>
+                <div class="content">
+                  <p align="justify"><em><img src="images/note.gif" width="17" height="17"> </em><strong>This functionality (and the corresponding section) is available only if a service is selected and the service is running.</strong></p>
+<p align="justify">To suspend the selected service click on the &quot;Suspend&quot; link in the Service Management page. </p>
+<p align="center"><img src="images/image044.jpg"></p>
+<p align="justify">Two kinds of suspension mode are foreseen:</p>
+<ul>
+<li>HARD mode: the &quot;first scripts&quot; are not executed, 
+                    the request is put in rejected status and the get result will 
+                  be information of such rejection</li>
+<li>SOFT mode: requests are 
+                    queued on a dedicated queue before executing &quot;first scripts&quot; and before the normal queuing mechanism. Each request in suspend 
+                  queue is served when the service is resumed.</li>
+				  </ul>
+<p>The suspension mode is defined during the <a href="serviceConfiguring.html">service configuration</a>.</p>
+</div>
+                </body></html>

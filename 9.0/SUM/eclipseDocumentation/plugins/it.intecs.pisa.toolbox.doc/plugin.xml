@@ -1,0 +1,5 @@
+<plugin name="TOOLBOX.SUM.doc" id="it.intecs.pisa.toolbox.doc" version="2.1.0" provider-name="Intecs">
+	<extension point="org.eclipse.help.toc">
+		<toc file="toc.xml" primary="true"/>
+	</extension>
+</plugin>

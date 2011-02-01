@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Service Management</title>
+
+
+<link type="text/css" href="images/page.css" rel="stylesheet">
+</head>
+<body bgcolor="#ffffff" text="#000000">
+<h1>Creating a Catalogue  Proxy Service</h1>
+                <div class="content"><div style="border: 2px none ; margin-left: 0pt;">
+                  <p align="justify">A proxy service can be used in front of an existing Catalogue service typically to add a security layer and protect the original service.</p>
+                  <p align="justify">To create a new Catalogue proxy service follow these steps.</p>
+                  <p align="justify">Perform the <a href="toolboxLoggingIn.html">login procedure</a>.</p>
+                </div>
+</div>
+<div class="content">
+                  <p>Click on the Service management link in the toolbar. The browser should display</p>
+                  <p align="center"><img src="images/image007.jpg" width="642"></p>
+                  <p>Click on the <em>"Create a new Service"</em> section link. The following page should be displayed</p>
+                  <p align="center"><img src="images/CAT_SO_1.png" width="587" height="371"></p>
+                  <p>select the <em>"Create Catalogue Service"</em>
+option and fill the Service Info tab using a unique Service Name. This
+is the name of the service that will be used to create the WSDL file. Enter also an abstract and a Description of the
+service.</p>
+                  <p>Select the Catalogue Information tab and select the Interface Type</p>
+                  <p align="center"><img src="images/CAT_SO_2.png" width="587" height="371"></p>
+                  <p align="left"> The Interface Mode content will depend on the type of interface you have selected </p>
+                  <p align="center"><img src="images/CAT_SO_3.png" width="587" height="371"></p>
+                  <p align="left">Select the Gateway (for some interaces you could find Standard instead of Gateway)Interface Mode, then click on the Create Catalogue Service Button. The Browser should now display a successful message. Click on OK. The browser now should provide a list of all the schema associated to this service and some additional parameters to be set.</p>
+                  <p align="center"><img src="images/ORD4.png" width="936" height="165"></p>
+                  <p align="justify">In the following a description of the "Service information" section</p>
+
+
+                
+<ul>
+<li> 
+                    <div class="content"> 
+                      <div align="justify"><em>"Queue incoming service requests"</em> 
+                        - setting this parameter to "true" all the requests 
+                        to the service will be queued, avoiding concurrence between 
+                        scripts execution (only for asynchronous operations). 
+                        This field cannot be set if there is global queuing.</div>
+                    </div>
+    </li><li> 
+                    <div class="content"> 
+                      <div align="justify">Choose the "<em>Suspend mode"</em>: 
+                        The Suspend mode defines the way the requests are managed 
+                        on the service suspension. Two modes are supported:HARD 
+                        and SOFT mode. <em><strong>HARD mode</strong></em>: the 
+                        "first scripts" are not executed, the request 
+                        is put in rejected status and the get result will be information 
+                        of such rejection. <em><strong>SOFT mode</strong></em>: 
+                        requests are queued on a dedicated queue before executing 
+                        "first scripts" and before and after the normal 
+                        queuing mechanism. Each request in suspend queue is served 
+                        when the service is resumed.</div>
+                    </div>
+                  </li><li> 
+                    <div class="content"> 
+                      <div align="justify">If the new service supports secure 
+                        communication via SSL select the (OPTIONAL) "SSL" 
+                        option and fill the (OPTIONAL) "Certification location" 
+                        field with the path to the SSL certificate location. WARN: 
+                        only if both the SSL fields are specified will the secure 
+                        communication be possible.</div>
+                    </div>
+                  </li>
+<li>
+  <div class="content">
+    <div align="justify">WS-Security: this allow securing the communication at SOAP level. Please refer to the <a href="serviceSecurityConfiguration.html">Service Security Configuration</a> for more information. .</div>
+  </div>
+</li>
+</ul>
+
+                
+<p>Then click on Configure. A summary of all the selected options is now displayed but the service is created without operations. To add an operation follow the steps descrbed <a href="createOperation.html">here</a>. </p>
+</div>
+</body></html>

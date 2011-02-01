@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Documento senza titolo</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link type="text/css" href="../images/page.css" rel="stylesheet">
+
+</head>
+
+<body>
+<h1>addOrderConfirmation</h1>
+<table border="1" width="100%" cellspacing="0">
+  <tbody>
+    <tr>
+      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>addOrderConfirmation<a name="addOrderConfirmation" id="addOrderConfirmation"></a></strong></font></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" bgcolor="#CCCCCC">Attributes</td>
+      <td align="center" bgcolor="#F0F0F0"><table border="1" width="100%" bgcolor="#F0F0F0" cellspacing="0">
+          <tbody>
+            <tr>
+              <td width="20%" align="center" bgcolor="#CCCCCC">Name</td>
+              <td width="20%" align="center" bgcolor="#CCCCCC">Type</td>
+              <td width="20%" align="center" bgcolor="#CCCCCC">Use</td>
+              <td width="20%" align="center" bgcolor="#CCCCCC">Default</td>
+              <td width="20%" align="center" bgcolor="#CCCCCC">Description</td>
+            </tr>
+            <tr>
+              <td height="72" align="center">mnemonicId</td>
+              <td align="center">xsd:string</td>
+              <td align="center">required</td>
+              <td align="center">&nbsp;</td>
+              <td align="justify" >A mnemonic value to be linked to the order ocnfirmation. </td>
+            </tr>
+          </tbody>
+      </table></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+      <td align="justify" bgcolor="#F0F0F0">This tag add an order confirmation entry for the service. The order confirmation id is returned by the tag.Mnemonicid  specifies an attribute useful for finding the order confirmation from the web page. It can be used for linking the confirmation to the portal orderId.</td>
+    </tr>
+    <tr>
+      <td align="center" valign="top"  bgcolor="#CCCCCC">Examples</td>
+      <td align="left" bgcolor="#F0F0F0"><pre>&lt;addOrderConfirmation mnemonicId=&quot;$orderId&quot; /&gt;           </pre>        <font><em>This tag adds an order confirmation for the service that is executing it. The value of the variable orderId is linked to this confirmation request and displayed to the administrator on the management web page. </em></font></td>
+    </tr>
+  </tbody>
+</table>
+<p>&nbsp;</p>
+<h1>checkOrderConfirmation</h1>
+<table border="1" width="100%" cellspacing="0">
+  <tbody>
+    <tr>
+      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>checkOrderConfirmation<a name="checkOrderConfirmation" id="checkOrderConfirmation"></a></strong></font></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" bgcolor="#CCCCCC">Attributes</td>
+      <td align="center" bgcolor="#F0F0F0"><table border="1" width="100%" bgcolor="#F0F0F0" cellspacing="0">
+          <tbody>
+            <tr>
+              <td width="20%" align="center" bgcolor="#CCCCCC">Name</td>
+              <td width="20%" align="center" bgcolor="#CCCCCC">Type</td>
+              <td width="20%" align="center" bgcolor="#CCCCCC">Use</td>
+              <td width="20%" align="center" bgcolor="#CCCCCC">Default</td>
+              <td width="20%" align="center" bgcolor="#CCCCCC">Description</td>
+            </tr>
+            <tr>
+              <td height="72" align="center">id</td>
+              <td align="center">xsd:string</td>
+              <td align="center">required</td>
+              <td align="center">&nbsp;</td>
+              <td align="justify" >Identifier of the order confirmation, returned by the addOrderConfirmation tag, </td>
+            </tr>
+          </tbody>
+      </table></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+      <td align="justify" bgcolor="#F0F0F0">This tag returns the status of the order, whose id is specified by the id attribute. If the order has been confirmed by the administrator a true value is returned, false otherwise. </td>
+    </tr>
+    <tr>
+      <td align="center" valign="top"  bgcolor="#CCCCCC">Examples</td>
+      <td align="left" bgcolor="#F0F0F0"><pre>&lt;if&gt;<br>	&lt;oeq&gt;<br>	    &lt;checkOrderConfirmation id=&quot;$orderConfId&quot; /&gt;<br>	    &lt;literal type=&quot;boolean&quot; value=&quot;true&quot; /&gt;<br>	&lt;/oeq&gt;<br>						<br>	&lt;setVariable name=&quot;returnValue&quot;&gt;<br>		&lt;literal type=&quot;boolean&quot; value=&quot;true&quot;/&gt;<br>	&lt;/setVariable&gt;<br>	&lt;setVariable name=&quot;returnValue&quot;&gt;<br>		&lt;literal type=&quot;boolean&quot; value=&quot;false&quot;/&gt;<br>	&lt;/setVariable&gt;<br>&lt;/if&gt;
+         </pre>        
+      <font><em>This tag sets the variable returnValue to true or false depending on the status of the confirmation request whose id is stored by the variable orderConfigId. </em></font></td>
+    </tr>
+  </tbody>
+</table>
+<h1>getOrderError</h1>
+<table border="1" width="100%" cellspacing="0">
+  <tbody>
+    <tr>
+      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>getOrderError<a name="getOrderError" id="getOrderError"></a></strong></font></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" bgcolor="#CCCCCC">Attributes</td>
+      <td align="center" bgcolor="#F0F0F0"><table border="1" width="100%" bgcolor="#F0F0F0" cellspacing="0">
+          <tbody>
+            <tr>
+              <td width="20%" align="center" bgcolor="#CCCCCC">Name</td>
+              <td width="20%" align="center" bgcolor="#CCCCCC">Type</td>
+              <td width="20%" align="center" bgcolor="#CCCCCC">Use</td>
+              <td width="20%" align="center" bgcolor="#CCCCCC">Default</td>
+              <td width="20%" align="center" bgcolor="#CCCCCC">Description</td>
+            </tr>
+            <tr>
+              <td height="72" align="center">id</td>
+              <td align="center">xsd:string</td>
+              <td align="center">required</td>
+              <td align="center">&nbsp;</td>
+              <td align="justify" >Id associated to an order confirmation whose error message shall be returned. </td>
+            </tr>
+          </tbody>
+      </table></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" bgcolor="#CCCCCC">Description</td>
+      <td align="justify" bgcolor="#F0F0F0">This tag returns, if any, the error message associated to the confirmation with the provided id. The return value is of type String </td>
+    </tr>
+    <tr>
+      <td height="77" align="center" valign="top"  bgcolor="#CCCCCC">Examples</td>
+      <td align="left" bgcolor="#F0F0F0"><pre>&lt;getOrderError id=&quot;$id&quot;/&gt;           </pre>
+          <font><em>This tag returns, if any, the error message associated to the confirmation with the provided id. </em></font></td>
+    </tr>
+  </tbody>
+</table>
+<p>&nbsp;</p>
+</body>
+</html>

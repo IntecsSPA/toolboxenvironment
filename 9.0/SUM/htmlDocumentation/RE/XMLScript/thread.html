@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Documento senza titolo</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link type="text/css" href="../images/page.css" rel="stylesheet">
+
+</head>
+
+<body>
+<h1>Threading
+</h1>
+<table border="1" width="100%" cellspacing="0">
+  <tbody>
+    <tr>
+      <td width="9%" align="center" bgcolor="#CCCCCC">Tag Name</td>
+      <td width="91%" bgcolor="#F0F0F0"><font color="#993300"><strong>fork<a name="fork" id="fork"></a></strong></font></td>
+    </tr>
+    <tr>
+      <td align="center" bgcolor="#CCCCCC">Description</td>
+      <td align="justify" bgcolor="#F0F0F0">This tag creates a new thread for executing  Toolbox scripts. The script to be executed can be provided through the file tag, giving its full path, or simply putting a script snippet as a child of the fork tag.</td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" bgcolor="#CCCCCC">Examples</td>
+      <td align="left" bgcolor="#F0F0F0"><pre>&lt;fork&gt;<br>		&lt;sequence&gt;<br>	    	&lt;ftpGet transfer=&quot;binary&quot;&gt;<br>	        	&lt;host&gt;<br>		        	&lt;string&gt;pisa007.pisa.intecs.it&lt;/string&gt;<br>		        &lt;/host&gt;<br>	        	&lt;port&gt;<br>		        	&lt;literal value=&quot;21&quot; /&gt;<br>	        	&lt;/port&gt;<br>	        	&lt;user&gt;<br>		        	&lt;string&gt;dvd&lt;/string&gt;<br>	        	&lt;/user&gt;<br>	        	&lt;password&gt;<br>		        	&lt;string&gt;intecs&lt;/string&gt;<br>	        	&lt;/password&gt;<br>	        	&lt;remotePath&gt;<br>		        	&lt;string&gt;/home/ftpaccount/wtp-all-in-one-sdk-R-1.5.1-200609230508-win32.zip&lt;/string&gt;<br>		        &lt;/remotePath&gt;<br>	         	&lt;localPath&gt;<br>		         	&lt;stringCat&gt;<br>		              	&lt;string&gt;/tmp/downloadedFile.zip&lt;/string&gt;<br>			        &lt;/stringCat&gt;<br>	         	&lt;/localPath&gt;<br>        	&lt;/ftpGet&gt;<br>   	&lt;/sequence&gt;
+&lt;/fork&gt;</pre>
+          <p><font><em>This piece of code executes asynchronously an FTP file transfer.</em></font></p>
+          <pre>&lt;fork&gt;
+     &lt;file&gt;/home/toolbox/myAsynchScript.tscript&lt;/file&gt;
+&lt;/fork&gt;
+
+<font><em>This piece of code executes asynchronously the script stored in the file myAsynchScript.tscript.</em></font>
+</pre></td>
+    </tr>
+  </tbody>
+</table>
+<p>&nbsp;</p>
+</body>
+</html>

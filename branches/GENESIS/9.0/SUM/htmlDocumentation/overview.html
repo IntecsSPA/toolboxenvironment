@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Overview</title>
+        <link type="text/css" href="RE/images/page.css" rel="stylesheet">
+        <style type="text/css">
+        </style>
+    </head>
+    <body text="#000000" bgcolor="#ffffff">
+        <h1>The TOOLBOX</h1>
+        <div class="content">
+            <p>
+                This section provides an overview of the TOOLBOX capabilities. In the following we refer to the TOOLBOX Runtime Environment with TOOLBOX RE and TOOLBOX Development Environment with TOOLBOX DE.
+            </p>
+            The TOOLBOX RE allows deploying legacy application, custom processing, legacy catalogues as OGC compliant services. 
+            The following pre-defined services can be deployed out of the box:
+            <ul>
+                <li>
+                    Catalogue services: The OpenGIS Catalogue Services Interface Standard (CAT) supports the ability to publish and search collections of descriptive information (metadata) about geospatial data, services and related resources. A provider of resources use catalogues to register metadata that conform to the provider's choice of an information model; such models include descriptions of spatial references and thematic information. Client applications can then search for geospatial data and services in very efficient ways. The following profiles are supported by the Toolbox: 
+                    <ul>
+                        <li>
+                            EO Products Extension Package for ebRIM (ISO/TS 15000-3) Profile of CSW 2.0 (0.1.9), 06-131r4 and higher
+                        </li>
+                        <li>
+                            OGC Cataloguing of ISO Metadata (CIM) using the ebRIM profile of CS-W (0.1.10), 07-038 and higher
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    Ordering Services: this kind of services allow the ordering of Earth Observation (EO) data products either from previously identified data set collections via a typical catalogue interaction or from future acquisitions specified via a Programming service. 
+                </li>
+                <li>
+                    Web Processing Services: the OGC Web Processing Service (WPS) 1.0.0 standard provides distributed spatial data processing analyses for arbitrary geoprocessing functionalities using a standardized web service-based interface. Additionally, the standard offers the ability to define and use so-called WPS Profiles in a recyclable way for semantically-driven interoperable processing.
+                </li>
+                <li>
+                    Archiving Services: this service provides simple and more advanced functionalities to archive, restore or delete final or intermediate result of computations in a data store. Simple management will consist of storing data in a simple local server and manage a rolling archive where files are deleted automatically after a configurable amount of time. Advanced functionalities will allow the automatic result deployment on a predefined set of server: FTP, WMS, WFS and WCS, HTTP. The input data can be deployed on the different servers depending on the registered servers and on the user inputs. For example a GeoTIFF output of a processing could be stored in an FTP server as well as on a GeoServer. Moreover the service will allow the automatic metadata extraction (if applicable, if not the metadata will be provided as input to the processing in a known format, GML or ISO) and the metadata publication on a connected catalogue. Data deletion and update will implies an automatic update of the metadata, thus maintaining the environment up to date. The service is exposed as OGC WPS allowing it to be handled in a standardized way by other GENESIS services, notably the Workflow Orchestration Service.
+                </li>
+            </ul>
+            Moreover the Toolbox implements a Policy Enforcement Point and a Policy Decision Point compliant with the OGC 07-118r8 "User Management Interfaces for Earth Observation Services" best practice to protect both internal as well as external services. 
+            The framework allows also defining and implementing Web Serviced based on custom interfaces via the TOOLBOX DE Eclipse plug-in.
+            <p>
+                In the following the main capabilities
+            </p>
+            <table cellpadding="60" cellspacing="4">
+                <tr>
+                    <td width="50%" valign="top">
+                        <div align="center">
+                            <h2>Catalogue support</h2>
+                            <img src="RE/images/overview1.png"/>
+                        </div>
+                        <div align="justify">
+                            <p>
+                                It allows the publication of OGC compliant catalogues based on the buddata open source engine. The following profiles are  supported:
+                                <ul>
+                                    <li>
+                                        EO Products Extension Package for ebRIM (ISO/TS 15000-3) Profile of CSW 2.0 (0.1.9), 06-131r4 and higher
+                                    </li>
+                                    <li>
+                                        OGC Cataloguing of ISO Metadata (CIM) using the ebRIM profile of CS-W (0.1.10), 07-038 and higher
+                                    </li>
+                                </ul>
+                            </p>
+                        </div>
+                    </td>
+                    <td width="50%" valign="top">
+                        <div align="center">
+                            <h2>Legacy Catalogue integration</h2>
+                            <img src="RE/images/overview2.png"/>
+                        </div>
+                        <div align="justify">
+                            <p>
+                                It allows the creation of gateways towards legacy catalogues to expose them as OGC compliant catalogues. The following interfaces are supported:
+                                The following profiles are supported:
+                                <ul>
+                                    <li>
+                                        EO Products Extension Package for ebRIM (ISO/TS 15000-3) Profile of CSW 2.0 (0.1.9), 06-131r4 and higher
+                                    </li>
+                                    <li>
+                                        OGC Cataloguing of ISO Metadata (CIM) using the ebRIM profile of CS-W (0.1.10), 07-038 and higher
+                                    </li>
+                                </ul>
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">
+                        <div align="center">
+                            <h2>INSPIRE facade</h2>
+                            <img src="RE/images/overview3.png"/>
+                        </div>
+                        <div align="justify">
+                            <p>
+                                It allows the publication of an OGC ebRIM CIM catalogue as an INSPIRE compliant catalogue by means of a facade.
+                            </p>
+                        </div>
+                    </td>
+                    <td width="50%" valign="top">
+                        <div align="center">
+                            <h2>Web Processing Services support</h2>
+                            <img src="RE/images/overview4.png"/>
+                        </div>
+                        <div align="justify">
+                            <p>
+                                It allows the publication of OGC Web Processing services. It can be easily connected to some common open source processing tools (currently GRASS, OCTAVE and OpenMath integration is under development) but it can be also integrate custom processing executable.
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">
+                        <div align="center">
+                            <h2>Generic Web Services</h2>
+                            <img src="RE/images/overview5.png"/>
+                        </div>
+                        <div align="justify">
+                            <p>
+                                It allows deployment of generic Web Services by means of an XML based scripting language.
+                            </p>
+                        </div>
+                    </td>
+                    <td width="50%" valign="top">
+                        <div align="center">
+                            <h2>Result publication</h2>
+                            <img src="RE/images/overview6.png"/>
+                        </div>
+                        <div align="justify">
+                            <p>
+                                It support the publication of the results of a processing/service on different servers: FTP (built-in), HTTP (built-in), WMS, WFS and WCS (via GeoServer) 
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">
+                        <div align="center">
+                            <h2>Testing</h2>
+                            <img src="RE/images/overview7.png"/>
+                        </div>
+                        <div align="justify">
+                            <p>
+                                It provides a web based testing tool. The test tool can be used to perform test on a local installation as well as on a remote installation. 
+                            </p>
+                        </div>
+                    </td>
+                    <td width="50%" valign="top">
+                        <div align="center">
+                            <h2>Monitoring</h2>
+                            <img src="RE/images/overview8.png"/>
+                        </div>
+                        <div align="justify">
+                            <p>
+                                It provides a web based monitoring tool allowing listing all the incoming requests, to inspect the processing and see the results sent back to the client. Moreover some statistics on the service execution can be generated. 
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">
+                        <div align="center">
+                            <h2>Security</h2>
+                            <img src="RE/images/overview9.png"/>
+                        </div>
+                        <div align="justify">
+                            <p>
+                                It implements a Policy Enforcement Point and a Policy Decision Point compliant with the OGC 07-118r8 "User Management Interfaces for Earth Observation Services" best practice to protect both internal as well as external services 
+                            </p>
+                        </div>
+                    </td>
+                    <td width="50%" valign="top">
+                        <div align="center">
+                            <h2>Development support</h2>
+                            <img src="RE/images/overview10.png"/>
+                        </div>
+                        <div align="justify">
+                            <p>
+                                For advanced users, it includes a development environment as eclipse plugin that can be used to create new web services and deploy them automatically in the run time environment running on Tomcat. The development environment provides a way to handle all the service resources and createS the XML needed to define the service logic. Moreover it allows defining, organizing and performing test. 
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

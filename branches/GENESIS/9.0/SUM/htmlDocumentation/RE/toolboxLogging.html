@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>TOOLBOX logging</title>
+        <link type="text/css" href="images/page.css" rel="stylesheet">
+    </head>
+    <body text="#000000" bgcolor="#ffffff">
+        <h1>Viewing the TOOLBOX log</h1>
+
+        <div class="content">
+            <img src="images/note.gif" width="17" height="17"><strong>The maximum log file size is defined during the configuration procedure.
+			 When the maximum file size is reached the current toolbox.log file is saved with a different name (toolbox.log.1) and a new empty 
+			 file is created using a rolling policy. The maximum index allowed is 9. Thus a maximum of 10 log files can be saved. Each file 
+			 content can be displayed using the navigation bar.</strong>
+        </div>
+        <div class="content">
+            <div style="border: 2px none ; margin-left: 0pt;">
+                <p>
+                    To display the TOOLBOX log file in a user-friendly view, 
+                    click on the &quot;Display the TOOLBOX log&quot; section link in the &quot;Monitoring center&quot; page. The browser should display 
+                    a window similar to the one reported below
+                </p>
+                <p align="center">
+                    <img src="images/image032.jpg" width="936" height="515">
+                </p>
+                <p>
+                    The TOOLBOX log window allows selecting the log level.
+                    Five log level are foreseen:
+                </p>
+            </div>
+            <ul>
+                <li>
+                    <div class="content">
+                        DEBUG - this level designates fine-grained 
+                        informational events that are most useful to debug the 
+                        application.
+                    </div>
+                </li>
+                <li>
+                    <div class="content">
+                        INFO - this level designates informational 
+                        messages that highlight the progress of the application 
+                        at coarse-grained level.
+                    </div>
+                </li>
+                <li>
+                    <div class="content">
+                        WARN - This level designates potentially 
+                        harmful situations.
+                    </div>
+                </li>
+                <li>
+                    <div class="content">
+                        ERROR - This level designates error 
+                        events that might still allow the application to continue  
+                        running. 
+                    </div>
+                </li>
+                <li>
+                    <div class="content">
+                        FATAL - This level designates very 
+                        severe error events that will presumably lead the application  
+                        to abort. 
+                    </div>
+                </li>
+            </ul>
+            <p>
+                By default the INFO level is selected. If you want to change it select the log level from the combo area.
+            </p>
+            <p align="center">
+                <img src="images/image138.jpg">
+            </p>
+            <p>
+                A table showing the TOOLBOX log file entries corresponding to the selected level should displayed. 
+            </p>
+            <p>
+                It is possbile sort the log entries for Level, Thread Id, Text or Data.
+            </p>
+            <p align="center">
+                <img src="images/image139.jpg">
+            </p>
+            <p>
+                Also, It is possbile custumize the columns to visualize.
+            </p>
+            <p align="center">
+                <img src="images/image140.jpg">
+            </p>
+            <!--p>In order to clear and backup the TOOLBOX log files, click on the &quot;Clear &quot; button. The current log files (named
+            <em>toolbox.log</em>[.x] stored under the TOOLBOX log directory
+            set at configuration time) will be moved to a backup directory named <em>toolbox-bkp-YYYY-MM-DDTHH-MM-SS</em>. These files can not be displayed with the web application and their deletion is responsibility of the administrator.</p-->
+        </div>
+    </body>
+</html>

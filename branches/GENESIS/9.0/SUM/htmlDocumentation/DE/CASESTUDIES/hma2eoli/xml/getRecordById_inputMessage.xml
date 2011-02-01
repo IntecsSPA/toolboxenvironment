@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GetRecordById service="http://www.opengis.net/cat/csw" version="2.0.1" xmlns="http://www.opengis.net/cat/csw" xmlns:gmlns="http://www.opengis.net/gml" xmlns:hma="http://earth.esa.int/hma" xmlns:order="http://earth.esa.int/hma/ordering" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><Id>urn:HMA:EoliCatalogue:ESA.EECF.ENVISAT_ASA_IMx_xF:EN1-06101809282061-1509.XI</Id><ElementSetName typeNames="dataset">full</ElementSetName></GetRecordById>

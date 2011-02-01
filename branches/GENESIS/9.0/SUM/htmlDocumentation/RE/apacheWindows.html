@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Apache installation</title>
+        <link type="text/css" href="images/page.css" rel="stylesheet">
+    </head>
+    <body text="#000000" bgcolor="#ffffff">
+        <div class="content">
+        <h1>Apache Web Server for Windows</h1>
+        <h2>System requirements</h2>
+        <p>
+            Apache 2.0 is designed to run on Windows NT 4.0 and Windows 2000. The binary installer will only work with the x86 family of processors, such as Intel's
+        </p>
+        <p>
+            If running on NT 4.0, installing Service Pack 6 is recommended, as Service Pack 4 created known issues with TCP/IP and WinSock integrity that were resolved in later Service Packs.
+        </p>
+        <h2>Installing Apache</h2>
+        <p>
+            Run the apache_2.0.43-win32-x86-no_ssl.exe installation file.
+        </p>
+        <p>
+            This will ask for:
+        </p>
+        <ul>
+            <li>
+                <div style="border: 2px none ; margin-left: 0pt;">
+                    whether or not you want to run Apache for all users (installing Apache as a Service), or if you want it installed to run in a console window when you choose the Start Apache shortcut. Choose to install Apache as a service.
+                </div>
+            </li>
+            <li>
+                <div style="border: 2px none ; margin-left: 0pt;">
+                    your Server name, Domain name and administrative e-mail account. 
+                </div>
+            </li>
+            <li>
+                <div style="border: 2px none ; margin-left: 0pt;">
+                    the installation type: &quot;Complete&quot; (recommended) or &quot;Custom&quot;.
+                </div>
+            </li>
+            <li>
+                <div style="border: 2px none ; margin-left: 0pt;">
+                    the directory to install Apache into 
+                </div>
+            </li>
+        </ul>
+        <div style="border: 2px none ; margin-left: 0pt;">
+            <p>
+                During the installation, Apache will configure the files in the conf directory for your chosen installation directory. However if any of the files in this directory already exist they will not be overwritten. Instead the new copy of the corresponding file will be left with the extension .default. So, for example, if conf\httpd.conf already exists it will not be altered, but the version, which would have been installed, will be left in conf\httpd.conf.default. After the installation has finished you should manually check to see what is in new in the .default file, and if necessary update your existing configuration files. Also, if you already have a file called htdocs\index.html then it will not be overwritten (no index.html.default file will be installed either). This should mean it a safe to install Apache over an existing installation (but you will have to stop the existing server running before doing the installation, then start the new one after the installation is finished).
+            </p>
+            <p>
+                After installing Apache, you should edit the configuration files in the conf directory as required. These files will be configured during the install ready for Apache to be run from the directory where it was installed, with the documents served from the subdirectory htdocs. There are lots of other options that should be set before you start really using Apache. However to get started quickly the files should work as installed.
+            </p>
+        </div>
+        <h2>Running Apache</h2>
+        <p>
+            Apache is assumed installed as a service, as strongly recommended in the previous section. Multiple Apache services can be installed, each with a different name and configuration.
+        </p>
+        <p>
+            After the installation Apache is running in the background and will start automatically when the machine boots. Apache start-up, restart and stopping can be controlled in four ways:
+        </p>
+        <p>
+            1) by the Start menu, selecting &quot;Start&quot; --&gt; &quot;Programs&quot; --&gt; &quot;Apache HTTP Server 2.0.43&quot; --&gt; &quot;Control Apache Server&quot; and finally &quot;Restart&quot;, &quot;Start&quot; or &quot;Stop&quot;.
+        </p>
+        <p>
+            2) by clicking on the &quot;Apache Monitor&quot; icon on the Windows Tool bar and selecting &quot;Restart&quot;, &quot;Start&quot; or &quot;Stop&quot;.
+        </p>
+        <p>
+            3) by opening the &quot;Services&quot; window (in the &quot;Control Panel&quot; on Windows NT, in &quot;Control Panel&quot; --&gt; &quot;Administration tools&quot; on Windows 2000), selecting &quot;Apache2&quot;, and then clicking on Start, Stop or Restart. Apache will now be running in the background. You can later stop Apache by clicking on Stop. A more user-friendly way to start and stop Apache is by the &quot;Apache Monitor&quot;, whose icon is available on the Windows tool bar.
+        </p>
+        <p>
+            4) by command line. Open a DOS prompt and move into the directory[1] C:\Program Files\Apache Group\Apache2\bin, then run one of the following:
+        </p>
+        <p>
+            o $ apache –k start
+        </p>
+        <p>
+            o $ apache –k restart
+        </p>
+        <p>
+            o $ apache –k restart
+        </p>
+        <p>
+            Apache, unlike many other Windows NT services, logs any errors to its own error.log file in the logs folder within the Apache server root folder. You will not find Apache error details in the Windows Event Log.
+        </p>
+        <p>
+            After starting Apache running it will be listening on port 80 (unless you changed the Listen directive in the configuration files). To connect to the server and access the default page, launch a browser and enter this URL:
+        </p>
+        <p>
+            http://localhost/
+        </p>
+        <p>
+            This should respond with a welcome page, and a link to the Apache manual. If nothing happens or you get an error, look in the error.log file in the logs directory. If your host isn't connected to the net, you may have to use this URL:
+        </p>
+        <p>
+            http://127.0.0.1/
+        </p>
+        <p>
+            Once your basic installation is working, you should configure it properly by editing the files in the conf directory. If you change the configuration of the Windows NT service for Apache, first attempt to start it from the command line to assure that the service starts with no errors.
+        </p>
+        <div style="border: 2px none ; margin-left: 0pt;">
+            <h2>Linking Apache and Tomcat</h2>
+            <p>
+                Apache supports an optional module (mod_proxy) that configures the web server to act as a proxy server. This can be used to forward requests for a particular web application to a Tomcat instance, without having to configure a web connector such as mod_webapp.
+            </p>
+            <p>
+                In order to link Apache and Tomcat some directives have to be added in the Apache httpd.conf configuration file. To accomplish this, you need to perform the following tasks:
+            </p>
+            <p>
+                1) Configure your copy of Apache so that it includes the mod_proxy module, by selecting &quot;Start&quot;-&gt;&quot;Programs&quot;-&gt;&quot;Apache HTTP Server 2.0.43 &quot;-&gt;&quot;Configure Apache Server&quot;-&gt;&quot;Edit the Apache httpd.conf Configuration File&quot; and uncomment the following lines:
+            </p>
+            <p>
+                #LoadModule proxy_module modules/mod_proxy.so
+            </p>
+            <p>
+                #LoadModule proxy_http_module modules/mod_proxy_http.so
+            </p>
+            <p>
+                2) Include the following two directives in your httpd.conf file to forward the Web application of the TOOLBOX to Tomcat at context path /TOOLBOX:
+            </p>
+            <p>
+                ProxyPass /TOOLBOX http://Tomcat_host:8080/TOOLBOX
+            </p>
+            <p>
+                ProxyPassReverse /TOOLBOX http://Tomcat_host:8080/TOOLBOX
+            </p>
+            <p>
+                which tell Apache to forward URLs of the form http://Apache_Host/TOOLBOX/* to the Tomcat connector listening on port 8080.
+            </p>
+            <p>
+                In order to make the changes effective restart Apache.
+            </p>
+        </div>
+    </body>
+</html>

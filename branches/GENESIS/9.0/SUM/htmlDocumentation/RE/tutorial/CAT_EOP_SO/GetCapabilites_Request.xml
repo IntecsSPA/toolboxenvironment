@@ -1,0 +1,10 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+  <SOAP-ENV:Header/>
+  <SOAP-ENV:Body>
+		<GetCapabilities xmlns="http://www.opengis.net/cat/csw/2.0.2" service="http://www.opengis.net/cat/csw">
+			<AcceptVersions xmlns="http://www.opengis.net/ows">
+				<Version>2.0.2</Version>
+			</AcceptVersions>
+		</GetCapabilities>
+	</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <ExecuteProcess_TestOperation xmlns="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" lineage="true" storeExecuteResponse="true" status="true">
+      <InputRaster>
+        <wps:Reference xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" method="GET" mimeType="image/geotiff" xlink:href="http://hrt-11.pisa.intecs.it/raster/currentSpeedModel.tiff"/>
+      </InputRaster>
+      <InputRasterMultiple>
+        <wps:Reference xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" method="GET" mimeType="image/geotiff" xlink:href="http://hrt-11.pisa.intecs.it/raster/currentSpeedModel.tiff"/>
+      </InputRasterMultiple>
+      
+      <InputRasterMultiple>
+        <wps:Reference xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" method="GET" mimeType="image/geotiff" xlink:href="http://hrt-11.pisa.intecs.it/raster/currentSpeedModel.tiff"/>
+      </InputRasterMultiple>
+      <InputRasterNotMandatory>
+        <wps:Reference xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" method="GET" mimeType="image/geotiff" xlink:href="http://hrt-11.pisa.intecs.it/raster/currentSpeedModel.tiff"/>
+      </InputRasterNotMandatory>
+      <BoundingBox>
+        <wps:BoundingBoxData xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:ows="http://www.opengis.net/ows/1.1">
+          <ows:LowerCorner xmlns:ows="http://www.opengis.net/ows/1.1">47.35 8.5</ows:LowerCorner>
+          <ows:UpperCorner xmlns:ows="http://www.opengis.net/ows/1.1">50.55 14</ows:UpperCorner>
+        </wps:BoundingBoxData>
+      </BoundingBox>
+      <BoundingBoxMultipleNotMandatory>
+        <wps:BoundingBoxData xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:ows="http://www.opengis.net/ows/1.1">
+          <ows:LowerCorner xmlns:ows="http://www.opengis.net/ows/1.1">0 0</ows:LowerCorner>
+          <ows:UpperCorner xmlns:ows="http://www.opengis.net/ows/1.1">90 90</ows:UpperCorner>
+        </wps:BoundingBoxData>
+      </BoundingBoxMultipleNotMandatory>
+      <BoundingBoxMultipleNotMandatory>
+        <wps:BoundingBoxData xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:ows="http://www.opengis.net/ows/1.1">
+          <ows:LowerCorner xmlns:ows="http://www.opengis.net/ows/1.1">-90 -180</ows:LowerCorner>
+          <ows:UpperCorner xmlns:ows="http://www.opengis.net/ows/1.1">90 180</ows:UpperCorner>
+        </wps:BoundingBoxData>
+      </BoundingBoxMultipleNotMandatory>
+      <InputFormat>netCDF4</InputFormat>
+      <OutputDataType>Float32</OutputDataType>
+      <LiteralMultipleNotMandatory>Float32</LiteralMultipleNotMandatory>
+      <LiteralMultipleNotMandatory>CFloat32</LiteralMultipleNotMandatory>
+      <OutputRaster asReference="true" mimeType="image/tiff"/>
+      <OutputMessage/>
+      <BBOX/>
+    </ExecuteProcess_TestOperation>
+  </soapenv:Body>
+</soapenv:Envelope>

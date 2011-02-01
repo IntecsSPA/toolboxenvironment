@@ -31,37 +31,25 @@ configuration used.</p>
 <h5>Windows machine system requirements</h5>
 <!--p>The TOOLBOX can be run on different versions of Tomcat. The following configurations have been tested:</p-->
 <ol>
-  <li>J2SE Development Kit 5.0 (JDK 5.0) + Tomcat 5.5.9</li>
+  <li>J2SE Development Kit 6.0 (JDK 6.0) + Tomcat 6.0.30</li>
   <div>
   <table border="0" cellpadding="2" cellspacing="2" width="920">
     <tbody>
       <tr>
-        <th scope="row" bgcolor="#000000" width="188"><span class="Stile1"> J2SE Development Kit 5.0 (JDK 5.0) </span></th>
+        <th scope="row" bgcolor="#000000" width="188"><span class="Stile1"> J2SE Development Kit 6.0 (JDK 6.0) </span></th>
         <td bgcolor="#cccccc" width="718">
-        <p>J2SE
-Development Kit 5.0 (JDK 5.0) is supported on Microsoft Windows running
-Intel IA32, 100% compatible processors, and AMD Opteron 32. For
-supported versions of Windows, along with disk and RAM requirements,
-see <a href="http://java.sun.com/j2se/1.5.0/system-configurations.html" target="_blank">System Configurations.</a></p>
-        <p><strong> Amount of disk space required. </strong>It
-depends on the installation options. In case the typical installation
-has been chosen 281 MB are required. For further details please see the
-        <a href="http://java.sun.com/j2se/1.5.0/install-windows-diskspace.html" target="_blank">java 1.5 Windows Disk Space Requirements.</a></p>
-        <p> Note - The JDK has two version numbers -- external version
-number 5.0 and internal version number 1.5.0. </p>
-        <p>Note
-- Trying to install the JDK on a non-supported version of Microsoft
-Windows or on a machine that doesn't have a sufficiently up-to-date
-Service Pack will cause the installer to generate this warning: "We
-recommend that you do not install this Java platform for the following
-reasons: This Java platform does not support the operating system or
-operating-system service pack on this machine." </p>
-        </td>
+        <p>See supported <a href="http://www.oracle.com/technetwork/java/javase/system-configurations-135212.html">System Configurations </a> for information about supported platforms, operating systems, desktop managers, and browsers. </p>
+        <p>The minimum physical RAM is required to run graphically based applications. More RAM is recommended for applets running within a browser using the Java Plugin. Running with less memory may cause disk swapping which has a severe effect on performance. Very large programs may require more RAM for adequate performance. </p>
+        <p>This installation requires Windows Installer 2.0 to be on your machine. For more details, see the <a href="http://www.oracle.com/technetwork/java/javase/install-windows-189425.html#troubleshooting">Troubleshooting the Installation </a> section . </p>
+        <p>For the amount of disk space required, see <a href="http://www.oracle.com/technetwork/java/javase/windows-diskspace-140460.html">Windows Disk Space Requirements </a>. </p>
+
+        Note - The JDK has two version numbers -- external version number (6) and an internal version number (1.6.0).
+        <p>Note - Trying to install the JDK on a non-supported version of Microsoft Windows or on a machine that doesn't have a sufficiently up-to-date Service Pack will cause the installer to generate this warning: "We recommend that you do not install this Java platform for the following reasons: This Java platform does not support the operating system or operating-system service pack on this machine." See the <a href="http://www.oracle.com/technetwork/java/javase/install-windows-189425.html#requirements">system requirements </a> above for information on supported configurations of Microsoft Windows. </p></td>
       </tr>
       <tr>
         <th scope="row" bgcolor="#000000"><span class="Stile1">Tomcat
-5.5.9 </span></th>
-        <td bgcolor="#cccccc">At least 128 MB RAM and 35 MB of free
+6.0.30</span></th>
+        <td bgcolor="#cccccc">At least 512 MB RAM and 100 MB of free
 disk (once the TOOLBOX has been installed on it).</td>
       </tr>
     </tbody>
@@ -87,25 +75,21 @@ see <a href="http://httpd.apache.org/docs/2.0/platform/windows.html" target="_bl
 <h5>Linux machine system requirements</h5>
 <!--p>The TOOLBOX can be run on different versions of Tomcat. The following configurations have been tested:</p-->
 <ol>
-  <li>J2SE Development Kit 5.0 (JDK 5.0) + Tomcat 5.5.9</li>
+  <li>J2SE Development Kit 6.0 (JDK 6.0) + Tomcat 6.0.30</li>
   <div>
   <table border="0" cellpadding="2" cellspacing="2" width="920">
     <tbody>
       <tr>
-        <th scope="row" bgcolor="#000000" width="188"><span class="Stile1"> J2SE Development Kit 5.0 (JDK 5.0) </span></th>
+        <th scope="row" bgcolor="#000000" width="188"><span class="Stile1"> J2SE Development Kit 6.0 (JDK 6.0) </span></th>
         <td bgcolor="#cccccc" width="718">
-        <p>JDK
-5.0 is supported on i586 Intel and 100% compatible platforms running
-Linux. For supported versions of Linux and desktop managers, along with
-disk and RAM requirements, see <a href="http://java.sun.com/j2se/1.5.0/system-configurations.html" target="_blank">System Configurations.</a></p>
-        <p>For issues, see the <a href="http://java.sun.com/j2se/1.5.0/install-linux.html#troubleshooting" target="_blank">Troubleshooting</a> section below and the <a href="http://java.sun.com/j2se/1.5.0/relnotes.html#linux" target="_blank">Linux Notes</a> section of the Release Notes. Also
-available is <a href="http://java.sun.com/j2se/1.5.0/install-linux.html#problems" target="_blank">Known Problems on Non-Supported Platforms.</a></p>
+        <p> Some Linux platforms, such as Red Hat and SuSE, are RPM-based, which provide an automated way to install software. Some Linux distributions, such as Ubuntu, are not RPM-based. For these Linux systems, you must manually install the Java platform by using a self-extracting binary file. </p>
+        <p>&nbsp;</p>
         </td>
       </tr>
       <tr>
         <th scope="row" bgcolor="#000000"><span class="Stile1">Tomcat
 5.5.9 </span></th>
-        <td bgcolor="#cccccc">At least 128 MB RAM and 35 MB of free
+        <td bgcolor="#cccccc">At least 512 MB RAM and 100 MB of free
 disk (once the TOOLBOX has been installed on it).</td>
       </tr>
     </tbody>
@@ -135,7 +119,7 @@ your PATH must contain basic build tools such as make.</li>
 </div>
 In
 the case a local instance of the EOP catalogue is required, PostgreSQL
-8.3 and PostGis 1.3 must be installed and configured on the machine.
+8.4 and PostGis 1.5 must be installed and configured on the machine.
 Once done multiple
 database instances can be created following the procedure described <a href="createebRRDBinstance.html">here</a>.<br>
 In case one or more Toolbox services must be protected enforcing

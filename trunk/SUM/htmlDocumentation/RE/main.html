@@ -5,42 +5,43 @@
 
     <link type="text/css" href="images/page.css" rel="stylesheet"></head><body bgcolor="#ffffff" text="#000000">
 
-<h1>Getting started (version 8.0) </h1>
-<div class="content"><p>In the <strong>run-time environment</strong>,
+<h1>Getting started (version 9.0) </h1>
+<div class="content">
+  <p>In the <strong>run-time environment</strong>,
 the TOOLBOX is a configurable application that helps the Service
 Provider to easily convert its service in SOAP based service without
 code development.</p>
-<p>Using the TOOLBOX the new Web Services can be integrated within the SSE framework.</p>
 <p>See the <a href="../overview.html">overview</a> page for more details. </p>
-<p>The TOOLBOX allows the possibility of deploying a SOAP interface not
-compliant with the SSE ICD or the EOLI-XML ICD. Thus it can also be
-employed outside the context of the SSE framework.</p>
-
 <h2>New in this release </h2>
 <ul>
-<li><p>Added support for OGC catalogues interfaces:</p>
-    
+<li>
+Added support for the deployment of the following OGC catalogues interfaces:
     <ul>
-      <li>OGC-06-131r  OGC Catalogue Services Specification 2.0 Extension Package for ebRIM (ISO/TS 15000-3) Application Profile</li>
-    </ul>
-
-    
-    <ul>
-      <li>OGC-07-038     OGC Cataloguing of ISO Metadata (CIM) Using the ebRIM profile of CS-W</li>
+      <li> EO Products Extension Package for ebRIM (ISO/TS 15000-3) Profile of CSW 2.0 (0.1.9), 06-131r4 and higher</li>
     </ul>
 </li>
-  <ul>
-    <li>OGC-07-045 <br>
-    </li>
-  </ul>
-
-<li>Integrated ebRR ebRIM catalogue as internal instance.</li>
-<li>Added administration pages for editing GetCapabilities, harvesting data and creating catalogue database.</li>
-<li>Added support to security enforcement for Toolbox services.<br>
+  <li>Added the support for the integrationof legacy catalogue to be exposed as OGC catalogues interfaces:
+      <ul>
+        <li> EO Products Extension Package for ebRIM (ISO/TS 15000-3) Profile of CSW 2.0 (0.1.9), 06-131r4 and higher </li>
+          <li> OGC Cataloguing of ISO Metadata (CIM) using the ebRIM profile of CS-W (0.1.10), 07-038 and higher </li>
+      </ul>
+  </li>
+<li>Added the the possibility to expose an OGC ebRIM CIM catalogue as an INSPIRE compliant catalogue by means of a facade handling the conversion between the two catalogue interfaces.</li>
+<li>Added the support of the OGC Web Processing Service specification (SOAP and HTTP POST bindings, HTTP GET is under development).
+    <ul>
+        <li>Custom processing services integrated via shell scripts</li>
+        <li>GRASS processing engine supported  </li>
+    </ul>
 </li>
+<li>Added the possibility to publish the results of a processing/service on different servers: FTP (built-in), HTTP (built-in), WMS, WFS and WCS (via GeoServer) </li>
+<li>Added support OGC 07-118r8 "User Management Interfaces for Earth Observation Services" for Toolbox services.</li>
+<li>Added support OGC 07-118r8 "User Management Interfaces for Earth Observation Services" for external services (PEP).</li>
+<li>Updated the Toolbox GUI.</li>
+<li>Added a dock bar for an easier navigation.</li>
+<li>Updated the Toolbox Gis Client. </li>
 </ul>
 </div>
 <div class="content">
-    <div style="border: 2px none ; margin-left: 0pt;"></div>
+  <div style="border: 2px none ; margin-left: 0pt;"></div>
 </div>
 </body></html>

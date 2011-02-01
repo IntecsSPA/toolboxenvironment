@@ -1,69 +1,45 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Security configuration</title></head><body>
-<h1>Security configuration:</h1>
-For a given Toolbox service, it is possible to specify if WS-Security
-and (optionally) XACML policies need to be enforced during any service
-invocation; this information can be set through the Toolbox
-administration pages during the service creation or configuration
-procedure by using the following HTML page panel:<br>
-<div style="text-align: center;"><img style="width: 806px; height: 98px;" alt="" src="file:///media/disk-1/Progetti/Codice/TOOLBOX_rep/trunk/SUM/htmlDocumentation/RE/images/serviceSecurityConfiguration.png"><br>
-</div>
-<br>
-<br>
-To edit WS-Security related information just:<br>
-<ul>
-  <li>Check/uncheck the WS-Security check-box to enable/disable
-WS-Security and XACML for the current service; when the field is
-checked then the fields on the right are enabled to be edited;</li>
-</ul>
-<ul>
-  <li>Use the KeyStore file chooser to provide the physical key-store
-archive where the service private key and certificate is stored; </li>
-</ul>
-<ul>
-  <li>Use the Alias and Password text fields to set the user name and
-password which are needed to retrieve the private key stored in the
-provided key-store;</li>
-</ul>
-<ul>
-  <li>(Optional) check XACML check-box and use the associated
-file-chooser to provide the physical file with the XACML policy;
-alternatively uncheck it to remove any previously loaded XACML policy;</li>
-</ul>
-<ul>
-  <li>Depending on the action currently performed upon the service,
-i.e. creation or update, click the Create or the Configure button (not
-showed in the figure)</li>
-</ul>
-After the service configuration has been created or updated than it is
-possible to query it by using the View Current Configuration feature of
-the Toolbox Client.<br>
-<br>
-<h1>Note about WS-Security policy:</h1>
-For a given service protected via WS-Security, WS-Security policy
-information are currently attached by default: the policy is the one
-which satisfies the HMA-T requirements about WS-Security. WS-Security
-policy for a given protected service are automatically stored in its
-WSDL file; so it is possible to use the Toolbox Client to retrieve the
-service WSDL file and so the defined WS-Security policy.<br>
-<br>
-<br>
-<h1>Note about the Toolbox installation to support WS-Security:</h1>
-Toolbox installation for WS-Security requires a dedicated java library
-from the Bouncy Castle organization (http://www.bouncycastle.org): this
-library provides cryptography extensions to the Java default
-installation.<br>
-To enable Toolbox WS-Security usage it is necessary to manually
-download and copy the bouncy castle jar corresponding to the JDK
-currently used for the Toolbox; then it is necessary to add
-bouncycastle as a security provider in the Java installation. In
-practice:<br>
-<br>
-<ol>
-  <li>Download bouncycastle according to your java version. You can download bouncycastle from the following link:<span style="text-decoration: underline;"> </span><a href="http://www.bouncycastle.org/latest_releases.html">http://www.bouncycastle.org/latest_releases.html</a></li>
-  <li>Add the bcprov-jdkXX-XXX.jar to the JRE&#8217;s /lib/ext directory;</li>
-  <li>Add the following line to java.security file which can be found in JRE's lib/security directory as the last line:</li>
-</ol>
-<div style="margin-left: 40px;">security.provider.X=org.bouncycastle.jce.provider.BouncyCastleProvider<br>
-</div>
-where X has to be replaced by the progressive number according to the current security providers already listed.</body></html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Security Configuration</title>
+<link type="text/css" href="images/page.css" rel="stylesheet">
+</head>
+<body bgcolor="#ffffff" text="#000000"> 
+<h1>Web Service Security configuration</h1> 
+For a given Toolbox service, it is possible to specify if WS-Security and (optionally) XACML policies need to be enforced during any service invocation; this information can be set through the Toolbox administration pages during the service creation or configuration procedure by using the following HTML page panel:<br> 
+<br> 
+<img src="images/configuringService3.png" width="927" height="209"><br> 
+To edit WS-Security related information just:<br> 
+<ul> 
+  <li>Check/uncheck the WS-Security check-box to enable/disable WS-Security and XACML for the current service; when the field is checked then the fields on the right are enabled to be edited;</li> 
+</ul> 
+<ul> 
+  <li>Use the KeyStore file chooser to provide the physical key-store archive where the service private key and certificate is stored; </li> 
+</ul> 
+<ul> 
+  <li>Use the Alias and Password text fields to set the user name and password which are needed to retrieve the private key stored in the provided key-store;</li> 
+</ul> 
+<ul> 
+  <li>(Optional) check XACML check-box and use the associated file-chooser to provide the physical file with the XACML policy; alternatively uncheck it to remove any previously loaded XACML policy;</li> 
+</ul> 
+<ul> 
+  <li>Depending on the action currently performed upon the service, i.e. creation or update, click the Create or the Configure button (not showed in the figure)</li> 
+</ul> 
+After the service configuration has been created or updated than it is possible to query it by using the View Current Configuration feature of the Toolbox Client.<br> 
+<br> 
+<h4>Note about WS-Security policy</h4> 
+For a given service protected via WS-Security, WS-Security policy information are currently attached by default: the policy is the one which satisfies the HMA-T requirements about WS-Security. WS-Security policy for a given protected service are automatically stored in its WSDL file; so it is possible to use the Toolbox Client to retrieve the service WSDL file and so the defined WS-Security policy.<br> 
+<h4>Note about the Toolbox installation to support WS-Security</h4> 
+Toolbox installation for WS-Security requires a dedicated java library from the Bouncy Castle organization (http://www.bouncycastle.org): this library provides cryptography extensions to the Java default installation.<br> 
+To enable Toolbox WS-Security usage it is necessary to manually download and copy the bouncy castle jar corresponding to the JDK currently used for the Toolbox; then it is necessary to add bouncycastle as a security provider in the Java installation. In practice:<br> 
+<br> 
+<ol> 
+  <li>Download bouncycastle according to your java version. You can download bouncycastle from the following link:<span style="text-decoration: underline;"> </span><a href="http://www.bouncycastle.org/latest_releases.html">http://www.bouncycastle.org/latest_releases.html</a></li> 
+  <li>Add the bcprov-jdkXX-XXX.jar to the JRE&#8217;s /lib/ext directory;</li> 
+  <li>Add the following line to java.security file which can be found in JRE's lib/security directory as the last line:</li> 
+</ol> 
+security.provider.X=org.bouncycastle.jce.provider.BouncyCastleProvider<br> 
+<p>where X has to be replaced by the progressive number according to the current security providers already listed.</p> 
+</body>
+</html>

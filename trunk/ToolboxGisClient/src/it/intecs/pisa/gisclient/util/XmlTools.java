@@ -1309,5 +1309,13 @@ public class XmlTools
       }
     }
  }
+    public static String getDocumentAsString(Document xml)
+            throws Exception {
+        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        StreamResult res = new StreamResult(out);
+        transformer.transform(new DOMSource(xml), res);
+        return new String(out.toByteArray());
+    }
     
 }

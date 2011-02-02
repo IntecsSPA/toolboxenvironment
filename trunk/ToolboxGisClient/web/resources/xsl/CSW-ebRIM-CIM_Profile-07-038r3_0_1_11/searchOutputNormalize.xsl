@@ -71,7 +71,7 @@
         <metadataURL><xsl:value-of select="@xlink:href"/></metadataURL>
     </xsl:template>
 
-    wrs:repositoryItemRef
+    
 
    <xsl:template name="polygonStringByBBOX">
     <xsl:param name="lCorner"/>

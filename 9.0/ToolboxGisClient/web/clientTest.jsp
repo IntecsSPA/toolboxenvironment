@@ -10,7 +10,7 @@
 
 <html>
     <head>
-        <title>Toolbox Test Client</title>
+        <title>TOOLBOX Web Client</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <script>
             var localToolboxURL="<%=request.getParameter("tbxUrl")%>"; 
@@ -61,7 +61,7 @@
             
     <!-- Widget SelectionTool End Import -->
     <!-- Edit Area Configuration-->
-        <script src="jsScripts/import/edit_area/edit_area_full.js"></script>
+        <script src="jsScripts/import/editarea/edit_area_full.js"></script>
         <script language="Javascript" type="text/javascript">
         function initEditArea(textArea){
 		editAreaLoader.init({

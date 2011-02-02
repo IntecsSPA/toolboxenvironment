@@ -21,7 +21,7 @@ Ext.namespace('ToolboxTestCenter');
   var selectionLayer=null;
   var desktopImageURL="style/img/desktop/ToolboxDesktop.png";
   var numberToolboxInput=0;
-  var editAreaPath="jsScripts/import/edit_area/edit_area_full.js";
+  var editAreaPath="jsScripts/import/editarea/edit_area_full.js";
   var screenWidth=screen.availWidth;
   var screenHeight=screen.availHeight;
   var screenRes=screen.availWidth/screen.availHeight;
@@ -50,18 +50,21 @@ ToolboxTestCenter.Application = function()
  var mapWindowHeight=(screen.height/100)*70;
  var mapWindowWidth=(screen.width/100)*65;
 
- var textAreaFrameHToolbox=(screen.height/100)*44;
- var textAreaFrameWToolbox=(screen.width/100)*75;
- var textAreaWToolbox=(screen.width/100)*74;
- var textAreaHToolbox=(screen.height/100)*43;
+ var textAreaFrameHToolbox=(screen.height/100)*48;
+ var textAreaFrameWToolbox=(screen.width/100)*70;
+ var textAreaWToolbox=(screen.width/100)*9.75;
+ var textAreaHToolbox=(screen.height/100)*3;
+
+ var textAreaWToolboxOutput=(screen.width/100)*75;
+ var textAreaHToolboxOutput=(screen.height/100)*55;
 
  var textAreaFrameHGeneric=(screen.height/100)*55;
- var textAreaFrameWGeneric=(screen.width/100)*46;
- var textAreaWGeneric=(screen.width/100)*45;
- var textAreaHGeneric=(screen.height/100)*54;
+ var textAreaFrameWGeneric=(screen.width/100)*44;
+ var textAreaWGeneric=(screen.width/100)*6;
+ var textAreaHGeneric=(screen.height/100)*3.5;
 
- var textAreaWGenericOutput=(screen.width/100)*45;
- var textAreaHGenericOutput=(screen.height/100)*59;
+ var textAreaWGenericOutput=(screen.width/100)*42;
+ var textAreaHGenericOutput=(screen.height/100)*62;
 
  var mapOptions = {
 		maxResolution: 1.40625/2
@@ -1163,10 +1166,10 @@ ToolboxTestCenter.Application = function()
                       response="Service Exception!";
                   }
                   var htmlReposne="<br><table width='100%'><tr width='100%'rowspan='2' BGCOLOR='#325e8f'><td><br><b style='color: #ffffff;'>&nbsp;&nbsp;&nbsp;"+operation+" Response: </b></td></tr>"+
-                  "<tr align='center'><td align='center'><br><textarea id='ToolboxGeneric' style='width:"+textAreaWToolbox+"px;height:"+textAreaHToolbox+"px;'>"+response+"</textarea></td></tr></table>";
+                  "<tr align='center'><td align='center'><br><textarea id='ToolboxGeneric_"+toolboxURL+"_"+service+"_"+operation+"' style='width:"+textAreaWToolboxOutput+"px;height:"+textAreaHToolboxOutput+"px;'>"+response+"</textarea></td></tr></table>";
                   tbxTCenter.addToolboxOperationOutputTab(toolboxURL, service, operation, {html: htmlReposne});
                   // alert("ToolboxGeneric");
-                   initEditArea('ToolboxGeneric');
+                   initEditArea("ToolboxGeneric_"+toolboxURL+"_"+service+"_"+operation);
                 };
               var genericToolboxTimeOut= function(){
                   document.getElementById("toolboxOutputInformation").innerHTML="";

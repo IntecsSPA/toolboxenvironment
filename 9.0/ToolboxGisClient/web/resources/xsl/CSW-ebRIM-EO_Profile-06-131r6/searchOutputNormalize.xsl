@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:gml="http://www.opengis.net/gml" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" xmlns:wrs="http://www.opengis.net/cat/wrs/1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0">
   <xsl:output method="xml" omit-xml-declaration="no" encoding="utf-8" indent="no"/>
   <xsl:template match="/SoapFault">
@@ -7,7 +7,7 @@
   <xsl:template match="/csw:GetRecordsResponse">
     <response>
         <retrievedData>
-            <xsl:apply-templates select="csw:SearchResults/wrs:ExtrinsicObject[@objectType='urn:x-ogc:specification:csw-ebrim:ObjectType:EO:EOProduct']"/>
+            <xsl:apply-templates select="csw:SearchResults//wrs:ExtrinsicObject[@objectType='urn:x-ogc:specification:csw-ebrim:ObjectType:EO:EOProduct']"/>
         </retrievedData>
         <!--xsl:copy-of select="eoli:cursor"/>
         <xsl:copy-of select="eoli:hits"/>

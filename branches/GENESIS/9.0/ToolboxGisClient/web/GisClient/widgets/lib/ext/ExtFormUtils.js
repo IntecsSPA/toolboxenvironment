@@ -999,7 +999,7 @@ function createHtmlTemplateOperation(templateOperationElement){
 
 
   var style,mapObjcetName,layerFillOpacity,layerGraphicOpacity,geometry,attributeGeometry,formatPoint,pointSeparator,mapLayerName;
-  var posList,posListDimension,layerTitle;
+  var posList,posListDimension,layerTitle,urlAttribute;
   switch(type){
          case "details":
                      var tempString="";
@@ -1161,7 +1161,54 @@ function createHtmlTemplateOperation(templateOperationElement){
                     break;
          case "zoomAt":
              
-                    break;       
+                    break;
+         case "getRequestPopup":
+                     labelButton=templateOperationElement.getAttribute("labelButton");
+                     imageButton=templateOperationElement.getAttribute("imageButton");
+                     imageDimMin=templateOperationElement.getAttribute("imageDimMin");
+                     imageDimMax=templateOperationElement.getAttribute("imageDimMax");
+                     idAttribute=templateOperationElement.getAttribute("idAttribute");
+                     urlAttribute=templateOperationElement.getAttribute("urlAttribute");
+                     winWidth=eval(templateOperationElement.getAttribute("winWidth"));
+                     var xslResponse=templateOperationElement.getAttribute("xslResponse");
+                     winHeight=eval(templateOperationElement.getAttribute("winHeight"));
+                     var serviceURL=templateOperationElement.getAttribute("serviceURL");
+                     var serviceURLVariable=templateOperationElement.getAttribute("serviceURLVariable");
+
+
+                     if(serviceURLVariable)
+                       serviceURL=serviceURLVariable;
+                     var getRequest;
+                     if(urlAttribute){
+                        getRequest="{"+urlAttribute+"}";
+                        serviceURL="'ProxyRedirect?url='";
+                     }
+                     else
+                      getRequest="httpservice?request=GetRepositoryItem&service=CSW-ebRIM&version=2.0.2&id={"+idAttribute +"}";
+
+
+                     var showpopupWindow="var targetURL="+serviceURL+"+'"+getRequest+"&XSLResponse="+xslResponse+"'; "+
+                                  "var win = new Ext.Window({ "+
+                                            "title: '({"+idAttribute +"}) Result Details', "+
+                                            "border: false, "+
+                                            "animCollapse : true, "+
+                                            "autoScroll : true, "+
+                                            "maximizable: true, "+
+                                            "resizable : true, "+
+                                            "collapsible: true, "+
+                                            "layout: 'fit', "+
+                                            "width: "+winWidth+", "+
+                                            "height: "+winHeight+", "+
+                                            "closeAction:'close', "+
+                                            "autoLoad: {url: targetURL , scripts: true}"+
+                                  "}).show();";
+                              
+                        htmlOperation="<img  title='"+labelButton+"' src='"+imageButton+"' onmouseout=\"javascript:this.src='"+imageButton+"';this.width='"+imageDimMin+"';this.height='"+imageDimMin+"';\""+
+                       " onmouseover=\"javascript:this.src='"+imageButton+"';this.width='"+imageDimMax+"';this.height='"+imageDimMax+"';\" width='"+imageDimMin+"'  height='"+imageDimMin+"'"+
+                       " onclick=\"javascript:"+showpopupWindow+"\"/>"+
+                       "<img src='style/img/empty.png' width='1'  height='"+imageDimMax+"'/>";
+
+                    break;
   }       
     return(htmlOperation);              
     
@@ -1189,11 +1236,12 @@ function createCodeOnLoadOperation(onLoadOperationElement){
                          layerName: onLoadOperationElement.getAttribute("layerName"),
                          //layerName:onLoadOperationElement.getAttribute("layerName"),
                          actionOnLoad: function(pointsString/*, format, separator*/){
-                            // alert(pointsString);
+                           
                              var pointsArray;
                              var olPointsArray=new Array();
+                             
                               if(this.posList && this.posList!=""){
-                                 // alert("posList");
+                                
                                  pointsArray=pointsString.split(" ");
                                  if(this.posListDimension == "2"){
                                    var tempLat,tempLong;
@@ -1209,6 +1257,7 @@ function createCodeOnLoadOperation(onLoadOperationElement){
                                    }
                                  }
                               }else{
+                                  
                                  pointsArray=pointsString.split(this.pointSeparator);
                                  if(pointsArray.lenght==0)
                                     pointsArray[0]=pointsString;
@@ -1307,10 +1356,11 @@ function zoomTo (pointString, formatPoint, mapObjcetName, zoomfactor){
 /*this.style --> style     mapObjcetName--> this.mapObjcetName     this.layerFillOpacity --> layerOptions  this.layerGraphicOpacity-->layerOptions
  *this.geometry --> geometry      this.vectorLayer --> vectorLayer   */
 function geometryrendering (pointsString, format, separator, geometry, vectorLayer, style, mapObjcetName, layerOptions, replace, posList, posListDimension){
-       // alert("geometryrendering");
+ 
        var i,pointsArray;
        var olPointsArray=new Array();
-       if(posList && posList!=""){
+   
+       if(!separator){
           pointsArray=pointsString.split(" ");
           if(posListDimension == "2"){
              var tempLat,tempLong;
@@ -1324,6 +1374,7 @@ function geometryrendering (pointsString, format, separator, geometry, vectorLay
              }
           }
        }else{
+
         pointsArray=pointsString.split(separator);
         if(pointsArray.lenght==0)
           pointsArray[0]=pointsString; 

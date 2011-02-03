@@ -36,7 +36,7 @@ HarvestFromFileInterface=function(serviceName){
      this.onHarvest=function(){
           var formValuesImport=this.formInterface.getFormValues(false);
             
-           if(formValuesImport.metadataURL.value){
+           if(formValuesImport.metadataFile.uploadID){
 
                var loading=new Object();
                loading.message="Please Wait ...";

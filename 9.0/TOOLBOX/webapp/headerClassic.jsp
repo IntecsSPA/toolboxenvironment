@@ -242,13 +242,21 @@
                                 <form name="service" method="get" action="<%= response.encodeURL("serviceConfiguration.jsp")%>">
                                     <select name="serviceName" size="1" <%= isEnabled ? "" : "disabled"%> onChange="javascript:document.service.submit();">
                                         <option value=""></option>
-                                        <%
-        for (TBXService service : services) {
-            String itemServiceName = service.getServiceName();
+                                        <% List serviceList = new ArrayList();
+                                        for (TBXService service : services) {
+                                             serviceList.add(service.getServiceName());
+                                        }
+
+                                        Collections.sort(serviceList, String.CASE_INSENSITIVE_ORDER);
+                                         String itemServiceName=null;
+                                        ListIterator itr = serviceList.listIterator();
+                                        while(itr.hasNext()) {
+                                            itemServiceName = (String)itr.next();
+
                                         %>
-                                        <option value="<%= itemServiceName%>" <%= serviceName.equals(itemServiceName) ? "selected" : ""%>><%= itemServiceName%></option>
+                                            <option value="<%= itemServiceName%>" <%= serviceName.equals(itemServiceName) ? "selected" : ""%>><%= itemServiceName%></option>
                                         <%
-        }
+                                          }
                                         %>
                                     </select>
                                 </form>

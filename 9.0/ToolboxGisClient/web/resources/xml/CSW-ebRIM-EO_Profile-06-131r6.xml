@@ -49,7 +49,7 @@
             <input type="text" name="XSLRequest" id="XSLRequest" hidden="true" hideLabel="true" optional="false" value="resources/xsl/CSW-ebRIM-EO_Profile-06-131r6/searchMessageTransformer.xsl"/>
             <input type="text" name="XSLResponse" id="XSLResponse" hidden="true" hideLabel="true" optional="false" value="resources/xsl/CSW-ebRIM-EO_Profile-06-131r6/searchOutputNormalize.xsl"/>
             <input type="text" name="SoapAction" id="SoapAction" hidden="true" hideLabel="true" optional="false" value="http://www.opengis.net/cat/csw/2.0.2/requests#GetRecords"/>
-            <input type="text" name="LogFolder" id="LogFolder" hidden="true" hideLabel="true" optional="false" value="CSW-ebRIM-EO_Profile-06-131r6"/>
+            <input type="text" name="LogFolder" id="LogFolder" hidden="true" hideLabel="true" optional="false" value="/CSW-ebRIM-EO_Profile-06-131r6"/>
 
         </group>
     </section>

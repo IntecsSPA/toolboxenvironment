@@ -138,7 +138,7 @@ String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;" +
                                                 <%
                                                 } else if (serviceStatus==ServiceStatuses.STATUS_RUNNING){
                                                 %>
-                                                <a href=# onclick="javascript: assign('stopService', '<%= serviceName %>')"><img src="images/stop.png" alt="STOP"></a>
+                                                <a href=# onclick="javascript: assign('stopService', '<%= serviceName %>')"><img src="images/stopIcon.png" alt="STOP"></a>
                                                 <a href=# onclick="javascript: assign('suspendService', '<%= serviceName %>');"><img src="images/pause.png" alt="SUSPEND"></a> 
                                                 <%
                                                 } else if (serviceStatus==ServiceStatuses.STATUS_SUSPENDED){

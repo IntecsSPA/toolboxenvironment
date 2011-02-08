@@ -3,7 +3,7 @@
 <%@taglib uri="http://java.sun.com/jstl/fmt"  prefix="fmt"%>
 
 <%@ include file="checkAccount.jsp" %>
-<%@ include file="header.jsp" %> 
+<jsp:include page="header.jsp?firebugControl=false&loadPanel=true&loadDefer=250&extVers=3" />
 
 <c:if test="${sessionScope.languageReq!= null}">
 <fmt:setLocale value="${sessionScope.languageReq}" />

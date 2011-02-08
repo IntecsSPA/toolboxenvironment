@@ -61,7 +61,7 @@ String toolboxUrl=ToolboxNetwork.getEndpointURL();
                     </P> 
                 </DIV>
 
-                <DIV class=portletItem id=01>
+               <!-- <DIV class=portletItem id=01>
                     <DIV>
                         <A href="manager?cmd=getReport"><fmt:message key="tools.createReport" bundle="${lang}"/> &nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
                     </DIV>
@@ -69,7 +69,7 @@ String toolboxUrl=ToolboxNetwork.getEndpointURL();
                         <A href="createEbRRDB.jsp"><IMG class=labelHomePage title=Toolbox alt="Send a SOAP message" src="images/statistics.png" align=middle border=0></A>
                         <fmt:message key="tools.createReport.descr" bundle="${lang}"/>
                     </P>
-                </DIV>
+                </DIV>-->
                
 
                 <%

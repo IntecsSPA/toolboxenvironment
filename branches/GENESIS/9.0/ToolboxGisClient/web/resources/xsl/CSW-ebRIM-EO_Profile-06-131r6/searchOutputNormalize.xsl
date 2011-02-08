@@ -17,6 +17,7 @@
   <xsl:template match="wrs:ExtrinsicObject">
     <xsl:variable name="eopId" select='@id'/>
     <Metadata>
+        <eoId><xsl:value-of select="$eopId"/></eoId>
         <xsl:apply-templates select="rim:Slot"></xsl:apply-templates>
         <xsl:apply-templates select="../rim:Association[@sourceObject=$eopId]"></xsl:apply-templates>
     </Metadata>

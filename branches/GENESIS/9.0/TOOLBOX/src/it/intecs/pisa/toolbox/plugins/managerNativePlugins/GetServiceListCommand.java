@@ -10,6 +10,10 @@ import it.intecs.pisa.toolbox.service.TBXService;
 import it.intecs.pisa.pluginscore.exceptions.GenericException;
 import it.intecs.pisa.toolbox.constants.OperationConstants;
 import it.intecs.pisa.util.DOMUtil;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.ListIterator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.w3c.dom.Document;
@@ -28,6 +32,7 @@ public class GetServiceListCommand extends NativeCommandsManagerPlugin {
         TBXService[] services;
         String serviceName;
         ServiceManager serviceManager;
+        List serviceList = new ArrayList();
 
         try {
             util = new DOMUtil();
@@ -38,11 +43,14 @@ public class GetServiceListCommand extends NativeCommandsManagerPlugin {
 
             serviceManager=ServiceManager.getInstance();
             services = serviceManager.getServicesAsArray();
-            for(TBXService service:services)
-            {
-                serviceName =service.getServiceName();
-                addServiceToServiceList(doc, serviceName, root);
-            }
+            for(TBXService service:services) 
+                serviceList.add(service.getServiceName());
+               
+            Collections.sort(serviceList, String.CASE_INSENSITIVE_ORDER);
+            ListIterator itr = serviceList.listIterator();
+            while(itr.hasNext())
+               addServiceToServiceList(doc, (String)itr.next(), root);
+
             sendXMLAsResponse(resp, doc);
         } catch (Exception ex) {
            String errorMsg = "Error getting the service list: " + CDATA_S + ex.getMessage() + CDATA_E;

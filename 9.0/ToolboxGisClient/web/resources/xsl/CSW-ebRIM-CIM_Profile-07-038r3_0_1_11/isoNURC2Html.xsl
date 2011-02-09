@@ -20,269 +20,167 @@ xmlns:nurc="http://www.nurc.int/isoExtent">
     <xsl:variable name="fullDataURL" select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:linkage/gmd:URL"/>
 
     <table  width='100%'>
-        <tr width='100%' rowspan="2">
-            <td colspan='2' BGCOLOR='{$titleColor}' align='center'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>General Data Information PIPPO</b></td>
 
-        </tr>
-        <tr width='100%'>
-            <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>ISO Identifer :</b></td>
-            <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'><xsl:value-of select="gmd:fileIdentifier/gco:CharacterString"/></p></td>
-        </tr>
-        <tr width='100%'>
-            <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Metadata Creation Date :</b></td>
-            <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'><xsl:value-of select="gmd:dateStamp/gco:Date"/></p></td>
-        </tr>
+        <!-- GENERAL METADATA INFORMATION START -->
+       
+        <xsl:call-template name="metadataInfoSectionTitleTemplate">
+              <xsl:with-param name="title">General Data Information</xsl:with-param>
+        </xsl:call-template>
 
-<!-- EXTENDED DATA GENERIC INFO-->
-        <tr width='100%' rowspan="2">
-            <td colspan='2' BGCOLOR='{$titleColor}' align='center'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Extended Data Information</b></td>
-        </tr>
-             <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Cruise/Experiment</b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                <xsl:value-of select="gmd:nurcExtent/gmd:dataInformation/gmd:experimentOrCruise"/>
-                </p></td>
-             </tr>
+        <xsl:call-template name="metadataInfoRowTemplate">
+              <xsl:with-param name="key">ISO Identifer</xsl:with-param>
+              <xsl:with-param name="value" select="gmd:fileIdentifier/gco:CharacterString"/>
+        </xsl:call-template>
 
-             <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Forecast time</b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                <xsl:value-of select="//gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimeInstant/gml:timePosition"/>
-                </p></td>
-             </tr>
+        <xsl:if test="gmd:parentIdentifier/gco:CharacterString">
+          <xsl:call-template name="metadataInfoRowTemplate">
+              <xsl:with-param name="key">Parent Identifer</xsl:with-param>
+              <xsl:with-param name="value" select="gmd:parentIdentifier/gco:CharacterString"/>
+          </xsl:call-template>
+        </xsl:if>
+        <xsl:if test="gmd:dateStamp/gco:Date">
+          <xsl:call-template name="metadataInfoRowTemplate">
+              <xsl:with-param name="key">Metadata Creation Date</xsl:with-param>
+              <xsl:with-param name="value" select="gmd:dateStamp/gco:Date"/>
+          </xsl:call-template>
+        </xsl:if>
+        <xsl:if test="gmd:dateStamp/gco:DateTime">
+          <xsl:call-template name="metadataInfoRowTemplate">
+              <xsl:with-param name="key">Metadata Creation Date/Time</xsl:with-param>
+              <xsl:with-param name="value" select="gmd:dateStamp/gco:DateTime"/>
+            </xsl:call-template>
+        </xsl:if>
+        <xsl:if test="gmd:metadataStandardName/gco:CharacterString">
+          <xsl:call-template name="metadataInfoRowTemplate">
+              <xsl:with-param name="key">Metadata Standard Name</xsl:with-param>
+              <xsl:with-param name="value" select="gmd:metadataStandardName/gco:CharacterString"/>
+            </xsl:call-template>
+        </xsl:if>
+        <xsl:if test="gmd:metadataStandardVersion/gco:CharacterString">
+          <xsl:call-template name="metadataInfoRowTemplate">
+              <xsl:with-param name="key">Metadata Standard Version</xsl:with-param>
+              <xsl:with-param name="value" select="gmd:metadataStandardVersion/gco:CharacterString"/>
+            </xsl:call-template>
+        </xsl:if>
+      <!-- GENERAL METADATA INFORMATION END -->
 
-        <xsl:for-each select="//gmd:nurcExtent//gmd:variablesList/gmd:variable">
-            <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Variable</b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                    Name: <xsl:value-of select="gmd:variableName"/> <br/>
-                    UOM: <xsl:value-of select="gmd:variableUOM"/> <br/>
-                    Long name: <xsl:value-of select="gmd:variableLongName"/> <br/>
-                </p></td>
-            </tr>
-        </xsl:for-each>
+        <!-- CONTACT INFORMATION START -->
+        <xsl:for-each select="gmd:contact/gmd:CI_ResponsibleParty">
+          <xsl:call-template name="metadataInfoSectionTitleTemplate">
+              <xsl:with-param name="title">Contact Information</xsl:with-param>
+          </xsl:call-template>  
+          <xsl:if test="gmd:organisationName/gco:CharacterString">
+            <xsl:call-template name="metadataInfoRowTemplate">
+              <xsl:with-param name="key">Organisation Name</xsl:with-param>
+              <xsl:with-param name="value" select="gmd:organisationName/gco:CharacterString"/>
+            </xsl:call-template>
+          </xsl:if>
+          <xsl:if test="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString">
+            <xsl:call-template name="metadataInfoRowTemplate">
+              <xsl:with-param name="key">Electronic Mail Address</xsl:with-param>
+              <xsl:with-param name="value" select="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString"/>
+            </xsl:call-template>
+          </xsl:if>
+          <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource">
+            <xsl:call-template name="metadataInfoRowTemplate">
+              <xsl:with-param name="key">"<xsl:value-of select="gmd:function/gmd:CI_OnLineFunctionCode"/>" Online Resource</xsl:with-param>
+              <xsl:with-param name="value" select="gmd:linkage/gmd:URL"/>
+            </xsl:call-template>
+          </xsl:for-each>
+          <xsl:call-template name="metadataInfoRowTemplate">
+              <xsl:with-param name="key">Contact Role</xsl:with-param>
+              <xsl:with-param name="value" select="gmd:role/gmd:CI_RoleCode"/>
+          </xsl:call-template>
+      </xsl:for-each>
+      <!-- CONTACT INFORMATION END -->
 
-             <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Bounding box</b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>                
-                <xsl:value-of select="//gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox/gmd:southBoundLatitude/gco:Decimal"/><xsl:value-of select="string(' ')"/>
-                <xsl:value-of select="//gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox/gmd:westBoundLongitude/gco:Decimal"/><xsl:value-of select="string(' ')"/>
-                <xsl:value-of select="//gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox/gmd:northBoundLatitude/gco:Decimal"/><xsl:value-of select="string(' ')"/>
-				<xsl:value-of select="//gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox/gmd:eastBoundLongitude/gco:Decimal"/>
-                </p></td>
-             </tr>
-
-
-<!-- MODEL METADATA INFORMATION-->
-    <xsl:choose>
-      <xsl:when test="gmd:nurcExtent/gmd:dataSpecs//gmd:modelName">
-          <tr width='100%' rowspan="2">
-              <td colspan='2' BGCOLOR='{$titleColor}' align='center'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Model Metadata</b></td>
-          </tr>
-
-             <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Model Name</b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                <xsl:value-of select="gmd:nurcExtent/gmd:dataSpecs//gmd:modelName"/>
-                </p></td>
-             </tr>
-             <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Model Type</b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                <xsl:value-of select="gmd:nurcExtent/gmd:dataSpecs//gmd:modelType"/>
-                </p></td>
-             </tr>
-             <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Model Run Time</b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                <xsl:value-of select="gmd:nurcExtent/gmd:dataSpecs//gmd:modelRunTime"/>
-                </p></td>
-             </tr>
-             <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Tau</b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                <xsl:value-of select="gmd:nurcExtent/gmd:dataSpecs//gmd:modelTau"/>
-                </p></td>
-             </tr>
-             <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Post processing</b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                <xsl:value-of select="gmd:nurcExtent/gmd:dataSpecs//gmd:postProcessingFlag"/>
-                </p></td>
-             </tr>
-             <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Z level</b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                <xsl:value-of select="gmd:nurcExtent/gmd:dataSpecs//gmd:zLevel"/>
-                </p></td>
-             </tr>
-      </xsl:when>
-      <xsl:when test="gmd:nurcExtent/gmd:dataSpecs/gmd:remoteSensingData">
-          <tr width='100%' rowspan="2">
-              <td colspan='2' BGCOLOR='{$titleColor}' align='center'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Remote Sensing Metadata</b></td>
-          </tr>
-             <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Sensor Name</b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                <xsl:value-of select="gmd:nurcExtent/gmd:dataSpecs//gmd:sensorName"/>
-                </p></td>
-             </tr>
-             <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Satellite</b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                <xsl:value-of select="gmd:nurcExtent/gmd:dataSpecs//gmd:satellite"/>
-                </p></td>
-             </tr>
-             <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Post Processing</b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                <xsl:value-of select="gmd:nurcExtent/gmd:dataSpecs//gmd:postProcessingFlag"/>
-                </p></td>
-             </tr>
-            <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Vector Data Information</b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                <xsl:value-of select="gmd:nurcExtent/gmd:dataSpecs//gmd:vectorDataInformation/@value"/>
-                </p></td>
-             </tr>
-              <xsl:if test="gmd:nurcExtent/gmd:dataSpecs//gmd:vectorDataInformation/@value = 'true'">
-                    <tr width='100%'>
-                    <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Vector Data Type</b></td>
-                    <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                    <xsl:value-of select="gmd:nurcExtent/gmd:dataSpecs//gmd:vectorDataType"/>
-                    </p></td>
-                 </tr>
-                 <tr width='100%'>
-                    <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Related Data</b></td>
-                    <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                    <xsl:value-of select="gmd:nurcExtent/gmd:dataSpecs//gmd:relatedData"/>
-                    </p></td>
-                 </tr>
-              </xsl:if>
-             
-          
-      </xsl:when>
-  </xsl:choose>
-
-<!-- GRID INFORMATION-->
-    <xsl:if test="gmd:nurcExtent/gmd:dataSpecs//gmd:originalGridInformation">
-        <tr width='100%' rowspan="2">
-            <td colspan='2' BGCOLOR='{$titleColor}' align='center'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Grid Information</b></td>
-        </tr>
-
-             <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Reference system</b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                <xsl:value-of select="gmd:nurcExtent/gmd:dataSpecs//gmd:originalGridInformation/gmd:referenceSystemIdentifier"/>
-                </p></td>
-             </tr>
-
-             <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Pixel Size</b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-				Res-X:<xsl:value-of select="gmd:nurcExtent/gmd:dataSpecs//gmd:originalGridInformation/gmd:pixelSize/gmd:resX"/>
-				<br/>
-				Res-Y:<xsl:value-of select="gmd:nurcExtent/gmd:dataSpecs//gmd:originalGridInformation/gmd:pixelSize/gmd:resY"/>
-                </p></td>
-             </tr>
-
-             <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Grid Size</b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-				Width:<xsl:value-of select="gmd:nurcExtent/gmd:dataSpecs//gmd:originalGridInformation/gmd:gridSize/gmd:width"/>
-				<br/>
-				Heigth:<xsl:value-of select="gmd:nurcExtent/gmd:dataSpecs//gmd:originalGridInformation/gmd:gridSize/gmd:height"/>
-                </p></td>
-             </tr>
-
-             <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Grid origin</b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                <xsl:value-of select="gmd:nurcExtent/gmd:dataSpecs//gmd:originalGridInformation/gmd:gridOrigin"/>
-                </p></td>
-             </tr>
-
-             <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Grid offset</b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                <xsl:value-of select="gmd:nurcExtent/gmd:dataSpecs//gmd:originalGridInformation/gmd:gridOffsets"/>
-                </p></td>
-             </tr>
+      <!-- REFERENCE SYSTEM INFO START -->
+        <xsl:for-each select="gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier">
+          <xsl:call-template name="metadataInfoSectionTitleTemplate">
+              <xsl:with-param name="title">Reference System Info</xsl:with-param>
+          </xsl:call-template>
+          <xsl:if test="gmd:RS_Identifier/gmd:code/gco:CharacterString">
+            <xsl:call-template name="metadataInfoRowTemplate">
+              <xsl:with-param name="key">Code</xsl:with-param>
+              <xsl:with-param name="value" select="gmd:RS_Identifier/gmd:code/gco:CharacterString"/>
+            </xsl:call-template>
+          </xsl:if>
+          <xsl:for-each select="gmd:RS_Identifier/gmd:authority/gmd:CI_Citation">
+             <xsl:apply-templates select="."/>
+          </xsl:for-each>
+          <xsl:for-each select="gmd:RS_Identifier/gmd:authority/gmd:CI_Citation/gmd:date/gmd:CI_Date">
+            <xsl:call-template name="metadataInfoRowTemplate">
+              <xsl:with-param name="key">"<xsl:value-of select="gmd:dateType/gmd:CI_DateTypeCode"/>" Date</xsl:with-param>
+              <xsl:with-param name="value" select="gmd:date/.[1]"/>
+            </xsl:call-template>
+          </xsl:for-each>
+      </xsl:for-each>
+      <!-- REFERENCE SYSTEM INFO END -->
 
 
-             <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>No data value</b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                <xsl:value-of select="gmd:nurcExtent/gmd:dataSpecs//gmd:originalGridInformation/gmd:noDataValue"/>
-                </p></td>
-             </tr>
-    </xsl:if>
+      <!-- DATA IDENTIFICATION START -->
+      <xsl:if test="gmd:identificationInfo/gmd:MD_DataIdentification">
+          <xsl:call-template name="metadataInfoSectionTitleTemplate">
+              <xsl:with-param name="title">Data Identification</xsl:with-param>
+          </xsl:call-template>
+
+          <!-- citation -->
+          <xsl:for-each select="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation">
+              <xsl:apply-templates select="."/>
+          </xsl:for-each>
+      </xsl:if>
+      <!-- DATA IDENTIFICATION END -->
 
 
-<!-- DISTRIBUTION INFORMATION-->
 
-        <tr width='100%' rowspan="2">
-            <td colspan='2' BGCOLOR='{$titleColor}' align='center'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Distribution Information</b></td>
-        </tr>
+       <!-- SERVICE IDENTIFICATION START -->
+      <xsl:if test="gmd:identificationInfo/srv:SV_ServiceIdentification">
+          <xsl:call-template name="metadataInfoSectionTitleTemplate">
+              <xsl:with-param name="title">Service Identification</xsl:with-param>
+          </xsl:call-template>
 
-             <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>WCS URL</b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                <xsl:value-of select="gmd:nurcExtent/gmd:distribuitionInfo/gmd:wcsLayer/gmd:wcsURL"/>
-                </p></td>
-             </tr>
-             <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>WCS Layer Name</b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                <xsl:value-of select="gmd:nurcExtent/gmd:distribuitionInfo/gmd:wcsLayer/gmd:wcsLayerName"/>
-                </p></td>
-             </tr>
+      </xsl:if>
+      <!-- SERVICE IDENTIFICATION END -->
 
 
-             <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>WMS URL</b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                <xsl:value-of select="gmd:nurcExtent/gmd:distribuitionInfo/gmd:wmsLayer/gmd:wmsURL"/>
-                </p></td>
-             </tr>
-             <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>WMS Layer Name</b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                <xsl:value-of select="gmd:nurcExtent/gmd:distribuitionInfo/gmd:wmsLayer/gmd:wmsLayerName"/>
-                </p></td>
-             </tr>
-
-<!-- POINT OF CONTACT-->
-
-        <tr width='100%' rowspan="2">
-            <td colspan='2' BGCOLOR='{$titleColor}' align='center'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>Point of Contact</b></td>
-
-        </tr>
-        <xsl:for-each select="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact/gmd:CI_ResponsibleParty">
-            <tr width='100%'>
-                <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>
-                    <xsl:value-of select="gmd:role/gmd:CI_RoleCode/@codeListValue"/> :
-                </b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                    <xsl:value-of select="gmd:individualName/gco:CharacterString"/> <xsl:value-of select="string(' ')"/><xsl:value-of select="gmd:organisationName/gco:CharacterString"/>
-                </p></td>
-            </tr>
-        </xsl:for-each>
-        <tr width='100%'>
-            <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'>
-                    Download Full Data:
-                </b></td>
-                <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'>
-                    <a href="{$fullDataURL}"><img  title='Download Data' src='styles/img/download.png' onmouseout="javascript:this.src='styles/img/download.png';this.width='24';this.height='24';"
-                      onmouseover="javascript:this.src='styles/img/download.png';this.width='48';this.height='48';" width='24'  height='24'/></a>
-                    <img src='style/img/empty.png' width='1' height='50'/>
-                    </p>
-                </td>
-        </tr>
     </table>
 
 
 </xsl:template>
 
+
+<xsl:template match="gmd:CI_Citation">
+
+    <xsl:if test="gmd:title/gco:CharacterString">
+        <xsl:call-template name="metadataInfoRowTemplate">
+                  <xsl:with-param name="key">Title</xsl:with-param>
+                  <xsl:with-param name="value" select="gmd:title/gco:CharacterString"/>
+        </xsl:call-template> 
+    </xsl:if>
+
+
+</xsl:template>
+
+
+
+
+<!-- HTML TEMPLATES START -->
+    <xsl:template name="metadataInfoRowTemplate">
+        <xsl:param name="key"/>
+        <xsl:param name="value"/>
+        <tr width='100%'>
+           <td BGCOLOR='{$titleColor}'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'><xsl:value-of select="$key"/></b></td>
+           <td BGCOLOR='{$valueColor}'><p style='font-size: {$fontSize}px;'><xsl:value-of select="$value"/></p></td>
+        </tr>
+    </xsl:template>
+
+    <xsl:template name="metadataInfoSectionTitleTemplate">
+        <xsl:param name="title"/>
+
+        <tr width='100%' rowspan="2">
+                <td colspan='2' BGCOLOR='{$titleColor}' align='center'><b style='color: {$titleFontColor}; font-size: {$fontSize}px;'><xsl:value-of select="$title"/></b></td>
+        </tr>
+    </xsl:template>
+<!-- HTML TEMPLATES END -->
 
 </xsl:stylesheet>

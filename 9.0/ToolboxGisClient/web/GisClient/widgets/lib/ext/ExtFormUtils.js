@@ -1196,6 +1196,7 @@ function createHtmlTemplateOperation(templateOperationElement){
                                             "maximizable: true, "+
                                             "resizable : true, "+
                                             "collapsible: true, "+
+                                            "bodyStyle : {background: '#ffffff'}, "+
                                             "layout: 'fit', "+
                                             "width: "+winWidth+", "+
                                             "height: "+winHeight+", "+

@@ -141,14 +141,15 @@ public class ProxyRedirect extends HttpServlet {
                 if (httpget.getStatusCode() == HttpStatus.SC_OK) {
                     //force the response to have XML content type (WMS servers generally don't)
                     response.setContentType(outputFormat);
-                    String responseBody = httpget.getResponseBodyAsString().trim();
+
+
                      if (inputsGetReq.getXslResponseRelativePath() != null) {
                         PipedInputStream pipeInput = null;
                         SaxonXSLT saxonUtil=new SaxonXSLT();
                         SAXSource xsltDoc;
                          try {
                               xsltDoc = new SAXSource(new InputSource(new FileInputStream(getServletContext().getRealPath(inputsGetReq.getXslResponseRelativePath()))));
-                              pipeInput = saxonUtil.saxonXSLPipeTransform(new SAXSource(new InputSource(new StringReader(responseBody))), xsltDoc, null);
+                              pipeInput = saxonUtil.saxonXSLPipeTransform(new SAXSource(new InputSource(httpget.getResponseBodyAsStream())), xsltDoc, null);
                              } catch (Exception ex) {
                                log.fatal("GisClient -- GET XSLT Response Transform Error: " + ex.getMessage(), ex);
                                System.out.println("GisClient -- GET XSLT Response Transform Error: " + ex.getMessage());
@@ -156,6 +157,7 @@ public class ProxyRedirect extends HttpServlet {
                              }
                             XmlTools.copyInputStreamToOutputStream(pipeInput, response.getOutputStream());
                     }else{
+                        String responseBody = httpget.getResponseBodyAsString().trim();
                         PrintWriter out = response.getWriter();
                         out.print(responseBody);
                         response.flushBuffer();

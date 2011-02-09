@@ -3,6 +3,8 @@ package it.intecs.pisa.toolbox.plugins.managerNativePlugins;
 
 import it.intecs.pisa.pluginscore.exceptions.GenericException;
 import it.intecs.pisa.toolbox.constants.MiscConstants;
+import it.intecs.pisa.toolbox.constants.ServiceConstants;
+import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.IOUtil;
 import it.intecs.pisa.util.SchemaSetRelocator;
 import it.intecs.pisa.util.ServiceFoldersFilter;
@@ -13,6 +15,8 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  *
@@ -37,6 +41,12 @@ public class ExportServicesGroupCommand extends NativeCommandsManagerPlugin{
         File sourceSchemaDIr;
         File zipPackage,zipPackageServiceGroup;
         OutputStream out;
+        File descriptorFile;
+        File securityResourceFolder;
+        Document descriptor;
+        Element rootDesc;
+        String security;
+        DOMUtil util= new DOMUtil();
 
         try {
             tempDir = new File(System.getProperty("java.io.tmpdir"), "exportPackages");
@@ -62,6 +72,24 @@ public class ExportServicesGroupCommand extends NativeCommandsManagerPlugin{
                 serviceDir = tbxServlet.getServiceRoot(serviceName);
 
                 IOUtil.copyDirectory(serviceDir, tempServiceDir);
+
+                /*Check Security*/
+                descriptorFile = new File(tempServiceDir, ServiceConstants.SERVICE_DESCRIPTOR_FILE_NAME);
+                descriptor = util.fileToDocument(descriptorFile);
+                rootDesc = descriptor.getDocumentElement();
+                security = rootDesc.getAttribute("wssecurity");
+                if (security.equals("true")) {
+                    /*Remove Security*/
+                    rootDesc.setAttribute("wssecurity", "false");
+                    DOMUtil.dumpXML(descriptor, descriptorFile);
+                    securityResourceFolder= new File(tempServiceDir, ServiceConstants.SERVICE_SERVICE_RESOURCE_FOLDER);
+                    if(securityResourceFolder.exists())
+                       IOUtil.rmdir(securityResourceFolder);
+                }
+
+
+
+
                 tempSchemaDir = new File(tempServiceDir, "Schemas");
                 sourceSchemaDIr = new File(serviceDir, "Schemas");
 

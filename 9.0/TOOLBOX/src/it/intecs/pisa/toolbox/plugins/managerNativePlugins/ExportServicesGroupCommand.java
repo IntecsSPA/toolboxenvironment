@@ -2,7 +2,6 @@
 package it.intecs.pisa.toolbox.plugins.managerNativePlugins;
 
 import it.intecs.pisa.pluginscore.exceptions.GenericException;
-import it.intecs.pisa.toolbox.constants.MiscConstants;
 import it.intecs.pisa.toolbox.constants.ServiceConstants;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.IOUtil;
@@ -87,9 +86,6 @@ public class ExportServicesGroupCommand extends NativeCommandsManagerPlugin{
                        IOUtil.rmdir(securityResourceFolder);
                 }
 
-
-
-
                 tempSchemaDir = new File(tempServiceDir, "Schemas");
                 sourceSchemaDIr = new File(serviceDir, "Schemas");
 
@@ -100,10 +96,7 @@ public class ExportServicesGroupCommand extends NativeCommandsManagerPlugin{
                 
                 ServiceFoldersFilter filter= new ServiceFoldersFilter(fileFilters);
                 Zip.zipDirectory(zipPackage.getAbsolutePath(), tempServiceDir.getAbsolutePath(), false, filter);
-
-
-                    IOUtil.copy(new FileInputStream(zipPackage), new FileOutputStream(new File(tempGroupServiceDir, serviceName + ".zip")));
-
+                IOUtil.copy(new FileInputStream(zipPackage), new FileOutputStream(new File(tempGroupServiceDir, serviceName + ".zip")));
             }
 
             resp.setContentType(ZIP_DEPLOY_PACKAGE_MIME_TYPE);
@@ -114,7 +107,7 @@ public class ExportServicesGroupCommand extends NativeCommandsManagerPlugin{
 
             out=resp.getOutputStream();
          //   if(zipPackageServiceGroup.getTotalSpace() < MiscConstants.MAX_READ_BYTES)
-              IOUtil.copy(new FileInputStream(zipPackageServiceGroup), out);
+            IOUtil.copy(new FileInputStream(zipPackageServiceGroup), out);
           //  else
             //  out.write("The Export zip file is too large.".getBytes());
             out.flush();

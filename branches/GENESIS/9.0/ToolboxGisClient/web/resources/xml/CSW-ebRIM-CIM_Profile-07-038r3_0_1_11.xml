@@ -19,9 +19,10 @@
         <group label="Temporal Coverage">
             <input type="rangedate" name="rangeDate" id="rangeDate" optional="false" labelStart="From" labelEnd="To" format="Y-m-d"></input>       
         </group>
+        <!-- ['hits'],,['browse'],['summary'] -->
         <group label="Presentation">
             <input type="combo" name="presentation" hideLabel="true" size="15" id="presentation" optional="false" store="VALUES" storeFields="['value']"
-            storeData="[['hits'],['brief'],['full'],['browse'],['summary']]">  
+            storeData="[['brief'],['full']]">  
           </input>
           <input type="numeric" name="iteratorSize" label="Retrieve" id="iteratorSize" optional="false" value="10" size="5"/>
           <input type="numeric" name="cursor" label="Starting from" id="cursor" optional="false" value="1" size="5"/>
@@ -83,7 +84,7 @@
                    
                 </templateOperation>-->
                 <templateOperation type="getRequestPopup" id="requestPopup" imageButton="style/img/details.png"  urlAttribute="metadataURL"
-                xslResponse="resources/xsl/CSW-ebRIM-CIM_Profile-07-038r3_0_1_11/isoNURC2Html.xsl" labelButton="Details" idAttribute="resourceMetadataId"
+                xslResponse="resources/xsl/CSW-ebRIM-CIM_Profile-07-038r3_0_1_11/isoXML2HTML.xslt" labelButton="Details" idAttribute="resourceMetadataId"
                  imageDimMin="25" imageDimMax="50" winWidth="screen.width*0.39" winHeight="screen.height*0.62" label="" dimMin="" dimMax="">
                 </templateOperation>
                 <templateOperation type="select" id="select" geometry="polygon" attributeGeometry="spatial" layerOpacity="0.2"

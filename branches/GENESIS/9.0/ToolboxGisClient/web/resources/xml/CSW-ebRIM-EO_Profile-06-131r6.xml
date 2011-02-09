@@ -12,9 +12,10 @@
         <group label="Temporal Coverage">
             <input type="rangedate" name="rangeDate" id="rangeDate" optional="false" labelStart="From" labelEnd="To" format="Y-m-d"></input>       
         </group>
+        <!-- ['hits'], ,['browse'],['summary']-->
         <group label="Presentation">
             <input type="combo" name="presentation" hideLabel="true" size="15" id="presentation" optional="false" store="VALUES" storeFields="['value']"
-            storeData="[['hits'],['brief'],['full'],['browse'],['summary']]">  
+            storeData="[['brief'],['full']]">  
           </input>
           <input type="numeric" name="iteratorSize" label="Retrieve" id="iteratorSize" optional="false" value="10" size="5"/>
           <input type="numeric" name="cursor" label="Starting from" id="cursor" optional="false" value="1" size="5"/>
@@ -62,9 +63,9 @@
     <outputInformations>
         <!--for format=json  rootStore is mandatory *****  for format=xml recordRow is mandatory , totalRecordRow and idRow are optional-->
         <template container="grid" format="json" rootStore="response.retrievedData" totalRecordRow="" idRow="" recordRow="Metadata"
-            attributeNamesStore="acquisitionDate,productType,beginPosition,processorVersion,lastOrbitNumber,multiExtentOf,endPosition,parentIdentifier,acquisitionType,orbitNumber,status,acquisitionStation,fileName_QUICKLOOK,fileName_THUMBNAIL"
-            attributeTitlesStore="acquisitionDate,productType,beginPosition,processorVersion,lastOrbitNumber,multiExtentOf,endPosition,parentIdentifier,acquisitionType,orbitNumber,status,acquisitionStation,quicklook,thumbnail">
-            <gridAttrbutes value="parentIdentifier,productType,beginPosition,endPosition,status,acquisitionStation" sortable="true" widthCols="200"></gridAttrbutes>
+            attributeNamesStore="eoWrsId,acquisitionDate,productType,beginPosition,processorVersion,lastOrbitNumber,multiExtentOf,endPosition,parentIdentifier,acquisitionType,orbitNumber,status,acquisitionStation,fileName_QUICKLOOK,fileName_THUMBNAIL"
+            attributeTitlesStore="wrsExtrinsicObjectId,acquisitionDate,productType,beginPosition,processorVersion,lastOrbitNumber,multiExtentOf,endPosition,parentIdentifier,acquisitionType,orbitNumber,status,acquisitionStation,quicklook,thumbnail">
+            <gridAttrbutes value="wrsExtrinsicObjectId,parentIdentifier,productType,beginPosition,endPosition,status,acquisitionStation" sortable="true" widthCols="200"></gridAttrbutes>
             <!--gridAttrbutes value="MdContactRpOrgName,MdContactRole,AcquisitionDateTime,IdentCode,Platform,InstShNm,SatDomOrbit,SatDomOrbitDirection,SatDomRefSysFrame,SatDomRefSysTrack,SatDomSwathId,SatDomPassCoverageStart,SatDomPassCoverageStop,ProductIdentifier,IdAbs,IdStatus,TempEleExTempBeginEndBegin,TempEleExTempBeginEndEnd,DataExtGeoEleCoordinates,DataExtGeoEleCenterCoordinates" sortable="true" widthCols="40"></gridAttrbutes-->
             <tempalteHtml value=""></tempalteHtml>
             <onloadOperations>

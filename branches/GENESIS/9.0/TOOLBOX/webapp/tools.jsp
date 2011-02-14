@@ -53,10 +53,10 @@ String toolboxUrl=ToolboxNetwork.getEndpointURL();
             <TD class=pageBody id=main><SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT>
                 <DIV class=portletItem id=01>
                     <DIV>
-                        <A href="createEbRRDB.jsp"><fmt:message key="tools.createebRRDB" bundle="${lang}"/> &nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
+                        <A href=# onclick="javascript:showToolInterface ('CreateCatalogueDatabase', 'Create Catalogue Database', '<%=serviceName%>');"><fmt:message key="tools.createebRRDB" bundle="${lang}"/> &nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
                     </DIV> 
                     <P> 
-                        <A href="createEbRRDB.jsp"><IMG class=labelHomePage title=Toolbox alt="Send a SOAP message" src="images/EOPdatabase.png" align=middle border=0></A>
+                        <A href=# onclick="javascript:showToolInterface ('CreateCatalogueDatabase', 'Create Catalogue Database', '<%=serviceName%>');"><IMG class=labelHomePage title=Toolbox src="images/EOPdatabase.png" align=middle border=0></A>
                         <fmt:message key="tools.createebRRDB.descr" bundle="${lang}"/>
                     </P> 
                 </DIV>
@@ -89,20 +89,20 @@ String toolboxUrl=ToolboxNetwork.getEndpointURL();
                 <DIV class=portletItem id=05>
                     <DIV>
 
-                        <A href=# onclick="javascript:harvestFromUrlInterface('<%=serviceName%>');"><fmt:message key="ebrr.harvest" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
+                        <A href=# onclick="javascript:showToolInterface('HarvestFromURL', 'Harvest from URL', '<%=serviceName%>');"><fmt:message key="ebrr.harvest" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
                     </DIV>
                     <P>
-                        <A href="<%= response.encodeURL("ebrrHarvest.jsp?serviceName="+serviceName) %>"><IMG class=labelHomePage title=validate alt="" src="images/harvest.png" align=middle border=0></A>
+                        <A href=# onclick="javascript:showToolInterface('HarvestFromURL', 'Harvest from URL', '<%=serviceName%>');"><IMG class=labelHomePage title=validate alt="" src="images/harvest.png" align=middle border=0></A>
                     <fmt:message key="ebrr.harvest.description" bundle="${lang}"/></P>
                 </DIV>
                 <DIV class=portletItem id=05>
                     <DIV>
                         <!-- <A href=" response.encodeURL("ebrrHarvestFromDisk.jsp?serviceName="+serviceName) ">-->
-                        <A href=# onclick="javascript:harvestFromFileInterface('<%=serviceName%>');">
+                        <A href=# onclick="javascript:showToolInterface('HarvestFromFile','Harvest from filesystem','<%=serviceName%>');">
                         <fmt:message key="ebrr.harvestfromdisk" bundle="${lang}"/>&nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
                     </DIV>
                     <P>
-                       <A href=# onclick="javascript:harvestFromFileInterface('<%=serviceName%>');"><IMG class=labelHomePage title=validate alt="<fmt:message key="ebrr.harvestfromdisk" bundle="${lang}"/>" src="images/harvestFromDisk.png" align=middle border=0></A>
+                       <A href=# onclick="javascript:showToolInterface('HarvestFromFile','Harvest from filesystem','<%=serviceName%>');"><IMG class=labelHomePage title=validate alt="<fmt:message key="ebrr.harvestfromdisk" bundle="${lang}"/>" src="images/harvestFromDisk.png" align=middle border=0></A>
                     <fmt:message key="ebrr.harvestfromdisk.description" bundle="${lang}"/></P>
                 </DIV>
 

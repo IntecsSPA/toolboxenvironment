@@ -66,12 +66,11 @@ public class GetServicesListFromServicesGroupCommand extends NativeCommandsManag
             while(entries.hasMoreElements()){
                 entry = (ZipEntry)entries.nextElement();
                 entryFileName=entry.getName().substring(0,entry.getName().indexOf("."));
-                serviceList.add(entryFileName);
+                addServiceToServiceList(doc, entryFileName, root);
+                
             }
-            Collections.sort(serviceList, String.CASE_INSENSITIVE_ORDER);
-            ListIterator itr = serviceList.listIterator();
-            while(itr.hasNext())
-               addServiceToServiceList(doc, (String)itr.next(), root);
+            
+               
         }
 
        resp.setStatus(resp.SC_OK);

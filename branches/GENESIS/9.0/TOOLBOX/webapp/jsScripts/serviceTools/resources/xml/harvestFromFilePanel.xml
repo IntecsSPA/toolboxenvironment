@@ -34,7 +34,7 @@
 
     <requestInformations>
         <buttons>
-            <button name="harvestFromFileButton" id="harvestFromFileButton" label="Harvest" iconImage="" onclick="harvestFromFile.onHarvest"/>
+            <button name="harvestFromFileButton" id="harvestFromFileButton" label="Harvest" iconImage="" onclick="ToolInterfaces.HarvestFromFile.onHarvest"/>
         </buttons>
     </requestInformations>
 </inputInterface>

@@ -4,18 +4,19 @@
 /*Import Form Interfaces -- START*/
     gcManager.loadGlobalScript("jsScripts/serviceTools/scripts/harvestFromURL.js");
     gcManager.loadGlobalScript("jsScripts/serviceTools/scripts/harvestFromFile.js");
+    gcManager.loadGlobalScript("jsScripts/serviceTools/scripts/createCatalogueDatabase.js");
  /*Import Form Interfaces -- END*/
 
 
 /* Service Tool Interface Objects */
+var ToolInterfaces=new Object();
 var harvestFromURL;
 var harvestFromFile;
 
-
 /* Service Tool Windows*/
+var ToolWindows=new Object();
 var harvestFromFileWin=null;
 var harvestFromURLWin=null;
-
 
 var spot = new Ext.ux.Spotlight({
         easing: 'easeOut',
@@ -119,7 +120,59 @@ function harvestFromUrlInterface(serviceName){
     }else
        harvestFromURLWin.show();
        spot2.show('HarvestFromURLWin');
-    
+}
 
 
+function showToolInterface (interfaceId, interfaceTitle, currentServiceName, widthPerc, heightPerc){
+    var interfaceIdWin=interfaceId+"Win";
+    var width, height;
+    width= BrowserDetect.getWidth(widthPerc || 50);
+
+    height= BrowserDetect.getHeight(heightPerc|| 50);
+
+    if(ToolWindows[interfaceIdWin] == null){
+        var interfaceClass=interfaceId+"Interface";
+        var interfaceDivId=interfaceId+"Div";
+        ToolInterfaces[interfaceId]=eval("new "+interfaceClass+"(currentServiceName);");
+        ToolWindows[interfaceIdWin]=new WebGIS.Panel.WindowInterfacePanel({
+                        title: interfaceTitle,
+                        id: interfaceIdWin,
+                        border: false,
+                        animCollapse : true,
+                        maximizable : true,
+                        autoScroll : true,
+                        resizable : false,
+                        draggable: false,
+                        collapsible: false,
+                        layout: 'fit',
+                        serviceName: currentServiceName,
+                        loadingBarImg: "images/loader1.gif",
+                        loadingBarImgPadding: 60,
+                        loadingMessage: "Loading... Please Wait...",
+                        loadingMessagePadding: 30,
+                        loadingMessageColor: "black",
+                        loadingPanelColor: "#d9dce0",
+                        loadingPanelDuration: 1000,
+                        listeners:{
+                          hide: function(){
+                            spot.hide();
+                          },
+                          collapse: function(){
+                            spot.hide();
+                          },
+                          expand: function(){
+                            spot.show(interfaceIdWin);
+                          }
+                        },
+                        width: width,
+                        height: height,
+                        closeAction:'hide',
+                        html: "<div id='"+interfaceDivId+"'/>"
+	});
+        ToolWindows[interfaceIdWin].show();
+        ToolWindows[interfaceIdWin].insertLoadingPanel();
+        ToolInterfaces[interfaceId].render(interfaceDivId);
+    }else
+       ToolWindows[interfaceIdWin].show();
+       spot.show(interfaceIdWin);
 }

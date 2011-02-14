@@ -9,7 +9,7 @@
 
     <requestInformations>
         <buttons>
-            <button name="harvestFromURLButton" id="harvestFromURLButton" label="Harvest" iconImage="" onclick="harvestFromURL.onHarvest"/>
+            <button name="harvestFromURLButton" id="harvestFromURLButton" label="Harvest" iconImage="" onclick="ToolInterfaces.HarvestFromURL.onHarvest"/>
         </buttons>
     </requestInformations>
 </inputInterface>

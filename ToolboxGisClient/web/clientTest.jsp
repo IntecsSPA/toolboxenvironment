@@ -10,12 +10,13 @@
 
 <html>
     <head>
-        <title>Toolbox Test Client</title>
+        <title>TOOLBOX Web Client</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <script>
             var localToolboxURL="<%=request.getParameter("tbxUrl")%>"; 
             var serviceSelected="<%=request.getParameter("service")%>";
          </script>
+        <link rel="SHORTCUT ICON" href="resources/images/toolboxIcon.gif"/>
         <link rel="stylesheet" type="text/css" href="GisClient/import/ext/resources/css/ext-all.css" />
         <script type="text/javascript" src="GisClient/widgets/lib/jquery/jquery-1.2.6.js"></script>
         <script type="text/javascript" src="GisClient/import/ext/adapter/jquery/ext-jquery-adapter.js"></script>
@@ -61,7 +62,7 @@
             
     <!-- Widget SelectionTool End Import -->
     <!-- Edit Area Configuration-->
-        <script src="jsScripts/import/edit_area/edit_area_full.js"></script>
+        <script src="jsScripts/import/editarea/edit_area_full.js"></script>
         <script language="Javascript" type="text/javascript">
         function initEditArea(textArea){
 		editAreaLoader.init({

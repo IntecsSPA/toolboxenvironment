@@ -17,6 +17,7 @@
   <xsl:template match="wrs:ExtrinsicObject">
     <xsl:variable name="eopId" select='@id'/>
     <Metadata>
+        <eoWrsId><xsl:value-of select="$eopId"/></eoWrsId>
         <xsl:apply-templates select="rim:Slot"></xsl:apply-templates>
         <xsl:apply-templates select="../rim:Association[@sourceObject=$eopId]"></xsl:apply-templates>
     </Metadata>
@@ -24,7 +25,7 @@
 
     <xsl:template match="rim:Slot">
     <xsl:variable name="nameString" select="substring-after(@name,'OGC-06-131:')"/>
-    <!--xsl:text> </xsl:text><xsl:value-of select="$nameString"/><xsl:text> </xsl:text-->
+    
      <xsl:variable name="name">
       <xsl:choose>
           <xsl:when test="$nameString = 'fileName'"><xsl:value-of select="$nameString"/>_<xsl:value-of select="../rim:Name/rim:LocalizedString/@value"/></xsl:when>

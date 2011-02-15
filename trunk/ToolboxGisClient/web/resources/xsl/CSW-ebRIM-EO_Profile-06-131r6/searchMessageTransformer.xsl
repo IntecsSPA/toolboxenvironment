@@ -14,14 +14,31 @@ version="1.0">
 
 <csw:GetRecords
 outputSchema="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"
-service="CSW" version="2.0.2"
-resultType="results"
-startPosition="1"
-maxRecords="20">
-    <xsl:attribute name="startPosition"><xsl:value-of select="gc:cursor"/></xsl:attribute>
-    <xsl:attribute name="maxRecords"><xsl:value-of select="gc:iteratorSize"/></xsl:attribute>
+service="CSW" version="2.0.2">
+    <xsl:choose>
+        <xsl:when test="gc:presentation = 'hits'">
+            <xsl:attribute name="resultType">hits</xsl:attribute>
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:attribute name="resultType">results</xsl:attribute>
+            <xsl:attribute name="startPosition"><xsl:value-of select="gc:cursor"/></xsl:attribute>
+            <xsl:attribute name="maxRecords"><xsl:value-of select="gc:iteratorSize"/></xsl:attribute>
+        </xsl:otherwise>
+
+    </xsl:choose>
+   
     <csw:Query typeNames="rim:RegistryPackage rim:ExtrinsicObject rim:ExtrinsicObject_ACQPLAT rim:Association">
-        <csw:ElementSetName typeNames="rim:RegistryPackage"><xsl:value-of select="gc:presentation"/></csw:ElementSetName>
+        <csw:ElementSetName typeNames="rim:RegistryPackage">
+            <xsl:choose>
+                <xsl:when test="gc:presentation = 'hits'">
+                    <xsl:text></xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="gc:presentation"/>
+                </xsl:otherwise>
+
+            </xsl:choose>
+        </csw:ElementSetName>
         <csw:Constraint version="1.1.0">
             <ogc:Filter>
                 <ogc:And>

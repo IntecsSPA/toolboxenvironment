@@ -12,7 +12,11 @@ import it.intecs.pisa.common.tbx.Operation;
 import it.intecs.pisa.toolbox.constants.OperationConstants;
 import it.intecs.pisa.toolbox.service.ServiceManager;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +43,7 @@ public class GetServicesListFromServicesGroupCommand extends NativeCommandsManag
         Enumeration entries;
         Service currService = null;
         String entryFileName;
+        List serviceList = new ArrayList();
 
         String storedZipFileID=req.getParameter(ID_PARAMETER);
         ZipFile zipFile = new ZipFile(new File(pluginDir, FILES_STORED_FOLDER_PATH+ storedZipFileID));
@@ -62,8 +67,10 @@ public class GetServicesListFromServicesGroupCommand extends NativeCommandsManag
                 entry = (ZipEntry)entries.nextElement();
                 entryFileName=entry.getName().substring(0,entry.getName().indexOf("."));
                 addServiceToServiceList(doc, entryFileName, root);
-
+                
             }
+            
+               
         }
 
        resp.setStatus(resp.SC_OK);

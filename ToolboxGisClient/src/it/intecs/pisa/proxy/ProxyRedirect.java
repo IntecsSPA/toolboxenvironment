@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package it.intecs.pisa.proxy;
 
 import it.intecs.pisa.gisclient.util.AxisSOAPClient;
@@ -109,28 +106,23 @@ public class ProxyRedirect extends HttpServlet {
             if (!serverUrl.startsWith("http://")) {
                 serverUrl=appUrl+serverUrl;
              }
-               // log.info("GET param serverUrl:" + serverUrl);
-                System.out.println("GET REQUEST= " + serverUrl);
-                // System.out.println("GET param serverUrl:" + serverUrl);
+                log.debug("GET param serverUrl:" + serverUrl);
+
                 HttpClient client = new HttpClient();
                 if (type != null) {
                     if (type.equalsIgnoreCase("ENCODED")) {
                         serverUrl = OGCUtil.getSLDEncoded(serverUrl);
-                        //  System.out.println("ENCODED SLD serverUrl:" + serverUrl);
-                        log.info("ENCODED serverUrl:" + serverUrl);
+                        log.debug("ENCODED serverUrl:" + serverUrl);
                     } else if (type.equalsIgnoreCase("ENCODEDFILTER")) {
                         serverUrl = OGCUtil.getFilterEncoded(serverUrl);
-                        //     System.out.println("ENCODED FILTER serverUrl:" + serverUrl);
-                        log.info("ENCODED FILTER serverUrl:" + serverUrl);
+                        log.debug("ENCODED FILTER serverUrl:" + serverUrl);
                     }
                 }
-
                 serverUrl = serverUrl.replaceAll("<", "%3C");
                 serverUrl = serverUrl.replaceAll(">", "%3E");
                 serverUrl = serverUrl.replaceAll(" ", "%20");
                 serverUrl = serverUrl.replaceAll("\"", "%22");
                 serverUrl = serverUrl.replaceAll("#", "%23");
-
 
                 GetMethod httpget = new GetMethod(serverUrl);
 
@@ -149,16 +141,15 @@ public class ProxyRedirect extends HttpServlet {
                 if (httpget.getStatusCode() == HttpStatus.SC_OK) {
                     //force the response to have XML content type (WMS servers generally don't)
                     response.setContentType(outputFormat);
-                    String responseBody = httpget.getResponseBodyAsString().trim();
-                    //response.setContentLength(responseBody.length());
-                   // log.info("responseBody:" + responseBody);
+
+
                      if (inputsGetReq.getXslResponseRelativePath() != null) {
                         PipedInputStream pipeInput = null;
                         SaxonXSLT saxonUtil=new SaxonXSLT();
                         SAXSource xsltDoc;
                          try {
                               xsltDoc = new SAXSource(new InputSource(new FileInputStream(getServletContext().getRealPath(inputsGetReq.getXslResponseRelativePath()))));
-                              pipeInput = saxonUtil.saxonXSLPipeTransform(new SAXSource(new InputSource(new StringReader(responseBody))), xsltDoc, null);
+                              pipeInput = saxonUtil.saxonXSLPipeTransform(new SAXSource(new InputSource(httpget.getResponseBodyAsStream())), xsltDoc, null);
                              } catch (Exception ex) {
                                log.fatal("GisClient -- GET XSLT Response Transform Error: " + ex.getMessage(), ex);
                                System.out.println("GisClient -- GET XSLT Response Transform Error: " + ex.getMessage());
@@ -166,6 +157,7 @@ public class ProxyRedirect extends HttpServlet {
                              }
                             XmlTools.copyInputStreamToOutputStream(pipeInput, response.getOutputStream());
                     }else{
+                        String responseBody = httpget.getResponseBodyAsString().trim();
                         PrintWriter out = response.getWriter();
                         out.print(responseBody);
                         response.flushBuffer();
@@ -236,16 +228,13 @@ public class ProxyRedirect extends HttpServlet {
                 serverUrl=appUrl+serverUrl;
              }
 
-                // System.out.println("GET param serverUrl:" + serverUrl);
                 HttpClient client = new HttpClient();
                 if (type != null) {
                     if (type.equalsIgnoreCase("ENCODED")) {
                         serverUrl = OGCUtil.getSLDEncoded(serverUrl);
-                        //  System.out.println("ENCODED SLD serverUrl:" + serverUrl);
                         log.info("ENCODED serverUrl:" + serverUrl);
                     } else if (type.equalsIgnoreCase("ENCODEDFILTER")) {
                         serverUrl = OGCUtil.getFilterEncoded(serverUrl);
-                        //     System.out.println("ENCODED FILTER serverUrl:" + serverUrl);
                         log.info("ENCODED FILTER serverUrl:" + serverUrl);
                     }
                 }
@@ -493,13 +482,6 @@ public class ProxyRedirect extends HttpServlet {
         SAXSource xsltDoc=null;
         PipedInputStream pipeInput = null;
         SaxonXSLTParameter [] parameters= null;
-       /* SaxonURIResolver uriResolver=null;
-        if(httpPostInputs.getXslUriResolver() != null)
-           uriResolver = new SaxonURIResolver(new URL(appUrl+httpPostInputs.getXslUriResolver()));
-        else
-           uriResolver = new SaxonURIResolver(new URL(appUrl));
-
-        SaxonXSLT saxonUtil=new SaxonXSLT(uriResolver);*/
         SaxonXSLT saxonUtil=new SaxonXSLT();
 
         if(httpPostInputs.getServiceUrl().contains("http://"))
@@ -561,7 +543,6 @@ public class ProxyRedirect extends HttpServlet {
                         postmessage=XmlTools.getStringFromElement((Element) processingRequest);
                         postmessage=postmessage.replaceAll("<PostMessage>", "");
                         postmessage=postmessage.replaceAll("</PostMessage>", "");
-                       // System.out.println("POSTMESSAGE: " + postmessage);
                         connection.setRequestProperty("Content-length", Long.toString(postmessage.length()));
                         connOut = connection.getOutputStream();
                         XmlTools.copyInputStreamToOutputStream(new ByteArrayInputStream(postmessage.getBytes()), connOut);
@@ -710,13 +691,7 @@ public class ProxyRedirect extends HttpServlet {
     }
 
 
-  /* public void deleteAsynchronousInstance(String messageId) throws Exception {
-            File root = new File(getServletContext().getRealPath(INSTANCES_DIR));
-            String modifiedMesssageId;
-            modifiedMesssageId = getModifiedMessageId(messageId);
-            File instanceDir = new File(root, modifiedMesssageId);
-            FileUtil.delete(instanceDir);
-    }*/
+
 
 
     private String responseManager(ProxyParametersManager parameters, HttpServletResponse response, String startPage, String limitPage) throws Exception{
@@ -890,90 +865,7 @@ public class ProxyRedirect extends HttpServlet {
 
     public void createAsynchronousInstance(String messageId, Document requestMessage, String WSAManager, String description) throws Exception {
 
-        /*
-
-        HttpMethod method;
-        String urlPath;
-        String host;
-        //        String queryStr = "";
-        int port;
-        URL url;
-        url = new URL(WSAManager);
-        host = url.getHost();
-        port = url.getPort();
-        urlPath = url.getPath();
-        //        queryStr = url.getQuery();
-
-        PostMethod pMethod = (PostMethod) (method = new PostMethod(urlPath));
-        TransformerFactory tf = TransformerFactory.newInstance();
-        Transformer t = tf.newTransformer();
-        String bodyContent = "";
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        t.transform(new DOMSource(requestMessage),
-        new StreamResult(baos));
-        bodyContent = baos.toString();
-        byte[] bytes = bytes = baos.toByteArray();
-
-
-        pMethod.setRequestBody(bodyContent);
-
-
-        HttpConnection conn = new HttpConnection(host, port);
-
-        String proxyHost;
-        String proxyPort;
-        if ((proxyHost = System.getProperty("http.proxyHost")) != null &&
-        (proxyPort = System.getProperty("http.proxyPort")) != null) {
-        conn.setProxyHost(proxyHost);
-        conn.setProxyPort(Integer.parseInt(proxyPort));
-        }
-
-        conn.open();
-
-
-        method.execute(new HttpState(), conn);
-
-
-        Reader in = new InputStreamReader(method.getResponseBodyAsStream());
-        StringBuffer out = new StringBuffer();
-        char[] buffer = new char[1024];
-        int count;
-        for (count = in.read(buffer); count >= 0; count = in.read(buffer)) {
-        out.append(buffer, 0, count);
-        }
-        conn.close();
-        System.out.println("createAsynchronousInstance :: RESPONSE ::" + out.toString());
-        }
-         */
-
-
         try {
-            /*
-            }
-            URLConnection uc = new URL(WSAManager).openConnection();
-            if (uc instanceof HttpURLConnection) {
-            ((HttpURLConnection) uc).setRequestMethod("POST");
-            }
-            uc.setDoOutput(true);
-            byte[] bytes = null;
-            String mime = null;
-            TransformerFactory tf = TransformerFactory.newInstance();
-            Transformer t = tf.newTransformer();
-            String bodyContent = "";
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            t.transform(new DOMSource(requestMessage),
-            new StreamResult(baos));
-            bodyContent = baos.toString();
-            bytes = baos.toByteArray();
-
-            System.out.println("Message to post["+Integer.toString(bytes.length)+"]:" + bodyContent);
-
-            uc.setRequestProperty("Content-Type", "text/xml");
-            uc.setRequestProperty("Content-Length", Integer.toString(bytes.length));
-
-            OutputStream os = uc.getOutputStream();
-            os.write(bytes);
-             */
             OutputStream connOut = null;
             HttpURLConnection connection = (HttpURLConnection) new URL(WSAManager).openConnection();
             connection.setDoOutput(true);

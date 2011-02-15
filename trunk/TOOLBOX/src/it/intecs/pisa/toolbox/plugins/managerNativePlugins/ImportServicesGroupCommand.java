@@ -132,8 +132,9 @@ public class ImportServicesGroupCommand extends NativeCommandsManagerPlugin {
             File descriptorFile;
             Document descriptor;
             DOMUtil util;
-            String name;
-            Element root;
+            String name,security;
+            Element rootDesc;
+            File securityResourceFolder;
             
             util = new DOMUtil();
 
@@ -152,11 +153,22 @@ public class ImportServicesGroupCommand extends NativeCommandsManagerPlugin {
      
             descriptor = util.fileToDocument(descriptorFile);
 
-            root = descriptor.getDocumentElement();
-            name = root.getAttribute("serviceName");
+            rootDesc = descriptor.getDocumentElement();
+            name = rootDesc.getAttribute("serviceName");
             if (name.equals(serviceName) == false) {
-                root.setAttribute("serviceName", serviceName);
+                rootDesc.setAttribute("serviceName", serviceName);
             }
+
+            /*Check Security*/
+            security = rootDesc.getAttribute("wssecurity");
+            if (security.equals("true")) {
+                /*Remove Security*/
+                rootDesc.setAttribute("wssecurity", "false");
+                securityResourceFolder= new File(packageDeployDir, ServiceConstants.SERVICE_SERVICE_RESOURCE_FOLDER);
+                if(securityResourceFolder.exists())
+                   IOUtil.rmdir(securityResourceFolder);
+            }
+
 
             DOMUtil.dumpXML(descriptor, descriptorFile);
 

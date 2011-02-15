@@ -3536,11 +3536,17 @@ function generateComboField(field){
 
  var tooltip=null;
 
+ var emptymsg="";
+ if(field.tooltipDefaultMessage)
+     emptymsg=field.tooltipDefaultMessage;
+
+
  if(field.tooltip){
     tooltip=new Ext.ToolTip({
-        html: field.tooltipDefaultMessage,
+        html: emptymsg,
+        anchor: 'buttom',
         setHtml: function (newHtml){
-          this.html=newHtml;
+          this.body.dom.innerHTML=newHtml;
           Ext.QuickTips.init();
         },
         //title: "tooltip"+field.id,
@@ -3590,31 +3596,36 @@ function generateComboField(field){
                             name: field.name,
                             msgTarget : 'qtip',
                             typeAhead: true,
+                            tooltipDefaultMessage: emptymsg,
                             tooltip: tooltip,
                             listeners: {
-                                afterrender: function() {
-                                   if(this.tooltip)
-                                       this.tooltip.initTarget(this.container.id);
-                                },
-                               select: function() {
-                                  
+                                afterrender: function() {                                  
                                    if(this.tooltip){
-                                       this.tooltip.destroy();
-                                       this.tooltip=new Ext.ToolTip({
-                                            html: this.getValueInformation("description"),
-                                            setHtml: function (newHtml){
-                                              this.html=newHtml;
+                                       this.tooltip.initTarget(this.container.id);
+                                    if(this.tooltipDefaultMessage == ''){
+                                     // this.tooltip.setDisabled(true);
+                                    }
+                                   }
+                                },
+                               beforeselect: function(){
+                                  if(this.tooltip.disabled){
+                                       this.tooltip.setDisabled(false);
+                                       //this.tooltip.initTarget(this.container.id);
+                                  }
 
-                                            },
-                                            //title: "tooltip"+field.id,
-                                            autoHide: true
-                                           /* closable: true,*/
-                                           // draggable:true
-                                        });
-                                        Ext.QuickTips.init();
+                               },
+                               select: function() {
+                                   
+                                   
+
+                                   if(this.tooltip){
+                                       
+                                       var newDescription=this.getValueInformation("description");
+                                       this.tooltip.setHtml(newDescription);
                                    }
                                    
-                                }},
+                                }
+                            },
 
                             disabled: field.disabled,
                             mode: mode,

@@ -522,7 +522,14 @@ function printError (errorType){
             animEl: 'elId',
             icon: Ext.MessageBox.ERROR
      });  
-    }
+    }else
+       Ext.Msg.show({
+            title:'TOOLBOX Error',
+            buttons: Ext.Msg.OK,
+            msg: errorType,
+            animEl: 'elId',
+            icon: Ext.MessageBox.ERROR
+     });
 }
 
 
@@ -535,6 +542,13 @@ function printInfo (infoType){
             animEl: 'elId',
             icon: Ext.MessageBox.INFO
      });
-    }
+    }else
+       Ext.Msg.show({
+            title:'TOOLBOX Information',
+            buttons: Ext.Msg.OK,
+            msg: infoType,
+            animEl: 'elId',
+            icon: Ext.MessageBox.INFO
+     });
 }
 

@@ -211,10 +211,7 @@ PropertyResourceBundle messages = (PropertyResourceBundle)ResourceBundle.getBund
                 <tr><!-- Row 8 -->
                     <td class=sortable colspan="2" nowrap><fmt:message key="configureToolboxRequest.errorReport" bundle="${lang}"/></td>						
                 </tr>
-                <tr><!-- Row 9 -->
-                    <td class="tdItem" nowrap width="50%"><fmt:message key="configureToolboxRequest.mailErrSSE" bundle="${lang}"/></td>
-                    <td class="tdForm" nowrap><input name="mailErrorSSE" type="checkbox" <%=mailErrorSSEChecked%> <%=disabled%>></td>
-                </tr>
+                
                 <tr><!-- Row 9 -->
                     <td class="tdItem" nowrap width="50%"><fmt:message key="configureToolboxRequest.mailErr" bundle="${lang}"/></td>
                     <td class="tdForm" nowrap><input name="mailErrorSP" type="checkbox" <%=mailErrorSPChecked%> <%=disabled%>></td>

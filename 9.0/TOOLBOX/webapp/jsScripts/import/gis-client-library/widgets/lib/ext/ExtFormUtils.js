@@ -3608,6 +3608,7 @@ function generateComboField(field){
                                    }
                                 },
                                beforeselect: function(){
+				  if(this.tooltip)  
                                   if(this.tooltip.disabled){
                                        this.tooltip.setDisabled(false);
                                        //this.tooltip.initTarget(this.container.id);

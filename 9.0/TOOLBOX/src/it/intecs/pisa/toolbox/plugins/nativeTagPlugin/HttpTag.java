@@ -1,5 +1,6 @@
 package it.intecs.pisa.toolbox.plugins.nativeTagPlugin;
 
+import it.intecs.pisa.toolbox.constants.MiscConstants;
 import it.intecs.pisa.util.DOMUtil;
 import java.io.StringWriter;
 import java.util.Iterator;
@@ -8,6 +9,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
+import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
@@ -42,7 +44,10 @@ public class HttpTag extends NativeTagExecutor {
         urlStr=urlStr.replaceAll("&amp;", "&");
        // Create an instance of HttpClient.
        HttpClient client = new HttpClient();
-
+       HostConfiguration hc=client.getHostConfiguration();
+       hc.setProxy(System.getProperty(MiscConstants.PROXY_HOST_KEY), 
+               new Integer(System.getProperty(MiscConstants.PROXY_PORT_KEY)));
+       client.setHostConfiguration(hc);
        
 
        if (http.getAttribute(METHOD).equals(POST)) {

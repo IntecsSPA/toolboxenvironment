@@ -85,10 +85,7 @@
                                                 var editArea = document.getElementById(form.editAreaID+"TextAreaIframe");
                                                 var editAreaDoc = editArea.contentWindow.document;
                                                 var textResp=eval("'"+jsonResponseObj.content+"'");
-                                                
-                                                //var decode=decodeURIComponent(textResp.replace(/\+/g,  " "));
-
-                                                editAreaDoc.setValue(textResp.replace(/\+/g,  " "));
+                                                editAreaDoc.setValue(textResp);
                                            }
 
                                           var file=form.findField(form.fileID);

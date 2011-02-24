@@ -12,6 +12,6 @@ A patch to solve this problem has been created and can be downloaded here.
 
 Download the package and follow these instructiones:
 
-1) Stop Tomcat
-2) copy the package in the Tomcat webapp directory. This should replace the following file <TOMCAT PATH>/webapps/TOOLBOX/WEB-INF/classes/it/intecs/pisa/toolbox/plugins/nativeTagPlugin/HttpTag.class
-3) Restart Tomcat
+# Stop Tomcat
+# copy the package in the Tomcat webapp directory. This should replace the following file <TOMCAT PATH>/webapps/TOOLBOX/WEB-INF/classes/it/intecs/pisa/toolbox/plugins/nativeTagPlugin/HttpTag.class
+# Restart Tomcat

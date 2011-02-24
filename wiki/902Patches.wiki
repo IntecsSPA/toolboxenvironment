@@ -12,7 +12,7 @@ Bugs Fixed:
 
 2. A bug on the "Add WPS processing" interface has been found. Some characters of the engine script (loaded from local disk) are replaced by blank character.
 
-A patch to solve these problems has been created and can be downloaded [http://code.google.com/p/toolboxenvironment/downloads/detail?name=TOOLBOX_ProxyPatch.tar.gz&can=2&q= here].
+A patch to solve these problems has been created and can be downloaded [http://toolboxenvironment.googlecode.com/files/TOOLBOX_Patch_0.1.tar.gz].
 
 Download the package and follow these instructions:
 

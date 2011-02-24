@@ -8,10 +8,11 @@ In this page we report all the patches created for version 9.0.2 of the Toolbox
 
 A bug on the http download via the proxy has been found. The proxy configuration settings are ignored by the Toolbox when it tries to download a file from a remote URL. This is due to an update of the HTTP library.
 
-A patch to solve this problem has been created and can be downloaded here.
+A patch to solve this problem has been created and can be downloaded [http://code.google.com/p/toolboxenvironment/downloads/detail?name=TOOLBOX_ProxyPatch.tar.gz&can=2&q= here].
 
 Download the package and follow these instructiones:
 
-# Stop Tomcat
-# copy the package in the Tomcat webapp directory. This should replace the following file <TOMCAT PATH>/webapps/TOOLBOX/WEB-INF/classes/it/intecs/pisa/toolbox/plugins/nativeTagPlugin/HttpTag.class
-# Restart Tomcat
+  # Stop Tomcat
+  # Copy the package in the Tomcat webapp directory. 
+  # Unzip the package. This should replace the following file <TOMCAT PATH>/webapps/TOOLBOX/WEB-INF/classes/it/intecs/pisa/toolbox/plugins/nativeTagPlugin/HttpTag.class
+  # Restart Tomcat

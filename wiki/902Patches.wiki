@@ -18,5 +18,5 @@ Download the package and follow these instructions:
 
   # Stop Tomcat
   # Copy the package in the Tomcat webapps directory. 
-  # Unzip the package. This should replace the following file <TOMCAT PATH>/webapps/TOOLBOX/WEB-INF/classes/it/intecs/pisa/toolbox/plugins/nativeTagPlugin/HttpTag.class
+  # Unzip the package. This should replace the following files <TOMCAT PATH>/webapps/TOOLBOX/WEB-INF/classes/it/intecs/pisa/toolbox/plugins/nativeTagPlugin/HttpTag.class and <TOMCAT PATH>/webapps/TOOLBOX/jsScripts/import/gis-client-library/widgets/lib/ext/field/fileField.js
   # Restart Tomcat

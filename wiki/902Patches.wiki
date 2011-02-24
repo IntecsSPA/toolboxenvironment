@@ -4,7 +4,7 @@
 
 In this page we report all the patches created for version 9.0.2 of the Toolbox
 
-= Proxy patch =
+= Patch 0.1 =
 
 A bug on the http download via the proxy has been found. The proxy configuration settings are ignored by the Toolbox when it tries to download a file from a remote URL. This is due to an update of the HTTP library.
 

@@ -58,8 +58,21 @@
                     Click on done to complete the installation.
                     <br>
                 </p>
-                <p align="left">
-                    If you want to execute the installed Tomcat as daemon (or service under windows) follows the stepse described <a href="setTomcatAsDaemon.html">here</a>.
+                <p align="left">At least one of JAVA_HOME or JRE_HOME environment variable  is needed to run Tomcat. </p>
+                <h2 align="left">Windows</h2>
+                <p align="left">Check if JAVA_HOME or JRE_HOME have been set in your environment. If not you can follow one of these solutions:</p>
+                <p align="left">1) set one of the two environment variable via the Windows System Properties -&gt; Advanced settings menu (e.g. for Windows XP http://support.microsoft.com/kb/310519)</p>
+                <p align="left">2) Add at the beginning of the startup.bat and shutdown.bat files the following line</p>
+                <p align="left">	set JAVA_HOME=&lt;PATH_TO_JAVA_HOME&gt;</p>
+                <p align="left">e.g. set JAVA_HOME=C:\Program Files\Java\jdk1.6.0_23</p>
+                <h2 align="left">Linux</h2>
+                <p align="left">Check if JAVA_HOME or JRE_HOME have been set in your environment. If not you can follow one of these solutions:</p>
+                <p align="left">1) set one of the two environment variable in  /home/&lt;user name&gt;/.bashrc </p>
+                <p align="left">2) Add at the beginning of the startup.bat and shutdown.bat files the following line</p>
+                <p align="left"> set JAVA_HOME=&lt;PATH_TO_JAVA_HOME&gt;</p>
+                <p align="left">e.g. set JAVA_HOME=C:\Program Files\Java\jdk1.6.0_23</p>
+                <p align="left">&nbsp;</p>
+                <p align="left">If you want to execute the installed Tomcat as daemon (or service under windows) follows the stepse described <a href="setTomcatAsDaemon.html">here</a>.
                     <br>
                 </p>
             </div>

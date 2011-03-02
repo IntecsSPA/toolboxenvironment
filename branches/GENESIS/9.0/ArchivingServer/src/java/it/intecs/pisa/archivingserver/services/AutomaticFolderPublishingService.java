@@ -7,12 +7,14 @@ package it.intecs.pisa.archivingserver.services;
 
 import it.intecs.pisa.archivingserver.chain.commands.CommandsConstants;
 import it.intecs.pisa.archivingserver.data.StoreItem;
+import it.intecs.pisa.archivingserver.log.Log;
 import it.intecs.pisa.archivingserver.prefs.Prefs;
 import it.intecs.pisa.util.DateUtil;
 import it.intecs.pisa.util.datetime.TimeInterval;
 import java.io.File;
 import java.util.Date;
 import java.util.Properties;
+import java.util.StringTokenizer;
 import java.util.Timer;
 import javawebparts.misc.chain.ChainContext;
 import javawebparts.misc.chain.ChainManager;
@@ -53,15 +55,29 @@ public class AutomaticFolderPublishingService extends Thread{
             {
                 try
                 {
-                    File folder=new File(prop.getProperty(Prefs.PUBLISH_LOCAL_FOLDER_DIR));
-                    publishItemInFolder(folder);
+                    String folderDirs;
+                    folderDirs=prop.getProperty(Prefs.PUBLISH_LOCAL_FOLDER_DIR);
+
+                    StringTokenizer tokenizer=new StringTokenizer(folderDirs,";");
+
+                    String types;
+                    types=prop.getProperty(Prefs.PUBLISH_LOCAL_FOLDER_TYPES);
+                    StringTokenizer typesTokenizer=new StringTokenizer(types,";");
+
+                    while(tokenizer.hasMoreTokens())
+                    {
+                        File folder=new File(tokenizer.nextToken());
+                        publishItemInFolder(folder, typesTokenizer.nextToken());
+                    }
+
                     try {
-                        sleep(waitInterval);
-                    } catch (InterruptedException ex) {}
+                            sleep(waitInterval);
+                        }
+                        catch (InterruptedException ex) {}
                 }
                 catch(Exception e)
                 {
-
+                    Log.log("An exception occurred while publishing data from disk... Details: "+e.getMessage());
                 }
             }
         }
@@ -90,14 +106,20 @@ public class AutomaticFolderPublishingService extends Thread{
         this.interrupt();
     }
 
-    private void publishItemInFolder(File folder) {
-        for(File f:folder.listFiles())
+    private void publishItemInFolder(File folder,String type) {
+        File[] files=null;
+
+        files=folder.listFiles();
+        if(files==null)
+            files=new File[0];
+
+        for(File f:files)
         {
-            publishItem(f);
+            publishItem(f,type);
         }
     }
 
-    private void publishItem(File f) {
+    private void publishItem(File f,String type) {
         String item;
         if(f.isFile())
         {
@@ -110,6 +132,7 @@ public class AutomaticFolderPublishingService extends Thread{
             storeitem.deleteAfter=0;
             storeitem.downloadUrl="";
             storeitem.metadataUrl="";
+            storeitem.type=type;
             storeitem.publishCatalogue=new String[0];
             storeitem.publishFtp=new String[0];
             storeitem.publishGeoserver=new String[0];
@@ -117,6 +140,7 @@ public class AutomaticFolderPublishingService extends Thread{
             ct.setAttribute(CommandsConstants.STORE_ITEM, storeitem);
             ct.setAttribute(CommandsConstants.ITEM_ID, item);
             ct.setAttribute(CommandsConstants.APP_DIR, appdir);
+            ct.setAttribute(CommandsConstants.LOCAL_FILE, f);
             cm.executeChain("Catalogue/localFolderstoreChain", ct);
 
             int success = ct.getResult().getCode();

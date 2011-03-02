@@ -49,24 +49,26 @@ public class PublishToGeoServer implements Command {
             itemId = (String) cc.getAttribute(CommandsConstants.ITEM_ID);
             StoreItem storeItem = (StoreItem) cc.getAttribute(CommandsConstants.STORE_ITEM);
 
-            prop = Prefs.load(appDir);
-            downloadedFile = new File(prop.getProperty("download.dir"), itemId);
+            if(storeItem.publishGeoserver.length>0)
+            {
+                prop = Prefs.load(appDir);
+                downloadedFile = new File(prop.getProperty("download.dir"), itemId);
 
-            workspaceName = prop.getProperty("publish.geoserver.workspace");
-            dataType=getDataType(downloadFileName);
-            deployName=DateUtil.getCurrentDateAsUniqueId();
-            
-            for (String url : storeItem.publishGeoserver) {
-                try {
-                    location=publish(downloadedFile, url, workspaceName, deployName, dataType);
+                workspaceName = prop.getProperty("publish.geoserver.workspace");
+                dataType=getDataType(downloadFileName);
+                deployName=DateUtil.getCurrentDateAsUniqueId();
 
-                    if(location!=null)
-                        GeoServerAccessible.add(itemId, location);
-                } catch (Exception e) {
-                    Log.logException(e);
+                for (String url : storeItem.publishGeoserver) {
+                    try {
+                        location=publish(downloadedFile, url, workspaceName, deployName, dataType);
+
+                        if(location!=null)
+                            GeoServerAccessible.add(itemId, location);
+                    } catch (Exception e) {
+                        Log.logException(e);
+                    }
                 }
             }
-
         } catch (Exception e) {
             Log.logException(e);
             return new Result(Result.FAIL);

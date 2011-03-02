@@ -34,7 +34,6 @@ public class FTPServerServlet extends HttpServlet {
         boolean success=true;
         try
         {
-            System.out.println(this.getServletContext().getContextPath());
             String requestURI=request.getRequestURI();
             System.out.println(requestURI);
             if(requestURI.endsWith("start"))

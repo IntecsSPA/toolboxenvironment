@@ -451,4 +451,8 @@ public class IOUtil {
             }
         }
     }
+
+    public static void moveFile(File localFile, File destFile) {
+        localFile.renameTo(destFile);
+    }
 }

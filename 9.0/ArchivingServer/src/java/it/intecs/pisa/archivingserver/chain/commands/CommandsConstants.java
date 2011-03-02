@@ -15,4 +15,5 @@ public class CommandsConstants {
     public static final String APP_DIR="appDir";
     public static final String DOWNLOADED_FILE_NAME="downloadedItemFileName";
     public static final String ITEM_METADATA="itemMetadata";
+    public static final String LOCAL_FILE="localFile";
 }

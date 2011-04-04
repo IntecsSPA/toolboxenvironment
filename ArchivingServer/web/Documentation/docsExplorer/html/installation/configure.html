@@ -1,8 +1,7 @@
-<html>
-    <head>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
         <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
-        <title>blank page</title>
-    </head>
+        <title>blank page</title></head>
     <body>
         <h2>Configuration procedures</h2>
         <h3>Toolbox Archiving Service</h3>
@@ -11,7 +10,10 @@
         The ARMS servlet can be configured by modifying its properties fils and restarting the servlet.
         In order to do this, follow these steps:
         <ul>
-            <li>Access Tomcat manager application and stop the ARMS servlet. You can stop the Tomcat instance instead. See Tomcat manual for the a description of the procedure.</li>
+            <li>Access
+Tomcat manager application and stop the ARMS servlet. You can stop the
+Tomcat instance instead. See Tomcat manual for the a description of the
+procedure.</li>
             <li>Open the properties file that can be found under &lt;TOMCAT_HOME&gt;/webapps/ArchivingServer/WEB-INF/classes/config.properties</li>
             <li>Modify the properties. Save the properties file.</li>
             <li>Restart the servlet or the Tomcat instance (depending on what has been done in step 1)</li>
@@ -37,13 +39,18 @@
                 <tr>
                     <td>http.public.url</td>
                     <td>URL</td>
-                    <td>Full URL that shall be used for accessing the ARMS servlet. E.g. http://localhost:8080/ArchivingServer This parameter shall be used when creating links (e.g. data download links)</td>
+                    <td>Full
+URL that shall be used for accessing the ARMS servlet. E.g.
+http://localhost:8080/ArchivingServer This parameter shall be used when
+creating links (e.g. data download links)</td>
                 </tr>
                 <tr>
                     <td>delete.after</td>
                     <td>Complex type</td>
-                    <td>This parameter provides a time interval after which data shall be automatically deleted. This value shall be expressed concatenating a number and one of the following letters:
-                        <ul><li>s for seconds</li><li>m for minutes</li><li>h for hours</li><li>d for days</li><li>w for weeks</li></ul></td>
+                    <td>This
+parameter provides a time interval after which data shall be
+automatically deleted. This value shall be expressed concatenating a
+number and one of the following letters: <ul><li>s for seconds</li><li>m for minutes</li><li>h for hours</li><li>d for days</li><li>w for weeks</li></ul></td>
                 </tr>
                 <tr>
                     <td>fail.dorollback</td>
@@ -54,13 +61,19 @@
                 <tr>
                     <td>publish.local.http.enable</td>
                     <td>Boolean</td>
-                    <td>This parameter activates or deactivates the HTTP publish feature. This parameter has an higher priority respect to the parameter provided by the input message</td>
+                    <td>This
+parameter activates or deactivates the HTTP publish feature. This
+parameter has an higher priority respect to the parameter provided by
+the input message</td>
                 </tr>
 
                 <tr>
                     <td>publish.local.ftp.enable</td>
                     <td>Boolean</td>
-                    <td>This parameter activates or deactivates the FTP publish feature. This parameter has an higher priority respect to the parameter provided by the input message</td>
+                    <td>This
+parameter activates or deactivates the FTP publish feature. This
+parameter has an higher priority respect to the parameter provided by
+the input message</td>
                 </tr>
                  <tr>
                     <td>publish.local.ftp.rootdir</td>
@@ -83,8 +96,11 @@
                 <tr>
                     <td>publish.local.folder.interval</td>
                     <td>Complex Type</td>
-                    <td>This parameter provides a time interval between directory checks. At every check new file is searched in the directory and automatically deployed into the ARMS. This value shall be expressed concatenating a number and one of the following letters:
-                        <ul><li>s for seconds</li><li>m for minutes</li><li>h for hours</li><li>d for days</li><li>w for weeks</li></ul></td>
+                    <td>This
+parameter provides a time interval between directory checks. At every
+check new file is searched in the directory and automatically deployed
+into the ARMS. This value shall be expressed concatenating a number and
+one of the following letters: <ul><li>s for seconds</li><li>m for minutes</li><li>h for hours</li><li>d for days</li><li>w for weeks</li></ul></td>
                 </tr>
 
                 <tr>
@@ -102,12 +118,16 @@
         </table>
 
         <h3>Toolbox Archiving Service</h3>
-        The Toolbox Archiving Service can be deployed with few steps by following a wizard like interface. Once deployed the service can be configured as all of the Toolbox services.
-        The Toolbox administration web pages allow the administrator to fine tune the configuration in order to match his needs. In order to do this, please follow the steps below:
-        <ul>
+The Toolbox Archiving Service can be deployed with few steps by
+following a wizard like interface. Once deployed the service can be
+configured as all of the Toolbox services. The Toolbox administration
+web pages allow the administrator to fine tune the configuration in
+order to match his needs. In order to do this, please follow the steps
+below: <ul>
             <li>Login into the Toolbox Administration web pages.</li>
             <li>Select the Archiving Service from the drop down in the top left.</li>
-            <li>Click on the "Change the configuration" link.</li>
+            <li>Click on "Service Configuration" link, then on "Change the configuration" 
+link.</li>
             <li>Update the cariables in the "Configure service variables" section. A description is done below for each parameter.</li>
             <li>Click on the "Configure" button.</li>
         </ul>
@@ -165,5 +185,4 @@
 
 
 
-</body>
-</html>
+</body></html>

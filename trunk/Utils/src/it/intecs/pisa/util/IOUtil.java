@@ -214,6 +214,23 @@ public class IOUtil {
         out.close();
     }
 
+    public static void moveFile(File sourceFile, File targetFile) throws Exception {
+        targetFile.getParentFile().mkdirs();
+
+        FileInputStream in = new FileInputStream(sourceFile);
+        FileOutputStream out = new FileOutputStream(targetFile);
+        byte[] buffer = new byte[1024];
+        int count;
+        while ((count = in.read(buffer)) >= 0) {
+            out.write(buffer, 0, count);
+        }
+        in.close();
+        out.close();
+        targetFile.delete();
+    }
+
+
+
     public static void copyDirectory(File sourceDir, File destDir) throws Exception {
         File[] elements;
         File destElement;

@@ -53,10 +53,12 @@ String toolboxUrl=ToolboxNetwork.getEndpointURL();
             <TD class=pageBody id=main><SCRIPT>addBreadCrumb("<%=bc%>");</SCRIPT>
                 <DIV class=portletItem id=01>
                     <DIV>
-                        <A href=# onclick="javascript:showToolInterface ('CreateCatalogueDatabase', 'Create Catalogue Database', '<%=serviceName%>');"><fmt:message key="tools.createebRRDB" bundle="${lang}"/> &nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
+                        <A href="createEbRRDB.jsp"><!--<A href=# onclick="javascript:showToolInterface ('CreateCatalogueDatabase', 'Create Catalogue Database', '<%=serviceName%>');">--><fmt:message key="tools.createebRRDB" bundle="${lang}"/> &nbsp;<IMG src="images/arrow.gif"></A><SPAN><IMG src="images/tt_square2.gif"></SPAN>
+                        
                     </DIV> 
                     <P> 
-                        <A href=# onclick="javascript:showToolInterface ('CreateCatalogueDatabase', 'Create Catalogue Database', '<%=serviceName%>');"><IMG class=labelHomePage title=Toolbox src="images/EOPdatabase.png" align=middle border=0></A>
+                        <!--<A href=# onclick="javascript:showToolInterface ('CreateCatalogueDatabase', 'Create Catalogue Database', '<%=serviceName%>');">-->
+                        <A href="createEbRRDB.jsp"><IMG class=labelHomePage title=Toolbox src="images/EOPdatabase.png" align=middle border=0></A>
                         <fmt:message key="tools.createebRRDB.descr" bundle="${lang}"/>
                     </P> 
                 </DIV>

@@ -38,7 +38,7 @@ public class XsltTag extends NativeTagExecutor {
         if(xsltRef instanceof String){
             xsltDoc= new SAXSource(new InputSource((String)xsltRef));
             String xsltPath=((String)xsltRef).substring(0,
-                    ((String)xsltRef).lastIndexOf('/'));
+                    ((String)xsltRef).lastIndexOf(System.getProperty( "file.separator")));
             uriResolver = new SaxonURIResolver(new File(xsltPath));
             saxonUtil=new SaxonXSLT(uriResolver);
         }

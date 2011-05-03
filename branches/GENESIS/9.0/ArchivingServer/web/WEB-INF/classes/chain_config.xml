@@ -2,6 +2,8 @@
     <catalog id="Catalogue">
         <chain id="localFolderstoreChain">
             <command id="register" className="it.intecs.pisa.archivingserver.chain.commands.RegisterItemRef"/>
+            <command id="createFakeDownload" className="it.intecs.pisa.archivingserver.chain.commands.CreateFakeDownload"/>
+            <command id="processData" chain="dataProcessChain"/>
             <command id="metadata" chain="metadataProductionChain"/>
             <command id="publish" chain="publishItemChain"/>
             <command id="cleanup" chain="storeCleanUpChain"/>
@@ -10,6 +12,7 @@
         <chain id="storeChain">
             <command id="register" className="it.intecs.pisa.archivingserver.chain.commands.RegisterItemRef"/>
             <command id="download" chain="downloadItemChain"/>
+            <command id="processData" chain="dataProcessChain"/>
             <command id="metadata" chain="metadataProductionChain"/>
             <command id="publish" chain="publishItemChain"/>
             <command id="cleanup" chain="storeCleanUpChain"/>
@@ -26,7 +29,12 @@
             <command id="publishToFtp" className="it.intecs.pisa.archivingserver.chain.commands.PublishToFTP" />
             <command id="publishToCatalogue" className="it.intecs.pisa.archivingserver.chain.commands.PublishToEbRIMCatalogue" />
             <command id="publishToGeoServer" className="it.intecs.pisa.archivingserver.chain.commands.PublishToGeoServer" />
+            <command id="publishToSOS" className="it.intecs.pisa.archivingserver.chain.commands.PublishToSOS" />
             <command id="changeStatusToPublished" className="it.intecs.pisa.archivingserver.chain.commands.ChangeStatusToPublished" />
+        </chain>
+
+        <chain id="dataProcessChain">
+            <command id="dataProcess" className="it.intecs.pisa.archivingserver.chain.commands.ProcessData" />
         </chain>
 
         <chain id="storeCleanUpChain">

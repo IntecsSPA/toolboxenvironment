@@ -1,0 +1,16 @@
+
+
+{
+    "dataProcessingNumber": 1,
+    "dataProcessingList": [
+        {
+          "id": "",  
+          "hidden": false,
+          "engineType": "shell", 
+          "localScriptPath": "/home/maro/",
+          "idScriptFileStored": "aaaaaabbbbbbbbbb.xml",
+          "type": "shp",
+          "ouputType": "shp"
+        }
+    ]
+}

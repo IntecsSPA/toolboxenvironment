@@ -1,0 +1,19 @@
+
+
+{
+    "chainTypesNumber": 1,
+    "chainTypesList": [
+        {
+          "id": "",  
+          "typeName": "shp",
+          "hidden": false,
+          "ppEngineType": "shell", 
+          "pplocalScriptPath": "/home/maro/",
+          "ppIdScriptFileStored": "aaaaaabbbbbbbbbb.xml",
+          "ppOuputType": "shp",
+          "mpEngineType": "shell", 
+          "mplocalScriptPath": "/home/maro/ddd",
+          "mpIdScriptFileStored": "bbbbbbbbbb.xml"
+        }
+    ]
+}

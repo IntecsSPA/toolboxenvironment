@@ -13,7 +13,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Properties;
 import javawebparts.misc.chain.ChainContext;
 import javawebparts.misc.chain.Command;
 import javawebparts.misc.chain.Result;
@@ -23,6 +22,7 @@ import javawebparts.misc.chain.Result;
  * @author Massimiliano Fanciulli
  */
 public class DownloadFromHttp implements Command {
+    
 
     @Override
     public Result init(ChainContext cc) {
@@ -32,11 +32,10 @@ public class DownloadFromHttp implements Command {
     @Override
     public Result execute(ChainContext cc) {
         StoreItem storeItem;
-        File outFile;
+        File outFile, dowloandDirFile;
         File webappDir;
         String fileName;
         String id;
-        Properties prop;
 
         try {
             storeItem = (StoreItem) cc.getAttribute(CommandsConstants.STORE_ITEM);
@@ -47,8 +46,9 @@ public class DownloadFromHttp implements Command {
                 DownloadsDB.addDownload(id, storeItem.downloadUrl);
                 DownloadsDB.updateStatus(id, "DOWNLOADING");
 
-                prop=Prefs.load(webappDir);
-                outFile=new File(prop.getProperty("download.dir"),id);
+                dowloandDirFile=Prefs.getDownloadFolder(webappDir);
+                
+                outFile=new File(dowloandDirFile,id);
 
                 download(storeItem.downloadUrl,outFile);
 

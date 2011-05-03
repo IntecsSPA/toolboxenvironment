@@ -36,31 +36,33 @@ public class PublishToGeoServer implements Command {
     @Override
     public Result execute(ChainContext cc) {
         File downloadedFile, appDir;
-        String downloadFileName;
         String workspaceName;
         String itemId;
-        String dataType;
         String deployName;
         Properties prop;
         String location;
         try {
             appDir = (File) cc.getAttribute(CommandsConstants.APP_DIR);
-            downloadFileName = (String) cc.getAttribute(CommandsConstants.DOWNLOADED_FILE_NAME);
             itemId = (String) cc.getAttribute(CommandsConstants.ITEM_ID);
             StoreItem storeItem = (StoreItem) cc.getAttribute(CommandsConstants.STORE_ITEM);
 
             if(storeItem.publishGeoserver.length>0)
             {
                 prop = Prefs.load(appDir);
-                downloadedFile = new File(prop.getProperty("download.dir"), itemId);
-
-                workspaceName = prop.getProperty("publish.geoserver.workspace");
-                dataType=getDataType(downloadFileName);
+                downloadedFile = new File(Prefs.getDownloadFolder(appDir), itemId + "_processed");
+                if(!downloadedFile.exists())
+                   downloadedFile = new File(Prefs.getDownloadFolder(appDir), itemId);
+                
+                if(storeItem.geoserverWorkspace !=null)
+                    workspaceName = storeItem.geoserverWorkspace;
+                else    
+                    workspaceName = prop.getProperty("publish.geoserver.workspace");
+         
                 deployName=DateUtil.getCurrentDateAsUniqueId();
 
                 for (String url : storeItem.publishGeoserver) {
                     try {
-                        location=publish(downloadedFile, url, workspaceName, deployName, dataType);
+                        location=publish(downloadedFile, url, workspaceName, deployName, storeItem.geoserverType);
 
                         if(location!=null)
                             GeoServerAccessible.add(itemId, location);

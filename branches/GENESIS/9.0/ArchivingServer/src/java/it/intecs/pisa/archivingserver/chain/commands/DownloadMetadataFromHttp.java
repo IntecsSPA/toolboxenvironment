@@ -34,7 +34,7 @@ public class DownloadMetadataFromHttp implements Command {
         File outFile;
         File webappDir;
         String id;
-        Properties prop;
+        File dowloandDirFile;
         Document doc = null;
         try {
             storeItem = (StoreItem) cc.getAttribute(CommandsConstants.STORE_ITEM);
@@ -42,8 +42,8 @@ public class DownloadMetadataFromHttp implements Command {
             webappDir=(File) cc.getAttribute(CommandsConstants.APP_DIR);
 
             if (storeItem.metadataUrl.startsWith("http://")) {
-                prop=Prefs.load(webappDir);
-                outFile=new File(prop.getProperty("download.dir"),id+"_metadata.xml");
+                dowloandDirFile=Prefs.getDownloadFolder(webappDir);
+                outFile=new File(dowloandDirFile,id+"_metadata.xml");
 
                 doc=download(storeItem.metadataUrl,outFile);
                 cc.setAttribute(CommandsConstants.ITEM_METADATA, doc);

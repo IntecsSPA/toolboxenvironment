@@ -5,10 +5,16 @@
 
 package it.intecs.pisa.archivingserver.services;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import it.intecs.pisa.archivingserver.chain.commands.CommandsConstants;
 import it.intecs.pisa.archivingserver.data.StoreItem;
+import it.intecs.pisa.archivingserver.data.StoreItemDeserializer;
 import it.intecs.pisa.archivingserver.log.Log;
 import it.intecs.pisa.archivingserver.prefs.Prefs;
+import it.intecs.pisa.archivingserver.prefs.WatchPrefs;
 import it.intecs.pisa.util.DateUtil;
 import it.intecs.pisa.util.datetime.TimeInterval;
 import java.io.File;
@@ -26,7 +32,7 @@ import javawebparts.misc.chain.Result;
  */
 public class AutomaticFolderPublishingService extends Thread{
     protected static final long ONE_HOUR=1000*60*60;
-
+    //
     protected boolean mustShutdown=false;
     protected File appdir;
     protected Timer timer=new Timer();
@@ -42,7 +48,9 @@ public class AutomaticFolderPublishingService extends Thread{
         long waitInterval=ONE_HOUR;
         String[] items;
         Properties prop;
-        String intervalStr;
+        String intervalStr,watchFolder;
+        JsonObject watchListJson,watchObject=null;
+        JsonArray watchArray;
 
         try
         {
@@ -55,7 +63,20 @@ public class AutomaticFolderPublishingService extends Thread{
             {
                 try
                 {
-                    String folderDirs;
+                    
+                    watchListJson = WatchPrefs.loadJson(appdir);
+                    
+                    watchArray=watchListJson.getAsJsonArray(WatchPrefs.JSON_WATCH_LIST_PROPERTY);
+                    
+                   for(int i=0; i<watchArray.size(); i++){
+                        watchObject=(JsonObject) watchArray.get(i);
+
+                        publishItemInFolder(watchObject);
+                        
+                    }
+                    
+                    
+                   /* String folderDirs;
                     folderDirs=prop.getProperty(Prefs.PUBLISH_LOCAL_FOLDER_DIR);
 
                     StringTokenizer tokenizer=new StringTokenizer(folderDirs,";");
@@ -68,7 +89,7 @@ public class AutomaticFolderPublishingService extends Thread{
                     {
                         File folder=new File(tokenizer.nextToken());
                         publishItemInFolder(folder, typesTokenizer.nextToken());
-                    }
+                    }*/
 
                     try {
                             sleep(waitInterval);
@@ -113,11 +134,73 @@ public class AutomaticFolderPublishingService extends Thread{
         if(files==null)
             files=new File[0];
 
-        for(File f:files)
-        {
+        for(File f:files){
+            
             publishItem(f,type);
         }
     }
+    
+    
+    private void publishItemInFolder(JsonObject watchConfiguration) {
+        
+        String watchFolderPath=watchConfiguration.getAsJsonPrimitive(
+                           WatchPrefs.WATCH_JSON_FOLDER_PROPERTY).getAsString();
+     
+        File watchFolder=new File(watchFolderPath);
+        
+        File[] files=null;
+        
+        files=watchFolder.listFiles();
+        if(files==null)
+            files=new File[0];
+
+        for(File f:files)
+        {
+            publishItem(f,watchConfiguration);
+        }
+    }
+    
+    
+     private void publishItem(File itemFile, JsonObject configuration) {
+        String item;
+        StoreItem storeitem;
+        Gson gson;
+        GsonBuilder gsonBuilder;
+        if(itemFile.isFile())
+        {
+            item=DateUtil.getCurrentDateAsUniqueId();
+            gsonBuilder = new GsonBuilder();
+            gsonBuilder.registerTypeAdapter(StoreItem.class, new StoreItemDeserializer());
+            gson=gsonBuilder.create();
+            storeitem=gson.fromJson(configuration, StoreItem.class);
+            
+            ChainManager cm = new ChainManager();
+            ChainContext ct = cm.createContext();
+
+            /* storeitem = new StoreItem();
+            storeitem.deleteAfter=0;
+            storeitem.downloadUrl="";
+            storeitem.metadataUrl="";
+            storeitem.type=type;
+            storeitem.publishCatalogue=new String[0];
+            storeitem.publishFtp=new String[0];
+            storeitem.publishGeoserver=new String[0];*/
+
+            ct.setAttribute(CommandsConstants.STORE_ITEM, storeitem);
+            ct.setAttribute(CommandsConstants.ITEM_ID, item);
+            ct.setAttribute(CommandsConstants.APP_DIR, appdir);
+            ct.setAttribute(CommandsConstants.LOCAL_FILE, itemFile);
+            cm.executeChain("Catalogue/localFolderstoreChain", ct);
+
+            int success = ct.getResult().getCode();
+            if (success == Result.FAIL) {
+                System.out.println("Cannot publish item " + item);
+            }
+            else System.out.println("Item " + item+" published");
+        }
+    }
+     
+     
 
     private void publishItem(File f,String type) {
         String item;

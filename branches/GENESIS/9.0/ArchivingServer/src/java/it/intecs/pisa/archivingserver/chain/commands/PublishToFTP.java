@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 package it.intecs.pisa.archivingserver.chain.commands;
 
@@ -13,7 +10,6 @@ import it.intecs.pisa.util.ftp.FTPLinkTokenizer;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.Properties;
 import javawebparts.misc.chain.ChainContext;
 import javawebparts.misc.chain.Command;
 import javawebparts.misc.chain.Result;
@@ -83,8 +79,7 @@ public class PublishToFTP implements Command{
                 return;
             }
 
-            Properties prop = Prefs.load(appDir);
-            File fromFile = new File(prop.getProperty("download.dir"), itemId);
+            File fromFile = new File(Prefs.getDownloadFolder(appDir), itemId);
 
             InputStream stream;
             stream=new FileInputStream(fromFile);

@@ -112,12 +112,12 @@
                     i++;
                 }
                 while (itemIdTmp != 0)
-                window.frames.sampleframe.location.href = url + "?un=" + Date.parse(new Date());
+                top.window.frames.sampleframe.location.href = url + "?un=" + Date.parse(new Date());
             }
             
             function openPathDocs(id){
                 if (tree.getUserData(id, "thisurl") != null) {
-                    window.frames.sampleframe.location.href = tree.getUserData(id, "thisurl");
+                    top.window.frames.sampleframe.location.href = tree.getUserData(id, "thisurl");
                     return;
                 }
                 var entUrl = "";
@@ -145,7 +145,7 @@
                 }
                 while (id != "0")
                 
-                window.frames.sampleframe.location.href = entUrl
+                top.window.frames.sampleframe.location.href = entUrl
             }
             
             function updateTreeSize(){
@@ -165,18 +165,11 @@
                 }
             }
         </script>
-        <!-- <a href="javascript:void(0)" onclick="updateTreeSize()">update Size</a> -->
+
         <table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0" style="table-layout:fixed;">
-            <!--tr>
-            <td height="55" width="286" valign=top background="codebase/imgs/bg_sampleexplorer_header.gif"><a href="http://www.dhtmlx.com"><img src="codebase/imgs/logo_sampleexplorer.gif" width="256" height="55" border="0" /></a></td>
-            <td background="codebase/imgs/bg_sampleexplorer_header.gif" align=right valign=top  height="55"></td>
-            <td background="codebase/imgs/bg_sampleexplorer_header.gif" align=right valign=top  height="55"><img src="codebase/imgs/title_sampleexplorer.gif" width="302" height="55" /></td>
-            </tr-->
-            <tr bgcolor="#607a92" >
-                <!--td align="left" bgcolor="#607a92" height="60" valign="bottom">
-                    <a href="main.jsp" target="_top"><img src="../images/ARMSLogo.png" border="0"></a>
-                </td-->
-               
+           
+            <!--<tr bgcolor="#607a92" >
+              
                 <td align="right" bgcolor="#607a92" width="100%" height="60" valign="bottom">
                     <img src="../images/directory_top.png" name="top" border="0" height="60" width="293">
                 </td>
@@ -191,43 +184,43 @@
                     <div>
                     </div>
                 </td>
-            </tr>
+            </tr>-->
             <tr>
                 <td width="100%" height="100%" colspan="3">
                     <table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
                         <tr>
                             <td valign="top" width="276">
-                                <div id="tabbarconteiner" style="width: 276px; height: 100%; margin: 0 0 0 8px;">
-                                    <div id="a_tabbar" class="dhtmlxTabBar" tabstyle="scbr" tabheight="28" imgpath="codebase/imgs/" style="width: 276px; height: 100%;" skinColors="#FFFFFF,#F4F3EE" mode="left" offset="3" oninit="a_tabbar.setTabActive(type+'tab')" select="doctab">
+                                <div id="tabbarconteiner" style="width: 350px; height: 100%; margin: 0 0 0 8px;">
+                                    <div id="a_tabbar" class="dhtmlxTabBar" tabstyle="scbr" tabheight="28" imgpath="codebase/imgs/" style="width: 340px; height: 100%;" border='0' skinColors="#FFFFFF,#F4F3EE" mode="left" offset="3" oninit="a_tabbar.setTabActive(type+'tab')" select="doctab">
                                         <div id="doctab" width="120" name="<table width='100%' height='100%' cellspacing='0' cellpadding='0' border='0' style='margin-left: 3px;'><tr><td width='100%' height='100%' valign='middle' align='center'><img src='codebase/imgs/null.gif' class='tab_docs'></td></tr></table>" style="padding: 8px 8px 0 8px;display:none;">
-                                            <div id="doctree_box" style="width: 226px; height: 100%; ">
+                                            <div id="doctree_box" style="width: 280px; height: 100%; ">
                                             </div>
                                         </div>
                                         <div id="smpltab" width="80" name="<table width='100%' height='100%' cellspacing='0' cellpadding='0' border='0' style='margin-left: 3px;'><tr><td width='100%' height='100%' valign='middle' align='center'><img src='codebase/imgs/null.gif' class='tab_samples'></td></tr></table>" style="padding: 8px 8px 0 8px;display:none;" select="1">
-                                            <div id="smpltree_box" style="width: 226px; height: 100%; ">
+                                            <div id="smpltree_box" style="width: 280px; height: 100%; ">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </td>
-                            <td width="10">
+                          <!--  <td width="10">
                                 <div>
                                 </div>
                             </td>
                             <td align="right">
                                 <iframe id="sampleframe" name="sampleframe" width="100%" height="99%" frameborder="0" src="blank.html" style="border: 0px solid #cecece;">
                                 </iframe>
-                            </td>
+                            </td>-->
                         </tr>
                     </table>
                 </td>
             </tr>
-            <tr>
+           <!-- <tr>
                 <td height="6" width="100%" colspan="3">
                     <div>
                     </div>
                 </td>
-            </tr>
+            </tr>-->
         </table>
     </body>
 </html>

@@ -54,7 +54,9 @@ public class ArchivingServerServlet extends HttpServlet {
     protected FTPService ftpService;
     protected String rootDirStr;
     protected File rootDir;
-
+    protected File workspaceDir;
+    
+    
     /**
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
@@ -278,6 +280,7 @@ public class ArchivingServerServlet extends HttpServlet {
         Properties props = Prefs.load(rootDir);
         if(props.getProperty("fail.dorollback").equals("true"))
             rollbackChain="Catalogue/deleteChain";
+        
 
         exec=new ChainExecutor("Catalogue/storeChain",rollbackChain,item,id,rootDir);
         exec.start();
@@ -338,6 +341,7 @@ public class ArchivingServerServlet extends HttpServlet {
 
         rootDirStr=getServletContext().getRealPath("/");
         rootDir = new File(rootDirStr);
+        
         File webinfDir = new File(rootDir, "WEB-INF");
         File dbDir = new File(webinfDir, "db");
         File dblock = new File(dbDir, "database.lck");

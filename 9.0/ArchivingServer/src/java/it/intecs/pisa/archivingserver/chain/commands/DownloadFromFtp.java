@@ -14,9 +14,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javawebparts.misc.chain.ChainContext;
 import javawebparts.misc.chain.Command;
 import javawebparts.misc.chain.Result;
@@ -38,11 +35,10 @@ public class DownloadFromFtp implements Command {
     @Override
     public Result execute(ChainContext cc) {
         StoreItem storeItem;
-        File outFile;
+        File outFile, dowloandDirFile;
         File webappDir;
         String fileName;
         String id="";
-        Properties prop;
 
         try {
             storeItem = (StoreItem) cc.getAttribute(CommandsConstants.STORE_ITEM);
@@ -53,8 +49,9 @@ public class DownloadFromFtp implements Command {
                 DownloadsDB.addDownload(id, storeItem.downloadUrl);
                 DownloadsDB.updateStatus(id, "DOWNLOADING");
 
-                prop = Prefs.load(webappDir);
-                outFile = new File(prop.getProperty("download.dir"), id);
+                dowloandDirFile=Prefs.getDownloadFolder(webappDir);
+                
+                outFile=new File(dowloandDirFile,id);
 
                 download(storeItem.downloadUrl, outFile);
 

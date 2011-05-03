@@ -21,6 +21,7 @@ public class StoreItemDeserializer implements JsonDeserializer<StoreItem> {
     public StoreItem deserialize(JsonElement je, Type type, JsonDeserializationContext jdc) throws JsonParseException {
         StoreItem item;
         JsonObject obj;
+        JsonElement el;
         JsonObject publishObj;
         JsonArray array;
 
@@ -29,19 +30,36 @@ public class StoreItemDeserializer implements JsonDeserializer<StoreItem> {
         item = new StoreItem();
         item.downloadUrl = obj.get("downloadUrl").getAsString();
 
-        if(obj.get("metadataUrl")!=null)
-            item.metadataUrl=obj.get("metadataUrl").getAsString();
-        else item.metadataUrl="";
+        el=obj.get("metadataUrl");
+        if(el==null || el instanceof com.google.gson.JsonNull)
+          item.metadataUrl="";  
+        else 
+          item.metadataUrl=el.getAsString();
 
-        if(obj.get("type")!=null)
-            item.type=obj.get("type").getAsString();
-        else item.type="";
+        el=obj.get("type");
+        if(el==null || el instanceof com.google.gson.JsonNull)
+           item.type=""; 
+        else item.type=el.getAsString();
 
-        if(obj.get("deleteAfter")!=null)
-            item.deleteAfter=obj.get("deleteAfter").getAsLong();
-        else item.deleteAfter=0;
+        el=obj.get("deleteAfter");
+        if(el==null || el instanceof com.google.gson.JsonNull)
+           item.deleteAfter=0; 
+        else item.deleteAfter=el.getAsLong();
+        
+        el=obj.get("geoserverType");
+        if(el==null || el instanceof com.google.gson.JsonNull)
+          item.geoserverType="";  
+        else item.geoserverType=el.getAsString();
+        
+        el=obj.get("geoserverWorkspace");
+        if(el==null || el instanceof com.google.gson.JsonNull)
+          item.geoserverWorkspace="";  
+        else item.geoserverWorkspace=el.getAsString();
+        
         
         publishObj = obj.getAsJsonObject("publish");
+        if(publishObj == null)  //local folder (watch)
+            publishObj=obj;
 
         if (publishObj != null) {
             array = publishObj.getAsJsonArray("Ftp");
@@ -70,6 +88,15 @@ public class StoreItemDeserializer implements JsonDeserializer<StoreItem> {
                     item.publishGeoserver[i] = array.get(i).getAsString();
                 }
             } else item.publishGeoserver = new String[0];
+            
+            array = publishObj.getAsJsonArray("SOS");
+
+            if (array != null) {
+                item.publishSOS = new String[array.size()];
+                for (int i = 0; i < array.size(); i++) {
+                    item.publishSOS[i] = array.get(i).getAsString();
+                }
+            } else item.publishSOS = new String[0];
 
             if(publishObj.has("Http") && publishObj.get("Http").getAsBoolean()==true)
                 item.publishHttp=true;

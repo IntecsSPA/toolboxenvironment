@@ -41,7 +41,7 @@ public class PublishToInternalHttp implements Command {
             storeItem=(StoreItem) cc.getAttribute(CommandsConstants.STORE_ITEM);
 
             prop=Prefs.load(appDir);
-            fromFile=new File(prop.getProperty("download.dir"),itemId);
+            fromFile=new File(Prefs.getDownloadFolder(appDir),itemId);
 
             if(prop.getProperty(Prefs.PUBLISH_LOCAL_HTTP_ENABLE).equals("true") || storeItem.publishHttp==true )
             {

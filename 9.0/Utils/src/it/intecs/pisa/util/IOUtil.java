@@ -256,6 +256,8 @@ public class IOUtil {
         }
         return out.toString();
     }
+    
+
 
     /**
      * This method copy the data from an InputStream to an OtputStream
@@ -455,4 +457,6 @@ public class IOUtil {
     public static void moveFile(File localFile, File destFile) {
         localFile.renameTo(destFile);
     }
+
+
 }

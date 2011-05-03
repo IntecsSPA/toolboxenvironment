@@ -4,13 +4,15 @@
  */
 package it.intecs.pisa.archivingserver.chain.commands;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonObject;
 import it.intecs.pisa.archivingserver.data.StoreItem;
 import it.intecs.pisa.archivingserver.log.Log;
+import it.intecs.pisa.archivingserver.prefs.ChainTypesPrefs;
 import it.intecs.pisa.archivingserver.prefs.Prefs;
 import it.intecs.pisa.util.DOMUtil;
 import java.io.File;
-import java.io.FileInputStream;
-import java.util.Properties;
 import javawebparts.misc.chain.ChainContext;
 import javawebparts.misc.chain.Command;
 import javawebparts.misc.chain.Result;
@@ -61,43 +63,50 @@ public class ExtractMetadataFromData implements Command {
 
     private Document extractMetadataFromItem(String itemId,StoreItem storeItem,File webappDir) throws Exception {
         Document extractedDoc=null;
-
-        Properties props;
-        props=new Properties();
-        props.load(new FileInputStream(new File(webappDir,"WEB-INF/classes/metadataExtractionProcessings.properties")));
+        JsonObject chainTypesListJson = null;
+        String command=null;
+        JsonElement el;
         
-        //trying shell script
-        String command=props.getProperty("shell."+storeItem.type);
-        if(command!=null && command.equals("")==false)
-        {
-            File commandFile;
-            commandFile=new File(webappDir,"WEB-INF/metadataExtractors/"+command);
-            commandFile.setExecutable(true,false);
+        
+        chainTypesListJson = ChainTypesPrefs.getChainTypeInformation(webappDir,storeItem.type); 
+        
+        if(chainTypesListJson !=null){
+            el=chainTypesListJson.get(
+               ChainTypesPrefs.METADATA_PROCESSING_JSON_SCRIPT_PATH_PROPERTY);
+                if(!(el ==null || el instanceof JsonNull))
+                    command=el.getAsString();
             
-            Properties prefs = Prefs.load(webappDir);
+            //trying shell script
+            if(!storeItem.metadataUrl.startsWith("http://"))
+                if(command!=null && !command.equals(""))
+                {
+                    File commandFile;
+                    commandFile=new File(command);
+                    commandFile.setExecutable(true,false);
 
-            File dataFile;
-            dataFile=new File(prefs.getProperty("download.dir"),itemId);
+                    File downloadDir=Prefs.getDownloadFolder(webappDir);
 
-            File outFile;
-            outFile= new File(prefs.getProperty("download.dir"), itemId + "_metadata.xml");
-            
-            ProcessBuilder pb;
-            Process p;
-            
-            
-            
-            pb = new ProcessBuilder("./"+command, dataFile.getAbsolutePath(), outFile.getAbsolutePath());
-            pb.directory(commandFile.getParentFile());
-            p = pb.start();
-            p.waitFor();
+                    File dataFile;
+                    dataFile=new File(downloadDir,itemId);
 
-            DOMUtil util;
-            util=new DOMUtil();
+                    File outFile;
+                    outFile= new File(downloadDir, itemId + "_metadata.xml");
 
-            extractedDoc=util.fileToDocument(outFile);
-        }
+                    ProcessBuilder pb;
+                    Process p;
 
+                    pb = new ProcessBuilder("./"+command, dataFile.getCanonicalPath(), 
+                                                            outFile.getCanonicalPath());
+                    pb.directory(commandFile.getParentFile());
+                    p = pb.start();
+                    p.waitFor();
+
+                    DOMUtil util;
+                    util=new DOMUtil();
+
+                    extractedDoc=util.fileToDocument(outFile);
+                }
+        }    
         return extractedDoc;
     }
 }

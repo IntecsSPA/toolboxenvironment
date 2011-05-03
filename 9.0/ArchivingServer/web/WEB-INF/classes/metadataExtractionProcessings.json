@@ -1,0 +1,15 @@
+
+
+{
+    "metadataProcessingNumber": 1,
+    "metadataProcessingList": [
+        {
+          "id": "",  
+          "hidden": false,
+          "engineType": "shell", 
+          "localScriptPath": "/home/maro/",
+          "idScriptFileStored": "aaaaaabbbbbbbbbb.xml",
+          "type": "shp"
+        }
+    ]
+}

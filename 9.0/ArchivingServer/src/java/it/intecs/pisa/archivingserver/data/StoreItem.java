@@ -33,7 +33,12 @@ public class StoreItem {
     public String[] publishCatalogue;
     public String[] publishSOS;
     public boolean publishHttp;
-    
+
+    public String[] notifyURL;
+    public String[] notifyTopic;
+    public String[] notifyEventType;
+
+
     /*
      this.idString="";
     this.watchFolder= null;  

@@ -1,0 +1,13 @@
+<wfs:Transaction
+xmlns:wfs="http://www.opengis.net/wfs"
+xmlns:gen="http://www.genesis-fp7.eu/xmlschema/Global"
+xmlns:xlink="http://www.w3.org/1999/xlink"
+version="1.0.0" service="WFS">
+    <wfs:Insert idgen="GenerateNew">
+        <gen:Event>
+            <gen:topic xlink:href=" urn.gen.Topic.5"/>
+            <gen:eventType xlink:href="urn.gen.EventType.14"/>
+            <gen:anyPayload>http://arms.datarepository.it/netcdf/someNetcdf.nc</gen:anyPayload>
+        </gen:Event>
+    </wfs:Insert>
+</wfs:Transaction>

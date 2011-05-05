@@ -38,8 +38,8 @@ import java.security.PrivilegedAction;
  * by the name of the property.
  * @see java.beans.PropertyDescriptor
  *
- * @author Rey François
- * @author Gregor Raýman
+ * @author Rey Francois
+ * @author Gregor Raman
  * @version $Revision: 134 $ $Date: 2005-09-27 06:56:51 +0200 (di, 27 sep 2005) $
  */
 

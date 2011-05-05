@@ -35,8 +35,8 @@ import javawebparts.core.org.apache.commons.collections.FastHashMap;
  * @author Craig R. McClanahan
  * @author Ralph Schaer
  * @author Chris Audley
- * @author Rey François
- * @author Gregor Raýman
+ * @author Rey Francois
+ * @author Gregor Raman
  * @author Jan Sorensen
  * @author Scott Sanders
  * @version $Revision: 134 $ $Date: 2005-09-27 06:56:51 +0200 (di, 27 sep 2005) $

@@ -46,8 +46,8 @@ import org.apache.commons.logging.LogFactory;
  * @author Craig R. McClanahan
  * @author Ralph Schaer
  * @author Chris Audley
- * @author Rey François
- * @author Gregor Raýman
+ * @author Rey Francois
+ * @author Gregor Raman
  * @author Jan Sorensen
  * @author Robert Burrell Donkin
  */

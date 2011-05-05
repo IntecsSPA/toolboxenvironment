@@ -6,6 +6,7 @@
             <command id="processData" chain="dataProcessChain"/>
             <command id="metadata" chain="metadataProductionChain"/>
             <command id="publish" chain="publishItemChain"/>
+            <command id="notify" chain="notifyChain"/>
             <command id="cleanup" chain="storeCleanUpChain"/>
         </chain>
 
@@ -15,6 +16,7 @@
             <command id="processData" chain="dataProcessChain"/>
             <command id="metadata" chain="metadataProductionChain"/>
             <command id="publish" chain="publishItemChain"/>
+            <command id="notify" chain="notifyChain"/>
             <command id="cleanup" chain="storeCleanUpChain"/>
         </chain>
         
@@ -22,6 +24,11 @@
             <command id="downloadFromHttp" className="it.intecs.pisa.archivingserver.chain.commands.DownloadFromHttp" />
             <command id="downloadFromFtp" className="it.intecs.pisa.archivingserver.chain.commands.DownloadFromFtp" />
         </chain>
+
+        <chain id="notifyChain">
+            <command id="notifyPublishing" className="it.intecs.pisa.archivingserver.chain.commands.NotifyPublishing" />
+        </chain>
+
 
         <chain id="publishItemChain">
             <command id="publishToInternalHttp" className="it.intecs.pisa.archivingserver.chain.commands.PublishToInternalHttp" />

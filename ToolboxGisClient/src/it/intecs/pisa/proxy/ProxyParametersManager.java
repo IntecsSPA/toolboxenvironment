@@ -167,28 +167,6 @@ public class ProxyParametersManager {
                 }
             }
 
-            
-        /*this.serviceUrl = XmlTools.getElementTextChildValue(docProxy.getDocumentElement(), INPUT_SERVICEURL);
-        this.protocol= XmlTools.getElementTextChildValue(docProxy.getDocumentElement(), INPUT_PROTOCOL);
-            if (this.protocol == null)
-                this.protocol = "HTTPPOST";
-            else
-               if (this.protocol.equalsIgnoreCase("SOAP"))
-                  this.setSoapParameters(docProxy);
-
-        this.xslRequest = XmlTools.getElementTextChildValue(docProxy.getDocumentElement(), INPUT_XSLREQUEST);
-        this.xslResponse = XmlTools.getElementTextChildValue(docProxy.getDocumentElement(), INPUT_XSLRESPONSE);
-        this.logService = XmlTools.getElementTextChildValue(docProxy.getDocumentElement(), INPUT_LOGFOLDER);
-        this.ident = XmlTools.getElementTextChildValue(docProxy.getDocumentElement(), INPUT_IDENT);
-        this.soapAction = XmlTools.getElementTextChildValue(docProxy.getDocumentElement(), INPUT_SOAPACTION);
-        this.outputFormat = XmlTools.getElementTextChildValue(docProxy.getDocumentElement(), INPUT_OUTPUTFORMAT);
-            if (this.outputFormat == null) this.outputFormat = "XML";
-        this.outputMod = XmlTools.getElementTextChildValue(docProxy.getDocumentElement(), INPUT_OUTPUTMOD);
-            if (this.outputMod == null) this.outputMod = "VALUE";
-        this.idRequest = XmlTools.getElementTextChildValue(docProxy.getDocumentElement(), INPUT_IDREQUEST);
-        this.logRealPath=contextPath+ LOG_SERVICES+ this.logService;
-        this.contextPath=contextPath+"/";
-        this.createLogRequest();*/
 
     }
 
@@ -399,9 +377,9 @@ public class ProxyParametersManager {
     private void createLogRequest(){
         String pathIdRequest = "/Request_" + this.getIdRequest().hashCode();
         this.logRequestDir = new File(this.getLogRealPath());
-        this.logRequestDir.mkdir();
+        this.logRequestDir.mkdirs();
         this.logRequestDir = new File(this.logRequestDir,pathIdRequest);
-        this.logRequestDir.mkdir();
+        this.logRequestDir.mkdirs();
     }
 
     /**

@@ -603,6 +603,7 @@ public class ProxyRedirect extends HttpServlet {
                    documentReq = XmlTools.newDocument();
                    Node payload = documentReq.importNode(XmlTools.getFirstChild((Element) processingRequest), true);
                    documentReq.appendChild(payload);
+                   XmlTools.dumpXML(documentReq, httpPostInputs.getXmlServiceRequestFile());
                }
           }
         try {

@@ -2,12 +2,14 @@
     <head>
         <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
         <title>blank page</title>
+
+		<link type="text/css" href="../images/page.css" rel="stylesheet">
     </head>
     <body>
         <h2>Retrieve data and metadata links</h2>
         The retrieve operation allows the client to retrieve a complete set of links related to data and metadata and their status.
         <br>
-        <img src="images/retrieve.png"/><br>
+        <img src="../images/retrieve.png"/><br>
         The retrieve task is composed by several subtasks which retrieve all required data from an internal database. The result is given to the client synchronously.
         Each subtask retrieve part of the link set and add it to the response message. At each step, one or more links may be found, depending on the configuration and on the store operation invocation which
         stored data and metadata into the ARMS.

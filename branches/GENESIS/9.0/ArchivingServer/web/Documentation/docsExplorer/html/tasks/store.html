@@ -2,13 +2,15 @@
     <head>
         <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
         <title>blank page</title>
+
+		<link type="text/css" href="../images/page.css" rel="stylesheet">
     </head>
     <body>
         <h2>Store data and metadata</h2>
 
         The store task is the main task that can be executed by the ARMS. This task consist in downloading data and metadata using the URLs provided by the client
         and then store them in the proper service. The whole task is composed by several subtasks, as described in the image below.
-        <img alt="Store diagram"  src="images/store.png"/>
+        <img alt="Store diagram"  src="../images/store.png"/>
         <br>
         The first subtask take care of downloading data from the network location provided in the input message. This step is mandatory and the input message shall provide a valid URL.
         The ARMS is capable of downloading data from an HTTP or FTP server. More protocols can be added in the future in order to reach an higher level of integration.

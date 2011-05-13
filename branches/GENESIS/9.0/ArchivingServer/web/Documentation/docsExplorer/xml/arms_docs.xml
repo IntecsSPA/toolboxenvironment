@@ -28,9 +28,7 @@
                 <item text="Configuration" id="install.configure" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 			<userdata name="thisurl">html/installation/configure.html</userdata>
 		</item>
-                <item text="Metadata extraction shell scripts configuration" id="install.configure.shell" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-			<userdata name="thisurl">html/installation/configure_shell.html</userdata>
-		</item>
+               
 	</item>
         
          <item text="Tasks" id="tasks.main" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
@@ -82,4 +80,14 @@
 		</item>
                 
 	</item>
+        <item text="Reference" id="reference.main" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+           <userdata name="thisurl">javascript:var x='noOperation';</userdata>
+		<item text="Tutorial" id="reference.tutorial" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+			<userdata name="thisurl">javascript:var x='noOperation';</userdata>
+                        <item text="Multiple SOS data ingestion" id="reference.tutorial.multipleSOSdataingestion" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+                            <userdata name="thisurl">html/tutorial/SOS.html</userdata>
+                        </item>
+                        
+		</item> 
+        </item>    
 </tree>

@@ -2,8 +2,26 @@
     <head>
         <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
         <title>blank page</title>
+		<link type="text/css" href="../images/page.css" rel="stylesheet">
     </head>
     <body>
+        <h2>New in these release</h2>
+        <ul>
+          <li>New graphical user interface allowing:
+              <ul>
+                <li></li>
+              </ul>
+              Generic configuration
+              <ul>
+                <li>Definition of new data type with pre and post processing capabilities</li>
+                <li>Definition of new watched allowing the automatig ingestion of the data stored in the directories being watched</li>
+                <li>management of the ingested data with the possibility to delete the elements via the GUI </li>
+              </ul>
+          </li>
+          <li>Improved the automatic publishing feature </li>
+          <li>Added the SOS publishing support</li>
+          <li>Added the possibility to notify when a new data is ingested </li>
+    </ul>
         <h2>Overview</h2>
         The Archiving and Resource Management Services (ARMS) is a service which aims to automate some common tasks
         performed on Earth Observation data and metadata. The ARMS is capable of:
@@ -35,9 +53,11 @@
         of the client interaction with the service without affecting the engine work.
 
         <h2>ARMS Servlet</h2>
-        The ARMS servlet is a Java servlet which provides the core logic to the ARMS. It is responsible to perform
+        <p>The ARMS servlet is a Java servlet which provides the core logic to the ARMS. It is responsible to perform
         all tasks assigned to the ARMS and to provide access to data when made accessible via HTTP and FTP. The servlet exposes
         a REST interface which is used by the Toolbox Archiving Service. No checks are done on the client request
         so the servlet can be used without the Toolbox Service. Obviously in this case no WPS interface is exposed.
-    </body>
+</p>
+        <h2>&nbsp;  </h2>
+</body>
 </html>

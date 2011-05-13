@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<InsertObservation xmlns="http://www.opengis.net/sos/1.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:ogc="http://www.opengis.net/ogc" xmlns:om="http://www.opengis.net/om/1.0" xmlns:sos="http://www.opengis.net/sos/1.0" xmlns:sa="http://www.opengis.net/sampling/1.0" xmlns:gml="http://www.opengis.net/gml" xmlns:swe="http://www.opengis.net/swe/1.0.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" service="SOS" version="1.0.0">
+  <AssignedSensorId>urn:ogc:object:feature:Sensor:IFGI:ifgi-sensor-1</AssignedSensorId>
+  <om:Measurement>
+    <om:samplingTime>
+      <gml:TimeInstant>
+        <gml:timePosition>2010-04-25T02:00:00+0200</gml:timePosition>
+      </gml:TimeInstant>
+    </om:samplingTime>
+    <om:procedure xlink:href="urn:ogc:object:feature:Sensor:IFGI:ifgi-sensor-1"/>
+    <om:observedProperty xlink:href="urn:ogc:def:phenomenon:OGC:1.0.30:waterlevel"/>
+    <om:featureOfInterest>
+      <sa:SamplingPoint gml:id="1304419220806430381">
+        <gml:name>1304419220806430381</gml:name>
+        <sa:sampledFeature xlink:href=""/>
+        <sa:position>
+          <gml:Point>
+            <gml:pos srsName="urn:ogc:def:crs:EPSG:4326">34 43</gml:pos>
+          </gml:Point>
+        </sa:position>
+      </sa:SamplingPoint>
+    </om:featureOfInterest>
+    <om:result uom="cm">30</om:result>
+  </om:Measurement>
+</InsertObservation>

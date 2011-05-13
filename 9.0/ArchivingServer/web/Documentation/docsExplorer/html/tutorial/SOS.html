@@ -1,0 +1,70 @@
+<html>
+    <head>
+        <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+        <title>SOS Tutorial</title>
+		<link type="text/css" href="../images/page.css" rel="stylesheet">
+
+    </head>
+    <body>
+        <h2>Multiple SOS data ingestion</h2>
+
+        <p>This tutorial shows how to ingest sensor data stored in a csv file into the SOS server via the ARMS. </p>
+        <p>Prerequisite: the sensor has to be already registered in the SOS. </p>
+        <p>Constraints: this tutorial is for the linux platform (shell script) </p>
+        <p>Resources:</p>
+        <ul>
+          <li><a href="SOS/sensorCSV.txt">csv sensor file</a></li>
+          <li><a href="SOS/parseObs.sh">pre-processing script</a></li>
+          <li><a href="SOS/SOSSample.xml">SOS input file example</a> </li>
+        </ul>
+    <h3>CVS file format</h3>
+        <p>The csv that will be used for this tutorial has the following format</p>
+        <p>[Water Velocity],[Time Instant],[Latitude],[Longitude]</p>
+        <p>and can be found <a href="SOS/sensorCSV.txt">here</a></p>
+        <h3>SOS file format</h3>
+        <p>An example of the input SOS file can be found <a href="SOS/SOSSample.xml">here</a>. The files to be ingested will be generated via the <a href="SOS/parseObs.sh">pre-processing script</a>. </p>
+        <h3>Pre-processing script</h3>
+        <p>This <a href="SOS/parseObs.sh">script</a> is provided as an example and have to be adapted to the specific files format applicable to your use case. In this tutorial the script parses the csv file and creates a new SOS compliant file for each line. This file is stored in a directory &quot;watched&quot; by the ARMS and automatically uploaded in the SOS server. </p>
+        <h3>Configuration steps </h3>
+        <p>Open the ARMS GUI.</p>
+        <p>Create a watch for the single SOS ingestion following these steps:</p>
+        <ol>
+          <li>Click on the watches link on the left panel</li>
+          <li>Click on Add Watch. A new empty watch section appears. </li>
+          <li>Select sos in the Chain Type drop down list</li>
+          <li>enter the path to the folder that will store the SOS data</li>
+          <li>thick the SOS check box </li>
+          <li>Enter the URL of the SOS to be used for the data publishing </li>
+          <li>Then click on Save </li>
+        </ol>
+        <p align="center"><img src="../images/SOS_TUTORIAL_1.png" width="530" height="373"></p>
+        <p align="left">In the example above the new watch will allow publishing all the SOS compliant file that will be stored in the /home/maro/Link/Temp/sosWatch directory.</p>
+        <p align="left">Now we have to create a new chain type to allow the pre-processing of the csv data. The output of the pre-processing will be a set of SOS compliant data that will be stored in the /home/maro/Link/Temp/sosWatch directory and automatically ingested. </p>
+        <p align="left">To create a new Chain Type follow these steps:</p>
+        <ol>
+          <li>Click on the Chain Types link on the left panel</li>
+          <li>Click on Add Chain Type. A new empty Chain Type section appears. </li>
+          <li>Enter the csvSOS value in the text box </li>
+          <li>Thick the Data pre-processing check box</li>
+          <li> Select the &quot;shell&quot; engine type</li>
+          <li>Select the Output Watch that will be used in the script to store the processed data (if no Output Watch is selected the script has t return only one file to be ingested) </li>
+          <li>Load the <a href="SOS/parseObs.sh">processing script </a></li>
+          <li>Then click on Save </li>
+          
+        </ol>
+        <p align="center"><img src="../images/SOS_TUTORIAL_2.png" width="648" height="232"></p>
+        <p align="left">Now we have to add a new Watch for the ingestion of the csvSOS files. This new watch will not perform directly the ingestion. It will perform the pre-processing and will store the results in the SOS watch directory. The SOS watch will then perform the publication of the data.</p>
+        <p align="left">To create the new Watch follow these steps:</p>
+        <ol>
+          <li>Click on the watches link on the left panel</li>
+          <li>Click on Add Watch. A new empty watch section appears. </li>
+          <li>Select csvSOS in the Chain Type drop down list</li>
+          <li>enter the path to the folder that will store the cvs SOS data</li>
+          <li>Then click on Save </li>
+        </ol>
+        <p align="center"><img src="../images/SOS_TUTORIAL_3.png" width="535" height="327"></p>
+        <p align="left">The ARMS is now ready to ingest csv SOS data into the SOS server. </p>
+        <p align="left">To test the ingestion copy the <a href="SOS/sensorCSV.txt">csv sensor file</a> in the watched directory (/home/maro/Link/Temp/csvSOSwatch in the example). </p>
+        <p align="left"><img src="../images/warning.gif" width="28" height="21"> The directory /home/maro/Link/Temp/csvSOSwatch has been used as an example. Use your own path to define watches. </p>
+    </body>
+</html>

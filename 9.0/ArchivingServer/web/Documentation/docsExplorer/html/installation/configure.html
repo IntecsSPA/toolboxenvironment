@@ -1,114 +1,165 @@
-<html>
-    <head>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
         <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
         <title>blank page</title>
-    </head>
+		<link type="text/css" href="../images/page.css" rel="stylesheet">
+        <style type="text/css">
+<!--
+.Stile1 {
+	font-style: italic;
+	font-weight: bold;
+}
+-->
+        </style>
+</head>
     <body>
         <h2>Configuration procedures</h2>
-        <h3>Toolbox Archiving Service</h3>
+        <h3>ARMS Servlet Configuration </h3>
 
-        <h3>ARMS Servlet</h3>
-        The ARMS servlet can be configured by modifying its properties fils and restarting the servlet.
-        In order to do this, follow these steps:
+        <p>The ARMS servlet can be configured via its Graphical User Interfaces. </p>
+        <p>Connect to </p>
+        <p>	http://[TOMCAT SERVER]:[TOMCAT PORT]/ArchivingServer/</p>
+        <p>The following page appears </p>
+        <h3 align="center"><img src="../images/0.png"></h3>
+        <p>The following sections are available in the left navigation menu</p>
         <ul>
-            <li>Access Tomcat manager application and stop the ARMS servlet. You can stop the Tomcat instance instead. See Tomcat manual for the a description of the procedure.</li>
-            <li>Open the properties file that can be found under &lt;TOMCAT_HOME&gt;/webapps/ArchivingServer/WEB-INF/classes/config.properties</li>
-            <li>Modify the properties. Save the properties file.</li>
-            <li>Restart the servlet or the Tomcat instance (depending on what has been done in step 1)</li>
+          <li><strong>Configuration</strong>: This section allows defining the general configuration parameters. </li>
+          <li><strong>Chain Types</strong>: This section allows defining new chain type and to specify the pre-processing, post-processing (metadata extraction) and notification behavior.</li>
+          <li><strong>Watches</strong>: this section allows defining automatic ingestion procedures by specifying the publication steps that the ARMS have to perform when a new data is put in the watched directory.</li>
+          <li><strong>Data list</strong>:This section allows listing the ingested data and to perform some administration tasks (e.g. data deletion) </li>
+    </ul>
+        <h3>Configuration</h3>
+        <p>Click on configuration. The following page will be displayed. </p>
+        <p align="center"><img src="../images/1.png"></p>
+        <p>Set the parameters according to your configuration needs: </p>
+        <ul>
+          <li><strong>General</strong>
+            <ul>
+              <li><em><strong>ARMS Workspace Folder</strong></em>: This parameter provides a full path to a directory where all ARMs data are stored </li>
+              <li><span class="Stile1">ARMS public HTTP URL</span>: Full URL that shall be used for accessing the ARMS servlet. E.g. http://myserver.mycompany.com/ArchivingServer. This parameter is used by the ARMS to create links (e.g. http data download links)</li>
+            </ul>
+          </li>
+          <li><strong>Data Manager </strong>            
+            <ul>
+              <li><em><strong>Set the rollback procedure in case of error</strong></em>: This parameter activates or deactivates the rollback procedure in case of error.</li>
+              <li><span class="Stile1">Delete After</span>: This parameter sets the  time interval after which data shall be automatically deleted. This is typically user to implement a rolling archive. Set this parameter to 0 to disable the automatic deletion feature. </li>
+              <li><em><strong>Watch Interval</strong></em>: This parameter provides a time interval between directory checks. At every check new file is searched in the directory and automatically deployed into the ARMS, if found.</li>
+            </ul>
+          </li>
+          <li><strong>HTTP Server </strong>
+            <ul>
+              <li><em><strong>Always publish data for access through HTTP</strong></em>: This setting force the HTTP publish feature even if from the REST interface this is not requested</li>
+            </ul>
+          </li>
+          <li><strong>FTP Server </strong>
+            <ul>
+              <li><span class="Stile1">FTP IP Address</span>:This parameter provides the binding address for the internal FTP server.</li>
+              <li><span class="Stile1">FTP Port</span>: This parameter provides the port associated to the FTP server.</li>
+              <li><span class="Stile1">Root Folder</span>: This parameter provides a full path to a directory where all FTP data is stored.</li>
+              <li><span class="Stile1">Always publish data in local FTP server for access</span>: This setting force the FTP publish feature even if from the REST interface this is not requested.</li>
+            </ul>
+          </li>
+          <li><strong>GeoServer</strong>
+            <ul>
+              <li><em><strong>Default Workspace</strong></em>: This parameter provides the Geoserver workspace name under which all data will be deployed.</li>
+            </ul>
+          </li>
+    </ul>
+        <p>Save the configuration by clicking the button.</p>
+        <h3>Chain type definition</h3>
+    <p>This functionality allow defining the pre-processing and metadata extraction behavior associated to a specific data type. It allows also to activate the notification of the data availability. </p>
+    <p><img src="../images/note.gif" width="17" height="17"> Note that all the operation we are going to explain will take effect only when the Save button is pressed).</p>
+    <p>To add a new Chain Type just click on Add Chain Type.</p>
+    <p align="center"><img src="../images/chaintypemanager.png" width="346" height="71"></p>
+    <p> A new &quot;clean&quot; Chain Type section will be added to the interface then enter the <strong>name</strong>. This name will be used as key in the WPS/REST request or in the watch definition to apply the rules you are going to define.</p>
+    <p align="center"><img src="../images/newchaintype.png" width="258" height="210"></p>
+    <p>To remove a Chain Type just open the appropriate section and click on the Remove button. </p>
+    <p>To Remove all the Chain Types click on the &quot;Remove All Chain Types&quot; button.</p>
+    <h4>Adding a data pre-processing script</h4>
+    <p align="center"><img src="../images/preprocessing.png" width="527" height="134"> </p>
+    <p>This functionality allows you to pre-process the data before the ingestion. To add a pre processing step tick the Data pre-processing check box then enter the following parameters:</p>
+    <ul>
+      <li><span class="Stile1">Engine</span>: this parameter define the type of script that will be uploaded (currently only shell scripts are allowed) </li>
+      <li><em><strong>Output Watch </strong></em>: this parameter is needed if the output data as a different format or a different multiplicity (e.g. more thaan one file has been generated by the pre-processing script). The following options are availble:
+        <ul>
+          <li>&quot;No Output Watch&quot; or blank: this means that the ouptput of the processing can be ingested directly and is compliant with the ingestion types. </li>
+          <li>Specific output watch: if the output is multiple you have to define the watched directory that will be used to ingest the generated data. The path of the directory will be passed to the script as input when invoked. See the <a href="../tutorial/SOS.html">SOS tutorial</a> for more information on how to use this canfiguration. </li>
         </ul>
-
-        The table below describes all properties parameters that can be changed in the ARMS servlet configuration.
-        For each one a description is given.
-
-        <table border="1">
-            <thead>
-                <tr>
-                    <th><h3>Configuration key</h3></th>
-                    <th><h3>Type</h3></th>
-                    <th><h3>Description</h3></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>download.dir</td>
-                    <td>Path to directory</td>
-                    <td>This parameter provides a full path to a diretory where all data and metadata is temporarily downloaded</td>
-                </tr>
-                <tr>
-                    <td>http.public.url</td>
-                    <td>URL</td>
-                    <td>Full URL that shall be used for accessing the ARMS servlet. E.g. http://localhost:8080/ArchivingServer This parameter shall be used when creating links (e.g. data download links)</td>
-                </tr>
-                <tr>
-                    <td>delete.after</td>
-                    <td>Complex type</td>
-                    <td>This parameter provides a time interval after which data shall be automatically deleted. This value shall be expressed concatenating a number and one of the following letters:
-                        <ul><li>s for seconds</li><li>m for minutes</li><li>h for hours</li><li>d for days</li><li>w for weeks</li></ul></td>
-                </tr>
-                <tr>
-                    <td>fail.dorollback</td>
-                    <td>Boolean</td>
-                    <td>This parameter activates or deactivates the rollback procedure in case of error.</td>
-                </tr>
-
-                <tr>
-                    <td>publish.local.http.enable</td>
-                    <td>Boolean</td>
-                    <td>This parameter activates or deactivates the HTTP publish feature. This parameter has an higher priority respect to the parameter provided by the input message</td>
-                </tr>
-
-                <tr>
-                    <td>publish.local.ftp.enable</td>
-                    <td>Boolean</td>
-                    <td>This parameter activates or deactivates the FTP publish feature. This parameter has an higher priority respect to the parameter provided by the input message</td>
-                </tr>
-                 <tr>
-                    <td>publish.local.ftp.rootdir</td>
-                    <td>Path to directory</td>
-                    <td>This parameter provides a full path to a directory where all FTP data is stored.</td>
-                </tr>
-
-                <tr>
-                    <td>publish.local.ftp.ip</td>
-                    <td>IP Address</td>
-                    <td>This parameter provides the binding address for the internal FTP server.</td>
-                </tr>
-
-                <tr>
-                    <td>publish.local.ftp.port</td>
-                    <td>Number</td>
-                    <td>This parameter provides the port associated to the FTP server.</td>
-                </tr>
-
-                <tr>
-                    <td>publish.local.folder.interval</td>
-                    <td>Complex Type</td>
-                    <td>This parameter provides a time interval between directory checks. At every check new file is searched in the directory and automatically deployed into the ARMS. This value shall be expressed concatenating a number and one of the following letters:
-                        <ul><li>s for seconds</li><li>m for minutes</li><li>h for hours</li><li>d for days</li><li>w for weeks</li></ul></td>
-                </tr>
-
-                <tr>
-                    <td>publish.local.folder.dir</td>
-                    <td>Full path to directory</td>
-                    <td>This parameter provides a full path to a directory that will be checked for data deployment.</td>
-                </tr>
-
-                <tr>
-                    <td>publish.geoserver.workspace</td>
-                    <td>Stirng</td>
-                    <td>This parameter provides the Geoserver workspace name under which all data will be deployed.</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h3>Toolbox Archiving Service</h3>
-        The Toolbox Archiving Service can be deployed with few steps by following a wizard like interface. Once deployed the service can be configured as all of the Toolbox services.
-        The Toolbox administration web pages allow the administrator to fine tune the configuration in order to match his needs. In order to do this, please follow the steps below:
+      </li>
+    </ul>
+    <p>Then load the Processing Script</p>
+    <h4>Adding a metadata extraction script </h4>
+    <p align="center"><img src="../images/metadataextraction.png" width="643" height="161"></p>
+    <p>To add a script to automatically extract metadata from the incoming data thick the Metadata extraction processing check box then enter the following parameters:</p>
+    <ul>
+      <li><em><strong>Engine</strong></em>: this parameter define the type of script that will be uploaded.</li>
+    </ul>
+    <p>Then load the Processing Script</p>
+    <h4>Notification message </h4>
+    <p align="center"><img src="../images/notify.png" width="480" height="147"></p>
+    <p>To send a notification message when the data has been successfully ingested thick the Notify Options check box then enter the following parameters:</p>
+    <ul>
+      <li><em><strong>Service URL </strong></em>: enter the URL of the notification service.</li>
+      <li><em><strong>Topic</strong></em>: enter the Topic URI (this has to be previously created in the notification service)</li>
+      <li><em><strong>Event Type</strong></em>: enter the Event Type URI (this has to be previously created in the notification service) </li>
+    </ul>
+    <p>&nbsp;</p>
+    <h3>Watches</h3>
+	          <p>This functionality allows defining watches that will allow the automatic ingestion of the data that will be stored in the directory being watched. </p>
+	          <p align="center"><img src="../images/3.png"></p>
+	          <p>Before defining a new watch you have to define a chain type for the type of data you are going to handle (if not already existing).</p>
+	          <p>To add a new Watch just click on Add Watch. A new &quot;clean&quot; watch section will be added to the Watch List.</p>
+	          <p align="center"><img src="../images/ARMS4.png"> </p>
+	          <p>Select one of the available Chain Types (if you have a new type of data with different pre-processing or metadata extraction rules you need to create a new Chain Type).</p>
+	          <p>Insert the full path to the directory to be watched.  </p>
+	          <p>Then proceed with the definition of the steps that the ARMS have to perform when a new data is ingested.</p>
+	          <p>To remove a watch just open the appropriate section and click on the Remove button. </p>
+	          <p>To remove all the Watches click on the &quot;Remove All Watches&quot; button.</p>
+	          <h4>Internal HTTP Publishing</h4>
+	          <p>By checking this check box you will activate the HTTP publish functionality. The ingested data will be made available via HTTP. The HTTP URL will be put in the metadata and it will be visible in the management interface. </p>
+	          <p><img src="../images/note.gif"> Note that if the generic HTTP publishing parameter have been set the data will be published on HTTP even if this setting is disabled. </p>
+	          <h4>Internal FTP Publishing</h4>
+	          <p>By checking this check box you will activate the internal FTP publish functionality. For each new ingested data a new FTP account will be created. The FTP access credential will be will be visible in the management interface.</p>
+	          <p><img src="../images/note.gif"> Note that if the generic internal FTP publishing parameter have been set the data will be published on HTTP even if this setting is disabled.</p>
+	          <h4>FTP</h4>
+	          <p align="center"><img src="../images/ftpwatch.png" width="510" height="137"></p>
+	          <p>By checking this check box you will activate the external FTP publish functionality. To complete the configuration, fill the parameters as follows: </p>
+	          <ul>
+	            <li><em><strong>FTP URL</strong></em>: URL of the FTP server to be used to store the data </li>
+	            <li><em><strong>FTP user </strong></em>: username of the of the FTP account to be used to store the data </li>
+	            <li><em><strong>FTP password</strong></em>: password of the user of the FTP account to be used to store the data </li>
+    </ul>
+	          <h4>Catalogue</h4>
+	          <p align="center"><img src="../images/cataloguewatch.png" width="511" height="94"></p>
+	          <p>By checking this check box you will activate the metadata publishing functionality. To complete the configuration enter the URL of the catalogue where the metadata have to be harvested (e.g. http://mycatalogue.mycompany.com/cimCatalogue). </p>
+	          <p></p>
+	          <h4>GeoServer</h4>
+	          <p align="center"><img src="../images/geoserverwatch.png" width="506" height="137"></p>
+	          <p>By checking this check box you will activate the publication on a GeoServer instance. To complete the configuration enter the parameters as follow:</p>
+	          <ul>
+	            <li><em><strong>Data Type</strong></em>: type of data to be ingested. Select the appropriate data from the list. </li>
+	            <li><em><strong>GeoServer URL</strong></em>: enter the URL of the GeoServer instance to be used for the publication.</li>
+	            <li><em><strong>GeoServer User</strong></em>: enter the user name of a user configured in the GeoServer instance to be used for the publication.</li>
+	            <li><em><strong>GeoServer Password</strong></em>: Enter the password of the user configured in the GeoServer instance to be used for the publication.</li>
+	            <li><em><strong>GeoServer Workspace</strong></em>: enter a name for the workspace to be used for the publication of the layer. If empty the default value will be used. </li>
+    </ul>
+	          <h4>SOS</h4>
+	          <p align="center"><img src="../images/soswatch.png" width="510" height="88"></p>
+	          <p>By checking this check box you will activate the SOS publishing functionality. To complete the configuration enter the URL of the SOS server where the data have to be inserted (e.g. http://mycatalogue.mycompany.com/SOS). </p>
+	          <p><img src="../images/note.gif"> Note that the data have to be SOS compliant. Thus if you have a different type of data you have to create a new chain type that convert your data via the pre-processing script.</p>
+	          <p>&nbsp; </p>
+	          <h3>Toolbox Archiving Service</h3>The Toolbox Archiving Service can be deployed with few steps by
+following a wizard like interface. Once deployed the service can be
+configured as all of the Toolbox services. The Toolbox administration
+web pages allow the administrator to fine tune the configuration in
+order to match his needs. In order to do this, please follow the steps
+below: 
         <ul>
             <li>Login into the Toolbox Administration web pages.</li>
             <li>Select the Archiving Service from the drop down in the top left.</li>
-            <li>Click on the "Change the configuration" link.</li>
-            <li>Update the cariables in the "Configure service variables" section. A description is done below for each parameter.</li>
+            <li>Click on "Service Configuration" link, then on "Change the configuration" 
+link.</li>
+            <li>Update the variables in the "Configure service variables" section. A description is done below for each parameter.</li>
             <li>Click on the "Configure" button.</li>
         </ul>
 
@@ -165,5 +216,4 @@
 
 
 
-</body>
-</html>
+</body></html>

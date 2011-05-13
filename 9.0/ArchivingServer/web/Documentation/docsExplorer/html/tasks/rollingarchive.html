@@ -2,14 +2,15 @@
     <head>
         <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
         <title>blank page</title>
+				<link type="text/css" href="../images/page.css" rel="stylesheet">
+
     </head>
     <body>
         <h2>Setup a rolling archive</h2>
         The ARMS has been developed with the rolling archive feature in mind. Through this, the ARMS is capable of automatically delete
         data and metadata after a configurable amount of time. Setting up a rolling archive is simple and requires only a proper configuration of
         the Archiving Servlet.
-        To enable the rolling archive the administrator has to edit the configuration file (see <a href="">here</a>) and has to provide a value for the field delete.after.
-        When this field is set, the ARMS acts as a rolling archive, deleting automatically all stored data after the specified amount of time. Data and metadata can still be deleted via the delete operation.
+        To enable the rolling archive the administrator has to set the proper value for the configuration parameter <span class="Stile1">Delete After</span> in the main configuration page (see here). This parameter sets the time interval after which data shall be automatically deleted. When this field is set, the ARMS acts as a rolling archive, deleting automatically all stored data after the specified amount of time (and managing accordingly the corresponding metadata). Data and metadata can still be deleted via the delete operation.
         
-</body>
+    </body>
 </html>

@@ -17,10 +17,13 @@ ChainTypesInterface=function(){
      this.chainTypesListLoaded=null;
      
      this.render=function (elementID){
-        var maskChainTypes=new Ext.LoadMask(armsManager.workspacePanel.body,
-            {msg:"Please wait..."}
+       /* var maskChainTypes=new Ext.LoadMask(armsManager.workspacePanel.body,
+            {msg:"Please wait..."
+           }
         ); 
-        maskChainTypes.show(); 
+            
+        maskChainTypes.show(); */
+        armsManager.showWorkspaceLoadPanel(); 
         this.formInterface.formsPanel.render(document.getElementById(elementID));
         this.formInterface.render();
         
@@ -39,10 +42,22 @@ ChainTypesInterface=function(){
                 var chainTypesCollection=JSON.parse(response);
                 chainTypesInterface.chainTypesListLoaded=chainTypesCollection;
                 for(var i=0; i<chainTypesCollection.chainTypesNumber;i++){
-                    if(! chainTypesCollection.chainTypesList[i].hidden)
-                      chainTypesInterface.onAddChainType(chainTypesCollection.chainTypesList[i]);
+                    if(! chainTypesCollection.chainTypesList[i].hidden){
+                      chainTypesInterface.onAddChainType(chainTypesCollection.chainTypesList[i],true);
+                      
+                    }
+                      
                 }
-                maskChainTypes.hide();
+
+                Ext.getCmp('chainTypesMultiInput').doLayout();
+               
+                for(var i=0; i<chainTypesCollection.chainTypesNumber;i++){
+                    if(! chainTypesCollection.chainTypesList[i].hidden){
+                      Ext.getCmp("chainTypeFieldSetSet_"+i).collapse();
+                    }
+                }   
+               // maskChainTypes.hide();
+                armsManager.hideWorkspaceLoadPanel();
             };
 
          //var loginValues=this.formInterface.getFormValues();
@@ -60,17 +75,31 @@ ChainTypesInterface=function(){
         
      };
 
-     this.onAddChainType=function(defaultValues){
+     this.onAddChainType=function(defaultValues, notRefresh){
          var chainTypesMulti=Ext.getCmp('chainTypesMultiInput');
+         
+         var setDefaultValues=null;
+         
+         var chainTypeName="New Chain Type "/*("+this.chainTypesNumber+")"*/;
+         
+         if(defaultValues){
+             setDefaultValues="armsManager.chainTypesInterface.loadChainTypeDefaultValues("+this.chainTypesNumber+");";
+             chainTypeName="Chain Type ( "+this.chainTypesListLoaded.chainTypesList[this.chainTypesNumber].typeName+" )";
+         }
+           
          
          // Add Chain Type Field Set
          chainTypesMulti.addFieldSet("chainTypeFieldSetSet_"+this.chainTypesNumber, 
-                                    "Chain Type "+this.chainTypesNumber);
+                                    chainTypeName, null, false, setDefaultValues);
          
          // Add Chain Type Name
-         chainTypesMulti.addTextField("chainTypeName_"+this.chainTypesNumber, 
-         "Name", "", 20, "chainTypeFieldSetSet_"+this.chainTypesNumber);
-         
+         if(defaultValues)
+            chainTypesMulti.addTextField("chainTypeName_"+this.chainTypesNumber, 
+            "Name", "", 20, "chainTypeFieldSetSet_"+this.chainTypesNumber,null,null,true);
+         else
+            chainTypesMulti.addTextField("chainTypeName_"+this.chainTypesNumber, 
+            "Name", "", 20, "chainTypeFieldSetSet_"+this.chainTypesNumber,null, "newchaintype");
+            
          chainTypesMulti.addSpace("chainTypeSpace2_"+this.chainTypesNumber,4, 
                           "chainTypeFieldSetSet_"+this.chainTypesNumber);            
          
@@ -84,16 +113,18 @@ ChainTypesInterface=function(){
                                 
          //Add FieldSet Section    
          this.addPreProcessingOptions(chainTypesMulti);
-        this.addMetadataProcessingOptions(chainTypesMulti);                 
+         this.addMetadataProcessingOptions(chainTypesMulti);     
+         this.addNotificationsOptions(chainTypesMulti);
          
-   
-         chainTypesMulti.doLayout();    
-         
-         Ext.getCmp("preProcessingFieldSetSet_"+this.chainTypesNumber).collapse();
-         Ext.getCmp("metadataProcessingFieldSet_"+this.chainTypesNumber).collapse();
+         if(!notRefresh){
+             chainTypesMulti.doLayout();    
+             Ext.getCmp("preProcessingFieldSetSet_"+this.chainTypesNumber).collapse();
+             Ext.getCmp("metadataProcessingFieldSet_"+this.chainTypesNumber).collapse();
+             Ext.getCmp("notificationOptionsFieldSet_"+this.chainTypesNumber).collapse();
+         }    
              
-         if(defaultValues)
-             this.loadChainTypeDefaultValues(this.chainTypesNumber, defaultValues);    
+         /*if(defaultValues)
+             this.loadChainTypeDefaultValues(this.chainTypesNumber, defaultValues);  */  
          this.chainTypesNumber++;    
     };
     
@@ -118,9 +149,11 @@ ChainTypesInterface=function(){
                                 
           // Add Pre Processing Output Type Combo                      
          var outputTypeStoreFields=['value'];
-         var outputTypeStoreData=armsManager.getTypesList();
-         multiType.addComboField("preProcessingOutputType_"+this.chainTypesNumber,
-                         'Chain Output Type',10,outputTypeStoreFields,outputTypeStoreData,
+         //var outputTypeStoreData=armsManager.getTypesList();
+         var outputTypeStoreData=armsManager.getWatchesList();
+         
+         multiType.addComboField("preProcessingOutputWatch_"+this.chainTypesNumber,
+                         'Output Watch',66,outputTypeStoreFields,outputTypeStoreData,
                          null,"preProcessingFieldSetSet_"+this.chainTypesNumber);    
                          
          
@@ -129,7 +162,7 @@ ChainTypesInterface=function(){
          
          // Add Metadata Processing Script Local File
          multiType.addFileField("preProcessingScript_"+this.chainTypesNumber, 
-                                        "Processing Script", 50, "rest/storeddata/preProcessingScript_"+this.chainTypesNumber+"_file", 
+                                        "Processing Script", 75, "rest/storeddata/preProcessingScript_"+this.chainTypesNumber+"_file", 
                                         null,
                                         "upload-icon",
                                         "resources/images/loaderFile.gif",
@@ -141,8 +174,6 @@ ChainTypesInterface=function(){
     
     
     this.addMetadataProcessingOptions=function(multiType){
-        
-        
       multiType.addFieldSet("metadataProcessingFieldSet_"+this.chainTypesNumber, 
              "Metadata extraction processing", "chainTypeFieldSetSet_"+this.chainTypesNumber, true);
              
@@ -160,7 +191,7 @@ ChainTypesInterface=function(){
                                 
       // Add Metadata Processing Script Local File
       multiType.addFileField("metadataProcessingScript_"+this.chainTypesNumber, 
-                                   "Processing Script", 50, "rest/storeddata/metadataProcessingScript_"+this.chainTypesNumber+"_file", 
+                                   "Processing Script", 75, "rest/storeddata/metadataProcessingScript_"+this.chainTypesNumber+"_file", 
                                    null,
                                    "upload-icon",
                                    "resources/images/loaderFile.gif",
@@ -169,6 +200,29 @@ ChainTypesInterface=function(){
                                    "metadataProcessingFieldSet_"+this.chainTypesNumber,5);                          
         
     };
+    
+    
+    this.addNotificationsOptions=function(multiType){
+        multiType.addFieldSet("notificationOptionsFieldSet_"+this.chainTypesNumber, 
+             "Notify Options", "chainTypeFieldSetSet_"+this.chainTypesNumber, true);
+             
+      // Add Notification Service URL
+      multiType.addTextField("notificationServiceURL_"+this.chainTypesNumber, 
+         "Service URL", "", 80, "notificationOptionsFieldSet_"+this.chainTypesNumber,5);
+                                
+      
+                                
+      // Add Notification Topic  
+      multiType.addTextField("notifyTopic_"+this.chainTypesNumber, 
+         "Topic", "", 38, "notificationOptionsFieldSet_"+this.chainTypesNumber);
+                                
+      multiType.addSpace("notificationSpace4_"+this.chainTypesNumber,3, 
+                                "notificationOptionsFieldSet_"+this.chainTypesNumber,1); 
+                                
+      // Add Notification Event Type
+      multiType.addTextField("notifyEventType_"+this.chainTypesNumber, 
+         "Event Type", "", 38, "notificationOptionsFieldSet_"+this.chainTypesNumber);    
+    }
      
      
      this.onDeleteAllChainTypes=function(){
@@ -188,7 +242,10 @@ ChainTypesInterface=function(){
         chainTypesMulti.doLayout();    
     };
     
-    this.loadChainTypeDefaultValues=function(chainTypeIndex, defaultValues){ 
+    this.loadChainTypeDefaultValues=function(chainTypeIndex){ 
+        
+        var defaultValues=this.chainTypesListLoaded.chainTypesList[chainTypeIndex];
+        
         if(defaultValues.typeName)
           Ext.getCmp("chainTypeName_"+chainTypeIndex).setValue(defaultValues.typeName);
        
@@ -197,7 +254,10 @@ ChainTypesInterface=function(){
          if(defaultValues.ppIdScriptFileStored !=null){
           Ext.getCmp("preProcessingFieldSetSet_"+chainTypeIndex).expand();
           Ext.getCmp("preProcessingEngine_"+chainTypeIndex).setValue(defaultValues.ppEngineType);
-          Ext.getCmp("preProcessingOutputType_"+chainTypeIndex).setValue(defaultValues.ppOuputType);
+          if(defaultValues.ppOutputWatch=="")
+              Ext.getCmp("preProcessingOutputWatch_"+chainTypeIndex).setValue("No Output Watch");
+          else
+              Ext.getCmp("preProcessingOutputWatch_"+chainTypeIndex).setValue(defaultValues.ppOutputWatch);
           Ext.getCmp("preProcessingScript_"+chainTypeIndex+"UploadID").setValue(defaultValues.ppIdScriptFileStored); 
         }else
            Ext.getCmp("preProcessingFieldSetSet_"+chainTypeIndex).collapse();
@@ -210,14 +270,28 @@ ChainTypesInterface=function(){
         }else
            Ext.getCmp("metadataProcessingFieldSet_"+chainTypeIndex).collapse();    
          
-
+        if(defaultValues.notifyURL !=null){
+           Ext.getCmp("notificationOptionsFieldSet_"+chainTypeIndex).expand();
+           Ext.getCmp("notificationServiceURL_"+chainTypeIndex).setValue(defaultValues.notifyURL);
+           Ext.getCmp("notifyTopic_"+chainTypeIndex).setValue(defaultValues.notifyTopic);
+           Ext.getCmp("notifyEventType_"+chainTypeIndex).setValue(defaultValues.notifyEventType);  
+            
+        } else
+            Ext.getCmp("notificationOptionsFieldSet_"+chainTypeIndex).collapse();
     };
     
     this.getChainTypeData=function(chainTypeIndex){
+        
+        
+        if(Ext.getCmp("chainTypeName_"+chainTypeIndex)){
+            if(Ext.getCmp("chainTypeName_"+chainTypeIndex).getValue()=="")
+                return this.chainTypesListLoaded.chainTypesList[chainTypeIndex];
+        }
+        
         var chainTypeData=new ChainType();
         var value;
    
-        if(Ext.getCmp("chainTypeName_"+chainTypeIndex)){
+        if(Ext.getCmp("chainTypeName_"+chainTypeIndex) && Ext.getCmp("chainTypeName_"+chainTypeIndex).validate()){
            value=Ext.getCmp("chainTypeName_"+chainTypeIndex).getValue();
            if(value){
                chainTypeData.typeName=value;
@@ -235,8 +309,10 @@ ChainTypesInterface=function(){
              chainTypeData.ppEngineType=value;
              chainTypeData.idString+=value;
              
-             value=Ext.getCmp("preProcessingOutputType_"+chainTypeIndex).getValue();  
-             chainTypeData.ppOuputType=value;
+             value=Ext.getCmp("preProcessingOutputWatch_"+chainTypeIndex).getValue();  
+             if(value=='No Output Watch')
+                 value="";
+             chainTypeData.ppOutputWatch=value;
              chainTypeData.idString+=value;
              
              value=Ext.getCmp("preProcessingScript_"+chainTypeIndex+"UploadID").getValue();  
@@ -259,16 +335,32 @@ ChainTypesInterface=function(){
            }
         }
        
+       if(Ext.getCmp("notificationOptionsFieldSet_"+chainTypeIndex)){
+           value=Ext.getCmp("notificationOptionsFieldSet_"+chainTypeIndex).collapsed;
+           if(!value){
+             value=Ext.getCmp("notificationServiceURL_"+chainTypeIndex).getValue();  
+             chainTypeData.notifyURL=value;
+             chainTypeData.idString+=value;
+ 
+             value=Ext.getCmp("notifyTopic_"+chainTypeIndex).getValue();  
+             chainTypeData.notifyTopic=value;
+             chainTypeData.idString+=value;
+             
+             value=Ext.getCmp("notifyEventType_"+chainTypeIndex).getValue();  
+             chainTypeData.notifyEventType=value;
+             chainTypeData.idString+=value;
+           }
+        }
 
        return chainTypeData;  
     };
     
     
      this.onSave=function(){
-        var maskChainTypes=new Ext.LoadMask(armsManager.workspacePanel.body,
+        /*var maskChainTypes=new Ext.LoadMask(armsManager.workspacePanel.body,
             {msg:"Please wait..."}
         ); 
-        maskChainTypes.show(); 
+        maskChainTypes.show(); */
          var chainTypesListJSON=new Object();
          var chainTypesSaved=0;
          chainTypesListJSON.chainTypesList=new Array();
@@ -301,14 +393,22 @@ ChainTypesInterface=function(){
             
          var postChainTypesList= function(response){
                 var jsonResponse=JSON.parse(response);
-                maskChainTypes.hide(); 
+               // maskChainTypes.hide(); 
                 if(jsonResponse.success){
                     Ext.Msg.show({
                     title:'Changes Saved',
                     msg: 'Number of chain Types saved: ' + chainTypesSaved,
+                    fn: function(){
+                        armsManager.workspacePanel.cleanPanel();
+                        armsManager.loadXmlInterface('ChainTypesARMS',
+                                   "armsManager.chainTypesInterface",
+                                  armsManager.chainTypesInterfaceObj
+                                  );
+                    },
                     buttons: Ext.Msg.OK,
                     icon: Ext.MessageBox.INFO
                     });
+                    
                 }else{
                     Ext.Msg.show({
                     title:'Changes Saved Error',
@@ -339,10 +439,14 @@ ChainType=function(){
     
     this.ppIdScriptFileStored=null;
     this.ppEngineType=null;
-    this.ppOuputType= null;
+    this.ppOutputWatch= null;
     
     
     this.mpIdScriptFileStored=null;
     this.mpEngineType=null;
+    
+    this.notifyURL=null;
+    this.notifyTopic=null;
+    this.notifyEventType=null;
 
 }

@@ -16,10 +16,11 @@ WatchInterface=function(){
      
      
      this.render=function (elementID){
-        var maskWatch=new Ext.LoadMask(armsManager.workspacePanel.body,
+       /* var maskWatch=new Ext.LoadMask(armsManager.workspacePanel.body,
             {msg:"Please wait..."}
         ); 
-        maskWatch.show(); 
+        maskWatch.show(); */
+        armsManager.showWorkspaceLoadPanel();
         this.formInterface.formsPanel.render(document.getElementById(elementID));
         this.formInterface.render();
         
@@ -38,10 +39,21 @@ WatchInterface=function(){
                 var watchCollection=JSON.parse(response);
                 watchInterface.watchListLoaded=watchCollection;
                 for(var i=0; i<watchCollection.watchNumber;i++){
-                    if(! watchCollection.watchList[i].hidden)
-                        watchInterface.onAddWatch(watchCollection.watchList[i]);
+                    if(! watchCollection.watchList[i].hidden){
+                      watchInterface.onAddWatch(watchCollection.watchList[i], true);
+                      //Ext.getCmp("watchFieldSetSet_"+i).collapse();
+                    }
+                      
+                        
                 }
-                maskWatch.hide();
+                Ext.getCmp('watchMultiType').doLayout();
+                for(i=0; i<watchCollection.watchNumber;i++){
+                    if(! watchCollection.watchList[i].hidden){
+                      Ext.getCmp("watchFieldSetSet_"+i).collapse();
+                    }
+                }    
+                armsManager.hideWorkspaceLoadPanel();
+              
             };
 
          //var loginValues=this.formInterface.getFormValues();
@@ -57,19 +69,28 @@ WatchInterface=function(){
                      null, null);
      };
 
-     this.onAddWatch=function(defaultValues){
+     this.onAddWatch=function(defaultValues,notRefresh){
          
          
          var multiType=Ext.getCmp('watchMultiType');
          
-
+         var setDefaultValues=null;
+         
+         var watchName="New Watch "/*("+this.watchNumber+")"/*/;
+         
+         if(defaultValues){
+           setDefaultValues="armsManager.watchInterface.loadWatchDefaultValues("+this.watchNumber+");";
+           watchName="Watch ( "+this.watchListLoaded.watchList[this.watchNumber].watchFolder+" )";
+         }  
+             
+         
          //Add watch FieldSet
-         multiType.addFieldSet("watchFieldSetSet_"+this.watchNumber, "watch "+this.watchNumber);
+         multiType.addFieldSet("watchFieldSetSet_"+this.watchNumber, watchName, null, false, setDefaultValues);
 
          //Add Watch Type Combo
          var watchTypeStoreFields=['value'];
          var watchTypeStoreData=armsManager.getTypesList();
-         multiType.addComboField("watchType_"+this.watchNumber,'Watch Type',10,
+         multiType.addComboField("watchType_"+this.watchNumber,'Chain Type',10,
                                 watchTypeStoreFields,watchTypeStoreData, null,
                                 "watchFieldSetSet_"+this.watchNumber);
                                 
@@ -78,8 +99,12 @@ WatchInterface=function(){
          
          
          // Add Watch Server Folder Path Text
-         multiType.addTextField("watchFolder_"+this.watchNumber, 
-            "Watch Folder", "", 40, "watchFieldSetSet_"+this.watchNumber);
+         if(defaultValues)
+            multiType.addTextField("watchFolder_"+this.watchNumber, 
+            "Watch Folder", "", 60, "watchFieldSetSet_"+this.watchNumber,null,null,true);
+         else
+            multiType.addTextField("watchFolder_"+this.watchNumber, 
+            "Watch Folder", "", 60, "watchFieldSetSet_"+this.watchNumber,null, "newwatch");   
          
          multiType.addSpace("watchSpace2_"+this.watchNumber,4, "watchFieldSetSet_"+this.watchNumber);
          
@@ -88,6 +113,7 @@ WatchInterface=function(){
          multiType.addButtonField("watchDeleteButton_"+this.watchNumber,'Remove',
                         "armsManager.watchInterface.onDeleteWatch("+this.watchNumber+")",null, "watchFieldSetSet_"+this.watchNumber);
                         
+         this.addDeleteAfterOptions(multiType);
                         
          multiType.addCheckBox("watchHTTPEnable_"+this.watchNumber, 
                                 "Internal HTTP Publish", function(){},
@@ -97,27 +123,50 @@ WatchInterface=function(){
                                 "Internal FTP Publish", function(){},
                                         "watchFieldSetSet_"+this.watchNumber,5,'x-check-group-alt');                               
                                                                      
-         //Add Fieldset Section    
+         //Add Fieldset Section  
+         
          this.addFTPOptions(multiType);
          this.addCatalogueOptions(multiType);
          this.addGeoserverOptions(multiType);
          this.addSOSOptions(multiType);
          
-         multiType.doLayout();
-         
-         Ext.getCmp("watchHTTPEnable_"+this.watchNumber).setValue(false);
-         Ext.getCmp("watchFTPFieldSet_"+this.watchNumber).collapse();
-         Ext.getCmp("watchGeoserverFieldSet_"+this.watchNumber).collapse();
-         Ext.getCmp("watchCatalogueFieldSet_"+this.watchNumber).collapse();
-         Ext.getCmp("watchSOSFieldSet_"+this.watchNumber).collapse();
+       
+         if(!notRefresh){
+            multiType.doLayout();
+             Ext.getCmp("watchHTTPEnable_"+this.watchNumber).setValue(false);
+             Ext.getCmp("watchFTPFieldSet_"+this.watchNumber).collapse();
+             Ext.getCmp("watchGeoserverFieldSet_"+this.watchNumber).collapse();
+             Ext.getCmp("watchCatalogueFieldSet_"+this.watchNumber).collapse();
+             Ext.getCmp("watchSOSFieldSet_"+this.watchNumber).collapse(); 
+             Ext.getCmp("watchDeleteAfterFieldSet_"+this.watchNumber).collapse();
+         }
+          
 
-         if(defaultValues)
-             this.loadWatchDefaultValues(this.watchNumber, defaultValues);
+        /* if(defaultValues)
+            this.loadWatchDefaultValues(this.watchNumber, defaultValues);*/
          
-         this.watchNumber++;               
+         this.watchNumber++;    
+     
 
     };
-    
+     this.addDeleteAfterOptions= function(multiType){
+
+         multiType.addFieldSet("watchDeleteAfterFieldSet_"+this.watchNumber, 
+             "Automatic Deletion", "watchFieldSetSet_"+this.watchNumber, true);
+             
+             
+         multiType.addNumberField("deleteAfter_"+this.watchNumber, "Delete After", "",3,
+                                       ".",0,"watchDeleteAfterFieldSet_"+this.watchNumber);
+         
+         multiType.addSpace("watchSpace12_"+this.watchNumber,0, "watchDeleteAfterFieldSet_"+this.watchNumber);
+         
+         var watchDeleteAfterUOMStoreFields=['name','value'];
+         var watchDeleteAfterUOMStoreData=[['seconds', 's'],['minutes','m'], ['hours','h'], ['days','D'], ['weeks','W']];
+         multiType.addComboField("deleteAfterUOM_"+this.watchNumber,'',10,
+                                watchDeleteAfterUOMStoreFields,watchDeleteAfterUOMStoreData, null,
+                                "watchDeleteAfterFieldSet_"+this.watchNumber);
+     };
+     
      this.addFTPOptions= function (multiType){
          // Add FTP input Text
          
@@ -126,7 +175,16 @@ WatchInterface=function(){
          
 
          multiType.addTextField("ftpUrl_"+this.watchNumber, 
-            "FTP URL", "", 40, "watchFTPFieldSet_"+this.watchNumber);
+            "FTP URL", "", 80, "watchFTPFieldSet_"+this.watchNumber,5);
+            
+         
+         multiType.addTextField("ftpUser_"+this.watchNumber, 
+            "FTP Username", "", 20, "watchFTPFieldSet_"+this.watchNumber);
+         multiType.addSpace("ftpwatchSpace3_"+this.watchNumber,4, "watchFTPFieldSet_"+this.watchNumber);
+         
+         multiType.addTextField("ftpPassword_"+this.watchNumber, 
+            "FTP Password", "", 20, "watchFTPFieldSet_"+this.watchNumber);
+         multiType.addSpace("ftpwatchSpace4_"+this.watchNumber,4, "watchFTPFieldSet_"+this.watchNumber);      
      };
      
      this.addCatalogueOptions= function (multiType){
@@ -137,7 +195,7 @@ WatchInterface=function(){
          
 
          multiType.addTextField("catalogueUrl_"+this.watchNumber, 
-            "Catalogue URL", "", 40, "watchCatalogueFieldSet_"+this.watchNumber);
+            "Catalogue URL", "", 80, "watchCatalogueFieldSet_"+this.watchNumber);
      };
      
      this.addGeoserverOptions= function (multiType){
@@ -156,9 +214,9 @@ WatchInterface=function(){
          multiType.addSpace("geoserverwatchSpace1_"+this.watchNumber,4, "watchGeoserverFieldSet_"+this.watchNumber);
          
          multiType.addTextField("geoserverUrl_"+this.watchNumber, 
-            "Geoserver URL", "", 40, "watchGeoserverFieldSet_"+this.watchNumber);
+            "Geoserver URL", "", 57, "watchGeoserverFieldSet_"+this.watchNumber,3);
             
-         multiType.addSpace("geoserverwatchSpace2_"+this.watchNumber,4, "watchGeoserverFieldSet_"+this.watchNumber,2);
+         //multiType.addSpace("geoserverwatchSpace2_"+this.watchNumber,4, "watchGeoserverFieldSet_"+this.watchNumber,2);
          
          multiType.addTextField("geoserverUser_"+this.watchNumber, 
             "Geoserver User", "", 20, "watchGeoserverFieldSet_"+this.watchNumber);
@@ -180,7 +238,7 @@ WatchInterface=function(){
              "SOS", "watchFieldSetSet_"+this.watchNumber, true);
 
          multiType.addTextField("SOSUrl_"+this.watchNumber, 
-            "SOS URL", "", 40, "watchSOSFieldSet_"+this.watchNumber);
+            "SOS URL", "", 80, "watchSOSFieldSet_"+this.watchNumber);
 
      };
      
@@ -205,20 +263,40 @@ WatchInterface=function(){
        multiType.doLayout();  
     };
     
-    this.loadWatchDefaultValues=function(watchIndex, defaultValues){
+    this.loadWatchDefaultValues=function(watchIndex){
+
+     if(Ext.getCmp("watchType_"+watchIndex).getValue()==""){
+        
+        var defaultValues=this.watchListLoaded.watchList[watchIndex];
         if(defaultValues.type)
            Ext.getCmp("watchType_"+watchIndex).setValue(defaultValues.type);
        
         if(defaultValues.watchFolder)
            Ext.getCmp("watchFolder_"+watchIndex).setValue(defaultValues.watchFolder);
-       
+
+        if(defaultValues.deleteAfter)
+            if(defaultValues.deleteAfter== "-1")
+               Ext.getCmp("watchDeleteAfterFieldSet_"+watchIndex).collapse();
+            else{
+               Ext.getCmp("watchDeleteAfterFieldSet_"+watchIndex).expand(); 
+               var ns=defaultValues.deleteAfter.substring(
+               defaultValues.deleteAfter.length-1,0)
+               var uom=defaultValues.deleteAfter.substring(
+               defaultValues.deleteAfter.length-1,defaultValues.deleteAfter.length);
+               Ext.getCmp("deleteAfter_"+watchIndex).setValue(parseFloat(ns));
+               Ext.getCmp("deleteAfterUOM_"+watchIndex).setValue(
+               Ext.getCmp("deleteAfterUOM_"+watchIndex).getLabelForValueInformation("value",uom));
+                
+            }   
+            
+            
         if(defaultValues.Http)
             Ext.getCmp("watchHTTPEnable_"+watchIndex).setValue(true);
         else
             Ext.getCmp("watchHTTPEnable_"+watchIndex).setValue(false);
         
         
-        
+
         if(defaultValues.Ftp.length>0){
             var ftpInternal=false;
             for(var i=0; i<defaultValues.Ftp.length;i++)
@@ -228,8 +306,18 @@ WatchInterface=function(){
           if(ftpInternal){
               if(defaultValues.Ftp.length>1){
                  Ext.getCmp("watchFTPFieldSet_"+watchIndex).expand();
-                 Ext.getCmp("ftpUrl_"+watchIndex).setValue(defaultValues.Ftp[1]); 
-              }
+                 if(defaultValues.Ftp[1].indexOf("@") !=-1){
+                    var urlFTP=replaceAll(defaultValues.Ftp[1], "ftp://","");
+                     var tmp=urlFTP.split("@");
+                     Ext.getCmp("ftpUrl_"+watchIndex).setValue(tmp[1]);
+                     var tmp2=tmp[0].split(":");
+                     Ext.getCmp("ftpUser_"+watchIndex).setValue(tmp2[0]);
+                     Ext.getCmp("ftpPassword_"+watchIndex).setValue(tmp2[1]); 
+                 }else    
+                  Ext.getCmp("ftpUrl_"+watchIndex).setValue(defaultValues.Ftp[1]); 
+              }else
+                 Ext.getCmp("watchFTPFieldSet_"+watchIndex).collapse(); 
+              
           }else{
              Ext.getCmp("watchFTPFieldSet_"+watchIndex).expand();
              Ext.getCmp("ftpUrl_"+watchIndex).setValue(defaultValues.Ftp[0]);   
@@ -240,10 +328,11 @@ WatchInterface=function(){
         if(defaultValues.GeoServer.length>0){
            Ext.getCmp("watchGeoserverFieldSet_"+watchIndex).expand();
            if(defaultValues.GeoServer[0].indexOf("@") !=-1){
+               
                var urlGeoserver=replaceAll(defaultValues.GeoServer[0], "http://","");
-               var tmp=urlGeoserver.split("@");
+                tmp=urlGeoserver.split("@");
                Ext.getCmp("geoserverUrl_"+watchIndex).setValue(tmp[1]);
-               var tmp2=tmp[0].split(":");
+                tmp2=tmp[0].split(":");
                Ext.getCmp("geoserverUser_"+watchIndex).setValue(tmp2[0]);
                Ext.getCmp("geoserverPassword_"+watchIndex).setValue(tmp2[1]);
            }else    
@@ -271,13 +360,19 @@ WatchInterface=function(){
            Ext.getCmp("SOSUrl_"+watchIndex).setValue(defaultValues.SOS[0]);
          }else
            Ext.getCmp("watchSOSFieldSet_"+watchIndex).collapse();
-  
+       }
     };
     
     
     this.getWatchData=function(watchIndex){
+        var protocol;
+        if(Ext.getCmp("watchType_"+watchIndex)){
+            if(Ext.getCmp("watchType_"+watchIndex).getValue()=="")
+                return this.watchListLoaded.watchList[watchIndex];
+        }
+    
+    
         var watchData=new Watch();
-        //alert(JSON.stringify(watchData, null));
         
         var value;
    
@@ -291,7 +386,7 @@ WatchInterface=function(){
         }else
            return null; 
     
-        if(Ext.getCmp("watchFolder_"+watchIndex)){
+        if(Ext.getCmp("watchFolder_"+watchIndex) && Ext.getCmp("watchFolder_"+watchIndex).validate()){
            value=Ext.getCmp("watchFolder_"+watchIndex).getValue();
            if(value){
                watchData.watchFolder=value;
@@ -300,7 +395,22 @@ WatchInterface=function(){
               return null; 
         }else
            return null; 
-         
+    
+        if(Ext.getCmp("watchDeleteAfterFieldSet_"+watchIndex)){
+           value=Ext.getCmp("watchDeleteAfterFieldSet_"+watchIndex).collapsed;
+           if(!value){
+               var deleteAfter=Ext.getCmp("deleteAfter_"+watchIndex).getValue();
+               var deleteAfterUOM=Ext.getCmp("deleteAfterUOM_"+watchIndex).getValueInformation("value");
+               if(deleteAfter && deleteAfterUOM)
+                   if(deleteAfter!='' && deleteAfterUOM!=''){
+                       watchData.deleteAfter=deleteAfter+deleteAfterUOM; 
+                       watchData.idString+=deleteAfter+deleteAfterUOM;
+                   }
+                     
+           }else
+            watchData.idString+="false";    
+        } 
+
         if(Ext.getCmp("watchHTTPEnable_"+watchIndex)){
            value=Ext.getCmp("watchHTTPEnable_"+watchIndex).checked;
            watchData.Http=value; 
@@ -321,7 +431,11 @@ WatchInterface=function(){
              if(Ext.getCmp("ftpUrl_"+watchIndex)){
                 value=Ext.getCmp("ftpUrl_"+watchIndex).getValue(); 
                 if(value){
-                   watchData.Ftp.push(value); 
+                    protocol = value.substring(6,0);
+                    if(protocol == "ftp://")
+                       watchData.Ftp.push(value); 
+                    else
+                       watchData.Ftp.push("ftp://"+value); 
                    watchData.idString+=value;
                 }
                   
@@ -329,6 +443,27 @@ WatchInterface=function(){
            }else
             watchData.idString+="false";  
         }
+        var ftpUP="";
+        if(Ext.getCmp("ftpUser_"+watchIndex)){
+           value=Ext.getCmp("ftpUser_"+watchIndex).getValue(); 
+           if(value){
+               watchData.idString+=value;
+               ftpUP+=value+":";
+           }
+        }
+        if(Ext.getCmp("ftpPassword_"+watchIndex)){
+          value=Ext.getCmp("ftpPassword_"+watchIndex).getValue(); 
+          if(value){
+             ftpUP+=value;
+             watchData.idString+=value;
+          }
+        }
+        if(ftpUP!=""){
+           var urlFtp=replaceAll(watchData.Ftp[watchData.Ftp.length-1], "ftp://","");
+           watchData.Ftp[watchData.Ftp.length-1]="ftp://"+ftpUP+"@"+urlFtp;
+        }
+             
+             
     
         if(Ext.getCmp("watchGeoserverFieldSet_"+watchIndex)){
            value=Ext.getCmp("watchGeoserverFieldSet_"+watchIndex).collapsed;
@@ -337,7 +472,11 @@ WatchInterface=function(){
              if(Ext.getCmp("geoserverUrl_"+watchIndex)){
                 value=Ext.getCmp("geoserverUrl_"+watchIndex).getValue(); 
                 if(value){
-                    watchData.GeoServer.push(value); 
+                     protocol = value.substring(7,0);
+                    if(protocol == "http://")
+                        watchData.GeoServer.push(value); 
+                    else
+                        watchData.GeoServer.push("http://"+value);
                     watchData.idString+=value;    
                 }
                 
@@ -389,7 +528,11 @@ WatchInterface=function(){
              if(Ext.getCmp("catalogueUrl_"+watchIndex)){
                 value=Ext.getCmp("catalogueUrl_"+watchIndex).getValue(); 
                 if(value){
-                    watchData.ebRIMCatalogue.push(value); 
+                    protocol = value.substring(7,0);
+                    if(protocol == "http://")
+                        watchData.ebRIMCatalogue.push(value); 
+                    else
+                        watchData.ebRIMCatalogue.push("http://"+value);
                     watchData.idString+=value;
                 }
              }   
@@ -404,7 +547,11 @@ WatchInterface=function(){
              if(Ext.getCmp("SOSUrl_"+watchIndex)){
                 value=Ext.getCmp("SOSUrl_"+watchIndex).getValue(); 
                 if(value){
-                    watchData.SOS.push(value); 
+                    protocol = value.substring(7,0);
+                    if(protocol == "http://")
+                        watchData.SOS.push(value); 
+                    else
+                        watchData.SOS.push("http://"+value);
                     watchData.idString+=value;
                 }
              }   
@@ -416,10 +563,10 @@ WatchInterface=function(){
     };
     
      this.onSave=function(){
-         var maskWatch=new Ext.LoadMask(armsManager.workspacePanel.body,
+        /* var maskWatch=new Ext.LoadMask(armsManager.workspacePanel.body,
             {msg:"Please wait..."}
         ); 
-        maskWatch.show(); 
+        maskWatch.show(); */
          var watchListJSON=new Object();
          var watchSaved=0;
          watchListJSON.watchList=new Array();
@@ -451,14 +598,22 @@ WatchInterface=function(){
             
          var postWatchList= function(response){
                 var jsonResponse=JSON.parse(response);
-                maskWatch.hide(); 
+                //maskWatch.hide(); 
                 if(jsonResponse.success){
                     Ext.Msg.show({
                     title:'Changes Saved',
                     msg: 'Number of watch saved: ' + watchSaved,
                     buttons: Ext.Msg.OK,
+                    fn: function(){
+                       armsManager.workspacePanel.cleanPanel();
+                       armsManager.loadXmlInterface('WatchARMS',
+                               "armsManager.watchInterface",
+                              armsManager.watchInterfaceObj
+                              ); 
+                    },
                     icon: Ext.MessageBox.INFO
                     });
+                    
                 }else{
                     Ext.Msg.show({
                     title:'Changes Saved Error',
@@ -486,7 +641,7 @@ WatchInterface=function(){
 Watch=function(){
     this.idString="";
     this.watchFolder= null;  
-    this.deleteAfter= 50000000000000;
+    this.deleteAfter= "-1";
     this.hidden= false;
     this.type= null;
     this.downloadUrl= "";

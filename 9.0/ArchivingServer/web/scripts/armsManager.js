@@ -3,6 +3,8 @@
     interfacesManager.loadGlobalScript("scripts/configurationInterface.js");
     interfacesManager.loadGlobalScript("scripts/watchInterface.js");
     interfacesManager.loadGlobalScript("scripts/chainTypeInterface.js");
+    interfacesManager.loadGlobalScript("scripts/dataGridInterface.js");
+    interfacesManager.loadGlobalScript("scripts/loggingInterface.js");
     /*interfacesManager.loadGlobalScript("scripts/preProcessingInterface.js");
     interfacesManager.loadGlobalScript("scripts/metadataProcessingInterface.js");*/
    
@@ -30,6 +32,10 @@ armsManager = {
      metadataProcessingInterface: null,
      chainTypesInterfaceObj: "ChainTypesInterface",
      chainTypesInterface: null,
+     logManagerInterface: null,
+     dataListInterfaceObj: "DataGridInterface",
+     dataListInterface: null,
+     pagingSize: 20,
      preProcessingDefaultValues: ["geotiff", "shp"],
      metadataProcessingDefaultValues: ["geotiff", "shp"],
      watchDefautValues:[{type:"geotiff", folder:"/home/massi/arms/publish/soscsv"},
@@ -49,7 +55,7 @@ armsManager = {
                  id:'workspacePanel',
                  autoScroll: true,
                  border: true,
-                 html: "<div id='"+armsManager.workspacePanelDIV+"'/>",
+                 html: "<div id='loadingPanel'></div><div id='"+armsManager.workspacePanelDIV+"'/>",
                  loadingBarImg: "resources/images/loader.gif",
                  loadingMessage: "Loading... Please Wait...",
                  loadingMessageColor: "black",
@@ -74,6 +80,7 @@ armsManager = {
                   items:[{
                           title: "Manager",
                           border:false,
+                          iconCls: 'manager',
                           autoScroll:true,
                           items:[
                                  new Ext.tree.TreePanel({
@@ -89,20 +96,30 @@ armsManager = {
                                      children: [{
                                                  text: "Configuration",
                                                  type: 'ConfigurationARMS',
+                                                 iconCls: 'configuration',
                                                  xmlInterface: armsManager.configurationInterfaceObj,
                                                  interfacePanel: "armsManager.configurationInterface",
-                                                 leaf: true
-                                                }, {
-                                                 text: "Watch",
-                                                 type: 'WatchARMS',
-                                                 xmlInterface: armsManager.watchInterfaceObj,
-                                                 interfacePanel: "armsManager.watchInterface",
                                                  leaf: true
                                                 },{
                                                  text: "Chain Types",
                                                  type: 'ChainTypesARMS',
+                                                 iconCls: 'chaintypes',
                                                  xmlInterface: armsManager.chainTypesInterfaceObj,
                                                  interfacePanel: "armsManager.chainTypesInterface",
+                                                 leaf: true
+                                                },{
+                                                 text: "Watches",
+                                                 type: 'WatchARMS',
+                                                 iconCls: 'watches',
+                                                 xmlInterface: armsManager.watchInterfaceObj,
+                                                 interfacePanel: "armsManager.watchInterface",
+                                                 leaf: true
+                                                },{
+                                                 text: "Data List",
+                                                 type: 'DataListARMS',
+                                                 iconCls: 'datalist',
+                                                 xmlInterface: armsManager.dataListInterfaceObj,
+                                                 interfacePanel: "armsManager.dataListInterface",
                                                  leaf: true
                                                 }/*,{
                                                  text: "Pre Processing",
@@ -139,20 +156,10 @@ armsManager = {
                                                   }).show();
                                               }else{
                                                 if(n.attributes.xmlInterface){  
+                                                    armsManager.loadXmlInterface(n.attributes.type,
+                                                    n.attributes.interfacePanel, n.attributes.xmlInterface);
                                                  
-                                                  new Ext.Panel({
-                                                     renderTo: armsManager.workspacePanelDIV,
-                                                     height: panelHeight,
-                                                     listeners: {
-                                                         "resize" : function(){
-                                                             this.doLayout();
-                                                         }
-                                                     },
-                                                     html: "<div id='"+n.attributes.type+"'></div>"
-                                                  }).show();  
-                                                   eval(n.attributes.interfacePanel+"=new "+n.attributes.xmlInterface+"();");
-                                                   eval(n.attributes.interfacePanel).render(n.attributes.type); 
-                                                   //eval(n.attributes.interfacePanel).loadDefaultValues(armsManager.getDefaultValues(n.attributes.xmlInterface));
+                                                 
                                                 }  
                                               }   
                                             armsManager.workspacePanel.doLayout();
@@ -161,8 +168,34 @@ armsManager = {
                                })
                             ]
                         },{
+                          title: "Log",
+                          iconCls: 'log',
+                          autoScroll:true,
+                          border:false,
+                          html: "<div id='logManagerDiv'/>",
+                          listeners: {
+                            "collapse": function(){
+
+
+                            },
+                            "expand": function(){
+
+
+                               if(!armsManager.logManagerInterface){
+
+                                  armsManager.logManagerInterface=new LoggingInterface();
+
+                               }
+
+                               armsManager.logManagerInterface.render('logManagerDiv');
+
+                               armsManager.logManagerInterface.updadeLogView();
+                            }
+                          }
+                        },{
                           title: "Documentation",
                           border:false,
+                          iconCls: 'documentation',
                           autoScroll:false,
                           page: armsManager.DocumentationPage,
                           html: "<div id='DocumentationARMS'></div><iframe src='"+armsManager.DocumentationPage+"' name='DocumentationARMS_frame'  scrolling='no' width='100%' height='100%' marginwidth='0' marginheight='0'></iframe>",
@@ -179,11 +212,11 @@ armsManager = {
                                             armsManager.workspacePanel.doLayout();
                                          }
                                     }
-                        },{
+                        }/*{
                           title: "ARMS Client",
                           border:false,
                           autoScroll:true  
-                        }]
+                        },*/]
                   });
                                 
                  var northPanel =new Ext.Panel({
@@ -233,6 +266,32 @@ armsManager = {
                                       items: [armsManager.armsMainMenuPanel]
                });
 
+
+              Ext.apply(Ext.form.VTypes, {
+                  newwatch: function(val, field){
+                      var watchesList=armsManager.getWatchesList();
+                      for(var i=0; i<watchesList.length; i++)
+                          if(watchesList[i][0]== val)
+                              return false;
+
+                      return true;
+
+                  },
+                  newwatchText: 'Watch folder already defined',
+
+                  newchaintype: function (val, field){
+                    var chainTypesList=armsManager.getTypesList();
+                      for(var i=0; i<chainTypesList.length; i++)
+                          if(chainTypesList[i][0]== val)
+                              return false;
+
+                      return true;
+                  },
+                  newchaintypeText: 'Chain Type already defined'
+                  
+                });
+                
+                
                var viewport = new Ext.Viewport({
                                 layout:'border',
                                 id: 'mainViewPort',
@@ -264,7 +323,32 @@ armsManager = {
 
         },
         
-
+        showWorkspaceLoadPanel: function(msg){
+            var workEl=document.getElementById("loadingPanel");
+            var message="Loading: Please Wait...";
+            if(msg)
+                if(msg!='')
+                    message=msg; 
+            
+            var loadingPanel="<div id=\"loading-mask-workspace\" style=\"\" ></div>"+
+            "<div id=\"loading\">"+
+            //    "<div class=\"x-mask-loading\"><br /><span id=\"loading-msg\">Please Wait...<br><span align=\"center\"><img src=\"resources/images/init_Load.gif\"/></span></div>"+
+            "<table class=\"loadingTable\">"+
+                "<tr><td align=\"center\"><span id=\"loading-msg\">"+message+"</span></td></tr>"+
+                "<tr><td align=\"center\"><img src=\"resources/images/workspaceLoad.gif\"/></td></tr>"+
+            "</table>"+    
+            "</div>";
+        
+           workEl.innerHTML=loadingPanel; 
+        },
+        
+        hideWorkspaceLoadPanel: function(){
+            Ext.get('loading').remove();
+            Ext.fly('loading-mask-workspace').fadeOut({
+                   remove:true  
+            });
+        },
+        
         getDefaultValues: function(interfaceName){
             switch(interfaceName){
                 case "PreProcessingInterface":
@@ -281,7 +365,7 @@ armsManager = {
             
         },
         
-        getTypesList: function(interfaceName){
+        getTypesList: function(){
             var storeCombo=new Array();
             
             
@@ -317,9 +401,82 @@ armsManager = {
             
             return storeCombo;
             
+        },
+        
+        getWatchesList: function(){
+            var storeCombo=new Array();
+            
+            
+            var getWatchesListTimeOut=function(){
+                   Ext.Msg.show({
+                       title:'Get Watches List: Error',
+                       buttons: Ext.Msg.OK,
+                       msg: 'Request TIME-OUT!',
+                       animEl: 'elId',
+                       icon: Ext.MessageBox.ERROR
+                   });
+            }
+            
+            var getWatchesList= function(response){
+                var watchesCollection=JSON.parse(response);
+                var tmp=null;
+                tmp=new Array();
+                tmp.push("No Output Watch");
+                storeCombo.push(tmp);
+                for(var i=0; i<watchesCollection.watchNumber;i++){
+                    if(! watchesCollection.watchList[i].hidden){
+                        tmp=new Array();
+                        tmp.push(watchesCollection.watchList[i].watchFolder);
+                        storeCombo.push(tmp);
+                    }
+                    
+                }
+            };
+
+           
+           sendAuthenticationXmlHttpRequestTimeOut("GET",
+                     this.watchInterface.restWatchListURL,
+                     false, null, "loginValues['user']", "loginValues['password']", 
+                     800000, getWatchesList, getWatchesListTimeOut,null,
+                     null, null);
+            
+            return storeCombo;
+            
+        },
+        
+        newWindow: function(url,type){
+            var winURL=url;
+            if(type=='geoserver'){
+                if(url.indexOf("@")!=-1){
+                   winURL="http://"; 
+                   var urlSplit=url.split("@"); 
+                   winURL+=urlSplit[1];
+                } 
+            }
+            /*"toolbar=yes,
+location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,copyhistory=yes,
+resizable=yes"*/
+            window.open(winURL);
+        },
+
+
+
+        loadXmlInterface: function(type, interfacePanel, xmlInterface){
+            var panelHeight=Ext.getCmp("workspacePanel").getHeight()-2;
+            new Ext.Panel({
+               renderTo: armsManager.workspacePanelDIV,
+               height: panelHeight,
+               autoScroll: true,
+               listeners: {
+                 "resize" : function(){
+                     this.doLayout();
+                 }
+               },
+               html: "<div id='loadingPanel'></div><div id='"+type+"'></div>"
+            }).show();  
+            eval(interfacePanel+"=new "+xmlInterface+"();");
+            eval(interfacePanel).render(type); 
         }
-
-
 };
 
 

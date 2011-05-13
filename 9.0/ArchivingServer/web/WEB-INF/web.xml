@@ -18,6 +18,10 @@
         <servlet-name>StoreData</servlet-name>
         <servlet-class>it.intecs.pisa.archivingserver.rest.StoreData</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ARMSServlet</servlet-name>
+        <servlet-class>it.intecs.pisa.archivingserver.rest.ARMSGenericServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ArchivingServerServlet</servlet-name>
         <url-pattern>/service/*</url-pattern>
@@ -33,6 +37,10 @@
     <servlet-mapping>
         <servlet-name>StoreData</servlet-name>
         <url-pattern>/rest/storeddata/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ARMSServlet</servlet-name>
+        <url-pattern>/arms</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

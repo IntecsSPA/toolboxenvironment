@@ -1,19 +1,12 @@
 
 
 {
-    "chainTypesNumber": 1,
+    "chainTypesNumber": 3,
     "chainTypesList": [
-        {
-          "id": "",  
-          "typeName": "shp",
-          "hidden": false,
-          "ppEngineType": "shell", 
-          "pplocalScriptPath": "/home/maro/",
-          "ppIdScriptFileStored": "aaaaaabbbbbbbbbb.xml",
-          "ppOuputType": "shp",
-          "mpEngineType": "shell", 
-          "mplocalScriptPath": "/home/maro/ddd",
-          "mpIdScriptFileStored": "bbbbbbbbbb.xml"
-        }
+    {"hidden":false,"typeName":"shp","id":113851},
+    {"hidden":false,"typeName":"geotiff","id":113852},
+    {"hidden":false,"typeName":"sos","id":113852}
     ]
 }
+
+

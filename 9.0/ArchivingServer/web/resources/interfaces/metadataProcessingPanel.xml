@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<inputInterface xmlns="http://gisClient.pisa.intecs.it/gisClient">
+    <section name="Metadata Processing" cols="3">
+      
+       <group label="Metadata Processing Manager">
+         <input type="button" name="addNewMetadataProcessingButton" label="Add Metadata Processing" id="addNewMetadataProcessingButton" colSpan="1" onclick="armsManager.metadataProcessingInterface.onAddMetadataProcessing"/>
+         <input type="label" name="space2" id="space2" size="50" value="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;" colSpan="1" />
+         <input type="button" name="RemoveAllMetadataProcessingButton" label="Remove All Metadata Processing" id="RemoveAllMetadataProcessingButton" colSpan="1" onclick="armsManager.metadataProcessingInterface.onDeleteAllMetadataProcessing"/>
+        </group>
+        <group label="Metadata Processing">
+         
+
+         
+         
+         <input type="multitext" name="metadataProcessingMultiInput" id="metadataProcessingMultiInput" columns='5' optional="true" size="20" labelAlign="top" colSpan="2"/>   
+
+        </group>
+        
+        
+    </section>
+
+    <requestInformation>
+        <buttons>
+            <button name="saveMetadataProcessingButton" id="saveMetadataProcessingButton" label="Save" iconImage="" onclick="armsManager.metadataProcessingInterface.onSave"/>
+        </buttons>
+    </requestInformation>
+</inputInterface>

@@ -56,12 +56,17 @@ public class SimpleSOAPClient {
             conn.connect();
 
             soapDoc=buildSOAPMessage(payload, getMessageId(), getReplyTo());
-            System.out.println(DOMUtil.getDocumentAsString(soapDoc));
             OutputStream outStream = conn.getOutputStream();
             IOUtil.copy(DOMUtil.getDocumentAsInputStream(soapDoc), outStream);
 
             DOMUtil util;
-            InputStream inStream = conn.getInputStream();
+            
+            InputStream inStream=null;
+            if(conn.getResponseCode() > 400)
+                inStream = conn.getErrorStream();
+            else
+                inStream = conn.getInputStream();
+            
             util = new DOMUtil();
             doc = util.inputStreamToDocument(inStream);
             return doc;

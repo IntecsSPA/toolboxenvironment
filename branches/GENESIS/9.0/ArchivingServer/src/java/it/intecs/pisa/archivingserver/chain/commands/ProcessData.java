@@ -65,8 +65,8 @@ public class ProcessData implements Command {
 
     private void processData(String itemId,StoreItem storeItem,File webappDir) throws Exception {
         JsonObject chainTypesListJson = null;
-        String command=null,outputType=null;
-        JsonElement el;
+        String command=null,outputWatchFolderPath=null;
+        JsonElement el,el1;
         chainTypesListJson = ChainTypesPrefs.getChainTypeInformation(webappDir,storeItem.type); 
         
        
@@ -75,10 +75,10 @@ public class ProcessData implements Command {
            ChainTypesPrefs.PRE_PROCESSING_JSON_SCRIPT_PATH_PROPERTY);
             if(!(el ==null || el instanceof JsonNull))
                 command=el.getAsString();
-            el=chainTypesListJson.get(
-               ChainTypesPrefs.CHAIN_TYPE_JSON_OUTPUT_TYPE_PROPERTY);
-            if(!(el ==null || el instanceof JsonNull))
-                outputType=el.getAsString();
+            el1=chainTypesListJson.get(
+               ChainTypesPrefs.CHAIN_TYPE_JSON_OUTPUT_WATCH_PROPERTY);
+            if(!(el1 ==null || el1 instanceof JsonNull))
+                outputWatchFolderPath=el1.getAsString();
             if(command!=null && !command.equals(""))
             {
                 File commandFile;
@@ -89,13 +89,11 @@ public class ProcessData implements Command {
                 File downloadDir=Prefs.getDownloadFolder(webappDir);
 
                 File dataFile=new File(downloadDir,itemId);
-                if(outputType.equals("") || outputType.equals(storeItem.type)){
+                if(outputWatchFolderPath.equals("")){
                     
                     outFile= new File(downloadDir, itemId + "_processed");
                 }else{
-                  JsonObject watchJson = WatchPrefs.getWatchInformation(webappDir,outputType);
-                  outFile= new File(watchJson.getAsJsonPrimitive(
-                         WatchPrefs.WATCH_JSON_FOLDER_PROPERTY).getAsString());
+                  outFile= new File(outputWatchFolderPath);
                 }
                 ProcessBuilder pb;
                 Process p;

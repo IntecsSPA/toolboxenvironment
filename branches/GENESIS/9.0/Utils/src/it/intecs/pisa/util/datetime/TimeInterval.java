@@ -35,15 +35,16 @@ public class TimeInterval {
                 multiplier = 3600;
                 break;
 
-            case 'd':
+            case 'D':
                 multiplier = 86400;
                 break;
 
-            case 'w':
+            case 'W':
                 multiplier = 604800;
                 break;
+                   
         }
-
+//['weeks','W'], ['days','D'], ['months','M'], ['years', 'Y']
         value = interval.substring(0, interval.length() - 1);
         return Long.parseLong(value) * multiplier*1000;
     }

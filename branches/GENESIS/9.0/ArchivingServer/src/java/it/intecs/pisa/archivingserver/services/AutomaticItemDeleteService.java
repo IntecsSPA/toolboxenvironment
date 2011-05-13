@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package it.intecs.pisa.archivingserver.services;
 
 import it.intecs.pisa.archivingserver.chain.commands.CommandsConstants;
@@ -26,72 +25,68 @@ import javawebparts.misc.chain.Result;
  *
  * @author Massimiliano Fanciulli
  */
-public class AutomaticItemDeleteService extends Thread{
-    protected static final long ONE_HOUR=1000*60*60;
+public class AutomaticItemDeleteService extends Thread {
 
-    protected boolean mustShutdown=false;
+    protected static final long ONE_HOUR = 1000 * 60 * 60;
+    protected boolean mustShutdown = false;
     protected File appdir;
-    protected Timer timer=new Timer();
-    protected static AutomaticItemDeleteService instance=new AutomaticItemDeleteService();
+    protected Timer timer = new Timer();
+    protected static AutomaticItemDeleteService instance = new AutomaticItemDeleteService();
 
-    public static AutomaticItemDeleteService getInstance()
-    {
+    public static AutomaticItemDeleteService getInstance() {
         return instance;
     }
 
     @Override
     public void run() {
-        long waitInterval=ONE_HOUR;
+        long waitInterval = ONE_HOUR;
         String[] items;
         Properties prop;
         String intervalStr;
 
-        try
-        {
+        try {
             prop = Prefs.load(appdir);
-            intervalStr=prop.getProperty("delete.after");
+            intervalStr = prop.getProperty("delete.after");
 
-            waitInterval=TimeInterval.getIntervalAsLong(intervalStr);
+            waitInterval = TimeInterval.getIntervalAsLong(intervalStr);
 
-            while(!mustShutdown)
-            {
-                try
-                {
+            while (!mustShutdown) {
+                try {
                     long maxExpires;
-                    maxExpires=(new Date()).getTime()-waitInterval;
+                    maxExpires = (new Date()).getTime()/* - waitInterval*/;
                     items = getItemsToDelete(maxExpires);
 
                     for (String item : items) {
-                        Log.log("Automatic deletion of item "+item);
+                        Log.log("Automatic deletion of item " + item);
                         deleteItem(item);
                     }
 
                     try {
+                        prop = Prefs.load(appdir);
+                        intervalStr = prop.getProperty("delete.after");
+
+                        waitInterval = TimeInterval.getIntervalAsLong(intervalStr);
                         sleep(waitInterval);
-                    } catch (InterruptedException ex) {}
-                }
-                catch(Exception e)
-                {
+                    } catch (InterruptedException ex) {
+                    }
+                } catch (Exception e) {
                     Log.logException(e);
                 }
             }
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             Log.logException(e);
         }
     }
 
-    public void addRemovableItem(String item,Date expireDate)
-    {
+    public void addRemovableItem(String item, Date expireDate) {
         DeleteItemTask tt;
 
-        tt=new DeleteItemTask(item,appdir);
+        tt = new DeleteItemTask(item, appdir);
         timer.schedule(tt, expireDate);
         timer.purge();
     }
 
-   private String[] getItemsToDelete(long maxExpires) throws SQLException {
+    private String[] getItemsToDelete(long maxExpires) throws SQLException {
         InternalDatabase db;
         Statement stm = null;
         ResultSet rs;
@@ -101,8 +96,8 @@ public class AutomaticItemDeleteService extends Thread{
             db = InternalDatabase.getInstance();
             stm = db.getStatement();
 
-            rs = stm.executeQuery("SELECT I.ID FROM T_ITEMS AS I,T_DOWNLOADS AS D WHERE I.EXPIRES=0 AND I.ARRIVAL_DATE<=" + maxExpires+
-                    " AND D.ID=I.ID AND D.STATUS!='DOWNLOADING'");
+            rs = stm.executeQuery("SELECT I.ID FROM T_ITEMS AS I,T_DOWNLOADS AS D WHERE I.EXPIRES<=" + maxExpires
+                    + " AND D.ID=I.ID AND D.STATUS!='DOWNLOADING'");
 
             Vector<String> ids;
 
@@ -133,18 +128,16 @@ public class AutomaticItemDeleteService extends Thread{
 
         int success = ct.getResult().getCode();
         if (success == Result.FAIL) {
-            Log.log("Cannot delete item "+item);
+            Log.log("Cannot delete item " + item);
         }
     }
 
-    public void setAppDir(File dir)
-    {
-        appdir=dir;
+    public void setAppDir(File dir) {
+        appdir = dir;
     }
 
-    public void requestShutdown()
-    {
-        mustShutdown=true;
+    public void requestShutdown() {
+        mustShutdown = true;
         this.interrupt();
     }
 }

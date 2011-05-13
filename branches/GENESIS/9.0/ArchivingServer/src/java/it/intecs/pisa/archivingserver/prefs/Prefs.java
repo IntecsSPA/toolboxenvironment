@@ -48,8 +48,10 @@ public class Prefs {
         propFile=new File(webappDir,CONFIG_PROPERTIES_FILE_PATH);
         
         prop=new Properties();
-        prop.load(new FileInputStream(propFile));
+        FileInputStream propIs=new FileInputStream(propFile);
+        prop.load(propIs);
 
+        propIs.close();
         return prop;
     }
     

@@ -7,11 +7,13 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import it.intecs.pisa.util.IOUtil;
+import it.intecs.pisa.util.datetime.TimeInterval;
 import it.intecs.pisa.util.json.JsonUtil;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Properties;
 
 /**
  *
@@ -23,6 +25,7 @@ public class WatchPrefs {
     
     public static final String WATCH_JSON_ID_PROPERTY="id";
     public static final String WATCH_JSON_ID_STRING_PROPERTY="idString";
+    public static final String WATCH_JSON_DELETE_AFTER_STRING_PROPERTY="deleteAfter";
     public static final String WATCH_JSON_FOLDER_PROPERTY="watchFolder";
     public static final String JSON_WATCH_LIST_PROPERTY="watchList";
     public static final String JSON_WATCH_TYPE_PROPERTY="type";
@@ -59,6 +62,7 @@ public class WatchPrefs {
         File propFile;
         int idHashCode;
         JsonPrimitive idProperties;
+        JsonPrimitive deleteAfterProperties;
 
         propFile = new File(webappDir,WATCH_LIST_JSON_FILE_PATH);
         
@@ -72,9 +76,22 @@ public class WatchPrefs {
                 watch.addProperty(WATCH_JSON_ID_PROPERTY, idHashCode);
                 watch.remove(WATCH_JSON_ID_STRING_PROPERTY);
             }
+            /*deleteAfterProperties=watch.getAsJsonPrimitive(WATCH_JSON_DELETE_AFTER_STRING_PROPERTY);
+            if(deleteAfterProperties.getAsString().equals("-1")){*/
+              /* Properties prop = Prefs.load(webappDir);
+               String intervalStr = prop.getProperty("delete.after"); 
+               watch.remove(WATCH_JSON_DELETE_AFTER_STRING_PROPERTY);
+               String afterProp=""+TimeInterval.getIntervalAsLong(intervalStr);
+               if(afterProp.equals("0"))*/
+            /*   String afterProp=""+TimeInterval.getIntervalAsLong("9999W"); 
+               watch.addProperty(WATCH_JSON_DELETE_AFTER_STRING_PROPERTY, afterProp);
+            
+            }*/
         }
         
-        IOUtil.copy(JsonUtil.getJsonAsStream(obj), new FileOutputStream(propFile));
+        FileOutputStream fout=new FileOutputStream(propFile);
+        IOUtil.copy(JsonUtil.getJsonAsStream(obj), fout);
+        fout.close();
     }
     
 

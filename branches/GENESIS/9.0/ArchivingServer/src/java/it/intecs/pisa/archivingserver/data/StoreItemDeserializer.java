@@ -10,6 +10,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import it.intecs.pisa.util.datetime.TimeInterval;
 import java.lang.reflect.Type;
 
 /**
@@ -17,6 +18,8 @@ import java.lang.reflect.Type;
  * @author massi
  */
 public class StoreItemDeserializer implements JsonDeserializer<StoreItem> {
+    
+    private final String MAX_DELETE_AFTER="9999W";
 
     public StoreItem deserialize(JsonElement je, Type type, JsonDeserializationContext jdc) throws JsonParseException {
         StoreItem item;
@@ -43,8 +46,13 @@ public class StoreItemDeserializer implements JsonDeserializer<StoreItem> {
 
         el=obj.get("deleteAfter");
         if(el==null || el instanceof com.google.gson.JsonNull)
-           item.deleteAfter=0; 
-        else item.deleteAfter=el.getAsLong();
+           item.deleteAfter=TimeInterval.getIntervalAsLong(MAX_DELETE_AFTER); 
+        else {
+            if(el.getAsString().equals("-1"))
+               item.deleteAfter=TimeInterval.getIntervalAsLong(MAX_DELETE_AFTER);
+            else
+               item.deleteAfter=TimeInterval.getIntervalAsLong(el.getAsString());
+        }
         
         el=obj.get("geoserverType");
         if(el==null || el instanceof com.google.gson.JsonNull)

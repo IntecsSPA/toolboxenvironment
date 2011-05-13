@@ -5,6 +5,7 @@ package it.intecs.pisa.archivingserver.rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import it.intecs.pisa.archivingserver.chain.commands.ChainExecutor;
 import it.intecs.pisa.archivingserver.chain.commands.CommandsConstants;
@@ -28,7 +29,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLDecoder;
 import java.util.Properties;
-import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javawebparts.misc.chain.ChainContext;
@@ -46,15 +46,15 @@ import javax.servlet.http.HttpServletResponse;
 public class ArchivingServerServlet extends HttpServlet {
 
     protected static final String METHOD_STORE = "store";
+    protected static final String METHOD_DATA_LIST = "datalist";
     protected static final String METHOD_GET_STATUS = "getstatus";
     protected static final String METHOD_REVERSE_ID = "reverseid";
     protected static final String METHOD_DELETE = "delete";
 
-    protected Timer timer;
-    protected FTPService ftpService;
-    protected String rootDirStr;
-    protected File rootDir;
-    protected File workspaceDir;
+     private FTPService ftpService;
+     protected String rootDirStr;
+     protected File rootDir;
+     protected File workspaceDir;
     
     
     /**
@@ -79,6 +79,11 @@ public class ArchivingServerServlet extends HttpServlet {
         {
             reverseId(request,response);
         }
+        else if(requestURI.contains(METHOD_DATA_LIST))
+        {
+            response.setContentType("text/html");
+            dataList(request,response);
+        }
         else {
             response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }
@@ -100,6 +105,7 @@ public class ArchivingServerServlet extends HttpServlet {
         
         requestURI = request.getRequestURI();
         if (requestURI.contains(METHOD_STORE)) {
+            
             storeItem(request, response);
         } else {
             response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
@@ -170,10 +176,73 @@ public class ArchivingServerServlet extends HttpServlet {
         
         sendJsonBackToClient(outputJson, response);
     }
+    
+    
+    private void dataList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        JsonObject jsonDataList=null;
+        String[][] itemStatusM;
+        try
+        {
+          itemStatusM=ItemRefDB.getList();
+          String startParam=request.getParameter("start");
+          String limitParam=request.getParameter("limit");
+          jsonDataList=new JsonObject();
+          JsonArray arraylist=new JsonArray();
+          
+          jsonDataList.addProperty("totalCount", ""+itemStatusM.length); 
+          
+          if(startParam != null && limitParam != null)
+              arraylist=createDataArray(itemStatusM, 
+                      Integer.parseInt(startParam),
+                      Integer.parseInt(limitParam));
+          else
+              arraylist=createDataArray(itemStatusM);
+          
+          jsonDataList.add("dataList", arraylist);
+          sendJsonBackToClient(jsonDataList, response);
+        }
+        catch(Exception e)
+        {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+
+    }
+    
+    private JsonArray createDataArray(String[][] itemStatus){
+        JsonArray list=new JsonArray();
+        int i;
+        JsonObject eleJs=null;
+        for(i=0; i<itemStatus.length; i++){
+            eleJs=new JsonObject();
+            eleJs.addProperty("dataId", itemStatus[i][0]);
+            eleJs.addProperty("creationDate", itemStatus[i][1]);
+            eleJs.addProperty("deleteDate", itemStatus[i][2]);
+            list.add(eleJs);
+        }
+        return list;
+    }
+    
+    private JsonArray createDataArray(String[][] itemStatus, int start, int limit){
+        JsonArray list=new JsonArray();
+        int i;
+        JsonObject eleJs=null;
+        int end=start+limit;
+        for(i=start; i<itemStatus.length; i++){
+            if(i<end){
+                eleJs=new JsonObject();
+                eleJs.addProperty("dataId", itemStatus[i][0]);
+                eleJs.addProperty("creationDate", itemStatus[i][1]);
+                eleJs.addProperty("deleteDate", itemStatus[i][2]);
+                list.add(eleJs);
+            }else
+              break;  
+        }
+        return list;
+    }
 
     private void sendJsonBackToClient(JsonObject outputJson, HttpServletResponse response) throws IOException {
         String jsonStr;
-
+        response.setContentType("application/json");
         jsonStr=JsonUtil.getJsonAsString(outputJson);
         response.getWriter().print(jsonStr);
     }
@@ -218,7 +287,8 @@ public class ArchivingServerServlet extends HttpServlet {
     private void deleteItem(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String itemId=null;
         boolean success=false;
-
+        JsonObject outputJson;
+        outputJson=new JsonObject();
         try {
             String requestURI;
             requestURI=request.getRequestURI();
@@ -242,18 +312,20 @@ public class ArchivingServerServlet extends HttpServlet {
                 cm.executeChain("Catalogue/deleteChain", ct);
 
                 success=ct.getResult().getCode()==Result.SUCCESS;
-
-                if(success==false)
-                    response.setStatus(500);
+                
+                
+                
             }
-            else response.setStatus(404);
+            else success=false;;
         }
         catch(Exception e)
         {
-            response.setStatus(500);
+            success=false;
         }
         
-       
+       outputJson.addProperty("success", success);
+
+       sendJsonBackToClient(outputJson, response);
     }
 
    
@@ -324,8 +396,8 @@ public class ArchivingServerServlet extends HttpServlet {
 
          try
          {
-             if(ftpService!=null)
-                ftpService.stopServer();
+             if(getFtpService()!=null)
+                getFtpService().stopServer();
          }
          catch(Exception e)
          {
@@ -353,22 +425,25 @@ public class ArchivingServerServlet extends HttpServlet {
         internalDatabase = InternalDatabase.getInstance();
         internalDatabase.setDatabasePath("file:" + dbDir.getAbsolutePath() + File.separatorChar + "database");
 
+        
         AutomaticItemDeleteService automaticDeleteService;
 
         automaticDeleteService=AutomaticItemDeleteService.getInstance();
         automaticDeleteService.setAppDir(rootDir);
-        automaticDeleteService.start();
+        if(!automaticDeleteService.isAlive())
+            automaticDeleteService.start();
 
         AutomaticFolderPublishingService folderPublishingService;
         folderPublishingService=AutomaticFolderPublishingService.getInstance();
         folderPublishingService.setAppDir(rootDir);
+        if(!folderPublishingService.isAlive())
         folderPublishingService.start();
 
         File ftpConfigDir;
 
         ftpConfigDir=new File(webinfDir, "FTPServer");
-        ftpService = FTPService.getInstance(ftpConfigDir.getAbsolutePath());
-        if(ftpService==null)
+        setFtpService(FTPService.getInstance(ftpConfigDir.getAbsolutePath()));
+        if(getFtpService()==null)
             Log.log("Cannot start FTP server");
     }
 
@@ -414,5 +489,19 @@ public class ArchivingServerServlet extends HttpServlet {
         {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    /**
+     * @return the ftpService
+     */
+    public FTPService getFtpService() {
+        return this.ftpService;
+    }
+
+    /**
+     * @param ftpService the ftpService to set
+     */
+    public void setFtpService(FTPService ftpService) {
+        this.ftpService = ftpService;   
     }
 }

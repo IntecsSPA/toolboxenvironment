@@ -34,9 +34,9 @@ public class StoreItem {
     public String[] publishSOS;
     public boolean publishHttp;
 
-    public String[] notifyURL;
+    /*public String[] notifyURL;
     public String[] notifyTopic;
-    public String[] notifyEventType;
+    public String[] notifyEventType;*/
 
 
     /*

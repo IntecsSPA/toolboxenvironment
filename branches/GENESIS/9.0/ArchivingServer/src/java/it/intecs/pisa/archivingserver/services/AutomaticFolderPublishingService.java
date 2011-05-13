@@ -194,9 +194,9 @@ public class AutomaticFolderPublishingService extends Thread{
 
             int success = ct.getResult().getCode();
             if (success == Result.FAIL) {
-                System.out.println("Cannot publish item " + item);
+                Log.log("Cannot publish item " + item);
             }
-            else System.out.println("Item " + item+" published");
+            else Log.log("Item " + item+" published");
         }
     }
      

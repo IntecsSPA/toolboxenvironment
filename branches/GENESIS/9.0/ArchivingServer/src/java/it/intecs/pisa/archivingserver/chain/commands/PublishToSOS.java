@@ -4,6 +4,7 @@ package it.intecs.pisa.archivingserver.chain.commands;
 import com.sun.org.apache.xpath.internal.XPathAPI;
 import com.sun.org.apache.xpath.internal.objects.XObject;
 import it.intecs.pisa.archivingserver.data.StoreItem;
+import it.intecs.pisa.archivingserver.db.SOSAccessible;
 import it.intecs.pisa.archivingserver.log.Log;
 import it.intecs.pisa.archivingserver.prefs.Prefs;
 import it.intecs.pisa.archivingserver.soap.SOAPNamespacePrefixResolver;
@@ -25,6 +26,7 @@ import org.w3c.dom.Document;
  *
  * @author massi
  */
+
 public class PublishToSOS implements Command {
     @Override
     public Result init(ChainContext cc) {
@@ -53,7 +55,7 @@ public class PublishToSOS implements Command {
 
                 for (String url : storeItem.publishSOS) {
                     try {
-                        harvestData(url, SOSmessage);
+                        harvestData(url, SOSmessage, itemId);
                     } catch (Exception e) {
                         Log.logException(e);
                     }
@@ -66,7 +68,7 @@ public class PublishToSOS implements Command {
         return new Result(Result.SUCCESS);
     }
 
-    private boolean harvestData(String url, Document doc) throws Exception, MalformedURLException {
+    private boolean harvestData(String url, Document doc, String id) throws Exception, MalformedURLException {
         URL to = new URL(url);
         HttpURLConnection conn;
         Document response;
@@ -88,8 +90,13 @@ public class PublishToSOS implements Command {
         } catch (Exception e) {
             throw new Exception("Cannot insert data on the SOS server. Details: " + e.getLocalizedMessage());
         }
-
-        return isSuccessful(response);
+        
+        boolean success=isSuccessful(response);
+        if(success){
+            SOSAccessible.add(id, url);
+        }
+        
+        return success;
     }
 
     @Override
@@ -100,7 +107,7 @@ public class PublishToSOS implements Command {
     private Boolean isSuccessful(Document resp) throws TransformerException {
         String xpath="/sos:InsertObservationResponse/sos:AssignedObservationId";
         XObject result = XPathAPI.eval(resp, xpath, new SOAPNamespacePrefixResolver());
-        if(result!=null && result.toString()!=null && result.toString().equals("")==false)
+        if(result!=null && result.toString()!=null)
            return true;
 
         return false;

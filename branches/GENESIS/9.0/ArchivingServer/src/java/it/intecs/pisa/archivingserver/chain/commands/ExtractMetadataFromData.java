@@ -95,7 +95,7 @@ public class ExtractMetadataFromData implements Command {
                     ProcessBuilder pb;
                     Process p;
 
-                    pb = new ProcessBuilder("./"+command, dataFile.getCanonicalPath(), 
+                    pb = new ProcessBuilder(command, dataFile.getCanonicalPath(), 
                                                             outFile.getCanonicalPath());
                     pb.directory(commandFile.getParentFile());
                     p = pb.start();

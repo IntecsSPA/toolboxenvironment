@@ -22,7 +22,11 @@ public class SOAPNamespacePrefixResolver implements  PrefixResolver{
         else if(string.equals("soap-env"))
             return "http://schemas.xmlsoap.org/soap/envelope/";
         else if(string.equals("sos"))
-            return "http://www.opengis.net/sos/1.0";        
+            return "http://www.opengis.net/sos/1.0";
+        else if(string.equals("ogc"))
+            return "http://www.opengis.net/ogc";    
+        else if(string.equals("ows"))
+            return "http://www.opengis.net/ows/1.1";          
         else return "";
     }
 

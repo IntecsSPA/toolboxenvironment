@@ -37,7 +37,8 @@ public class PublishToFTP implements Command{
 
             for(String ftp: storeItem.publishFtp)
             {
-                storeFile(ftp,itemId,appDir);
+                if(!ftp.equals("ftp:"))
+                   storeFile(ftp,itemId,appDir);
             }
         } catch (Exception e) {
             Log.log(e.getMessage());

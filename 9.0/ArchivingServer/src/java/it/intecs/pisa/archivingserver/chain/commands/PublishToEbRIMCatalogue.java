@@ -120,9 +120,11 @@ public class PublishToEbRIMCatalogue implements Command {
 
         //Storing reference into db for reverse lookup
         String itemId=extractRIMIdFromHarvestResponse(resp);
-        if(itemId!=null)
+        if(itemId!=null){
             CatalogueCorrespondence.add(id, url, itemId);
-        
+            Log.log("Harvest metadata to catalogue "+url+" completed. Metadata id: "+itemId);
+        }else
+            Log.log("Harvest metadata to catalogue "+url+" failed! ");
         res=true;
         return res;
     }
@@ -141,7 +143,6 @@ public class PublishToEbRIMCatalogue implements Command {
         DOMUtil util;
         Element rootEl;
         Element sourceEl;
-        Element resourceTypeEl;
         Properties prop;
 
         util=new DOMUtil();
@@ -161,15 +162,13 @@ public class PublishToEbRIMCatalogue implements Command {
         sourceEl.setTextContent(fullUrl);
         rootEl.appendChild(sourceEl);
 
-        /*resourceTypeEl=doc.createElement("csw:ResourceType");
-        resourceTypeEl.setTextContent("urn:x-ogc:specification:csw-ebrim:ObjectType:EO:EOProduct");
-        rootEl.appendChild(resourceTypeEl);*/
         return doc;
     }
 
-    private String extractRIMIdFromHarvestResponse(Document resp) throws TransformerException {
+    private String extractRIMIdFromHarvestResponse(Document resp) throws TransformerException, Exception {
         String[] supportedRIMTypes={"//csw:BriefRecord[dcelem:type = 'urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:RegistryPackage']/dcelem:identifier"};
       
+       // Log.debug(DOMUtil.getDocumentAsString(resp));
         for(String path:supportedRIMTypes)
         {
             XObject result = XPathAPI.eval(resp, path, new SOAPNamespacePrefixResolver());
@@ -201,7 +200,6 @@ public class PublishToEbRIMCatalogue implements Command {
                 namespaceURI.equals(NAMESPACE_EOP))
             putLinkIntoEOMetadata(doc,url);
 
-        Log.log(DOMUtil.getDocumentAsString(doc));
     }
 
     private void putLinkIntoEOMetadata(Document doc,String url)
@@ -228,7 +226,6 @@ public class PublishToEbRIMCatalogue implements Command {
         try
         {
             Element root=doc.getDocumentElement();
-            //Element MDMetadataEl=getChildren(root,NAMESPACE_GMD,"MD_Metadata");
             Element distribInfoEl=getChildren(root,NAMESPACE_GMD,"distributionInfo");
             Element distributionEl=getChildren(distribInfoEl,NAMESPACE_GMD,"MD_Distribution");
             Element tranferOptionsEl=getChildren(distributionEl,NAMESPACE_GMD,"transferOptions");

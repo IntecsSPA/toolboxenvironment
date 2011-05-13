@@ -77,6 +77,20 @@ public class ItemStatusSerializer implements JsonSerializer<ItemStatus>{
 
         if(t.geoserver.length>0)
             obj.add("geoserver", array);
+        
+        
+        array=new JsonArray();
+        try {
+            for (String url : t.sos) {
+                array.add(new JsonPrimitive(url));
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ItemStatusSerializer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if(t.sos.length>0)
+            obj.add("sos", array);
+        
         return obj;
     }
 

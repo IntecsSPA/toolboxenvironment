@@ -4,12 +4,18 @@
  */
 package it.intecs.pisa.archivingserver.chain.commands;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonObject;
 import com.sun.org.apache.xpath.internal.XPathAPI;
+import com.sun.org.apache.xpath.internal.objects.XObject;
 import it.intecs.pisa.archivingserver.data.StoreItem;
 import it.intecs.pisa.archivingserver.db.FTPAccessible;
 import it.intecs.pisa.archivingserver.db.GeoServerAccessible;
 import it.intecs.pisa.archivingserver.db.HttpAccessible;
 import it.intecs.pisa.archivingserver.log.Log;
+import it.intecs.pisa.archivingserver.prefs.ChainTypesPrefs;
+import it.intecs.pisa.archivingserver.soap.SOAPNamespacePrefixResolver;
 import it.intecs.pisa.archivingserver.soap.SimpleSOAPClient;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.DateUtil;
@@ -37,6 +43,7 @@ public class NotifyPublishing implements Command {
     protected static final String NAMESPACE_GML = "http://www.opengis.net/gml";
     protected static final String NAMESPACE_XLINK = "http://www.w3.org/1999/xlink";
     protected static final String NAMESPACE_OGC = "http://www.opengis.net/ogc";
+    
 
     @Override
     public Result init(ChainContext cc) {
@@ -49,19 +56,35 @@ public class NotifyPublishing implements Command {
         String id;
         File webappDir;
         Document doc = null;
+        JsonObject chainTypesListJson = null;
+        JsonElement notifyURLEl,notifyTopicEl, notifyEventTypeEl;
 
         try {
             storeItem = (StoreItem) cc.getAttribute(CommandsConstants.STORE_ITEM);
-
-            if (storeItem.notifyURL.length > 0) {
-                for (int index = 0; index < storeItem.notifyURL.length; index ++) {
-                    try {
-                        doc = createTransactionMessage(cc,storeItem.notifyTopic[index],storeItem.notifyEventType[index]);
-                        notify(storeItem.notifyURL[index], doc);
-                    } catch (Exception e) {
+            webappDir=(File) cc.getAttribute(CommandsConstants.APP_DIR);
+            chainTypesListJson = ChainTypesPrefs.getChainTypeInformation(webappDir,storeItem.type); 
+            
+            notifyURLEl=chainTypesListJson.get(
+                    ChainTypesPrefs.NOTIFY_URL_PROPERTY);
+            notifyTopicEl=chainTypesListJson.get(
+                    ChainTypesPrefs.NOTIFY_TOPIC_PROPERTY);
+            notifyEventTypeEl=chainTypesListJson.get(
+                    ChainTypesPrefs.NOTIFY_EVENT_TYPE_PROPERTY);
+            
+            
+            if (notifyURLEl!= null && !(notifyURLEl instanceof JsonNull) &&
+                notifyTopicEl!= null && !(notifyTopicEl instanceof JsonNull) &&
+                notifyEventTypeEl!= null && !(notifyEventTypeEl instanceof JsonNull)    
+                ){
+                  try {
+                        doc = createTransactionMessage(cc,
+                                notifyTopicEl.getAsString(),
+                                notifyEventTypeEl.getAsString());
+                        notify(notifyURLEl.getAsString(), doc);
+                  } catch (Exception e) {
                         Log.logException(e);
-                    }
-                }
+                  }
+                
             }
         } catch (Exception e) {
             Log.log(e.getMessage());
@@ -78,6 +101,23 @@ public class NotifyPublishing implements Command {
         client.setTo(new URL(url));
         client.setSoapAction("http://www.opengis.net/cat/csw/2.0.2/requests#Harvest");
         Document resp = client.sendReceive(doc);
+
+        String notifyId="";    
+        String xpath="//ogc:FeatureId/@fid";
+        XObject result = XPathAPI.eval(resp, xpath, new SOAPNamespacePrefixResolver());
+        if(result!=null && result.str()!=null && !result.str().equals("")){
+            notifyId=result.str();
+            Log.log("New notification issued: "+ notifyId);
+        }else{
+            String details="";
+            xpath="//ows:ExceptionReport/ows:Exception";
+            result = XPathAPI.eval(resp, xpath, new SOAPNamespacePrefixResolver());
+            Element exc=(Element) result.nodelist().item(0);
+            
+            details+=exc.getAttribute("exceptionCode")+" : ";
+            details+=exc.getAttribute("locator")+".";
+            Log.log("Notification Error"+ details);
+        }
 
         // do something with the response
 

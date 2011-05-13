@@ -7,8 +7,12 @@ package it.intecs.pisa.archivingserver.chain.commands;
 import it.intecs.pisa.archivingserver.data.StoreItem;
 import it.intecs.pisa.archivingserver.db.ItemRefDB;
 import it.intecs.pisa.archivingserver.log.Log;
+import it.intecs.pisa.archivingserver.prefs.Prefs;
 import it.intecs.pisa.archivingserver.services.AutomaticItemDeleteService;
+import it.intecs.pisa.util.datetime.TimeInterval;
+import java.io.File;
 import java.util.Date;
+import java.util.Properties;
 import javawebparts.misc.chain.ChainContext;
 import javawebparts.misc.chain.Command;
 import javawebparts.misc.chain.Result;
@@ -29,6 +33,7 @@ public class RegisterItemRef implements Command {
         String itemId;
         long expireDate=0;
         long arrivalDate=0;
+        Properties prop;
         try {
             itemId=(String) cc.getAttribute(CommandsConstants.ITEM_ID);
             StoreItem storeItem = (StoreItem) cc.getAttribute(CommandsConstants.STORE_ITEM);
@@ -42,7 +47,11 @@ public class RegisterItemRef implements Command {
             }
             else
             {
-                expireDate=0;
+                File appDir = (File) cc.getAttribute(CommandsConstants.APP_DIR);
+                prop = Prefs.load(appDir);
+                String intervalStr = prop.getProperty("delete.after"); 
+                expireDate=(new Date()).getTime() + 
+                                TimeInterval.getIntervalAsLong(intervalStr);
             }
             
             ItemRefDB.register(itemId,arrivalDate,expireDate);

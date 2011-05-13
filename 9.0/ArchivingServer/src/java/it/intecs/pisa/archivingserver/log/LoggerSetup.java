@@ -1,5 +1,3 @@
-
-
 package it.intecs.pisa.archivingserver.log;
 
 import java.util.logging.ConsoleHandler;
@@ -9,24 +7,28 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Massimiliano Fanciulli
+ * @author Andrea Marongiu
  */
-public class Log {
-    
+public class LoggerSetup {
+
     private static Logger log;
-    
-    
+
     public static void setup() {
 
         if (log == null) {
             System.out.println("Setting up logger");
-            try { 
+            try {
+               /* Handler fileHandler = new FileHandler(System.getProperty("user.home") + "/ergorr.log", 4096, 3, true);
+                fileHandler.setFormatter(new LogFormatter());
+                fileHandler.setLevel(Level.FINEST);*/
+                
                 Handler consHandler = new ConsoleHandler();
                 consHandler.setFormatter(new LogFormatter());
                 consHandler.setLevel(Level.FINEST);
                 
-                log = Logger.getLogger("it.intecs.pisa.archivingserver");
+                log = Logger.getLogger("be.kzen.ergorr");
                 log.addHandler(consHandler);
+               // log.addHandler(fileHandler);
                 log.setLevel(Level.FINEST);
             } catch (Exception ex) {
                 System.out.println("Error setting up Logger");
@@ -35,51 +37,21 @@ public class Log {
         }
     }
     
-    public static void log(String text){
-        if(log == null)
-              setup();
-        log.log(Level.INFO,text);
-    }
-    
-    
-    public static void debug(String text){
-        if(log == null)
-              setup();
-        log.log(Level.FINEST,text);
-    }
-
-    public static void logException(Exception e)
-    {
-        if(log == null)
-              setup();
-        log.log(Level.SEVERE, "An exception has been thrown. Details: ", e);
-        log.log(Level.SEVERE, e.toString());
-       
-    }
-
-    public static void logHTTPStatus(String url, int code)
-    {
-        if(log == null)
-              setup();
-        log.log(Level.FINEST, "The HTTP exchange with URL {0} return code {1}", new Object[]{url, code});
-    }
-    
-    public static Level getLogLevel(){
-        if(log == null)
-              setup();
-        return log.getLevel();
-    }
-    
     public static void setLevel(Level newLevel) {
+
            System.out.println("Setting new level logger");
             try {
-
+               /* Handler fileHandler = new FileHandler(System.getProperty("user.home") + "/ergorr.log", 4096, 3, true);
+                fileHandler.setFormatter(new LogFormatter());
+                fileHandler.setLevel(newLevel);*/
+                
                 Handler consHandler = new ConsoleHandler();
                 consHandler.setFormatter(new LogFormatter());
                 consHandler.setLevel(newLevel);
                 
                 log = Logger.getLogger("be.kzen.ergorr");
                 log.addHandler(consHandler);
+                //log.addHandler(fileHandler);
                 log.setLevel(newLevel);
             } catch (Exception ex) {
                 System.out.println("Error setting new Level Logger");
@@ -88,4 +60,15 @@ public class Log {
 
         
     }
+    
+    public static String getLevel() {
+          if(log == null)
+              setup();
+          return log.getLevel().toString();
+
+    }
+    
+    
+   
+    
 }

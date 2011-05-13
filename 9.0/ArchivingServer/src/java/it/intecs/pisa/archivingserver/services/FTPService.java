@@ -210,6 +210,12 @@ public class FTPService {
        server.stop();
        server=null;
     }
+    
+    public synchronized void deleteServer() {
+       server.stop();
+       server=null;
+       self= null;
+    }
 
     public boolean isServerRunning() {
         return server!=null && server.isStopped() == false;

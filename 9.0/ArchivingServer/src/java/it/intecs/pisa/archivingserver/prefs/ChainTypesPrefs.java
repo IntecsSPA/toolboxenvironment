@@ -30,8 +30,12 @@ public class ChainTypesPrefs {
  public static final String PRE_PROCESSING_JSON_SCRIPT_PATH_PROPERTY="pplocalScriptPath";
  public static final String METADATA_PROCESSING_JSON_SCRIPT_PATH_PROPERTY="mplocalScriptPath";
  public static final String CHAIN_TYPES_JSON_LIST_PROPERTY="chainTypesList";
- public static final String CHAIN_TYPE_JSON_OUTPUT_TYPE_PROPERTY="ppOuputType";
+ public static final String CHAIN_TYPE_JSON_OUTPUT_WATCH_PROPERTY="ppOutputWatch";
  public static final String CHAIN_TYPE_JSON_TYPE_NAME_PROPERTY="typeName";
+ 
+ public static final String NOTIFY_URL_PROPERTY="notifyURL";
+ public static final String NOTIFY_TOPIC_PROPERTY="notifyTopic";
+ public static final String NOTIFY_EVENT_TYPE_PROPERTY="notifyEventType";
     
    /**
      * Load Data Processing configuration

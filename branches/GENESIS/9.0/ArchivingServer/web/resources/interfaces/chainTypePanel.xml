@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<inputInterface xmlns="http://gisClient.pisa.intecs.it/gisClient">
+    <section name="Chain Types" cols="3">
+      
+       <group label="Chain Types Manager">
+         <input type="button" name="addNewChainTypesButton" label="Add Chain Type" id="addNewChainTypesButton" colSpan="1" onclick="armsManager.chainTypesInterface.onAddChainType"/>
+         <input type="label" name="space2" id="space2" size="50" value="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;" colSpan="1" />
+         <input type="button" name="RemoveAllChainTypesButton" label="Remove All Chain Types" id="RemoveAllChainTypesButton" colSpan="1" onclick="armsManager.chainTypesInterface.onDeleteAllChainTypes"/>
+        </group>
+        <group label="Pre Processing">
+         
+
+         
+         
+         <input type="multitext" name="chainTypesMultiInput" id="chainTypesMultiInput" columns='5' optional="true" size="20" labelAlign="top" colSpan="2"/>   
+
+        </group>
+        
+        
+    </section>
+
+    <requestInformation>
+        <buttons>
+            <button name="saveChainTypesButton" id="saveChainTypesButton" label="Save" iconImage="" onclick="armsManager.chainTypesInterface.onSave"/>
+        </buttons>
+    </requestInformation>
+</inputInterface>

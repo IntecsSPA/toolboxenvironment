@@ -15,10 +15,11 @@ ConfigurationInterface=function(){
      this.formInterface=new ExtXmlInterface(this.xmlInterface);
 
      this.render=function (elementID){
-        var maskConfiguration=new Ext.LoadMask(armsManager.workspacePanel.body,
+        /*var maskConfiguration=new Ext.LoadMask(armsManager.workspacePanel.body,
             { msg:"Please wait..."}
         ); 
-        maskConfiguration.show();
+        maskConfiguration.show();*/
+        armsManager.showWorkspaceLoadPanel(); 
         this.formInterface.formsPanel.render(document.getElementById(elementID));
         this.formInterface.render();
 
@@ -36,7 +37,8 @@ ConfigurationInterface=function(){
             var getConfiguration= function(response){
                 var conf=JSON.parse(response);
                 confInterface.setJSONValues(conf);
-                maskConfiguration.hide();
+                //maskConfiguration.hide();
+                armsManager.hideWorkspaceLoadPanel();
             };
 
            //var loginValues=this.formInterface.getFormValues();

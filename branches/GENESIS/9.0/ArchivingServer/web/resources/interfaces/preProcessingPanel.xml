@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<inputInterface xmlns="http://gisClient.pisa.intecs.it/gisClient">
+    <section name="Pre Processing" cols="3">
+      
+       <group label="Pre Processing Manager">
+         <input type="button" name="addNewPreProcessingButton" label="Add Pre Processing" id="addNewPreProcessingButton" colSpan="1" onclick="armsManager.preProcessingInterface.onAddPreProcessing"/>
+         <input type="label" name="space2" id="space2" size="50" value="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;" colSpan="1" />
+         <input type="button" name="RemoveAllPreProcessingButton" label="Remove All Pre Processing" id="RemoveAllPreProcessingButton" colSpan="1" onclick="armsManager.preProcessingInterface.onDeleteAllPreProcessing"/>
+        </group>
+        <group label="Pre Processing">
+         
+
+         
+         
+         <input type="multitext" name="preProcessingMultiInput" id="preProcessingMultiInput" columns='5' optional="true" size="20" labelAlign="top" colSpan="2"/>   
+
+        </group>
+        
+        
+    </section>
+
+    <requestInformation>
+        <buttons>
+            <button name="savePreProcessingButton" id="savePreProcessingButton" label="Save" iconImage="" onclick="armsManager.preProcessingInterface.onSave"/>
+        </buttons>
+    </requestInformation>
+</inputInterface>

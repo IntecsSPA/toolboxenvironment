@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<inputInterface xmlns="http://gisClient.pisa.intecs.it/gisClient">
+    <section name="Create Catalogue Database" cols="3">
+
+        <group label="General">
+          <input type="text" name="workspace.dir" id="workspace.dir" label="ARMS Workspace Folder" value="" optional="false" size="50" colSpan="3"/>    
+          <input type="text" name="http.public.url" id="http.public.url" label="ARMS public HTTP URL" value="" optional="false" size="50" colSpan="3"/>  
+        </group>
+        <group label="Data Manager">
+          <input type="checkbox" name="fail.dorollback" hideLabel="false" id="fail.dorollback" optional="true" label="Set the rollback procedure in case of error" value="true" colSpan="3"></input>  
+          <input type="numeric" label="Delete Control Interval" name="delete.after" id="delete.after" decimalSeparator="." decimalPrecision='0' optional="false" value="1" size="4" colSpan="1"/>
+          <input type="label" name="space4" id="space2" size="50" value="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;" />
+          <input type="combo" name="delete.after.uom" hideLabel="true" size="20" id="delete.after.uom" optional="false" store="VALUES" storeFields="['label','value']" colSpan="2"
+            storeData="[['seconds', 's'],['minutes','m'], ['hours','h'], ['days','D'], ['weeks','W']]" value="days">
+          </input>
+          
+          <input type="numeric" label="Watch Interval" name="publish.local.folder.interval" id="publish.local.folder.interval" decimalSeparator="." decimalPrecision='0' optional="false" value="1" size="4" colSpan="1"/>
+          <input type="label" name="space5" id="space5" size="50" value="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;" />
+          <input type="combo" name="publish.local.folder.interval.uom" hideLabel="true" size="20" id="publish.local.folder.interval.uom" optional="false" store="VALUES" storeFields="['label','value']" colSpan="1"
+            storeData="[['seconds', 's'],['minutes','m'], ['hours','h'], ['days','D'], ['months','M'], ['years', 'Y']]" value="days">
+          </input>
+        </group>
+        <group label="HTTP Server">
+           <input type="checkbox" name="publish.local.http.enable" hideLabel="false" id="publish.local.http.enable" optional="true" label="Always publish data for access through HTTP" value="true" colSpan="3"></input>  
+        </group>
+        <group label="FTP Server">
+          <input type="text" name="publish.local.ftp.ip" id="publish.local.ftp.ip" label="FTP IP Address" value="" optional="false" size="30" colSpan="3"/>
+          <input type="numeric" label="FTP Port" name="publish.local.ftp.port" id="publish.local.ftp.port" decimalPrecision='0' optional="false" value="1300" size="4" colSpan="3"/>  
+          <input type="text" name="publish.local.ftp.rootdir" id="publish.local.ftp.rootdir" label="FTP Root Folder" value="http://localhost:8080/ArchivingServer" optional="false" size="50" colSpan="3"/> 
+          <input type="checkbox" name="publish.local.ftp.enable" hideLabel="false" id="publish.local.ftp.enable" optional="true" label="Always publish data in local FTP server for access" value="true" colSpan="3"></input><!-- onChange="armsManager.configurationInterface.onToggleFTP" -->
+        </group>
+        <group label="GeoServer">
+           <input type="text" name="publish.geoserver.workspace" id="publish.geoserver.workspace" label="Default Workspace" value="archivingserver" optional="false" size="30" colSpan="3"/>
+        </group>
+        
+        
+    </section>
+
+    <requestInformation>
+        <buttons>
+            <button name="createDatabaseButton" id="createDatabaseButton" label="Save Configuration" iconImage="" onclick="armsManager.configurationInterface.onSetConfiguration"/>
+        </buttons>
+    </requestInformation>
+</inputInterface>

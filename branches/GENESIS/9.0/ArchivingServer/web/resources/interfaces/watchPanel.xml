@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<inputInterface xmlns="http://gisClient.pisa.intecs.it/gisClient">
+    <section name="Create Catalogue Database" cols="3">
+      
+       <group label="Watch Manager">
+         <input type="button" name="addNewWatchButton" label="Add Watch" id="addNewWatchButton" colSpan="1" onclick="armsManager.watchInterface.onAddWatch"/>
+         <input type="label" name="space2" id="space2" size="50" value="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;" colSpan="1" />
+         <input type="button" name="RemoveAllWatchButton" label="Remove All Watches" id="RemoveAllWatchButton" colSpan="1" onclick="armsManager.watchInterface.onDeleteAllWatch"/>
+        </group>
+        <group label="Watch List">
+         
+
+         
+         
+         <input type="multitext" name="watchMultiType" id="watchMultiType" columns='5' optional="true" size="20" labelAlign="top" colSpan="2"/>   
+
+        </group>
+        
+        
+    </section>
+
+    <requestInformation>
+        <buttons>
+            <button name="createDatabaseButton" id="createDatabaseButton" label="Save" iconImage="" onclick="armsManager.watchInterface.onSave"/>
+        </buttons>
+    </requestInformation>
+</inputInterface>

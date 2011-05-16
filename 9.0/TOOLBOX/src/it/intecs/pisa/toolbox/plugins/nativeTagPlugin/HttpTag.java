@@ -45,7 +45,9 @@ public class HttpTag extends NativeTagExecutor {
        // Create an instance of HttpClient.
        HttpClient client = new HttpClient();
        HostConfiguration hc=client.getHostConfiguration();
-       hc.setProxy(System.getProperty(MiscConstants.PROXY_HOST_KEY), 
+       if(System.getProperty(MiscConstants.PROXY_HOST_KEY)!=null &&
+               System.getProperty(MiscConstants.PROXY_PORT_KEY)!= null)
+            hc.setProxy(System.getProperty(MiscConstants.PROXY_HOST_KEY), 
                new Integer(System.getProperty(MiscConstants.PROXY_PORT_KEY)));
        client.setHostConfiguration(hc);
        

@@ -334,11 +334,14 @@ public class ManagerServlet extends ArchivingServerServlet {
             File webinfDir = new File(appDir, "WEB-INF");
             ftpConfigDir=new File(webinfDir, "FTPServer");
             FTPService ftpService=this.getFtpService();
+            if(ftpService !=null)
             ftpService.deleteServer();
             ftpService = FTPService.getInstance(ftpConfigDir.getAbsolutePath());
             this.setFtpService(ftpService);
             if(ftpService==null)
                 Log.log("Cannot start FTP server");
+            else
+                Log.log("FTP server started");
         }    
        
     }

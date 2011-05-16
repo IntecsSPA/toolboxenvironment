@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package it.intecs.pisa.archivingserver.chain.commands;
 
 import com.sun.org.apache.xpath.internal.XPathAPI;

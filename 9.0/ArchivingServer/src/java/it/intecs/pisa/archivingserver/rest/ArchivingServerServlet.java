@@ -27,6 +27,7 @@ import it.intecs.pisa.util.json.JsonUtil;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -44,12 +45,17 @@ import javax.servlet.http.HttpServletResponse;
  * @author Massimiliano Fanciulli
  */
 public class ArchivingServerServlet extends HttpServlet {
-
+    protected static final String ARMS_VERSION = "2.0";
+    
+    
     protected static final String METHOD_STORE = "store";
+    protected static final String METHOD_INFO = "info";
     protected static final String METHOD_DATA_LIST = "datalist";
     protected static final String METHOD_GET_STATUS = "getstatus";
     protected static final String METHOD_REVERSE_ID = "reverseid";
     protected static final String METHOD_DELETE = "delete";
+    
+    
 
      private FTPService ftpService;
      protected String rootDirStr;
@@ -83,6 +89,11 @@ public class ArchivingServerServlet extends HttpServlet {
         {
             response.setContentType("text/html");
             dataList(request,response);
+        }else if(requestURI.contains(METHOD_INFO))
+        {
+            PrintWriter outPW=response.getWriter();
+            outPW.print(this.getServletInfo());
+            outPW.close();
         }
         else {
             response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
@@ -137,7 +148,12 @@ public class ArchivingServerServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Archiving service for TOOLBOX";
+        JsonObject infoJs=new JsonObject();
+        infoJs.addProperty("service", "ARMS");
+        infoJs.addProperty("title", "Archiving Service");
+        infoJs.addProperty("version", ARMS_VERSION);
+        return JsonUtil.getJsonAsString(infoJs);
+
     }// </editor-fold>
 
     private void storeItem(HttpServletRequest request, HttpServletResponse response) throws IOException {

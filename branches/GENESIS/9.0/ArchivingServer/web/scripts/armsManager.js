@@ -1,20 +1,20 @@
 
+
+/*ARMS Application version 2.0*/
+
+
 /*Import XML Interfaces -- START*/
     interfacesManager.loadGlobalScript("scripts/configurationInterface.js");
     interfacesManager.loadGlobalScript("scripts/watchInterface.js");
     interfacesManager.loadGlobalScript("scripts/chainTypeInterface.js");
     interfacesManager.loadGlobalScript("scripts/dataGridInterface.js");
     interfacesManager.loadGlobalScript("scripts/loggingInterface.js");
-    /*interfacesManager.loadGlobalScript("scripts/preProcessingInterface.js");
-    interfacesManager.loadGlobalScript("scripts/metadataProcessingInterface.js");*/
    
  /*Import XML Interfaces -- END*/
 
 armsManager = {
-  
+     restInfoURL: "service/info",
     /*ARMS PAGES*/
-     InputTDAPage: "index.html",
-     OuputTDAPage: "results.html",
      DocumentationPage: "Documentation/docsExplorer/index.html",
     /*ARMS PAGES -- END*/
 
@@ -45,8 +45,6 @@ armsManager = {
            armsManager.configurationInterface=new ConfigurationInterface();
            armsManager.watchInterface=new WatchInterface();
            armsManager.chainTypesInterface=new ChainTypesInterface();
-           /*armsManager.preProcessingInterface= new PreProcessingInterface();
-           armsManager.metadataProcessingInterface= new MetadataProcessingInterface();*/
            
            armsManager.workspacePanel=new Ext.Panel({
                  region: 'center',
@@ -121,19 +119,7 @@ armsManager = {
                                                  xmlInterface: armsManager.dataListInterfaceObj,
                                                  interfacePanel: "armsManager.dataListInterface",
                                                  leaf: true
-                                                }/*,{
-                                                 text: "Pre Processing",
-                                                 type: 'PreProcessingARMS',
-                                                 xmlInterface: armsManager.preProcessingInterfaceObj,
-                                                 interfacePanel: "armsManager.preProcessingInterface",
-                                                 leaf: true
-                                                },{    
-                                                 text: "Metadata Processing",
-                                                 type: 'MetadataProcessingARMS',
-                                                 xmlInterface: armsManager.metadataProcessingInterfaceObj,
-                                                 interfacePanel: "armsManager.metadataProcessingInterface",
-                                                 leaf: true
-                                                }*/
+                                                }
                                               ]
                                       }),
                                       listeners: {
@@ -147,9 +133,7 @@ armsManager = {
                                                      frameId: n.attributes.type+"_frame",
                                                      listeners: {
                                                          "resize" : function(){
-                                                             /*var panelHeight=Ext.getCmp("workspacePanel").getHeight()-2;
-                                                             document.getElementById(frameId).setAttribute('height', panelHeight);
-                                                             this.doLayout();*/
+                                                             
                                                          }
                                                      },
                                                      html: "<div id='"+n.attributes.type+"'></div><iframe src='"+n.attributes.page+"' name='"+n.attributes.type+"_frame' id='"+n.attributes.type+"_frame' scrolling='no' width='100%' height='100%' marginwidth='0' marginheight='0'></iframe>"
@@ -212,11 +196,7 @@ armsManager = {
                                             armsManager.workspacePanel.doLayout();
                                          }
                                     }
-                        }/*{
-                          title: "ARMS Client",
-                          border:false,
-                          autoScroll:true  
-                        },*/]
+                        }]
                   });
                                 
                  var northPanel =new Ext.Panel({
@@ -241,11 +221,10 @@ armsManager = {
                                       region:'west',
                                       id: 'westMainPanel',
                                       split:true,
-                                      //minWidth: 300,
                                       maxWidth: 350,
                                       bodyStyle : {background: armsManager.bodyColor},
                                       width: 350,
-                                      title: "Archiving Server",
+                                      title: armsManager.getArmsTitleAndVersion(),
                                       collapsible: true,
                                       collapsed : false,
                                       autoScroll : true,
@@ -434,6 +413,7 @@ armsManager = {
             };
 
            
+           
            sendAuthenticationXmlHttpRequestTimeOut("GET",
                      this.watchInterface.restWatchListURL,
                      false, null, "loginValues['user']", "loginValues['password']", 
@@ -443,6 +423,34 @@ armsManager = {
             return storeCombo;
             
         },
+        
+        getArmsTitleAndVersion: function(){
+            var titleAndVersion;
+            var getARMSInfoTimeOut=function(){
+                   Ext.Msg.show({
+                       title:'Get ARMS Information: Error',
+                       buttons: Ext.Msg.OK,
+                       msg: 'Request TIME-OUT!',
+                       animEl: 'elId',
+                       icon: Ext.MessageBox.ERROR
+                   });
+            }
+            
+            var getARMSInfo= function(response){    
+                var armsInfo=JSON.parse(response);
+                var tmp=null;
+                titleAndVersion=armsInfo.title+" version: "+armsInfo.version;
+            };
+            
+            sendAuthenticationXmlHttpRequestTimeOut("GET",
+                     armsManager.restInfoURL,
+                     false, null, "loginValues['user']", "loginValues['password']", 
+                     800000, getARMSInfo, getARMSInfoTimeOut,null,
+                     null, null);
+            
+            return titleAndVersion;
+        },     
+        
         
         newWindow: function(url,type){
             var winURL=url;
@@ -454,8 +462,8 @@ armsManager = {
                 } 
             }
             /*"toolbar=yes,
-location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,copyhistory=yes,
-resizable=yes"*/
+            location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,copyhistory=yes,
+            resizable=yes"*/
             window.open(winURL);
         },
 

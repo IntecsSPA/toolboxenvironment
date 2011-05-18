@@ -83,7 +83,7 @@
         <item text="Reference" id="reference.main" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
            <userdata name="thisurl">javascript:var x='noOperation';</userdata>
 		<item text="Tutorial" id="reference.tutorial" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-			<userdata name="thisurl">javascript:var x='noOperation';</userdata>
+                        <userdata name="thisurl">html/tutorial/tutorials.html</userdata>
                         <item text="Multiple SOS data ingestion" id="reference.tutorial.multipleSOSdataingestion" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
                             <userdata name="thisurl">html/tutorial/SOS.html</userdata>
                         </item>

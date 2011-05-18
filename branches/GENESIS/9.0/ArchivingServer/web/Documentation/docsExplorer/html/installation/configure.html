@@ -42,7 +42,7 @@
           <li><strong>Data Manager </strong>            
             <ul>
               <li><em><strong>Set the rollback procedure in case of error</strong></em>: This parameter activates or deactivates the rollback procedure in case of error.</li>
-              <li><span class="Stile1">Delete After</span>: This parameter sets the  time interval after which data shall be automatically deleted. This is typically user to implement a rolling archive. Set this parameter to 0 to disable the automatic deletion feature. </li>
+              <li><span class="Stile1">Delete Control Interval</span>: This parameter provides a time interval between checks a data that should be automatically deleted but, due to of crash, are remained pending.</li>
               <li><em><strong>Watch Interval</strong></em>: This parameter provides a time interval between directory checks. At every check new file is searched in the directory and automatically deployed into the ARMS, if found.</li>
             </ul>
           </li>
@@ -115,6 +115,9 @@
 	          <p>Then proceed with the definition of the steps that the ARMS have to perform when a new data is ingested.</p>
 	          <p>To remove a watch just open the appropriate section and click on the Remove button. </p>
 	          <p>To remove all the Watches click on the &quot;Remove All Watches&quot; button.</p>
+		  <h4>Automatic Deletion</h4>
+	          <p>By checking this check box you will activate the Automatic Deletion functionality. This parameter sets the  time interval after which data shall be automatically deleted. This is typically user to implement a rolling archive.</p>
+	          <p><img src="../images/note.gif"> Note that if the Automatic Deletion Functionality have not been set, the automatic deletion time is set by default to 9999 weeks. </p>
 	          <h4>Internal HTTP Publishing</h4>
 	          <p>By checking this check box you will activate the HTTP publish functionality. The ingested data will be made available via HTTP. The HTTP URL will be put in the metadata and it will be visible in the management interface. </p>
 	          <p><img src="../images/note.gif"> Note that if the generic HTTP publishing parameter have been set the data will be published on HTTP even if this setting is disabled. </p>

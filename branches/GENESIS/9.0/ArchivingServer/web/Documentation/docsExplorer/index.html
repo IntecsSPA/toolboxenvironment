@@ -8,7 +8,7 @@
         </script>
         <script src="codebase/dhtmlxtabbar.js">
         </script>
-        <!-- !!! Following is important inclusion -->
+
         <script src="codebase/dhtmlxtabbar_start.js">
         </script>
         <LINK href="../template/dom.css" rel=stylesheet>
@@ -115,6 +115,8 @@
                 top.window.frames.sampleframe.location.href = url + "?un=" + Date.parse(new Date());
             }
             
+            
+            
             function openPathDocs(id){
                 if (tree.getUserData(id, "thisurl") != null) {
                     top.window.frames.sampleframe.location.href = tree.getUserData(id, "thisurl");
@@ -168,23 +170,7 @@
 
         <table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0" style="table-layout:fixed;">
            
-            <!--<tr bgcolor="#607a92" >
-              
-                <td align="right" bgcolor="#607a92" width="100%" height="60" valign="bottom">
-                    <img src="../images/directory_top.png" name="top" border="0" height="60" width="293">
-                </td>
-            </tr>
-            <tr class="flagcolour">
-                <td colspan="3" height="1">
-                    <img src="../images/1x1.gif">
-                </td>
-            </tr>
-            <tr>
-                <td height="10" width="100%">
-                    <div>
-                    </div>
-                </td>
-            </tr>-->
+    
             <tr>
                 <td width="100%" height="100%" colspan="3">
                     <table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
@@ -203,24 +189,12 @@
                                     </div>
                                 </div>
                             </td>
-                          <!--  <td width="10">
-                                <div>
-                                </div>
-                            </td>
-                            <td align="right">
-                                <iframe id="sampleframe" name="sampleframe" width="100%" height="99%" frameborder="0" src="blank.html" style="border: 0px solid #cecece;">
-                                </iframe>
-                            </td>-->
+                    
                         </tr>
                     </table>
                 </td>
             </tr>
-           <!-- <tr>
-                <td height="6" width="100%" colspan="3">
-                    <div>
-                    </div>
-                </td>
-            </tr>-->
+  
         </table>
     </body>
 </html>

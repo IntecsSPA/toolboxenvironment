@@ -20,10 +20,10 @@ CreateCatalogueDatabaseInterface=function(serviceName){
 
     
      this.onCreate=function(){
-         alert("create");
-          /*var formValuesImport=this.formInterface.getFormValues(false);
+
+          var formValuesImport=this.formInterface.getFormValues(false);
             
-           if(formValuesImport.metadataFile.uploadID){
+           if(formValuesImport){
 
                var loading=new Object();
                loading.message="Please Wait ...";

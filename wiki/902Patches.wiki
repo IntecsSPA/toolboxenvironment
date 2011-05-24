@@ -8,12 +8,6 @@ In this page we report all the patches created for version 9.0.2 of the Toolbox
 
 The Patch 0.2 fixes the bugs fixed by Patch 0.1 and also fixes a bug on the proxy port configuration for the HTTP download.
 
-Bugs Fixed:
-
-1. A bug on the HTTP download via the proxy has been found. The proxy configuration settings are ignored by the Toolbox when it tries to download a file from a remote URL. This is due to an update of the HTTP library.
-
-2. A bug on the "Add WPS processing" interface has been found. Some characters of the engine script (loaded from local disk) are replaced by blank character. 
-
 A patch to solve these problems has been created and can be downloaded [http://toolboxenvironment.googlecode.com/files/TOOLBOX_Patch_0.2.zip here].
 
 Download the package and follow these instructions:

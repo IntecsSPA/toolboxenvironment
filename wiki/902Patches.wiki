@@ -15,6 +15,15 @@ Bugs Fixed:
 2. A bug on the WPS Plugin: The outputs in the Execute response are not present  if the TOOLBOX Endpoint address, set in the configuration,
 is not resolved by host where the TOOLBOX is installed.
 
+A patch to solve these problems has been created and can be downloaded [http://toolboxenvironment.googlecode.com/files/TOOLBOX_Patch_0.3.zip here].
+
+Download the package and follow these instructions:
+
+  # Stop Tomcat
+  # Copy the package in the Tomcat webapps directory. 
+  # Unzip the package. 
+  # Restart Tomcat
+
 = Patch 0.2 =
 
 The Patch 0.2 fixes the bugs fixed by Patch 0.1 and also fixes a bug on the proxy port configuration for the HTTP download.

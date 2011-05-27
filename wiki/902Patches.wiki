@@ -4,6 +4,17 @@
 
 In this page we report all the patches created for version 9.0.2 of the Toolbox
 
+= Patch 0.3 =
+
+The Patch 0.3 fixes the bugs fixed by previous Patch, also it fixes the following bugs.
+
+Bugs Fixed:
+
+1. A bug on the ARMS WPS interface: "Data download and publication to Geoserver"  fails with the new version of ARMS (2.0).
+
+2. A bug on the WPS Plugin: The outputs in the Execute response are not present  if the TOOLBOX Endpoint address, set in the configuration,
+is not resolved by host where the TOOLBOX is installed.
+
 = Patch 0.2 =
 
 The Patch 0.2 fixes the bugs fixed by Patch 0.1 and also fixes a bug on the proxy port configuration for the HTTP download.

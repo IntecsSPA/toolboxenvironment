@@ -23,6 +23,9 @@ Download the package and follow these instructions:
   # Copy the package in the Tomcat webapps directory. 
   # Unzip the package. 
   # Restart Tomcat
+  # Export all your TOOLBOX services
+  # Delete all your TOOLBOX services
+  # Import your old TOOLBOX services from previous export 
 
 = Patch 0.2 =
 

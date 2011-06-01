@@ -35,10 +35,10 @@ http://schemas.opengis.net/sos/1.0.0/sosRegisterSensor.xsd http://www.opengis.ne
          <sml:outputs>
             <sml:OutputList>
                <sml:output name="OutputPhenomena">
-                  <swe:Quantity definition="urn:ogc:def:phenomenon:OGC:1.0.30:min_no2"><swe:uom code="�g/m3"/></swe:Quantity>
-                  <swe:Quantity definition="urn:ogc:def:phenomenon:OGC:1.0.30:max_no2"><swe:uom code="�g/m3"/></swe:Quantity>
-                  <swe:Quantity definition="urn:ogc:def:phenomenon:OGC:1.0.30:avg_no2"><swe:uom code="�g/m3"/></swe:Quantity>
-                  <swe:Quantity definition="urn:ogc:def:phenomenon:OGC:1.0.30:median_no2"><swe:uom code="�g/m3"/></swe:Quantity>
+                  <swe:Quantity definition="urn:ogc:def:phenomenon:OGC:1.0.30:min_no2"><swe:uom code="µg/m3"/></swe:Quantity>
+                  <swe:Quantity definition="urn:ogc:def:phenomenon:OGC:1.0.30:max_no2"><swe:uom code="µg/m3"/></swe:Quantity>
+                  <swe:Quantity definition="urn:ogc:def:phenomenon:OGC:1.0.30:avg_no2"><swe:uom code="µg/m3"/></swe:Quantity>
+                  <swe:Quantity definition="urn:ogc:def:phenomenon:OGC:1.0.30:median_no2"><swe:uom code="µg/m3"/></swe:Quantity>
                </sml:output>
             </sml:OutputList>
          </sml:outputs>

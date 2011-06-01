@@ -37,6 +37,8 @@ $params{'geoserver_rest_workspace'}=						"genesis_rest";
 $params{'wmc_template_rast_vect_polygon_intersection'}=		"$params{'resources_dir'}/WMC_template_rast_vect_polygon_intersection.xml";
 $params{'wmc_template_vect_rast_interp_regular_grid'}=		"$params{'resources_dir'}/WMC_template_vect_rast_interpolation_regular_grid.xml";
 $params{'wmc_template_rast_vect_polylines_intersection'}=	"$params{'resources_dir'}/WMC_template_rast_vect_polylines_intersection.xml";
+$params{'wmc_template_rast_otb_band_math'}=					"$params{'resources_dir'}/WMC_template_rast_otb_band_math.xml";
+
 $params{'wmc_template_rast_format_conv'}=					"$params{'resources_dir'}/WMC_template_rast_format_conv.xml";
 
 $params{'wmc_template_rast_format_conv2'}=					"$params{'resources_dir'}/WMC_template_rast_format_conv2.xml";
@@ -44,7 +46,12 @@ $params{'wmc_template_rast_format_conv2_layer'}=			"$params{'resources_dir'}/WMC
 
 $params{'math_xsl'}=										"$params{'resources_dir'}/math.xsl";
 
+$params{'ndvi_location'}=									"/OTB/NDVI/ndvi";
+$params{'orthorectification_location'}=						"/OTB/OrthorectificationExample/OrthorectificationExample";
+$params{'coregistration_location'}=							"/OTB/SimpleDisparityMapEstimationExample/SimpleDisparityMapEstimationExample";
+
 $params{'debug'}=1;
+
 
 sub getParams {
 	return %params;

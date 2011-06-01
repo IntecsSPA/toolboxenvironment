@@ -506,8 +506,26 @@ sub publishToGeoServerAndReturnLayerNameAndTitle {
 	}
 	
 	# use cURL to add raster to geoserver using REST
-	my $curl_add_raster_command = "curl -v -XPUT  -u ${geoserver_rest_user}:${geoserver_rest_password} ${content_type} --data-binary \@${file_to_publish} ${geoserver_url}/rest/workspaces/${geoserver_rest_workspace}/coveragestores/${coverage_name}/file.${rest_file_extension}?coverageName=${layer_name_wo_workspace}";
-	Utils::execute($curl_add_raster_command, $debug);
+	# this sometimes fails the first time, so we try until we get a "201 Created"
+	# response or until we made 20 attempts
+	my $attempt = 1;
+	my $success = 0;
+	while ($attempt <= 20 && (! $success)) {
+		my $curl_add_raster_command = "curl -v -XPUT  -u ${geoserver_rest_user}:${geoserver_rest_password} ${content_type} --data-binary \@${file_to_publish} ${geoserver_url}/rest/workspaces/${geoserver_rest_workspace}/coveragestores/${coverage_name}/file.${rest_file_extension}?coverageName=${layer_name_wo_workspace}";
+		if ($debug) {
+			print "###########################\n";
+			print "EXECUTING $curl_add_raster_command (attempt $attempt)\n";
+			print "###########################\n";
+		}
+		my $response = `$curl_add_raster_command 2>&1`;
+		if($response =~ m|201 Created|) {
+			$success = 1;
+		}
+		if ($debug) {
+			print "$response\n";
+		}
+		$attempt++;
+	}
 	
 	# use cURL to change default style using REST
 	if (defined $style) {
@@ -523,4 +541,5 @@ sub publishToGeoServerAndReturnLayerNameAndTitle {
 	return ($layer_name,$layer_title);
 
 }
+
 

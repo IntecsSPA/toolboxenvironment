@@ -176,6 +176,66 @@ sub storeBandInfoACRIFileInHash {
 	return %bandinfo;
 }
 
+# store information about the bands in the raster in a hash
+# the returned information is a dimensional hashmap with this structure:
+#		timestamp1
+#			bandnumber
+#		timestamp2
+#			bandnumber
+#		...
+sub storeBandInfoSGHFileInHash {
+
+	my (@input_datasets) = @_;
+
+	my %bandinfo=();
+	
+	my $band = "";
+	my $base_timestamp = "2009-06-05 00:00:00";
+#	my $base_timestamp = "2009-06-05 01:00:00";
+	my $time_offset = "";
+	
+
+	foreach my $input_dataset (@input_datasets) {
+
+		my @input_lines=`gdalinfo \"$input_dataset\"`;
+	
+		foreach my $input_line (@input_lines) {
+
+			# match Band followed by a space followed by one or more digits followed by a whitespace character
+			# match set parentheses around (\d)* to match all digits
+			# the parentheses around \d only match the last digit
+			if ($input_line=~/Band\s((\d)+)\s/) {
+				# we'll add the previous band (if there was any) to the hash
+				#if (defined($band) && defined($base_timestamp) && defined($time_offset)) {
+				if (defined($band) && defined($base_timestamp)) {
+					$time_offset=(($band - 1) * 86400);
+					$bandinfo{calculateTimestamp($base_timestamp,"s",$time_offset)}=$band;
+				}
+				# intialize values
+				$band=$1;
+				my $time_offset = "";
+				#print "BAND $band\n";
+			}
+
+			# match NETCDF_DIMENSION_number_time_step= followed by one or more digits followed by a whitespace character
+			# timestep = 86400, time_offset of first timestep should be 0, so - 1 
+			#if ($input_line=~/NETCDF_DIMENSION_number_time_step=((\d)+)\s/) {
+			#	$time_offset=(($1 - 1) * 86400);
+			#	#print "\tTIME STEP NUMBER $1\n";
+			#}
+		}
+
+		# we'll add the last band (if there is any) to the hash
+		if (defined($band) && defined($base_timestamp) && defined($time_offset)) {
+			$time_offset=(($band - 1) * 86400);
+			$bandinfo{calculateTimestamp($base_timestamp,"s",$time_offset)}=$band;
+		}
+	}
+	
+	return %bandinfo;
+}
+
+
 sub getKeyAndValuesForACRIBandInfo {
 
 	(my $band, my $base_timestamp, my $time_offset, my $variable_name, my $key_field) = @_;
@@ -199,9 +259,11 @@ sub getKeyAndValuesForACRIBandInfo {
 	$values{'variable_name'} = $variable_name;
 	
 	return ($key, %values)
-
-	
 }
+
+
+
+
 
 # get the BBOX of covering the input datasets
 # the returned information is a list containing minx, miny, maxx and maxy

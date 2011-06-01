@@ -92,10 +92,10 @@ if ($output_type_WMC && (!defined($output_wmc) || $output_wmc eq "")) {
 	exit 1;
 }
 
-#6. convert input method method to starpsan syntax
+#6. convert input method to starpsan syntax
 my $method_in_starspan_syntax = convertMethodToStarspanSyntax($method);
 if ($method_in_starspan_syntax eq "") {
-	print "The provided methods is not valid\n";
+	print "The provided method is not valid\n";
 }
 
 

@@ -159,12 +159,12 @@ if ($output_type_wmc) {
 	print "Raster files: @input_raster_files\n";
 
 	my $input_raster_files = "@input_raster_files";
-	my $original_csv="${work_dir}/output.csv";
-	performStarspan("$original_csv", $input_vector_file, $input_raster_files, "--fields $polygon_ID_property");
+	my $starspan_original_output="${work_dir}/output.csv";
+	performStarspan("$starspan_original_output", $input_vector_file, $input_raster_files, "--fields $polygon_ID_property");
 
 	# remove header line from csv file
 	my $csv_wo_header="$work_dir/output_wo_header.csv";
-	open (IN, $original_csv) or die "cannot open $original_csv for reading: $!";
+	open (IN, $starspan_original_output) or die "cannot open $starspan_original_output for reading: $!";
 	open (OUT, ">$csv_wo_header") or die "cannot open $csv_wo_header for writing: $!";
 	my $linenumber=1;
 	while (<IN>) {
@@ -173,7 +173,7 @@ if ($output_type_wmc) {
 		}
 		$linenumber = $linenumber + 1;
 	}
-	close(IN) or die "cannot close $original_csv: $!";
+	close(IN) or die "cannot close $starspan_original_output: $!";
 	close(OUT) or die "cannot close $csv_wo_header: $!";
 	
 	
@@ -201,13 +201,7 @@ if ($output_type_wmc) {
 	if ($parameter eq "NO2") {
 		$parameter = "no2";
 	}
-	#my $rast_vect_polygon_intersection_unique_code="${unique_code}_vect_csv2db";
-	##my $csv2db_command="$shell_scripts_dir/vect_csv2db.sh \"$rast_vect_polygon_intersection_unique_code\" \"$csv_wo_header_w_timestamp\" $unique_code $elevation $parameter \"pg\" \"host=localhost,dbname=grass\" rast_tmp rast postgres grespost";
-	#my $csv2db_command="perl $perl_scripts_dir/vect_csv2db.pl --unique_code=\"$rast_vect_polygon_intersection_unique_code\" --input_file=\"$csv_wo_header_w_timestamp\" --order_id=\"$unique_code\" --elevation=\"$elevation\" --parameter=\"$parameter\" --db_driver=\"pg\" --db_setting=\"host=localhost,dbname=grass\" --tmp_table=rast_tmp --perm_table=rast --db_user=postgres --db_psw=grespost";
-	#print "CSV2DB command:\n";
-	#Utils::execute($csv2db_command, $debug);
-
-	#USE CSV2SOS instead of CSV2DB
+	#add to SOS
 	#perl vect_csv2sos.pl --input_file="/var/www/html/genesis/data/GIM_test_data/CSV/output_wo_header_w_timestamp.csv" --order_id="test1" --parameter="no2" 
 	my $csv2sos_command="perl $perl_scripts_dir/vect_csv2sos.pl --input_file=\"$csv_wo_header_w_timestamp\" --sos_url=\"${sos_url}/sos\" --order_id=\"$unique_code\" --parameter=\"$parameter\"";
 	print "CSV2SOS command:\n";
@@ -256,31 +250,54 @@ if ($output_type_wmc) {
 
 if ($output_type_shape || $output_type_csv) {
 
-	my $original_csv="${work_dir}/output.csv";
-	performStarspan("$original_csv", $input_vector_file, $input_raster_file, "");
+	my $starspan_original_output="${work_dir}/output.csv";
+	performStarspan("$starspan_original_output", $input_vector_file, $input_raster_file, "");
 
 	# copy original shape file
 	#my $copy_shape_files_command = "$shell_scripts_dir/copy_shape_files.sh \"/var/www/html/genesis/data/Bayern/deud52________a8\" \"$work_dir/output_shape\"";
 	
-	# remove FID and RID from CSV file
-	# remove the first field (until ,) in every line (FID-field)
+	# remove RID from CSV file (keep FID field)
 	# remove first occurrence of 'RID' (in header), remove $input_raster_filename in every line
 	my $input_raster_filename = basename ($input_raster_file);
-	my $sed_command="sed -e \"s|^[^,]*,||g\"";
-	   $sed_command="$sed_command -e \"s|,RID,|,|\" -e \"s|,$input_raster_filename,|,|g\"";
-	   $sed_command="$sed_command $original_csv > $work_dir/star_stats_shape_wo_RID.csv";
+	my $sed_command="sed -e \"s|,RID,|,|\" -e \"s|,$input_raster_filename,|,|g\"";
+	   $sed_command="$sed_command $starspan_original_output > $work_dir/star_stats_shape_wo_RID.csv";
 	print "SED command\n";
 	Utils::execute($sed_command, $debug);
 	
+	#convert original DBF to CSV file
+	#we need this CSV file to combine it with the starspan output file
+	#if we don't combine these files features that are not included
+	#in the starspan output file (because there is no overlay with raster)
+	#will not be included in the output CSV or shapefile
+	my $csv_original_dbf_output_dir = "${work_dir}/original_dbf";
+	my $ogr2ogr_command = "ogr2ogr -f \"CSV\" \"${csv_original_dbf_output_dir}\" \"$input_vector_file\"";
+	print "OGR command\n";
+	Utils::execute($ogr2ogr_command, $debug);
+	my @csv_original_dbf_files = ();
+	push (@csv_original_dbf_files, glob("${csv_original_dbf_output_dir}/*.csv"));
+	my $number_of_csv_files_in_dir=@csv_original_dbf_files;
+	if ($number_of_csv_files_in_dir != 1) {
+		print "The $csv_original_dbf_output_dir should contain exactly one .csv file!\n";
+		print "Found .csv files in directory: $number_of_csv_files_in_dir\n";
+		exit 1;
+	}
+	my $csv_original_dbf = $csv_original_dbf_files[0];
+
+	
+	my $combined_CSVs = "${work_dir}/combined.csv";
+	print "Combine CSVs\n";
+	combineCSVs("${work_dir}/star_stats_shape_wo_RID.csv", $csv_original_dbf, $combined_CSVs);
+	
+	
 	if ($output_type_csv) {
-		my $copy_csv_command = "cp \"${work_dir}/star_stats_shape_wo_RID.csv\" \"$output_csv\"";
+		my $copy_csv_command = "cp \"${combined_CSVs}\" \"$output_csv\"";
 		print "Copy CSV command\n";
 		Utils::execute($copy_csv_command, $debug);
 	}
 	
 	if ($output_type_shape) {
 		# overwrite dbf file of original shape file by creating a new dbf file from CSV output
-		my $ogr2ogr_command = "ogr2ogr -f \"ESRI Shapefile\" \"${work_dir}/star_stats_shape.shp\" \"${work_dir}/star_stats_shape_wo_RID.csv\"";
+		my $ogr2ogr_command = "ogr2ogr -f \"ESRI Shapefile\" \"${work_dir}/star_stats_shape.shp\" \"${combined_CSVs}\"";
 		print "OGR command\n";
 		Utils::execute($ogr2ogr_command, $debug);
 
@@ -329,4 +346,76 @@ sub performStarspan {
 	
 	#remove star__table.csv
 	unlink "star__table.csv";
+}
+
+#combine the starspan output CSV file and the original (complete) CSV file
+#derived from the original DBF
+#the FID in the starspan output matches the line numer in the original DBF
+sub combineCSVs {
+	my ($starspan_output, $original_csv, $output_file) = @_;
+
+	open (IN_STARSPAN, $starspan_output) or die "cannot open $starspan_output for reading: $!";
+	open (IN_ORIGINAL, $original_csv) or die "cannot open $original_csv for reading: $!";
+	open (OUT, ">$output_file") or die "cannot open $output_file for writing: $!";
+	
+	
+	my @lines_starspan = <IN_STARSPAN>;
+	my $numer_of_lines_in_starspan = @lines_starspan;
+	my @lines_original = <IN_ORIGINAL>;
+	my $numer_of_lines_in_original = @lines_original;
+	
+	my $fid = 0;
+	my $line_without_fid = "";
+	#start at line 1 (skip header)
+	my $linenumber_original=0;
+	
+	
+	#loop starspan output, starting from 1
+	for (my $linenumber_starspan = 0; $linenumber_starspan < $numer_of_lines_in_starspan; $linenumber_starspan++) {
+		
+		my $line_starspan = $lines_starspan[$linenumber_starspan];
+			
+		#fetch FID	
+		if ($line_starspan =~ m/^([^,]*),(.*)$/) {
+			$fid = $1;
+			$line_without_fid = $2;
+		}
+	
+		#if $linenumber_starspan = 0, no need to loop through original CSV
+		#just print first line (header) in starspan output
+		if ($linenumber_starspan != 0) {
+			#loop through original CSV until FID matches the one from starspan output
+			#FID starts at feature 0
+			#line 0 in CSV contains header, that's why we until
+			#linenumber = FID + 1
+			while ($linenumber_original < $fid + 1) {
+				#write line + 6 comma's (= empty values) to output file
+				my $line_with_empty_values = $lines_original[$linenumber_original];
+				chomp($line_with_empty_values);
+				$line_with_empty_values .= ",,,,,,";
+				print OUT "$line_with_empty_values\n";
+				$linenumber_original++;
+			}
+		}
+		#at this moment the FID in starspan and original output file is the same
+		#write line from starspan output
+		print OUT "$line_without_fid\n";
+		#also augment $line_original so this record is skipped from the original file
+		#(otherwise, it would appear twice in the output file)
+		$linenumber_original++;
+	}
+	
+	#write the rest of the lines (if any)
+	while ($linenumber_original < $numer_of_lines_in_original) {
+			#write line + 6 comma's (= empty values) to output file
+			my $line_with_empty_values = $lines_original[$linenumber_original];
+			chomp($line_with_empty_values);
+			$line_with_empty_values .= ",,,,,,";
+			print OUT "$line_with_empty_values\n";
+			$linenumber_original++;
+	}
+
+	close(IN_STARSPAN) or die "cannot close $starspan_output: $!";
+	close(IN_ORIGINAL) or die "cannot close $original_csv: $!";
+	close(OUT) or die "cannot close $output_file: $!";
 }

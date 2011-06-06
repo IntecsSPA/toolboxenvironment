@@ -30,8 +30,8 @@ GetOptions(
 	"unique_code=s" => \my $unique_code,
 	"input_raster=s" => \my $input_raster,
 	"reference_raster=s" => \my $reference_raster,
-	"point_step_x=i" => \my $point_step_x,
-	"point_step_y=i" => \my $point_step_y,
+	"point_set_step_x=i" => \my $point_set_step_x,
+	"point_set_step_y=i" => \my $point_set_step_y,
 	"exploration_size=i" => \my $exploration_size,
 	"window_size=i" => \my $window_size,
 	"learning_rate=i" => \my $learning_rate,
@@ -51,7 +51,7 @@ GetOptions(
 
 #check mandatory parameters
 if (!(defined ($unique_code) && defined ($input_raster) && defined ($reference_raster)
-	 && defined ($point_step_x) && defined ($point_step_y)  && defined ($exploration_size) && defined ($window_size)
+	 && defined ($point_set_step_x) && defined ($point_set_step_y)  && defined ($exploration_size) && defined ($window_size)
 	 && defined ($learning_rate) && defined ($nb_iterations) && defined ($metric_threshold)
 	 && defined ($output_raster) && defined ($field_output_raster))) {
 	print "One or more parameters are missing or invalid (string were integer is expected)\n";
@@ -107,7 +107,7 @@ Utils::printStart($unique_code, $debug);
 
 
 my $orthorectification_command = "${coregistration_location} \"${reference_raster}\" \"${input_raster}\" \"${field_output_raster_tiff}\" \"${output_raster_tiff}\"";
-$orthorectification_command .= " $point_step_x $point_step_y $exploration_size $window_size $learning_rate $nb_iterations $metric_threshold";
+$orthorectification_command .= " $point_set_step_x $point_set_step_y $exploration_size $window_size $learning_rate $nb_iterations $metric_threshold";
 Utils::execute($orthorectification_command, $debug);
 
 # convert output to correct format

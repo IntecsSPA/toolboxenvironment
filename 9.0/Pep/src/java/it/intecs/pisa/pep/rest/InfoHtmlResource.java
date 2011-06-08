@@ -20,9 +20,12 @@ public class InfoHtmlResource {
 
     @Context
     private UriInfo context;
+    
+    private String content;
 
     /** Creates a new instance of InfoResource */
     public InfoHtmlResource() {
+        
         
     }
 
@@ -36,6 +39,7 @@ public class InfoHtmlResource {
         return "<b>Info "+format+"</b><p>"+context.getPath()+"</p>";
     }
     
+    
 
    
     /**
@@ -46,6 +50,10 @@ public class InfoHtmlResource {
     @PUT
     @Consumes("text/html")
     public void putHtml(String content) {
+        System.out.println("CONTENT: " + content);
+    //    InfoHtmlResource infoHtmlResource = new InfoHtmlResource(content);
+      
+        
     }
 }
 

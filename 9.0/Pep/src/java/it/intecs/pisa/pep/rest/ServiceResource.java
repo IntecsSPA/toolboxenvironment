@@ -1,9 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package it.intecs.pisa.pep.rest;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import it.intecs.pisa.util.json.JsonUtil;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
 import javax.ws.rs.GET;
@@ -16,6 +16,8 @@ import javax.ws.rs.DELETE;
  * @author Andrea Marongiu
  */
 public class ServiceResource {
+    
+    private static final String WSDL_URL_SERVICE_INPUT_CONTENT="wdsl";
 
     private String name;
 
@@ -42,6 +44,8 @@ public class ServiceResource {
         throw new UnsupportedOperationException();
     }
 
+    
+    
     /**
      * PUT method for updating or creating an instance of ServiceResource
      * @param content representation for the resource
@@ -50,6 +54,9 @@ public class ServiceResource {
     @PUT
     @Consumes("application/json")
     public void putJson(String content) {
+        JsonObject contentJson=JsonUtil.getStringAsJSON(content);
+        String wdslURL=contentJson.get(WSDL_URL_SERVICE_INPUT_CONTENT).getAsString();
+        
     }
 
     /**

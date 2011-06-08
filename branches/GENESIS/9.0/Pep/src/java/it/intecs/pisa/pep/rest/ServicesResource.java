@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package it.intecs.pisa.pep.rest;
 
 import javax.ws.rs.core.Context;
@@ -14,10 +11,12 @@ import javax.ws.rs.Produces;
 /**
  * REST Web Service
  *
- * @author maro
+ * @author Andrea Marongiu
  */
 @Path("/services")
 public class ServicesResource {
+    
+    
 
     @Context
     private UriInfo context;
@@ -33,6 +32,7 @@ public class ServicesResource {
     @GET
     @Produces("application/json")
     public String getJson() {
+       
         //TODO return proper representation object
         throw new UnsupportedOperationException();
     }

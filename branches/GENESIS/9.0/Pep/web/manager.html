@@ -1,0 +1,180 @@
+
+<!doctype html>
+<html>
+  <head>
+    <title>Archiving Server Manager</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <!-- ************ XMLInterfaces Import *************-->
+        <!-- Load jquery -->
+        <script type="text/javascript" src="import/xmlInterfaces/import/jquery.js"></script>
+        
+    <!-- ***********************************************-->    
+    
+    <!-- ************ Load XMLInterfaces **************-->
+        <script type="text/javascript" src="import/xmlInterfaces/interfacesManager.js"></script>
+    <!-- **********************************************-->
+    
+    <script type="text/javascript" src="scripts/armsManager.js"></script>
+    
+    <style type="text/css">
+        .settings {
+                background-image:url(resources/images/settings.png);
+            }
+            .find {
+                background-image:url(resources/images/find3.gif);
+            }
+            .specificfind {
+                background-image:url(resources/images/find.png);
+            }
+
+            #loading-mask{
+                position:absolute;
+                left:0;
+                top:0;
+                width:100%;
+                height:100%;
+                z-index:20000;
+                background-color:white;
+            }
+            #loading{
+                position:absolute;
+                left:45%;
+                top:40%;
+                padding:2px;
+                z-index:20001;
+                height:auto;
+            }
+            #loading a {
+                color:#225588;
+            }
+            #loading .loading-indicator{
+                background:white;
+                color:#444;
+                font:bold 13px tahoma,arial,helvetica;
+                padding:10px;
+                margin:0;
+                height:auto;
+            }
+            #loading-msg {
+                font: normal 10px arial,tahoma,sans-serif;
+            }
+    
+            .x-check-group-alt {
+                background: #D1DDEF;
+                border-top:1px dotted #B5B8C8;
+                border-bottom:1px dotted #B5B8C8;
+            }
+            
+            .upload-icon {
+                background: url('resources/images/image_add.png') no-repeat 0 0 !important;
+            }
+            
+            .remove {
+             background-image:url(resources/images/remove.png) !important;
+            }
+            
+            
+            
+            .documentation {
+                background: url('resources/images/documentation.png') no-repeat 0 0 !important;
+            }
+            
+            .log {
+                background: url('resources/images/log.png') no-repeat 0 0 !important;
+            }
+            
+            .chaintypes {
+                background: url('resources/images/chainTypes.png') no-repeat 0 0 !important;
+            }
+            
+            .watches {
+                background: url('resources/images/watches.png') no-repeat 0 0 !important;
+            }
+            
+            .configuration {
+                background: url('resources/images/configuration.png') no-repeat 0 0 !important;
+            }
+            
+            .datalist {
+                background: url('resources/images/datalist.gif') no-repeat 0 0 !important;
+            }
+            
+            .manager {
+                background: url('resources/images/manager.png') no-repeat 0 0 !important;
+            }
+            
+           table.status {
+                border-width: 1px;
+                border-style: solid;
+                border-color: gray;
+                border-collapse: collapse;
+                background-color: white;
+            }
+            table.status th {
+                    border-width: 1px;
+                    padding: 2px;
+                    border-style: solid;
+                    border-color: rgb(153, 187, 232);
+                    background-color: white;
+
+            }
+            table.status td {
+                    border-width: 1px;
+                    padding: 2px;
+                    border-style: solid;
+                    border-color: rgb(153, 187, 232);
+                    background-color: white;
+
+            }
+            
+            
+            
+            table.loadingTable {
+                border-width: 3px;
+                border-style: double;
+                border-color: rgb(153, 187, 232);
+                border-collapse: collapse;
+                background-color: white;
+            }
+            table.loadingTable th {
+                    border-width: 1px;
+                    padding: 1px;
+                    border-style: none;
+                    border-color: rgb(153, 187, 232);
+                    background-color: white;
+
+            }
+            table.loadingTable td {
+                    border-width: 1px;
+                    padding: 1px;
+                    border-style: none;
+                    border-color: rgb(153, 187, 232);
+                    background-color: white;
+
+            }
+            
+            #loading-mask-workspace{
+                position:absolute;
+                left:0;
+                top:0;
+                width:100%;
+                height:100%;
+                z-index:20000;
+                background-color:rgb(228, 231, 231);
+            }
+            
+        
+    </style>
+
+        </style>
+  </head>
+  <body id="body">
+
+    <div id="loading-mask" style=""></div>
+    <div id="loading">
+        <div class="loading-indicator"><img src="resources/images/arms.png" width="80" height="80" style="margin-right:8px;float:left;vertical-align:top;"/>Archiving Server Manager<br /><span id="loading-msg">Loading... Please Wait...</span><span><img src="resources/images/init_Load.gif"/></span></div>
+    </div>
+
+</body>
+</html>

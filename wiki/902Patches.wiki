@@ -4,6 +4,30 @@
 
 In this page we report all the patches created for version 9.0.2 of the Toolbox
 
+= Patch 0.4 =
+
+The Patch 0.4 fixes the bugs fixed by previous Patch, also it fixes the following bugs.
+
+Bugs Fixed:
+
+1. A bug on the ARMS WPS interface: "Data duration" input is no longer defined in milliseconds, but with a string (ex. 100s) in the the new version of ARMS (2.0).
+
+2. A bug on the ARMS WPS interface: The geoserver workspace is different for Store and Delete Processing.
+
+A patch to solve these problems has been created and can be downloaded [http://toolboxenvironment.googlecode.com/files/TOOLBOX_Patch_0.4.zip here].
+
+Download the package and follow these instructions:
+
+  # Stop Tomcat
+  # Copy the package in the Tomcat webapps directory. 
+  # Unzip the package. 
+  # Restart Tomcat
+  # Export all TOOLBOX services and save the export file
+  # Delete all your TOOLBOX services
+  # Import all TOOLBOX services from the export file
+
+Note: Old ARMS services will not be fixed with this patch. You will need to recreate these services.
+
 = Patch 0.3 =
 
 The Patch 0.3 fixes the bugs fixed by previous Patch, also it fixes the following bugs.

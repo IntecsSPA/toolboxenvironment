@@ -75,6 +75,7 @@ import org.apache.axis2.context.MessageContext;
 import org.apache.axis2.transport.http.AxisServlet;
 import org.apache.axis2.util.XMLUtils;
 import it.intecs.pisa.toolbox.plugins.managerNativePlugins.DeployServiceCommand;
+import it.intecs.pisa.toolbox.plugins.wpsPlugin.manager.WPSUtil;
 import it.intecs.pisa.toolbox.resources.TextResourcesPersistence;
 import it.intecs.pisa.toolbox.timers.AsynchInstancesSecondScriptWakeUpManager;
 import it.intecs.pisa.toolbox.timers.PushRetryManager;
@@ -85,6 +86,7 @@ import it.intecs.pisa.util.json.JsonUtil;
 import it.intecs.pisa.util.xml.DocumentError;
 
 public class Toolbox extends AxisServlet implements ServletContextListener {
+
     private static String mailError = null;
     private File rootDir;
     private File logDir;
@@ -469,7 +471,6 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         return responseDocument;
     }
 
-
     /**
      *
      * @author Stefano
@@ -490,9 +491,9 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
 
         serviceName = requestURI.substring(requestURI.lastIndexOf("/") + 1);
         service = (TBXService) this.serviceManager.getService(serviceName);
-        
+
         //EXTRACT THE BODY CHILD TAG NAMESPACE AND LOCAL NAME
-        Element body = (Element)soapRequestDoc.getElementsByTagNameNS("http://schemas.xmlsoap.org/soap/envelope/", "Body").item(0);
+        Element body = (Element) soapRequestDoc.getElementsByTagNameNS("http://schemas.xmlsoap.org/soap/envelope/", "Body").item(0);
         Node tag = body.getFirstChild();
         String namespace = tag.getNamespaceURI();
         String tagName = tag.getLocalName();
@@ -555,6 +556,80 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             //operationName = requestURI.substring(requestURI.lastIndexOf("/") + 1);
 
 //            responseDocument = executeServiceRequest(operationName, soapRequestDocument, requestURI.substring(0,requestURI.lastIndexOf("/")), false);
+            responseDocument = executeServiceRequest(soapRequestDocument, requestURI, false);
+
+            try {
+                new XMLSerializer2(writer).serialize(responseDocument);
+                writer.flush();
+                writer.close();
+            } catch (Exception e) {
+                errorMsg = "Error while serializing response document:: " + e.getMessage();
+                logger.error(errorMsg);
+                ErrorMailer.send(null, soapaction, null, null, errorMsg);
+                throw new ToolboxException(errorMsg);
+            }
+
+        } catch (Exception e) {
+            //******** an exception has been thrown, sending a SOAP Fault ********************
+
+            try {
+                if (e instanceof ToolboxException) {
+                    doc = Util.getSOAPFault((ToolboxException) e);
+                } else {
+                    doc = Util.getSOAPFault(e.getMessage());
+                }
+                Util.addSOAPEnvelope(doc);
+                new XMLSerializer2(writer).serialize(doc);
+            } catch (Exception ex) {
+                ex.printStackTrace(System.out);
+            }
+            writer.close();
+        }
+    }
+
+    private void executeHttpGet(HttpServletRequest req, HttpServletResponse resp, String requestURI) throws IOException {
+        String service = "";
+        String operation = "";
+        String identifier = "";
+        Document doc = null;
+        Document responseDocument = null;
+        Document soapRequestDocument = null;
+        String errorMsg = null;
+        PrintWriter writer = null;
+        String soapaction = null;
+
+        try {
+            resp.setContentType("text/xml");
+            writer = resp.getWriter();
+
+            try {
+                service = req.getParameter(RequestsConstants.REQUEST_PARAMETER_WPS_SERVICE);
+                if (!service.equals("WPS")) {
+                    throw new ToolboxException("only WPS is currently supported in HTTP GET");
+                }
+
+                operation = req.getParameter(RequestsConstants.REQUEST_PARAMETER_WPS_REQUEST);
+
+                if (operation.equals("GetCapabilities")) {
+                    soapRequestDocument = WPSGetUtil.getCapabilitiesRequestDocument();
+
+                } else if (operation.equals("DescribeProcess")) {
+                    identifier = req.getParameter(RequestsConstants.REQUEST_PARAMETER_WPS_IDENTIFIER);
+
+                    soapRequestDocument = WPSGetUtil.getCapabilitiesRequestDocument(identifier);
+
+                } else {
+                    throw new ToolboxException("Only WPS GetCapabilities and DescribeProcess are supported in HTTP GET");
+                }
+            } catch (Exception e) {
+                errorMsg = "Error creating the message template: " + MiscConstants.CDATA_S + e.getMessage() + MiscConstants.CDATA_E;
+                logger.error(errorMsg);
+                throw new ToolboxException(errorMsg);
+            }
+
+            //ADD THE SOAP HEADER TO THE POST BODY
+            Util.addSOAPEnvelope(soapRequestDocument);
+
             responseDocument = executeServiceRequest(soapRequestDocument, requestURI, false);
 
             try {
@@ -924,7 +999,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
 
             if (requestURI.startsWith("/TOOLBOX/http")) {
                 StatisticsUtil.incrementStatistic(StatisticsUtil.STAT_ARRIVED);
-                //executeHttpGet(req, resp);
+                executeHttpGet(req, resp, requestURI);
                 return;
             }
 

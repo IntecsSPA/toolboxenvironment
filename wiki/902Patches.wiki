@@ -14,7 +14,7 @@ Bugs Fixed:
 
 2. A bug on the ARMS WPS interface: The geoserver workspace is different for Store and Delete Processing.
 
-A patch to solve these problems has been created and can be downloaded [http://toolboxenvironment.googlecode.com/files/TOOLBOX_Patch_0.4.zip here].
+A patch to solve these problems has been created and can be downloaded [http://toolboxenvironment.googlecode.com/files/TOOLBOX_PATCH_0.4.zip here].
 
 Download the package and follow these instructions:
 

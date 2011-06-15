@@ -595,6 +595,8 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         Document responseDocument = null;
         Document soapRequestDocument = null;
         String errorMsg = null;
+        String errorCode = null;
+        String locator = null;
         PrintWriter writer = null;
         String soapaction = null;
 
@@ -602,36 +604,59 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             resp.setContentType("text/xml");
             writer = resp.getWriter();
 
-            try {
-                service = req.getParameter(RequestsConstants.REQUEST_PARAMETER_WPS_SERVICE);
-                if (!service.equals("WPS")) {
-                    throw new ToolboxException("only WPS is currently supported in HTTP GET");
-                }
+            service = req.getParameter(RequestsConstants.REQUEST_PARAMETER_WPS_SERVICE);
 
-                operation = req.getParameter(RequestsConstants.REQUEST_PARAMETER_WPS_REQUEST);
-
-                if (operation.equals("GetCapabilities")) {
-                    soapRequestDocument = WPSGetUtil.getCapabilitiesRequestDocument();
-
-                } else if (operation.equals("DescribeProcess")) {
-                    identifier = req.getParameter(RequestsConstants.REQUEST_PARAMETER_WPS_IDENTIFIER);
-
-                    soapRequestDocument = WPSGetUtil.getCapabilitiesRequestDocument(identifier);
-
-                } else {
-                    throw new ToolboxException("Only WPS GetCapabilities and DescribeProcess are supported in HTTP GET");
-                }
-            } catch (Exception e) {
-                errorMsg = "Error creating the message template: " + MiscConstants.CDATA_S + e.getMessage() + MiscConstants.CDATA_E;
-                logger.error(errorMsg);
-                throw new ToolboxException(errorMsg);
+            if (service == null) {
+                doc = WPSGetUtil.getWPSExceptionDocument("MissingParameterValue",
+                        RequestsConstants.REQUEST_PARAMETER_WPS_SERVICE + " is missing",
+                        RequestsConstants.REQUEST_PARAMETER_WPS_SERVICE);
+                throw new Exception();
             }
 
-            //ADD THE SOAP HEADER TO THE POST BODY
+            if (!service.equals("WPS")) {
+                doc = WPSGetUtil.getWPSExceptionDocument("InvalidParameterValue",
+                        "Only WPS is currently supported in HTTP GET",
+                        RequestsConstants.REQUEST_PARAMETER_WPS_SERVICE);
+                throw new Exception();
+            }
+
+            operation = req.getParameter(RequestsConstants.REQUEST_PARAMETER_WPS_REQUEST);
+
+            if (service == null) {
+                doc = WPSGetUtil.getWPSExceptionDocument("MissingParameterValue",
+                        RequestsConstants.REQUEST_PARAMETER_WPS_REQUEST + " is missing",
+                        RequestsConstants.REQUEST_PARAMETER_WPS_REQUEST);
+                throw new Exception();
+            }
+
+            if (operation.equals("GetCapabilities")) {
+                soapRequestDocument = WPSGetUtil.getCapabilitiesRequestDocument();
+
+            } else if (operation.equals("DescribeProcess")) {
+                identifier = req.getParameter(RequestsConstants.REQUEST_PARAMETER_WPS_IDENTIFIER);
+                if (identifier == null) {
+                    doc = WPSGetUtil.getWPSExceptionDocument("MissingParameterValue",
+                            "Missing " + RequestsConstants.REQUEST_PARAMETER_WPS_IDENTIFIER + " parameter.",
+                            RequestsConstants.REQUEST_PARAMETER_WPS_IDENTIFIER);
+                    throw new Exception();
+                }
+                if (identifier.equals("")) {
+                    doc = WPSGetUtil.getWPSExceptionDocument("InvalidParameterValue",
+                            RequestsConstants.REQUEST_PARAMETER_WPS_IDENTIFIER + " parameter is empty.",
+                            RequestsConstants.REQUEST_PARAMETER_WPS_IDENTIFIER);
+                    throw new Exception();
+                }
+
+                soapRequestDocument = WPSGetUtil.getCapabilitiesRequestDocument(identifier);
+
+            } else {
+                doc = WPSGetUtil.getWPSExceptionDocument("NoApplicableCode",
+                        "Only WPS GetCapabilities and DescribeProcess are supported in HTTP GET");
+                throw new Exception();
+            }
+
             Util.addSOAPEnvelope(soapRequestDocument);
-
             responseDocument = executeServiceRequest(soapRequestDocument, requestURI, false);
-
             try {
                 new XMLSerializer2(writer).serialize(responseDocument);
                 writer.flush();
@@ -640,19 +665,14 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
                 errorMsg = "Error while serializing response document:: " + e.getMessage();
                 logger.error(errorMsg);
                 ErrorMailer.send(null, soapaction, null, null, errorMsg);
-                throw new ToolboxException(errorMsg);
+
+                doc = WPSGetUtil.getWPSExceptionDocument("NoApplicableCode",
+                        errorMsg);
+
+                throw new Exception();
             }
-
         } catch (Exception e) {
-            //******** an exception has been thrown, sending a SOAP Fault ********************
-
             try {
-                if (e instanceof ToolboxException) {
-                    doc = Util.getSOAPFault((ToolboxException) e);
-                } else {
-                    doc = Util.getSOAPFault(e.getMessage());
-                }
-                Util.addSOAPEnvelope(doc);
                 new XMLSerializer2(writer).serialize(doc);
             } catch (Exception ex) {
                 ex.printStackTrace(System.out);

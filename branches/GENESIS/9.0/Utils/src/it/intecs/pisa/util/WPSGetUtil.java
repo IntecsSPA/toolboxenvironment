@@ -44,4 +44,41 @@ public class WPSGetUtil {
         DOMUtil du = new DOMUtil();
         return du.stringToDocument(xmlString);
     }
+
+    public static Document getWPSExceptionDocument(String code, String text ,String locator) throws IOException, SAXException {
+        String xmlString = "<ows:ExceptionReport "
+                + "xmlns:ows=\"http://www.opengis.net/ows/1.1\" "
+                + "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "
+                + "version=\"1.0.0\" xml:lang=\"en-CA\">"
+                + "<ows:Exception exceptionCode=\""
+                + code
+                + "\" locator=\""
+                + locator
+                + "\">"
+                + "<ows:ExceptionText>"
+                + text
+                + "</ows:ExceptionText>"
+                + "</ows:Exception>"
+                + "</ows:ExceptionReport>";
+        DOMUtil du = new DOMUtil();
+        return du.stringToDocument(xmlString);
+    }
+
+    public static Document getWPSExceptionDocument(String code, String text) throws IOException, SAXException {
+        String xmlString = "<ows:ExceptionReport "
+                + "xmlns:ows=\"http://www.opengis.net/ows/1.1\" "
+                + "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "
+                + "version=\"1.0.0\" xml:lang=\"en-CA\">"
+                + "<ows:Exception exceptionCode=\""
+                + code
+                + "\">"
+                + "<ows:ExceptionText>"
+                + text
+                + "</ows:ExceptionText>"
+                + "</ows:Exception>"
+                + "</ows:ExceptionReport>";
+        DOMUtil du = new DOMUtil();
+        return du.stringToDocument(xmlString);
+    }
+
 }

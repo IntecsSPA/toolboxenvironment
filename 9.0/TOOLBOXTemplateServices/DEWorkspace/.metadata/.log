@@ -1,0 +1,497 @@
+!SESSION 2010-04-08 14:24:31.702 -----------------------------------------------
+eclipse.buildId=M20060921-0945
+java.version=1.6.0_16
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=it_IT
+
+!ENTRY org.eclipse.ui.browser 2 0 2010-04-08 15:41:33.999
+!MESSAGE Internal browser is not available: No more handles [Unknown Mozilla path (MOZILLA_FIVE_HOME not set)]
+!SESSION 2010-04-12 10:10:42.524 -----------------------------------------------
+eclipse.buildId=M20060921-0945
+java.version=1.6.0_16
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=it_IT
+
+!ENTRY org.eclipse.xsd 2 0 2010-04-12 10:11:00.438
+!MESSAGE 
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.xsd.impl.XSDSchemaImpl.patch(XSDSchemaImpl.java:1489)
+	at org.eclipse.xsd.impl.XSDSchemaImpl.traverseToRootForPatching(XSDSchemaImpl.java:1464)
+	at org.eclipse.xsd.impl.XSDConcreteComponentImpl.changeAttribute(XSDConcreteComponentImpl.java:1269)
+	at org.eclipse.xsd.impl.XSDSchemaImpl.changeAttribute(XSDSchemaImpl.java:2339)
+	at org.eclipse.xsd.impl.XSDConcreteComponentImpl.eNotify(XSDConcreteComponentImpl.java:1240)
+	at org.eclipse.xsd.impl.XSDConcreteComponentImpl.setElementGen(XSDConcreteComponentImpl.java:2832)
+	at org.eclipse.xsd.impl.XSDConcreteComponentImpl.setElement(XSDConcreteComponentImpl.java:2864)
+	at org.eclipse.xsd.impl.XSDSchemaImpl.setElement(XSDSchemaImpl.java:2473)
+	at org.eclipse.xsd.impl.XSDSchemaImpl.createMetaSchema(XSDSchemaImpl.java:482)
+	at org.eclipse.xsd.util.XSDResourceImpl.handleSchemaElement(XSDResourceImpl.java:821)
+	at org.eclipse.xsd.util.XSDResourceImpl.doLoad(XSDResourceImpl.java:693)
+	at org.eclipse.xsd.util.XSDResourceImpl.doLoad(XSDResourceImpl.java:784)
+	at org.eclipse.emf.ecore.resource.impl.ResourceImpl.load(ResourceImpl.java:1094)
+	at org.eclipse.xsd.impl.XSDSchemaDirectiveImpl.resolve(XSDSchemaDirectiveImpl.java:352)
+	at org.eclipse.xsd.impl.XSDImportImpl.importSchema(XSDImportImpl.java:411)
+	at org.eclipse.xsd.impl.XSDSchemaImpl.resolveSchema(XSDSchemaImpl.java:2136)
+	at org.eclipse.xsd.impl.XSDSchemaImpl.resolveNamedComponent(XSDSchemaImpl.java:2164)
+	at org.eclipse.xsd.impl.XSDSchemaImpl.resolveAttributeDeclaration(XSDSchemaImpl.java:2189)
+	at org.eclipse.xsd.impl.XSDConcreteComponentImpl.resolveAttributeDeclaration(XSDConcreteComponentImpl.java:2484)
+	at org.eclipse.xsd.impl.XSDAttributeDeclarationImpl.patch(XSDAttributeDeclarationImpl.java:199)
+	at org.eclipse.xsd.impl.XSDConcreteComponentImpl.patch(XSDConcreteComponentImpl.java:526)
+	at org.eclipse.xsd.impl.XSDAttributeUseImpl.patch(XSDAttributeUseImpl.java:700)
+	at org.eclipse.xsd.impl.XSDConcreteComponentImpl.patch(XSDConcreteComponentImpl.java:526)
+	at org.eclipse.xsd.impl.XSDNamedComponentImpl.patch(XSDNamedComponentImpl.java:768)
+	at org.eclipse.xsd.impl.XSDTypeDefinitionImpl.patch(XSDTypeDefinitionImpl.java:245)
+	at org.eclipse.xsd.impl.XSDComplexTypeDefinitionImpl.patch(XSDComplexTypeDefinitionImpl.java:993)
+	at org.eclipse.xsd.impl.XSDConcreteComponentImpl.patch(XSDConcreteComponentImpl.java:526)
+	at org.eclipse.xsd.impl.XSDNamedComponentImpl.patch(XSDNamedComponentImpl.java:768)
+	at org.eclipse.xsd.impl.XSDElementDeclarationImpl.patch(XSDElementDeclarationImpl.java:545)
+	at org.eclipse.xsd.impl.XSDConcreteComponentImpl.patch(XSDConcreteComponentImpl.java:526)
+	at org.eclipse.xsd.impl.XSDSchemaImpl.patch(XSDSchemaImpl.java:1505)
+	at org.eclipse.xsd.impl.XSDSchemaImpl.changeAttribute(XSDSchemaImpl.java:2335)
+	at org.eclipse.xsd.impl.XSDConcreteComponentImpl.eNotify(XSDConcreteComponentImpl.java:1240)
+	at org.eclipse.xsd.impl.XSDSchemaImpl.setSchemaLocation(XSDSchemaImpl.java:829)
+	at org.eclipse.xsd.util.XSDResourceImpl.doLoad(XSDResourceImpl.java:756)
+	at org.eclipse.xsd.util.XSDResourceImpl.doLoad(XSDResourceImpl.java:784)
+	at org.eclipse.emf.ecore.resource.impl.ResourceImpl.load(ResourceImpl.java:1094)
+	at org.eclipse.emf.ecore.resource.impl.ResourceImpl.load(ResourceImpl.java:900)
+	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.demandLoad(ResourceSetImpl.java:249)
+	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.demandLoadHelper(ResourceSetImpl.java:264)
+	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.getResource(ResourceSetImpl.java:390)
+	at org.eclipse.xsd.impl.XSDSchemaImpl.getSchemaForSchema(XSDSchemaImpl.java:609)
+	at org.eclipse.xsd.impl.XSDSchemaImpl.createSchema(XSDSchemaImpl.java:420)
+	at org.eclipse.xsd.util.XSDResourceImpl.handleSchemaElement(XSDResourceImpl.java:825)
+	at org.eclipse.xsd.util.XSDResourceImpl.findSchemas(XSDResourceImpl.java:791)
+	at org.eclipse.xsd.util.XSDResourceImpl.doLoad(XSDResourceImpl.java:695)
+	at org.eclipse.xsd.util.XSDResourceImpl.doLoad(XSDResourceImpl.java:784)
+	at org.eclipse.emf.ecore.resource.impl.ResourceImpl.load(ResourceImpl.java:1094)
+	at org.eclipse.wst.xsd.contentmodel.internal.XSDImpl.buildXSDModel(XSDImpl.java:210)
+	at org.eclipse.wst.xsd.contentmodel.internal.XSDImpl.buildCMDocument(XSDImpl.java:169)
+	at org.eclipse.wst.xsd.contentmodel.internal.CMDocumentFactoryXSD.createCMDocument(CMDocumentFactoryXSD.java:37)
+	at org.eclipse.wst.xml.core.internal.contentmodel.ContentModelManager.createCMDocument(ContentModelManager.java:56)
+	at org.eclipse.wst.xml.core.internal.contentmodel.modelqueryimpl.CMDocumentManagerImpl.buildCMDocument(CMDocumentManagerImpl.java:259)
+	at org.eclipse.wst.xml.core.internal.contentmodel.modelqueryimpl.CMDocumentManagerImpl$1.run(CMDocumentManagerImpl.java:229)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:58)
+!SESSION 2010-05-04 10:39:35.425 -----------------------------------------------
+eclipse.buildId=M20060921-0945
+java.version=1.6.0_16
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=it_IT
+
+!ENTRY org.eclipse.ui.browser 2 0 2010-05-04 10:48:58.084
+!MESSAGE Internal browser is not available: No more handles [Unknown Mozilla path (MOZILLA_FIVE_HOME not set)]
+!SESSION 2010-05-05 10:29:41.980 -----------------------------------------------
+eclipse.buildId=M20060921-0945
+java.version=1.6.0_16
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=it_IT
+
+!ENTRY org.eclipse.ui.browser 2 0 2010-05-05 11:32:18.762
+!MESSAGE Internal browser is not available: No more handles [Unknown Mozilla path (MOZILLA_FIVE_HOME not set)]
+!SESSION 2010-06-15 14:39:04.655 -----------------------------------------------
+eclipse.buildId=M20060921-0945
+java.version=1.6.0_20
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=it_IT
+
+!ENTRY org.eclipse.search 2 0 2010-06-15 16:27:59.853
+!MESSAGE Problems encountered during text search.
+!SUBENTRY 1 org.eclipse.search 2 2 2010-06-15 16:27:59.853
+!MESSAGE File 'geoserverTest/Info/description.txt' has been skipped, problem while reading: ('Resource /geoserverTest/Info/description.txt is not local.').
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException: Resource /geoserverTest/Info/description.txt is not local.
+	at org.eclipse.core.internal.resources.Resource.checkLocal(Resource.java:323)
+	at org.eclipse.core.internal.resources.File.getCharset(File.java:213)
+	at org.eclipse.core.internal.resources.File.getCharset(File.java:201)
+	at org.eclipse.search.internal.core.text.FileCharSequenceProvider$FileCharSequence.initializeReader(FileCharSequenceProvider.java:275)
+	at org.eclipse.search.internal.core.text.FileCharSequenceProvider$FileCharSequence.reset(FileCharSequenceProvider.java:268)
+	at org.eclipse.search.internal.core.text.FileCharSequenceProvider.newCharSequence(FileCharSequenceProvider.java:40)
+	at org.eclipse.search.internal.core.text.TextSearchVisitor.processFile(TextSearchVisitor.java:254)
+	at org.eclipse.search.internal.core.text.TextSearchVisitor.processFiles(TextSearchVisitor.java:189)
+	at org.eclipse.search.internal.core.text.TextSearchVisitor.search(TextSearchVisitor.java:170)
+	at org.eclipse.search.internal.core.text.TextSearchVisitor.search(TextSearchVisitor.java:182)
+	at org.eclipse.search.core.text.TextSearchEngine$1.search(TextSearchEngine.java:54)
+	at org.eclipse.search.internal.ui.text.FileSearchQuery.run(FileSearchQuery.java:122)
+	at org.eclipse.search2.internal.ui.InternalSearchUI$InternalSearchJob.run(InternalSearchUI.java:93)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:58)
+!SUBENTRY 2 org.eclipse.core.resources 4 369 2010-06-15 16:27:59.854
+!MESSAGE Resource /geoserverTest/Info/description.txt is not local.
+!SUBENTRY 1 org.eclipse.search 2 2 2010-06-15 16:27:59.854
+!MESSAGE File 'geoserverTest/Info/abstract.txt' has been skipped, problem while reading: ('Resource /geoserverTest/Info/abstract.txt is not local.').
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException: Resource /geoserverTest/Info/abstract.txt is not local.
+	at org.eclipse.core.internal.resources.Resource.checkLocal(Resource.java:323)
+	at org.eclipse.core.internal.resources.File.getCharset(File.java:213)
+	at org.eclipse.core.internal.resources.File.getCharset(File.java:201)
+	at org.eclipse.search.internal.core.text.FileCharSequenceProvider$FileCharSequence.initializeReader(FileCharSequenceProvider.java:275)
+	at org.eclipse.search.internal.core.text.FileCharSequenceProvider$FileCharSequence.reset(FileCharSequenceProvider.java:268)
+	at org.eclipse.search.internal.core.text.FileCharSequenceProvider$FileCharSequence.<init>(FileCharSequenceProvider.java:254)
+	at org.eclipse.search.internal.core.text.FileCharSequenceProvider.newCharSequence(FileCharSequenceProvider.java:36)
+	at org.eclipse.search.internal.core.text.TextSearchVisitor.processFile(TextSearchVisitor.java:254)
+	at org.eclipse.search.internal.core.text.TextSearchVisitor.processFiles(TextSearchVisitor.java:189)
+	at org.eclipse.search.internal.core.text.TextSearchVisitor.search(TextSearchVisitor.java:170)
+	at org.eclipse.search.internal.core.text.TextSearchVisitor.search(TextSearchVisitor.java:182)
+	at org.eclipse.search.core.text.TextSearchEngine$1.search(TextSearchEngine.java:54)
+	at org.eclipse.search.internal.ui.text.FileSearchQuery.run(FileSearchQuery.java:122)
+	at org.eclipse.search2.internal.ui.InternalSearchUI$InternalSearchJob.run(InternalSearchUI.java:93)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:58)
+!SUBENTRY 2 org.eclipse.core.resources 4 369 2010-06-15 16:27:59.854
+!MESSAGE Resource /geoserverTest/Info/abstract.txt is not local.
+!SUBENTRY 1 org.eclipse.search 2 2 2010-06-15 16:27:59.854
+!MESSAGE File 'WPSSoap/AdditionalResources/WPS/XSL/GenerateShellExecuteScript.xsl' has been skipped, problem while reading: ('Resource is out of sync with the file system: /WPSSoap/AdditionalResources/WPS/XSL/GenerateShellExecuteScript.xsl.').
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException: Resource is out of sync with the file system: /WPSSoap/AdditionalResources/WPS/XSL/GenerateShellExecuteScript.xsl.
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.read(FileSystemResourceManager.java:606)
+	at org.eclipse.core.internal.resources.File.getContents(File.java:290)
+	at org.eclipse.core.internal.resources.File.getContents(File.java:279)
+	at org.eclipse.search.internal.core.text.FileCharSequenceProvider$FileCharSequence.getInputStream(FileCharSequenceProvider.java:282)
+	at org.eclipse.search.internal.core.text.FileCharSequenceProvider$FileCharSequence.initializeReader(FileCharSequenceProvider.java:276)
+	at org.eclipse.search.internal.core.text.FileCharSequenceProvider$FileCharSequence.reset(FileCharSequenceProvider.java:268)
+	at org.eclipse.search.internal.core.text.FileCharSequenceProvider.newCharSequence(FileCharSequenceProvider.java:40)
+	at org.eclipse.search.internal.core.text.TextSearchVisitor.processFile(TextSearchVisitor.java:254)
+	at org.eclipse.search.internal.core.text.TextSearchVisitor.processFiles(TextSearchVisitor.java:189)
+	at org.eclipse.search.internal.core.text.TextSearchVisitor.search(TextSearchVisitor.java:170)
+	at org.eclipse.search.internal.core.text.TextSearchVisitor.search(TextSearchVisitor.java:182)
+	at org.eclipse.search.core.text.TextSearchEngine$1.search(TextSearchEngine.java:54)
+	at org.eclipse.search.internal.ui.text.FileSearchQuery.run(FileSearchQuery.java:122)
+	at org.eclipse.search2.internal.ui.InternalSearchUI$InternalSearchJob.run(InternalSearchUI.java:93)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:58)
+!SUBENTRY 2 org.eclipse.core.resources 4 274 2010-06-15 16:27:59.854
+!MESSAGE Resource is out of sync with the file system: /WPSSoap/AdditionalResources/WPS/XSL/GenerateShellExecuteScript.xsl.
+!SESSION 2010-06-15 16:46:39.189 -----------------------------------------------
+eclipse.buildId=M20060921-0945
+java.version=1.6.0_20
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=it_IT
+
+!ENTRY org.eclipse.core.resources 2 10035 2010-06-15 16:46:46.041
+!MESSAGE A workspace crash was detected. The previous session did not exit normally.
+!SESSION 2010-07-13 17:58:26.214 -----------------------------------------------
+eclipse.buildId=M20060921-0945
+java.version=1.6.0_20
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=it_IT
+
+!ENTRY org.eclipse.core.resources 2 10035 2010-07-13 17:58:30.240
+!MESSAGE A workspace crash was detected. The previous session did not exit normally.
+!SESSION 2010-09-06 15:09:00.736 -----------------------------------------------
+eclipse.buildId=M20060921-0945
+java.version=1.6.0_20
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=it_IT
+
+!ENTRY org.eclipse.ui.browser 2 0 2010-09-06 17:10:44.534
+!MESSAGE Internal browser is not available: No more handles [Unknown Mozilla path (MOZILLA_FIVE_HOME not set)]
+!SESSION 2010-11-09 14:04:44.305 -----------------------------------------------
+eclipse.buildId=M20060921-0945
+java.version=1.6.0_20
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=it_IT
+
+!ENTRY org.eclipse.ui 4 0 2010-11-09 14:05:34.797
+!MESSAGE Warning: Detected recursive attempt by part org.eclipse.wst.xsd.ui.internal.editor.InternalXSDMultiPageEditor to create itself (this is probably, but not necessarily, a bug)
+!STACK 1
+org.eclipse.ui.PartInitException: Warning: Detected recursive attempt by part org.eclipse.wst.xsd.ui.internal.editor.InternalXSDMultiPageEditor to create itself (this is probably, but not necessarily, a bug)
+	at org.eclipse.ui.internal.WorkbenchPartReference.getPart(WorkbenchPartReference.java:557)
+	at org.eclipse.ui.internal.PartPane.requestActivation(PartPane.java:246)
+	at org.eclipse.ui.internal.EditorPane.requestActivation(EditorPane.java:89)
+	at org.eclipse.ui.internal.presentations.PresentablePart.setFocus(PresentablePart.java:152)
+	at org.eclipse.ui.internal.presentations.util.TabbedStackPresentation$1.handleEvent(TabbedStackPresentation.java:92)
+	at org.eclipse.ui.internal.presentations.util.AbstractTabFolder.fireEvent(AbstractTabFolder.java:267)
+	at org.eclipse.ui.internal.presentations.util.AbstractTabFolder.fireEvent(AbstractTabFolder.java:272)
+	at org.eclipse.ui.internal.presentations.util.AbstractTabFolder.handleMouseDown(AbstractTabFolder.java:342)
+	at org.eclipse.ui.internal.presentations.util.AbstractTabFolder$3.mouseDown(AbstractTabFolder.java:79)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:133)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:66)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1085)
+	at org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:3166)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:2842)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.block(ModalContext.java:158)
+	at org.eclipse.jface.operation.ModalContext.run(ModalContext.java:326)
+	at org.eclipse.jface.dialogs.ProgressMonitorDialog.run(ProgressMonitorDialog.java:479)
+	at org.eclipse.ui.internal.progress.ProgressMonitorJobsDialog.run(ProgressMonitorJobsDialog.java:265)
+	at org.eclipse.ui.internal.progress.ProgressManager$3.run(ProgressManager.java:894)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.ui.internal.progress.ProgressManager.busyCursorWhile(ProgressManager.java:929)
+	at org.eclipse.ui.internal.progress.ProgressManager.busyCursorWhile(ProgressManager.java:904)
+	at org.eclipse.wst.xsd.ui.internal.text.XSDModelAdapter.createSchema(XSDModelAdapter.java:131)
+	at org.eclipse.wst.xsd.ui.internal.text.XSDModelAdapter.lookupOrCreateSchema(XSDModelAdapter.java:186)
+	at org.eclipse.wst.xsd.ui.internal.editor.InternalXSDMultiPageEditor.buildModel(InternalXSDMultiPageEditor.java:171)
+	at org.eclipse.wst.xsd.ui.internal.adt.editor.ADTMultiPageEditor.createPages(ADTMultiPageEditor.java:153)
+	at org.eclipse.wst.xsd.ui.internal.editor.InternalXSDMultiPageEditor.createPages(InternalXSDMultiPageEditor.java:445)
+	at org.eclipse.ui.part.MultiPageEditorPart.createPartControl(MultiPageEditorPart.java:276)
+	at org.eclipse.ui.internal.EditorReference.createPartHelper(EditorReference.java:596)
+	at org.eclipse.ui.internal.EditorReference.createPart(EditorReference.java:372)
+	at org.eclipse.ui.internal.WorkbenchPartReference.getPart(WorkbenchPartReference.java:566)
+	at org.eclipse.ui.internal.PartPane.setVisible(PartPane.java:290)
+	at org.eclipse.ui.internal.presentations.PresentablePart.setVisible(PresentablePart.java:140)
+	at org.eclipse.ui.internal.presentations.util.PresentablePartFolder.select(PresentablePartFolder.java:268)
+	at org.eclipse.ui.internal.presentations.util.LeftToRightTabOrder.select(LeftToRightTabOrder.java:65)
+	at org.eclipse.ui.internal.presentations.util.TabbedStackPresentation.selectPart(TabbedStackPresentation.java:394)
+	at org.eclipse.ui.internal.PartStack.refreshPresentationSelection(PartStack.java:1144)
+	at org.eclipse.ui.internal.PartStack.setSelection(PartStack.java:1097)
+	at org.eclipse.ui.internal.PartStack.presentationSelectionChanged(PartStack.java:795)
+	at org.eclipse.ui.internal.PartStack.access$1(PartStack.java:781)
+	at org.eclipse.ui.internal.PartStack$1.selectPart(PartStack.java:123)
+	at org.eclipse.ui.internal.presentations.util.TabbedStackPresentation.showSystemMenu(TabbedStackPresentation.java:414)
+	at org.eclipse.ui.internal.presentations.util.TabbedStackPresentation$1.handleEvent(TabbedStackPresentation.java:138)
+	at org.eclipse.ui.internal.presentations.util.AbstractTabFolder.fireEvent(AbstractTabFolder.java:267)
+	at org.eclipse.ui.internal.presentations.util.AbstractTabFolder.fireEvent(AbstractTabFolder.java:280)
+	at org.eclipse.ui.internal.presentations.util.AbstractTabFolder.handleContextMenu(AbstractTabFolder.java:338)
+	at org.eclipse.ui.internal.presentations.util.AbstractTabFolder$1.handleEvent(AbstractTabFolder.java:61)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:66)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1085)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1109)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1094)
+	at org.eclipse.swt.widgets.Control.showMenu(Control.java:3424)
+	at org.eclipse.swt.widgets.Control.gtk_event_after(Control.java:1993)
+	at org.eclipse.swt.widgets.Widget.windowProc(Widget.java:1429)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:3798)
+	at org.eclipse.swt.internal.gtk.OS._gtk_main_do_event(Native Method)
+	at org.eclipse.swt.internal.gtk.OS.gtk_main_do_event(OS.java:5273)
+	at org.eclipse.swt.widgets.Display.eventProc(Display.java:1135)
+	at org.eclipse.swt.internal.gtk.OS._g_main_context_iteration(Native Method)
+	at org.eclipse.swt.internal.gtk.OS.g_main_context_iteration(OS.java:1428)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:2840)
+	at org.eclipse.ui.internal.Workbench.runEventLoop(Workbench.java:1914)
+	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:1878)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:419)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at org.eclipse.ui.internal.ide.IDEApplication.run(IDEApplication.java:95)
+	at org.eclipse.core.internal.runtime.PlatformActivator$1.run(PlatformActivator.java:78)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:92)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:68)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:400)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:177)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.eclipse.core.launcher.Main.invokeFramework(Main.java:336)
+	at org.eclipse.core.launcher.Main.basicRun(Main.java:280)
+	at org.eclipse.core.launcher.Main.run(Main.java:977)
+	at org.eclipse.core.launcher.Main.main(Main.java:952)
+!SUBENTRY 1 org.eclipse.ui 4 0 2010-11-09 14:05:34.798
+!MESSAGE Warning: Detected recursive attempt by part org.eclipse.wst.xsd.ui.internal.editor.InternalXSDMultiPageEditor to create itself (this is probably, but not necessarily, a bug)
+!SESSION 2011-05-26 10:51:18.520 -----------------------------------------------
+eclipse.buildId=M20060921-0945
+java.version=1.6.0_22
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=it_IT
+Command-line arguments:  -os linux -ws gtk -arch x86
+
+!ENTRY org.eclipse.update.configurator 2011-05-26 10:51:19.461
+!MESSAGE Unable to find feature.xml in directory: /home/maro/Programmi/eclipse3.2.1/features/Toolbox.Develop.Plugin_1.3.15.jar
+
+!ENTRY org.eclipse.ui 4 0 2011-05-26 10:52:08.108
+!MESSAGE Unable to create editor ID org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart: No editor descriptor for id org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart
+!STACK 1
+org.eclipse.ui.PartInitException: No editor descriptor for id org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart
+	at org.eclipse.ui.internal.EditorReference.createPartHelper(EditorReference.java:541)
+	at org.eclipse.ui.internal.EditorReference.createPart(EditorReference.java:372)
+	at org.eclipse.ui.internal.WorkbenchPartReference.getPart(WorkbenchPartReference.java:566)
+	at org.eclipse.ui.internal.EditorAreaHelper.setVisibleEditor(EditorAreaHelper.java:263)
+	at org.eclipse.ui.internal.EditorManager.setVisibleEditor(EditorManager.java:1446)
+	at org.eclipse.ui.internal.EditorManager$5.run(EditorManager.java:1006)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
+	at org.eclipse.core.runtime.Platform.run(Platform.java:843)
+	at org.eclipse.ui.internal.EditorManager.restoreState(EditorManager.java:1001)
+	at org.eclipse.ui.internal.WorkbenchPage.restoreState(WorkbenchPage.java:2843)
+	at org.eclipse.ui.internal.WorkbenchWindow.restoreState(WorkbenchWindow.java:1936)
+	at org.eclipse.ui.internal.Workbench.doRestoreState(Workbench.java:2857)
+	at org.eclipse.ui.internal.Workbench.access$14(Workbench.java:2805)
+	at org.eclipse.ui.internal.Workbench$19.run(Workbench.java:1681)
+	at org.eclipse.ui.internal.Workbench.runStartupWithProgress(Workbench.java:1421)
+	at org.eclipse.ui.internal.Workbench.restoreState(Workbench.java:1679)
+	at org.eclipse.ui.internal.Workbench.access$12(Workbench.java:1650)
+	at org.eclipse.ui.internal.Workbench$17.run(Workbench.java:1529)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
+	at org.eclipse.ui.internal.Workbench.restoreState(Workbench.java:1473)
+	at org.eclipse.ui.internal.WorkbenchConfigurer.restoreState(WorkbenchConfigurer.java:183)
+	at org.eclipse.ui.application.WorkbenchAdvisor.openWindows(WorkbenchAdvisor.java:702)
+	at org.eclipse.ui.internal.Workbench.init(Workbench.java:1085)
+	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:1847)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:419)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at org.eclipse.ui.internal.ide.IDEApplication.run(IDEApplication.java:95)
+	at org.eclipse.core.internal.runtime.PlatformActivator$1.run(PlatformActivator.java:78)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:92)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:68)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:400)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:177)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:616)
+	at org.eclipse.core.launcher.Main.invokeFramework(Main.java:336)
+	at org.eclipse.core.launcher.Main.basicRun(Main.java:280)
+	at org.eclipse.core.launcher.Main.run(Main.java:977)
+	at org.eclipse.core.launcher.Main.main(Main.java:952)
+!SUBENTRY 1 org.eclipse.ui 4 0 2011-05-26 10:52:08.109
+!MESSAGE No editor descriptor for id org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart
+
+!ENTRY org.eclipse.ui.workbench 4 2 2011-05-26 10:52:08.132
+!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.ui.workbench".
+!STACK 0
+org.eclipse.core.runtime.AssertionFailedException: null argument:
+	at org.eclipse.core.runtime.Assert.isNotNull(Assert.java:84)
+	at org.eclipse.core.runtime.Assert.isNotNull(Assert.java:72)
+	at org.eclipse.ui.internal.EditorSite.<init>(EditorSite.java:45)
+	at org.eclipse.ui.internal.EditorReference.createPart(EditorReference.java:406)
+	at org.eclipse.ui.internal.WorkbenchPartReference.getPart(WorkbenchPartReference.java:566)
+	at org.eclipse.ui.internal.EditorAreaHelper.setVisibleEditor(EditorAreaHelper.java:263)
+	at org.eclipse.ui.internal.EditorManager.setVisibleEditor(EditorManager.java:1446)
+	at org.eclipse.ui.internal.EditorManager$5.run(EditorManager.java:1006)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
+	at org.eclipse.core.runtime.Platform.run(Platform.java:843)
+	at org.eclipse.ui.internal.EditorManager.restoreState(EditorManager.java:1001)
+	at org.eclipse.ui.internal.WorkbenchPage.restoreState(WorkbenchPage.java:2843)
+	at org.eclipse.ui.internal.WorkbenchWindow.restoreState(WorkbenchWindow.java:1936)
+	at org.eclipse.ui.internal.Workbench.doRestoreState(Workbench.java:2857)
+	at org.eclipse.ui.internal.Workbench.access$14(Workbench.java:2805)
+	at org.eclipse.ui.internal.Workbench$19.run(Workbench.java:1681)
+	at org.eclipse.ui.internal.Workbench.runStartupWithProgress(Workbench.java:1421)
+	at org.eclipse.ui.internal.Workbench.restoreState(Workbench.java:1679)
+	at org.eclipse.ui.internal.Workbench.access$12(Workbench.java:1650)
+	at org.eclipse.ui.internal.Workbench$17.run(Workbench.java:1529)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
+	at org.eclipse.ui.internal.Workbench.restoreState(Workbench.java:1473)
+	at org.eclipse.ui.internal.WorkbenchConfigurer.restoreState(WorkbenchConfigurer.java:183)
+	at org.eclipse.ui.application.WorkbenchAdvisor.openWindows(WorkbenchAdvisor.java:702)
+	at org.eclipse.ui.internal.Workbench.init(Workbench.java:1085)
+	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:1847)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:419)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at org.eclipse.ui.internal.ide.IDEApplication.run(IDEApplication.java:95)
+	at org.eclipse.core.internal.runtime.PlatformActivator$1.run(PlatformActivator.java:78)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:92)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:68)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:400)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:177)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:616)
+	at org.eclipse.core.launcher.Main.invokeFramework(Main.java:336)
+	at org.eclipse.core.launcher.Main.basicRun(Main.java:280)
+	at org.eclipse.core.launcher.Main.run(Main.java:977)
+	at org.eclipse.core.launcher.Main.main(Main.java:952)
+
+!ENTRY org.eclipse.ui 4 0 2011-05-26 10:52:08.197
+!MESSAGE Unable to create editor ID org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart: No editor descriptor for id org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart
+!STACK 1
+org.eclipse.ui.PartInitException: No editor descriptor for id org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart
+	at org.eclipse.ui.internal.EditorReference.createPartHelper(EditorReference.java:541)
+	at org.eclipse.ui.internal.EditorReference.createPart(EditorReference.java:372)
+	at org.eclipse.ui.internal.WorkbenchPartReference.getPart(WorkbenchPartReference.java:566)
+	at org.eclipse.ui.internal.PartPane.setVisible(PartPane.java:290)
+	at org.eclipse.ui.internal.presentations.PresentablePart.setVisible(PresentablePart.java:140)
+	at org.eclipse.ui.internal.presentations.util.PresentablePartFolder.select(PresentablePartFolder.java:268)
+	at org.eclipse.ui.internal.presentations.util.LeftToRightTabOrder.select(LeftToRightTabOrder.java:65)
+	at org.eclipse.ui.internal.presentations.util.TabbedStackPresentation.selectPart(TabbedStackPresentation.java:394)
+	at org.eclipse.ui.internal.PartStack.refreshPresentationSelection(PartStack.java:1144)
+	at org.eclipse.ui.internal.PartStack.handleDeferredEvents(PartStack.java:1112)
+	at org.eclipse.ui.internal.LayoutPart.deferUpdates(LayoutPart.java:400)
+	at org.eclipse.ui.internal.PartSashContainer.handleDeferredEvents(PartSashContainer.java:1369)
+	at org.eclipse.ui.internal.LayoutPart.deferUpdates(LayoutPart.java:400)
+	at org.eclipse.ui.internal.WorkbenchPage.handleDeferredEvents(WorkbenchPage.java:1305)
+	at org.eclipse.ui.internal.WorkbenchPage.deferUpdates(WorkbenchPage.java:1295)
+	at org.eclipse.ui.internal.WorkbenchPage.restoreState(WorkbenchPage.java:2967)
+	at org.eclipse.ui.internal.WorkbenchWindow.restoreState(WorkbenchWindow.java:1936)
+	at org.eclipse.ui.internal.Workbench.doRestoreState(Workbench.java:2857)
+	at org.eclipse.ui.internal.Workbench.access$14(Workbench.java:2805)
+	at org.eclipse.ui.internal.Workbench$19.run(Workbench.java:1681)
+	at org.eclipse.ui.internal.Workbench.runStartupWithProgress(Workbench.java:1421)
+	at org.eclipse.ui.internal.Workbench.restoreState(Workbench.java:1679)
+	at org.eclipse.ui.internal.Workbench.access$12(Workbench.java:1650)
+	at org.eclipse.ui.internal.Workbench$17.run(Workbench.java:1529)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
+	at org.eclipse.ui.internal.Workbench.restoreState(Workbench.java:1473)
+	at org.eclipse.ui.internal.WorkbenchConfigurer.restoreState(WorkbenchConfigurer.java:183)
+	at org.eclipse.ui.application.WorkbenchAdvisor.openWindows(WorkbenchAdvisor.java:702)
+	at org.eclipse.ui.internal.Workbench.init(Workbench.java:1085)
+	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:1847)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:419)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at org.eclipse.ui.internal.ide.IDEApplication.run(IDEApplication.java:95)
+	at org.eclipse.core.internal.runtime.PlatformActivator$1.run(PlatformActivator.java:78)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:92)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:68)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:400)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:177)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:616)
+	at org.eclipse.core.launcher.Main.invokeFramework(Main.java:336)
+	at org.eclipse.core.launcher.Main.basicRun(Main.java:280)
+	at org.eclipse.core.launcher.Main.run(Main.java:977)
+	at org.eclipse.core.launcher.Main.main(Main.java:952)
+!SUBENTRY 1 org.eclipse.ui 4 0 2011-05-26 10:52:08.198
+!MESSAGE No editor descriptor for id org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart
+
+!ENTRY org.eclipse.ui.workbench 4 2 2011-05-26 10:52:08.234
+!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.ui.workbench".
+!STACK 0
+org.eclipse.core.runtime.AssertionFailedException: null argument:
+	at org.eclipse.core.runtime.Assert.isNotNull(Assert.java:84)
+	at org.eclipse.core.runtime.Assert.isNotNull(Assert.java:72)
+	at org.eclipse.ui.internal.EditorSite.<init>(EditorSite.java:45)
+	at org.eclipse.ui.internal.EditorReference.createPart(EditorReference.java:406)
+	at org.eclipse.ui.internal.WorkbenchPartReference.getPart(WorkbenchPartReference.java:566)
+	at org.eclipse.ui.internal.PartPane.setVisible(PartPane.java:290)
+	at org.eclipse.ui.internal.presentations.PresentablePart.setVisible(PresentablePart.java:140)
+	at org.eclipse.ui.internal.presentations.util.PresentablePartFolder.select(PresentablePartFolder.java:268)
+	at org.eclipse.ui.internal.presentations.util.LeftToRightTabOrder.select(LeftToRightTabOrder.java:65)
+	at org.eclipse.ui.internal.presentations.util.TabbedStackPresentation.selectPart(TabbedStackPresentation.java:394)
+	at org.eclipse.ui.internal.PartStack.refreshPresentationSelection(PartStack.java:1144)
+	at org.eclipse.ui.internal.PartStack.handleDeferredEvents(PartStack.java:1112)
+	at org.eclipse.ui.internal.LayoutPart.deferUpdates(LayoutPart.java:400)
+	at org.eclipse.ui.internal.PartSashContainer.handleDeferredEvents(PartSashContainer.java:1369)
+	at org.eclipse.ui.internal.LayoutPart.deferUpdates(LayoutPart.java:400)
+	at org.eclipse.ui.internal.WorkbenchPage.handleDeferredEvents(WorkbenchPage.java:1305)
+	at org.eclipse.ui.internal.WorkbenchPage.deferUpdates(WorkbenchPage.java:1295)
+	at org.eclipse.ui.internal.WorkbenchPage.restoreState(WorkbenchPage.java:2967)
+	at org.eclipse.ui.internal.WorkbenchWindow.restoreState(WorkbenchWindow.java:1936)
+	at org.eclipse.ui.internal.Workbench.doRestoreState(Workbench.java:2857)
+	at org.eclipse.ui.internal.Workbench.access$14(Workbench.java:2805)
+	at org.eclipse.ui.internal.Workbench$19.run(Workbench.java:1681)
+	at org.eclipse.ui.internal.Workbench.runStartupWithProgress(Workbench.java:1421)
+	at org.eclipse.ui.internal.Workbench.restoreState(Workbench.java:1679)
+	at org.eclipse.ui.internal.Workbench.access$12(Workbench.java:1650)
+	at org.eclipse.ui.internal.Workbench$17.run(Workbench.java:1529)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
+	at org.eclipse.ui.internal.Workbench.restoreState(Workbench.java:1473)
+	at org.eclipse.ui.internal.WorkbenchConfigurer.restoreState(WorkbenchConfigurer.java:183)
+	at org.eclipse.ui.application.WorkbenchAdvisor.openWindows(WorkbenchAdvisor.java:702)
+	at org.eclipse.ui.internal.Workbench.init(Workbench.java:1085)
+	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:1847)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:419)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at org.eclipse.ui.internal.ide.IDEApplication.run(IDEApplication.java:95)
+	at org.eclipse.core.internal.runtime.PlatformActivator$1.run(PlatformActivator.java:78)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:92)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:68)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:400)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:177)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:616)
+	at org.eclipse.core.launcher.Main.invokeFramework(Main.java:336)
+	at org.eclipse.core.launcher.Main.basicRun(Main.java:280)
+	at org.eclipse.core.launcher.Main.run(Main.java:977)
+	at org.eclipse.core.launcher.Main.main(Main.java:952)
+!SESSION 2011-06-15 19:24:26.563 -----------------------------------------------
+eclipse.buildId=M20060921-0945
+java.version=1.6.0_22
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=it_IT
+Command-line arguments:  -os linux -ws gtk -arch x86
+
+!ENTRY org.eclipse.core.resources 2 10035 2011-06-15 19:24:50.026
+!MESSAGE A workspace crash was detected. The previous session did not exit normally.
+
+!ENTRY org.eclipse.core.resources 4 567 2011-06-15 19:24:50.076
+!MESSAGE Workspace restored, but some problems occurred.
+!SUBENTRY 1 org.eclipse.core.resources 4 567 2011-06-15 19:24:50.076
+!MESSAGE The project description file (.project) for geoserverTest is missing.  This file contains important information about the project.  The project will not function properly until this file is restored.

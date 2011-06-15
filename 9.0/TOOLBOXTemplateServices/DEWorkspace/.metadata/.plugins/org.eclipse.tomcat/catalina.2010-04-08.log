@@ -1,0 +1,15 @@
+WebappLoader[]: Deploying class repositories to work directory /home/maro/Progetti/Workspaces/GENESIS/.metadata/.plugins/org.eclipse.tomcat/ROOT
+ContextConfig[]: Added certificates -> request attribute Valve
+StandardManager[]: Seeding random number generator class java.security.SecureRandom
+StandardManager[]: Seeding of random number generator has been completed
+StandardWrapper[:default]: Loading container servlet default
+StandardWrapper[:invoker]: Loading container servlet invoker
+CoyoteConnector Coyote can't register jmx for protocol
+WebappLoader[/wsexplorer]: Deploying class repositories to work directory /home/maro/Progetti/Workspaces/GENESIS/.metadata/.plugins/org.eclipse.tomcat/wsexplorer
+WebappLoader[/wsexplorer]: Deploy class files /WEB-INF/classes to /home/maro/Progetti/Workspaces/GENESIS/.metadata/.plugins/org.eclipse.tomcat/wsexplorer/WEB-INF/classes
+WebappLoader[/wsexplorer]: Deploy JAR /WEB-INF/lib/wsexplorer.jar to /home/maro/Progetti/Workspaces/GENESIS/.metadata/.plugins/org.eclipse.tomcat/wsexplorer/WEB-INF/lib/wsexplorer.jar
+ContextConfig[/wsexplorer]: Added certificates -> request attribute Valve
+StandardManager[/wsexplorer]: Seeding random number generator class java.security.SecureRandom
+StandardManager[/wsexplorer]: Seeding of random number generator has been completed
+StandardWrapper[/wsexplorer:default]: Loading container servlet default
+StandardWrapper[/wsexplorer:invoker]: Loading container servlet invoker

@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pisa.intecs.it/mass/toolbox/xmlScript file:/home/maro/Programmi/eclipse3.2.1/plugins/com.intecs.ToolboxScript.editorFiles_1.1.0/schemas/xmlScript.xsd">
+  <!-- if>
+	<validateDocument>
+		<xmlRequest/>
+		<path startFrom="SERVICE_RESOURCE_DIR">
+        	<string>../Schemas/wps/1.0.0/wpsGetCapabilities_request.xsd</string>
+        </path>
+	</validateDocument>
+	<sequence-->
+	  <setVariable name="version">
+	    <xPath xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:ows="http://www.opengis.net/ows/1.1">
+	      <xmlRequest/>
+	      <string>/wps:GetCapabilities/wps:AcceptVersions/ows:Version</string>
+	    </xPath>
+	  </setVariable>
+	  <if>
+	    <isNotNull>
+	      <variable name="version"/>
+	    </isNotNull>
+	    <sequence>
+	      	<setVariable name="wpsLogFolder">
+			    <path startFrom="SERVICE_RESOURCE_DIR">
+			      <string>../Log</string>
+			    </path>
+			</setVariable>
+	    	<setVariable name="wpsCapabilitiesTempFolder">
+            	<string>${wpsLogFolder}/Capabilities/temp/</string>
+        	</setVariable>
+        	<mkdir>
+		    	<variable name="wpsCapabilitiesTempFolder"/>
+		  	</mkdir>
+	    	<setVariable name="capabilites">
+			    <xslt xmlOutput="true">
+			      <loadXML>
+			        <path startFrom="SERVICE_RESOURCE_DIR">
+			          <string>../AdditionalResources/ExternalServiceInformation.xml</string>
+			        </path>
+			      </loadXML>
+			      <path startFrom="SERVICE_RESOURCE_DIR">
+			        <string>../AdditionalResources/WPS/XSL/GenerateCapabilities.xsl</string>
+			      </path>
+			      <parameter name="toolboxURL">
+			        <toolboxAddress/>
+			      </parameter>
+			    </xslt>
+	    	</setVariable>
+	    	<dumpXML>
+                <string>${wpsCapabilitiesTempFolder}capabilties.xml</string>
+                <variable name="capabilites"/>
+        	</dumpXML>
+        	<variable name="capabilites"/>
+        </sequence>
+	  </if>
+	<!-- /sequence>
+	<sequence>
+		<xslt xmlOutput="true">
+            <variable name="processRequest"/>
+            <path startFrom="SERVICE_RESOURCE_DIR">
+              <string>../AdditionalResources/WPS/XSL/WPSExceptions.xsl</string>
+            </path>
+            <parameter name="exceptionCode">
+              <string>NoApplicableCode</string>
+            </parameter>
+            <parameter name="exceptionText">
+              <string>GetCapabilities Request is not Valid.</string>
+            </parameter>
+        </xslt>
+	</sequence> 
+ </if>		  -->
+</sequence>

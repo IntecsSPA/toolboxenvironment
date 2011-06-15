@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><service xmlns="http://pisa.intecs.it/mass/toolbox/serviceDescriptor" queuing="false" serviceName="WPSSoap" sslCertificate="" suspendMode="soft" version="2.2" wssecurity="false">
+	<interface mode="" name="" schemaValidation="true" type="Standard" version="">
+		<rootSchemaFile>WPSSoapAll.xsd</rootSchemaFile>
+		<schemaSetLocation>Schemas</schemaSetLocation>
+		<wsdlFile/>
+		<targetNameSpace>http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap</targetNameSpace>
+		<operations>
+			<operation SOAPAction="GetCapabilities" name="GetCapabilities" requestTimeout="1h" type="synchronous">
+				<admittedHosts/>
+				<inputType namespace="http://www.opengis.net/wps/1.0.0" type="GetCapabilities"/>
+				<outputType namespace="http://www.opengis.net/wps/1.0.0" type="Capabilities"/>
+				<scriptFile overrideByUser="false" path="Operations/GetCapabilities/firstScript.tscript" type="FIRST_SCRIPT"/>
+				<scriptFile overrideByUser="false" path="Operations/GetCapabilities/globalError.tscript" type="GLOBAL_ERROR"/>
+			</operation>
+			<operation SOAPAction="DescribeProcess" name="DescribeProcess" requestTimeout="1h" type="synchronous">
+				<admittedHosts/>
+				<inputType namespace="http://www.opengis.net/wps/1.0.0" type="DescribeProcess"/>
+				<outputType namespace="http://www.opengis.net/wps/1.0.0" type="ProcessDescriptions"/>
+				<scriptFile overrideByUser="false" path="Operations/DescribeProcess/firstScript.tscript" type="FIRST_SCRIPT"/>
+				<scriptFile overrideByUser="false" path="Operations/DescribeProcess/globalError.tscript" type="GLOBAL_ERROR"/>
+			</operation>
+			<operation SOAPAction="Execute" name="Execute" requestTimeout="1h" type="synchronous">
+				<admittedHosts/>
+				<inputType namespace="http://www.opengis.net/wps/1.0.0" type="Execute"/>
+				<outputType namespace="http://www.opengis.net/wps/1.0.0" type="ExecuteResponse"/>
+				<scriptFile overrideByUser="true" path="Operations/Execute/firstScript.tscript" type="FIRST_SCRIPT"/>
+				<scriptFile overrideByUser="true" path="Operations/Execute/globalError.tscript" type="GLOBAL_ERROR"/>
+			</operation>
+		</operations>
+		<variables/>
+		<admittedHosts/>
+	</interface>
+</service>

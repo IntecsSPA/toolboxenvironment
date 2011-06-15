@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pisa.intecs.it/mass/toolbox/xmlScript file:/C:/TBXTraining/eclipse/plugins/com.intecs.ToolboxScript.editorFiles_1.1.0/schemas/xmlScript.xsd">
+
+  <setVariable name="statusDocument">
+    <xml textTag="evaluate" attributePrefix="x">
+        <Percentage value="xcurrentStatus"/>
+    </xml>
+  </setVariable>
+
+  <dumpXML>
+    <variable name="STATUS_FILE"/>
+    <variable name="statusDocument"/>
+  </dumpXML>
+</sequence>

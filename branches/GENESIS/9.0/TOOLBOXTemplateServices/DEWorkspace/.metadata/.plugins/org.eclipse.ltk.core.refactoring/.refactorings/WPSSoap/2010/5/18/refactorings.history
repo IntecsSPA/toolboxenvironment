@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<session version="1.0">
+<refactoring comment="Rename resource '/WPSSoap/AdditionalResources/WPS/XSL/ToolboxEngine/Execute_Grass_Enviorement.xsl' to 'Execute_ToolboxScript_Environement.xsl'&#10;- Original element: 'Execute_Grass_Enviorement.xsl'" description="Rename resource 'Execute_Grass_Enviorement.xsl'" flags="7" id="org.eclipse.jdt.ui.rename.resource" input="AdditionalResources/WPS/XSL/ToolboxEngine/Execute_Grass_Enviorement.xsl" name="Execute_ToolboxScript_Environement.xsl" stamp="1272904788513" version="1.0"/>
+</session>

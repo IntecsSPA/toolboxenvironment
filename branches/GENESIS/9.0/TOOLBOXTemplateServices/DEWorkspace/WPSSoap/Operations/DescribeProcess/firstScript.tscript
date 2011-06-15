@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pisa.intecs.it/mass/toolbox/xmlScript file:/home/maro/Programmi/eclipse3.2.1/plugins/com.intecs.ToolboxScript.editorFiles_1.2.0/schemas/xmlScript.xsd">
+	
+		<xslt xmlOutput="true">
+			<xmlRequest />
+      		<path startFrom="SERVICE_RESOURCE_DIR">
+        		<string>../AdditionalResources/WPS/XSL/GenerateDescribeProcess.xsl</string>
+      		</path>
+		</xslt>
+</sequence>

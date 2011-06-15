@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="com.intecs.ToolboxScript.launchConfigurationType.tscript">
+<stringAttribute key="SERVICE" value="geoserverTest"/>
+<stringAttribute key="OPERATION" value="geoserverDeploy"/>
+<stringAttribute key="TESTFILE" value="/geoserverTest/Test Files/geoserverDeploy/test.xml"/>
+</launchConfiguration>

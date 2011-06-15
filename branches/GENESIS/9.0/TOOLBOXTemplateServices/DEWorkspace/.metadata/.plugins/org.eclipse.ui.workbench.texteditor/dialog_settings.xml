@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="562" key="DIALOG_Y_ORIGIN"/>
+		<item value="124" key="DIALOG_X_ORIGIN"/>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="false" key="wrap"/>
+		<item value="false" key="isRegEx"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="incremental"/>
+		<item value="false" key="wholeword"/>
+		<item value="serviceNa" key="selection"/>
+		<list key="findhistory">
+			<item value="servicena"/>
+			<item value="wpsOutputFolder"/>
+			<item value="toolboxGetServiceResourceURL"/>
+			<item value="GenerateExecuteResponse"/>
+			<item value="outputHttpRequest"/>
+			<item value="utputHttpRequest"/>
+			<item value="text/xml"/>
+			<item value="soapcall"/>
+		</list>
+		<list key="replacehistory">
+			<item value="&amp;#10;"/>
+			<item value=" "/>
+		</list>
+	</section>
+</section>

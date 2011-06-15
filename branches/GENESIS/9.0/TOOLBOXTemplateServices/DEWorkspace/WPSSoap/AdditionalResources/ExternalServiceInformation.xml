@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ExternalServiceInformation xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:ows="http://www.opengis.net/ows/1.1">
+	<Capabilities>
+	<wps:Capabilities service="WPS" version="1.0.0" xml:lang="en" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" updateSequence="1">
+  		<ows:ServiceIdentification>	
+  			<ows:Title>WPSSoap</ows:Title>
+  			<ows:Abstract>Example Toolbox WPS Service</ows:Abstract>
+  			<ows:Keywords>
+    			<ows:Keyword>WPS</ows:Keyword>
+    			<ows:Keyword>INTECS</ows:Keyword>
+    			<ows:Keyword>geospatial</ows:Keyword>
+    			<ows:Keyword>geoprocessing</ows:Keyword>
+  			</ows:Keywords>
+  			<ows:ServiceType>WPS</ows:ServiceType>
+			<ows:ServiceTypeVersion>1.0.0</ows:ServiceTypeVersion>
+			<ows:Fees>NONE</ows:Fees>
+			<ows:AccessConstraints>NONE</ows:AccessConstraints>
+  		</ows:ServiceIdentification>	
+  		<ows:ServiceProvider>
+    		<ows:ProviderName>Intecs Informatica e tecnologia del Software SpA</ows:ProviderName>
+    		<ows:ProviderSite xlink:href="http://www.intecs.it/"/>
+    			<ows:ServiceContact>
+      				<ows:IndividualName/>
+      				<ows:PositionName>I</ows:PositionName>
+      				<ows:ContactInfo>
+        				<ows:Phone>
+          					<ows:Voice/>
+          					<ows:Facsimile/>
+        				</ows:Phone>
+        				<ows:Address>
+          					<ows:DeliveryPoint/>
+          					<ows:City>Pisa</ows:City>
+          					<ows:AdministrativeArea/>
+          					<ows:PostalCode>56100</ows:PostalCode>
+          					<ows:Country>Italy</ows:Country>
+          					<ows:ElectronicMailAddress>toolbox@pisa.intecs.it</ows:ElectronicMailAddress>
+        				</ows:Address>
+      				</ows:ContactInfo>
+    			</ows:ServiceContact>
+  		</ows:ServiceProvider>
+  		<ows:OperationsMetadata>
+    		<ows:Operation name="GetCapabilities">
+      			<ows:DCP>
+        			<ows:HTTP>
+          				<ows:Get xlink:href="/services/WPSSoap?"/>
+          				<ows:Post xlink:href="/services/WPSSoap?"/>
+        			</ows:HTTP>
+      			</ows:DCP>
+    		</ows:Operation>
+    		<ows:Operation name="DescribeProcess">
+      			<ows:DCP>
+        			<ows:HTTP>
+          				<ows:Get xlink:href="/services/WPSSoap?"/>
+          				<ows:Post xlink:href="/services/WPSSoap?"/>
+        			</ows:HTTP>
+      			</ows:DCP>
+    		</ows:Operation>
+    		<ows:Operation name="Execute">
+      			<ows:DCP>
+        			<ows:HTTP>
+          				<ows:Post xlink:href="/services/WPSSoap?"/>
+        			</ows:HTTP>
+      			</ows:DCP>
+    		</ows:Operation>
+  		</ows:OperationsMetadata>
+  		<wps:ProcessOfferings>
+    		<wps:Process wps:processVersion="0.1">
+      			<ows:Identifier>RasterDiff</ows:Identifier>
+      			<ows:Title>Raster Difference.</ows:Title>
+      			<ows:Abstract>Creation of a new raster that it corresponds to the difference of the two input rasters. For each pixels if the pixel of the first raster is different from the pixel of the second raster, the pixel of the new raster will be equal to input constant value.</ows:Abstract>
+      			<ows:Metadata xlink:title="sum"/>
+      			<ows:Metadata xlink:title="coverage"/>
+    		</wps:Process>
+    		<wps:Process wps:processVersion="0.1">
+      			<ows:Identifier>RasterFormatConversion</ows:Identifier>
+      			<ows:Title>Convert raster to another format</ows:Title>
+      			<ows:Abstract>Convert a raster to another file format and stores the resulting raster file.</ows:Abstract>
+      			<ows:Metadata xlink:title="raster"/>
+      			<ows:Metadata xlink:title="conversion"/>
+      			<ows:Metadata xlink:title="format"/>
+    		</wps:Process>
+  		</wps:ProcessOfferings>
+  		<wps:Languages>
+    		<wps:Default>
+      			<ows:Language>en</ows:Language>
+    		</wps:Default>
+    		<wps:Supported>
+      			<ows:Language>en</ows:Language>
+    		</wps:Supported>
+  		</wps:Languages>
+  		<!--  wps:WSDL xlink:href="http://foo.bar/wps?WSDL"/-->
+  </wps:Capabilities>
+  </Capabilities>
+  <EPSGSupported>
+  	<AllowedValues>
+		<Value>4236</Value>
+		<Value>4258</Value>
+	</AllowedValues>
+  </EPSGSupported>
+  <!-- ComplexOutputSupported>
+  	<schemas>
+  		<schema xsl=""></schema>
+  		...
+  	</schemas>
+  	<mimeTypes>
+  		<mimeType></mimeType>
+  	</mimeTypes>
+  </ComplexOutputSupported> -->
+  <!-- GeoserverInfo>
+  	<url>http://192.168.31.4:8080/geoserver</url>
+  	<user>admin</user>
+  	<password>geoserver</password>
+  </GeoserverInfo> -->
+</ExternalServiceInformation>

@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pisa.intecs.it/mass/toolbox/xmlScript file:/C:/TBXTraining/eclipse/plugins/com.intecs.ToolboxScript.editorFiles_1.1.0/schemas/xmlScript.xsd">
+  <setVariable name="wpsLogFolder">
+    <path startFrom="SERVICE_RESOURCE_DIR">
+      <string>../Log</string>
+    </path>
+  </setVariable>
+  <setVariable name="wpsProcessingInstance">
+    <dateStringFormatter format="ddMMyyyyHHmmssSSS">
+      <now/>
+    </dateStringFormatter>
+  </setVariable>
+  <setVariable name="wpsScriptFolder">
+    <string>${wpsLogFolder}/${wpsProcessingInstance}/script/</string>
+  </setVariable>
+  <mkdir>
+    <variable name="wpsScriptFolder"/>
+  </mkdir>
+  <!-- POST Request Control -->
+  <setVariable name="rootRequestName">
+    <xPath>
+      <xmlRequest/>
+      <string>local-name(/*[1])</string>
+    </xPath>
+  </setVariable>
+  <if>
+    <oeq>
+      <variable name="rootRequestName"></variable>
+      <string>Execute</string>
+    </oeq>
+    <sequence>
+       <setVariable name="processRequest">
+          <xslt xmlOutput="true">
+            <xmlRequest/>
+            <path startFrom="SERVICE_RESOURCE_DIR">
+              <string>../AdditionalResources/WPS/XSL/WPSPost2WPSSoap.xsl</string>
+            </path>
+          </xslt>
+      </setVariable> 
+    </sequence>
+    <sequence>
+      <setVariable name="processRequest">
+      	<xmlRequest/>
+          <!-- xslt xmlOutput="true">
+            <xmlRequest/>
+            <path startFrom="SERVICE_RESOURCE_DIR">
+              <string>../AdditionalResources/WPS/XSL/WPSSoapNormalize.xsl</string>
+            </path>
+          </xslt -->
+      </setVariable>
+    </sequence>
+  </if>
+  <dumpXML>
+    <path>
+      	<string>${wpsLogFolder}/${wpsProcessingInstance}/ProcessedRequest.xml</string>
+    </path>
+    <variable name="processRequest"/>
+  </dumpXML>
+  
+  		<!-- Generate ExecuteProcess Operation Toolbox script-->
+		  <setVariable name="executeProcessScript">
+		    <xslt xmlOutput="true">
+		      <variable name="processRequest"/>
+		      <path startFrom="SERVICE_RESOURCE_DIR">
+		        <string>../AdditionalResources/WPS/XSL/ShellEngine/GenerateShellExecuteScript.xsl</string>
+		      </path>
+		    </xslt>
+		  </setVariable>
+		  <dumpXML>
+		    <path>
+		      <string>${wpsScriptFolder}executeProcessScript.tscript</string>
+		    </path>
+		    <variable name="executeProcessScript"/>
+		  </dumpXML>
+		
+		  <loadProcedure name="ExecuteProcedure">
+		    <string>${wpsScriptFolder}executeProcessScript.tscript</string>
+		  </loadProcedure>
+		  <call procedure="ExecuteProcedure">
+		  </call>
+
+  
+  
+  <!-- End ExecuteProcess -->
+</sequence>

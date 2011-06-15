@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inspection xmlns="http://schemas.xmlsoap.org/ws/2001/10/inspection/"
+xmlns:wsilwsdl="http://schemas.xmlsoap.org/ws/2001/10/inspection/wsdl/"
+xmlns:wsiluddi="http://schemas.xmlsoap.org/ws/2001/10/inspection/uddi/"
+xmlns:uddi="urn:uddi-org:api">
+<abstract xml:lang="en-US">
+v5_0_1_0
+</abstract>
+<link referencedNamespace="urn:uddi-org:api">
+<abstract xml:lang="en-US">
+%PUBLICUDDIREGISTRYTYPE_NAME_SAP_TEST
+</abstract>
+<abstract xml:lang="en-US">
+http://udditest.sap.com/UDDI/api/inquiry/
+</abstract>
+<abstract xml:lang="en-US">
+https://udditest.sap.com/UDDI/api/publish/
+</abstract>
+<abstract xml:lang="en-US">
+http://udditest.sap.com/
+</abstract>
+</link>
+<link referencedNamespace="urn:uddi-org:api">
+<abstract xml:lang="en-US">
+%PUBLICUDDIREGISTRYTYPE_NAME_SAP
+</abstract>
+<abstract xml:lang="en-US">
+http://uddi.sap.com/UDDI/api/inquiry/
+</abstract>
+<abstract xml:lang="en-US">
+https://uddi.sap.com/UDDI/api/publish/
+</abstract>
+<abstract xml:lang="en-US">
+http://uddi.sap.com/
+</abstract>
+</link>
+<link referencedNamespace="urn:uddi-org:api">
+<abstract xml:lang="en-US">
+%PUBLICUDDIREGISTRYTYPE_NAME_XMETHODS
+</abstract>
+<abstract xml:lang="en-US">
+http://uddi.xmethods.net/inquire
+</abstract>
+<abstract xml:lang="en-US">
+https://uddi.xmethods.net/publish
+</abstract>
+<abstract xml:lang="en-US">
+http://www.xmethods.net/ve2/Register.po?event=registerOrg
+</abstract>
+</link>
+<link referencedNamespace="urn:uddi-org:api">
+<abstract xml:lang="en-US">
+%PUBLICUDDIREGISTRYTYPE_NAME_NTTCOMM
+</abstract>
+<abstract xml:lang="en-US">
+http://www.uddi.ne.jp/registry/inquiryapi
+</abstract>
+<abstract xml:lang="en-US">
+https://www.uddi.ne.jp/registry/publishapi
+</abstract>
+<abstract xml:lang="en-US">
+http://www.uddi.ne.jp/registry/registry.html
+</abstract>
+</link>
+<link referencedNamespace="http://schemas.xmlsoap.org/ws/2001/10/inspection/" location="http://www.xmethods.com/inspection.wsil">
+</link>
+</inspection>
+

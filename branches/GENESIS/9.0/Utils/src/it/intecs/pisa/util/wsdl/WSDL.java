@@ -8,6 +8,8 @@ import it.intecs.pisa.util.DOMUtil;
 import java.io.File;
 import java.io.FileReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.LinkedList;
@@ -43,7 +45,6 @@ public class WSDL {
     protected Import[] imports = null;
     protected Hashtable<String, String> namespaces = null;
     private DOMUtil domutil;
-    private String [] includeLocations;
     private String [] importLocations;
 
     /**
@@ -82,6 +83,22 @@ public class WSDL {
         try {
             wsdlDoc = domutil.inputStreamToDocument(wsdlInputStream);
 
+            parseWSDL(wsdlDoc);
+        } catch (Exception e) {
+            wsdlDoc = null;
+        }
+
+    }
+    
+        /**
+     * This constructor fills the class with WSDL parameters
+     * @param wsdlURL
+     */
+    public WSDL(URL wsdlURL) {
+        this();
+        try {
+            InputStreamReader reader = new InputStreamReader(wsdlURL.openStream());
+            wsdlDoc = domutil.readerToDocument(reader);
             parseWSDL(wsdlDoc);
         } catch (Exception e) {
             wsdlDoc = null;
@@ -233,18 +250,7 @@ public class WSDL {
         //gettting target name space
         this.targetNameSpace = root.getAttribute(ATTRIBUTE_TARGET_NAMESPACE);
         
-        
-        //parsing include schema locations
-        children = DOMUtil.getChildrenByTagName(root, TAG_INCLUDE);
 
-        count = children.size();
-        includeLocations = new String[count];
-
-        for (int i = 0; i < count; i++) {
-            tag = (Element) children.get(i);
-            includeLocations[i]=tag.getAttribute(ATTRIBUTE_SCHEMA_LOCATION);
-        }
-        
         //parsing import schema locations
         children = DOMUtil.getChildrenByTagName(root, TAG_IMPORT);
 
@@ -446,13 +452,6 @@ public class WSDL {
             providerPortTypeEl.setAttribute("name", "tns:"+name+"Callback");
             providerRoleEl.appendChild(providerPortTypeEl);
         }
-    }
-
-    /**
-     * @return the includeLocations
-     */
-    public String [] getIncludeLocations() {
-        return includeLocations;
     }
 
     /**

@@ -7,6 +7,7 @@ import it.intecs.pisa.util.DOMUtil;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.LinkedList;
@@ -21,6 +22,10 @@ import org.w3c.dom.Element;
 public class WSDL {
 
     private static final String ATTRIBUTE_TARGET_NAMESPACE = "targetNamespace";
+    
+    private static final String TAG_INCLUDE = "include";
+    private static final String TAG_IMPORT = "import";
+    private static final String ATTRIBUTE_SCHEMA_LOCATION = "schemaLocation";
     private static final String TAG_MESSAGE = "message";
     private static final String TAG_BINDING = "binding";
     private static final String TAG_PORT_TYPE = "portType";
@@ -38,6 +43,8 @@ public class WSDL {
     protected Import[] imports = null;
     protected Hashtable<String, String> namespaces = null;
     private DOMUtil domutil;
+    private String [] includeLocations;
+    private String [] importLocations;
 
     /**
      * Default constructor
@@ -58,6 +65,22 @@ public class WSDL {
             FileReader reader = new FileReader(wsdl);
 
             wsdlDoc = domutil.readerToDocument(reader);
+
+            parseWSDL(wsdlDoc);
+        } catch (Exception e) {
+            wsdlDoc = null;
+        }
+
+    }
+    
+    /**
+     * This constructor fills the class with WSDL parameters
+     * @param wsdl InputStream
+     */
+    public WSDL(InputStream wsdlInputStream) {
+        this();
+        try {
+            wsdlDoc = domutil.inputStreamToDocument(wsdlInputStream);
 
             parseWSDL(wsdlDoc);
         } catch (Exception e) {
@@ -209,6 +232,29 @@ public class WSDL {
 
         //gettting target name space
         this.targetNameSpace = root.getAttribute(ATTRIBUTE_TARGET_NAMESPACE);
+        
+        
+        //parsing include schema locations
+        children = DOMUtil.getChildrenByTagName(root, TAG_INCLUDE);
+
+        count = children.size();
+        includeLocations = new String[count];
+
+        for (int i = 0; i < count; i++) {
+            tag = (Element) children.get(i);
+            includeLocations[i]=tag.getAttribute(ATTRIBUTE_SCHEMA_LOCATION);
+        }
+        
+        //parsing import schema locations
+        children = DOMUtil.getChildrenByTagName(root, TAG_IMPORT);
+
+        count = children.size();
+        importLocations = new String[count];
+
+        for (int i = 0; i < count; i++) {
+            tag = (Element) children.get(i);
+            importLocations[i]=tag.getAttribute(ATTRIBUTE_SCHEMA_LOCATION);
+        }
 
         //parsing message type
         children = DOMUtil.getChildrenByTagName(root, TAG_MESSAGE);
@@ -224,7 +270,9 @@ public class WSDL {
             messages[i].createFromXMLSnippet(tag);
         }
 
-
+        
+        
+        
         //Parsing portTypes
         children = DOMUtil.getChildrenByTagName(root, TAG_PORT_TYPE);
 
@@ -310,6 +358,7 @@ public class WSDL {
         namespaces.put("tns", targetNameSpace);
 
     }
+    
 
     public String getNameSpaceValue(String name) {
         return namespaces.get("xmlns:" + name);
@@ -397,5 +446,19 @@ public class WSDL {
             providerPortTypeEl.setAttribute("name", "tns:"+name+"Callback");
             providerRoleEl.appendChild(providerPortTypeEl);
         }
+    }
+
+    /**
+     * @return the includeLocations
+     */
+    public String [] getIncludeLocations() {
+        return includeLocations;
+    }
+
+    /**
+     * @return the importLocations
+     */
+    public String [] getImportLocations() {
+        return importLocations;
     }
 }

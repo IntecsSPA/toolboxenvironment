@@ -1,6 +1,5 @@
 package it.intecs.pisa.toolbox.security.validator;
 
-
 import com.sun.xacml.Indenter;
 import com.sun.xacml.ParsingException;
 import com.sun.xacml.PDP;
@@ -12,13 +11,16 @@ import com.sun.xacml.cond.StandardFunctionFactory;
 
 import com.sun.xacml.ctx.Attribute;
 import com.sun.xacml.ctx.RequestCtx;
+import com.sun.xacml.ctx.RequestElement;
 import com.sun.xacml.ctx.ResponseCtx;
+import com.sun.xacml.Constants;
+import com.sun.xacml.attr.AttributeValue;
 
 import com.sun.xacml.finder.AttributeFinder;
 import com.sun.xacml.finder.PolicyFinder;
 
 import com.sun.xacml.finder.impl.CurrentEnvModule;
-import com.sun.xacml.finder.impl.FilePolicyModule;
+import com.sun.xacml.support.finder.FilePolicyModule;
 import com.sun.xacml.finder.impl.SelectorModule;
 
 import it.intecs.pisa.toolbox.security.ToolboxSecurityConfigurator;
@@ -30,13 +32,12 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
-
-public class ToolboxPDP
-{
+public class ToolboxPDP {
 
     // this is the actual PDP from sunxacml we'll use for policy evaluation
     private PDP pdp = null;
@@ -47,15 +48,11 @@ public class ToolboxPDP
     public ToolboxPDP() throws Exception {
         // load the configuration
         //ConfigurationStore store = new ConfigurationStore();
-
         // use the default factories from the configuration
         //store.useDefaultFactories();
-
         // get the PDP configuration's and setup the PDP
         //pdp = new PDP(store.getDefaultPDPConfig());
-        
     }
-
 
     /**
      * Evaluates the given request and returns the Response that the PDP
@@ -70,16 +67,15 @@ public class ToolboxPDP
      * @throws ParsingException if the Request is invalid
      */
     public ResponseCtx evaluate(String requestFile)
-        throws IOException, ParsingException
-    {
+            throws IOException, ParsingException {
         // setup the request based on the file
         RequestCtx request =
-            RequestCtx.getInstance(new FileInputStream(requestFile));
+                RequestCtx.getInstance(new FileInputStream(requestFile));
 
         // evaluate the request
         return pdp.evaluate(request);
     }
-    
+
     /**
      * Evaluates the given request and returns the Response that the PDP
      * will hand back to the PEP.
@@ -92,12 +88,31 @@ public class ToolboxPDP
      * @throws ParsingException if the Request is invalid
      */
     public ResponseCtx evaluate(RequestCtx request)
-        throws IOException, ParsingException
-    {
-    	//load policy and init
-    	String service = ((Attribute) request.getResource().iterator().next()).getValue().encode();
-    	String[] policy = gePolicyFiles(service.toString().substring(service.toString().lastIndexOf("/") + 1));
-    	init(policy);
+            throws IOException, ParsingException {
+        //load policy and init
+
+        AttributeValue resourceId = null;
+        Iterator iter = request.getRequestElements().iterator();
+        while (iter.hasNext()) {
+            RequestElement re = (RequestElement) iter.next();
+            Set rSet = (Set) re.getAttributes().get(Constants.RESOURCE_ID);
+            if (rSet != null) {
+                if (rSet.size() > 1) {
+                    System.err.println("Resource may contain "
+                            + "only one resource-id Attribute");
+                    throw new ParsingException("too many resource-id attrs");
+                }
+                // keep track of the resource-id attribute
+                resourceId = ((Attribute) (rSet.iterator().next())).getValue();
+            }
+        }
+
+        String service = null;
+        if (resourceId != null) {
+            service = resourceId.encode();
+        }
+        String[] policy = gePolicyFiles(service.toString().substring(service.toString().lastIndexOf("/") + 1));
+        init(policy);
         // evaluate the request
         return pdp.evaluate(request);
     }
@@ -112,90 +127,95 @@ public class ToolboxPDP
      *             file must be specified in the standard java property,
      *             com.sun.xacml.PDPConfigFile.
      */
-    public static void main(String [] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         if (args.length < 2) {
             System.out.println("Usage: -config <request>");
             System.out.println("       <request> <policy> [policies]");
             System.exit(1);
         }
-        
+
+        String charsetName = "UTF"; // default charset
+
         ToolboxPDP simplePDP = null;
         String requestFile = null;
-        
+
         if (args[0].equals("-config")) {
             requestFile = args[1];
             simplePDP = new ToolboxPDP();
         } else {
             requestFile = args[0];
-            String [] policyFiles = new String[args.length - 1];
-            
-            for (int i = 1; i < args.length; i++)
-                policyFiles[i-1] = args[i];
+            String[] policyFiles = new String[args.length - 1];
+
+            for (int i = 1; i < args.length; i++) {
+                policyFiles[i - 1] = args[i];
+            }
 
             simplePDP = new ToolboxPDP();
-            
+
         }
 
         // evaluate the request
         ResponseCtx response = simplePDP.evaluate(requestFile);
 
         // for this sample program, we'll just print out the response
-        response.encode(System.out, new Indenter());
+        response.encode(System.out, charsetName, new Indenter());
     }
-    
+
     /**
      * 
      * @return Returns the list of the XACML policy files that need to be checked by the PDP
      */
-    public String[] gePolicyFiles(String serviceName){
+    public String[] gePolicyFiles(String serviceName) {
         String[] arr = null;
-        
+
         Vector v = new Vector();
 
         String policiesDir = ToolboxSecurityConfigurator.getXACMLpolicyDir(serviceName);
-        
+
         File dir = new File(policiesDir);
-    
+
         String[] children = null;
-        
+
         // It is also possible to filter the list of returned files.
         // This example does not return any files that start with `.'.
         FilenameFilter filter = new FilenameFilter() {
+
             public boolean accept(File dir, String name) {
                 return name.endsWith(".xml");
             }
         };
         children = dir.list(filter);
-        
-        
+
+
         if (children == null) {
             // Either dir does not exist or is not a directory
         } else {
-            for (int i=0; i<children.length; i++) {
+            for (int i = 0; i < children.length; i++) {
                 // Get filename of file or directory
                 String filename = children[i];
-                v.add(policiesDir+"/"+filename);
+                v.add(policiesDir + "/" + filename);
             }
         }
 
         arr = new String[v.size()];
         v.copyInto(arr);
-        
+
         return arr;
     }
-    
+
     /**
      * sets the current PDP with the given policies
      * @author Stefano
      * @param policyFiles
      */
-    private void init(String [] policyFiles){
-    	// Create a PolicyFinderModule and initialize it...in this case,
+    private void init(String[] policyFiles) {
+        // Create a PolicyFinderModule and initialize it...in this case,
         // we're using the sample FilePolicyModule that is pre-configured
         // with a set of policies from the filesystem
         FilePolicyModule filePolicyModule = new FilePolicyModule();
-        for (int i = 0; i < policyFiles.length; i++)
+        for (int i = 0; i < policyFiles.length; i++) {
             filePolicyModule.addPolicy(policyFiles[i]);
+        }
 
         // next, setup the PolicyFinder that this PDP will use
         PolicyFinder policyFinder = new PolicyFinder();
@@ -223,13 +243,12 @@ public class ToolboxPDP
         // understand why it's provided here instead of in the standard
         // code base.
         FunctionFactoryProxy proxy =
-            StandardFunctionFactory.getNewFactoryProxy();
+                StandardFunctionFactory.getNewFactoryProxy();
         FunctionFactory factory = proxy.getConditionFactory();
         factory.addFunction(new TimeInRangeFunction());
         FunctionFactory.setDefaultFactory(proxy);
 
         // finally, initialize sunxacml pdp
-        pdp = new PDP(new PDPConfig(attributeFinder, policyFinder, null));
+        pdp = new PDP(new PDPConfig(attributeFinder, policyFinder, null, null));
     }
-
 }

@@ -1,16 +1,19 @@
-package it.intecs.pisa.toolbox.security.validator; 
-        
+package it.intecs.pisa.toolbox.security.validator;
+
+import com.sun.xacml.Constants;
 import com.sun.xacml.EvaluationCtx;
 import com.sun.xacml.Indenter;
 
 import com.sun.xacml.attr.AnyURIAttribute;
 import com.sun.xacml.attr.StringAttribute;
+import com.sun.xacml.attr.AttributeValue;
+import com.sun.xacml.attr.StandardAttributeFactory;
 
 import com.sun.xacml.ctx.Attribute;
 import com.sun.xacml.ctx.RequestCtx;
 import com.sun.xacml.ctx.ResponseCtx;
 import com.sun.xacml.ctx.Result;
-import com.sun.xacml.ctx.Subject;
+import com.sun.xacml.ctx.RequestElement;
 
 import java.io.File;
 import java.net.URI;
@@ -31,21 +34,19 @@ import org.opensaml.SAMLStatement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-
 /**
  * This class implements a PEP; it generates an XACML
  * Request and pass it to the PDP.
  *
- * @author Stefano
+ * @author Stefano, Maria Rosaria
  */
-public class ToolboxPEP
-{
+public class ToolboxPEP {
     /*
     private static String ORGANIZATION ="organization";
     private static String HMA_ID ="hmaId";
     private static String COUNTRY ="c";
-    */
-	
+     */
+
     private String subjectIdvalue = null; //the subject identifier
     /*
     private String cValue = null;
@@ -59,14 +60,16 @@ public class ToolboxPEP
 
     // MRB ADDITION 2010-01
     private SAMLAssertion samlAssertion = null;
+    
+    private int XACMLVersion = Constants.XACML_VERSION_2_0;
+    
+    
 
 	
     public ToolboxPEP() {
-	
     }
 
-
-	/**
+    /**
      * Sets up the Subject section of the request. This Request only has
      * one Subject section, and it uses the default category. To create a
      * Subject with a different category, you simply specify the category
@@ -76,51 +79,53 @@ public class ToolboxPEP
      *
      * @throws URISyntaxException if there is a problem with a URI
      */
-    public Set setupSubjects() throws URISyntaxException {
+    public RequestElement setupSubjects() throws URISyntaxException {
         HashSet attributes = new HashSet();
 
         // setup the id and value for the requesting subject
-        URI subjectId =
-            new URI("urn:oasis:names:tc:xacml:1.0:subject:subject-id");
- 
+        //URI subjectId = new URI("urn:oasis:names:tc:xacml:1.0:subject:subject-id");
+
         // create the subject section with two attributes, the first with
         // the subject's identity...
-        attributes.add(new Attribute(subjectId, null, null, new StringAttribute(subjectIdvalue)));
+        //attributes.add(new Attribute(Constants.RESOURCE_ID, null, null, new AnyURIAttribute(new URI(subjectIdvalue)), XACMLVersion, false));
         // ...and the second with the SAML attributes in the request
 
         SAMLAttributeStatement attrStatem = null;
         SAMLAttribute attr = null;
-        for (Iterator iter=samlAssertion.getStatements(); iter.hasNext();){
+        for (Iterator iter = samlAssertion.getStatements(); iter.hasNext();) {
             SAMLStatement statem = (SAMLStatement) iter.next();
-            if (statem instanceof SAMLAttributeStatement == false)
+            if (statem instanceof SAMLAttributeStatement == false) {
                 continue;
+            }
             attrStatem = (SAMLAttributeStatement) statem;
-            for (Iterator attriter=attrStatem.getAttributes(); attriter.hasNext();){
+            for (Iterator attriter = attrStatem.getAttributes(); attriter.hasNext();) {
                 attr = (SAMLAttribute) attriter.next();
-                attributes.add(new Attribute(new URI(attr.getName()), null, null, new StringAttribute(attr.getValues().next().toString())));
+                attributes.add(new Attribute(new URI(attr.getName()), null, null, new StringAttribute(attr.getValues().next().toString()), XACMLVersion, false));
             }
 
         }//end retrieve SAML attributes
 
         /*
         attributes.add(new Attribute(new URI("hmaAccount"), null, null, 
-                                     new StringAttribute(hmaAccountValue)));
+        new StringAttribute(hmaAccountValue)));
         //..and so on
         attributes.add(new Attribute(new URI("hmaProjectName"), null, null, 
-                new StringAttribute(hmaProjectNameValue)));
+        new StringAttribute(hmaProjectNameValue)));
         
         attributes.add(new Attribute(new URI("c"), null, null, 
-                new StringAttribute(cValue)));
+        new StringAttribute(cValue)));
         
         attributes.add(new Attribute(new URI("o"), null, null, 
-                new StringAttribute(oValue)));
+        new StringAttribute(oValue)));
          */
 
         // bundle the attributes in a Subject with the default category
-        HashSet subjects = new HashSet();
-        subjects.add(new Subject(attributes));
 
-        return subjects;
+        //HashSet subjects = new HashSet();
+        //subjects.add(new Subject(attributes));
+        RequestElement reqEl = new RequestElement(Constants.SUBJECT_CAT, attributes);
+
+        return reqEl;
     }
 
     /**
@@ -130,19 +135,22 @@ public class ToolboxPEP
      *
      * @throws URISyntaxException if there is a problem with a URI
      */
-    public Set setupResource() throws URISyntaxException {
+    public RequestElement setupResource() throws URISyntaxException {
         HashSet resource = new HashSet();
 
         // the resource being requested
         AnyURIAttribute value =
-            new AnyURIAttribute(resourceIdValue);
+                new AnyURIAttribute(resourceIdValue);
 
         // create the resource using a standard, required identifier for
         // the resource being requested
-        resource.add(new Attribute(new URI(EvaluationCtx.RESOURCE_ID),
-                                   null, null, value));
+        resource.add(new Attribute(new URI(Constants.RESOURCE_ID.toString()),
+                null, null, value));
+
+        RequestElement reqEl = new RequestElement(Constants.RESOURCE_CAT, resource);
         
-        return resource;
+        //return resource;
+        return reqEl;
     }
 
     /**
@@ -152,33 +160,35 @@ public class ToolboxPEP
      *
      * @throws URISyntaxException if there is a problem with a URI
      */
-    public Set setupAction() throws URISyntaxException {
+    public RequestElement setupAction() throws URISyntaxException {
         HashSet action = new HashSet();
 
         // this is a standard URI that can optionally be used to specify
         // the action being requested
         URI actionId =
-            new URI("urn:oasis:names:tc:xacml:1.0:action:action-id");
+                new URI("urn:oasis:names:tc:xacml:1.0:action:action-id");
 
         // create the action
         action.add(new Attribute(actionId, null, null,
-                                 new StringAttribute(actionIdValue)));
-
-        return action;
+                new StringAttribute(actionIdValue)));
+ 
+        RequestElement reqEl = new RequestElement(Constants.ACTION_CAT, action);
+     
+        //return action;
+        return reqEl;
     }
 
     /**
      * Command-line interface that creates a new Request by invoking the
      * static methods in this class. The Request has no Environment section.
      */
-    public static void main(String [] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         // create the new Request...
-    	ToolboxPEP reqBuild = new ToolboxPEP();
-    	reqBuild.checkPolicies("anHmaId", new URI("http://localhost:8080/axis2/execute"), "serviceX", getRequestPayload());
-  
+        ToolboxPEP reqBuild = new ToolboxPEP();
+        reqBuild.checkPolicies("anHmaId", new URI("http://localhost:8080/axis2/execute"), "serviceX", getRequestPayload());
+
     }
-    
-    
+
     /**
      * 
      *  Returns:
@@ -188,9 +198,9 @@ public class ToolboxPEP
      *  3 - no applicable policies were found for the request
      *
      * */
-    public int enforceChecks(URI requestURI, String soapAction, SAMLAssertion saml, Node soap){
+    public int enforceChecks(URI requestURI, String soapAction, SAMLAssertion saml, Node soap) {
         int resp = 2;
-        
+
         /**
          * here I could retrieve SAML attributes and pass them as XACML attribute in the request, in the following way.
          */
@@ -198,42 +208,40 @@ public class ToolboxPEP
         SAMLAttributeStatement attrStatem = null;
         SAMLAttribute attr = null;
         for (Iterator iter=saml.getStatements(); iter.hasNext();){
-            SAMLStatement statem = (SAMLStatement) iter.next();
-            if (statem instanceof SAMLAttributeStatement == false)
-                continue;
-            attrStatem = (SAMLAttributeStatement) statem;
-            for (Iterator attriter=attrStatem.getAttributes(); attriter.hasNext();){
-                attr = (SAMLAttribute) attriter.next();
-                if (attr.getName().compareTo(ToolboxPEP.ORGANIZATION)==0){
-                    this.oValue = attr.getValues().next().toString();
-                    continue;
-                }
-                if (attr.getName().compareTo(ToolboxPEP.HMA_ID)==0){
-                    this.subjectIdvalue = attr.getValues().next().toString();
-                    continue;
-                }
-                if (attr.getName().compareTo(ToolboxPEP.COUNTRY)==0){
-                    this.cValue = attr.getValues().next().toString();
-                    continue;
-                }
-            }
-            
-        }//end retrieve SAML attributes
-        */
+        SAMLStatement statem = (SAMLStatement) iter.next();
+        if (statem instanceof SAMLAttributeStatement == false)
+        continue;
+        attrStatem = (SAMLAttributeStatement) statem;
+        for (Iterator attriter=attrStatem.getAttributes(); attriter.hasNext();){
+        attr = (SAMLAttribute) attriter.next();
+        if (attr.getName().compareTo(ToolboxPEP.ORGANIZATION)==0){
+        this.oValue = attr.getValues().next().toString();
+        continue;
+        }
+        if (attr.getName().compareTo(ToolboxPEP.HMA_ID)==0){
+        this.subjectIdvalue = attr.getValues().next().toString();
+        continue;
+        }
+        if (attr.getName().compareTo(ToolboxPEP.COUNTRY)==0){
+        this.cValue = attr.getValues().next().toString();
+        continue;
+        }
+        }
         
-         // MRB ADDITION 2010-01
+        }//end retrieve SAML attributes
+         */
+        // MRB ADDITION 2010-01
         this.samlAssertion = saml;
 
-        try{
+        try {
             resp = checkPolicies(this.subjectIdvalue, requestURI, soapAction, soap);
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
+
         return resp;
     }
-   
+
     /**
      * 
      *  Returns:
@@ -243,68 +251,72 @@ public class ToolboxPEP
      *  3 - no applicable policies were found for the request
      *
      * */
-    public int checkPolicies(String subjectId, 
-			URI resourceId, String actionId, Node soapDoc) throws Exception{
-        
+    public int checkPolicies(String subjectId,
+            URI resourceId, String actionId, Node soapDoc) throws Exception {
 
-    	subjectIdvalue = subjectId;
-		/*cValue = "";
-		oValue = "";
-		hmaProjectNameValue = "";
-		hmaAccountValue = "";*/
-		resourceIdValue = resourceId;
-		actionIdValue = actionId;
-		this.soapDoc = soapDoc;
-		
+
+        subjectIdvalue = subjectId;
+        /*cValue = "";
+        oValue = "";
+        hmaProjectNameValue = "";
+        hmaAccountValue = "";*/
+        resourceIdValue = resourceId;
+        actionIdValue = actionId;
+        this.soapDoc = soapDoc;
+        
+        String charsetName = "UTF-8";
+
         //
-        RequestCtx requestCtx =
-            new RequestCtx(setupSubjects(), setupResource(),
-            		setupAction(),  new HashSet(), soapDoc);
-        
-        
+        HashSet hs = new HashSet();
+        hs.add(setupSubjects());
+        hs.add(setupResource());
+        hs.add(setupAction());
+        //RequestCtx requestCtx =
+        //        new RequestCtx(setupSubjects(), setupResource(),
+        //        setupAction(), new HashSet(), soapDoc);
+
+        RequestCtx requestCtx = new RequestCtx(hs, soapDoc, null, XACMLVersion);
+
         System.out.println("The generated XACML request :");
         // encode the Request and print it to standard out
-        requestCtx.encode(System.out, new Indenter());
-                
+        requestCtx.encode(System.out, charsetName, new Indenter());
+
         //invoke the PDP
-        
+
         ToolboxPDP toolboxPDP = null;
 
         toolboxPDP = new ToolboxPDP();
-               
+
         // evaluate the request
         ResponseCtx response = toolboxPDP.evaluate(requestCtx);
-        
+
         System.out.println("The XACML response :");
 
-        response.encode(System.out, new Indenter());
+        response.encode(System.out, charsetName, new Indenter());
         Object resp = response.getResults().iterator().next();
 
         return ((Result) resp).getDecision();
-    	
+
     }
-    
+
     /***
      * This method can be used to run and test this class
      * @return
      */
     private static Document getRequestPayload() {
-        
+
         MessageContext msgCtx = MessageContext.getCurrentMessageContext();
         String serviceRealPath = msgCtx.getConfigurationContext().getRealPath("/").getPath(); // axis2\web-inf directory
-           
-    	Document xmlInputStream = null;
-    	try {	
-    		DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
-    		DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-    		xmlInputStream = docBuilder.parse (new File(serviceRealPath+"toolbox/body.xml"));
 
-    	}catch (Exception ex){
-    		ex.printStackTrace();
-    	}
-    	return xmlInputStream;
-     }
-    
-    
+        Document xmlInputStream = null;
+        try {
+            DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+            xmlInputStream = docBuilder.parse(new File(serviceRealPath + "toolbox/body.xml"));
 
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return xmlInputStream;
+    }
 }

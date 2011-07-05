@@ -1,19 +1,16 @@
 package it.intecs.pisa.toolbox.security.validator;
 
-import com.sun.xacml.Constants;
 import com.sun.xacml.EvaluationCtx;
 import com.sun.xacml.Indenter;
 
 import com.sun.xacml.attr.AnyURIAttribute;
 import com.sun.xacml.attr.StringAttribute;
-import com.sun.xacml.attr.AttributeValue;
-import com.sun.xacml.attr.StandardAttributeFactory;
 
 import com.sun.xacml.ctx.Attribute;
 import com.sun.xacml.ctx.RequestCtx;
 import com.sun.xacml.ctx.ResponseCtx;
 import com.sun.xacml.ctx.Result;
-import com.sun.xacml.ctx.RequestElement;
+import com.sun.xacml.ctx.Subject;
 
 import java.io.File;
 import java.net.URI;
@@ -31,41 +28,31 @@ import org.opensaml.SAMLAssertion;
 import org.opensaml.SAMLAttribute;
 import org.opensaml.SAMLAttributeStatement;
 import org.opensaml.SAMLStatement;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 /**
  * This class implements a PEP; it generates an XACML
  * Request and pass it to the PDP.
  *
- * @author Stefano, Maria Rosaria
+ * @author Stefano
  */
 public class ToolboxPEP {
-    /*
-    private static String ORGANIZATION ="organization";
-    private static String HMA_ID ="hmaId";
-    private static String COUNTRY ="c";
-     */
 
-    private String subjectIdvalue = null; //the subject identifier
-    /*
-    private String cValue = null;
-    private String oValue = null;
-    private String hmaProjectNameValue = null;
-    private String hmaAccountValue = null;
-     */
-    private URI resourceIdValue = null; // the resource being requested
-    private String actionIdValue = null; //the action being requested
-    private Node soapDoc = null;
-
-    // MRB ADDITION 2010-01
+    String NAMESPACE_GML = "http://www.opengis.net/gml";
+    String NAMESPACE_OGC = "http://www.opengis.net/ogc";
+   
+    private String subjectIdvalue = null;   //the subject identifier
+   
+    private URI resourceIdValue = null;     //the resource being requested
+    private String actionIdValue = null;    //the action being requested
+    private Document soapDoc = null;        //the SOAP request in input to be authorised
+  
     private SAMLAssertion samlAssertion = null;
-    
-    private int XACMLVersion = Constants.XACML_VERSION_2_0;
-    
-    
 
-	
     public ToolboxPEP() {
     }
 
@@ -79,15 +66,16 @@ public class ToolboxPEP {
      *
      * @throws URISyntaxException if there is a problem with a URI
      */
-    public RequestElement setupSubjects() throws URISyntaxException {
+    public Set setupSubjects() throws URISyntaxException {
         HashSet attributes = new HashSet();
 
         // setup the id and value for the requesting subject
-        //URI subjectId = new URI("urn:oasis:names:tc:xacml:1.0:subject:subject-id");
+        URI subjectId =
+                new URI("urn:oasis:names:tc:xacml:1.0:subject:subject-id");
 
         // create the subject section with two attributes, the first with
         // the subject's identity...
-        //attributes.add(new Attribute(Constants.RESOURCE_ID, null, null, new AnyURIAttribute(new URI(subjectIdvalue)), XACMLVersion, false));
+        attributes.add(new Attribute(subjectId, null, null, new StringAttribute(subjectIdvalue)));
         // ...and the second with the SAML attributes in the request
 
         SAMLAttributeStatement attrStatem = null;
@@ -100,32 +88,17 @@ public class ToolboxPEP {
             attrStatem = (SAMLAttributeStatement) statem;
             for (Iterator attriter = attrStatem.getAttributes(); attriter.hasNext();) {
                 attr = (SAMLAttribute) attriter.next();
-                attributes.add(new Attribute(new URI(attr.getName()), null, null, new StringAttribute(attr.getValues().next().toString()), XACMLVersion, false));
+                attributes.add(new Attribute(new URI(attr.getName()), null, null, new StringAttribute(attr.getValues().next().toString())));
             }
 
         }//end retrieve SAML attributes
 
-        /*
-        attributes.add(new Attribute(new URI("hmaAccount"), null, null, 
-        new StringAttribute(hmaAccountValue)));
-        //..and so on
-        attributes.add(new Attribute(new URI("hmaProjectName"), null, null, 
-        new StringAttribute(hmaProjectNameValue)));
-        
-        attributes.add(new Attribute(new URI("c"), null, null, 
-        new StringAttribute(cValue)));
-        
-        attributes.add(new Attribute(new URI("o"), null, null, 
-        new StringAttribute(oValue)));
-         */
 
         // bundle the attributes in a Subject with the default category
+        HashSet subjects = new HashSet();
+        subjects.add(new Subject(attributes));
 
-        //HashSet subjects = new HashSet();
-        //subjects.add(new Subject(attributes));
-        RequestElement reqEl = new RequestElement(Constants.SUBJECT_CAT, attributes);
-
-        return reqEl;
+        return subjects;
     }
 
     /**
@@ -135,7 +108,7 @@ public class ToolboxPEP {
      *
      * @throws URISyntaxException if there is a problem with a URI
      */
-    public RequestElement setupResource() throws URISyntaxException {
+    public Set setupResource() throws URISyntaxException {
         HashSet resource = new HashSet();
 
         // the resource being requested
@@ -144,13 +117,14 @@ public class ToolboxPEP {
 
         // create the resource using a standard, required identifier for
         // the resource being requested
-        resource.add(new Attribute(new URI(Constants.RESOURCE_ID.toString()),
+        resource.add(new Attribute(new URI(EvaluationCtx.RESOURCE_ID),
                 null, null, value));
 
-        RequestElement reqEl = new RequestElement(Constants.RESOURCE_CAT, resource);
-        
-        //return resource;
-        return reqEl;
+        if (soapDoc.getElementsByTagNameNS("http://www.opengis.net/cat/csw/2.0.2", "GetRecords").getLength() > 0) {
+            handleGetRecords();
+        }
+
+        return resource;
     }
 
     /**
@@ -160,7 +134,7 @@ public class ToolboxPEP {
      *
      * @throws URISyntaxException if there is a problem with a URI
      */
-    public RequestElement setupAction() throws URISyntaxException {
+    public Set setupAction() throws URISyntaxException {
         HashSet action = new HashSet();
 
         // this is a standard URI that can optionally be used to specify
@@ -171,11 +145,8 @@ public class ToolboxPEP {
         // create the action
         action.add(new Attribute(actionId, null, null,
                 new StringAttribute(actionIdValue)));
- 
-        RequestElement reqEl = new RequestElement(Constants.ACTION_CAT, action);
-     
-        //return action;
-        return reqEl;
+
+        return action;
     }
 
     /**
@@ -201,36 +172,6 @@ public class ToolboxPEP {
     public int enforceChecks(URI requestURI, String soapAction, SAMLAssertion saml, Node soap) {
         int resp = 2;
 
-        /**
-         * here I could retrieve SAML attributes and pass them as XACML attribute in the request, in the following way.
-         */
-        /*  
-        SAMLAttributeStatement attrStatem = null;
-        SAMLAttribute attr = null;
-        for (Iterator iter=saml.getStatements(); iter.hasNext();){
-        SAMLStatement statem = (SAMLStatement) iter.next();
-        if (statem instanceof SAMLAttributeStatement == false)
-        continue;
-        attrStatem = (SAMLAttributeStatement) statem;
-        for (Iterator attriter=attrStatem.getAttributes(); attriter.hasNext();){
-        attr = (SAMLAttribute) attriter.next();
-        if (attr.getName().compareTo(ToolboxPEP.ORGANIZATION)==0){
-        this.oValue = attr.getValues().next().toString();
-        continue;
-        }
-        if (attr.getName().compareTo(ToolboxPEP.HMA_ID)==0){
-        this.subjectIdvalue = attr.getValues().next().toString();
-        continue;
-        }
-        if (attr.getName().compareTo(ToolboxPEP.COUNTRY)==0){
-        this.cValue = attr.getValues().next().toString();
-        continue;
-        }
-        }
-        
-        }//end retrieve SAML attributes
-         */
-        // MRB ADDITION 2010-01
         this.samlAssertion = saml;
 
         try {
@@ -256,30 +197,20 @@ public class ToolboxPEP {
 
 
         subjectIdvalue = subjectId;
-        /*cValue = "";
-        oValue = "";
-        hmaProjectNameValue = "";
-        hmaAccountValue = "";*/
         resourceIdValue = resourceId;
         actionIdValue = actionId;
-        this.soapDoc = soapDoc;
-        
-        String charsetName = "UTF-8";
+
+        this.soapDoc = (Document) soapDoc;
 
         //
-        HashSet hs = new HashSet();
-        hs.add(setupSubjects());
-        hs.add(setupResource());
-        hs.add(setupAction());
-        //RequestCtx requestCtx =
-        //        new RequestCtx(setupSubjects(), setupResource(),
-        //        setupAction(), new HashSet(), soapDoc);
+        RequestCtx requestCtx =
+                new RequestCtx(setupSubjects(), setupResource(),
+                setupAction(), new HashSet(), this.soapDoc.getDocumentElement());
 
-        RequestCtx requestCtx = new RequestCtx(hs, soapDoc, null, XACMLVersion);
 
         System.out.println("The generated XACML request :");
         // encode the Request and print it to standard out
-        requestCtx.encode(System.out, charsetName, new Indenter());
+        requestCtx.encode(System.out, new Indenter());
 
         //invoke the PDP
 
@@ -292,7 +223,7 @@ public class ToolboxPEP {
 
         System.out.println("The XACML response :");
 
-        response.encode(System.out, charsetName, new Indenter());
+        response.encode(System.out, new Indenter());
         Object resp = response.getResults().iterator().next();
 
         return ((Result) resp).getDecision();
@@ -318,5 +249,159 @@ public class ToolboxPEP {
             ex.printStackTrace();
         }
         return xmlInputStream;
+    }
+
+    /* The following method serves a twofold purpose:
+     * a) converts the GML3.1.x geometries of the SOAP request to GML2.1 geometries; 
+     *    this is due to a limitation in the JTS framework used by the geo-pdp library
+     * b) remove the "PropertyName" element as the first child of a OGC spatial operator,
+     *    so that in the GeoXACML suthorization file a RequestContextPath can be used to retrieve 
+     *    GML2.1 geometries
+     */
+    private void handleGetRecords() {
+
+        if (soapDoc.getElementsByTagNameNS(NAMESPACE_GML, "*").getLength() == 0) {
+            createDefaultBBOX();
+        }
+
+        NodeList envelopeList = soapDoc.getElementsByTagNameNS(NAMESPACE_GML, "Envelope");
+        if (envelopeList.getLength() != 0) {
+            Node envelope = envelopeList.item(0);
+            Element box = soapDoc.createElementNS(NAMESPACE_GML, "Box");
+            box.setAttribute("srsName", "http://www.opengis.net/gml/srs/epsg.xml#4326");
+
+            NodeList lowerCornerList = ((Element) envelope).getElementsByTagNameNS(NAMESPACE_GML, "lowerCorner");
+            if (lowerCornerList.getLength() != 0) {
+                String lowerCorner = lowerCornerList.item(0).getTextContent().trim();
+
+                Element coord1 = soapDoc.createElementNS(NAMESPACE_GML, "coord");
+                box.appendChild(coord1);
+                // The X value corresponds to the longitude of the coordinate
+                Element X1 = soapDoc.createElementNS(NAMESPACE_GML, "X");
+                ((Node) X1).setTextContent(lowerCorner.substring(lowerCorner.indexOf(' '), lowerCorner.length() - 1));
+
+                // The Y value corresponds to the latitude of the coordinate
+                Element Y1 = soapDoc.createElementNS(NAMESPACE_GML, "Y");
+                ((Node) Y1).setTextContent(lowerCorner.substring(0, lowerCorner.indexOf(' ')));
+
+                coord1.appendChild(X1);
+                coord1.appendChild(Y1);
+            }
+            NodeList upperCornerList = ((Element) envelope).getElementsByTagNameNS(NAMESPACE_GML, "upperCorner");
+            if (upperCornerList.getLength() != 0) {
+                String upperCorner = upperCornerList.item(0).getTextContent().trim();
+
+                Element coord1 = soapDoc.createElementNS(NAMESPACE_GML, "coord");
+                box.appendChild(coord1);
+                // The X value corresponds to the longitude of the coordinate
+                Element X2 = soapDoc.createElementNS(NAMESPACE_GML, "X");
+                ((Node) X2).setTextContent(upperCorner.substring(upperCorner.indexOf(' '), upperCorner.length() - 1));
+
+                // The Y value corresponds to the latitude of the coordinate
+                Element Y2 = soapDoc.createElementNS(NAMESPACE_GML, "Y");
+                ((Node) Y2).setTextContent(upperCorner.substring(0, upperCorner.indexOf(' ')));
+
+                coord1.appendChild(X2);
+                coord1.appendChild(Y2);
+            }
+
+            Node envelopeParent = envelope.getParentNode();
+
+            Node newEnvelopeParent = envelopeParent.cloneNode(false);
+            newEnvelopeParent.appendChild(box);
+
+            envelopeParent.getParentNode().replaceChild(newEnvelopeParent, envelopeParent);
+
+        }
+
+        /* Temporary comment, wating for a suitable handling of the spatial operators other than "BBOX"
+         * in the GeoXACML policy file
+        
+        String[] spatialOperators = {"BBOX", "Beyond", "Contains", "Crosses", "DWithin", "Disjoint", "Equals", "Intersects", "Overlaps", "Touches", "Within"};
+        for (int i = 0; i < spatialOperators.length; i++) {
+            NodeList tempList = soapDoc.getElementsByTagNameNS(NAMESPACE_OGC, spatialOperators[i]);
+            for (int j = 0; j < tempList.getLength(); j++) {
+                Node spatialOperator = tempList.item(j);
+                for (Node child = spatialOperator.getFirstChild(); child != null; child = child.getNextSibling()) {
+                    if (child instanceof Element && child.getLocalName().equals("PropertyName")) {
+                        spatialOperator.removeChild(child);
+                    }
+                }
+            }
+        }
+         */
+        
+        /*
+        try {
+            DOMUtil.dumpXML((Document) this.soapDoc, System.out, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+         */
+    }
+
+    /* The following method creates a default OGC BBOX spatial operator in a SOAP request with 
+     * no (BBOX) spatial operator.
+     */
+    private void createDefaultBBOX() {
+
+        Element bbox = soapDoc.createElementNS(NAMESPACE_OGC, "BBOX");
+
+        Element box = soapDoc.createElementNS(NAMESPACE_GML, "Box");
+        box.setAttribute("srsName", "http://www.opengis.net/gml/srs/epsg.xml#4326");
+        bbox.appendChild(box);
+
+        Element coord1 = soapDoc.createElementNS(NAMESPACE_GML, "coord");
+        box.appendChild(coord1);
+        // The X value corresponds to the longitude of the coordinate
+        Element X1 = soapDoc.createElementNS(NAMESPACE_GML, "X");
+        ((Node) X1).setTextContent("-180");
+
+        // The Y value corresponds to the latitude of the coordinate
+        Element Y1 = soapDoc.createElementNS(NAMESPACE_GML, "Y");
+        ((Node) Y1).setTextContent("-90");
+
+        coord1.appendChild(X1);
+        coord1.appendChild(Y1);
+
+
+        Element coord2 = soapDoc.createElementNS(NAMESPACE_GML, "coord");
+        box.appendChild(coord2);
+        // The X value corresponds to the longitude of the coordinate
+        Element X2 = soapDoc.createElementNS(NAMESPACE_GML, "X");
+        ((Node) X2).setTextContent("180");
+
+        // The Y value corresponds to the latitude of the coordinate
+        Element Y2 = soapDoc.createElementNS(NAMESPACE_GML, "Y");
+        ((Node) Y2).setTextContent("90");
+
+        coord2.appendChild(X2);
+        coord2.appendChild(Y2);
+
+        // The following assignment can throw an Exception
+        Node filter = soapDoc.getElementsByTagNameNS(NAMESPACE_OGC, "Filter").item(0);
+        NodeList filterChildren = filter.getChildNodes();
+
+        if (filterChildren.getLength() > 0) {
+
+            Element filterChildElement = null;
+            Element andOperator = null;
+            for (int index = 0; index < filterChildren.getLength(); index++) {
+                if (filterChildren.item(index) instanceof Element) {
+                    filterChildElement = (Element) filterChildren.item(index);
+                    break;
+                }
+            }
+            if (filterChildElement.getLocalName().equals("And")) {
+                filterChildElement.appendChild(bbox);
+            } else {
+                andOperator = soapDoc.createElementNS(NAMESPACE_OGC, "And");
+                filter.removeChild(filterChildElement);
+                andOperator.appendChild(filterChildElement);
+                andOperator.appendChild(bbox);
+                filter.appendChild(andOperator);
+
+            }
+        }
     }
 }

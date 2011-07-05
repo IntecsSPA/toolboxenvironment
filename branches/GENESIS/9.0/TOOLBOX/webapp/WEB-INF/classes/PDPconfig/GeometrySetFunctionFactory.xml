@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ===========================================================================
+This file contains the configuration of the factory GeometrySetFunctionFactory.
+You can add further functions by adding a bean within the list element which
+specifies a Function instance.
+
+author: Benjamin Friedrich
+date:   05.06.2009.
+============================================================================ -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <!-- import of the needed properties -->
+    <import resource="GeoProperties.xml"/>
+
+    <bean id="GeometrySetFunctionFactory"  class="net.eig.geoxacml.pdp.function.GeometryFunctionFactory">
+        <constructor-arg>
+            <bean class="java.util.ArrayList">
+                <constructor-arg>
+                    <list>
+
+                        <bean class="com.sun.xacml.cond.SetFunction" factory-method="getAtLeastOneInstance">
+                            <constructor-arg>
+                                <ref bean="GeometryAtLeastOneMemberOfURI"/>
+                            </constructor-arg>
+                            <constructor-arg>
+                                <ref bean="GeometryURI" />
+                            </constructor-arg>
+                        </bean>
+
+                        <bean class="com.sun.xacml.cond.SetFunction" factory-method="getSubsetInstance">
+                            <constructor-arg>
+                                 <ref bean="GeometryBagSubsetURI"/>
+                            </constructor-arg>
+                            <constructor-arg>
+                                <ref bean="GeometryURI" />
+                            </constructor-arg>
+                        </bean>
+
+                         <bean class="com.sun.xacml.cond.SetFunction" factory-method="getSetEqualsInstance">
+                            <constructor-arg>
+                                 <ref bean="GeometrySetEqualsURI"/>
+                            </constructor-arg>
+                            <constructor-arg>
+                                <ref bean="GeometryURI" />
+                            </constructor-arg>
+                        </bean>
+
+                       <bean class="com.sun.xacml.cond.SetFunction" factory-method="getIntersectionInstance">
+                            <constructor-arg>
+                                <ref bean="GeometryBagIntersectionURI"/>
+                            </constructor-arg>
+                            <constructor-arg>
+                                <ref bean="GeometryURI"/>
+                            </constructor-arg>
+                        </bean>
+
+                        <bean class="com.sun.xacml.cond.SetFunction" factory-method="getUnionInstance">
+                            <constructor-arg>
+                                <ref bean="GeometryBagUnionURI"/>
+                            </constructor-arg>
+                            <constructor-arg>
+                                <ref bean="GeometryURI"/>
+                            </constructor-arg>
+                        </bean>
+                        
+                    </list>
+                </constructor-arg>
+            </bean>
+
+        </constructor-arg>
+    </bean>
+</beans>

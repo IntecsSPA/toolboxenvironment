@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ===========================================================================
+This file contains the configuration of the factory GeometryTopologicalFunctionFactory.
+You can add further functions by adding a bean within the list element which
+specifies a Function instance.
+
+author: Benjamin Friedrich
+date:   05.06.2009.
+============================================================================ -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <bean id="GeometryTopologicalFunctionFactory" class="net.eig.geoxacml.pdp.function.GeometryFunctionFactory">
+        <constructor-arg>
+            <bean class="java.util.ArrayList">
+                <constructor-arg>
+                    <list>
+                        <bean class="net.eig.geoxacml.pdp.function.topological.ContainsFunction" />
+                        <bean class="net.eig.geoxacml.pdp.function.topological.CrossesFunction" />
+                        <bean class="net.eig.geoxacml.pdp.function.topological.DisjointFunction" />
+                        <bean class="net.eig.geoxacml.pdp.function.topological.EqualsFunction" />
+                        <bean class="net.eig.geoxacml.pdp.function.topological.IntersectsFunction" />
+                        <bean class="net.eig.geoxacml.pdp.function.topological.OverlapsFunction" />
+                        <bean class="net.eig.geoxacml.pdp.function.topological.TouchesFunction" />
+                        <bean class="net.eig.geoxacml.pdp.function.topological.WithinFunction" />
+                        <!-- <bean class="my.further.Function"/> -->
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+
+    </bean>
+</beans>

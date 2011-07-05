@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ===========================================================================
+This file is needed to provide a generic way for changing the GMLReader of
+the class GeometryAttribute.
+
+author: Benjamin Friedrich
+date:   05.06.2009.
+============================================================================ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+<bean id="gmlReader" class="net.eig.geoxacml.pdp.attribute.jtsiofix.FixedGMLReader" />
+  
+</beans>

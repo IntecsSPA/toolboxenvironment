@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ===========================================================================
+This file is needed to read in values from GeoProperties to pass them to
+other bean definition by import this file into the target bean definition file.
+
+author: Benjamin Friedrich
+date:   05.06.2009.
+============================================================================ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+     <!-- resolve instance of GeoProperties -->
+    <bean id="GeoProperties" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetClass">
+            <value>net.eig.geoxacml.pdp.util.GeoProperties</value>
+        </property>
+        <property name="targetMethod">
+            <value>getInstance</value>
+        </property>
+    </bean>
+
+    <!-- reads in the property with key "geometry" and represents it by this bean -->
+    <bean id="GeometryURI" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject">
+            <ref local="GeoProperties" />
+        </property>
+        <property name="targetMethod">
+            <value>getProperty</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <value>geometry</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- reads in the property with key "geometry_is_in" and represents it by this bean -->
+    <bean id="GeometryIsInURI" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject">
+            <ref local="GeoProperties" />
+        </property>
+        <property name="targetMethod">
+            <value>getProperty</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <value>geometry_is_in</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- reads in the property with key "geometry_one_and_only" and represents it by this bean -->
+    <bean id="GeometryOneAndOnlyURI" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject">
+            <ref local="GeoProperties" />
+        </property>
+        <property name="targetMethod">
+            <value>getProperty</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <value>geometry_one_and_only</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- reads in the property with key "geometry_bag_size" and represents it by this bean -->
+    <bean id="GeometryBagSizeURI" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject">
+            <ref local="GeoProperties" />
+        </property>
+        <property name="targetMethod">
+            <value>getProperty</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <value>geometry_bag_size</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- reads in the property with key "geometry_bag" and represents it by this bean -->
+    <bean id="GeometryBagURI" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject">
+            <ref local="GeoProperties" />
+        </property>
+        <property name="targetMethod">
+            <value>getProperty</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <value>geometry_bag</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- reads in the property with key "geometry_at_least_one_member_of" and represents it by this bean -->
+    <bean id="GeometryAtLeastOneMemberOfURI" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject">
+            <ref local="GeoProperties" />
+        </property>
+        <property name="targetMethod">
+            <value>getProperty</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <value>geometry_at_least_one_member_of</value>
+            </list>
+        </property>
+    </bean>
+     <!-- reads in the property with key "geometry_bag_subset and represents it by this bean -->
+    <bean id="GeometryBagSubsetURI" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject">
+            <ref local="GeoProperties" />
+        </property>
+        <property name="targetMethod">
+            <value>getProperty</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <value>geometry_bag_subset</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- reads in the property with key "geometry_set_equals" and represents it by this bean -->
+    <bean id="GeometrySetEqualsURI" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject">
+            <ref local="GeoProperties" />
+        </property>
+        <property name="targetMethod">
+            <value>getProperty</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <value>geometry_set_equals</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- reads in the property with key "geometry_bag_intersection" and represents it by this bean -->
+    <bean id="GeometryBagIntersectionURI" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject">
+            <ref local="GeoProperties" />
+        </property>
+        <property name="targetMethod">
+            <value>getProperty</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <value>geometry_bag_intersection</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- reads in the property with key "geometry_bag_union" and represents it by this bean -->
+    <bean id="GeometryBagUnionURI" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject">
+            <ref local="GeoProperties" />
+        </property>
+        <property name="targetMethod">
+            <value>getProperty</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <value>geometry_bag_union</value>
+            </list>
+        </property>
+    </bean>
+
+</beans>

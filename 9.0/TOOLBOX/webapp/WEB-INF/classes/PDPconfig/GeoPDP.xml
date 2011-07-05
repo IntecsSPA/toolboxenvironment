@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ===========================================================================
+Assembling and configuration of an IGeoPDP instance
+
+author: Benjamin Friedrich
+date:   05.06.2009.
+============================================================================ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <!-- import of the configuration of the needed IGeoBuilder -->
+    <import resource="GeoBuilder.xml"/>
+
+    <!-- configuration of GeoPDP -->
+    <bean id="GeoPDP" class="net.eig.geoxacml.pdp.GeoPDP">
+
+        <!-- IGeoBuilder -->
+        <constructor-arg>
+            <ref bean="GeoBuilder" />
+        </constructor-arg>
+
+        <!-- PolicyFinderModules -->
+        <constructor-arg>
+            <list>
+                  <bean class="net.eig.geoxacml.pdp.finder.GeoFilePolicyModule">
+                    <!-- <constructor-arg> -->
+                        <!-- <list> -->
+                            <!-- add further policy files by adding
+                                 <value> my_policy_file </value> -->
+                            <!-- <value>res/test/test_geopolicy_area_designator.xml</value> -->
+                        <!-- </list> -->
+                    <!-- </constructor-arg> -->
+                </bean>
+            </list>
+        </constructor-arg>
+
+        <!-- AttributeFinderModules -->
+        <constructor-arg>
+            <list>
+                <bean class="com.sun.xacml.finder.impl.CurrentEnvModule" />
+                <bean class="net.eig.geoxacml.pdp.finder.GeoSelectorModule" />
+            </list>
+        </constructor-arg>
+
+    </bean>
+
+</beans>

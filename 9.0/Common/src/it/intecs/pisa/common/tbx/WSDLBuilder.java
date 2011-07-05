@@ -29,8 +29,8 @@ public class WSDLBuilder {
         wsdl = new WSDL();
 
         wsdl.setName(service.getServiceName());
-//        wsdl.setTargetNameSpace("http://www.intecs.it/TOOLBOX/service/" + service.getServiceName() + "/wsdl");
-        wsdl.setTargetNameSpace("http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap");
+        wsdl.setTargetNameSpace("http://www.intecs.it/TOOLBOX/service/" + service.getServiceName() + "/wsdl");
+ //       wsdl.setTargetNameSpace("http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap");
         wsdl.setServiceURL(serviceURL);
 
         namespaces=wsdl.getNameSpaces();

@@ -102,14 +102,20 @@ public class ToolboxSecurityWrapper {
                 Document soapDoc = stringToDocument(soapOMElem.toString());
 
                 ToolboxPEP pep = new ToolboxPEP();
-                int resp = pep.enforceChecks(new URI(req.getRequestURI()), operationName, saml, soapDoc.getDocumentElement());
-
+                int resp = pep.enforceChecks(new URI(req.getRequestURI()), operationName, saml, soapDoc);
+ 
+                /* The resp variable can take one of the following values:
+                 * com.sun.xacml.ctx.Result.DECISION_DENY           (1)
+                 * com.sun.xacml.ctx.Result.DECISION_INDETERMINATE  (2)
+                 * com.sun.xacml.ctx.Result.DECISION_NOT_APPLICABLE (3)
+                 * com.sun.xacml.ctx.Result.DECISION_PERMIT         (0)
+                 */
                 if (resp == 1) {
                     //extract information about the deny
                     String denyMsg = "";
                     NodeList nl = ((Element) soapDoc.getFirstChild()).getElementsByTagName("XACMLDeniedRule");
                     Element elem = null;
-                    if (nl != null) {
+                    if (nl.getLength() > 0) {
                         for (int i = 0; i < nl.getLength(); i++) {
                             elem = (Element) nl.item(i);
                             if (denyMsg.compareTo("") == 0) {
@@ -119,13 +125,21 @@ public class ToolboxSecurityWrapper {
                             }
                         }
                     } else {
-                        denyMsg = "Access denied";
+                        denyMsg = "You are not allowed to access the requested resource(s)";
                     }
                     //throw AxisFault exception
                     fault = new AxisFault(new QName("http://www.intecs.it/PEP", "AccessDenied", "pep"), denyMsg,
                             new Exception("PEP: Deny!"));
 
                     throw fault;
+                }
+                else if (resp == 2) {
+                    //throw AxisFault exception
+                    String denyMsg = "The evaluation of the policy is indeterminate";
+                    fault = new AxisFault(new QName("http://www.intecs.it/PEP", "AccessDenied", "pep"), denyMsg,
+                            new Exception("PEP: Deny!"));
+
+                    throw fault; 
                 }
             }
             //policies checked successfully
@@ -197,6 +211,7 @@ public class ToolboxSecurityWrapper {
 
     protected Document stringToDocument(String xml) throws IOException, SAXException {
         DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+        docBuilderFactory.setNamespaceAware(true);
         DocumentBuilder docBuilder = null;
         try {
             docBuilder = docBuilderFactory.newDocumentBuilder();

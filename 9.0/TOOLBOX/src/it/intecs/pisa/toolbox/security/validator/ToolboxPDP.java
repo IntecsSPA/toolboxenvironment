@@ -11,17 +11,16 @@ import com.sun.xacml.cond.StandardFunctionFactory;
 
 import com.sun.xacml.ctx.Attribute;
 import com.sun.xacml.ctx.RequestCtx;
-import com.sun.xacml.ctx.RequestElement;
 import com.sun.xacml.ctx.ResponseCtx;
-import com.sun.xacml.Constants;
-import com.sun.xacml.attr.AttributeValue;
 
 import com.sun.xacml.finder.AttributeFinder;
 import com.sun.xacml.finder.PolicyFinder;
+import com.sun.xacml.finder.PolicyFinderModule;
 
 import com.sun.xacml.finder.impl.CurrentEnvModule;
 import com.sun.xacml.support.finder.FilePolicyModule;
 import com.sun.xacml.finder.impl.SelectorModule;
+import it.intecs.pisa.toolbox.Toolbox;
 
 import it.intecs.pisa.toolbox.security.ToolboxSecurityConfigurator;
 
@@ -30,17 +29,26 @@ import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 
+import java.lang.reflect.Field;
+
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
+import net.eig.geoxacml.pdp.*;
+import net.eig.geoxacml.pdp.builder.GeoBuilderFactory;
+import net.eig.geoxacml.pdp.builder.IGeoBuilder;
+import net.eig.geoxacml.pdp.builder.IGeoBuilderFactory;
+import net.eig.geoxacml.pdp.finder.GeoFilePolicyModule;
+
 public class ToolboxPDP {
 
     // this is the actual PDP from sunxacml we'll use for policy evaluation
-    private PDP pdp = null;
+    //private PDP pdp = null;
+    private IGeoPDP pdp = null;
+    private final IGeoPDPFactory pdpFactory;
 
     /**
      * Default constructor.
@@ -48,10 +56,15 @@ public class ToolboxPDP {
     public ToolboxPDP() throws Exception {
         // load the configuration
         //ConfigurationStore store = new ConfigurationStore();
+
         // use the default factories from the configuration
         //store.useDefaultFactories();
+
         // get the PDP configuration's and setup the PDP
-        //pdp = new PDP(store.getDefaultPDPConfig());
+        //pdp = new PDP(store.getDefaultPDPConfig());     
+
+        this.pdpFactory = new GeoPDPFactory();
+
     }
 
     /**
@@ -87,32 +100,17 @@ public class ToolboxPDP {
      * @throws IOException if there is a problem accessing the file
      * @throws ParsingException if the Request is invalid
      */
+        
+    
+    
     public ResponseCtx evaluate(RequestCtx request)
-            throws IOException, ParsingException {
+            throws IOException, ParsingException, Exception {
+        
         //load policy and init
-
-        AttributeValue resourceId = null;
-        Iterator iter = request.getRequestElements().iterator();
-        while (iter.hasNext()) {
-            RequestElement re = (RequestElement) iter.next();
-            Set rSet = (Set) re.getAttributes().get(Constants.RESOURCE_ID);
-            if (rSet != null) {
-                if (rSet.size() > 1) {
-                    System.err.println("Resource may contain "
-                            + "only one resource-id Attribute");
-                    throw new ParsingException("too many resource-id attrs");
-                }
-                // keep track of the resource-id attribute
-                resourceId = ((Attribute) (rSet.iterator().next())).getValue();
-            }
-        }
-
-        String service = null;
-        if (resourceId != null) {
-            service = resourceId.encode();
-        }
-        String[] policy = gePolicyFiles(service.toString().substring(service.toString().lastIndexOf("/") + 1));
-        init(policy);
+        String service = ((Attribute) request.getResource().iterator().next()).getValue().encode();
+        String[] policy = getPolicyFiles(service.toString().substring(service.toString().lastIndexOf("/") + 1));
+        //init(policy);
+        setup(policy);
         // evaluate the request
         return pdp.evaluate(request);
     }
@@ -133,8 +131,6 @@ public class ToolboxPDP {
             System.out.println("       <request> <policy> [policies]");
             System.exit(1);
         }
-
-        String charsetName = "UTF"; // default charset
 
         ToolboxPDP simplePDP = null;
         String requestFile = null;
@@ -158,14 +154,14 @@ public class ToolboxPDP {
         ResponseCtx response = simplePDP.evaluate(requestFile);
 
         // for this sample program, we'll just print out the response
-        response.encode(System.out, charsetName, new Indenter());
+        response.encode(System.out, new Indenter());
     }
 
     /**
      * 
      * @return Returns the list of the XACML policy files that need to be checked by the PDP
      */
-    public String[] gePolicyFiles(String serviceName) {
+    public String[] getPolicyFiles(String serviceName) {
         String[] arr = null;
 
         Vector v = new Vector();
@@ -203,52 +199,41 @@ public class ToolboxPDP {
         return arr;
     }
 
-    /**
-     * sets the current PDP with the given policies
-     * @author Stefano
-     * @param policyFiles
-     */
-    private void init(String[] policyFiles) {
-        // Create a PolicyFinderModule and initialize it...in this case,
-        // we're using the sample FilePolicyModule that is pre-configured
-        // with a set of policies from the filesystem
-        FilePolicyModule filePolicyModule = new FilePolicyModule();
-        for (int i = 0; i < policyFiles.length; i++) {
-            filePolicyModule.addPolicy(policyFiles[i]);
+    protected void setup(String[] policies) throws Exception {
+
+        this.pdp = this.pdpFactory.createPDP();
+
+        final List<PolicyFinderModule> modules = new ArrayList<PolicyFinderModule>(1);
+        final GeoFilePolicyModule finderModule = new GeoFilePolicyModule();
+
+        for (final String policy : policies) {
+            finderModule.addPolicy(policy);
         }
 
-        // next, setup the PolicyFinder that this PDP will use
-        PolicyFinder policyFinder = new PolicyFinder();
-        Set policyModules = new HashSet();
-        policyModules.add(filePolicyModule);
-        policyFinder.setModules(policyModules);
+        modules.add(finderModule);
 
-        // now setup attribute finder modules for the current date/time and
-        // AttributeSelectors (selectors are optional, but this project does
-        // support a basic implementation)
-        CurrentEnvModule envAttributeModule = new CurrentEnvModule();
-        SelectorModule selectorAttributeModule = new SelectorModule();
+        final Field field = this.pdp.getClass().getDeclaredField("policyFinderModules");
+        field.setAccessible(true);
+        field.set(this.pdp, modules);
 
-        // Setup the AttributeFinder just like we setup the PolicyFinder. Note
-        // that unlike with the policy finder, the order matters here. See the
-        // the javadocs for more details.
-        AttributeFinder attributeFinder = new AttributeFinder();
-        List attributeModules = new ArrayList();
-        attributeModules.add(envAttributeModule);
-        attributeModules.add(selectorAttributeModule);
-        attributeFinder.setModules(attributeModules);
 
-        // Try to load the time-in-range function, which is used by several
-        // of the examples...see the documentation for this function to
-        // understand why it's provided here instead of in the standard
-        // code base.
-        FunctionFactoryProxy proxy =
-                StandardFunctionFactory.getNewFactoryProxy();
-        FunctionFactory factory = proxy.getConditionFactory();
-        factory.addFunction(new TimeInRangeFunction());
-        FunctionFactory.setDefaultFactory(proxy);
+        IGeoBuilderFactory factory = new GeoBuilderFactory();
+        IGeoBuilder builder = factory.createGeoBuilder();
 
-        // finally, initialize sunxacml pdp
-        pdp = new PDP(new PDPConfig(attributeFinder, policyFinder, null, null));
+        Toolbox tbx = Toolbox.getInstance();
+
+        String propLogFile = tbx.getRootDir() + "/WEB-INF/classes/log4j.properties";
+
+        final Field propField = builder.getClass().getDeclaredField("loggerPropertiesFile");
+        propField.setAccessible(true);
+        propField.set(builder, propLogFile);
+
+
+        final Field geoField = this.pdp.getClass().getDeclaredField("geoBuilder");
+        geoField.setAccessible(true);
+        geoField.set(this.pdp, builder);
+
+        this.pdp.setup();
+
     }
 }

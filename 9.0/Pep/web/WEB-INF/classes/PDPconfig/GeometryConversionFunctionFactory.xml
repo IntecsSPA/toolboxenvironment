@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ===========================================================================
+This file contains the configuration of the factory GeometryConversionFunctionFactory.
+You can add further functions by adding a bean within the list element which
+specifies a Function instance.
+
+author: Benjamin Friedrich
+date:   05.06.2009.
+============================================================================ -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <bean id="GeometryConversionFunctionFactory" class="net.eig.geoxacml.pdp.function.GeometryFunctionFactory">
+        <constructor-arg>
+            <bean class="java.util.ArrayList">
+                <constructor-arg>
+                    <list>
+                        <bean class="net.eig.geoxacml.pdp.function.conversion.ConvertToMetreFunction" />
+                        <bean class="net.eig.geoxacml.pdp.function.conversion.ConvertToSquareMetreFunction" />
+                        <!-- <bean class="my.further.Function"/> -->
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+</beans>

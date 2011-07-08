@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://pisa.intecs.it/mass/toolbox/xmlScript/catalogues"
+    xmlns:exs="http://pisa.intecs.it/mass/toolbox/xmlScript/catalogues"
+    elementFormDefault="qualified">
+
+    <xsd:element name="connectToCatalogue">
+        <xsd:annotation>
+            <xsd:documentation>This tag is used to create a date object, starting from a string. The format of the date is specified in te format attribute.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+               <xsd:any namespace="##other" processContents="strict"/>
+
+            </xsd:sequence>
+            <xsd:attribute name="format" type="xsd:string" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+
+   
+</xsd:schema>

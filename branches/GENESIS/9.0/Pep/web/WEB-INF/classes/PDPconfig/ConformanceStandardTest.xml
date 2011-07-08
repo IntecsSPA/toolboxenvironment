@@ -1,0 +1,970 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ===========================================================================
+Contains the properties for all standard conformance tests used by the class
+StandardConformanceTest. Each property (<props> </props>) represents one test
+case which will be validate by the whole standard conformance test. The
+topological function tests does also cover the test of the different geometry
+attribute datatype encoded in GML2 such as "test_geopolicy_contains_box_selector.xml"
+(test of the function "contains" with a GML2 box; using a AttributeSelector).
+
+Meaning of the keys:
+
+folder            = folder where the files are situated
+requestDesignator = request file suitable for using a AttributeDesignator in a policy
+requestSelector   = request file suitable for using a AttributeSelector in a policy
+invalidRequest    = request file with failures
+policyDesignator  = policy file using a AttributeDesignar
+policySelector    = policy file using a AttributeSelector
+invalidPolicy     = policy file with failures
+
+Add a further test case by adding the following (filled in) sequence within
+the tags <list> </list>
+
+<props>
+    <prop key="folder">
+        ???
+    </prop>
+    <prop key="requestDesignator">
+        ???
+    </prop>
+    <prop key="requestSelector">
+        ???
+    </prop>
+    <prop key="invalidRequest">
+        ???
+    </prop>
+
+    <prop key="policyDesignator">
+        ???
+    </prop>
+    <prop key="policySelector">
+        ???
+    </prop>
+    <prop key="invalidPolicy">
+        ???
+    </prop>
+</props>
+
+
+author: Benjamin Friedrich
+date:   05.06.2009.
+============================================================================ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+ 
+<bean id="testPropertyList" class="java.util.ArrayList">
+    <constructor-arg>
+        <list>
+            <!-- ===========================================================
+                            TOPOLOGICAL FUNCTION TESTS
+             ==============================================================-->
+            <!-- standard conformance test of topological function Contains(Box, Box) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector"> 
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">  
+                    test_invalid_georequest_designator.xml
+                </prop>    
+                
+                <prop key="policyDesignator"> 
+                    test_geopolicy_contains_box_designator.xml
+                </prop>
+                <prop key="policySelector">  
+                    test_geopolicy_contains_box_selector.xml
+                </prop>
+                <prop key="invalidPolicy">   
+                    test_invalid_geopolicy_contains_box_designator.xml
+                </prop>
+            </props>
+            
+            <!-- standard conformance test of topoligical function Crosses(Linestring, Box) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector"> 
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">  
+                    test_invalid_georequest_designator.xml
+                </prop>    
+                
+                <prop key="policyDesignator"> 
+                    test_geopolicy_crosses_linestring_designator.xml
+                </prop>
+                <prop key="policySelector">  
+                    test_geopolicy_crosses_linestring_selector.xml
+                </prop>
+                <prop key="invalidPolicy">   
+                    test_invalid_geopolicy_crosses_linestring_designator.xml
+                </prop>
+            </props>        
+   
+            <!-- standard conformance test of topoligical function Disjoint(MultiPoint, Box) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector"> 
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">  
+                    test_invalid_georequest_designator.xml
+                </prop>    
+                
+                <prop key="policyDesignator"> 
+                    test_geopolicy_disjoint_multipoint_designator.xml
+                </prop>
+                <prop key="policySelector">  
+                    test_geopolicy_disjoint_multipoint_selector.xml
+                </prop>
+                <prop key="invalidPolicy">   
+                    test_invalid_geopolicy_disjoint_multipoint_designator.xml
+                </prop>
+            </props>      
+            
+            <!-- standard conformance test of topoligical function Equals(Box, Box) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector"> 
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">  
+                    test_invalid_georequest_designator.xml
+                </prop>    
+                
+                <prop key="policyDesignator"> 
+                    test_geopolicy_equals_box_designator.xml
+                </prop>
+                <prop key="policySelector">  
+                    test_geopolicy_equals_box_selector.xml
+                </prop>
+                <prop key="invalidPolicy">   
+                    test_invalid_geopolicy_equals_box_designator.xml
+                </prop>
+            </props>            
+ 
+             <!-- standard conformance test of topoligical function Intersects(LinearRing, Box) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector"> 
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">  
+                    test_invalid_georequest_designator.xml
+                </prop>    
+                
+                <prop key="policyDesignator"> 
+                    test_geopolicy_intersects_linearring_designator.xml
+                </prop>
+                <prop key="policySelector">  
+                    test_geopolicy_intersects_linearring_selector.xml
+                </prop>
+                <prop key="invalidPolicy">   
+                    test_invalid_geopolicy_intersects_linearring_designator.xml
+                </prop>
+            </props>
+            
+            <!-- standard conformance test of topoligical function Overlaps(Polygon, Box) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector"> 
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">  
+                    test_invalid_georequest_designator.xml
+                </prop>    
+                
+                <prop key="policyDesignator"> 
+                    test_geopolicy_overlaps_polygon_designator.xml
+                </prop>
+                <prop key="policySelector">  
+                    test_geopolicy_overlaps_polygon_selector.xml
+                </prop>
+                <prop key="invalidPolicy">   
+                    test_invalid_geopolicy_overlaps_polygon_designator.xml
+                </prop>
+            </props>            
+
+            <!-- standard conformance test of topoligical function Touches(MultiLineString, Box) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector"> 
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">  
+                    test_invalid_georequest_designator.xml
+                </prop>    
+                
+                <prop key="policyDesignator"> 
+                    test_geopolicy_touches_multilinestring_designator.xml
+                </prop>
+                <prop key="policySelector">  
+                    test_geopolicy_touches_multilinestring_selector.xml
+                </prop>
+                <prop key="invalidPolicy">   
+                    test_invalid_geopolicy_touches_multilinestring_designator.xml
+                </prop>
+            </props>  
+
+            <!-- standard conformance test of topoligical function Within(MultiPolygon, Box) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector"> 
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">  
+                    test_invalid_georequest_designator.xml
+                </prop>    
+                
+                <prop key="policyDesignator"> 
+                    test_geopolicy_within_multipolygon_designator.xml
+                </prop>
+                <prop key="policySelector">  
+                    test_geopolicy_within_multipolygon_selector.xml
+                </prop>
+                <prop key="invalidPolicy">   
+                    test_invalid_geopolicy_within_multipolygon_designator.xml
+                </prop>
+            </props> 
+            
+            <!-- ===========================================================
+                            BAG FUNCTION TESTS
+            ==============================================================-->
+
+            <!-- standard conformance test of bag function GeometryOneAndOnly(Bag) -->
+           <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector"> 
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">  
+                    test_invalid_georequest_designator.xml
+                </prop>    
+                
+                <prop key="policyDesignator"> 
+                    test_geopolicy_one_and_only_designator.xml
+                </prop>
+                <prop key="policySelector">  
+                    test_geopolicy_one_and_only_selector.xml
+                </prop>
+                <prop key="invalidPolicy">   
+                    test_invalid_geopolicy_one_and_only_designator.xml
+                </prop>
+            </props>    
+
+            <!-- standard conformance test of bag function GeometryBag(Geometry*) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector"> 
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">  
+                    test_invalid_georequest_designator.xml
+                </prop>    
+                
+                <prop key="policyDesignator"> 
+                    test_geopolicy_bag_designator.xml
+                </prop>
+                <prop key="policySelector">  
+                    test_geopolicy_bag_selector.xml
+                </prop>
+                <prop key="invalidPolicy">   
+                    test_invalid_geopolicy_bag_designator.xml
+                </prop>
+            </props>
+
+             <!-- standard conformance test of bag function GeometryBagSize(Bag) -->
+             <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector">
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">
+                    test_invalid_georequest_designator.xml
+                </prop>
+
+                <prop key="policyDesignator">
+                    test_geopolicy_bag_size_designator.xml
+                </prop>
+                <prop key="policySelector">
+                    test_geopolicy_bag_size_selector.xml
+                </prop>
+                <prop key="invalidPolicy">
+                    test_invalid_geopolicy_bag_size_designator.xml
+                </prop>
+            </props>
+
+            <!-- standard conformance test of bag function GeometryIsIn(Geometry,Bag) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector">
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">
+                    test_invalid_georequest_designator.xml
+                </prop>
+
+                <prop key="policyDesignator">
+                    test_geopolicy_is_in_designator.xml
+                </prop>
+                <prop key="policySelector">
+                    test_geopolicy_is_in_selector.xml
+                </prop>
+                <prop key="invalidPolicy">
+                    test_invalid_geopolicy_is_in_designator.xml
+                </prop>
+            </props>
+
+            <!-- ===========================================================
+                            SET FUNCTION TESTS
+            ==============================================================-->
+
+            <!-- standard conformance test of set function GeometryBagIntersection(Bag,Bag) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector">
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">
+                    test_invalid_georequest_designator.xml
+                </prop>
+
+                <prop key="policyDesignator">
+                    test_geopolicy_bag_intersection_designator.xml
+                </prop>
+                <prop key="policySelector">
+                    test_geopolicy_bag_intersection_selector.xml
+                </prop>
+                <prop key="invalidPolicy">
+                    test_invalid_geopolicy_bag_intersection_designator.xml
+                </prop>
+            </props>
+
+            <!-- standard conformance test of set function GeometryBagAtLeastOneMemberOf(Bag,Bag) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector">
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">
+                    test_invalid_georequest_designator.xml
+                </prop>
+
+                <prop key="policyDesignator">
+                    test_geopolicy_at_least_one_member_of_designator.xml
+                </prop>
+                <prop key="policySelector">
+                    test_geopolicy_at_least_one_member_of_selector.xml
+                </prop>
+                <prop key="invalidPolicy">
+                    test_invalid_geopolicy_at_least_one_member_of_designator.xml
+                </prop>
+            </props>
+
+            <!-- standard conformance test of set function GeometryBagUnion(Bag, Bag) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector">
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">
+                    test_invalid_georequest_designator.xml
+                </prop>
+
+                <prop key="policyDesignator">
+                    test_geopolicy_bag_union_designator.xml
+                </prop>
+                <prop key="policySelector">
+                    test_geopolicy_bag_union_selector.xml
+                </prop>
+                <prop key="invalidPolicy">
+                    test_invalid_geopolicy_bag_union_designator.xml
+                </prop>
+            </props>
+
+            <!-- standard conformance test of set function GeometryBagSubset(Bag, Bag) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector">
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">
+                    test_invalid_georequest_designator.xml
+                </prop>
+
+                <prop key="policyDesignator">
+                    test_geopolicy_bag_subset_designator.xml
+                </prop>
+                <prop key="policySelector">
+                    test_geopolicy_bag_subset_selector.xml
+                </prop>
+                <prop key="invalidPolicy">
+                    test_invalid_geopolicy_bag_subset_designator.xml
+                </prop>
+            </props>
+
+            <!-- standard conformance test of set function GeometrySetEquals(Bag, Bag) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector">
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">
+                    test_invalid_georequest_designator.xml
+                </prop>
+
+                <prop key="policyDesignator">
+                    test_geopolicy_set_equals_designator.xml
+                </prop>
+                <prop key="policySelector">
+                    test_geopolicy_set_equals_selector.xml
+                </prop>
+                <prop key="invalidPolicy">
+                    test_invalid_geopolicy_set_equals_designator.xml
+                </prop>
+            </props>
+
+            <!-- ===========================================================
+                            CONVERSION FUNCTION TESTS
+            ==============================================================-->
+
+            <!-- standard conformance test of set function ConvertToMetre(Double, String) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector">
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">
+                    test_invalid_georequest_designator.xml
+                </prop>
+
+                <prop key="policyDesignator">
+                    test_geopolicy_convert_to_metre_designator.xml
+                </prop>
+                <prop key="policySelector">
+                    test_geopolicy_convert_to_metre_selector.xml
+                </prop>
+                <prop key="invalidPolicy">
+                    test_invalid_geopolicy_convert_to_metre_designator.xml
+                </prop>
+            </props>
+
+            <!-- standard conformance test of set function ConvertToSquareMetre(Double, String) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector">
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">
+                    test_invalid_georequest_designator.xml
+                </prop>
+
+                <prop key="policyDesignator">
+                    test_geopolicy_convert_to_square_metre_designator.xml
+                </prop>
+                <prop key="policySelector">
+                    test_geopolicy_convert_to_square_metre_selector.xml
+                </prop>
+                <prop key="invalidPolicy">
+                    test_invalid_geopolicy_convert_to_square_metre_designator.xml
+                </prop>
+            </props>
+
+            <!-- ===========================================================
+                            GEOMETRIC FUNCTION TESTS
+            ==============================================================-->
+
+            <!-- standard conformance test of set function Buffer(Geometry, Double) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector">
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">
+                    test_invalid_georequest_designator.xml
+                </prop>
+
+                <prop key="policyDesignator">
+                    test_geopolicy_buffer_designator.xml
+                </prop>
+                <prop key="policySelector">
+                    test_geopolicy_buffer_selector.xml
+                </prop>
+                <prop key="invalidPolicy">
+                    test_invalid_geopolicy_buffer_designator.xml
+                </prop>
+            </props>
+
+            <!-- standard conformance test of set function Buffer(Geometry, Double) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector">
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">
+                    test_invalid_georequest_designator.xml
+                </prop>
+
+                <prop key="policyDesignator">
+                    test_geopolicy_boundary_designator.xml
+                </prop>
+                <prop key="policySelector">
+                    test_geopolicy_boundary_selector.xml
+                </prop>
+                <prop key="invalidPolicy">
+                    test_invalid_geopolicy_boundary_designator.xml
+                </prop>
+            </props>
+
+            <!-- standard conformance test of set function ConvexHull(Geometry) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector">
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">
+                    test_invalid_georequest_designator.xml
+                </prop>
+
+                <prop key="policyDesignator">
+                    test_geopolicy_convex_hull_designator.xml
+                </prop>
+                <prop key="policySelector">
+                    test_geopolicy_convex_hull_selector.xml
+                </prop>
+                <prop key="invalidPolicy">
+                    test_invalid_geopolicy_convex_hull_designator.xml
+                </prop>
+            </props>
+
+            <!-- standard conformance test of set function Centroid(Geometry) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector">
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">
+                    test_invalid_georequest_designator.xml
+                </prop>
+
+                <prop key="policyDesignator">
+                    test_geopolicy_centroid_designator.xml
+                </prop>
+                <prop key="policySelector">
+                    test_geopolicy_centroid_selector.xml
+                </prop>
+                <prop key="invalidPolicy">
+                    test_invalid_geopolicy_centroid_designator.xml
+                </prop>
+            </props>
+
+            <!-- standard conformance test of set function Difference(Geometry, Geometry) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector">
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">
+                    test_invalid_georequest_designator.xml
+                </prop>
+
+                <prop key="policyDesignator">
+                    test_geopolicy_difference_designator.xml
+                </prop>
+                <prop key="policySelector">
+                    test_geopolicy_difference_selector.xml
+                </prop>
+                <prop key="invalidPolicy">
+                    test_invalid_geopolicy_difference_designator.xml
+                </prop>
+            </props>
+
+           <!-- standard conformance test of set function SymDifference(Geometry, Geometry) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector">
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">
+                    test_invalid_georequest_designator.xml
+                </prop>
+
+                <prop key="policyDesignator">
+                    test_geopolicy_sym_difference_designator.xml
+                </prop>
+                <prop key="policySelector">
+                    test_geopolicy_sym_difference_selector.xml
+                </prop>
+                <prop key="invalidPolicy">
+                    test_invalid_geopolicy_sym_difference_designator.xml
+                </prop>
+            </props>
+
+           <!-- standard conformance test of set function Intersection(Geometry, Geometry) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector">
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">
+                    test_invalid_georequest_designator.xml
+                </prop>
+
+                <prop key="policyDesignator">
+                    test_geopolicy_intersection_designator.xml
+                </prop>
+                <prop key="policySelector">
+                    test_geopolicy_intersection_selector.xml
+                </prop>
+                <prop key="invalidPolicy">
+                    test_invalid_geopolicy_intersection_designator.xml
+                </prop>
+            </props>
+
+           <!-- standard conformance test of set function Union(Geometry, Geometry) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector">
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">
+                    test_invalid_georequest_designator.xml
+                </prop>
+
+                <prop key="policyDesignator">
+                    test_geopolicy_union_designator.xml
+                </prop>
+                <prop key="policySelector">
+                    test_geopolicy_union_selector.xml
+                </prop>
+                <prop key="invalidPolicy">
+                    test_invalid_geopolicy_union_designator.xml
+                </prop>
+            </props>
+
+           <!-- standard conformance test of set function Area(Geometry) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector">
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">
+                    test_invalid_georequest_designator.xml
+                </prop>
+
+                <prop key="policyDesignator">
+                    test_geopolicy_area_designator.xml
+                </prop>
+                <prop key="policySelector">
+                    test_geopolicy_area_selector.xml
+                </prop>
+                <prop key="invalidPolicy">
+                    test_invalid_geopolicy_area_designator.xml
+                </prop>
+            </props>
+
+           <!-- standard conformance test of set function Distance(Geometry) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector">
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">
+                    test_invalid_georequest_designator.xml
+                </prop>
+
+                <prop key="policyDesignator">
+                    test_geopolicy_distance_designator.xml
+                </prop>
+                <prop key="policySelector">
+                    test_geopolicy_distance_selector.xml
+                </prop>
+                <prop key="invalidPolicy">
+                    test_invalid_geopolicy_distance_designator.xml
+                </prop>
+            </props>
+
+           <!-- standard conformance test of set function IsWithinDistance(Geometry, Geometry, Double) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector">
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">
+                    test_invalid_georequest_designator.xml
+                </prop>
+
+                <prop key="policyDesignator">
+                    test_geopolicy_is_within_distance_designator.xml
+                </prop>
+                <prop key="policySelector">
+                    test_geopolicy_is_within_distance_selector.xml
+                </prop>
+                <prop key="invalidPolicy">
+                    test_invalid_geopolicy_is_within_distance_designator.xml
+                </prop>
+            </props>
+
+           <!-- standard conformance test of set function Length(Geometry) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector">
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">
+                    test_invalid_georequest_designator.xml
+                </prop>
+
+                <prop key="policyDesignator">
+                    test_geopolicy_length_designator.xml
+                </prop>
+                <prop key="policySelector">
+                    test_geopolicy_length_selector.xml
+                </prop>
+                <prop key="invalidPolicy">
+                    test_invalid_geopolicy_length_designator.xml
+                </prop>
+            </props>
+
+           <!-- standard conformance test of set function IsSimple(Geometry) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector">
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">
+                    test_invalid_georequest_designator.xml
+                </prop>
+
+                <prop key="policyDesignator">
+                    test_geopolicy_is_simple_designator.xml
+                </prop>
+                <prop key="policySelector">
+                    test_geopolicy_is_simple_selector.xml
+                </prop>
+                <prop key="invalidPolicy">
+                    test_invalid_geopolicy_is_simple_designator.xml
+                </prop>
+            </props>
+
+           <!-- standard conformance test of set function IsClosed(Geometry) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector">
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">
+                    test_invalid_georequest_designator.xml
+                </prop>
+
+                <prop key="policyDesignator">
+                    test_geopolicy_is_closed_designator.xml
+                </prop>
+                <prop key="policySelector">
+                    test_geopolicy_is_closed_selector.xml
+                </prop>
+                <prop key="invalidPolicy">
+                    test_invalid_geopolicy_is_closed_designator.xml
+                </prop>
+            </props>
+
+           <!-- standard conformance test of set function IsValid(Geometry) -->
+            <props>
+                <prop key="folder">
+                    src/test/resources/geoxacml/
+                </prop>
+                <prop key="requestDesignator">
+                    test_georequest_designator.xml
+                </prop>
+                <prop key="requestSelector">
+                    test_georequest_selector.xml
+                </prop>
+                <prop key="invalidRequest">
+                    test_invalid_georequest_designator.xml
+                </prop>
+
+                <prop key="policyDesignator">
+                    test_geopolicy_is_valid_designator.xml
+                </prop>
+                <prop key="policySelector">
+                    test_geopolicy_is_valid_selector.xml
+                </prop>
+                <prop key="invalidPolicy">
+                    test_invalid_geopolicy_is_valid_designator.xml
+                </prop>
+            </props>
+
+
+        </list>
+    </constructor-arg>
+</bean>
+  
+</beans>

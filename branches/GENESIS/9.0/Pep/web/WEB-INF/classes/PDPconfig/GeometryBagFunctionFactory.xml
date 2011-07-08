@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ===========================================================================
+This file contains the configuration of the factory GeometryBagFunctionFactory.
+You can add further functions by adding a bean within the list element which
+specifies a Function instance.
+
+author: Benjamin Friedrich
+date:   05.06.2009.
+============================================================================ -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <!-- import of the needed properties -->
+    <import resource="GeoProperties.xml"/>
+
+    <!-- configuration of GeometryBagFunctionFactory -->
+    <bean id="GeometryBagFunctionFactory" class="net.eig.geoxacml.pdp.function.GeometryFunctionFactory">
+        <constructor-arg>
+            <bean class="java.util.ArrayList">
+                <constructor-arg>
+                    <list>
+
+                        <bean class="com.sun.xacml.cond.BagFunction" factory-method="getIsInInstance">
+                            <constructor-arg>
+                                <ref bean="GeometryIsInURI" />
+                            </constructor-arg>
+                            <constructor-arg>
+                                <ref bean="GeometryURI" />
+                            </constructor-arg>
+                        </bean>
+
+                        <bean class="com.sun.xacml.cond.BagFunction" factory-method="getOneAndOnlyInstance">
+                            <constructor-arg>
+                                <ref bean="GeometryOneAndOnlyURI"/>
+                            </constructor-arg>
+                            <constructor-arg>
+                                <ref bean="GeometryURI" />
+                            </constructor-arg>
+                        </bean>
+
+                        <bean class="com.sun.xacml.cond.BagFunction" factory-method="getBagSizeInstance">
+                            <constructor-arg>
+                                <ref bean="GeometryBagSizeURI"/>
+                            </constructor-arg>
+                            <constructor-arg>
+                                <ref bean="GeometryURI" />
+                            </constructor-arg>
+                        </bean>
+
+                        <bean class="com.sun.xacml.cond.BagFunction" factory-method="getBagInstance">
+                            <constructor-arg>
+                                <ref bean="GeometryBagURI"/>
+                            </constructor-arg>
+                            <constructor-arg>
+                                <ref bean="GeometryURI" />
+                            </constructor-arg>
+                        </bean>
+
+                        <!-- <bean class="my.further.Function"/> -->
+
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+</beans>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inputInterface xmlns="http://gisClient.pisa.intecs.it/gisClient">
+    <section name="Select PEP Operations">
+        <group label="Service Operations">
+           <input type="multitext" name="operationMultiInput" id="operationMultiInput" label="Operations" size="50"/>       
+        </group>
+    </section>
+    <requestInformation>
+        <buttons>
+            <button name="createPEPOperationsButton" id="createPEPOperationsButton" label="Create PEP Operations" iconImage="" onclick="pepManager.createPEPOperationsInterface.onCreateOperations"/>
+        </buttons>
+    </requestInformation>
+</inputInterface>

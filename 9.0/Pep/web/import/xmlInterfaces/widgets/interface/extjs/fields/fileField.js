@@ -1,7 +1,7 @@
 
 
 
-/*Ext.Client.Interface.*/FileField=function(field, title, numberColsField){
+/*Ext.Client.Interface.*/FileField=function(field, title, numberColsField, multiInterfaceId){
 
   var formField=new Array(), size="20";
   var colSpan=0;
@@ -71,27 +71,32 @@
                                         iconFailure: this.iconFailure,
                                        
                                         success: function(form, action){
-                                            var jsonResponseObj=eval('new Object(' + action.response.responseText + ')');
-                                      
-                                            if(form.iconSuccess){
-                                              if(jsonResponseObj.id){
-                                                var idField=form.findField(form.fieldID);
-                                                idField.setValue(jsonResponseObj.id);
-                                              }
-                                              var label=form.findField(form.labelIcon);
-                                              label.setValue("<img src='"+form.iconSuccess+"'/>");
-                                           }
-                                           if(form.editAreaID){
-                                                var editArea = document.getElementById(form.editAreaID+"TextAreaIframe");
-                                                var editAreaDoc = editArea.contentWindow.document;
-                                                var textResp=eval("'"+jsonResponseObj.content+"'");
-                                                editAreaDoc.setValue(textResp);
-                                           }
+                                            var resp=replaceAll(action.response.responseText, "<pre>", "");
+                                            resp=replaceAll(resp, "</pre>", "");
+                                            var jsonResponse=JSON.parse("{ " + resp+ " }");
+            
+                                            if(jsonResponse.success){
+                                             
+                                                if(form.iconSuccess){
+                                                  if(jsonResponse.filePath){
+                                                    var idField=form.findField(form.fieldID);
+                                                    idField.setValue(jsonResponse.filePath);
+                                                  }
+                                                  var label=form.findField(form.labelIcon);
+                                                  label.setValue("<img src='"+form.iconSuccess+"'/>");
+                                               }
+                                               if(form.editAreaID){
+                                                    var editArea = document.getElementById(form.editAreaID+"TextAreaIframe");
+                                                    var editAreaDoc = editArea.contentWindow.document;
+                                                    var textResp=eval("'"+jsonResponse.content+"'");
+                                                    editAreaDoc.setValue(textResp);
+                                               }
 
-                                          var file=form.findField(form.fileID);
-                                          file.fileInput.dom.value="";
+                                              var file=form.findField(form.fileID);
+                                              file.fileInput.dom.value="";
 
-                                          eval(form.onSuccessMethod+"('"+jsonResponseObj.id+"');");
+                                            //  eval(form.onSuccessMethod+"('"+jsonResponse.id+"');");
+                                           }
                                         },
                                         failure: function(form, action) {
                                           
@@ -150,7 +155,7 @@
 
            var fileUploadFormPanel=new Ext.FormPanel({
 
-                    divName: title+"FileForm"+field.id,
+                    divName: title+"FileForm"+field.id+multiInterfaceId,
                     fileUpload: true,
                     frame: true,
                     width: '100%',

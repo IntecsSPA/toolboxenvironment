@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2006 sp2 U (http://www.altova.com) by Joel Lim (Spacebel SA) -->
+<!-- edited with XMLSPY v2004 rel. 4 U (http://www.xmlspy.com) by Joeri Theelen (GIM NV) -->
+<!--==============================================================
+    File:			aoifeatures.xsd stub
+    Author:		Marc Gilles
+    Company:	Spacebel 
+    ==============================================================-->
+<xsd:schema xmlns:aoi="http://www.esa.int/xml/schemas/mass/aoifeatures" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.esa.int/xml/schemas/mass/aoifeatures" elementFormDefault="qualified" version="1.0">
+  <xsd:annotation>
+    <xsd:appinfo>Stub for the Web Map Viewer Area Of Interest schema </xsd:appinfo>
+    <xsd:documentation>This stub is independent of the GML  Schema. Please to refer to the real aoifeatures depending on the GML version see
+	                                   http://services.eoportal.org/schemas/1.6/gml/gmlversion.../ </xsd:documentation>
+  </xsd:annotation>
+  <!--================================================================
+    Global element Declarations 
+    ================================================================-->
+  <!-- Stub for GML 2-->
+  <xsd:element name="areaOfInterest" type="xsd:anyType"/>
+  <!-- Stub for GML 3-->
+  <xsd:element name="AreaOfInterest" type="xsd:anyType"/>
+</xsd:schema>

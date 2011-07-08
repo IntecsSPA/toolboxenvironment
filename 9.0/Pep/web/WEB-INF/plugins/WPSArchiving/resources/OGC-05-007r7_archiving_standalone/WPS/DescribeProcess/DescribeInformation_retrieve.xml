@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><ProcessDescription xmlns:wps="http://www.opengis.net/wps/1.0.0" statusSupported="true" storeSupported="true" wps:processVersion="0.1">
+    <ows:Identifier xmlns:ows="http://www.opengis.net/ows/1.1">retrieve</ows:Identifier>
+    <ows:Title xmlns:ows="http://www.opengis.net/ows/1.1">Retrieves a data</ows:Title>
+    <ows:Abstract xmlns:ows="http://www.opengis.net/ows/1.1">TODO</ows:Abstract>
+    <ows:Metadata xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="store"/>
+    <ows:Metadata xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="data"/>
+    <ows:Metadata xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="metadata"/>
+    <wps:Profile>OGC:WPS:DataArchiving</wps:Profile>
+    <DataInputs>
+      <Input maxOccurs="1" minOccurs="1">
+		<ows:Identifier xmlns:ows="http://www.opengis.net/ows/1.1">Identifier</ows:Identifier>
+		<ows:Title xmlns:ows="http://www.opengis.net/ows/1.1">Transaction identifier</ows:Title>
+		<ows:Abstract xmlns:ows="http://www.opengis.net/ows/1.1">This field contains the transaction identifier returned by the store processing.</ows:Abstract>
+		<LiteralData>
+			<ows:DataType xmlns:ows="http://www.opengis.net/ows/1.1" ows:reference="http://www.w3.org/TR/xmlschema-2/#string">string</ows:DataType>
+			<ows:AnyValue xmlns:ows="http://www.opengis.net/ows/1.1"/>			
+		</LiteralData>
+	</Input>
+    </DataInputs>
+    <ProcessOutputs>
+      <Output>
+        <ows:Identifier xmlns:ows="http://www.opengis.net/ows/1.1">ItemStatus</ows:Identifier>
+        <ows:Title xmlns:ows="http://www.opengis.net/ows/1.1">Current status of the given item</ows:Title>
+        <ows:Abstract xmlns:ows="http://www.opengis.net/ows/1.1">This complex field returns a detailed description of the status for the given item.</ows:Abstract>
+        <ComplexOutput>
+         <Default>
+            <Format>
+              <MimeType>text/xml</MimeType>
+            </Format>
+          </Default>
+          <Supported>
+            <Format>
+              <MimeType>text/xml</MimeType>
+            </Format>
+          </Supported>
+        </ComplexOutput>
+      </Output>
+    </ProcessOutputs>
+  </ProcessDescription>

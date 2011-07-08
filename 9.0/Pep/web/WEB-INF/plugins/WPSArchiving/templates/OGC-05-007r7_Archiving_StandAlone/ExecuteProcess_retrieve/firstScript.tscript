@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pisa.intecs.it/mass/toolbox/xmlScript file:/home/massi/Progetti/TOOLBOX_rep@Google/toolboxenvironment/trunk/Plugins/DE/com.intecs.ToolboxScript.editorFiles/schemas/xmlScript.xsd">
+  <setVariable name="wpsLogFolder">
+    <path startFrom="SERVICE_RESOURCE_DIR">
+      <string>../Log</string>
+    </path>
+  </setVariable>
+  <setVariable name="wpsProcessingInstance">
+    <dateStringFormatter format="ddMMyyyyHHmmssSSS">
+      <now/>
+    </dateStringFormatter>
+  </setVariable>
+  <setVariable name="wpsScriptFolder">
+    <string>${wpsLogFolder}/${wpsProcessingInstance}/script/</string>
+  </setVariable>
+  <mkdir>
+    <variable name="wpsScriptFolder"/>
+  </mkdir>
+  <!-- POST Request Control -->
+  <setVariable name="rootRequestName">
+    <xPath>
+      <xmlRequest/>
+      <string>local-name(/*[1])</string>
+    </xPath>
+  </setVariable>
+  <if>
+    <oeq>
+      <variable name="rootRequestName"/>
+      <string>Execute</string>
+    </oeq>
+    <sequence>
+       <setVariable name="processRequest">
+          <xslt xmlOutput="true">
+            <xmlRequest/>
+            <path startFrom="SERVICE_RESOURCE_DIR">
+              <string>../AdditionalResources/WPS/XSL/WPSPost2WPSSoap.xsl</string>
+            </path>
+          </xslt>
+      </setVariable> 
+    </sequence>
+    <sequence>
+      <setVariable name="processRequest">
+      	<xmlRequest/>
+          <!-- xslt xmlOutput="true">
+            <xmlRequest/>
+            <path startFrom="SERVICE_RESOURCE_DIR">
+              <string>../AdditionalResources/WPS/XSL/WPSSoapNormalize.xsl</string>
+            </path>
+          </xslt -->
+      </setVariable>
+    </sequence>
+  </if>
+ 
+ <setVariable name="Identifier">
+ 	<xPath xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+ 		<xmlRequest/>
+ 		<string>//wps:Identifier</string>
+ 	</xPath>
+ 	
+ </setVariable>
+ 
+ <!-- setVariable name="MetadataUrl">
+ 	<string>http://ergo.pisa.intecs.it/geotiff.tiff</string>
+ </setVariable-->
+ 
+ <!-- MODIFIED FROM ORIGINAL SERVICE LOGIC -->
+	<execute>
+	<procedure>
+		<path startFrom="SERVICE_RESOURCE_DIR">
+			<string>retrievelogic.tscript</string>
+		</path>
+	</procedure>
+	
+</execute>
+
+
+
+	
+
+	<setVariable name="response">
+		<xml attributePrefix="%" textTag="evaluate">
+		  	<wps:ExecuteResponse xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xlink="http://www.w3.org/1999/xlink" service="WPS" serviceInstance="http://localhost:8080/TOOLBOX/services/WPSexample/GetCapabilities.xml" statusLocation="http://192.168.24.223:8083/TOOLBOX/manager?cmd=getServiceResource&amp;serviceName=wpsAndError&amp;relativePath=Log/24052010183618606/status/executeResponseStatus.xml" version="1.0.0" xml:lang="en" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<wps:Process wps:processVersion="0.1">
+				<ows:Identifier>ARMS_retrieve</ows:Identifier>
+				<ows:Title>Retrieves an item status</ows:Title>
+				<ows:Abstract></ows:Abstract>
+				<wps:Profile></wps:Profile>
+			</wps:Process>
+			<wps:Status creationTime="2010-05-24T18:36:18Z">
+				<wps:ProcessAccepted/>
+			</wps:Status>
+			<wps:ProcessOutputs>
+				<wps:Output>
+					<ows:Identifier>ItemStatus</ows:Identifier>
+					<ows:Title>Item Status</ows:Title>
+					<ows:Abstract>This field describes the item status</ows:Abstract>
+					<wps:Data>
+						<wps:ComplexData>
+							<tbxwps:ItemDetails xmlns:tbxwps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+								<tbxwps:Status><evaluate name="DownloadStatus"/></tbxwps:Status>
+							</tbxwps:ItemDetails>
+						</wps:ComplexData>
+					</wps:Data>
+				</wps:Output>
+			</wps:ProcessOutputs>
+		</wps:ExecuteResponse>
+	  </xml>
+  </setVariable>
+  
+  	<if>
+		<existsVariable name="HttpLink"/>
+		<setXMLValue xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:tbxwps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+	       	<variable name="response"/>
+	       	<string>/wps:ExecuteResponse/wps:ProcessOutputs/wps:Output/wps:Data/wps:ComplexData/tbxwps:ItemDetails</string>
+			<xml attributePrefix="%" textTag="evaluate">
+				<tbxwps:HttpLink xmlns:tbxwps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap"><evaluate name="HttpLink"/></tbxwps:HttpLink>
+			</xml>
+		</setXMLValue>
+	</if>
+	
+	<if>
+		<existsVariable name="FtpLink"/>
+		<setXMLValue xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:tbxwps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+	       	<variable name="response"/>
+	       	<string>/wps:ExecuteResponse/wps:ProcessOutputs/wps:Output/wps:Data/wps:ComplexData/tbxwps:ItemDetails</string>
+			<xml attributePrefix="%" textTag="evaluate">
+				<tbxwps:FtpLink xmlns:tbxwps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap"><evaluate name="FtpLink"/></tbxwps:FtpLink>
+			</xml>
+		</setXMLValue>
+	</if>
+	
+	<if>
+		<existsVariable name="CataloguesLink"/>
+		<setXMLValue xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:tbxwps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+	       	<variable name="response"/>
+	       	<string>/wps:ExecuteResponse/wps:ProcessOutputs/wps:Output/wps:Data/wps:ComplexData/tbxwps:ItemDetails</string>
+			<xml attributePrefix="%" textTag="evaluate">
+				<tbxwps:CatalogueLink xmlns:tbxwps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap"><evaluate name="CataloguesLink"/></tbxwps:CatalogueLink>
+			</xml>
+		</setXMLValue>
+	</if>
+	
+	<if>
+		<existsVariable name="GeoserverLink"/>
+		<setXMLValue xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:tbxwps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+	       	<variable name="response"/>
+	       	<string>/wps:ExecuteResponse/wps:ProcessOutputs/wps:Output/wps:Data/wps:ComplexData/tbxwps:ItemDetails</string>
+			<xml attributePrefix="%" textTag="evaluate">
+				<tbxwps:GeoserverLink xmlns:tbxwps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap"><evaluate name="GeoserverLink"/></tbxwps:GeoserverLink>
+			</xml>
+		</setXMLValue>
+	</if>
+  
+  
+  <variable name="response"/>
+</sequence>

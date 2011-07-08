@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence>
+    <copy from="resources/OGC-05-007r7_archiving_standalone/retrievelogic.tscript" to="Resources/retrievelogic.tscript"/>
+</sequence>

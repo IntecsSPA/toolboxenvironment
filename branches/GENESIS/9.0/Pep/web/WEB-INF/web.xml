@@ -21,13 +21,21 @@
     <servlet>
         <servlet-name>Toolbox</servlet-name>
         <servlet-class>it.intecs.pisa.toolbox.Toolbox</servlet-class>
+        <init-param>
+            <param-name>application</param-name>
+            <param-value>PEP</param-value>
+        </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>Toolbox</servlet-name>
         <url-pattern>/services/*</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Toolbox</servlet-name>
+        <url-pattern>/manager</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 </web-app>

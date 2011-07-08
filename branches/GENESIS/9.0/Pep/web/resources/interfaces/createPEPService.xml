@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<inputInterface xmlns="http://gisClient.pisa.intecs.it/gisClient">
+    <section name="New PEP Service">
+        <group label="New PEP Service Information">
+            <input type="text" name="wsdl" id="wsdl" label="Service WSDL" value="" optional="false" size="40"/>   
+            <input type="text" name="serviceName" id="serviceName" label="Service Name" value="" optional="false" size="25"/>
+        </group>
+    </section>
+
+    <section name="Security Configuration">
+   
+        <group label="Service KeyStore">
+            <input type="text" name="jksUserName" id="jksUserName" label="Alias" value="" optional="false" size="25"/>   
+            <input type="text" name="jksPasswd" id="jksPasswd" label="Password" value="" optional="false" size="25"/>  
+            <input type="file" name="jksFileLocation" hideLabel="false" id="jksFileLocation" colSpan="10"
+               optional="true"
+               size="300"
+               autoUploadURL="rest/manager/storefile"
+               iconImage="upload-icon"
+               blankText="Load Service keystore File"
+               label="KeyStore"
+               iconWait="styles/img/loaderFile.gif"
+               iconFailure="styles/img/fail.png"
+               iconSuccess="styles/img/success.png"/>           
+        </group>     
+        <group label="XACML Service File">
+            <input type="file" name="xacmlFileLocation" hideLabel="false" id="xacmlFileLocation" colSpan="10"
+               optional="true"
+               size="300"
+               autoUploadURL="rest/manager/storefile"
+               iconImage="upload-icon"
+               blankText="Load XACML File"
+               label="XACML"
+               iconWait="styles/img/loaderFile.gif"
+               iconFailure="styles/img/fail.png"
+               iconSuccess="styles/img/success.png"/>   
+        </group>    
+    </section>   
+   
+    <requestInformation>
+        <buttons>
+            <button name="createPEPServiceButton" id="createPEPServiceButton" label="Create PEP Service" iconImage="" onclick="pepManager.createPEPServiceInterface.onCreate"/>
+        </buttons>
+    </requestInformation>
+</inputInterface>

@@ -151,7 +151,7 @@
                              cmp.add({
                                       colspan: colspanDef,
                                       layout: "form",
-                                      itemCls: itemCls,
+                                      //itemCls: itemCls,
                                       items: [checkboxField]
                              });   
                             

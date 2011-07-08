@@ -28,28 +28,19 @@ var popup;
 
 
 
-ExtXmlInterface = function(interfaceDescription, lang){
+ExtXmlInterface = function(interfaceDescription, lang, multiInterfaceId){
     
-    return(createPanelExjFormByXml(interfaceDescription, lang));
+    return(createPanelExjFormByXml(interfaceDescription, lang, multiInterfaceId));
     
 }
 
 
 
-
-
-
-
-
-
-
-
-
-function generateFormFieldSet(title, fieldSets, numCol, localizationObj){
+function generateFormFieldSet(title, fieldSets, numCol, localizationObj,multiInterfaceId){
   var newForm, formsPanel;
-  var arrayFieldSet=generateListOfFieldSet(fieldSets, numCol, localizationObj);
+  var arrayFieldSet=generateListOfFieldSet(fieldSets, numCol, localizationObj, multiInterfaceId);
 
- var arrayFormFile=getFormFiles(title,fieldSets);
+ var arrayFormFile=getFormFiles(title,fieldSets,multiInterfaceId);
 
  var html="";
 
@@ -57,16 +48,17 @@ function generateFormFieldSet(title, fieldSets, numCol, localizationObj){
       html+="<div id='"+arrayFormFile[i].divName+"'></div>";
   }
   
-  html+="<div id='"+title+"MainForm'></div>";
+  html+="<div id='"+title+"MainForm"+multiInterfaceId+"'></div>";
 
   
 
   newForm=new Ext.FormPanel({
         frame: true,
         width: '100%',
+        //id: replaceAll(title+"MainForm"+multiInterfaceId, " ", ""),
         autoShow : true,
         fileUpload: true,
-        divName: title+"MainForm",
+        divName: title+"MainForm"+multiInterfaceId,
         items:arrayFieldSet
     });
 
@@ -88,10 +80,12 @@ function generateFormFieldSet(title, fieldSets, numCol, localizationObj){
     
 }
 
-function createPanelExjFormByXml(xmlDocument,lang){
+function createPanelExjFormByXml(xmlDocument,lang, multiInterfaceId){
    
   _formObj_.push({onChangeFieldControlMandatory:function(){}});
 
+  if(!multiInterfaceId)
+     multiInterfaceId=""; 
   var contentFormPanel, tabPanel, forms=null, idElementTabs=null;  
   var formObjCreated, fieldSetForms= new Array();
   var controlMandatoryButtons= new Array();
@@ -133,7 +127,7 @@ function createPanelExjFormByXml(xmlDocument,lang){
            onclickFunction=buttonElements[i].getAttribute("onclick"); 
            disableIfNotMandatoryFields=buttonElements[i].getAttribute("disableIfNotMandatoryFields");
            if(disableIfNotMandatoryFields){
-             controlMandatoryButtons.push(buttonElements[i].getAttribute("id"));
+             controlMandatoryButtons.push(buttonElements[i].getAttribute("id")+multiInterfaceId);
              disabled=true;
            }   
            
@@ -143,12 +137,13 @@ function createPanelExjFormByXml(xmlDocument,lang){
              textButton=buttonElements[i].getAttribute("label");
 
             buttons[i]=new Ext.Button({
-                              id: buttonElements[i].getAttribute("id"),  
+                              id: buttonElements[i].getAttribute("id")+multiInterfaceId,  
                               text: textButton,
+                              multiInterfaceId: multiInterfaceId,
                               onclickFunction: onclickFunction,
                               handler: function(){
                                   if(this.onclickFunction)
-                                    eval(this.onclickFunction+"()");
+                                    eval(this.onclickFunction+"('"+multiInterfaceId+"')");
                               },
                               disabled: disabled,
                               icon:buttonElements[i].getAttribute("icon")
@@ -198,9 +193,9 @@ function createPanelExjFormByXml(xmlDocument,lang){
         numberColsForm=cols;
         idElementTabs[i]=nameTab+"Div";
 
-        formObjCreated=createExjFormByElement(idElementTabs[i],sectionInterfaceElements[i],cols,loc);
+        formObjCreated=createExjFormByElement(idElementTabs[i],sectionInterfaceElements[i],cols,loc,multiInterfaceId);
         items[i]={
-              id: nameTab,
+              id: nameTab+multiInterfaceId,
               title: nameTab,
               enableTabScroll:true,
               autoScroll:true,
@@ -238,10 +233,10 @@ function createPanelExjFormByXml(xmlDocument,lang){
    numberColsForm=cols;
    idElementTabs[0]=nameTab+"Div";
 
-   formObjCreated=createExjFormByElement(idElementTabs[0],sectionInterfaceElements[0],cols,loc);
+   formObjCreated=createExjFormByElement(idElementTabs[0],sectionInterfaceElements[0],cols,loc,multiInterfaceId);
 
    var  item={
-              id: nameTab,
+              id: nameTab+multiInterfaceId,
               //title: nameTab,
               enableTabScroll:true,
               autoScroll:true,
@@ -262,7 +257,7 @@ function createPanelExjFormByXml(xmlDocument,lang){
 
   fieldSetConfValues[fieldSetConfValues.length-1].push({
                           name:"idRequest",
-                          id:"idRequest",
+                          id:"idRequest"+multiInterfaceId,
                           type:"text",
                           value: ""
                       });
@@ -295,8 +290,7 @@ function createPanelExjFormByXml(xmlDocument,lang){
                 formsArray: forms,
                 formsFileArray: formsFile,
                 tabContentPanels:tabContentPanels,
-
-
+                multiInterfaceId: multiInterfaceId,
                 formsFieldSetArray: fieldSetForms,
                 tabElementsId: idElementTabs,
                 confValues: fieldSetConfValues,
@@ -428,67 +422,67 @@ function createPanelExjFormByXml(xmlDocument,lang){
                       for(u=0; u<this.confValues[i].length; u++){
                          field=this.formsArray[i].getForm().findField(this.confValues[i][u].id); 
                          type=this.confValues[i][u].type;
-                         if(this.confValues[i][u].id!="idRequest")   
+                        
+                         if(this.confValues[i][u].id!="idRequest"+this.multiInterfaceId){  
+                             var setIDValue=replaceAll(this.confValues[i][u].id,this.multiInterfaceId,"");
                            switch(type) {
+                               
                             case "text":
-                                     field.setValue(values[this.confValues[i][u].id]); 
+                                     field.setValue(values[setIDValue]); 
                                     break; 
                             case "password":
-                                     field.setValue(values[this.confValues[i][u].id]); 
+                                     field.setValue(values[setIDValue]); 
                                     break;        
-                            /*case "label":
-                                      if(values[this.confValues[i][u].id])
-                                        field.setValue(values[this.confValues[i][u].id]); 
-                                    break;   */
                             case "numeric":
-                                    field.setValue(values[this.confValues[i][u].id]); 
+                                    field.setValue(values[setIDValue]); 
                                     break;
                             case "spinner":
-                                    field.setValue(values[this.confValues[i][u].id]);
+                                    field.setValue(values[setIDValue]);
                                     break;
-                                      field.setValue(values[this.confValues[i][u].id]);        
+                                      field.setValue(values[setIDValue]);        
 
                             case "combo":
-                                    var displayValue=field.getInformationValue(values[this.confValues[i][u].id]);
+                                    var displayValue=field.getInformationValue(values[setIDValue]);
                                     field.setValue(displayValue); 
                                     break;
                             case "checkbox":
-                                    field.setValue(values[this.confValues[i][u].id]== "true"); 
+                                    field.setValue(values[setIDValue]== "true"); 
                                     break;        
 
                             case "bbox":
                                   
-                                    var split=values[this.confValues[i][u].id].split(',');
-                                    this.formsArray[i].getForm().findField(this.confValues[i][u].id+'WestBBOX').setValue(split[0]); 
-                                    this.formsArray[i].getForm().findField(this.confValues[i][u].id+'SouthBBOX').setValue(split[1]); 
-                                    this.formsArray[i].getForm().findField(this.confValues[i][u].id+'EastBBOX').setValue(split[2]); 
-                                    this.formsArray[i].getForm().findField(this.confValues[i][u].id+'NorthBBOX').setValue(split[3]); 
+                                    var split=values[setIDValue].split(',');
+                                    this.formsArray[i].getForm().findField(setIDValue+'WestBBOX').setValue(split[0]); 
+                                    this.formsArray[i].getForm().findField(setIDValue+'SouthBBOX').setValue(split[1]); 
+                                    this.formsArray[i].getForm().findField(setIDValue+'EastBBOX').setValue(split[2]); 
+                                    this.formsArray[i].getForm().findField(setIDValue+'NorthBBOX').setValue(split[3]); 
                                     break;          
 
                             case "rangedate":
-                                    var range=values[this.confValues[i][u].id];
-                                    this.formsArray[i].getForm().findField(this.confValues[i][u].id+'StartDate').setValue(range.startDate); 
-                                    this.formsArray[i].getForm().findField(this.confValues[i][u].id+'EndDate').setValue(range.endDate); 
+                                    var range=values[setIDValue];
+                                    this.formsArray[i].getForm().findField(setIDValue+'StartDate').setValue(range.startDate); 
+                                    this.formsArray[i].getForm().findField(setIDValue+'EndDate').setValue(range.endDate); 
                                     break;
                             case "date":
-                                    field.setValue(values[this.confValues[i][u].id]); 
+                                    field.setValue(values[setIDValue]); 
                                     break;     
                             case "time":
-                                    var timeSplit=values[this.confValues[i][u].id].split('-'); 
-                                    this.formsArray[i].getForm().findField('h'+this.confValues[i][u].id).setValue(timeSplit[0]);
-                                    this.formsArray[i].getForm().findField('m'+this.confValues[i][u].id).setValue(timeSplit[1]);
-                                    this.formsArray[i].getForm().findField('s'+this.confValues[i][u].id).setValue(timeSplit[2]);
-                                    this.formsArray[i].getForm().findField('ms'+this.confValues[i][u].id).setValue(timeSplit[3]);
+                                    var timeSplit=values[setIDValue].split('-'); 
+                                    this.formsArray[i].getForm().findField('h'+setIDValue).setValue(timeSplit[0]);
+                                    this.formsArray[i].getForm().findField('m'+setIDValue).setValue(timeSplit[1]);
+                                    this.formsArray[i].getForm().findField('s'+setIDValue).setValue(timeSplit[2]);
+                                    this.formsArray[i].getForm().findField('ms'+setIDValue).setValue(timeSplit[3]);
                                     break;
                             case "rangetime":
-                                    var timeSplitStart=values[this.confValues[i][u].id].startTime.split('-'); 
-                                    var timeSplitEnd=values[this.confValues[i][u].id].endTime.split('-'); 
-                                    this.formsArray[i].getForm().findField('hStart'+this.confValues[i][u].id).setValue(timeSplitStart[0]);
-                                    this.formsArray[i].getForm().findField('mStart'+this.confValues[i][u].id).setValue(timeSplitStart[1]);
-                                    this.formsArray[i].getForm().findField('hEnd'+this.confValues[i][u].id).setValue(timeSplitEnd[0]);
-                                    this.formsArray[i].getForm().findField('mEnd'+this.confValues[i][u].id).setValue(timeSplitEnd[1]);
+                                    var timeSplitStart=values[setIDValue].startTime.split('-'); 
+                                    var timeSplitEnd=values[setIDValue].endTime.split('-'); 
+                                    this.formsArray[i].getForm().findField('hStart'+setIDValue).setValue(timeSplitStart[0]);
+                                    this.formsArray[i].getForm().findField('mStart'+setIDValue).setValue(timeSplitStart[1]);
+                                    this.formsArray[i].getForm().findField('hEnd'+setIDValue).setValue(timeSplitEnd[0]);
+                                    this.formsArray[i].getForm().findField('mEnd'+setIDValue).setValue(timeSplitEnd[1]);
                                     break;
                           }
+                        }
                       }
                     }                      
                 },
@@ -580,7 +574,7 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                                     }
 
                                                 }
-                                             //ANDREA: Vedere come aggiornare la lista dei valori
+                                             
                                             
                                              var elementLabel=document.getElementById(currentField.divContent);
                                              var hiddenEl,hiddenInputElement;
@@ -641,6 +635,7 @@ function createPanelExjFormByXml(xmlDocument,lang){
                   var formValues=new Array();
                   var complexValues=new Object();
                   for(i=0; i<this.formsArray.length; i++ ){
+         
                     if(this.formsFileArray[i])
                       for(k=0; k<this.formsFileArray[i].length; k++ ){
                          input=this.formsFileArray[i][k].findByType("textfield");
@@ -654,6 +649,7 @@ function createPanelExjFormByXml(xmlDocument,lang){
                       }
 
                       for(u=0; u<xtypeArray.length; u++){
+                         
                          input=this.formsArray[i].findByType(xtypeArray[u]);
                          for(j=0; j<input.length; j++){
                              if(!input[j].validate())
@@ -723,80 +719,81 @@ function createPanelExjFormByXml(xmlDocument,lang){
 
                   
 
-                  formValues["idRequest"]="";
+                  formValues["idRequest"+this.multiInterfaceId]="";
                   var tempform,tempFormat,tempTime1,tempTime2;  
                   
                   for(i=0;i<this.confValues.length;i++){
                      tempform=this.confValues[i];
                      
                      for(u=0;u<tempform.length;u++){
+                        var currentID=replaceAll(tempform[u].id, this.multiInterfaceId, "")/*tempform[u].id*/;
                         
                         switch(tempform[u].type) {
                           case "text":
                                     if(formValues[tempform[u].id].value){
-                                        complexValues[tempform[u].id]=formValues[tempform[u].id].value;
+                                        complexValues[currentID]=formValues[tempform[u].id].value;
                                         idRequest+=formValues[tempform[u].id].value;
                                     }else
-                                        complexValues[tempform[u].id]=null;
+                                        complexValues[currentID]=null;
                                   break; 
                           case "password":
                                    // if(formValues[tempform[u].id].value){
-                                        complexValues[tempform[u].id]=formValues[tempform[u].id].value;
+                                        complexValues[currentID]=formValues[tempform[u].id].value;
                                         idRequest+=formValues[tempform[u].id].value;
                                    // }else
-                                     //   complexValues[tempform[u].id]=null;
+                                     //   complexValues[currentID]=null;
                                   break;        
                           case "label":
                                   if(label)
                                     if(formValues[tempform[u].id].value ){
-                                        complexValues[tempform[u].id]=formValues[tempform[u].id].value;
+                                        complexValues[currentID]=formValues[tempform[u].id].value;
                                        // idRequest+=formValues[tempform[u].id].value;
                                     }else
-                                        complexValues[tempform[u].id]=null;
+                                        complexValues[currentID]=null;
                                   break;
                           case "textarea":
                                     if(formValues[tempform[u].id].value){
-                                        complexValues[tempform[u].id]=formValues[tempform[u].id].value;
+                                        complexValues[currentID]=formValues[tempform[u].id].value;
                                         idRequest+=formValues[tempform[u].id].value;
                                     }else
-                                        complexValues[tempform[u].id]=null;
+                                        complexValues[currentID]=null;
                                   break;
                           case "editarea":
                                     if(formValues[tempform[u].id].value){
-                                        complexValues[tempform[u].id]=formValues[tempform[u].id].value;
+                                        complexValues[currentID]=formValues[tempform[u].id].value;
                                         idRequest+=formValues[tempform[u].id].value;
                                     }else
-                                        complexValues[tempform[u].id]=null;
+                                        complexValues[currentID]=null;
                                   break;
                           case "numeric":
                                   //alert(tempform[u].id);
                                   if(formValues[tempform[u].id].value || formValues[tempform[u].id].value== 0){
-                                      complexValues[tempform[u].id]=formValues[tempform[u].id].value;
+                                      complexValues[currentID]=formValues[tempform[u].id].value;
                                       idRequest+=formValues[tempform[u].id].value;
                                     }  
                                   else
-                                      complexValues[tempform[u].id]='0';
+                                      complexValues[currentID]='0';
                                   //alert(complexValues[tempform[i].id]);
                                   break;
                           case "spinner":
                                
                                   if(formValues[tempform[u].id].value || formValues[tempform[u].id].value== 0){
-                                      complexValues[tempform[u].id]=formValues[tempform[u].id].value;
+                                      complexValues[currentID]=formValues[tempform[u].id].value;
                                       idRequest+=formValues[tempform[u].id].value;
                                     }
                                   else
-                                      complexValues[tempform[u].id]='0';
+                                      complexValues[currentID]='0';
                                   //alert(complexValues[tempform[i].id]);
                                   break;
                           case "checkbox":
                                   //alert(tempform[u].id);
                                   //alert(formValues[tempform[u].id].value);
                                   if(formValues[tempform[u].id].value){
-                                      complexValues[tempform[u].id]=formValues[tempform[u].id].value;
+                                      complexValues[currentID]=formValues[tempform[u].id].value;
                                       idRequest+=formValues[tempform[u].id].value;
                                     }  
                                   else
-                                      complexValues[tempform[u].id]=false;
+                                      complexValues[currentID]=false;
                                   //alert(complexValues[tempform[i].id]);
                                   break;
                           case "checkboxgroup":
@@ -805,21 +802,21 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                   //alert(formValues[tempform[u].id].value);
 
                                   if(formValues[tempform[u].id].value){
-                                      complexValues[tempform[u].id]=replaceAll(formValues[tempform[u].id].value,"__",',');
-                                      //alert(complexValues[tempform[u].id]);
+                                      complexValues[currentID]=replaceAll(formValues[tempform[u].id].value,"__",',');
+                                      //alert(complexValues[currentID]);
                                       idRequest+=formValues[tempform[u].id].value;
                                     }
                                   else
-                                      complexValues[tempform[u].id]=null;
+                                      complexValues[currentID]=null;
                                   //alert(complexValues[tempform[i].id]);
                                   break;
                           case "radiogroup":
                                   if(formValues[tempform[u].id].value){
-                                      complexValues[tempform[u].id]=replaceAll(formValues[tempform[u].id].value,"__",',');
+                                      complexValues[currentID]=replaceAll(formValues[tempform[u].id].value,"__",',');
                                       idRequest+=formValues[tempform[u].id].value;
                                     }
                                   else
-                                      complexValues[tempform[u].id]=null;
+                                      complexValues[currentID]=null;
 
                                   break;
                                   
@@ -828,11 +825,11 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                   //alert(formValues[tempform[u].id].value);
                                   if(formValues[tempform[u].id].value){
                                      if(!label){
-                                       complexValues[tempform[u].id]=formValues[tempform[u].id].value;
+                                       complexValues[currentID]=formValues[tempform[u].id].value;
                                       idRequest+=formValues[tempform[u].id].value;  
                                      }else{
                                         
-                                        complexValues[tempform[u].id]={
+                                        complexValues[currentID]={
                                                               value:formValues[tempform[u].id].value,
                                                               store: formValues[tempform[u].id].store
                                                             }; 
@@ -840,7 +837,7 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                       
                                     } 
                                   else
-                                      complexValues[tempform[u].id]=null;
+                                      complexValues[currentID]=null;
                                   //alert(complexValues[tempform[i].id]);
                                   break;
                                   
@@ -867,10 +864,10 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                         formValues[tempform[u].id+'NorthBBOX'].value);
                                       tempFormat = tempFormat.replace("S",
                                         formValues[tempform[u].id+'SouthBBOX'].value);    
-                                      complexValues[tempform[u].id]=tempFormat;
+                                      complexValues[currentID]=tempFormat;
                                       idRequest+=tempFormat;
                                   }else
-                                    complexValues[tempform[u].id]=null;      
+                                    complexValues[currentID]=null;      
                                   //alert("BBOX: " + complexValues[tempform[i].id]);
                                   break;          
                            
@@ -878,41 +875,41 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                   //alert(tempform[u].id);
                                   if(formValues[tempform[u].id+'MinValue'].value || formValues[tempform[u].id+'MinValue'].value == 0 &&
                                       formValues[tempform[u].id+'MaxValue'].value || formValues[tempform[u].id+'MinValue'].value == 0){
-                                      complexValues[tempform[u].id]={
+                                      complexValues[currentID]={
                                           minValue: formValues[tempform[u].id+'MinValue'].value,
                                           maxValue: formValues[tempform[u].id+'MaxValue'].value
                                       };
-                                      //alert(complexValues[tempform[u].id].minValue);
-                                      //alert(complexValues[tempform[u].id].maxValue);
-                                    idRequest+=complexValues[tempform[u].id].minValue;
-                                    idRequest+=complexValues[tempform[u].id].maxValue;
+                                      //alert(complexValues[currentID].minValue);
+                                      //alert(complexValues[currentID].maxValue);
+                                    idRequest+=complexValues[currentID].minValue;
+                                    idRequest+=complexValues[currentID].maxValue;
                                   }else
-                                    complexValues[tempform[u].id]=null;  
-                                  //alert("StartDate:" +complexValues[tempform[u].id].startDate);
-                                  //alert("EndDate:" +complexValues[tempform[u].id].endDate);
+                                    complexValues[currentID]=null;  
+                                  //alert("StartDate:" +complexValues[currentID].startDate);
+                                  //alert("EndDate:" +complexValues[currentID].endDate);
                                   break;
                           case "rangedate":
                                   if(formValues[tempform[u].id+'StartDate'].value &&
                                       formValues[tempform[u].id+'EndDate'].value){
-                                      complexValues[tempform[u].id]={
+                                      complexValues[currentID]={
                                           startDate: formValues[tempform[u].id+'StartDate'].value.format(tempform[u].format),
                                           endDate: formValues[tempform[u].id+'EndDate'].value.format(tempform[u].format)
                                       };
-                                    idRequest+=complexValues[tempform[u].id].startDate;
-                                    idRequest+=complexValues[tempform[u].id].endDate;
+                                    idRequest+=complexValues[currentID].startDate;
+                                    idRequest+=complexValues[currentID].endDate;
                                   }else
-                                    complexValues[tempform[u].id]=null;
+                                    complexValues[currentID]=null;
                                   break;
                           case "date":
                                   if(formValues[tempform[u].id].value){
                                       if(!label){
-                                          complexValues[tempform[u].id]=formValues[tempform[u].id].value.format(tempform[u].format);
+                                          complexValues[currentID]=formValues[tempform[u].id].value.format(tempform[u].format);
                                           idRequest+=formValues[tempform[u].id].value.format(tempform[u].format);
      
                                       }else
-                                          complexValues[tempform[u].id]=formValues[tempform[u].id].value; 
+                                          complexValues[currentID]=formValues[tempform[u].id].value; 
                                   }else
-                                    complexValues[tempform[u].id]=null;  
+                                    complexValues[currentID]=null;  
                                    
                                   break;     
                           case "time":
@@ -936,33 +933,33 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                                     formValues['ms'+tempform[u].id].value="000";
                                                     tempTime1=tempTime1.replace("ms", formValues['ms'+tempform[u].id].value);
                                                  }
-                                              complexValues[tempform[u].id]=tempTime1;
-                                              idRequest+=complexValues[tempform[u].id]; 
+                                              complexValues[currentID]=tempTime1;
+                                              idRequest+=complexValues[currentID]; 
                                          }else{
-                                             complexValues[tempform[u].id]=formValues['h'+tempform[u].id].value+"-"+
+                                             complexValues[currentID]=formValues['h'+tempform[u].id].value+"-"+
                                                                   formValues['m'+tempform[u].id].value;
                                              if(formValues['s'+tempform[u].id])
-                                                complexValues[tempform[u].id]+="-"+formValues['s'+tempform[u].id].value;
+                                                complexValues[currentID]+="-"+formValues['s'+tempform[u].id].value;
                                              if(formValues['ms'+tempform[u].id])
-                                                complexValues[tempform[u].id]+="-"+formValues['ms'+tempform[u].id].value;
+                                                complexValues[currentID]+="-"+formValues['ms'+tempform[u].id].value;
                                          }
 
                                       }else
-                                        complexValues[tempform[u].id]=null;  
+                                        complexValues[currentID]=null;  
                                   
                                   break;
                           case "file":
                                     
                                     if(formValues[tempform[u].id+"_file"].value){
-                                        complexValues[tempform[u].id]= new Object();
-                                        complexValues[tempform[u].id].fileName=formValues[tempform[u].id+"_file"].value;
+                                        complexValues[currentID]= new Object();
+                                        complexValues[currentID].fileName=formValues[tempform[u].id+"_file"].value;
                                         idRequest+=formValues[tempform[u].id+"_file"].value;
                                         if(formValues[tempform[u].id+"UploadID"].value){
-                                          complexValues[tempform[u].id].uploadID=formValues[tempform[u].id+"UploadID"].value;
+                                          complexValues[currentID].uploadID=formValues[tempform[u].id+"UploadID"].value;
                                           idRequest+=formValues[tempform[u].id+"UploadID"].value;
                                         }
                                     }else
-                                        complexValues[tempform[u].id]=null;
+                                        complexValues[currentID]=null;
                                   break;
                           case "rangetime":
                                   //alert(tempform[u].id);
@@ -980,14 +977,14 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                           tempTime2=tempTime2.replace("h", formValues['hEnd'+tempform[u].id].value);
                                           tempTime2=tempTime2.replace("i", formValues['mEnd'+tempform[u].id].value);
                                           tempTime2=tempTime2.replace("s", formValues['sEnd'+tempform[u].id].value);
-                                          complexValues[tempform[u].id]={
+                                          complexValues[currentID]={
                                               startTime: tempTime1,
                                               endTime: tempTime2
                                           };
-                                          idRequest+=complexValues[tempform[u].id].startTime;  
-                                          idRequest+=complexValues[tempform[u].id].endTime;
+                                          idRequest+=complexValues[currentID].startTime;  
+                                          idRequest+=complexValues[currentID].endTime;
                                       }else{
-                                        complexValues[tempform[u].id]={
+                                        complexValues[currentID]={
                                               startTime: formValues['hStart'+tempform[u].id].value+"-"+
                                                                   formValues['mStart'+tempform[u].id].value+"-",
                                               endTime: formValues['hEnd'+tempform[u].id].value+"-"+
@@ -995,7 +992,7 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                           };  
                                       }     
                                   }else    
-                                    complexValues[tempform[u].id]=null;   
+                                    complexValues[currentID]=null;   
                                   break;
                         } 
               
@@ -1306,7 +1303,7 @@ function createPanelExjFormByXml(xmlDocument,lang){
   return(_formObj_[_formObj_.length-1]);
 }
 
-function createExjFormByElement(title, formDataElement, numCols, localizationObj){
+function createExjFormByElement(title, formDataElement, numCols, localizationObj, multiInterfaceId){
 
    var valuesControl=new Array(); 
    var groupFormElements;
@@ -1358,7 +1355,7 @@ function createExjFormByElement(title, formDataElement, numCols, localizationObj
                 localization: localizationObj,
                         name: inputFormElements[i].getAttribute("name"),
                         type: inputFormElements[i].getAttribute("type"),
-                          id: inputFormElements[i].getAttribute("id"),
+                          id: inputFormElements[i].getAttribute("id")+multiInterfaceId,
                         size: inputFormElements[i].getAttribute("size"),
                         icon: inputFormElements[i].getAttribute("iconImage"),
                      colSpan: inputFormElements[i].getAttribute("colSpan"),
@@ -1471,7 +1468,7 @@ function createExjFormByElement(title, formDataElement, numCols, localizationObj
                           value: ""
                       });*/
 
-   var formFieldSet=generateFormFieldSet(title, fieldSets, numCols, localizationObj);
+   var formFieldSet=generateFormFieldSet(title, fieldSets, numCols, localizationObj, multiInterfaceId);
 
 
    return({
@@ -2266,11 +2263,11 @@ function createCodeOnLoadOperation(onLoadOperationElement){
 
 
 
-function generateListOfFieldSet(fieldSets, numberColums, localizationObj){ 
+function generateListOfFieldSet(fieldSets, numberColums, localizationObj, multiInterfaceId){ 
   var fieldSetArray= new Array(), listField;
   var groupName;
   for(var i=0;i<fieldSets.length;i++){
-     listField=generateListOfField(fieldSets[i].fields); 
+     listField=generateListOfField(fieldSets[i].fields, multiInterfaceId); 
      if(localizationObj && fieldSets[i].name && fieldSets[i].name!="")
         groupName=localizationObj.getLocalMessage(fieldSets[i].name);
      else
@@ -2278,6 +2275,7 @@ function generateListOfFieldSet(fieldSets, numberColums, localizationObj){
    
      if(listField.length > 0)
          fieldSetArray[i]= new Ext.form.FieldSet({
+                      id: replaceAll(groupName," ","")+multiInterfaceId,  
                       title: groupName,
                       layout: 'table',
 
@@ -2303,13 +2301,13 @@ function generateListOfFieldSet(fieldSets, numberColums, localizationObj){
     
 }
 
-function getFormFiles(title,fieldSets){
+function getFormFiles(title,fieldSets, multiInterfaceId){
   var formFileArray= new Array();
   for(var i=0;i<fieldSets.length;i++){
       for(var k=0;k<fieldSets[i].fields.length;k++){
           switch(fieldSets[i].fields[k].type) {
                case "file":
-                   formFileArray.push(new /*Ext.Client.Interface.*/FileField(fieldSets[i].fields[k], title, numberColsField));
+                   formFileArray.push(new /*Ext.Client.Interface.*/FileField(fieldSets[i].fields[k], title, numberColsField, multiInterfaceId));
                   break;
 
           }
@@ -2319,7 +2317,7 @@ function getFormFiles(title,fieldSets){
 }
 
 
-function generateListOfField(Fields){
+function generateListOfField(Fields, multiInterfaceId){
    
   var fieldsArray= new Array();
   var j=0;

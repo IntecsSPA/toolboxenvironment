@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<inputInterface xmlns="http://gisClient.pisa.intecs.it/gisClient">
+    <section name="Net Configuration">
+        <group label="Endpoint Configuration">
+           <input type="text" name="Address" id="Address" label="PEP Endpoint address" value="" optional="false" size="25" colSpan="3"/>   
+           <input type="numeric" name="Port" id="Port" label="Port Number" value="" optional="false" size="10" colSpan="3"/>
+           <input type="numeric" name="SSLPort" id="SSLPort" label="SSL Port number" value="" optional="false" size="10" colSpan="3"/>
+        </group>
+        <group label="Proxy Settings">
+           <input type="text" name="proxyHost" id="proxyHost" label="Host name" value="" optional="true" size="25" colSpan="3"/>   
+           <input type="numeric" name="proxyPort" id="proxyPort" label="Port Number" value="" optional="true" size="10" colSpan="3"/>          
+        </group>
+    </section>
+    <section name="Log Settings">
+        <group label="Log Settings">
+           <input type="combo" name="logLevel" id="logLevel" label="Logging Level" value="" optional="false" size="25" store="VALUES" storeFields="['value']" 
+            storeData="[['ALL'],['DEBUG'],['INFO'],['WARN'],['ERROR'],['FATAL'],['OFF']]"/>  
+           <input type="text" name="logDir" id="logDir" label="Log Directory" value="" optional="false" size="50" colSpan="3"/>
+           <input type="numeric" name="logFileSize" id="logFileSize" label="Log File Size (KB)" value="100" optional="false" size="10" colSpan="3"/>
+        </group>
+    </section>
+   <section name="General Security Configuration">
+        <group label="Security Configuration">
+            <input type="file" name="tbxLevelKeystore" hideLabel="false" id="tbxLevelKeystore" colSpan="10"
+               optional="true"
+               size="300"
+               autoUploadURL="rest/manager/storefile"
+               iconImage="upload-icon"
+               blankText="Load keystore File"
+               label="PEP level keystore"
+               iconWait="styles/img/loaderFile.gif"
+               iconFailure="styles/img/fail.png"
+               iconSuccess="styles/img/success.png"/>           
+            <input type="text" name="tbxLevelKeystorePwd" id="tbxLevelKeystorePwd" label="Keystore password" value="" optional="false" size="25" colSpan="3"/>  
+       </group>     
+    </section>   
+    <section name="Contact Information">
+       <group label="PEP Contact Information">
+           <input type="text" name="companyName" id="companyName" label="Company Name" value="" optional="true" size="25" colSpan="3"/>   
+           <input type="text" name="companyContact" id="companyContact" label="Company reference person" value="" optional="true" size="25" colSpan="3"/> 
+           <!-- Hidden FTP Configuration -->
+           <input type="text" name="adminDir" id="adminDir" hidden="true" hideLabel="true" optional="true" value="/tmp"/>
+           <input type="text" name="adminPassword" id="adminPassword" hidden="true" hideLabel="true" optional="true" value=""/>
+           <input type="text" name="port" id="port" hidden="true" hideLabel="true" optional="true" value="2120"/>
+           <input type="text" name="poolPort" id="poolPort" hidden="true" hideLabel="true" optional="true" value=""/>
+           <input type="text" name="serverHost" id="serverHost" hidden="true" hideLabel="true" optional="true" value="localhost"/>
+       </group>
+    </section>   
+    <requestInformation>
+        <buttons>
+            <button name="saveConfigurationButton" id="saveConfigurationButton" label="Save Configuration" iconImage="" onclick="pepManager.configurationInterface.onSave"/>
+        </buttons>
+    </requestInformation>
+</inputInterface>

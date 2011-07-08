@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<interface name="OGC-05-007r7" version="1.0.0" type="Archiving" mode="StandAlone">
+    <rootSchemaFile>WPSArchivingAll.xsd</rootSchemaFile>
+    <schemaSetLocation>schemas/OGC-05-007r7</schemaSetLocation>
+    <wsdlFile>/</wsdlFile>
+    <targetNameSpace>http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap</targetNameSpace>
+    <operations>
+        <operation SOAPAction="GetCapabilities" name="GetCapabilities" requestTimeout="1h" type="synchronous">
+            <admittedHosts />
+            <inputType namespace="http://www.opengis.net/wps/1.0.0" type="GetCapabilities" />
+            <outputType namespace="http://www.opengis.net/wps/1.0.0" type="Capabilities" />
+            <scriptFile overrideByUser="false" path="templates/OGC-05-007r7_Archiving_StandAlone/GetCapabilities/script.tscript" type="FIRST_SCRIPT" />
+            <scriptFile overrideByUser="false" path="templates/OGC-05-007r7_Archiving_StandAlone/GetCapabilities/globalError.tscript" type="GLOBAL_ERROR" />
+        </operation>
+        <operation SOAPAction="DescribeProcess" name="DescribeProcess" requestTimeout="1h" type="synchronous">
+            <admittedHosts />
+            <inputType namespace="http://www.opengis.net/wps/1.0.0" type="DescribeProcess" />
+            <outputType namespace="http://www.opengis.net/wps/1.0.0" type="ProcessDescriptions" />
+            <scriptFile overrideByUser="false" path="templates/OGC-05-007r7_Archiving_StandAlone/DescribeProcess/script.tscript" type="FIRST_SCRIPT" />
+            <scriptFile overrideByUser="false" path="templates/OGC-05-007r7_Archiving_StandAlone/DescribeProcess/globalError.tscript" type="GLOBAL_ERROR" />
+        </operation>
+        <operation SOAPAction="ExecuteProcess_store" name="ExecuteProcess_store" requestTimeout="1h" type="synchronous">
+            <admittedHosts />
+            <inputType namespace="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" type="ExecuteProcess_store" />
+            <outputType namespace="http://www.opengis.net/wps/1.0.0" type="ExecuteResponse" />
+            <scriptFile overrideByUser="false" path="templates/OGC-05-007r7_Archiving_StandAlone/ExecuteProcess_store/firstScript.tscript" type="FIRST_SCRIPT" />
+            <scriptFile overrideByUser="false" path="templates/OGC-05-007r7_Archiving_StandAlone/ExecuteProcess_store/globalError.tscript" type="GLOBAL_ERROR" />
+            <lifeCycleScripts>
+                <build path="lifeCycleScripts/OGC-05-007r7_Archiving_StandAlone/storecreation.xml"/>
+            </lifeCycleScripts>
+        </operation>
+       
+        <operation SOAPAction="ExecuteProcess_retrieve" name="ExecuteProcess_retrieve" requestTimeout="1h" type="synchronous">
+            <admittedHosts />
+            <inputType namespace="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" type="ExecuteProcess_retrieve" />
+            <outputType namespace="http://www.opengis.net/wps/1.0.0" type="ExecuteResponse" />
+            <scriptFile overrideByUser="false" path="templates/OGC-05-007r7_Archiving_StandAlone/ExecuteProcess_retrieve/firstScript.tscript" type="FIRST_SCRIPT" />
+            <scriptFile overrideByUser="false" path="templates/OGC-05-007r7_Archiving_StandAlone/ExecuteProcess_retrieve/globalError.tscript" type="GLOBAL_ERROR" />
+            <lifeCycleScripts>
+                <build path="lifeCycleScripts/OGC-05-007r7_Archiving_StandAlone/retrievecreation.xml"/>
+                <delete path="lifeCycleScripts/OGC-05-007r7_Archiving_StandAlone/retrievedeletion.xml"/>
+            </lifeCycleScripts>
+        </operation>
+       
+        <operation SOAPAction="ExecuteProcess_delete" name="ExecuteProcess_delete" requestTimeout="1h" type="synchronous">
+            <admittedHosts />
+            <inputType namespace="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" type="ExecuteProcess_delete" />
+            <outputType namespace="http://www.opengis.net/wps/1.0.0" type="ExecuteResponse" />
+            <scriptFile overrideByUser="false" path="templates/OGC-05-007r7_Archiving_StandAlone/ExecuteProcess_delete/firstScript.tscript" type="FIRST_SCRIPT" />
+            <scriptFile overrideByUser="false" path="templates/OGC-05-007r7_Archiving_StandAlone/ExecuteProcess_delete/globalError.tscript" type="GLOBAL_ERROR" />
+            <lifeCycleScripts>
+                <build path="lifeCycleScripts/OGC-05-007r7_Archiving_StandAlone/deletecreation.xml"/>
+                <delete path="lifeCycleScripts/OGC-05-007r7_Archiving_StandAlone/deletedeletion.xml"/>
+            </lifeCycleScripts>
+        </operation>
+        
+    </operations>
+    <variables>
+            <variable displayedText="Allow publishing data via WMS,WFS and WCS" name="allowGeoserver" type="boolean" value="true"/>
+            <variable displayedText="Allow publishing data via FTP" name="allowFTP" type="boolean" value="true"/>
+            <variable displayedText="Allow publishing data via HTTP" name="allowHTTP" type="boolean" value="true"/>
+            <variable displayedText="Url of the Geoserver instance" name="geoServerUrl" type="string" value=""/>
+            <variable displayedText="Url of the catalogue instance" name="catalogueUrl" type="string" value=""/>
+            <variable displayedText="Url of the archiving server" name="archivingUrl" type="string" value=""/>
+    </variables>
+    <lifeCycleScripts>
+        <build path="lifeCycleScripts/OGC-05-007r7_Archiving_StandAlone/servicecreation.xml"/>
+    </lifeCycleScripts>
+</interface>

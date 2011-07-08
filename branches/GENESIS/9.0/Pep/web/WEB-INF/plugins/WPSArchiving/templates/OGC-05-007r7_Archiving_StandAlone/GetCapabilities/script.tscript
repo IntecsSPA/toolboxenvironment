@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pisa.intecs.it/mass/toolbox/xmlScript file:/home/massi/Progetti/TOOLBOX_rep@Google/toolboxenvironment/trunk/Plugins/DE/com.intecs.ToolboxScript.editorFiles/schemas/xmlScript.xsd">
+  <!-- if>
+	<validateDocument>
+		<xmlRequest/>
+		<path startFrom="SERVICE_RESOURCE_DIR">
+        	<string>../Schemas/wps/1.0.0/wpsGetCapabilities_request.xsd</string>
+        </path>
+	</validateDocument>
+	<sequence-->
+	
+	<timer delay="8h">
+	<fileDelete>
+		<string>C:\MyFile.txt</string>
+	</fileDelete>
+</timer>
+
+	  <setVariable name="version">
+	    <xPath xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:wps="http://www.opengis.net/wps/1.0.0">
+	      <xmlRequest/>
+	      <string>/wps:GetCapabilities/wps:AcceptVersions/ows:Version</string>
+	    </xPath>
+	  </setVariable>
+	  <if>
+	    <isNotNull>
+	      <variable name="version"/>
+	    </isNotNull>
+	    <xslt xmlOutput="true">
+	      <loadXML>
+	        <path startFrom="SERVICE_RESOURCE_DIR">
+	          <string>../AdditionalResources/ExternalServiceInformation.xml</string>
+	        </path>
+	      </loadXML>
+	      <path startFrom="SERVICE_RESOURCE_DIR">
+	        <string>../AdditionalResources/WPS/XSL/GenerateCapabilities.xsl</string>
+	      </path>
+	      <parameter name="toolboxURL">
+	        <toolboxAddress/>
+	      </parameter>
+	    </xslt>
+	  </if>
+	<!-- /sequence>
+	<sequence>
+		<xslt xmlOutput="true">
+            <variable name="processRequest"/>
+            <path startFrom="SERVICE_RESOURCE_DIR">
+              <string>../AdditionalResources/WPS/XSL/WPSExceptions.xsl</string>
+            </path>
+            <parameter name="exceptionCode">
+              <string>NoApplicableCode</string>
+            </parameter>
+            <parameter name="exceptionText">
+              <string>GetCapabilities Request is not Valid.</string>
+            </parameter>
+        </xslt>
+	</sequence> 
+ </if>		  -->
+</sequence>

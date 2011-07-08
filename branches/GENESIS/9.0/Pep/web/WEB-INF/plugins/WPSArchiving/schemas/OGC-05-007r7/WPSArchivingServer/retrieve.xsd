@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:wps="http://www.opengis.net/wps/1.0.0" elementFormDefault="qualified" targetNamespace="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+	<xs:import namespace="http://www.opengis.net/wps/1.0.0" schemaLocation="wps/1.0.0/wpsAll.xsd"/>
+	<xs:element name="ExecuteProcess_retrieve">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="1" minOccurs="1" name="Identifier">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="uom" use="optional">
+									<xs:simpleType>
+										<xs:restriction base="xs:string"/>
+									</xs:simpleType>
+								</xs:attribute>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element maxOccurs="1" minOccurs="0" name="ItemStatus">
+					<xs:complexType>
+						<xs:attribute name="uom" type="xs:string" use="optional"/>
+						<xs:attribute name="asReference" type="xs:boolean" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="storeExecuteResponse" type="xs:boolean" use="optional"/>
+			<xs:attribute name="lineage" type="xs:boolean" use="optional"/>
+			<xs:attribute name="status" type="xs:boolean" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ItemDetails" type="ItemDetailsType"/>
+	<xs:complexType name="ItemDetailsType">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="1" name="Status">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="ITEM NOT AVAILABLE"/>
+						<xs:enumeration value="DOWNLOADING"/>
+						<xs:enumeration value="DOWNLOAD ERROR"/>
+						<xs:enumeration value="DOWNLOAD COMPLETE"/>
+						<xs:enumeration value="PUBLISHED"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element maxOccurs="1" minOccurs="0" name="HttpLink" type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="FtpLink" type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="CatalogueLink" type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="GeoserverLink" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

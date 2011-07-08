@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pisa.intecs.it/mass/toolbox/xmlScript file:/home/massi/Progetti/TOOLBOX_rep@Google/toolboxenvironment/trunk/Plugins/DE/com.intecs.ToolboxScript.editorFiles/schemas/xmlScript.xsd">
+  <setVariable name="wpsLogFolder">
+    <path startFrom="SERVICE_RESOURCE_DIR">
+      <string>../Log</string>
+    </path>
+  </setVariable>
+  <setVariable name="wpsProcessingInstance">
+    <dateStringFormatter format="ddMMyyyyHHmmssSSS">
+      <now/>
+    </dateStringFormatter>
+  </setVariable>
+  <setVariable name="wpsScriptFolder">
+    <string>${wpsLogFolder}/${wpsProcessingInstance}/script/</string>
+  </setVariable>
+  <mkdir>
+    <variable name="wpsScriptFolder"/>
+  </mkdir>
+  <!-- POST Request Control -->
+  <setVariable name="rootRequestName">
+    <xPath>
+      <xmlRequest/>
+      <string>local-name(/*[1])</string>
+    </xPath>
+  </setVariable>
+  <if>
+    <oeq>
+      <variable name="rootRequestName"/>
+      <string>Execute</string>
+    </oeq>
+    <sequence>
+       <setVariable name="processRequest">
+          <xslt xmlOutput="true">
+            <xmlRequest/>
+            <path startFrom="SERVICE_RESOURCE_DIR">
+              <string>../AdditionalResources/WPS/XSL/WPSPost2WPSSoap.xsl</string>
+            </path>
+          </xslt>
+      </setVariable> 
+    </sequence>
+    <sequence>
+      <setVariable name="processRequest">
+      	<xmlRequest/>
+          <!-- xslt xmlOutput="true">
+            <xmlRequest/>
+            <path startFrom="SERVICE_RESOURCE_DIR">
+              <string>../AdditionalResources/WPS/XSL/WPSSoapNormalize.xsl</string>
+            </path>
+          </xslt -->
+      </setVariable>
+    </sequence>
+  </if>
+  <dumpXML>
+    <path>
+      	<string>${wpsLogFolder}/${wpsProcessingInstance}/ProcessedRequest.xml</string>
+    </path>
+    <variable name="processRequest"/>
+  </dumpXML>
+  
+  <setVariable name="Identifier">
+ 	<xPath xmlns:wps="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap">
+ 		<xmlRequest/>
+ 		<string>//wps:Identifier</string>
+ 	</xPath>
+ </setVariable>
+ 
+ 
+ 
+ <!-- MODIFIED FROM ORIGINAL SERVICE LOGIC -->
+	<execute>
+		<procedure>
+			<path startFrom="SERVICE_RESOURCE_DIR">
+				<string>deletelogic.tscript</string>
+			</path>
+		</procedure>
+		
+	</execute>
+
+    <setVariable name="response">
+		<xml attributePrefix="%" textTag="evaluate">
+		  	<wps:ExecuteResponse xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xlink="http://www.w3.org/1999/xlink" service="WPS" serviceInstance="http://localhost:8080/TOOLBOX/services/WPSexample/GetCapabilities.xml" statusLocation="http://192.168.24.223:8083/TOOLBOX/manager?cmd=getServiceResource&amp;serviceName=wpsAndError&amp;relativePath=Log/24052010183618606/status/executeResponseStatus.xml" version="1.0.0" xml:lang="en" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<wps:Process wps:processVersion="0.1">
+				<ows:Identifier>TestOperation</ows:Identifier>
+				<ows:Title>Convert raster to another format</ows:Title>
+				<ows:Abstract>			Convert a raster to another file format and stores the			resulting raster file.		</ows:Abstract>
+				<wps:Profile>OGC:WPS:RasterFormatConversion</wps:Profile>
+			</wps:Process>
+			<wps:Status creationTime="2010-05-24T18:36:18Z">
+				<wps:ProcessAccepted/>
+			</wps:Status>
+			<wps:ProcessOutputs>
+				<wps:Output>
+					<ows:Identifier>Status</ows:Identifier>
+					<ows:Title>downloadStatus</ows:Title>
+					<ows:Abstract>downloadStatus</ows:Abstract>
+					<wps:Data>
+						<wps:LiteralData><evaluate name="Status"/></wps:LiteralData>
+					</wps:Data>
+				</wps:Output>
+			</wps:ProcessOutputs>
+		</wps:ExecuteResponse>
+	  </xml>
+  </setVariable>
+  
+  	
+  <variable name="response"/>
+</sequence>

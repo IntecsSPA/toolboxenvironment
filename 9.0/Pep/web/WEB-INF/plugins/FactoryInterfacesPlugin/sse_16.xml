@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface name="SSE" version="1.6" type="Ordering" mode="Standard">
+		<rootSchemaFile>SSE_main_template.xsd</rootSchemaFile>
+		<schemaSetLocation>schemas/SSE_16</schemaSetLocation>
+		<wsdlFile>wsdl/SSE_16.wsdl</wsdlFile>
+		<targetNameSpace>http://www.mycompanyname.com/ws/mynamespace</targetNameSpace>
+		<operations>
+			<operation SOAPAction="processRFQ" name="processRFQ" type="synchronous">
+				<admittedHosts/>
+				<inputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="processRFQRequestMsg"/>
+				<outputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="processRFQResponseMsg"/>
+				<scriptFile path="templates/SSE_16/processRFQ/script.tscript" type="FIRST_SCRIPT" overrideByUser="true"/>
+				<scriptFile path="templates/SSE_16/processRFQ/globalError.tscript" type="GLOBAL_ERROR" overrideByUser="false"/>
+				<testFiles>testFiles/SSE_16/processRFQ/test.xml</testFiles>
+			</operation>
+			<operation SOAPAction="processOrder" name="processOrder" type="synchronous">
+				<admittedHosts/>
+				<inputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="processOrderRequestMsg"/>
+				<outputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="processOrderResponseMsg"/>
+				<scriptFile path="templates/SSE_16/processOrder/script.tscript" type="FIRST_SCRIPT" overrideByUser="true"/>
+				<scriptFile path="templates/SSE_16/processOrder/globalError.tscript" type="GLOBAL_ERROR" overrideByUser="false"/>
+				<testFiles>testFiles/SSE_16/processOrder/test.xml</testFiles>
+			</operation>
+			<operation SOAPAction="sendRFQ" callbackSOAPAction="returnRFQResult" name="RFQ" pollingRate="1m" requestTimeout="1h" type="asynchronous">
+				<admittedHosts/>
+				<inputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="sendRFQRequestMsg"/>
+				<outputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="sendRFQResponseMsg"/>
+				<callbackInputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="returnRFQResultRequestMsg"/>
+				<callbackOutputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="returnRFQResultResponseMsg"/>
+				<scriptFile path="templates/SSE_16/RFQ/first_script.tscript" type="FIRST_SCRIPT" overrideByUser="true"/>
+				<scriptFile path="templates/SSE_16/RFQ/second_script.tscript" type="SECOND_SCRIPT" overrideByUser="true"/>
+				<scriptFile path="templates/SSE_16/RFQ/third_script.tscript" type="THIRD_SCRIPT" overrideByUser="true"/>
+				<scriptFile type="GLOBAL_ERROR" path="templates/SSE_16/RFQ/globalError.tscript" overrideByUser="false"/>
+				<scriptFile type="ERROR_ON_RESP_BUILDER" path="templates/SSE_16/RFQ/response_builder_error.tscript" overrideByUser="false"/>
+				<scriptFile type="RESP_BUILDER" path="templates/SSE_16/RFQ/response_builder.tscript" overrideByUser="false"/>
+				<testFiles>testFiles/SSE_16/RFQ/test.xml</testFiles>
+			</operation>
+			<operation SOAPAction="sendOrder" callbackSOAPAction="returnOrderResult" name="Order" pollingRate="1m" requestTimeout="1h" type="asynchronous">
+				<admittedHosts/>
+				<inputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="sendOrderRequestMsg"/>
+				<outputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="sendOrderResponseMsg"/>
+				<callbackInputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="returnOrderResultRequestMsg"/>
+				<callbackOutputType namespace="http://www.mycompanyname.com/ws/mynamespace" type="returnOrderResultResponseMsg"/>
+				<scriptFile path="templates/SSE_16/Order/first_script.tscript" type="FIRST_SCRIPT" overrideByUser="true"/>
+				<scriptFile path="templates/SSE_16/Order/second_script.tscript" type="SECOND_SCRIPT" overrideByUser="true"/>
+				<scriptFile path="templates/SSE_16/Order/third_script.tscript" type="THIRD_SCRIPT" overrideByUser="true"/>
+				<scriptFile type="GLOBAL_ERROR" path="templates/SSE_16/Order/globalError.tscript" overrideByUser="false"/>
+				<scriptFile type="ERROR_ON_RESP_BUILDER" path="templates/SSE_16/Order/response_builder_error.tscript" overrideByUser="false"/>
+				<scriptFile type="RESP_BUILDER" path="templates/SSE_16/Order/response_builder.tscript" overrideByUser="false"/>
+				<testFiles>testFiles/SSE_16/Order/test.xml</testFiles>
+			</operation>
+		</operations>
+	</interface>

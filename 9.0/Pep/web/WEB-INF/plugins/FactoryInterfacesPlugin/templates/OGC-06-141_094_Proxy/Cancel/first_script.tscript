@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript">
+	<setVariable name="pushedfile">
+		<path startFrom="SERVICE_RESOURCE_DIR">
+			<string>../../../../Push</string>
+			<stringCat>
+				<variable name="messageID"/>
+				<string>.xml</string>
+			</stringCat>
+		</path>
+	</setVariable>
+</sequence>

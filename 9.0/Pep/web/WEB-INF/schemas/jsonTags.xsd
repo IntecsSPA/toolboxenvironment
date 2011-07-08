@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://pisa.intecs.it/toolbox/json"
+    xmlns:json="http://pisa.intecs.it/toolbox/json"
+    xmlns:nat="http://pisa.intecs.it/mass/toolbox/xmlScript"
+    elementFormDefault="qualified">
+
+    <xsd:element name="stringToJSON">
+        <xsd:annotation>
+            <xsd:documentation>This tag converts a string to a JSON object</xsd:documentation>
+        </xsd:annotation>
+         <xsd:complexType>
+            <xsd:sequence>
+                 <xsd:any namespace="##other" processContents="strict"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="xmlToJSON">
+        <xsd:annotation>
+            <xsd:documentation>This tag converts a string to a JSON object</xsd:documentation>
+        </xsd:annotation>
+         <xsd:complexType>
+            <xsd:sequence>
+                 <xsd:any namespace="##other" processContents="strict"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+     <xsd:element name="RESTPost">
+        <xsd:annotation>
+            <xsd:documentation>This tag executes a POST request to a REST interface</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:any namespace="##other" processContents="strict"/>
+                <xsd:choice>
+                    <xsd:element ref="json:stringToJSON"/>
+                    <xsd:element ref="json:xmlToJSON"/>
+                </xsd:choice>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="RESTGet">
+        <xsd:annotation>
+            <xsd:documentation>This tag executes a GET request to a REST interface</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:any namespace="##other" processContents="strict"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="RESTDelete">
+        <xsd:annotation>
+            <xsd:documentation>This tag executes a DELETE request to a REST interface</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:any namespace="##other" processContents="strict"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="xPath">
+        <xsd:annotation>
+            <xsd:documentation>This tag retrieves the value identified by the xPath expression</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:choice>
+                    <xsd:element ref="json:stringToJSON"/>
+                    <xsd:element ref="json:xmlToJSON"/>
+                    <xsd:element ref="json:RESTPost"/>
+                    <xsd:element ref="json:RESTGet"/>
+                    <xsd:element ref="json:RESTDelete"/>
+                    <xsd:element ref="nat:variable"/>
+                </xsd:choice>
+                <xsd:any namespace="##other" processContents="strict" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="xPathExists">
+        <xsd:annotation>
+            <xsd:documentation>This tag retrieves the value identified by the xPath expression</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:choice>
+                    <xsd:element ref="json:stringToJSON"/>
+                    <xsd:element ref="json:xmlToJSON"/>
+                    <xsd:element ref="json:RESTPost"/>
+                    <xsd:element ref="json:RESTGet"/>
+                    <xsd:element ref="json:RESTDelete"/>
+                    <xsd:element ref="nat:variable"/>
+                </xsd:choice>
+                <xsd:any namespace="##other" processContents="strict" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

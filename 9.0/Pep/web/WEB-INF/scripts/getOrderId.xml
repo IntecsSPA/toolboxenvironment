@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ -
+ -  Developed By:      Intecs  S.P.A.
+ -  File Name:         $RCSfile: getOrderId.xml,v $
+ -  TOOLBOX Version:   $Name:  $
+ -  File Revision:     $Revision: 1.3 $
+ -  Revision Date:     $Date: 2004/04/15 12:16:49 $
+ -
+ -->
+<xPath outputType="text" xmlns:mass="http://www.esa.int/mass" xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript">
+    <xmlRequest/>
+    <string>//mass:orderId/text()</string>
+</xPath>
+

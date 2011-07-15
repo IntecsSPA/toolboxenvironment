@@ -8,10 +8,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import it.intecs.pisa.archivingserver.data.StoreItem;
+import it.intecs.pisa.archivingserver.db.DownloadsDB;
 import it.intecs.pisa.archivingserver.log.Log;
 import it.intecs.pisa.archivingserver.prefs.ChainTypesPrefs;
 import it.intecs.pisa.archivingserver.prefs.Prefs;
 import it.intecs.pisa.util.DOMUtil;
+import it.intecs.pisa.util.IOUtil;
 import java.io.File;
 import javawebparts.misc.chain.ChainContext;
 import javawebparts.misc.chain.Command;
@@ -33,21 +35,20 @@ public class ExtractMetadataFromData implements Command {
     public Result execute(ChainContext cc) {
         String itemId;
         StoreItem storeItem;
-        Document doc=null;
+        Document doc = null;
         File webappDir;
 
         try {
-            itemId=(String) cc.getAttribute(CommandsConstants.ITEM_ID);
-            doc=(Document) cc.getAttribute(CommandsConstants.ITEM_METADATA);
-            storeItem=(StoreItem) cc.getAttribute(CommandsConstants.STORE_ITEM);
-            webappDir=(File) cc.getAttribute(CommandsConstants.APP_DIR);
+            itemId = (String) cc.getAttribute(CommandsConstants.ITEM_ID);
+            doc = (Document) cc.getAttribute(CommandsConstants.ITEM_METADATA);
+            storeItem = (StoreItem) cc.getAttribute(CommandsConstants.STORE_ITEM);
+            webappDir = (File) cc.getAttribute(CommandsConstants.APP_DIR);
 
-            if(doc==null &&
-               storeItem.type!=null &&
-               storeItem.type.equals("")==false)
-            {
-               doc=extractMetadataFromItem(itemId,storeItem,webappDir);
-               cc.setAttribute(CommandsConstants.ITEM_METADATA, doc);
+            if (doc == null
+                    && storeItem.type != null
+                    && storeItem.type.equals("") == false) {
+                doc = extractMetadataFromItem(itemId, storeItem, webappDir);
+                cc.setAttribute(CommandsConstants.ITEM_METADATA, doc);
             }
         } catch (Exception e) {
             Log.logException(e);
@@ -61,52 +62,64 @@ public class ExtractMetadataFromData implements Command {
         return new Result(Result.SUCCESS);
     }
 
-    private Document extractMetadataFromItem(String itemId,StoreItem storeItem,File webappDir) throws Exception {
-        Document extractedDoc=null;
+    private Document extractMetadataFromItem(String itemId, StoreItem storeItem, File webappDir) throws Exception {
+        Document extractedDoc = null;
         JsonObject chainTypesListJson = null;
-        String command=null;
+        String command = null;
         JsonElement el;
-        
-        
-        chainTypesListJson = ChainTypesPrefs.getChainTypeInformation(webappDir,storeItem.type); 
-        
-        if(chainTypesListJson !=null){
-            el=chainTypesListJson.get(
-               ChainTypesPrefs.METADATA_PROCESSING_JSON_SCRIPT_PATH_PROPERTY);
-                if(!(el ==null || el instanceof JsonNull))
-                    command=el.getAsString();
-            
-            //trying shell script
-            if(!storeItem.metadataUrl.startsWith("http://"))
-                if(command!=null && !command.equals(""))
-                {
-                    File commandFile;
-                    commandFile=new File(command);
-                    commandFile.setExecutable(true,false);
 
-                    File downloadDir=Prefs.getDownloadFolder(webappDir);
+
+        chainTypesListJson = ChainTypesPrefs.getChainTypeInformation(webappDir, storeItem.type);
+
+        if (chainTypesListJson != null) {
+            el = chainTypesListJson.get(
+                    ChainTypesPrefs.METADATA_PROCESSING_JSON_SCRIPT_PATH_PROPERTY);
+            if (!(el == null || el instanceof JsonNull)) {
+                command = el.getAsString();
+            }
+
+            //trying shell script
+            if (!storeItem.metadataUrl.startsWith("http://")) {
+                if (command != null && !command.equals("")) {
+                    File commandFile;
+                    commandFile = new File(command);
+                    commandFile.setExecutable(true, false);
+
+                    File downloadDir = Prefs.getDownloadFolder(webappDir);
 
                     File dataFile;
-                    dataFile=new File(downloadDir,itemId);
+                    dataFile = new File(downloadDir, itemId);
 
                     File outFile;
-                    outFile= new File(downloadDir, itemId + "_metadata.xml");
+                    outFile = new File(downloadDir, itemId + "_metadata.xml");
 
                     ProcessBuilder pb;
                     Process p;
 
-                    pb = new ProcessBuilder(command, dataFile.getCanonicalPath(), 
-                                                            outFile.getCanonicalPath());
+                    pb = new ProcessBuilder(command, dataFile.getCanonicalPath(),
+                            outFile.getCanonicalPath());
                     pb.directory(commandFile.getParentFile());
                     p = pb.start();
                     p.waitFor();
+                    if (p.exitValue() != 0) {
+                        Log.log("Chain failed, Instance \"" + itemId + "\" EXTRACT METADATA PROCESSING ERROR");
+                        Log.log("Instance \"" + itemId + "\" Extract Metadata Processing Error: " + IOUtil.inputToString(p.getErrorStream()));
+                        Log.log(" Instance \"" + itemId + "\" Extract Metadata Processing Output: " + IOUtil.inputToString(p.getInputStream()));
+                        DownloadsDB.updateStatus(itemId, "EXTRACT METADATA PROCESSING ERROR");
+                        File movedFile = new File(Prefs.getNotProcessedFolder(webappDir), dataFile.getName());
+                        IOUtil.moveFile(dataFile, movedFile);
+                        Log.log(" Instance \"" + itemId + "\" not processed File moved to: " + movedFile.getCanonicalPath());
+                    } else {
+                        dataFile.delete();
+                    }
 
                     DOMUtil util;
-                    util=new DOMUtil();
+                    util = new DOMUtil();
 
-                    extractedDoc=util.fileToDocument(outFile);
+                    extractedDoc = util.fileToDocument(outFile);
                 }
-        }    
+            }
+        }
         return extractedDoc;
     }
 }

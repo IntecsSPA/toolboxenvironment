@@ -278,6 +278,8 @@ public class IOUtil {
                 }
             }
         }
+        in.close();
+        out.close();
     }
 
     /**

@@ -8,10 +8,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import it.intecs.pisa.archivingserver.data.StoreItem;
+import it.intecs.pisa.archivingserver.db.DownloadsDB;
 import it.intecs.pisa.archivingserver.log.Log;
 import it.intecs.pisa.archivingserver.prefs.ChainTypesPrefs;
 import it.intecs.pisa.archivingserver.prefs.Prefs;
 import it.intecs.pisa.archivingserver.prefs.WatchPrefs;
+import it.intecs.pisa.util.IOUtil;
 import java.io.File;
 import javawebparts.misc.chain.ChainContext;
 import javawebparts.misc.chain.Command;
@@ -102,8 +104,18 @@ public class ProcessData implements Command {
                 pb.directory(commandFile.getParentFile());
                 p = pb.start();
                 p.waitFor();
-
-                dataFile.delete();
+                if(p.exitValue()!=0){
+                    Log.log("Chain failed, Instance \""+itemId+"\" PRE PROCESSING ERROR");
+                    Log.log("Instance \""+itemId+"\" Pre Processing Error: "+IOUtil.inputToString(p.getErrorStream()));
+                    Log.log(" Instance \""+itemId+"\" Pre Processing Output: "+IOUtil.inputToString(p.getInputStream()));
+                    File watchErrorFolder= new File("tmp/error");
+                    watchErrorFolder.mkdirs();
+                    DownloadsDB.updateStatus(itemId, "PRE PROCESSING ERROR");
+                    File movedFile=new File(Prefs.getNotProcessedFolder(webappDir), dataFile.getName());
+                    IOUtil.moveFile(dataFile, movedFile);
+                    Log.log(" Instance \""+itemId+"\" not processed File moved to: "+movedFile.getCanonicalPath());
+                }else                   
+                    dataFile.delete();
                 
 
             }

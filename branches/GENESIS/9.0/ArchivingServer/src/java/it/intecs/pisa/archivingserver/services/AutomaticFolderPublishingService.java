@@ -166,6 +166,7 @@ public class AutomaticFolderPublishingService extends Thread{
         StoreItem storeitem;
         Gson gson;
         GsonBuilder gsonBuilder;
+     
         if(itemFile.isFile())
         {
             item=DateUtil.getCurrentDateAsUniqueId();

@@ -29,6 +29,7 @@ public class Prefs {
     public static final String PUBLISH_LOCAL_FTP_IP="publish.local.ftp.ip";
     public static final String DOWNLOAD_DIR="download";
     public static final String STORE_DIR="storeData";
+    public static final String NOT_PROCESSED_DIR="notProcessedData";
     public static final String PUBLISH_LOCAL_HTTP_URL="http.public.url";
     public static final String DELETE_AFTER="delete.after";
     public static final String PUBLISH_LOCAL_HTTP_ENABLE="publish.local.http.enable";
@@ -155,7 +156,7 @@ public class Prefs {
     /**
      *
      * @param webappDir File
-     * @return Dowload Directory File
+     * @return Download Directory File
      */
     public static File getDownloadFolder(File webappDir) throws FileNotFoundException, IOException{
         Properties props;
@@ -170,7 +171,7 @@ public class Prefs {
     /**
      *
      * @param webappDir File
-     * @return Dowload Directory File
+     * @return Store Directory File
      */
     public static File getStoreFolder(File webappDir) throws FileNotFoundException, IOException{
         Properties props;
@@ -179,6 +180,20 @@ public class Prefs {
         if(!dowloadFolder.exists())
            dowloadFolder.mkdirs(); 
         return dowloadFolder;
+    }
+    
+    /**
+     *
+     * @param webappDir File
+     * @return Not Processed Directory File
+     */
+    public static File getNotProcessedFolder(File webappDir) throws FileNotFoundException, IOException{
+        Properties props;
+        props = Prefs.load(webappDir);
+        File notProcessedFolder=new File(props.getProperty(WORKSPACE_DIR),NOT_PROCESSED_DIR);
+        if(!notProcessedFolder.exists())
+           notProcessedFolder.mkdirs(); 
+        return notProcessedFolder;
     }
   
 }

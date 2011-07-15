@@ -635,7 +635,7 @@ function createPanelExjFormByXml(xmlDocument,lang){
                 getFormValues: function(label){
                   
                   var xtypeArray;  
-                  xtypeArray=["textfield","textarea", "combo","datefield","numberfield","checkbox","field","checkboxgroup","radiogroup","spinnerfield"];
+                  xtypeArray=["textfield","textarea", "combo","percentage","datefield","numberfield","checkbox","field","checkboxgroup","radiogroup","spinnerfield"];
                   var input,i,u,j,k;
                   var idRequest="";
                   var formValues=new Array();
@@ -778,6 +778,16 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                       complexValues[tempform[u].id]='0';
                                   //alert(complexValues[tempform[i].id]);
                                   break;
+                          case "percentage":
+                                  //alert(tempform[u].id);
+                                  if(formValues[tempform[u].id].value || formValues[tempform[u].id].value== 0){
+                                      complexValues[tempform[u].id]=formValues[tempform[u].id].value;
+                                      idRequest+=formValues[tempform[u].id].value;
+                                    }  
+                                  else
+                                      complexValues[tempform[u].id]='0';
+                                  //alert(complexValues[tempform[i].id]);
+                                  break;        
                           case "spinner":
                                
                                   if(formValues[tempform[u].id].value || formValues[tempform[u].id].value== 0){
@@ -814,6 +824,7 @@ function createPanelExjFormByXml(xmlDocument,lang){
                                   //alert(complexValues[tempform[i].id]);
                                   break;
                           case "radiogroup":
+                                  
                                   if(formValues[tempform[u].id].value){
                                       complexValues[tempform[u].id]=replaceAll(formValues[tempform[u].id].value,"__",',');
                                       idRequest+=formValues[tempform[u].id].value;

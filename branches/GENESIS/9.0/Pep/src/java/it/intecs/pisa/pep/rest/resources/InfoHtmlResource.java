@@ -1,5 +1,5 @@
 
-package it.intecs.pisa.pep.rest;
+package it.intecs.pisa.pep.rest.resources;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -15,7 +15,7 @@ import javax.ws.rs.Produces;
  *
  * @author Andrea Marongiu
  */
-@Path("info.{format}")
+@Path("informa.{format}")
 public class InfoHtmlResource {
 
     @Context

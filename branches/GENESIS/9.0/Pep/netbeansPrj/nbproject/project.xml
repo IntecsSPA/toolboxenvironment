@@ -622,7 +622,7 @@
             </web-module-libraries>
             <web-module-additional-libraries/>
             <source-roots>
-                <root id="src.dir"/>
+                <root id="src.java.dir"/>
             </source-roots>
             <test-roots/>
         </data>

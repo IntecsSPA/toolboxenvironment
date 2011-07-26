@@ -88,9 +88,8 @@ public class CreateFakeDownload implements Command {
             
             DownloadsDB.addDownload(itemId, "");
             DownloadsDB.updateStatus(itemId, "DOWNLOAD COMPLETE");
-            
-            cc.setAttribute(CommandsConstants.DOWNLOADED_FILE_NAME, itemId);
-            
+           
+            cc.setAttribute(CommandsConstants.DOWNLOADED_FILE_NAME, itemId);            
         } catch (Exception e) {
             Log.log(e.getMessage());
             return new Result(Result.FAIL);

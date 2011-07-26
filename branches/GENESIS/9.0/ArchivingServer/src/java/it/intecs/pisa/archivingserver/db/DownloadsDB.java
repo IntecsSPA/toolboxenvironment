@@ -92,5 +92,26 @@ public class DownloadsDB {
         }
     }
 
+        public static Boolean hasBeenHandled(String url) throws Exception
+    {
+        InternalDatabase db;
+        Statement stm=null;
+
+        try
+        {
+            db=InternalDatabase.getInstance();
+            stm=db.getStatement();
+            ResultSet rs = stm.executeQuery("SELECT COUNT(*) FROM T_DOWNLOADS WHERE URL='" + url + "'");
+            rs.next();
+
+            return rs.getInt(1) != 0;
+        }
+        finally
+        {
+            if(stm!=null)
+                stm.close();
+        }
+    }
+
 
 }

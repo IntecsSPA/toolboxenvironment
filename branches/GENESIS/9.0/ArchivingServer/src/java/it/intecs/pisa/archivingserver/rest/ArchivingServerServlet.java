@@ -45,24 +45,20 @@ import javax.servlet.http.HttpServletResponse;
  * @author Massimiliano Fanciulli
  */
 public class ArchivingServerServlet extends HttpServlet {
+
     protected static final String ARMS_VERSION = "2.0.2";
-    
-    
     protected static final String METHOD_STORE = "store";
     protected static final String METHOD_INFO = "info";
     protected static final String METHOD_DATA_LIST = "datalist";
     protected static final String METHOD_GET_STATUS = "getstatus";
     protected static final String METHOD_REVERSE_ID = "reverseid";
     protected static final String METHOD_DELETE = "delete";
-    
-    
+    protected static final String METHOD_DELETE_ALL = "deleteall";
+    private FTPService ftpService;
+    protected String rootDirStr;
+    protected File rootDir;
+    protected File workspaceDir;
 
-     private FTPService ftpService;
-     protected String rootDirStr;
-     protected File rootDir;
-     protected File workspaceDir;
-    
-    
     /**
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
@@ -76,26 +72,20 @@ public class ArchivingServerServlet extends HttpServlet {
         String requestURI;
 
         response.setHeader("Content-Type", "application/json");
-        
+
         requestURI = request.getRequestURI();
         if (requestURI.contains(METHOD_GET_STATUS)) {
-            getItemStatus(request,response);
-        }
-        else if(requestURI.contains(METHOD_REVERSE_ID))
-        {
-            reverseId(request,response);
-        }
-        else if(requestURI.contains(METHOD_DATA_LIST))
-        {
+            getItemStatus(request, response);
+        } else if (requestURI.contains(METHOD_REVERSE_ID)) {
+            reverseId(request, response);
+        } else if (requestURI.contains(METHOD_DATA_LIST)) {
             response.setContentType("text/html");
-            dataList(request,response);
-        }else if(requestURI.contains(METHOD_INFO))
-        {
-            PrintWriter outPW=response.getWriter();
+            dataList(request, response);
+        } else if (requestURI.contains(METHOD_INFO)) {
+            PrintWriter outPW = response.getWriter();
             outPW.print(this.getServletInfo());
             outPW.close();
-        }
-        else {
+        } else {
             response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }
     }
@@ -113,10 +103,10 @@ public class ArchivingServerServlet extends HttpServlet {
         String requestURI;
 
         response.setHeader("Content-Type", "application/json");
-        
+
         requestURI = request.getRequestURI();
         if (requestURI.contains(METHOD_STORE)) {
-            
+
             storeItem(request, response);
         } else {
             response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
@@ -137,6 +127,8 @@ public class ArchivingServerServlet extends HttpServlet {
         requestURI = request.getRequestURI();
         if (requestURI.contains(METHOD_DELETE)) {
             deleteItem(request, response);
+        } else if (requestURI.contains(METHOD_DELETE_ALL)) {
+            deleteAllItems(response);
         } else {
             response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }
@@ -148,7 +140,7 @@ public class ArchivingServerServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        JsonObject infoJs=new JsonObject();
+        JsonObject infoJs = new JsonObject();
         infoJs.addProperty("service", "ARMS");
         infoJs.addProperty("title", "Archiving Service");
         infoJs.addProperty("version", ARMS_VERSION);
@@ -159,9 +151,9 @@ public class ArchivingServerServlet extends HttpServlet {
     private void storeItem(HttpServletRequest request, HttpServletResponse response) throws IOException {
         InputStream in;
         JsonObject inputJson = null;
-        String itemId=null;
-        String errorReason=null;
-        boolean success=false;
+        String itemId = null;
+        String errorReason = null;
+        boolean success = false;
 
         try {
             in = request.getInputStream();
@@ -174,62 +166,61 @@ public class ArchivingServerServlet extends HttpServlet {
 
         try {
             itemId = processItemStorage(inputJson);
-            success=true;
+            success = true;
         } catch (Exception ex) {
-            errorReason=ex.getMessage();
+            errorReason = ex.getMessage();
         }
 
         JsonObject outputJson;
-       
-        outputJson=new JsonObject();
+
+        outputJson = new JsonObject();
         outputJson.addProperty("success", success);
 
-        if(itemId!=null)
+        if (itemId != null) {
             outputJson.addProperty("id", itemId);
+        }
 
-        if(errorReason!=null)
+        if (errorReason != null) {
             outputJson.addProperty("errorReason", errorReason);
-        
+        }
+
         sendJsonBackToClient(outputJson, response);
     }
-    
-    
+
     private void dataList(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        JsonObject jsonDataList=null;
+        JsonObject jsonDataList = null;
         String[][] itemStatusM;
-        try
-        {
-          itemStatusM=ItemRefDB.getList();
-          String startParam=request.getParameter("start");
-          String limitParam=request.getParameter("limit");
-          jsonDataList=new JsonObject();
-          JsonArray arraylist=new JsonArray();
-          
-          jsonDataList.addProperty("totalCount", ""+itemStatusM.length); 
-          
-          if(startParam != null && limitParam != null)
-              arraylist=createDataArray(itemStatusM, 
-                      Integer.parseInt(startParam),
-                      Integer.parseInt(limitParam));
-          else
-              arraylist=createDataArray(itemStatusM);
-          
-          jsonDataList.add("dataList", arraylist);
-          sendJsonBackToClient(jsonDataList, response);
-        }
-        catch(Exception e)
-        {
+        try {
+            itemStatusM = ItemRefDB.getList();
+            String startParam = request.getParameter("start");
+            String limitParam = request.getParameter("limit");
+            jsonDataList = new JsonObject();
+            JsonArray arraylist = new JsonArray();
+
+            jsonDataList.addProperty("totalCount", "" + itemStatusM.length);
+
+            if (startParam != null && limitParam != null) {
+                arraylist = createDataArray(itemStatusM,
+                        Integer.parseInt(startParam),
+                        Integer.parseInt(limitParam));
+            } else {
+                arraylist = createDataArray(itemStatusM);
+            }
+
+            jsonDataList.add("dataList", arraylist);
+            sendJsonBackToClient(jsonDataList, response);
+        } catch (Exception e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
 
     }
-    
-    private JsonArray createDataArray(String[][] itemStatus){
-        JsonArray list=new JsonArray();
+
+    private JsonArray createDataArray(String[][] itemStatus) {
+        JsonArray list = new JsonArray();
         int i;
-        JsonObject eleJs=null;
-        for(i=0; i<itemStatus.length; i++){
-            eleJs=new JsonObject();
+        JsonObject eleJs = null;
+        for (i = 0; i < itemStatus.length; i++) {
+            eleJs = new JsonObject();
             eleJs.addProperty("dataId", itemStatus[i][0]);
             eleJs.addProperty("creationDate", itemStatus[i][1]);
             eleJs.addProperty("deleteDate", itemStatus[i][2]);
@@ -237,21 +228,22 @@ public class ArchivingServerServlet extends HttpServlet {
         }
         return list;
     }
-    
-    private JsonArray createDataArray(String[][] itemStatus, int start, int limit){
-        JsonArray list=new JsonArray();
+
+    private JsonArray createDataArray(String[][] itemStatus, int start, int limit) {
+        JsonArray list = new JsonArray();
         int i;
-        JsonObject eleJs=null;
-        int end=start+limit;
-        for(i=start; i<itemStatus.length; i++){
-            if(i<end){
-                eleJs=new JsonObject();
+        JsonObject eleJs = null;
+        int end = start + limit;
+        for (i = start; i < itemStatus.length; i++) {
+            if (i < end) {
+                eleJs = new JsonObject();
                 eleJs.addProperty("dataId", itemStatus[i][0]);
                 eleJs.addProperty("creationDate", itemStatus[i][1]);
                 eleJs.addProperty("deleteDate", itemStatus[i][2]);
                 list.add(eleJs);
-            }else
-              break;  
+            } else {
+                break;
+            }
         }
         return list;
     }
@@ -259,7 +251,7 @@ public class ArchivingServerServlet extends HttpServlet {
     private void sendJsonBackToClient(JsonObject outputJson, HttpServletResponse response) throws IOException {
         String jsonStr;
         response.setContentType("application/json");
-        jsonStr=JsonUtil.getJsonAsString(outputJson);
+        jsonStr = JsonUtil.getJsonAsString(outputJson);
         response.getWriter().print(jsonStr);
     }
 
@@ -273,78 +265,87 @@ public class ArchivingServerServlet extends HttpServlet {
 
     private void getItemStatus(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String itemId;
-        JsonObject obj=null;
+        JsonObject obj = null;
         ItemStatus itemStatus;
-        try
-        {
+        try {
             String requestURI;
-            requestURI=request.getRequestURI();
-            itemId=requestURI.substring(requestURI.lastIndexOf("/")+1);
-            if(ItemRefDB.exists(itemId))
-            {
-                 itemStatus=ItemStatusDB.getStatus(itemId);
+            requestURI = request.getRequestURI();
+            itemId = requestURI.substring(requestURI.lastIndexOf("/") + 1);
+            if (ItemRefDB.exists(itemId)) {
+                itemStatus = ItemStatusDB.getStatus(itemId);
 
-                 GsonBuilder gsonBuilder = new GsonBuilder();
-                 gsonBuilder.registerTypeAdapter(ItemStatus.class, new ItemStatusSerializer());
-                 Gson gson=gsonBuilder.create();
-                 obj=(JsonObject) gson.toJsonTree(itemStatus);
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                gsonBuilder.registerTypeAdapter(ItemStatus.class, new ItemStatusSerializer());
+                Gson gson = gsonBuilder.create();
+                obj = (JsonObject) gson.toJsonTree(itemStatus);
+            } else {
+                obj = getItemNotAvailableResponse();
             }
-            else obj=getItemNotAvailableResponse();
 
             sendJsonBackToClient(obj, response);
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
 
     }
 
     private void deleteItem(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String itemId=null;
-        boolean success=false;
+        String itemId = null;
+        boolean success = false;
         JsonObject outputJson;
-        outputJson=new JsonObject();
+        outputJson = new JsonObject();
         try {
             String requestURI;
-            requestURI=request.getRequestURI();
-            itemId=requestURI.substring(requestURI.lastIndexOf("/")+1);
-            
+            requestURI = request.getRequestURI();
+            itemId = requestURI.substring(requestURI.lastIndexOf("/") + 1);
+
         } catch (Exception ex) {
             logError(ex);
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
 
-        try
-        {
-            if(ItemRefDB.exists(itemId))
-            {
+        try {
+            if (ItemRefDB.exists(itemId)) {
                 ChainManager cm = new ChainManager();
                 ChainContext ct = cm.createContext();
-
                 ct.setAttribute(CommandsConstants.ITEM_ID, itemId);
                 ct.setAttribute(CommandsConstants.APP_DIR, new File(getServletContext().getRealPath("/")));
                 cm.executeChain("Catalogue/deleteChain", ct);
-
-                success=ct.getResult().getCode()==Result.SUCCESS;
-                
-                
-                
+                success = ct.getResult().getCode() == Result.SUCCESS;
+            } else {
+                success = false;
             }
-            else success=false;;
+        } catch (Exception e) {
+            success = false;
         }
-        catch(Exception e)
-        {
-            success=false;
-        }
-        
-       outputJson.addProperty("success", success);
-
-       sendJsonBackToClient(outputJson, response);
+        outputJson.addProperty("success", success);
+        sendJsonBackToClient(outputJson, response);
     }
 
-   
+    private void deleteAllItems(HttpServletResponse response) throws IOException {
+        boolean success = false;
+        JsonObject outputJson = new JsonObject();
+        try {
+
+            String[][] itemList;
+            itemList = ItemRefDB.getList();
+            for (int i = 0; i < itemList.length; i++) {
+                ChainManager cm = new ChainManager();
+                ChainContext ct = cm.createContext();
+
+                ct.setAttribute(CommandsConstants.ITEM_ID, itemList[i][0]);
+                ct.setAttribute(CommandsConstants.APP_DIR, new File(getServletContext().getRealPath("/")));
+                cm.executeChain("Catalogue/deleteChain", ct);
+
+                success = ct.getResult().getCode() == Result.SUCCESS;
+            }
+        } catch (Exception e) {
+            success = false;
+        }
+        outputJson.addProperty("success", success);
+        sendJsonBackToClient(outputJson, response);
+    }
 
     private String processItemStorage(JsonObject inputJson) throws Exception {
         StoreItem item;
@@ -354,23 +355,25 @@ public class ArchivingServerServlet extends HttpServlet {
         gsonBuilder.registerTypeAdapter(StoreItem.class, new StoreItemDeserializer());
 
         Gson gson;
-        gson=gsonBuilder.create();
-        item=gson.fromJson(inputJson, StoreItem.class);
+        gson = gsonBuilder.create();
+        item = gson.fromJson(inputJson, StoreItem.class);
 
-        if(item.downloadUrl==null || item.downloadUrl.equals(""))
+        if (item.downloadUrl == null || item.downloadUrl.equals("")) {
             throw new Exception("Download Url not set");
-        
-        id=DateUtil.getCurrentDateAsUniqueId();
+        }
+
+        id = DateUtil.getCurrentDateAsUniqueId();
 
         ChainExecutor exec;
-        String rollbackChain=null;
+        String rollbackChain = null;
 
         Properties props = Prefs.load(rootDir);
-        if(props.getProperty("fail.dorollback").equals("true"))
-            rollbackChain="Catalogue/deleteChain";
-        
+        if (props.getProperty("fail.dorollback").equals("true")) {
+            rollbackChain = "Catalogue/deleteChain";
+        }
 
-        exec=new ChainExecutor("Catalogue/storeChain",rollbackChain,item,id,rootDir);
+
+        exec = new ChainExecutor("Catalogue/storeChain", rollbackChain, item, id, rootDir);
         exec.start();
 
         return id;
@@ -379,46 +382,32 @@ public class ArchivingServerServlet extends HttpServlet {
     @Override
     public void destroy() {
         super.destroy();
-         Log.log("Shutting down ArchivingServer Servlet");
-        try
-        {
+        Log.log("Shutting down ArchivingServer Servlet");
+        try {
             InternalDatabase internalDatabase = InternalDatabase.getInstance();
             internalDatabase.close();
-        }
-        catch(Exception e)
-        {
-
+        } catch (Exception e) {
         }
 
-        try
-        {
+        try {
             AutomaticItemDeleteService automaticDeleteService = AutomaticItemDeleteService.getInstance();
             automaticDeleteService.requestShutdown();
-        }
-        catch(Exception e)
-        {
-
+        } catch (Exception e) {
         }
 
-        try
-        {
-            AutomaticFolderPublishingService folderPublishingService= AutomaticFolderPublishingService.getInstance();
+        try {
+            AutomaticFolderPublishingService folderPublishingService = AutomaticFolderPublishingService.getInstance();
             folderPublishingService.requestShutdown();
-        }
-        catch(Exception e)
-        {
-
+        } catch (Exception e) {
         }
 
-         try
-         {
-             if(getFtpService()!=null)
+        try {
+            if (getFtpService() != null) {
                 getFtpService().stopServer();
-         }
-         catch(Exception e)
-         {
-             Log.log("Cannot shutdown the FTP server");
-         }
+            }
+        } catch (Exception e) {
+            Log.log("Cannot shutdown the FTP server");
+        }
     }
 
     @Override
@@ -427,46 +416,49 @@ public class ArchivingServerServlet extends HttpServlet {
 
         Log.log("Initing ArchivingServer Servlet");
 
-        rootDirStr=getServletContext().getRealPath("/");
+        rootDirStr = getServletContext().getRealPath("/");
         rootDir = new File(rootDirStr);
-        
+
         File webinfDir = new File(rootDir, "WEB-INF");
         File dbDir = new File(webinfDir, "db");
         File dblock = new File(dbDir, "database.lck");
-            if (dblock.exists()) {
-                dblock.delete();
+        if (dblock.exists()) {
+            dblock.delete();
         }
 
         InternalDatabase internalDatabase;
         internalDatabase = InternalDatabase.getInstance();
         internalDatabase.setDatabasePath("file:" + dbDir.getAbsolutePath() + File.separatorChar + "database");
 
-        
+
         AutomaticItemDeleteService automaticDeleteService;
 
-        automaticDeleteService=AutomaticItemDeleteService.getInstance();
+        automaticDeleteService = AutomaticItemDeleteService.getInstance();
         automaticDeleteService.setAppDir(rootDir);
-        if(!automaticDeleteService.isAlive())
+        if (!automaticDeleteService.isAlive()) {
             automaticDeleteService.start();
+        }
 
         AutomaticFolderPublishingService folderPublishingService;
-        folderPublishingService=AutomaticFolderPublishingService.getInstance();
+        folderPublishingService = AutomaticFolderPublishingService.getInstance();
         folderPublishingService.setAppDir(rootDir);
-        if(!folderPublishingService.isAlive())
-        folderPublishingService.start();
+        if (!folderPublishingService.isAlive()) {
+            folderPublishingService.start();
+        }
 
         File ftpConfigDir;
 
-        ftpConfigDir=new File(webinfDir, "FTPServer");
+        ftpConfigDir = new File(webinfDir, "FTPServer");
         setFtpService(FTPService.getInstance(ftpConfigDir.getAbsolutePath()));
-        if(getFtpService()==null)
+        if (getFtpService() == null) {
             Log.log("Cannot start FTP server");
+        }
     }
 
     private JsonObject getItemNotAvailableResponse() {
         JsonObject obj;
 
-        obj=new JsonObject();
+        obj = new JsonObject();
         obj.addProperty("success", false);
         obj.addProperty("errorReason", "Item not available");
         return obj;
@@ -474,35 +466,29 @@ public class ArchivingServerServlet extends HttpServlet {
 
     private void reverseId(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String itemId;
-        JsonObject obj=null;
+        JsonObject obj = null;
         ItemStatus itemStatus;
         String catUrl;
         String rimId;
-        try
-        {
+        try {
             String type = request.getParameter("type");
-            if(type.equals("cat"))
-            {
-                catUrl=URLDecoder.decode(request.getParameter("url"), "UTF-8");
-                rimId=URLDecoder.decode(request.getParameter("rimid"), "UTF-8");
+            if (type.equals("cat")) {
+                catUrl = URLDecoder.decode(request.getParameter("url"), "UTF-8");
+                rimId = URLDecoder.decode(request.getParameter("rimid"), "UTF-8");
 
-                itemId=ReverseCatalogueId.getItem(catUrl, rimId);
+                itemId = ReverseCatalogueId.getItem(catUrl, rimId);
 
-                obj=new JsonObject();
+                obj = new JsonObject();
                 obj.addProperty("success", true);
                 obj.addProperty("itemId", itemId);
-            }
-            else
-            {
-                obj=new JsonObject();
+            } else {
+                obj = new JsonObject();
                 obj.addProperty("success", false);
                 obj.addProperty("errorReason", "Cat field not supported");
             }
 
             sendJsonBackToClient(obj, response);
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
@@ -518,6 +504,6 @@ public class ArchivingServerServlet extends HttpServlet {
      * @param ftpService the ftpService to set
      */
     public void setFtpService(FTPService ftpService) {
-        this.ftpService = ftpService;   
+        this.ftpService = ftpService;
     }
 }

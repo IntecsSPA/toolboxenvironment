@@ -99,30 +99,26 @@ public class ItemRefDB {
     public static String [][] getList() throws Exception
     {
         InternalDatabase db;
-        Statement stm=null;
-        ResultSet rs;
-        long currentTime;
-        try
-        {
+        Statement stm= null, stm2=null;
+        ResultSet rs, rs2;
+        try{
             ArrayList<String[]> vector;
             vector=new ArrayList<String[]>();
-            
-            currentTime=(new Date()).getTime();
-
             db=InternalDatabase.getInstance();
             stm=db.getStatement();
 
             rs=stm.executeQuery("SELECT ID,ARRIVAL_DATE,EXPIRES FROM T_ITEMS");
-            while(rs.next())
-            {
-                String[] value=new String[3];
+            while(rs.next()){
+                String[] value=new String[4];
                 value[0]=rs.getString("ID");
                 value[1]=String.valueOf(rs.getLong("ARRIVAL_DATE"));
                 value[2]=String.valueOf(rs.getLong("EXPIRES"));
-                
+                stm2=db.getStatement();
+                rs2 = stm2.executeQuery("SELECT STATUS FROM T_DOWNLOADS WHERE ID='" + value[0] + "'");
+                rs2.next();
+                value[3]=rs2.getString("STATUS");
                 vector.add(value);
-            }
-                
+            }    
             return vector.toArray(new String[0][0]);
         }
         finally

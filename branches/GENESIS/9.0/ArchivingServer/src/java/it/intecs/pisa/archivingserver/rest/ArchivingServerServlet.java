@@ -125,11 +125,13 @@ public class ArchivingServerServlet extends HttpServlet {
         String requestURI;
 
         requestURI = request.getRequestURI();
-        if (requestURI.contains(METHOD_DELETE)) {
-            deleteItem(request, response);
-        } else if (requestURI.contains(METHOD_DELETE_ALL)) {
+        if (requestURI.endsWith(METHOD_DELETE_ALL)) {
             deleteAllItems(response);
-        } else {
+        }else    
+            if (requestURI.contains(METHOD_DELETE)) {
+                 deleteItem(request, response);
+            } 
+         else {
             response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }
     }
@@ -224,6 +226,7 @@ public class ArchivingServerServlet extends HttpServlet {
             eleJs.addProperty("dataId", itemStatus[i][0]);
             eleJs.addProperty("creationDate", itemStatus[i][1]);
             eleJs.addProperty("deleteDate", itemStatus[i][2]);
+            eleJs.addProperty("status", itemStatus[i][3]);
             list.add(eleJs);
         }
         return list;
@@ -240,6 +243,7 @@ public class ArchivingServerServlet extends HttpServlet {
                 eleJs.addProperty("dataId", itemStatus[i][0]);
                 eleJs.addProperty("creationDate", itemStatus[i][1]);
                 eleJs.addProperty("deleteDate", itemStatus[i][2]);
+                eleJs.addProperty("status", itemStatus[i][3]);
                 list.add(eleJs);
             } else {
                 break;

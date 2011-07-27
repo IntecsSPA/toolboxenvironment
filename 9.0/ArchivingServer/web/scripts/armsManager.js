@@ -38,8 +38,8 @@ armsManager = {
      pagingSize: 20,
      preProcessingDefaultValues: ["geotiff", "shp"],
      metadataProcessingDefaultValues: ["geotiff", "shp"],
-     watchDefautValues:[{type:"geotiff", folder:"/home/massi/arms/publish/soscsv"},
-                        {type:"shp", folder:"/home/massi/arms/publish/sossingleinstances"},
+     watchDefautValues:[{type:"geotiff", folder:""},
+                        {type:"shp", folder:""},
                        ],
     init:function(){
            armsManager.configurationInterface=new ConfigurationInterface();

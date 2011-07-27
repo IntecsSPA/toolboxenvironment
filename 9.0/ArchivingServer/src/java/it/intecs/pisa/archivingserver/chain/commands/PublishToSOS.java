@@ -1,4 +1,3 @@
-
 package it.intecs.pisa.archivingserver.chain.commands;
 
 import com.sun.org.apache.xpath.internal.XPathAPI;
@@ -26,8 +25,8 @@ import org.w3c.dom.Document;
  *
  * @author massi
  */
-
 public class PublishToSOS implements Command {
+
     @Override
     public Result init(ChainContext cc) {
         return new Result(Result.SUCCESS);
@@ -38,27 +37,23 @@ public class PublishToSOS implements Command {
         File downloadedFile, appDir;
         String itemId;
         Document SOSmessage;
-        DOMUtil du= new DOMUtil();
+        DOMUtil du = new DOMUtil();
 
         try {
             appDir = (File) cc.getAttribute(CommandsConstants.APP_DIR);
             itemId = (String) cc.getAttribute(CommandsConstants.ITEM_ID);
             StoreItem storeItem = (StoreItem) cc.getAttribute(CommandsConstants.STORE_ITEM);
 
-            if(storeItem.publishSOS.length>0)
-            {
-             downloadedFile = new File(Prefs.getDownloadFolder(appDir), itemId + "_processed");
-             if(!downloadedFile.exists())
-                downloadedFile = new File(Prefs.getDownloadFolder(appDir), itemId);
-             
-             SOSmessage = du.fileToDocument(downloadedFile);
+            if (storeItem.publishSOS.length > 0) {
+                downloadedFile = new File(Prefs.getDownloadFolder(appDir), itemId + "_processed");
+                if (!downloadedFile.exists()) {
+                    downloadedFile = new File(Prefs.getDownloadFolder(appDir), itemId);
+                }
+
+                SOSmessage = du.fileToDocument(downloadedFile);
 
                 for (String url : storeItem.publishSOS) {
-                    try {
-                        harvestData(url, SOSmessage, itemId);
-                    } catch (Exception e) {
-                        Log.logException(e);
-                    }
+                    harvestData(url, SOSmessage, itemId);
                 }
             }
         } catch (Exception e) {
@@ -90,12 +85,12 @@ public class PublishToSOS implements Command {
         } catch (Exception e) {
             throw new Exception("Cannot insert data on the SOS server. Details: " + e.getLocalizedMessage());
         }
-        
-        boolean success=isSuccessful(response);
-        if(success){
+
+        boolean success = isSuccessful(response);
+        if (success) {
             SOSAccessible.add(id, url);
         }
-        
+
         return success;
     }
 
@@ -105,10 +100,11 @@ public class PublishToSOS implements Command {
     }
 
     private Boolean isSuccessful(Document resp) throws TransformerException {
-        String xpath="/sos:InsertObservationResponse/sos:AssignedObservationId";
+        String xpath = "/sos:InsertObservationResponse/sos:AssignedObservationId";
         XObject result = XPathAPI.eval(resp, xpath, new SOAPNamespacePrefixResolver());
-        if(result!=null && result.toString()!=null)
-           return true;
+        if (result != null && result.toString() != null) {
+            return true;
+        }
 
         return false;
     }

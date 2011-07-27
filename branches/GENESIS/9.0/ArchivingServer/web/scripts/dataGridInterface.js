@@ -33,22 +33,16 @@ DataGridInterface=function(){
            
         var dataRecord=new Array();
           
-        dataRecord.push({
-            name : "dataId",
-            mapping: "dataId"
-        });
-        dataRecord.push({
-            name : "creationDate",
-            mapping: "creationDate",
-            type: 'date',
-            dateFormat: 'time'
-        });
-        dataRecord.push({
-            name : "deleteDate",
-            mapping: "deleteDate",
-            type: 'date',
-            dateFormat: 'time'
-        });
+          dataRecord.push({name : "dataId", mapping: "dataId"});
+          dataRecord.push({name : "status", mapping: "status"});
+          dataRecord.push({name : "creationDate", 
+                           mapping: "creationDate",
+                           type: 'date', 
+                           dateFormat: 'time'});
+          dataRecord.push({name : "deleteDate", 
+                           mapping: "deleteDate",
+                           type: 'date', 
+                           dateFormat: 'time'});
           
           
         var dataListJsonReader=new Ext.data.JsonReader({
@@ -137,27 +131,31 @@ DataGridInterface=function(){
             plugins: expander,
             columnLines: true,
             colModel: new Ext.grid.ColumnModel({
-                defaults: {
-                    width: 20,
-                    sortable: true
-                },
-                columns:[smObj,expander,{
-                    header: "Data ID",
-                    dataIndex: 'dataId',
-                    width: 200,
-                    sortable:true
-                },{
-                    header: "Creation Date",
-                    dataIndex: 'creationDate',
-                    width: 300,
-                    sortable:true
-                },{
-                    header: "Delete Date",
-                    dataIndex: 'deleteDate',
-                    width: 300,
-                    sortable:true
-                }]
-            }),
+            defaults: {
+                width: 20,
+                sortable: true
+            },
+            columns:[smObj,expander,{
+                header: "Data ID",
+                dataIndex: 'dataId',
+                width: 150,
+                sortable:true
+            },{
+                header: "Status",
+                dataIndex: 'status',
+                width: 150,
+                sortable:true
+            },{
+                header: "Creation Date",
+                dataIndex: 'creationDate',
+                width: 275,
+                sortable:true
+            },{
+                header: "Delete Date",
+                dataIndex: 'deleteDate',
+                width: 275,
+                sortable:true
+            }]}),
 
             tbar:[{
                 text:'Remove Selected Data',

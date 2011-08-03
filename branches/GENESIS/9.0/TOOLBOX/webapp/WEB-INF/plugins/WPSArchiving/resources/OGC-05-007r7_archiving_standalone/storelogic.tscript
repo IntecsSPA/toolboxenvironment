@@ -1,8 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" 
-		  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-		  xmlns:json="http://pisa.intecs.it/toolbox/json" 
-		  xsi:schemaLocation="http://pisa.intecs.it/mass/toolbox/xmlScript file:/home/massi/Programmi/eclipse3.2/TDE/plugins/com.intecs.ToolboxScript.editorFiles_1.3.0/schemas/xmlScript.xsd">
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:json="http://pisa.intecs.it/toolbox/json" xsi:schemaLocation="http://pisa.intecs.it/mass/toolbox/xmlScript file:/home/massi/Programmi/eclipse3.2/TDE/plugins/com.intecs.ToolboxScript.editorFiles_1.3.0/schemas/xmlScript.xsd">
 	
 	<setVariable name="archivingRequest">
 		<stringCat>
@@ -13,7 +10,7 @@
 	</setVariable>	
 			
 	<if>
-		<existsVariable name="MetadataUrl" />
+		<existsVariable name="MetadataUrl"/>
 		<setVariable name="archivingRequest">
 			<stringCat>
 				<variable name="archivingRequest"/>
@@ -25,7 +22,7 @@
 	</if>
 	
 	<if>
-		<existsVariable name="InputDataType" />
+		<existsVariable name="InputDataType"/>
 		<setVariable name="archivingRequest">
 			<stringCat>
 				<variable name="archivingRequest"/>
@@ -33,20 +30,28 @@
 				<variable name="InputDataType"/>
 				<string>"</string>
 			</stringCat>
-		</setVariable>	
+		</setVariable>
 	</if>
 	
 	<if>
-		<existsVariable name="DataDuration" />
+		<existsVariable name="DataDuration"/>
 		<setVariable name="archivingRequest">
 			<stringCat>
 				<variable name="archivingRequest"/>
 				<string>,"deleteAfter":"</string>
-				<itoa><variable name="DataDuration"/></itoa>
+				<variable name="DataDuration"/>
 				<string>"</string>
 			</stringCat>
 		</setVariable>	
 	</if>
+
+        <setVariable name="archivingRequest">
+				<string>${archivingRequest},"geoserverType": "${GeoserverDataType}",</string>
+			</setVariable>
+                        
+                        <setVariable name="archivingRequest">
+				<string>${archivingRequest}"geoserverWorkspace": "${GeoserverWorkspace}"</string>
+			</setVariable>
 	
 	<setVariable name="archivingRequest">
 		<stringCat>
@@ -131,7 +136,7 @@
 			</oeq>
 			<oneq>
 				<variable name="geoServerUrl"/>
-				<string></string>
+				<string/>
 			</oneq>
 			<or>
 				<gt>
@@ -174,10 +179,12 @@
 				</setVariable>
 			</if>
 			
+                        
+
 			<setVariable name="archivingRequest">
 				<string>${archivingRequest}"GeoServer":["${geoServerUrl}"]</string>
 			</setVariable>
-			
+
 			<setVariable name="needsComma">
 				<literal type="boolean" value="true"/>
 			</setVariable>
@@ -188,7 +195,7 @@
 	<if>
 		<oneq>
 			<variable name="catalogueUrl"/>
-			<string></string>
+			<string/>
 		</oneq>	
 		<sequence>
 			<if>
@@ -242,7 +249,7 @@
 			</json:xPath>
 		</setVariable>
 		<setVariable name="Identifier">
-			<string></string>
+			<string/>
 		</setVariable>
 	</if>
 	

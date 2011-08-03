@@ -107,6 +107,13 @@ OpenLayers.Format.XMLKeyValue = OpenLayers.Class(OpenLayers.Format.XML, {
                                         this.writeNode(root, tempform[u].id, keyValue.formValues[tempform[u].id]);
                                       }  
                                       break;  
+                                case "percentage":
+                                     // alert(keyValue.formValues[tempform[u].id]);
+                                      if(keyValue.formValues[tempform[u].id]){  
+                                       
+                                        this.writeNode(root, tempform[u].id, keyValue.formValues[tempform[u].id]);
+                                      }  
+                                      break;       
                                 case "textarea":
                                       if(keyValue.formValues[tempform[u].id]){  
                                         this.writeNode(root, tempform[u].id, keyValue.formValues[tempform[u].id]);

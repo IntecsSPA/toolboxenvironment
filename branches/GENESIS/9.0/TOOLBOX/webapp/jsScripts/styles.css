@@ -332,3 +332,13 @@ H2 {
 .categoryItemTmp {
 	FLOAT: left; WIDTH: 100%
 }
+
+
+
+.silk-accept { background-image: url(../images/accept.png) !important; background-repeat: no-repeat; }
+
+.silk-delete { background-image: url(../images/delete.gif) !important; background-repeat: no-repeat; }
+
+.silk-add { background-image: url(../images/add.gif) !important; background-repeat: no-repeat; }
+
+.icon-save { background-image: url(../images/save.gif) !important; background-repeat: no-repeat; }

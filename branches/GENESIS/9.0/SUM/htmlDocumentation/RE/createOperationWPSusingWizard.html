@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Create Describe Process using Wizard</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link type="text/css" href="images/page.css" rel="stylesheet">
+</head>
+
+<body>
+ <h1>Create Describe Process using Wizard</h1>
+ <p align="justify">A new WPS Processing can be added to a service in order to grow its computing power.</p>
+ <p align="justify">Select a WPS service and click on the Operations management menu link. A page reporting the operations available for the selected service should be displayed. </p>
+ <p><img src="images/WPSOP1.png" width="853" height="180"></p>
+ 
+
+ <p align="left">To add new processing click on the &quot;Add WPS processing Wizard&quot; button. The browser should display the following dialog:<br>
+   <br>
+ <img src="images/WPSWizardOP1.png" width="936" height="585"> </p>
+ <p align="justify">In this step a Describe Process document can be created. The DescribeProcess operation allows WPS clients to request a full description of one or more processes that can be executed by the service. This description includes the input and output parameters and formats and can be used to automatically build a user interface to capture the parameter values to be used to execute a process. In tho Toolbox the describe document is used to build the WPS infrastructure and set the variables that will be used in the processing. Read <a href="buildDescribeProcess.html">here</a> for additional information on how to build a Describe Process document.</p>
+
+ <p>The wizard window is split into two sections. The left section contains the wizard for the creation of document. The right section contains an edit area with the document that is being created. Also, the edit area section can be used to edit the Describe Process document or to load a previously saved.</p>
+  
+ <h2>Set Processing Information</h2>
+
+  <p>At the top of the wizard should be inserted the general information of the "WPS processing". These are:
+  <ul>
+    <li><b>Processing Name.</b> Unambiguous identifier or name of a process, unique for this server.</li>
+    <li><b>Processing Title.</b> Title of a process, normally available for display to a human.</li>
+    <li><b>Processing Version.</b> Release version of process (not of WPS specification).</li>
+    <li><b>Store Supported.</b> Indicates if data output(s) from this process can be requested to be stored by the WPS server as web-accessible resources.</li>
+    <li><b>Status Supported.</b> Indicates if WPS Execute operation response can be returned quickly with status information.</li>
+    <li><b>Processing Abstract.</b> Brief narrative description of a process, normally available for display to a human.</li>
+    <li><b>Processing Metadata.</b> Comma-separated list of words that will be included in the Metadata of the processing.</li>
+  </ul>
+    See the example in the following figure.
+  </p>
+   <p><img src="images/WPSWizardOP2.png" height="251" width="896"></p>
+
+   <p>After set the information like the previous figure on the right of the interface, the XML Document will be as follows:</p> 
+   <p><img src="images/WPSWizardOP3.png" height="292" width="823"></p>
+  <h2>Add/Remove/Update Processing Input</h2>
+
+  <p>See the "<a href="WPSusingWizardInput.html">Processing Input</a>" section.</p>
+
+  <h2>Add/Remove/Update Processing Output</h2>
+
+  <p>See the "<a href="WPSusingWizardOutput.html">Processing Output</a>" section.</p>
+
+ <p align="justify">When done, click on the &quot;Create&rdquo; button. </p>
+ <p align="justify"> In order to complete the creation of the WPS processing see the "<a href="createOperationWPS.html">Add a WPS processing</a>" section.</p>
+</body>
+</html>

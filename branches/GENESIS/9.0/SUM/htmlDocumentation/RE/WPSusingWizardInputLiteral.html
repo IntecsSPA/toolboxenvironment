@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>WPS Wizard Processing Input Literal Data</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <link type="text/css" href="images/page.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <h1>Literal Data</h1>
+        <p align="justify">Indicates that this input shall be a simple literal value (such as an integer) that is embedded in the execute request, and describes the possible values.</p>
+
+        <p>The Literal Data Input in the wizard can be defined by the following interface: </p>
+
+        <p><img src="images/WPSWizardOP30.png" height="491" width="1072"></p>
+        <ol>
+            <li><p><b>DataType</b>: on the left of the form you can choose the DataType of this input(short,int,double,String,float,boolean,long,byte).</p> </li>
+
+            <li><p><b>AnyValue/DefaultValue</b>: at the click of the checkbox AnyValue, the grid immediately below(Allowed Values Grid) is disabled and the textfield DefaultValue enabled(Default value of this input, encoded in character string).
+                    AnyValue indicates that any value is allowed for this input.</p> </li>
+
+            <li><p><b>AllowedValues</b>: if a finite set of allowed values are chosen for this input, we must add the elements on the grid clicking the Add button. AllowedValues indicates that there is a finite set of values and ranges allowed for this input, and contains ordered list off all valid values.</p> </li>
+
+            <li><p><b>UOMs</b>: in the same way, add the unit of measure in the Supported UOMs grid. The default UOM is the item selected. UOMs is a list of units of measure supported for this numerical input(or output). For both grids, if an element must be removed just click the button Remove.</p> </li> </ol>
+
+        <p>The result we get (in WPS Current Process Description text area) to click the Save button is shown in the following:</p>
+
+        <p align="center"><img src="images/WPSWizardOP31.png" height="239" width="824"></p>
+    </body>
+</html>

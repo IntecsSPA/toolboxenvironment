@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <tree xmlns:ctl="http://www.occamlab.com/ctl" xmlns:txsl="http://www.w3.org/1999/XSL/Transform/target" id="0">
 	<!--main.html_Getting_started*-->
 	<item text="Getting started" id="main.html_Getting_started" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
@@ -242,9 +242,39 @@
 					<userdata name="thisurl">RE/operationListing.html</userdata>
 				</item>
 				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/operationManagement.html_Operations_management*RE/createOperationWPS.html_Add_a_WPS_operation*-->
-				<item text="Add a WPS operation" id="RE/createOperation.html_Add_a_WPS_operation" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
-					<userdata name="thisurl">RE/createOperationWPS.html</userdata>
-				</item>
+				<item text="Add a WPS processing" id="RE/createOperation.html_Add_a_WPS_operation" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">RE/createOperationWPS.html</userdata>
+						  <item text="Create Describe Process using Wizard" id="Toolbox_RE/createOperation.html_Create_Describe_By_Wizard" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">RE/createOperationWPSusingWizard.html</userdata>
+                <item text="Process Input" id="Toolbox_RE/createOperation.html_Create_Describe_By_Wizard_Input" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							  <userdata name="thisurl">RE/WPSusingWizardInput.html</userdata>
+                <item text="Literal Data" id="Toolbox_RE/createOperation.html_Create_Describe_By_Wizard_Input_Literal_Data" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							  <userdata name="thisurl">RE/WPSusingWizardInputLiteral.html</userdata>
+              </item>
+              <item text="Complex Data" id="Toolbox_RE/createOperation.html_Create_Describe_By_Wizard_Input_Complex_Data" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							  <userdata name="thisurl">RE/WPSusingWizardInputComplex.html</userdata>
+              </item>
+              <item text="Bounding Box Data" id="Toolbox_RE/createOperation.html_Create_Describe_By_Wizard_Input_BBOX_Data" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							  <userdata name="thisurl">RE/WPSusingWizardInputBBOX.html</userdata>
+              </item>
+              </item>
+                <item text="Process Output" id="Toolbox_RE/createOperation.html_Create_Describe_By_Wizard_Add_Remove_Output" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							  <userdata name="thisurl">RE/WPSusingWizardOutput.html</userdata>
+                <item text="Literal Output" id="Toolbox_RE/createOperation.html_Create_Describe_By_Wizard_Output_Literal" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							  <userdata name="thisurl">RE/WPSusingWizardOutputLiteral.html</userdata>
+              </item>
+              <item text="Complex Output" id="Toolbox_RE/createOperation.html_Create_Describe_By_Wizard_Output_Complex" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							  <userdata name="thisurl">RE/WPSusingWizardOutputComplex.html</userdata>
+              </item>
+              <item text="Bounding Box Output" id="Toolbox_RE/createOperation.html_Create_Describe_By_Wizard_Output_BBOX" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							  <userdata name="thisurl">RE/WPSusingWizardOutputBBOX.html</userdata>
+              </item>
+              </item>
+              </item>
+              <item text="Create Describe Process using Edit Area" id="Toolbox_RE/createOperation.html_Load_And_Edit_Describe" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
+							<userdata name="thisurl">RE/createOperationWPSusingEditArea.html</userdata>
+              </item> 
+            </item>
 				<!--RE/main.html_Run-time_environment*RE/blankpage.html_tasks*RE/operationManagement.html_Operations_management*RE/createOperation.html_Add_an_operation*-->
 				<item text="Add an operation" id="RE/createOperation.html_Add_an_operation" im0="dhtmlxtree_icon.gif" im1="dhtmlxtree_icon.gif" im2="dhtmlxtree_icon.gif">
 					<userdata name="thisurl">RE/createOperation.html</userdata>

@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>WPS Wizard Processing Input</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link type="text/css" href="images/page.css" rel="stylesheet">
+</head>
+
+<body>
+ <h1>Processing Input</h1>
+ <p align="justify">The processing inputs in the wizard are managed by the "Processing Inputs" section. In this section you can add, edit or delete an input processing.</p>
+
+ <p><img src="images/WPSWizardOP4.png" width="798" height="228"></p>
+ 
+ <h2>Add new Processing Input</h2>
+
+  <p>In order to add new processing input click on "Add Input" button, a new window will be displayed:</p>
+
+  <p><img src="images/WPSWizardOP7.png" width="1020" height="390"></p>
+
+  <p>At the top of the window should be inserted the general information. These are:</p>
+  
+  <ul>
+    <li><b>Input Name.</b> Unambiguous identifier or name of a input (Mandatory).</li>
+    <li><b>Input Title.</b> Title of a input, normally available for display to a human (Mandatory).</li>
+    <li><b>Input Abstract.</b> Brief narrative description of a input, normally available for display to a human (Optional).</li>
+    <li><b>Input Metadata.</b> Comma-separated list of words that will be included in the Metadata of the processing input (Optional).</li>
+    <li><b>Min Occurs.</b> Minimum number of times that values for this parameter are required (Mandatory).</li>
+    <li><b>Max Occurs.</b> Maximum number of times that this parameter may be present (Mandatory).</li>
+  </ul>
+  <p><img src="images/WPSWizardOP6.png" width="1086" height="241"></p>
+
+  <p>The types of inputs that can be defined as follows:</p>
+ <ul>
+    <li><b>Complex Data.</b> Indicates that this input shall be a complex data structure (such as a GML fragment), and provides lists of formats, encodings, and schemas supported (see "<a href="WPSusingWizardInputComplex.html">Complex Data</a>" section).</li>
+    <li><b>Literal Data.</b> Indicates that this input shall be a simple literal value (such as an integer) that is embedded in the execute request, and describes the possible values (see "<a href="WPSusingWizardInputLiteral.html">Literal Data</a>" section).</li>
+    <li><b>Bounding Box Data.</b> Indicates that this input shall be a BoundingBox data structure that is embedded in execute request, and provides a list of the CRSs supported in these Bounding Boxes (see "<a href="WPSusingWizardInputBBOX.html">Bounding Box Data</a>" section).</li>
+ </ul>
+ <p><img src="images/WPSWizardOP8.png" width="992" height="139"></p>
+ 
+ <p>After inserting information about the type of input, click on "Save" button. The input will be added to the "Processing Inputs" grid.</p>
+
+  <p><img src="images/WPSWizardOP9.png" width="798" height="228"></p>
+ 
+ <h2>Update Processing Input</h2>
+
+  <p>In order to update a processing input select the input in the "Processing Inputs" grid and make double-click. A window with the input information will be displayed:</p>
+
+  <p><img src="images/WPSWizardOP10.png" width="1088" height="450"></p>
+
+  <p>All the information about the input, except the identifier, may be modified. After changing information about the input click on "Update" button.</p>
+
+  <p><img src="images/WPSWizardOP11.png" width="798" height="226"></p>
+  
+  <h2>Remove Processing Intput</h2>
+
+  <p>In order to remove a processing input select the input in the "Processing Inputs" grid and click on "Remove Input" button. A confirmation message will be displayed:</p>
+
+  <p align="center"><img src="images/WPSWizardOP12.png" width="402" height="110"></p>
+
+  <p>Click on "Yes" button. The input will be removed and the the "Processing Inputs" grid will be updated.</p>
+</body>
+</html>

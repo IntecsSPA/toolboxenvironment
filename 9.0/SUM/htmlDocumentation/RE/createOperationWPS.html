@@ -8,10 +8,10 @@
 </head>
 
 <body>
- <h1>Add a WPS operation</h1>
- <p align="justify">A new operation can be added to a service in order to grow its computing power.</p>
+ <h1>Add a WPS processing</h1>
+ <p align="justify">A new WPS Processing can be added to a service in order to grow its computing power.</p>
  <p align="justify">Select a WPS service and click on the Operations management menu link. A page reporting the operations available for the selected service should be displayed. </p>
- <p><img src="images/WPSOP1.png" width="936" height="173"></p>
+ <p><img src="images/WPSOP1.png" width="853" height="180"></p>
  <p align="left">The list should at least contain the following operations</p>
  <ul>
    <li>GetCapabilities: 
@@ -28,12 +28,24 @@
  The Execute operation allows WPS clients to run a specified process implemented by a server, using the input parameter values provided and returning the output values produced. Inputs can be included directly in the Execute request, or reference web accessible resources.</li>
  </ul>
  <p align="left">When a new service is created the Execute and DescribeProcess operations are deployed but cannot be invoked (indeed no processing are reported in the GetCapabilities thus it is not possible to create a valid input message for the DescribeProcess and the Execute).</p>
- <p align="left">To add new processing click on the &quot;Add WPS processing&quot; button The browser should display the following dialog:<br>
+
+ <p align="left">There are two ways to create a new processing WPS:<br>
+  <ul>
+    <li>Create Processing using a wizard for the Describe Process creation (click on the &quot;Add WPS processing Wizard&quot; button).<br>
+	See the "<a href="createOperationWPSusingWizard.html">Create Describe Process using Wizard</a>" section.
+    </li>
+    <li>Create Processing using a edit area for the Describe Process creation (click on the &quot;Add WPS processing&quot; button).<br>
+	See the "<a href="createOperationWPSusingEditArea.html">Create Describe Process using Edit Area</a>" section.
+    </li>
+  </ul>
+
+ <!--<p align="left">To add new processing click on the &quot;Add WPS processing&quot; button The browser should display the following dialog:<br>
    <br>
  <img src="images/WPSOP2.png" width="936" height="585"> </p>
  <p align="justify">In this step a Describe Process document has to be be provided. The DescribeProcess operation allows WPS clients to request a full description of one or more processes that can be executed by the service. This description includes the input and output parameters and formats and can be used to automatically build a user interface to capture the parameter values to be used to execute a process. In tho Toolbox the describe document is used to build the WPS infrastructure and set the variables that will be used in the processing. Read <a href="buildDescribeProcess.html">here</a> for additional information on how to build a Describe Process document.</p>
- <p align="justify">The document can be copied directly in the text area or can be loaded from a file. </p>
- <p align="justify">When done, click on the &quot;Parse WPS Processing Describe Information&rdquo; button. The browser should display the following pop-up interface:</p>
+ <p align="justify">The document can be copied directly in the text area or can be loaded from a file. </p>-->
+ <p align="justify">When done, click on the &quot;Parse WPS Processing Describe Information&rdquo; button (Describe Process created using the Edit Area) or click on the &quot;Create&rdquo; button (Describe Process created using the Wizard). <br>
+The browser should display the following pop-up interface:</p>
  <p align="center"><img src="images/WPSOP3.png" width="936" height="588"></p>
  <p align="justify">This step allows you to select the processing engine to be used to process the requests. Currently only three processing methods are available: Grass Engine, Shell script or Toolbox Script.<br>
    The main difference between the three is the language/tool used to implement the processing logic. In the first case a Grass script shall be provided, in the second a bach shell script while in the third a Toolbox script is used for the processing and have to be provided. These scripts are then put in execution every time a SOAP request arrives to the service. The execution of these scripts will provide the processing logic. Toolbox will take care of setting and downloading input data so that the user shall only take care of writing the logic itself. All data to work upon shall be considered already downloaded when the user script is put in execution. For all implementation methods it is possible to write the script directly in the text area or to upload one from disk. </p>

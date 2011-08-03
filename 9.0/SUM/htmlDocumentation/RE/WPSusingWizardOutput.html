@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>WPS Wizard Processing Output</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link type="text/css" href="images/page.css" rel="stylesheet">
+</head>
+
+<body>
+ <h1>Processing Output</h1>
+ <p align="justify">The processing outputs in the wizard are managed by the "Processing Outputs" section. In this section you can add, edit or delete an output processing.</p>
+
+ <p><img src="images/WPSWizardOP5.png" width="796" height="227"></p>
+ 
+ <h2>Add new Processing Output</h2>
+
+  <p>In order to add new processing output click on "Add Output" button, a new window will be displayed:</p>
+
+  <p><img src="images/WPSWizardOP13.png" width="1054" height="342"></p>
+
+  <p>At the top of the window should be inserted the general information. These are:</p>
+  
+  <ul>
+    <li><b>Output Name.</b> Unambiguous identifier or name of a output (Mandatory).</li>
+    <li><b>Output Title.</b> Title of a output, normally available for display to a human (Mandatory).</li>
+    <li><b>Output Abstract.</b> Brief narrative description of a output, normally available for display to a human (Optional).</li>
+    <li><b>Output Metadata.</b> Comma-separated list of words that will be included in the Metadata of the processing output (Optional).</li>
+  </ul>
+  <p><img src="images/WPSWizardOP14.png" width="1031" height="160"></p>
+
+  <p>The types of outputs that can be defined as follows:</p>
+ <ul>
+    <li><b>Complex Output.</b> Indicates that this input shall be a complex data structure (such as a GML fragment), and provides lists of formats, encodings, and schemas supported (see "<a href="WPSusingWizardOutputComplex.html">Complex Output</a>" section).</li>
+    <li><b>Literal Output.</b> Indicates that this input shall be a simple literal value (such as an integer) that is embedded in the execute request (see "<a href="WPSusingWizardOutputLiteral.html">Literal Output</a>" section).</li>
+    <li><b>Bounding Box Output.</b> Indicates that this input shall be a BoundingBox data structure that is embedded in execute request, and provides a list of the CRSs supported in these Bounding Boxes (see "<a href="WPSusingWizardOutputBBOX.html">Bounding Box Output</a>" section).</li>
+ </ul>
+ <p><img src="images/WPSWizardOP15.png" width="1065" height="130"></p>
+ 
+ <p>After inserting information about the type of output, click on "Save" button. The output will be added to the "Processing Outputs" grid.</p>
+
+  <p><img src="images/WPSWizardOP16.png" width="798" height="226"></p>
+ 
+ <h2>Update Processing Output</h2>
+
+  <p>In order to update a processing output select the output in the "Processing Outputs" grid and make double-click. A window with the output information will be displayed:</p>
+
+  <p><img src="images/WPSWizardOP17.png" width="1087" height="381"></p>
+
+  <p>All the information about the output, except the identifier, may be modified. After changing information about the output click on "Update" button.</p>
+
+  <p><img src="images/WPSWizardOP18.png" width="797" height="225"></p>
+  
+  <h2>Remove Processing Output</h2>
+
+  <p>In order to remove a processing output select the output in the "Processing Outputs" grid and click on "Remove Output" button. A confirmation message will be displayed:</p>
+
+  <p align="center"><img src="images/WPSWizardOP19.png" width="270" height="106"></p>
+
+  <p>Click on "Yes" button. The output will be removed and the the "Processing Outputs" grid will be updated.</p>
+</body>
+</html>

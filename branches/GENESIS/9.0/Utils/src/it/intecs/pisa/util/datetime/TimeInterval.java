@@ -19,19 +19,22 @@ public class TimeInterval {
         char granularity;
         long multiplier = 0;
         String value;
-
-        granularity = interval.charAt(interval.length() - 1);
+        String granularityString;
+        
+        granularityString = interval.substring(interval.length() - 1);
+        
+        granularity=granularityString.toUpperCase().charAt(0);
 
         switch (granularity) {
-            case 's':
+            case 'S':
                 multiplier = 1;
                 break;
 
-            case 'm':
+            case 'M':
                 multiplier = 60;
                 break;
 
-            case 'h':
+            case 'H':
                 multiplier = 3600;
                 break;
 

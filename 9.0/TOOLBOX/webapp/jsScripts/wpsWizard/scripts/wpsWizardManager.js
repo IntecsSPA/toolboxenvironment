@@ -205,7 +205,10 @@ function parseWPSDescribeProcessingRequest(){
                                 processingName=processNameElements[0].firstChild.nodeValue;
                                 asynchronous=asynchronousElements[0].firstChild.nodeValue;
                                 if(controlNewWPSOperation(serviceName,"ExecuteProcess_"+processingName,"ExecuteProcess_"+processingName)){
-                                    insertDescribeWizardWindow.destroy();
+                                    if(insertDescribeWizardWindow)
+                                        insertDescribeWizardWindow.destroy();
+                                    if(describeProcessingEditAreaWindow)
+                                        describeProcessingEditAreaWindow.destroy();
                                      var id="engineEditArea";
                                    
                                         createWPSProccesingScriptEngineIO=createPanelExjFormByXml(createWPSScriptEngineXML);
@@ -606,6 +609,7 @@ function editEngineScript(serviceNameCurrent, processName, async, engineType, sc
 
 
 function changeWPSDescribeProcessingRequest(){
+   
    var describeProcess=createWPSProccesingIO.getFormValues()['processUpdateDescriptionContent'];
 
 

@@ -41,7 +41,7 @@
 	String bc = "<a href='main.jsp'>"+home+"</a>&nbsp;&gt;" +
               "&nbsp;"+opManag;
 %>
-
+<link rel="stylesheet" type="text/css" href="jsScripts/import/gis-client-library/import/ext/ux/css/CenterLayout.css">
 <!--script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/jquery/jquery-1.2.6.js"></script>
 <script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/adapter/jquery/ext-jquery-adapter.js"></script>
 <script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/adapter/ext/ext-base.js"></script>
@@ -50,6 +50,8 @@
 <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/openlayers/Format/XMLKeyValue.js"></script>
 <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/webgis/Panel/WindowInterfacePanel.js"></script>
 
+<script type="text/javascript" src="jsScripts/import/gis-client-library/import/ext/ux/RowEditor.js"> </script>  
+<link rel="stylesheet" type="text/css" href="jsScripts/import/gis-client-library/import/ext/ux/css/RowEditor.css" />
 <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/general.js"></script>
 <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/manager.js"></script>
 <script type="text/javascript" src="jsScripts/import/gis-client-library/widgets/lib/utils/browserDetect.js"></script>
@@ -59,7 +61,10 @@
 <script type="text/javascript" src="jsScripts/import/gis-client-library/import/sarissa/Sarissa.js"></script>
 <script type="text/javascript" src="jsScripts/import/gis-client-library/import/sarissa/sarissa_ieemu_xpath.js"></script>
 
-
+<script type="text/javascript" src="jsScripts/wpsWizard/scripts/describeObject.js"></script>
+<script type="text/javascript" src="jsScripts/wpsWizard/scripts/describeProcessWPSEditArea.js"></script>
+<script type="text/javascript" src="jsScripts/wpsWizard/scripts/describeWizardInterface.js"></script>
+<script type="text/javascript" src="jsScripts/wpsWizard/scripts/describeProcessVTypes.js"></script>
 <script type="text/javascript" src="jsScripts/wpsWizard/scripts/wpsWizardManager.js"></script>
 
 
@@ -121,7 +126,8 @@ function deleteOp(service, operation)
 								</tr>
                                             <tr>
                                                 <% if(serv.getFullSchemaPath().contains("WPSSoapAll.xsd")){ %>
-                                                       <td colspan="2" rowspan="2" nowrap align="right"><input id="buttonLabel" type="button" value="<fmt:message key="manageOperations.addWPS" bundle="${lang}"/> >>" onClick="wpsProcessingWizardManager()" > <!-- editDescribeProcess('wpsE', 'TestOperation')  -->
+                                                       <td colspan="2" rowspan="2" nowrap align="right"><input id="buttonLabel" type="button" value="<fmt:message key="manageOperations.addWPS" bundle="${lang}"/> >>" onClick="wpsProcessingWizardManager()" > 
+                                                           <input id="show-btn" type="button" value="<fmt:message key="manageOperations.addWPSWizard" bundle="${lang}"/> >>">
                                                 <%}else{ %>
                                                        <td colspan="2" rowspan="2" nowrap align="right"><input id="buttonLabel" type="button" value="<fmt:message key="manageOperations.addOperation" bundle="${lang}"/> >>" onClick="gothere()" >
                                                 <% }%>

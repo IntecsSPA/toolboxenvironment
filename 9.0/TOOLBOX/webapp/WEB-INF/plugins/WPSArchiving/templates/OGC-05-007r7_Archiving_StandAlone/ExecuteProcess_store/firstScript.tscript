@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pisa.intecs.it/mass/toolbox/xmlScript file:/home/massi/Progetti/TOOLBOX_rep@Google/toolboxenvironment/trunk/Plugins/DE/com.intecs.ToolboxScript.editorFiles/schemas/xmlScript.xsd">
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pisa.intecs.it/mass/toolbox/xmlScript file:/home/massi/Progetti/TOOLBOX_rep@Google/toolboxenvironment/trunk/Plugins/DE/com.intecs.ToolboxScript.editorFiles/schemas/xmlScript.xsd">
 	<!-- 
  			DataUrl
   -->
@@ -8,7 +9,52 @@
 			<string>/wpstbx:ExecuteProcess_store/wpstbx:Data/wps:Reference/@xlink:href</string>
 		</xPath>
 	</setVariable>
+
+        <!-- 
+ 			DataMimeType
+  -->
+	<setVariable name="DataMimeType">
+		<xPath xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:wpstbx="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" xmlns:xlink="http://www.w3.org/1999/xlink">
+			<xmlRequest/>
+			<string>/wpstbx:ExecuteProcess_store/wpstbx:Data/wps:Reference/@mimeType</string>
+		</xPath>
+	</setVariable>
+
+        
+        <setVariable name="GeoserverWorkspace">
+		<string>archvingserver</string>
+	</setVariable>
+
+        <setVariable name="GeoserverDataType">
+		<string/>
+	</setVariable>
+
 	
+        <if>
+		<oeq>
+			<variable name="DataMimeType"/>
+			<string>image/geotiff</string>
+		</oeq>
+		<setVariable name="GeoserverDataType">
+                    <string>tiff</string>
+		</setVariable>
+                <if>
+                    <or>
+                        <oeq>
+                                <variable name="DataMimeType"/>
+                                <string>application/zip</string>
+                        </oeq>
+                        <oeq>
+                                <variable name="DataMimeType"/>
+                                <string>application/shp</string>
+                        </oeq>
+                    </or>    
+                    <setVariable name="GeoserverDataType">
+                        <string>shp</string>
+                    </setVariable>
+
+                </if>
+	</if>
 	
 	<!-- 
  			MetadataUrl
@@ -72,7 +118,7 @@
 					<string>metadata.xml</string>
 				</path>
 				
-				<xPath outputType="xml" xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:wpstbx="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<xPath xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:wpstbx="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" xmlns:xlink="http://www.w3.org/1999/xlink" outputType="xml">
 					<xmlRequest/>
 					<string>/wpstbx:ExecuteProcess_store/wpstbx:Metadata/wps:ComplexData/*[1]</string>
 				</xPath>
@@ -100,12 +146,12 @@
 			<string>1</string>
 		</oeq>
 		<setVariable name="DataDuration">
-			<atoi>
+			
 				<xPath xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:wpstbx="http://toolbox.pisa.intecs.it/soap/WPS/WPSsoap" xmlns:xlink="http://www.w3.org/1999/xlink">
 					<xmlRequest/>
 					<string>/wpstbx:ExecuteProcess_store/wpstbx:DataDuration/text()</string>
 				</xPath>
-			</atoi>
+			
 		</setVariable>
 	</if>
 	
@@ -119,7 +165,7 @@
 	</execute>
 	
 	<xml attributePrefix="%" textTag="evaluate">
-		<wps:ExecuteResponse xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xlink="http://www.w3.org/1999/xlink" service="WPS" serviceInstance="http://localhost:8080/TOOLBOX/services/WPSexample/GetCapabilities.xml" statusLocation="http://192.168.24.223:8083/TOOLBOX/manager?cmd=getServiceResource&amp;serviceName=wpsAndError&amp;relativePath=Log/24052010183618606/status/executeResponseStatus.xml" version="1.0.0" xml:lang="en" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<wps:ExecuteResponse xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" service="WPS" serviceInstance="http://localhost:8080/TOOLBOX/services/WPSexample/GetCapabilities.xml" statusLocation="http://192.168.24.223:8083/TOOLBOX/manager?cmd=getServiceResource&amp;serviceName=wpsAndError&amp;relativePath=Log/24052010183618606/status/executeResponseStatus.xml" version="1.0.0" xml:lang="en">
 			<wps:Process wps:processVersion="0.1">
 				<ows:Identifier>TestOperation</ows:Identifier>
 				<ows:Title>Convert raster to another format</ows:Title>

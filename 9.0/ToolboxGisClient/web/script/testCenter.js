@@ -809,6 +809,7 @@ ToolboxTestCenter.Application = function()
 
                         var id=/*/toolboxUrl+*/service+operation+numberToolboxInput;
                         id=replaceAll(id, "-", "_");
+                        id=id.replace(".", "_");
                         var radioSelect="<br><table align='center'><tr><td><form name='formModeGenericToolbox"+id+"' id='formModeGenericToolbox"+id+"'><table width='100%'><tr width='100%'rowspan='2' BGCOLOR='#325e8f'><td><b style='color: #ffffff;'>SOAP message content Type: </b><br></td></tr>"+
                                   "<tr><td><input type='radio' name='requestMode' value='SyncPayload'/>&nbsp;&nbsp;&nbsp;Synchronous Payload</td></tr>"+
                                   "<tr><td><input type='radio' name='requestMode' value='AsyncPayload'/>&nbsp;&nbsp;&nbsp;Asynchronous Payload</td></tr>"+

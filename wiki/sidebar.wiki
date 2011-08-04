@@ -1,4 +1,4 @@
-  * [Wiki mainpage]
+  * [Wiki Toolbox]
     * [Overview Overview]
     * [contributing Contributing]
     * [BuildingTOOLBOX Build instructions]

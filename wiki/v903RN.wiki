@@ -25,4 +25,4 @@
 
 = New Feature =
 
-  * Implemented the “Create WPS Describe Process” wizard interface (under the “Operations Management” of a WPS service)..
+  * Implemented the “Create WPS Describe Process” wizard interface (under the “Operations Management” of a WPS service).

@@ -2,4 +2,4 @@
 
 = Toolbox 9.0.3 =
 
-TOOLBOX 9.0.3 can be downloaded [http://toolboxenvironment.googlecode.com/files/TOOLBOX_PATCH_0.5.zip here].
+The TOOLBOX 9.0.3 installer can be downloaded [http://toolboxenvironment.googlecode.com/files/ here].

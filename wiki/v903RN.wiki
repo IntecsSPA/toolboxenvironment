@@ -20,3 +20,9 @@
   * Bug on the ARMS WPS interface: The geoserver workspace is different for Store and Delete Processing.
 
   * Bug in the creation of the registry object identifiers: now, it is assumed that the identifier field in the EOP metadata to be harvested is an already a URN compliant with the URN syntax specification as per RFC 2141.
+
+
+
+= New Feature =
+
+  * Implemented the “Create WPS Describe Process” wizard interface (under the “Operations Management” of a WPS service)..

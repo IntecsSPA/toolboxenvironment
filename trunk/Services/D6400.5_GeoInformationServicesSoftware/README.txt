@@ -6,7 +6,13 @@ The Software User Manual contains further information on how to import these ser
 
 services_perl
 -------------
-Contains perl scripts, template and auxiliary files implementing the Web Processing Services
+Contains perl scripts, template and auxiliary files implementing Geo Processing Services
+Some perl scripts call the Orfeo Toolbox scripts in the services_OTB directory
+The Software User Manual contains more information on how to install these files
+
+services_OTB
+------------
+Contains Orfeo Toolbox scripts implementing Geo Processing Services
 The Software User Manual contains more information on how to install these files
 
 

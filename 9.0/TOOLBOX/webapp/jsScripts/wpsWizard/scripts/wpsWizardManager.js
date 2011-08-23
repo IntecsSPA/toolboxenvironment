@@ -12,7 +12,7 @@ var textAreaFrameW=(screen.width/1.55);
 var toolsServlet="Tools";
 var engineTemplatesURL;
 var insertEngineScriptWizardWindow=null;
-
+var describeProcessingEditAreaWindow=null;
 var serviceName;
 var processingName;
 var asynchronous;

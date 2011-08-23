@@ -955,14 +955,14 @@ Ext.onReady(function(){
                                     grid4.removeBtn.setDisabled(sm.getCount() < 1);
                                 });
 
-                                var maxMb = {
+                                /*var maxMb = {
                                     xtype:'numberfield',
                                     id:'maxMbOut',
                                     fieldLabel: 'Maximum Megabytes',
                                     name: 'maxMegabytes',
                                     minValue: 0
 
-                                };
+                                };*/
                                 var ComplexGridOut = new Ext.form.FieldSet({
                                     id:'complexgrid',
                                     labelAlign: 'left',
@@ -981,7 +981,7 @@ Ext.onReady(function(){
                                         }
                                     }, 
                                     title: 'Complex Output' ,
-                                    items:[maxMb,grid4]
+                                    items:[grid4]
 
                                 });
                                 fp.add(ComplexGridOut);
@@ -2909,14 +2909,14 @@ Ext.onReady(function(){
                                                     grid4.removeBtn.setDisabled(sm.getCount() < 1);
                                                 });
 
-                                                var maxMb = {
+                                                /*var maxMb = {
                                                     xtype:'numberfield',
                                                     id:'maxMbOutUp',
                                                     fieldLabel: 'Maximum Megabytes',
                                                     name: 'maxMegabytes',
                                                     minValue: 0
 
-                                                };
+                                                };*/
                                                 var ComplexGridOutUp = new Ext.form.FieldSet({
                                                     id:'complexgrid',
                                                     labelAlign: 'left',
@@ -2935,7 +2935,7 @@ Ext.onReady(function(){
                                                         }
                                                     }, 
                                                     title: 'Complex Default/Supported Format' ,
-                                                    items:[maxMb,grid4]
+                                                    items:[/*maxMb,*/grid4]
 
                                                 });
                                                 formPanelOut.add(ComplexGridOutUp);
@@ -2952,9 +2952,9 @@ Ext.onReady(function(){
                                                         schema:selectedOutput.TypeInformation.formatSupported[i].schema
 
                                                     });
-                                                    var itemMb= Ext.getCmp('maxMbOutUp');
+                                                   /* var itemMb= Ext.getCmp('maxMbOutUp');
 
-                                                    itemMb.setValue(selectedOutput.TypeInformation.MaximumMegabytes);
+                                                    itemMb.setValue(selectedOutput.TypeInformation.MaximumMegabytes);*/
 
                                                     store4.add([newRecord]);
                                                 }
@@ -3223,7 +3223,7 @@ Ext.onReady(function(){
                                                     var formatStore=complexDataGridFormat.getStore();
                                                     var currentRecord=null;
 
-                                                    outputObject.TypeInformation.setMaximumMegabytes(Ext.getCmp('maxMbOutUp').getValue());
+                                                    //outputObject.TypeInformation.setMaximumMegabytes(Ext.getCmp('maxMbOutUp').getValue());
 
                                                     for(i=0; i<formatStore.getCount(); i++){
                                                         currentRecord=formatStore.getAt(i);
@@ -3469,14 +3469,14 @@ Ext.onReady(function(){
                                                                     grid4.removeBtn.setDisabled(sm.getCount() < 1);
                                                                 });
 
-                                                                var maxMb = {
+                                                                /*var maxMb = {
                                                                     xtype:'numberfield',
                                                                     id:'maxMbOutUp',
                                                                     fieldLabel: 'Maximum Megabytes',
                                                                     name: 'maxMegabytes',
                                                                     minValue: 0
 
-                                                                };
+                                                                };*/
                                                                 var ComplexGridOut = new Ext.form.FieldSet({
                                                                     id:'complexgrid',
                                                                     labelAlign: 'left',
@@ -3495,7 +3495,7 @@ Ext.onReady(function(){
                                                                         }
                                                                     }, 
                                                                     title: 'Complex Output' ,
-                                                                    items:[maxMb,grid4]
+                                                                    items:[/*maxMb*/,grid4]
 
                                                                 });
                                                                 fp.add(ComplexGridOut);
@@ -3761,7 +3761,7 @@ Ext.onReady(function(){
                                                     var formatStore=complexDataGridFormat.getStore();
                                                     var currentRecord=null;
 
-                                                    outputObject.TypeInformation.setMaximumMegabytes(Ext.getCmp('maxMbOut').getValue());
+                                                   // outputObject.TypeInformation.setMaximumMegabytes(Ext.getCmp('maxMbOut').getValue());
 
                                                     for(i=0; i<formatStore.getCount(); i++){
                                                         currentRecord=formatStore.getAt(i);

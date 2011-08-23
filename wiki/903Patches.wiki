@@ -10,6 +10,8 @@ Bugs Fixed:
 
 1. WS-Addressing namespace wrong in the response of secured asynchronous operation.
 
+2. Bug fixed on "Add WPS processing" interface.
+
 A patch to solve these problems has been created and can be downloaded [http://toolboxenvironment.googlecode.com/files/TOOLBOX_PATCH_3.0.1.zip here].
 
 Download the package and follow these instructions:

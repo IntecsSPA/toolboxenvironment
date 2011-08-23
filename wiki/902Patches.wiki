@@ -11,6 +11,7 @@ The Patch 0.6 fixes the bugs fixed by previous Patch, also it fixes the followin
 Bugs Fixed:
 
 1. WS-Addressing namespace wrong in the response of secured asynchronous operation.
+
 2. Bug fixed on "date-time" interval conversion.
 
 A patch to solve these problems has been created and can be downloaded [http://toolboxenvironment.googlecode.com/files/TOOLBOX_PATCH_0.6.zip here].

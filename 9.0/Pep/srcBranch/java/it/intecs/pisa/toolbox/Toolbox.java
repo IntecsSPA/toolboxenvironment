@@ -754,7 +754,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             pluginDirectory = new File(webinfDir, "plugins");
             ebRRpropertiesFile = new File(pluginDirectory, "ebRRPlugin/resources/common.properties");
 
-            System.setProperty("ergorr.common.properties", ebRRpropertiesFile.getAbsolutePath());
+         // System.setProperty("ergorr.common.properties", ebRRpropertiesFile.getAbsolutePath());
 
             tagPluginManager = TagPluginManager.getInstance();
             interfacePluginManager = InterfacePluginManager.getInstance();
@@ -1012,6 +1012,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         } else if (requestURI.startsWith("/"+applicationName+"/services")) {
             StatisticsUtil.incrementStatistic(StatisticsUtil.STAT_ARRIVED);
             super.doPost(req, resp);
+
             return;
         } else if (requestURI.startsWith("/"+applicationName+"/http")) {
             StatisticsUtil.incrementStatistic(StatisticsUtil.STAT_ARRIVED);

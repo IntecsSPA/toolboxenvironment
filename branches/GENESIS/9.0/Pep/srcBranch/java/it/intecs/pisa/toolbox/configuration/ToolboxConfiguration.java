@@ -77,6 +77,7 @@ public  class ToolboxConfiguration {
     public static final String SSE_SUPPORT_TEAM_EMAIL="sseTeamEmail";
     public static final String TOOLBOX_LEVEL_KEYSTORE="tbxLevelKeystore";
     public static final String TOOLBOX_LEVEL_KEYSTORE_PASSWORD="tbxLevelKeystorePwd";
+    public static final String TOOLBOX_LEVEL_KEYSTORE_IDP_KEY_ALIAS="tbxLevelKeystoreIdPAlias";
     public static final String SMTP_PORT="smtpServerPort";
     public static final String MAIL_FROM="mailFrom";
     public static final String CLEANUP_EVERY="cleanupEvery";
@@ -89,7 +90,7 @@ public  class ToolboxConfiguration {
 
 
 
-    protected static final int CONFIG_VALUES_COUNT=45;
+    protected static final int CONFIG_VALUES_COUNT=46;
 
     protected Hashtable<String,String> configValues;
     protected static ToolboxConfiguration instance=new ToolboxConfiguration();
@@ -154,6 +155,8 @@ public  class ToolboxConfiguration {
     }
     
     public JsonObject getConfiguration(){
+        
+        // TODO Change with all configuration parameters
         JsonObject jsonConf=new JsonObject();
         /*---------- GET Configuration Check --------------------*/
         jsonConf.addProperty(ToolboxConfiguration.FIRST_TIME_CHECK, 
@@ -241,6 +244,9 @@ public  class ToolboxConfiguration {
         
         jsonConf.addProperty(ToolboxConfiguration.TOOLBOX_LEVEL_KEYSTORE_PASSWORD, 
                 getConfigurationValue(ToolboxConfiguration.TOOLBOX_LEVEL_KEYSTORE_PASSWORD));
+        
+        jsonConf.addProperty(ToolboxConfiguration.TOOLBOX_LEVEL_KEYSTORE_IDP_KEY_ALIAS, 
+                getConfigurationValue(ToolboxConfiguration.TOOLBOX_LEVEL_KEYSTORE_IDP_KEY_ALIAS));
         /*------------------------------------------------------*/
 
 
@@ -372,7 +378,11 @@ public  class ToolboxConfiguration {
         }
         jsonEl=jsonConfiguration.get(ToolboxConfiguration.TOOLBOX_LEVEL_KEYSTORE_PASSWORD);
         if(!(jsonEl==null || jsonEl instanceof com.google.gson.JsonNull))
-            setConfigurationValue(ToolboxConfiguration.TOOLBOX_LEVEL_KEYSTORE_PASSWORD, jsonEl.getAsString());
+            setConfigurationValue(ToolboxConfiguration.TOOLBOX_LEVEL_KEYSTORE_PASSWORD, jsonEl.getAsString()); 
+        
+        jsonEl=jsonConfiguration.get(ToolboxConfiguration.TOOLBOX_LEVEL_KEYSTORE_IDP_KEY_ALIAS);
+        if(!(jsonEl==null || jsonEl instanceof com.google.gson.JsonNull))
+            setConfigurationValue(ToolboxConfiguration.TOOLBOX_LEVEL_KEYSTORE_IDP_KEY_ALIAS, jsonEl.getAsString());
         /*----------------------------------------------*/
         
          saveConfiguration();
@@ -466,6 +476,7 @@ public  class ToolboxConfiguration {
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+SSE_PORTAL+"','services.eoportal.org')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+TOOLBOX_LEVEL_KEYSTORE+"','false')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+TOOLBOX_LEVEL_KEYSTORE_PASSWORD+"','')");
+               stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+TOOLBOX_LEVEL_KEYSTORE_IDP_KEY_ALIAS+"','')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+SMTP_AUTH_USERNAME+"','')");
                stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+SMTP_AUTH_PASSWORD+"','')");
                //stm.executeUpdate("INSERT INTO T_TOOLBOX_CONFIGURATION VALUES('"+SSE_SUPPORT_TEAM_EMAIL+"','Service.Support.Environment.Operations.Team@esa.int')");

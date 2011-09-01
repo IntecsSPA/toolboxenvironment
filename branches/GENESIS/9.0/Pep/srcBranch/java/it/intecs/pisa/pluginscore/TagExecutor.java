@@ -104,8 +104,11 @@ public class TagExecutor implements ITagExecutor {
         if (offlineDbgTag != null && returnValue != null) {
             offlineDbgTag.setAttribute("value", returnValue.toString());
             offlineDbgTag.setAttribute("valueType", returnValue.getClass().getCanonicalName());
-        }
-
+        }else
+           if(offlineDbgTag != null && returnValue == null){
+               offlineDbgTag.setAttribute("value", "null");
+               offlineDbgTag.setAttribute("valueType", "Object");
+           }      
         return returnValue;
     }
 

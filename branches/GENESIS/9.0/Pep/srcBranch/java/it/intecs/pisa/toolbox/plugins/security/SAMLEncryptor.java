@@ -122,7 +122,7 @@ public class SAMLEncryptor {
     	this.signSAML((Element) saml.toDOM(), jks4signature, user, pwd);
     }
     
-    public void signSAML(Element samlElem, File jks4signature, String user, String pwd) throws Exception{
+    public static void signSAML(Element samlElem, File jks4signature, String user, String pwd) throws Exception{
     	
     	SAMLAssertion saml = new SAMLAssertion(samlElem);
     	// sign the assertion

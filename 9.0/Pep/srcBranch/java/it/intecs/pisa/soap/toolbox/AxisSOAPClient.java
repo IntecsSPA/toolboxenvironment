@@ -271,7 +271,8 @@ Read more: http://kickjava.com/src/org/apache/axis2/engine/SOAPversionTest.java.
         {
             for(Element header:soapHeaders)
             {
-                addHeader(header,client);
+                if(header !=null)
+                    addHeader(header,client);
 
             }
         }
@@ -480,6 +481,8 @@ Read more: http://kickjava.com/src/org/apache/axis2/engine/SOAPversionTest.java.
                 block.setNamespace(factory.createOMNamespace(omNs.getNamespaceURI(),omNs.getPrefix()));
             }
         }
+        
+        block.setNamespace(factory.createOMNamespace(nodeNamespace.getNamespaceURI(),nodeNamespace.getPrefix()));
 
         Iterator attributes;
         OMAttribute omAttr,newAttr;

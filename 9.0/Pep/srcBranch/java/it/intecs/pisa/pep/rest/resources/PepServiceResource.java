@@ -12,6 +12,7 @@ import it.intecs.pisa.toolbox.service.TBXOperation;
 import it.intecs.pisa.toolbox.service.TBXService;
 import it.intecs.pisa.toolbox.util.wsil.WSILBuilder;
 import it.intecs.pisa.util.json.JsonUtil;
+import java.util.Hashtable;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
 import javax.ws.rs.GET;
@@ -54,6 +55,7 @@ public class PepServiceResource {
         TBXService service;
         JsonArray jsonOps= new JsonArray();
         Operation [] operations;
+              
         try {
             String authHeader = hh.getRequestHeader(AuthenticationManager.AUTHORIZATION_HEADER).get(0);
 
@@ -73,8 +75,8 @@ public class PepServiceResource {
                     jsonOp.addProperty("outputTypeNamespace", op.getOutputTypeNameSpace());
                     jsonOps.add(jsonOp);
                 }
-                
                 getResult.add("operations", jsonOps);
+                
                 getResult.addProperty("wsdl", service.getWSDLUrl());
             } else {
                 return JsonUtil.getJsonAsString(am.notAuthorizatedResponse());

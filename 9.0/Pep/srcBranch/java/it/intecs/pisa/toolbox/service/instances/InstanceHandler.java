@@ -202,6 +202,7 @@ public class InstanceHandler {
         confVarStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_SERVICE_RESOURCE_DIR, serviceResourceDir.getAbsolutePath());
         confVarStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_INSTANCE_ID, String.valueOf(serviceInstanceId));
         confVarStore.setVariable(ToolboxEngineVariablesKeys.CONFIGURATION_SCRIPT_IN_EXECUTION, breakpoint);
+        confVarStore.setVariable(EngineVariablesConstants.SERVICE_NAME, service.getServiceName());
     }
 
    

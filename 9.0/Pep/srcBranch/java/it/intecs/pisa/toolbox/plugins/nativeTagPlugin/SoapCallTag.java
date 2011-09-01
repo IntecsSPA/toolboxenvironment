@@ -46,8 +46,12 @@ public class SoapCallTag extends NativeTagExecutor {
             for(int i=0;i<headersCount;i++)
             {
                 el=(Element) list.get(i);
-                headerDoc=(Document) executeChildTag(el);
-                headers[i]= (Element) headerDoc.getDocumentElement();
+                Object result= executeChildTag(el);
+                if(result != null){
+                   headerDoc=(Document) executeChildTag(el);
+                   headers[i]= (Element) headerDoc.getDocumentElement();
+                }else
+                  headers[i]=null;  
             }
 
             el=(Element) soapParams.get(2);

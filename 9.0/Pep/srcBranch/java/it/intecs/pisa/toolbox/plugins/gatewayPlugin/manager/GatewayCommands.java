@@ -31,7 +31,6 @@ import javax.wsdl.factory.WSDLFactory;
 import javax.wsdl.xml.WSDLReader;
 import javax.xml.namespace.QName;
 
-
 /**
  *
  * @author Andrea Marongiu
@@ -41,6 +40,9 @@ public class GatewayCommands {
     // Json request Properties
     private static String WSDL_URL_PROPERTY = "wsdl";
     private static String SSL_CERTIFICATE_PROPERTY = "sslCertificate";
+    private static String FORWARD_MESSAGE_CRYPTED_TOKEN_PROPERTY = "forwardMessageWithCryptedToken";
+    private static String FORWARD_MESSAGE_CLEAR_TOKEN_PROPERTY = "forwardMessageWithClearToken";
+    private static String KEY_ALIAS_PROPERTY = "keyAlias";
     private static String JKS_PASSWORD_PROPERTY = "jksPasswd";
     private static String JKS_USER_PROPERTY = "jksUserName";
     private static String JKS_FILE_LOCATION_PROPERTY = "jksFileLocation";
@@ -67,8 +69,6 @@ public class GatewayCommands {
     static final String RESPONSE_BUILDER_SCRIPT_FILE_NAME = "respBuilder.tscript";
     static final String RESPONSE_BUILDER_ERROR_SCRIPT_FILE_NAME = "errorOnRespBuilder.tscript";
     static final String GLOBAL_ERROR_SCRIPT_FILE_NAME = "globalError.tscript";
-    
-    
 
     public GatewayCommands() {
     }
@@ -77,6 +77,8 @@ public class GatewayCommands {
         String wsdlURL = "", sslCertificate = "";
         String jksPasswd = "", jksUser = "", jksFileLocation = "";
         String errorDetails = "", xacmlFileLocation = "";
+        String forwardMessageWithClearToken = "";
+        String forwardMessageWithCryptedToken = "", keyAlias = "";
         RestResponse createGatewayResponse = new RestResponse("createGatewayService");
 
         JsonElement wsdlURLEl = serviceInformationJson.get(WSDL_URL_PROPERTY);
@@ -95,12 +97,27 @@ public class GatewayCommands {
 
         JsonElement xacmlFileLocationEl = serviceInformationJson.get(XACML_FILE_LOCATION_PROPERTY);
         if (!(xacmlFileLocationEl == null || xacmlFileLocationEl instanceof com.google.gson.JsonNull)) {
-            xacmlFileLocation = ((JsonObject)xacmlFileLocationEl).get("uploadID").getAsString();
+            xacmlFileLocation = ((JsonObject) xacmlFileLocationEl).get("uploadID").getAsString();
+        }
+
+        JsonElement forwardMessageWithClearTokenEl = serviceInformationJson.get(FORWARD_MESSAGE_CLEAR_TOKEN_PROPERTY);
+        if (!(forwardMessageWithClearTokenEl == null || forwardMessageWithClearTokenEl instanceof com.google.gson.JsonNull)) {
+            forwardMessageWithClearToken = forwardMessageWithClearTokenEl.getAsString();
+        }
+
+        JsonElement forwardMessageWithCryptedTokenEl = serviceInformationJson.get(FORWARD_MESSAGE_CRYPTED_TOKEN_PROPERTY);
+        if (!(forwardMessageWithCryptedTokenEl == null || forwardMessageWithCryptedTokenEl instanceof com.google.gson.JsonNull)) {
+            forwardMessageWithCryptedToken = forwardMessageWithCryptedTokenEl.getAsString();
+        }
+
+        JsonElement keyAliasEl = serviceInformationJson.get(KEY_ALIAS_PROPERTY);
+        if (!(keyAliasEl == null || keyAliasEl instanceof com.google.gson.JsonNull)) {
+            keyAlias = keyAliasEl.getAsString();
         }
 
         JsonElement jksFileLocationEl = serviceInformationJson.get(JKS_FILE_LOCATION_PROPERTY);
         if (!(jksFileLocationEl == null || jksFileLocationEl instanceof com.google.gson.JsonNull)) {
-            jksFileLocation = ((JsonObject)jksFileLocationEl).get("uploadID").getAsString();
+            jksFileLocation = ((JsonObject) jksFileLocationEl).get("uploadID").getAsString();
         } else {
             errorDetails += "JKS FILE LOCATION (" + JKS_FILE_LOCATION_PROPERTY + ") mandatory property missing. ";
         }
@@ -130,7 +147,7 @@ public class GatewayCommands {
         File gatewayServiceTemplate = new File(Toolbox.getInstance().getRootDir(), SERVICE_TEMPLATE_PATH);
         ServiceManager serviceManager;
         serviceManager = ServiceManager.getInstance();
-        
+
         try {
             serviceManager.deployService(gatewayServiceTemplate, serviceName);
         } catch (Exception ex) {
@@ -149,43 +166,54 @@ public class GatewayCommands {
             service.setJKSpasswd(jksPasswd);
             //TODO key password currently  is the same as the keystore one
             service.setKeyPasswd(jksPasswd);
-            //serviceRoot + File.separator + "Resources" + File.separator + "Security" + File.separator + "service.jks"
-            
+
             service.setJKSlocation(serviceRoot + File.separator + "Resources" + File.separator + "Security" + File.separator + "service.jks");
 
             File jksFile = new File(serviceRoot + File.separator + "Resources" + File.separator + "Security" + File.separator + "service.jks");
             jksFile.getParentFile().mkdirs();
             jksFile.createNewFile();
             IOUtil.copy(new FileInputStream(jksFileLocation), new FileOutputStream(jksFile));
-        
-            /*File securityFolder;
-            securityFolder = ToolboxSecurityConfigurator.getSecurityResource(service);
-            securityFolder.mkdirs();
-            jksFile = new File(securityFolder, ToolboxSecurityConfigurator.SERVICE_KEYSTORE_FILENAME);
-            service.setJKSlocation(jksFile.getCanonicalPath());
-            
-            jksFile.getParentFile().mkdirs();
-            jksFile.createNewFile();
-            IOUtil.copy(new FileInputStream(jksFileLocation), new FileOutputStream(jksFile));*/
-            
-            
+
+            Hashtable<String, Hashtable<String, String>> serviceVariables =
+                    new Hashtable<String, Hashtable<String, String>>();
+            Hashtable<String, String> variable = new Hashtable<String, String>();
+            variable.put("value", forwardMessageWithClearToken);
+            variable.put("type", "boolean");
+            variable.put("displayedText", "Forward message with security token unencrypted");
+            serviceVariables.put("forwardMessageWithClearToken", variable);
+
+            variable = new Hashtable<String, String>();
+            variable.put("value", forwardMessageWithCryptedToken);
+            variable.put("type", "boolean");
+            variable.put("displayedText", "Forward message with security token encrypted (this will override all forwarding options)");
+            serviceVariables.put("forwardMessageWithCryptedToken", variable);
+
+            variable = new Hashtable<String, String>();
+            variable.put("value", keyAlias);
+            variable.put("type", "string");
+            variable.put("displayedText", "Alias of the key to be used for encryption");
+            serviceVariables.put("keyAlias", variable);
+
+            service.getImplementedInterface().setUserVariables(serviceVariables);
+
             ToolboxSecurityConfigurator.addWSSecurityLayerForService(service);
-            
+
             //update WSDL
             service.deployWSDL();
             ToolboxSecurityConfigurator.removeXACMLfiles(service.getServiceName());
 
             if (!xacmlFileLocation.equalsIgnoreCase("")) {
                 String xacmlName = new File(xacmlFileLocation).getName();
-                if(!xacmlName.endsWith(".xml"))
-                 xacmlName+=".xml";
+                if (!xacmlName.endsWith(".xml")) {
+                    xacmlName += ".xml";
+                }
                 File xacmlFile = new File(ToolboxSecurityConfigurator.getXACMLpolicyDir(service.getServiceName()) + File.separator + xacmlName);
                 xacmlFile.getParentFile().mkdirs();
                 xacmlFile.createNewFile();
                 IOUtil.copy(new FileInputStream(xacmlFileLocation), new FileOutputStream(xacmlFile));
                 new File(xacmlFileLocation).delete();
             }
-            
+
             if (!jksFileLocation.equalsIgnoreCase("")) {
                 File securityFolder = ToolboxSecurityConfigurator.getSecurityResource(service);
                 securityFolder.mkdirs();
@@ -228,10 +256,10 @@ public class GatewayCommands {
         ServiceManager serviceManager;
         serviceManager = ServiceManager.getInstance();
         JsonElement jsEl = null;
-        String fileLocation=null;
+        String fileLocation = null;
 
         ToolboxSecurityConfigurator.removeXACMLfiles(serviceName);
-        
+
         try {
             TBXService service = serviceManager.getService(serviceName);
             jsEl = serviceInformationJson.get(SSL_CERTIFICATE_PROPERTY);
@@ -253,10 +281,10 @@ public class GatewayCommands {
 
             jsEl = serviceInformationJson.get(JKS_FILE_LOCATION_PROPERTY);
             if (!(jsEl == null || jsEl instanceof com.google.gson.JsonNull)) {
-                fileLocation = ((JsonObject)jsEl).get("uploadID").getAsString();
+                fileLocation = ((JsonObject) jsEl).get("uploadID").getAsString();
                 File jksFile;
                 File securityFolder;
-                
+
                 securityFolder = ToolboxSecurityConfigurator.getSecurityResource(service);
                 securityFolder.mkdirs();
                 jksFile = new File(securityFolder, ToolboxSecurityConfigurator.SERVICE_KEYSTORE_FILENAME);
@@ -275,16 +303,17 @@ public class GatewayCommands {
             jsEl = serviceInformationJson.get(XACML_FILE_LOCATION_PROPERTY);
             if (!(jsEl == null || jsEl instanceof com.google.gson.JsonNull)) {
                 ToolboxSecurityConfigurator.removeXACMLfiles(service.getServiceName());
-                String xacmlFileLocation=((JsonObject)jsEl).get("uploadID").getAsString();
+                String xacmlFileLocation = ((JsonObject) jsEl).get("uploadID").getAsString();
                 String xacmlName = new File(xacmlFileLocation).getName();
-                if(!xacmlName.endsWith(".xml"))
-                 xacmlName+=".xml";
+                if (!xacmlName.endsWith(".xml")) {
+                    xacmlName += ".xml";
+                }
                 File xacmlFile = new File(ToolboxSecurityConfigurator.getXACMLpolicyDir(service.getServiceName()) + File.separator + xacmlName);
                 xacmlFile.getParentFile().mkdirs();
                 xacmlFile.createNewFile();
                 IOUtil.copy(new FileInputStream(xacmlFileLocation), new FileOutputStream(xacmlFile));
                 new File(xacmlFileLocation).delete();
-               /* fileLocation = ((JsonObject)jsEl).get("uploadID").getAsString();
+                /* fileLocation = ((JsonObject)jsEl).get("uploadID").getAsString();
                 String xacmlName = new File(fileLocation).getName();
                 File xacmlFile = new File(ToolboxSecurityConfigurator.getXACMLpolicyDir(service.getServiceName()) + File.separator + xacmlName);
                 xacmlFile.getParentFile().mkdirs();
@@ -309,22 +338,32 @@ public class GatewayCommands {
         return updateGatewayResponse.getJsonRestResponse();
     }
 
-    
     public JsonObject getGatewayServiceConfiguration(String serviceName) {
         RestResponse getConfigurationGatewayResponse = new RestResponse("getConfigurationGatewayService");
         ServiceManager serviceManager;
         serviceManager = ServiceManager.getInstance();
-        JsonObject serviceConf= new JsonObject();
+        JsonObject serviceConf = new JsonObject();
+        Hashtable<String, Hashtable<String, String>> serviceVariables;
 
         try {
             TBXService service = serviceManager.getService(serviceName);
-            serviceConf.addProperty(SSL_CERTIFICATE_PROPERTY,service.getSSLcertificate());
-            
-            serviceConf.addProperty(JKS_USER_PROPERTY,service.getJKSuser());
-            serviceConf.addProperty(JKS_PASSWORD_PROPERTY,service.getJKSpasswd());
-            serviceConf.addProperty(JKS_FILE_LOCATION_PROPERTY,service.getJKSlocation());
+            serviceConf.addProperty(SSL_CERTIFICATE_PROPERTY, service.getSSLcertificate());
+
+            serviceConf.addProperty(JKS_USER_PROPERTY, service.getJKSuser());
+            serviceConf.addProperty(JKS_PASSWORD_PROPERTY, service.getJKSpasswd());
+            serviceConf.addProperty(JKS_FILE_LOCATION_PROPERTY, service.getJKSlocation());
             //serviceConf.addProperty(XACML_FILE_LOCATION_PROPERTY,service.get);
-            serviceConf.addProperty(SSL_CERTIFICATE_PROPERTY,service.getSSLcertificate());
+            serviceConf.addProperty(SSL_CERTIFICATE_PROPERTY, service.getSSLcertificate());
+
+            serviceVariables = service.getImplementedInterface().getUserVariable();
+            Hashtable<String, String> serviceVariable = serviceVariables.get("remoteUrl");
+            serviceConf.addProperty("remoteUrl", serviceVariable.get("value"));
+            serviceVariable = serviceVariables.get("forwardMessageWithClearToken");
+            serviceConf.addProperty("forwardMessageWithClearToken", serviceVariable.get("value"));
+            serviceVariable = serviceVariables.get("forwardMessageWithCryptedToken");
+            serviceConf.addProperty("forwardMessageWithCryptedToken", serviceVariable.get("value"));
+            serviceVariable = serviceVariables.get("keyAlias");
+            serviceConf.addProperty("keyAlias", serviceVariable.get("value"));
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -337,7 +376,7 @@ public class GatewayCommands {
         getConfigurationGatewayResponse.setSuccess(true);
         return getConfigurationGatewayResponse.getJsonRestResponse();
     }
-    
+
     public JsonObject createGatewayOperation(String operationName, JsonObject operationInformationJson) {
         RestResponse createGatewayOperationResponse = new RestResponse("createGatewayOperation");
         String operationType = "SYNC"/*operationInformationJson.get(OPERATION_TYPE_PROPERTY).getAsString()*/;
@@ -355,9 +394,9 @@ public class GatewayCommands {
 
     public JsonObject createGatewaySyncOperation(String operationName, JsonObject operationInformationJson) {
         RestResponse createGatewayOperationResponse = new RestResponse("createGatewayOperation");
-        String operationInputType, operationOutputType, 
+        String operationInputType, operationOutputType,
                 operationInputTypeNameSpace, operationOutputTypeNameSpace,
-                soapAction,operationEndPoint;
+                soapAction, operationEndPoint;
         String serviceName;
         ServiceManager serviceManager = ServiceManager.getInstance();
         operationInputType = operationInformationJson.get(OPERATION_INPUT_TYPE_PROPERTY).getAsString();
@@ -366,6 +405,10 @@ public class GatewayCommands {
         operationInputTypeNameSpace = operationInformationJson.get(OPERATION_INPUT_TYPE_NAMESPACE_PROPERTY).getAsString();
         operationOutputTypeNameSpace = operationInformationJson.get(OPERATION_OUTPUT_TYPE_NAMESPACE_PROPERTY).getAsString();
         operationOutputTypeNameSpace = operationInformationJson.get(OPERATION_OUTPUT_TYPE_NAMESPACE_PROPERTY).getAsString();
+
+        operationOutputTypeNameSpace = operationInformationJson.get(OPERATION_OUTPUT_TYPE_NAMESPACE_PROPERTY).getAsString();
+        operationOutputTypeNameSpace = operationInformationJson.get(OPERATION_OUTPUT_TYPE_NAMESPACE_PROPERTY).getAsString();
+
         serviceName = operationInformationJson.get(SERVICE_NAME_PROPERTY).getAsString();
         soapAction = operationInformationJson.get(SOAP_OPERATION_PROPERTY).getAsString();
         TBXSynchronousOperation operationDescr = new TBXSynchronousOperation();
@@ -381,14 +424,14 @@ public class GatewayCommands {
         TBXService service = null;
         try {
             service = serviceManager.getService(serviceName);
-            Hashtable<String, Hashtable<String, String>> serviceVariables= 
-                    new Hashtable<String, Hashtable<String, String>>();
-            Hashtable<String, String> remoteURLAttributes= new Hashtable<String, String>();
-            remoteURLAttributes.put("value", operationEndPoint);
-            remoteURLAttributes.put("type", "string");
-            remoteURLAttributes.put("displayedText", "URL of the SOAP endpoint");
-            serviceVariables.put("remoteUrl",  remoteURLAttributes);
-            
+            Hashtable<String, Hashtable<String, String>> serviceVariables =
+                    service.getImplementedInterface().getUserVariable();
+            Hashtable<String, String> variable = new Hashtable<String, String>();
+            variable.put("value", operationEndPoint);
+            variable.put("type", "string");
+            variable.put("displayedText", "URL of the SOAP endpoint");
+            serviceVariables.put("remoteUrl", variable);
+
             service.getImplementedInterface().setUserVariables(serviceVariables);
             operationDescr.setScripts(getGatewayScriptDescriptorSync(service.getServiceRoot(), operationName));
             service.addOperation(operationDescr);
@@ -398,7 +441,7 @@ public class GatewayCommands {
             createGatewayOperationResponse.setDetails(ex.getMessage());
             return createGatewayOperationResponse.getJsonRestResponse();
         }
-        
+
         createGatewayOperationResponse.setSuccess(true);
         return createGatewayOperationResponse.getJsonRestResponse();
     }
@@ -436,7 +479,7 @@ public class GatewayCommands {
         Iterator servicesIterator = services.values().iterator();
         SOAPAddressImpl soapAdd = null;
         SOAPOperationImpl soapOp = null;
-        QName inputPartElement=null, outputPartElement=null;
+        QName inputPartElement = null, outputPartElement = null;
 
         while (servicesIterator.hasNext()) {
             javax.wsdl.Service service = (javax.wsdl.Service) servicesIterator.next();
@@ -458,7 +501,7 @@ public class GatewayCommands {
                     while (bindingOperationsIterator.hasNext()) {
                         BindingOperation bindingOperation = (BindingOperation) bindingOperationsIterator.next();
                         javax.wsdl.Operation operation = bindingOperation.getOperation();
-                        
+
                         if (!operation.isUndefined()) {
                             operationObj = new JsonObject();
                             Iterator opExtElIterator = bindingOperation.getExtensibilityElements().iterator();
@@ -469,9 +512,9 @@ public class GatewayCommands {
                                     break;
                                 }
                             }
-                           // QName inputMess = operation.getInput().getMessage().getQName();
-                           // QName outputMess = operation.getOutput().getMessage().getQName();
-                          
+                            // QName inputMess = operation.getInput().getMessage().getQName();
+                            // QName outputMess = operation.getOutput().getMessage().getQName();
+
                             Iterator inputExtElIterator = operation.getInput().getMessage().getParts().values().iterator();
                             while (inputExtElIterator.hasNext()) {
                                 Object nativeAttribute = inputExtElIterator.next();
@@ -480,7 +523,7 @@ public class GatewayCommands {
                                     break;
                                 }
                             }
-                            
+
                             Iterator outputExtElIterator = operation.getOutput().getMessage().getParts().values().iterator();
                             while (outputExtElIterator.hasNext()) {
                                 Object nativeAttribute = outputExtElIterator.next();
@@ -489,7 +532,7 @@ public class GatewayCommands {
                                     break;
                                 }
                             }
-                            
+
                             operationObj.addProperty(SERVICE_OPERATION_PROPERTY,
                                     service.getQName().getLocalPart());
                             operationObj.addProperty(PORT_OPERATION_PROPERTY,

@@ -414,6 +414,7 @@ function createPanelExjFormByXml(xmlDocument,lang, multiInterfaceId){
                       }
                 },
                 setJSONValues: function (jsonObject){
+                    
                    this.setDefaultValues(jsonObject);   
                 },
                 setDefaultValues: function (values){
@@ -440,7 +441,6 @@ function createPanelExjFormByXml(xmlDocument,lang, multiInterfaceId){
                                     field.setValue(values[setIDValue]);
                                     break;
                                       field.setValue(values[setIDValue]);        
-
                             case "combo":
                                     var displayValue=field.getInformationValue(values[setIDValue]);
                                     field.setValue(displayValue); 
@@ -1402,6 +1402,7 @@ function createExjFormByElement(title, formDataElement, numCols, localizationObj
              onclickFunction: inputFormElements[i].getAttribute("onclick"),
            handlerParameters: inputFormElements[i].getAttribute("handlerParameters"),
              enableInputList: inputFormElements[i].getAttribute("enableInputList"),
+            disableInputList: inputFormElements[i].getAttribute("disableInputList"),
    alternativeCheckInputList: inputFormElements[i].getAttribute("alternativeCheckInputList"),
       formObjectInstanceName: inputFormElements[i].getAttribute("formObjectInstanceName"),
                        store: inputFormElements[i].getAttribute("store"),
@@ -2798,22 +2799,55 @@ function generateCheckBoxField(field){
              layout: "form",
              items: [checkboxField]
   };
-   if(field.enableInputList){
+   if(field.enableInputList || field.disableInputList){
+       var disableInputList, enableInputList;
+       if(field.disableInputList)
+          disableInputList=field.disableInputList;
+       else
+          disableInputList=null; 
+      
+       if(field.enableInputList)
+          enableInputList=field.enableInputList;
+       else
+          enableInputList=null;
        enableInputFunction=new Function(/*"function(){"+*/
-              "var enableInputList=\""+field.enableInputList+"\";"+
-              "var arrayInput=enableInputList.split(',');"+
+              "var arrayInput;var enableInputList=\""+enableInputList+"\";"+  
+              "if(enableInputList!='null'){"+    
+              "if(enableInputList.indexOf(',') != -1)"+    
+                "arrayInput=enableInputList.split(',');"+
+              "else{"+  
+                "arrayInput=new Array();arrayInput.push(enableInputList);}"+
               "var tmp;"+
               "var indexForm;"+
               "for(var i=0; i<arrayInput.length;i++){"+
                   "tmp=arrayInput[i].split('-');"+
                   "indexForm=parseInt(tmp[0]);"+
-                  "if(this.getValue())"+
-                    field.formObjectInstanceName+".formsArray[indexForm].getForm().findField(tmp[1]).enable();"+
-                  "else {"+
-                    field.formObjectInstanceName+".formsArray[indexForm].getForm().findField(tmp[1]).disable();"+
-                    field.formObjectInstanceName+".formsArray[indexForm].getForm().findField(tmp[1]).setValue('');"+
-                  " }"+
-              "}");
+                  "var formCont=this.findParentByType('form');"+
+                  "if(this.getValue()){"+  
+                    "formCont.getForm().findField(tmp[1]).enable();"+
+                  "}else {"+
+                    "formCont.getForm().findField(tmp[1]).disable();"+
+                    "formCont.getForm().findField(tmp[1]).setValue('');"+
+                  " }"+   
+              "}}"+
+              "var disableInputList=\""+disableInputList+"\";"+
+              "if(disableInputList!='null'){"+
+                 "if(enableInputList.indexOf(',') != -1)"+  
+                     "arrayInput=disableInputList.split(',');"+
+                 "else{"+  
+                     "arrayInput=new Array();arrayInput.push(disableInputList);}"+
+                 "for(i=0; i<arrayInput.length;i++){"+
+                      "tmp=arrayInput[i].split('-');"+
+                      "indexForm=parseInt(tmp[0]);"+
+                      "var formCont=this.findParentByType('form');"+
+                      "if(this.getValue()){"+
+                        "formCont.getForm().findField(tmp[1]).disable();"+
+                        "formCont.getForm().findField(tmp[1]).setValue('');"+
+                      "}else{"+
+                      "formCont.getForm().findField(tmp[1]).enable();}"+
+                 "}"+  
+              "}"
+          );
        checkboxField.addListener('check', eval(enableInputFunction));
        //checkEvent+="eval(enableInputFunction);";
        //checkboxField.on('check', eval(enableInputFunction));

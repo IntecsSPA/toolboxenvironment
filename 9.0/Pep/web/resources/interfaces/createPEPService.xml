@@ -6,6 +6,14 @@
             <input type="text" name="wsdl" id="wsdl" label="Service WSDL" value="" optional="false" size="40"/>   
             <input type="text" name="serviceName" id="serviceName" label="Service Name" value="" optional="false" size="25"/>
         </group>
+        <group label="Security Forward">
+          <input type="checkbox" name="forwardMessageWithCryptedToken" id="forwardMessageWithCryptedToken" colSpan="10"
+                label="Forward message with security token encrypted" enableInputList="0-keyAlias" 
+                disableInputList="0-forwardMessageWithClearToken"/>    
+          <input type="text" name="keyAlias" id="keyAlias" label="Alias of the key to be used for encryption" value="" optional="false" size="40" disabled="true"/>  
+          <input type="checkbox" name="forwardMessageWithClearToken" id="forwardMessageWithClearToken" colSpan="10"
+                label="Forward message with security token unencrypted" disableInputList="0-forwardMessageWithCryptedToken"/>
+        </group>
     </section>
 
     <section name="Security Configuration">
@@ -35,7 +43,8 @@
                iconWait="styles/img/loaderFile.gif"
                iconFailure="styles/img/fail.png"
                iconSuccess="styles/img/success.png"/>   
-        </group>    
+        </group>  
+        
     </section>   
    
     <requestInformation>

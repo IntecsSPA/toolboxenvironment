@@ -2,11 +2,22 @@
 
 <inputInterface xmlns="http://gisClient.pisa.intecs.it/gisClient">
     <section name="Security Configuration">
-   
         <group label="Service KeyStore">
             <input type="text" name="jksUserName" id="jksUserName" label="Alias" value="" optional="false" size="25"/>   
             <input type="text" name="jksPasswd" id="jksPasswd" label="Password" value="" optional="false" size="25"/>  
-            <input type="file" name="jksFileLocation" hideLabel="false" id="jksFileLocation" colSpan="10"
+        </group> 
+        
+        <group label="Security Forward">
+          <input type="checkbox" name="forwardMessageWithCryptedToken" id="forwardMessageWithCryptedToken" colSpan="10"
+                label="Forward message with security token encrypted" enableInputList="0-keyAlias" 
+                disableInputList="0-forwardMessageWithClearToken"/>    
+          <input type="text" name="keyAlias" id="keyAlias" label="Alias of the key to be used for encryption" value="" optional="false" size="40" disabled="true"/>  
+          <input type="checkbox" name="forwardMessageWithClearToken" id="forwardMessageWithClearToken" colSpan="10"
+                label="Forward message with security token unencrypted" disableInputList="0-forwardMessageWithCryptedToken"/>
+        </group>
+        
+        <group label="KeyStore">
+              <input type="file" name="jksFileLocation" hideLabel="false" id="jksFileLocation" colSpan="10"
                optional="true"
                size="300"
                autoUploadURL="rest/manager/storefile"

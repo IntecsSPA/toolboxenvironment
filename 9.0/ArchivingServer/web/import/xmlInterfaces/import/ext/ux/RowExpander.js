@@ -260,7 +260,7 @@ Ext.ux.grid.RowExpander = Ext.extend(Ext.util.Observable, {
            
         sendAuthenticationXmlHttpRequestTimeOut("GET",
               restReq,
-              true, null, "", "", 
+              true, null, interfacesManager.user, interfacesManager.password, 
               800000, requestResponse, requestTimeOut,null,
               null, null);
                          

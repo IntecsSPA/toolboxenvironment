@@ -64,7 +64,7 @@ WatchInterface=function(){
            
            sendAuthenticationXmlHttpRequestTimeOut("GET",
                      this.restWatchListURL,
-                     true, null, "loginValues['user']", "loginValues['password']", 
+                     true, null, interfacesManager.user, interfacesManager.password, 
                      800000, getWatchList, getWatchListTimeOut,null,
                      null, null);
      };
@@ -205,7 +205,7 @@ WatchInterface=function(){
              "Geoserver", "watchFieldSetSet_"+this.watchNumber, true);
          
          var geoserverTypeStoreFields=['value'];
-         var geoserverTypeStoreData=[['shp'],['geotiff']];
+         var geoserverTypeStoreData=[['shp'],['geotiff'],['imagemosaic']];
          
          multiType.addComboField("geoserverDataType_"+this.watchNumber,'Data Type',8,
                                 geoserverTypeStoreFields,geoserverTypeStoreData,
@@ -228,6 +228,18 @@ WatchInterface=function(){
 
          multiType.addTextField("geoserverWorkspace_"+this.watchNumber, 
             "Geoserver Workspace", "", 20, "watchGeoserverFieldSet_"+this.watchNumber);
+            
+        // multiType.addSpace("geoserverwatchSpace5_"+this.watchNumber,4, "watchGeoserverFieldSet_"+this.watchNumber);     
+         multiType.addTextField("geoserverFileNameTemplate_"+this.watchNumber, 
+            "File Name Template", "", 20, "watchGeoserverFieldSet_"+this.watchNumber);
+         
+         multiType.addSpace("geoserverwatchSpace6_"+this.watchNumber,4, "watchGeoserverFieldSet_"+this.watchNumber);
+         multiType.addTextField("geoserverStyle_"+this.watchNumber, 
+            "Layer Style", "", 20, "watchGeoserverFieldSet_"+this.watchNumber);
+         
+         multiType.addSpace("geoserverwatchSpace7_"+this.watchNumber,4, "watchGeoserverFieldSet_"+this.watchNumber);
+         multiType.addTextField("geoserverDimensions_"+this.watchNumber, 
+            "Layer Dimensions", "", 20, "watchGeoserverFieldSet_"+this.watchNumber);   
             
      };
      
@@ -345,6 +357,13 @@ WatchInterface=function(){
                Ext.getCmp("geoserverPassword_"+watchIndex).setValue(defaultValues.geoserverPassword);*/
            if(defaultValues.geoserverWorkspace)
                Ext.getCmp("geoserverWorkspace_"+watchIndex).setValue(defaultValues.geoserverWorkspace);
+           if(defaultValues.geoserverFileNameTemplate)
+               Ext.getCmp("geoserverFileNameTemplate_"+watchIndex).setValue(defaultValues.geoserverFileNameTemplate);
+           if(defaultValues.geoserverDimensions)
+               Ext.getCmp("geoserverDimensions_"+watchIndex).setValue(defaultValues.geoserverDimensions);
+           if(defaultValues.geoserverStyle)
+               Ext.getCmp("geoserverStyle_"+watchIndex).setValue(defaultValues.geoserverStyle);
+           
         }   
         else
            Ext.getCmp("watchGeoserverFieldSet_"+watchIndex).collapse();
@@ -497,6 +516,30 @@ WatchInterface=function(){
                 }
                   
              }
+             if(Ext.getCmp("geoserverFileNameTemplate_"+watchIndex)){
+                value=Ext.getCmp("geoserverFileNameTemplate_"+watchIndex).getValue(); 
+                if(value){
+                    watchData.geoserverFileNameTemplate=value;
+                    watchData.idString+=value;
+                }
+                  
+             }
+             if(Ext.getCmp("geoserverStyle_"+watchIndex)){
+                value=Ext.getCmp("geoserverStyle_"+watchIndex).getValue(); 
+                if(value){
+                    watchData.geoserverStyle=value;
+                    watchData.idString+=value;
+                }
+                  
+             }
+             if(Ext.getCmp("geoserverDimensions_"+watchIndex)){
+                value=Ext.getCmp("geoserverDimensions_"+watchIndex).getValue(); 
+                if(value){
+                    watchData.geoserverDimensions=value;
+                    watchData.idString+=value;
+                }
+                
+             } 
              var geoserverUP="";
              if(Ext.getCmp("geoserverUser_"+watchIndex)){
                 value=Ext.getCmp("geoserverUser_"+watchIndex).getValue(); 
@@ -629,7 +672,7 @@ WatchInterface=function(){
         sendAuthenticationXmlHttpRequestTimeOut("POST",
                      this.restWatchListURL,
                      true, JSON.stringify(watchListJSON, null),
-                     "loginValues['user']", "loginValues['password']", 
+                     interfacesManager.user, interfacesManager.password, 
                      800000, postWatchList, postWatchListTimeOut,null,
                      null, null);
         
@@ -650,6 +693,10 @@ Watch=function(){
     this.GeoServer= new Array();
     this.geoserverType= "";
     this.geoserverWorkspace= "";
+    
+    this.geoserverDimensions= "";
+    this.geoserverFileNameTemplate= "";
+    this.geoserverStyle= "";
    /* this.geoserverUser= "";
     this.geoserverPassword= "";*/
     this.ebRIMCatalogue= new Array();

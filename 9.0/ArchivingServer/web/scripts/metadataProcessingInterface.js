@@ -57,7 +57,7 @@ MetadataProcessingInterface=function(){
            
            sendAuthenticationXmlHttpRequestTimeOut("GET",
                      this.restMetadataProcessingListURL,
-                     true, null, "loginValues['user']", "loginValues['password']", 
+                     true, null, interfacesManager.user, interfacesManager.password, 
                      800000, getMetadataProcessingList, getMetadataProcessingListTimeOut,null,
                      null, null);
      };
@@ -283,7 +283,7 @@ MetadataProcessingInterface=function(){
         sendAuthenticationXmlHttpRequestTimeOut("POST",
                      this.restMetadataProcessingListURL,
                      true, JSON.stringify(metadataProcessingListJSON, null),
-                     "loginValues['user']", "loginValues['password']", 
+                     interfacesManager.user, interfacesManager.password, 
                      800000, postMetadataProcessingList, postMetadataProcessingListTimeOut,null,
                      null, null); 
    

@@ -54,10 +54,9 @@ ConfigurationInterface=function(){
  
            sendAuthenticationXmlHttpRequestTimeOut("GET",
                      this.restConfigurationURL,
-                     true, null, "loginValues['user']", "loginValues['password']", 
+                     true, null, interfacesManager.user, interfacesManager.password, 
                      800000, getConfiguration, getConfigurationTimeOut,null,
                      null, null);
-
      };
 
      this.onToggleFTP=function(){
@@ -124,7 +123,7 @@ ConfigurationInterface=function(){
          sendAuthenticationXmlHttpRequestTimeOut("POST",
                      this.restConfigurationURL,
                      true, jsonRequest, 
-                     "loginValues['user']", "loginValues['password']", 
+                     interfacesManager.user, interfacesManager.password, 
                      800000, saveConfiguration, saveConfigurationTimeOut,null,
                      null, null);
   

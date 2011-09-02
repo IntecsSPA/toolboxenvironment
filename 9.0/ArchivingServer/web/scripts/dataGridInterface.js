@@ -85,10 +85,15 @@ DataGridInterface=function(){
             singleSelect: false,
             listeners: {
                 selectionchange: function(sm) {
+                    var removeButton;
                     if (sm.getCount()) {
-                        grid.removeButton.enable();
+                        removeButton=Ext.getCmp("removeSelectedButton");
+                        if(removeButton)
+                          removeButton.enable();
                     } else {
-                        grid.removeButton.disable();
+                        removeButton=Ext.getCmp("removeSelectedButton");
+                        if(removeButton)
+                          removeButton.disable();
                     }
                 }
             }
@@ -160,6 +165,7 @@ DataGridInterface=function(){
             tbar:[{
                 text:'Remove Selected Data',
                 iconCls:'remove',
+                id:"removeSelectedButton",
                 disabled: true,
                 renderEl: this.renderElement,
                 restDeleteUrl: this.restDataDeleteUrl,
@@ -198,7 +204,7 @@ DataGridInterface=function(){
 
                                     sendAuthenticationXmlHttpRequestTimeOut("DELETE",
                                         opt.restDeleteUrl+"/"+record['dataId'],
-                                        false, null, "", "",
+                                        false, null, interfacesManager.user, interfacesManager.password,
                                         800000, deleteResponse, deleteRequestTimeOut,null,
                                         null, null);
                                 }
@@ -225,6 +231,7 @@ DataGridInterface=function(){
                 text:'Remove All Items',
                 iconCls:'remove',
                 disabled: false,
+                id:"removeAllButton",
                 renderEl: this.renderElement,
                 restDeleteUrl: this.restDataDeleteAllUrl,
                 ref: '../removeButton',
@@ -276,7 +283,7 @@ DataGridInterface=function(){
 
                                 sendAuthenticationXmlHttpRequestTimeOut("DELETE",
                                     opt.restDeleteUrl,
-                                    false, null, "", "",
+                                    false, null, interfacesManager.user, interfacesManager.password,
                                     800000, deleteResponse, deleteRequestTimeOut,null,
                                     null, null);
                             }

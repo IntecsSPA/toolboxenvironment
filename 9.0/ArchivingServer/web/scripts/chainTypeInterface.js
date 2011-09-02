@@ -68,7 +68,7 @@ ChainTypesInterface=function(){
            
            sendAuthenticationXmlHttpRequestTimeOut("GET",
                      this.restChainTypesListURL,
-                     true, null, "loginValues['user']", "loginValues['password']", 
+                     true, null, interfacesManager.user, interfacesManager.password, 
                      800000, getChainTypesList, getChainTypesListTimeOut,null,
                      null, null);
         
@@ -424,7 +424,7 @@ ChainTypesInterface=function(){
         sendAuthenticationXmlHttpRequestTimeOut("POST",
                      this.restChainTypesListURL,
                      true, JSON.stringify(chainTypesListJSON, null),
-                     "loginValues['user']", "loginValues['password']", 
+                     interfacesManager.user, interfacesManager.password, 
                      800000, postChainTypesList, postChainTypesListTimeOut,null,
                      null, null); 
     };

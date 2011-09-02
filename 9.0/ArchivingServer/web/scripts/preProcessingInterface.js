@@ -53,7 +53,7 @@ PreProcessingInterface=function(){
            
            sendAuthenticationXmlHttpRequestTimeOut("GET",
                      this.restPreProcessingListURL,
-                     true, null, "loginValues['user']", "loginValues['password']", 
+                     true, null, interfacesManager.user, interfacesManager.password, 
                      800000, getPreProcessingList, getPreProcessingListTimeOut,null,
                      null, null);
         
@@ -266,7 +266,7 @@ PreProcessingInterface=function(){
         sendAuthenticationXmlHttpRequestTimeOut("POST",
                      this.restPreProcessingListURL,
                      true, JSON.stringify(preProcessingListJSON, null),
-                     "loginValues['user']", "loginValues['password']", 
+                     interfacesManager.user, interfacesManager.password, 
                      800000, postPreProcessingList, postPreProcessingListTimeOut,null,
                      null, null); 
     };

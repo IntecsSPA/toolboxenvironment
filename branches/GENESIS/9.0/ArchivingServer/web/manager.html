@@ -4,7 +4,7 @@
   <head>
     <title>Archiving Server Manager</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
+    <link href="styles/css/arms.css" rel=stylesheet>
     <!-- ************ XMLInterfaces Import *************-->
         <!-- Load jquery -->
         <script type="text/javascript" src="import/xmlInterfaces/import/jquery.js"></script>
@@ -28,37 +28,8 @@
                 background-image:url(resources/images/find.png);
             }
 
-            #loading-mask{
-                position:absolute;
-                left:0;
-                top:0;
-                width:100%;
-                height:100%;
-                z-index:20000;
-                background-color:white;
-            }
-            #loading{
-                position:absolute;
-                left:45%;
-                top:40%;
-                padding:2px;
-                z-index:20001;
-                height:auto;
-            }
-            #loading a {
-                color:#225588;
-            }
-            #loading .loading-indicator{
-                background:white;
-                color:#444;
-                font:bold 13px tahoma,arial,helvetica;
-                padding:10px;
-                margin:0;
-                height:auto;
-            }
-            #loading-msg {
-                font: normal 10px arial,tahoma,sans-serif;
-            }
+           
+           
     
             .x-check-group-alt {
                 background: #D1DDEF;
@@ -171,10 +142,30 @@
   </head>
   <body id="body">
 
-    <div id="loading-mask" style=""></div>
+    <!--<div id="loading-mask" style=""></div>
     <div id="loading">
         <div class="loading-indicator"><img src="resources/images/arms.png" width="80" height="80" style="margin-right:8px;float:left;vertical-align:top;"/>Archiving Server Manager<br /><span id="loading-msg">Loading... Please Wait...</span><span><img src="resources/images/init_Load.gif"/></span></div>
-    </div>
+    </div>-->
+    
+    <div id="loading-mask" style="">
+            <div id="loginPanel"></div>
+        </div>
+        <!-- <div id="loading">
+             <div class="loading-indicator">Policy Enforcement Point Application<br /><span id="loading-msg">Loading... Please Wait...</span><span id="loading-icon"><img src="resources/images/init_Load.gif"/></span></div>
+         </div>-->
+        <div id="loginfields">
+            <div id="loginlogo"> 
+                <td  valign="bottom" align="center"><img src="styles/img/armslogo.png" width="133" height="133"></td> 
+            </div>  
+            <p> 
+                <input type="text" name="login" title="user" id="user" size="40" disabled="disabled" onclick="armsManager.loginInterface.removeMsg()"/> 
+            </p> 
+            <p> 
+                <input type="password" name="password" title="password" id="password" size="37" disabled="disabled" onclick="armsManager.loginInterface.removeMsg()"/> 
+                <a href="#"><img src="styles/img/NextS.png" onclick="armsManager.loginInterface.onLogin()"></a> 
+            </p> 
+            <div id="logging-msg"></div>
+        </div> 
 
 </body>
 </html>

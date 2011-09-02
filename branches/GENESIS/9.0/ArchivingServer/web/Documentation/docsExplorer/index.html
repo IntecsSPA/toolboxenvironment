@@ -11,12 +11,12 @@
 
         <script src="codebase/dhtmlxtabbar_start.js">
         </script>
-        <LINK href="../template/dom.css" rel=stylesheet>
+        <!--LINK href="../template/dom.css" rel=stylesheet>
         <LINK href="../template/dom.directory.css" rel=stylesheet>
         <LINK href="../template/portal.css" rel=stylesheet>
-        <LINK href="../template/styles.css" rel=stylesheet>
+        <LINK href="../template/styles.css" rel=stylesheet-->
     </head>
-    <body onload="loadTree();loadTreeSmpl(); correctSizes()" onresize="correctSizes();a_tabbar.enableAutoReSize(true,true);" style="padding: 0; margin: 0;overflow:hidden;height:100%;">
+    <body onload="loadTree();/*loadTreeSmpl();*/ correctSizes()" onresize="correctSizes();a_tabbar.enableAutoReSize(true,true);" style="padding: 0; margin: 0;overflow:hidden;height:100%;">
         <script src="codebase/dhtmlxcommon.js">
         </script>
         <script src="codebase/dhtmlxtree.js">
@@ -64,6 +64,7 @@
                 tree.enableCheckBoxes(false);
                 tree.loadXML("xml/arms_docs.xml?nu=1", autoselectNode);
                 
+                if(opener)
                 if (opener.helpSectionPath) {
                     setTimeout("openPath(tree,'" + opener.helpSectionPath + "');", 1000);
                     opener.helpSectionPath = null;
@@ -182,10 +183,10 @@
                                             <div id="doctree_box" style="width: 280px; height: 100%; ">
                                             </div>
                                         </div>
-                                        <div id="smpltab" width="80" name="<table width='100%' height='100%' cellspacing='0' cellpadding='0' border='0' style='margin-left: 3px;'><tr><td width='100%' height='100%' valign='middle' align='center'><img src='codebase/imgs/null.gif' class='tab_samples'></td></tr></table>" style="padding: 8px 8px 0 8px;display:none;" select="1">
+                                        <!--<div id="smpltab" width="80" name="<table width='100%' height='100%' cellspacing='0' cellpadding='0' border='0' style='margin-left: 3px;'><tr><td width='100%' height='100%' valign='middle' align='center'><img src='codebase/imgs/null.gif' class='tab_samples'></td></tr></table>" style="padding: 8px 8px 0 8px;display:none;" select="1">
                                             <div id="smpltree_box" style="width: 280px; height: 100%; ">
                                             </div>
-                                        </div>
+                                        </div>-->
                                     </div>
                                 </div>
                             </td>

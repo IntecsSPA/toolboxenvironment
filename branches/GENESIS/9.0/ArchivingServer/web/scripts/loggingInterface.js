@@ -46,11 +46,14 @@ LoggingInterface=function(){
                 
             };
           
+           
            sendAuthenticationXmlHttpRequestTimeOut("GET",
                      "rest/config/log/level",
-                     false, null, "", "", 800000, getLogLevel, getLogLevelTimeOut,null,
+                     false, null, interfacesManager.user, interfacesManager.password,
+                     800000, getLogLevel, getLogLevelTimeOut,null,
                      null, null);
 
+         
             
      };
      
@@ -75,8 +78,8 @@ LoggingInterface=function(){
                                               
         sendAuthenticationXmlHttpRequestTimeOut("DELETE",
             "rest/config/log",
-            false, null,"armsManager.loginInterface.user",
-            "armsManager.loginInterface.password", 800000, 
+            false, null,
+            interfacesManager.user, interfacesManager.password, 800000, 
             deleteLogFunc, deleteLogTimeOut,null,
             null, null);
         
@@ -110,8 +113,8 @@ LoggingInterface=function(){
             tmp="/"+rowCmp.getValue();
         sendAuthenticationXmlHttpRequestTimeOut("GET",
             "rest/config/log"+tmp,
-            false, null,"armsManager.loginInterface.user",
-            "armsManager.loginInterface.password", 800000, 
+            false, null,
+            interfacesManager.user, interfacesManager.password, 800000, 
             getLogFunc, getLogTimeOut,null,
             null, null);
                                  
@@ -155,7 +158,9 @@ LoggingInterface=function(){
           
            sendAuthenticationXmlHttpRequestTimeOut("GET",
                      "rest/config/log/level/"+logLevel,
-                     false, null, "", "", 800000, setLogLevel, setLogLevelTimeOut,null,
+                     false, null, interfacesManager.user, 
+                     interfacesManager.password, 800000, setLogLevel, 
+                     setLogLevelTimeOut,null,
                      null, null);
             
             

@@ -121,6 +121,7 @@ ConfigurePEPServiceInterface=function(serviceName){
     this.updateServiceCurrentConfiguration=function(){
         var configuration=null;
         var getPepServiceConfFunc=function(response){
+            
             var jsonResponse=JSON.parse(response);
             if(jsonResponse.success){
                 configuration=jsonResponse.serviceConfiguration;         

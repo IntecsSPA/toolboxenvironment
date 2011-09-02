@@ -32,7 +32,8 @@
                iconWait="styles/img/loaderFile.gif"
                iconFailure="styles/img/fail.png"
                iconSuccess="styles/img/success.png"/>           
-            <input type="text" name="tbxLevelKeystorePwd" id="tbxLevelKeystorePwd" label="Keystore password" value="" optional="false" size="25" colSpan="3"/>  
+            <input type="text" name="tbxLevelKeystorePwd" id="tbxLevelKeystorePwd" label="Keystore password" value="" optional="false" size="25" colSpan="3"/> 
+            <input type="text" name="tbxLevelKeystoreIdPAlias" id="tbxLevelKeystoreIdPAlias" label="IdP Key Alias" value="" optional="true" size="25" colSpan="3"/>
        </group>     
     </section>   
     <section name="Contact Information">

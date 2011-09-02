@@ -26,18 +26,19 @@ CreatePEPServiceInterface=function(){
 
     
     this.onCreate=function(){
-        var myMask = new Ext.LoadMask(Ext.getBody(), {
-            msg:"Please wait..."
-        });
-        // var myMask = new Ext.LoadMask(Ext.getCmp('bogus'+"createPEPServicefromWSDL").getEl(),
-        //    {msg:"Please wait..."});
-        myMask.show();
+       
         
 
         var jsonRequest=JSON.parse(this.formInterface.getJsonValueObject());
         
         if(jsonRequest){
           
+             var myMask = new Ext.LoadMask(Ext.getBody(), {
+            msg:"Please wait..."
+            });
+            // var myMask = new Ext.LoadMask(Ext.getCmp('bogus'+"createPEPServicefromWSDL").getEl(),
+            //    {msg:"Please wait..."});
+            myMask.show();
             var createPEPServiceFunc=function(response){
                 myMask.hide();
                 var jsonResponse=JSON.parse(response);

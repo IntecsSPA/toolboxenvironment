@@ -30,6 +30,9 @@ public class StoreItem {
     public String[] publishGeoserver;
     public String geoserverType;
     public String geoserverWorkspace;
+    public String geoserverStyle;
+    public String geoserverDimensions;
+    public String geoserverFileNameTemplate;
     public String[] publishCatalogue;
     public String[] publishSOS;
     public boolean publishHttp;

@@ -10,6 +10,7 @@ import it.intecs.pisa.archivingserver.prefs.Prefs;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.IOUtil;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
@@ -47,6 +48,7 @@ public class CreateFakeDownload implements Command {
             localFile=(File) cc.getAttribute(CommandsConstants.LOCAL_FILE);
             webappDir=(File) cc.getAttribute(CommandsConstants.APP_DIR);
             File destFile;
+            Prefs.getDownloadFolder(webappDir).mkdirs();
             destFile=new File(Prefs.getDownloadFolder(webappDir),itemId);
             
             try {
@@ -55,7 +57,11 @@ public class CreateFakeDownload implements Command {
                 
             } catch (ZipException exZip) {
             /*Data without Metadata*/
-             IOUtil.moveFile(localFile,destFile);
+             try{   
+                IOUtil.moveFile(localFile,destFile);
+             } catch (Exception ex) {
+                 ex.printStackTrace();
+             }   
             }
             
             if(zipFileCheck){
@@ -81,8 +87,10 @@ public class CreateFakeDownload implements Command {
               if(metadataCheck && zipFilesNumber==2){
                   localFile.delete();
                   IOUtil.moveFile(dataFile,destFile); 
-              }else
-                IOUtil.moveFile(localFile,destFile);
+              }else{
+                  IOUtil.moveFile(localFile,destFile);
+              }
+                
             
             }
             

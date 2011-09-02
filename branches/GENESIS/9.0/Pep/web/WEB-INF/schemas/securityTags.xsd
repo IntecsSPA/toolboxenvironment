@@ -44,4 +44,16 @@
            <xsd:attribute name="keyStorePwd" type="xsd:string" use="required"/>
         </xsd:complexType>
     </xsd:element>
+    
+    
+    <xsd:element name="samlSignature">
+        <xsd:annotation>
+            <xsd:documentation>SAML Signature</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+          <xsd:any namespace="##other" processContents="strict"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
 </xsd:schema>

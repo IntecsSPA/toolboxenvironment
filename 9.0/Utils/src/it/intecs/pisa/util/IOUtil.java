@@ -456,8 +456,11 @@ public class IOUtil {
         }
     }
 
-    public static void moveFile(File localFile, File destFile) {
-        localFile.renameTo(destFile);
+    public static void moveFile(File localFile, File destFile) throws FileNotFoundException, IOException {
+        //localFile.renameTo(destFile);
+        IOUtil.copy(new FileInputStream(localFile), 
+                               new FileOutputStream(destFile));
+        localFile.delete();
     }
 
 

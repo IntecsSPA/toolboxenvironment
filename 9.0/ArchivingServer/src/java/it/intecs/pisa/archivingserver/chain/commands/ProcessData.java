@@ -15,6 +15,8 @@ import it.intecs.pisa.archivingserver.prefs.Prefs;
 import it.intecs.pisa.archivingserver.prefs.WatchPrefs;
 import it.intecs.pisa.util.IOUtil;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import javawebparts.misc.chain.ChainContext;
 import javawebparts.misc.chain.Command;
 import javawebparts.misc.chain.Result;
@@ -40,10 +42,11 @@ public class ProcessData implements Command {
         StoreItem storeItem;
         Document doc=null;
         File webappDir;
-
+        String localFileName;
         try {
             itemId=(String) cc.getAttribute(CommandsConstants.ITEM_ID);
             doc=(Document) cc.getAttribute(CommandsConstants.ITEM_METADATA);
+            localFileName=((File) cc.getAttribute(CommandsConstants.LOCAL_FILE)).getName();
             storeItem=(StoreItem) cc.getAttribute(CommandsConstants.STORE_ITEM);
             webappDir=(File) cc.getAttribute(CommandsConstants.APP_DIR);
 
@@ -51,7 +54,7 @@ public class ProcessData implements Command {
                storeItem.type!=null &&
                storeItem.type.equals("")==false)
             {
-               processData(itemId,storeItem,webappDir);
+               processData(itemId,storeItem,webappDir, localFileName);
             }
         } catch (Exception e) {
             Log.logException(e);
@@ -65,7 +68,7 @@ public class ProcessData implements Command {
         return new Result(Result.SUCCESS);
     }
 
-    private void processData(String itemId,StoreItem storeItem,File webappDir) throws Exception {
+    private void processData(String itemId,StoreItem storeItem,File webappDir, String originalFileName) throws Exception {
         JsonObject chainTypesListJson = null;
         String command=null,outputWatchFolderPath=null;
         JsonElement el,el1;
@@ -90,7 +93,12 @@ public class ProcessData implements Command {
 
                 File downloadDir=Prefs.getDownloadFolder(webappDir);
 
-                File dataFile=new File(downloadDir,itemId);
+                File dataFolder=new File(downloadDir,itemId+"_temp");
+                dataFolder.mkdir();
+                File dataFile=new File(dataFolder,originalFileName);
+                IOUtil.copy(new FileInputStream(new File(downloadDir,itemId)), 
+                        new FileOutputStream(dataFile));
+                
                 if(outputWatchFolderPath.equals("")){
                     
                     outFile= new File(downloadDir, itemId + "_processed");
@@ -116,7 +124,7 @@ public class ProcessData implements Command {
                     Log.log(" Instance \""+itemId+"\" not processed File moved to: "+movedFile.getCanonicalPath());
                 }else                   
                     dataFile.delete();
-                
+                    dataFolder.delete();
 
             }
         }     

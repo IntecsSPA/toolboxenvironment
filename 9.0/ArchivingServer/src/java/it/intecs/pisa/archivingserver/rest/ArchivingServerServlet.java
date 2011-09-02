@@ -46,7 +46,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ArchivingServerServlet extends HttpServlet {
 
-    protected static final String ARMS_VERSION = "2.0.2";
+    protected static final String ARMS_VERSION = "2.1.0 Beta";
     protected static final String METHOD_STORE = "store";
     protected static final String METHOD_INFO = "info";
     protected static final String METHOD_DATA_LIST = "datalist";

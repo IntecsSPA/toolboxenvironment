@@ -64,6 +64,21 @@ public class StoreItemDeserializer implements JsonDeserializer<StoreItem> {
           item.geoserverWorkspace="";  
         else item.geoserverWorkspace=el.getAsString();
         
+        el=obj.get("geoserverDimensions");
+        if(el==null || el instanceof com.google.gson.JsonNull)
+          item.geoserverDimensions="";  
+        else item.geoserverDimensions=el.getAsString();
+        
+        el=obj.get("geoserverFileNameTemplate");
+        if(el==null || el instanceof com.google.gson.JsonNull)
+          item.geoserverFileNameTemplate="";  
+        else item.geoserverFileNameTemplate=el.getAsString();
+        
+        el=obj.get("geoserverStyle");
+        if(el==null || el instanceof com.google.gson.JsonNull)
+          item.geoserverStyle="";  
+        else item.geoserverStyle=el.getAsString();
+        
         
         publishObj = obj.getAsJsonObject("publish");
         if(publishObj == null)  //local folder (watch)

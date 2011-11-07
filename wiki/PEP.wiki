@@ -1,0 +1,7 @@
+#summary One-sentence summary of this page.
+
+= Policy Enforcement Point=
+
+A Policy Enforcement Point (PEP) is a component of policy-based management. When a client tries to access a file resource on a network  that uses policy-based access management, the PEP intercepts the request and gives the Policy Decision Point (PDP) the job of deciding whether or not to authorize the user based on the value of the user's attributes. 
+
+Applicable policies are expressed in XACML and GEOXACML language stored on the system and are analyzed by the PDP componet (part of the PEP). The PDP makes it's decision applying the rulòes defined in the rule files and returns the decision. The PEP then authorize or reject the access to the requested service resource.  

@@ -14,3 +14,5 @@ Data extracted and/or pre-processed can then be stored in one of the server conn
 The GeoETL can be connected to a catalogue to allow the automatic publication of the metadata that can be provided as input (via WPS or REST interface) or extracted automatically during the extraction process. The harvesting is performed via standard CSW interface.
 
 The data loaded in the system can then be managed via a graphical user interface that allows retrieving the instances associated to the data ingestion. From the GUI is then possible to see the ingestion logs and eventually delete the instances and undeploy the data. Undeplying the data means remove the data from all the servers and remove the entry from the catalogue, thus maintaining the system up to date and avoid broken links in the catalogue itself. Data deletion can be also performed at a pre-configured time. This allows implementing a rolling archiving.
+
+ARMS [http://code.google.com/p/toolboxenvironment/downloads/detail?name=ArchivingServer_V_2_1.zip download] page.

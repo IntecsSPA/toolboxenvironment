@@ -4,7 +4,6 @@
 package it.intecs.pisa.util.wsdl;
 
 import it.intecs.pisa.util.DOMUtil;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.InputStream;
@@ -12,11 +11,9 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.LinkedList;
-
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 /**
  * @author Massimiliano
@@ -50,6 +47,9 @@ public class WSDL {
     private DOMUtil domutil;
     private String [] importLocations;
     private String [] importNamespaces;
+    
+    private Document [] schemas;
+    private String [] internalNamespaces;
 
     /**
      * Default constructor
@@ -268,7 +268,23 @@ public class WSDL {
         }
         
        
-        
+        //parsing internal schemas --- Andrea
+        children = root.getElementsByTagNameNS("*", TAG_SCHEMA);
+        count = children.getLength();
+        if(count >0){
+          schemas = new Document[count];
+          internalNamespaces = new String[count];
+          for (int i = 0; i < count; i++) {
+               tag = (Element) children.item(i);
+                try {
+                    schemas[i]= DOMUtil.getElementAsNewDocument(tag);
+                    internalNamespaces[i]=tag.getAttribute(ATTRIBUTE_TARGET_NAMESPACE);
+                } catch (Exception ex) {
+                    throw  new WSDLException(ex.getMessage());
+                }
+                    
+          }
+        }
         
         //parsing message type
         
@@ -475,5 +491,19 @@ public class WSDL {
      */
     public String [] getImportNamespaces() {
         return importNamespaces;
+    }
+
+    /**
+     * @return the schemas
+     */
+    public Document[] getSchemas() {
+        return schemas;
+    }
+
+    /**
+     * @return the internalNamespaces
+     */
+    public String[] getInternalNamespaces() {
+        return internalNamespaces;
     }
 }

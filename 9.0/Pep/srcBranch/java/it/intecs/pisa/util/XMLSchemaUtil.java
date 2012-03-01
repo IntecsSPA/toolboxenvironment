@@ -1,10 +1,9 @@
 package it.intecs.pisa.util;
 
 import it.intecs.pisa.util.wsdl.WSDL;
-import java.net.URL;
 import java.io.File;
 import java.io.FileInputStream;
-import java.net.URLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import org.w3c.dom.Document;
@@ -26,24 +25,22 @@ public class XMLSchemaUtil {
     
     private static final int CONNECTION_TIME_OUT=100000;
 
-
-
-    
-    
-    
     public String saveWSDLSchemas(String wsdlURL, File schemaDirecorty) throws Exception{  
        String relativePath; 
-       int i=0;
+       int i=0, importedSchemas;
        DOMUtil domUtil= new DOMUtil();
-       Element elementImport=null;
-       File currentSchemaLocationDirecotry=null;
-       String schemaFileName=null;
+       Element elementImport;
+       File currentSchemaLocationDirecotry;
+       String schemaFileName;
        File mainSchemaFile=new File(schemaDirecorty, MAIN_SCHEMA_FILE_NAME);
        WSDL wsdl=new WSDL(new URL(wsdlURL));
        Document schemaDoc=domUtil.inputStreamToDocument(new FileInputStream(mainSchemaFile));
        String [] schemaImportLoc=wsdl.getImportLocations();
        String [] namespaceImport=wsdl.getImportNamespaces();
+       Document [] schema= wsdl.getSchemas();
+       String [] internalNamespaces= wsdl.getInternalNamespaces();
        
+       importedSchemas=schemaImportLoc.length;
        for(i=0; i<schemaImportLoc.length;i++){
            relativePath="wsdlSchemaImport_"+new Integer(i+1).toString();
            currentSchemaLocationDirecotry=new File(schemaDirecorty, relativePath);
@@ -59,6 +56,19 @@ public class XMLSchemaUtil {
            elementImport.setAttribute("namespace", namespaceImport[i]);
            schemaDoc.getDocumentElement().appendChild(elementImport);
        }
+
+       for(i=0; i<schema.length;i++){
+           relativePath="wsdlSchemaImport_"+new Integer(importedSchemas+i+1).toString();
+           currentSchemaLocationDirecotry=new File(schemaDirecorty, relativePath);
+           currentSchemaLocationDirecotry.mkdirs();
+           DOMUtil.dumpXML(schema[i], new File(currentSchemaLocationDirecotry.getCanonicalFile(),relativePath));  
+           schemaFileName="internalSchema_"+new Integer(i+1)+".xsd";
+           elementImport=schemaDoc.createElementNS(SCHEMA_NAMESPACE, "import");
+           elementImport.setAttribute("schemaLocation", relativePath+"/"+schemaFileName);
+           elementImport.setAttribute("namespace", internalNamespaces[i]);
+           schemaDoc.getDocumentElement().appendChild(elementImport);
+       }
+       
        DOMUtil.dumpXML(schemaDoc, mainSchemaFile);
        return wsdl.getTargetNameSpace();
     }

@@ -68,7 +68,7 @@ public class TBXSOAPInterface extends Interface{
         File schemaFile;
         File serviceRoot;
         //Added to solve the problem of the disable the valida
-        document.getDocumentElement().removeAttribute("schema-location");
+        document.getDocumentElement().removeAttributeNS("http://www.w3.org/2001/XMLSchema-instance", "schemaLocation");
 
         if(schemaRoot!=null && schemaRoot.equals("")==false && isValidationActive())
         {

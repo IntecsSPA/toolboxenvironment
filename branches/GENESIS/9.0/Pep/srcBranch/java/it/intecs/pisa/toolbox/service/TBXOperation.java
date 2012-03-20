@@ -181,6 +181,8 @@ public abstract class TBXOperation extends Operation {
         }
 
         try {
+
+            //TODO check this modification. We have disabled the outgoing message validation
             if (SOAPUtil.isSOAPFault(response) == false && parentInterf.isValidationActive()) {
                 validOutputMessage = validateMessage(response);
             } else {

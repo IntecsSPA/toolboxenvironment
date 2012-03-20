@@ -54,54 +54,6 @@ public class ServiceValidator {
         }
 
     }
-    
-    public static void validateService(File serviceFolder) throws Exception
-    {
-        File descriptorFile;
-        DOMUtil util;
-        Service serviceToValidate;
-
-        try
-        {
-            util=new DOMUtil();
-            descriptorFile = new File(serviceFolder, "serviceDescriptor.xml");
-
-            Document descriptorDocument = util.fileToDocument(descriptorFile);
-            serviceToValidate=new Service();
-            serviceToValidate.initializeFromXMLDescriptor(descriptorDocument.getDocumentElement());
-        }
-        catch(Exception e)
-        {
-            throw new Exception("Cannot load service descriptor");
-        }
-
-        try
-        {
-            Operation[] operations=serviceToValidate.getImplementedInterface().getOperations();
-            for(Operation op:operations)
-            {
-                validateOperation(serviceFolder,op);
-            }
-        }
-        catch(Exception e)
-        {
-            throw new ServiceValidationException(e.getMessage());
-        }
-
-    }
-    
-    public static void validateOperation(File serviceDir,Operation op) throws Exception {
-        Script[] scripts=op.getScripts();
-        
-        for(Script s:scripts)
-        {
-            File scriptFile=new File(serviceDir,s.getPath());
-            DocumentBuilder parser = DOMUtil.getValidatingParser();
-            parser.parse(scriptFile);
-        }
-
-    }
-    
 
     public static void validateOperation(File serviceDir,Operation op,File schemaFile) throws Exception {
         Script[] scripts=op.getScripts();

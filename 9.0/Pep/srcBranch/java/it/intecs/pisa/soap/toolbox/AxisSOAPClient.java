@@ -253,7 +253,7 @@ Read more: http://kickjava.com/src/org/apache/axis2/engine/SOAPversionTest.java.
         options.setTransportInfo(Constants.TRANSPORT_HTTP, Constants.TRANSPORT_HTTP, false);
         options.setProperty(org.apache.axis2.transport.http.HTTPConstants.CHUNKED, Boolean.FALSE);
 
-        client.setOptions(options);
+        
 
         if(relatesTo!=null && relatesTo.equals("")==false ){
             RelatesTo rel2 = new RelatesTo();
@@ -267,6 +267,7 @@ Read more: http://kickjava.com/src/org/apache/axis2/engine/SOAPversionTest.java.
             options.setMessageId(messageID);
 
 
+
         if(soapHeaders!=null)
         {
             for(Element header:soapHeaders)
@@ -276,7 +277,7 @@ Read more: http://kickjava.com/src/org/apache/axis2/engine/SOAPversionTest.java.
 
             }
         }
-
+        client.setOptions(options);
         inStream=DOMUtil.getDocumentAsInputStream(message.getOwnerDocument());
         OMElement result=null;
         OMElement inputMsg;
@@ -499,6 +500,9 @@ Read more: http://kickjava.com/src/org/apache/axis2/engine/SOAPversionTest.java.
         LinkedList children;
         
         children=DOMUtil.getChildren(header);
+        if(children.size() == 0){
+            block.setText(header.getTextContent());
+        }else
         for(int i=0;i<children.size();i++)
             block.addChild(XMLUtils.toOM((Element)children.get(i)));
 

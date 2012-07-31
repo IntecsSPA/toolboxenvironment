@@ -32,7 +32,7 @@ public class StoreDataCommand extends RESTManagerCommandPlugin{
         MultipartRequest parser=null;
         JsonObject outputJson = new JsonObject();
         try {
-            parser = new ServletMultipartRequest(req, MiscConstants.MAX_READ_BYTES, MultipartRequest.ABORT_IF_MAX_BYES_EXCEEDED, null);
+            parser = new ServletMultipartRequest(req, Integer.MAX_VALUE, MultipartRequest.ABORT_IF_MAX_BYES_EXCEEDED, null);
         } catch (IllegalArgumentException ex) {
            outputJson.addProperty("success", false);
            resp.setContentType("text/html");

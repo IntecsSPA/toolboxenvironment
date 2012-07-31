@@ -17,5 +17,5 @@ public class MiscConstants {
     public static final String PROXY_PORT_KEY = "http.proxyPort";
     public static final String PROXY_HOST_KEY = "http.proxyHost";
 
-    public static final int MAX_READ_BYTES = 10000000;
+    public static final int MAX_READ_BYTES = Integer.MAX_VALUE;
 }

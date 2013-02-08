@@ -73,7 +73,7 @@
                                         success: function(form, action){
                                             var resp=replaceAll(action.response.responseText, "<pre>", "");
                                             resp=replaceAll(resp, "</pre>", "");
-                                            var jsonResponse=JSON.parse("{ " + resp+ " }");
+                                            var jsonResponse=JSON.parse(resp);
             
                                             if(jsonResponse.success){
                                              

@@ -51,7 +51,7 @@ public class ManagerStoreFileResource {
      * @return an HTTP response with content of the updated or created resource.
      */
     @POST
-    @Produces("text/plain")
+    @Produces("text/html")
     public String store(@Context HttpServletRequest request) {
      //   AuthenticationManager am=new AuthenticationManager();
         RestResponse storeResponse= new RestResponse("storeFile");
@@ -86,7 +86,9 @@ public class ManagerStoreFileResource {
         }    */
        // storeResponse.setSuccess(Boolean.TRUE); 
          storeResponse.addJsonProperty("success", "true");
-        //Extjs workeraound       
-        return "\"success\":true , \"filePath\" : \""+filePath +"\"";//storeResponse.getStringRestResponse();
+         //return storeResponse.;
+        //Extjs workeraound   
+         //return "\"success\":true ";
+       return "{\"success\":true , \"filePath\" : \""+filePath +"\"}";
     }
 }

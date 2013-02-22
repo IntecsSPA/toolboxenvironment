@@ -44,7 +44,7 @@ public class OperationsResource {
     public OperationResource getOperationResource(@PathParam("name")
     String name, @PathParam("servicename")
     String servicename) {
-        System.out.println("TEST");
+//        System.out.println("TEST");
         return OperationResource.getInstance(name, servicename);
     }
 }

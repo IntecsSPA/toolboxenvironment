@@ -189,7 +189,14 @@ public class SAMLdecryptor {
                     null, null, e);
         }
 
-        Element decryptedElem = (Element) parent.getFirstChild();
+        // Element decryptedElem = (Element) parent.getFirstChild();
+        NodeList decryptedList = parent.getChildNodes();
+        Node decryptedElem = null;
+        for (int index = 0; index < decryptedList.getLength(); index ++){
+            decryptedElem = decryptedList.item(index);
+            if (decryptedElem.getNodeType() == Node.ELEMENT_NODE)
+                break;          
+        }
 
         return (Element) decryptedElem;
     }

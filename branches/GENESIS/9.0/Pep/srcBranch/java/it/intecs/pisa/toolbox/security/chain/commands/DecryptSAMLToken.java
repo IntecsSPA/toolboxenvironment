@@ -4,7 +4,6 @@
  */
 package it.intecs.pisa.toolbox.security.chain.commands;
 
-import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.plugins.security.SAMLdecryptor;
 import it.intecs.pisa.toolbox.security.ToolboxSecurityConfigurator;
 import it.intecs.pisa.toolbox.service.ServiceManager;
@@ -14,43 +13,21 @@ import javawebparts.misc.chain.ChainContext;
 import javawebparts.misc.chain.Command;
 import javawebparts.misc.chain.Result;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.Properties;
 
 import javax.xml.namespace.QName;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLStreamConstants;
-import javax.xml.stream.XMLStreamException;
 
 //import javax.xml.soap.*;
 
-import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
-import org.apache.axiom.om.OMFactory;
-import org.apache.axiom.om.OMNamespace;
-import org.apache.axiom.om.OMText;
 
 import org.apache.axiom.soap.SOAPEnvelope;
 import org.apache.axiom.soap.SOAPHeader;
 
-import org.apache.axis2.AxisFault;
-import org.apache.axis2.Constants;
-import org.apache.axis2.addressing.EndpointReference;
-import org.apache.axis2.client.Options;
-import org.apache.axis2.client.ServiceClient;
-import org.apache.axis2.transport.http.HTTPConstants;
 import org.apache.axis2.context.MessageContext;
 import org.apache.axis2.util.XMLUtils;
 
 import org.apache.log4j.Logger;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 /**
  *

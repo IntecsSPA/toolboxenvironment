@@ -76,7 +76,7 @@ public class CheckSAMLTokenValidityTime implements Command {
                 return new Result(Result.SUCCESS);
 
             } else {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ss");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 logger.error("The token is expired; the valid time interval was: "
                         + sdf.format(beforeDate) + " through " + sdf.format(onOrAfterDate));
                 return new Result(Result.FAIL);

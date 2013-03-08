@@ -1,8 +1,13 @@
 package it.intecs.pisa.toolbox.plugins.security;
 
+import it.intecs.pisa.toolbox.Toolbox;
+import it.intecs.pisa.toolbox.configuration.ToolboxConfiguration;
 import java.io.File;
+import java.io.FileInputStream;
+import java.security.KeyStore;
 import java.security.PublicKey;
 import java.security.cert.X509Certificate;
+import java.util.Enumeration;
 import java.util.Properties;
 import java.util.Vector;
 
@@ -35,6 +40,10 @@ public class SAMLdecryptor {
 
     private WSSConfig wssConfig = null;
 
+    public SAMLdecryptor() {
+        wssConfig = WSSConfig.getDefaultWSConfig();
+    }
+    
     /**
      *
      * @author Stefano
@@ -135,14 +144,50 @@ public class SAMLdecryptor {
                     return signature.checkSignatureValue(pk);
                 } else {
 
-                    throw new Exception("Cannot check the SAML siganture, public key is missing");
+                    throw new Exception("Cannot check the SAML signature, public key is missing");
                 }
             }
         } else {
-            System.out.println("Did not find a KeyInfo");
-            throw new Exception("Cannot check the SAML siganture, KeyInfo is missing");
+            ToolboxConfiguration configuration;
+
+            configuration = ToolboxConfiguration.getInstance();
+            if (Boolean.parseBoolean(configuration.getConfigurationValue(ToolboxConfiguration.TOOLBOX_LEVEL_KEYSTORE)) == false) {
+                throw new Exception("A Toolbox keystore has not been set");
+            }
+
+            Toolbox tbx;
+            tbx = Toolbox.getInstance();
+
+            File jksFile = new File(tbx.getRootDir(), "WEB-INF/persistence/tbxLevelKeystore.jks");
+            String keyStorePath = jksFile.getAbsolutePath();
+            String storePass = configuration.getConfigurationValue(ToolboxConfiguration.TOOLBOX_LEVEL_KEYSTORE_PASSWORD);
+            return checkSignature(signature, keyStorePath, storePass);
         }
     }
+    
+    public boolean checkSignature(XMLSignature signature, String keystorePath, String storePass) throws Exception {
+
+        KeyStore keyStore = KeyStore.getInstance("JKS");
+
+        File keystoreFile = new File(keystorePath);
+        keyStore.load(new FileInputStream(keystoreFile), storePass.toCharArray());
+
+        Enumeration<String> aliases = keyStore.aliases();
+
+        boolean isSignValid = false;
+
+        while (aliases.hasMoreElements() && (!isSignValid)) {
+            String alias = aliases.nextElement();
+
+            if (keyStore.getCertificate(alias) != null) {
+                X509Certificate certificate = (X509Certificate) keyStore.getCertificate(alias);
+
+                isSignValid = signature.checkSignatureValue(certificate);
+            }
+        }
+        return isSignValid;
+    }
+    
 
     public Element handleToken(Element elem, Crypto crypto, Crypto decCrypto,
             CallbackHandler cb, WSDocInfo wsDocInfo, Vector returnResults,

@@ -4,28 +4,14 @@
  */
 package it.intecs.pisa.toolbox.security.chain.commands;
 
-import it.intecs.pisa.toolbox.Toolbox;
-import it.intecs.pisa.toolbox.configuration.ToolboxConfiguration;
-
-
 import it.intecs.pisa.toolbox.plugins.security.SAMLdecryptor;
+
 import javawebparts.misc.chain.ChainContext;
 import javawebparts.misc.chain.Command;
 import javawebparts.misc.chain.Result;
 
-import java.io.File;
-import java.security.PublicKey;
-import java.security.cert.X509Certificate;
-
-import org.apache.xml.security.keys.KeyInfo;
 import org.apache.xml.security.signature.XMLSignature;
 import org.opensaml.XML;
-
-import java.io.FileInputStream;
-import java.security.KeyStore;
-import java.util.Enumeration;
-
-
 
 import org.apache.axiom.soap.SOAPEnvelope;
 import org.apache.axiom.soap.SOAPHeader;
@@ -34,7 +20,7 @@ import org.apache.axis2.context.MessageContext;
 import org.apache.axis2.util.XMLUtils;
 
 import org.apache.log4j.Logger;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
 import org.w3c.dom.Element;
 
 /**
@@ -57,20 +43,17 @@ public class CheckSAMLTokenSignature implements Command {
     @Override
     public Result init(ChainContext cc) {
         return new Result(Result.SUCCESS);
-
     }
 
     @Override
     public Result execute(ChainContext cc) {
-
         try {
-
             logger.info("Signature checking process started");
 
             MessageContext msgCtx = (MessageContext) cc.getAttribute(CommandsConstants.MESSAGE_CONTEXT);
             SOAPEnvelope envelope = msgCtx.getEnvelope();
             SOAPHeader soapHeader = envelope.getHeader();
-             Element soapHeaderDOM = XMLUtils.toDOM(soapHeader);
+            Element soapHeaderDOM = XMLUtils.toDOM(soapHeader);
 
             Element assertionDOM = (Element) soapHeaderDOM.getElementsByTagNameNS(XML.SAML_NS, SAML_ASSERTION).item(0);
 
@@ -96,13 +79,10 @@ public class CheckSAMLTokenSignature implements Command {
             logger.error("Error while checking signature: " + e.getMessage());
             return new Result(Result.FAIL);
         }
-
     }
 
     @Override
     public Result cleanup(ChainContext cc) {
         return new Result(Result.SUCCESS);
     }
-
-   
 }

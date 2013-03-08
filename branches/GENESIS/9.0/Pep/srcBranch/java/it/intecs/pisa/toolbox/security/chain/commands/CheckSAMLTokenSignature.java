@@ -8,6 +8,7 @@ import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.configuration.ToolboxConfiguration;
 
 
+import it.intecs.pisa.toolbox.plugins.security.SAMLdecryptor;
 import javawebparts.misc.chain.ChainContext;
 import javawebparts.misc.chain.Command;
 import javawebparts.misc.chain.Result;
@@ -77,7 +78,8 @@ public class CheckSAMLTokenSignature implements Command {
             XMLSignature sig = new XMLSignature((Element) n, "");
             boolean signatureOk = false;
             try {
-                signatureOk = checkSignature(sig);
+                SAMLdecryptor decryptor = new SAMLdecryptor();
+                signatureOk = decryptor.checkSignature(sig);
                 logger.info("SIGNATURE CHECK: " + signatureOk);
             } catch (Exception e) {
                 logger.error("Failed to validate SAML signature value: " + e.getMessage());
@@ -102,67 +104,5 @@ public class CheckSAMLTokenSignature implements Command {
         return new Result(Result.SUCCESS);
     }
 
-    public boolean checkSignature(XMLSignature signature) throws Exception {
-
-        KeyInfo ki = signature.getKeyInfo();
-
-        if (ki != null) {
-            // Try to verify the signature using a X509Certificate
-            X509Certificate cert = signature.getKeyInfo().getX509Certificate();
-
-            if (cert != null) {
-                return signature.checkSignatureValue(cert);
-            } else {
-                logger.error("Did not find a Certificate");
-
-                // try to verify the signature using the public key:
-                PublicKey pk = signature.getKeyInfo().getPublicKey();
-
-                if (pk != null) {
-                    return signature.checkSignatureValue(pk);
-                } else {
-                    throw new Exception("Cannot check the SAML signature, public key is missing");
-                }
-            }
-        } else {
-            ToolboxConfiguration configuration;
-
-            configuration = ToolboxConfiguration.getInstance();
-            if (Boolean.parseBoolean(configuration.getConfigurationValue(ToolboxConfiguration.TOOLBOX_LEVEL_KEYSTORE)) == false) {
-                throw new Exception("A Toolbox keystore has not been set");
-            }
-
-            Toolbox tbx;
-            tbx = Toolbox.getInstance();
-
-            File jksFile = new File(tbx.getRootDir(), "WEB-INF/persistence/tbxLevelKeystore.jks");
-            String keyStorePath = jksFile.getAbsolutePath();
-            String storePass = configuration.getConfigurationValue(ToolboxConfiguration.TOOLBOX_LEVEL_KEYSTORE_PASSWORD);
-            return checkSignature(signature, keyStorePath, storePass);
-        }
-    }
-
-    public boolean checkSignature(XMLSignature signature, String keystorePath, String storePass) throws Exception {
-
-        java.security.Security.addProvider(new BouncyCastleProvider());
-        KeyStore keyStore = KeyStore.getInstance("JKS");
-
-        File keystoreFile = new File(keystorePath);
-        keyStore.load(new FileInputStream(keystoreFile), storePass.toCharArray());
-
-        Enumeration<String> aliases = keyStore.aliases();
-
-        boolean isSignValid = false;
-
-        while (aliases.hasMoreElements() && (!isSignValid)) {
-            String alias = aliases.nextElement();
-
-            if (keyStore.getCertificate(alias) != null) {
-                X509Certificate certificate = (X509Certificate) keyStore.getCertificate(alias);
-
-                isSignValid = signature.checkSignatureValue(certificate);
-            }
-        }
-        return isSignValid;
-    }
+   
 }

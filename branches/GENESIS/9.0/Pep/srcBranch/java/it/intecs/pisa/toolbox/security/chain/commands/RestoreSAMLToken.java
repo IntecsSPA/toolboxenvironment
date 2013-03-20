@@ -33,12 +33,14 @@ import org.w3c.dom.Element;
  *
  * @author mariarosaria
  */
-public class DecryptSAMLToken implements Command {
+public class RestoreSAMLToken implements Command {
 
-    static public String ENCRYPTED_DATA_NAMESPACE = "http://www.w3.org/2001/04/xmlenc#";
-    static public String ENCRYPTED_DATA = "EncryptedData";
+    public static final String ENCRYPTED_DATA_NAMESPACE = "http://www.w3.org/2001/04/xmlenc#";
+    public static final String ENCRYPTED_DATA = "EncryptedData";
     public static final String WS_SECURITY_NAMESPACE = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd";
     public static final String WS_SECURITY = "Security";
+    public static final String SAML_ASSERTION_NAMESPACE = "urn:oasis:names:tc:SAML:1.0:assertion";
+    public static final String SAML_ASSERTION = "Assertion";
     /*
      * logger for the class
      */
@@ -54,39 +56,21 @@ public class DecryptSAMLToken implements Command {
     public Result execute(ChainContext cc) {
 
         try {
-
-            logger.info("Token decryption process started");
+            logger.info("Token restore process started");
 
             MessageContext msgCtx = (MessageContext) cc.getAttribute(CommandsConstants.MESSAGE_CONTEXT);
             SOAPEnvelope envelope = msgCtx.getEnvelope();
             SOAPHeader soapHeader = envelope.getHeader();
-            OMElement wsSecurityOM = soapHeader.getFirstChildWithName(new QName(WS_SECURITY_NAMESPACE, WS_SECURITY));
+            OMElement wsSecurity = soapHeader.getFirstChildWithName(new QName(WS_SECURITY_NAMESPACE, WS_SECURITY));
 
-            Element wsSecurityDOM = XMLUtils.toDOM(wsSecurityOM);
+           
+            OMElement tokenDecrypted = wsSecurity.getFirstChildWithName(new QName(SAML_ASSERTION_NAMESPACE, SAML_ASSERTION));
+            tokenDecrypted.detach();
+            
+            OMElement tokenEncrypted = (OMElement)msgCtx.getProperty(ENCRYPTED_DATA);
+            wsSecurity.addChild(tokenEncrypted);
 
-            String serviceName = msgCtx.getAxisService().getName();
-            TBXService service = ServiceManager.getInstance().getService(serviceName);
-
-            String keyStorePath = ToolboxSecurityConfigurator.getJKSlocation(service);
-            String keyStorePwd = ToolboxSecurityConfigurator.getJKSpassword(service);
-            String alias = ToolboxSecurityConfigurator.getJKSuser(service);
-
-            File keystoreFile = new File(keyStorePath);
-
-            SAMLdecryptor decryptor = new SAMLdecryptor();
-            Element tokenDecrypted = decryptor.decrypt(wsSecurityDOM, keystoreFile, alias, keyStorePwd);
-
-            if (tokenDecrypted == null) {
-                logger.error("Error when decrypting token");
-                return new Result(Result.FAIL);
-            }
-
-            OMElement tokenEncrypted = wsSecurityOM.getFirstChildWithName(new QName(ENCRYPTED_DATA_NAMESPACE, ENCRYPTED_DATA));
-            tokenEncrypted.detach();
-            wsSecurityOM.addChild(XMLUtils.toOM(tokenDecrypted));
-
-            logger.info("Token decryption process finished successfully");
-
+            logger.info("Token restore process finished with success");
             return new Result(Result.SUCCESS);
         } catch (Exception e) {
             logger.error("Error when decrypting token: " + e.getMessage());

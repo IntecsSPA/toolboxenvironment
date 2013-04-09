@@ -66,7 +66,7 @@ public class ConfiguredCommandsResource {
             String authHeader = hh.getRequestHeader(AuthenticationManager.AUTHORIZATION_HEADER).get(0);
 
             if (am.authenticate(authHeader, AuthenticationManager.ADMIN_RULE)) {
-                RestResponse jsonResponse = new RestResponse("configuredCommands");
+                RestResponse jsonResponse = new RestResponse("getConfiguredCommands");
                 File stepsFile = new File(Toolbox.getInstance().getRootDir(), COMMANDS_CONFIGURATION_FILE);
                 try {
                     DOMUtil domUtil = new DOMUtil();
@@ -83,13 +83,17 @@ public class ConfiguredCommandsResource {
                         }
                     }
 
+                    JsonObject configuredCommands = new JsonObject();
+                    
                     JsonObject authenticationChainJson = new JsonObject();
                     createJsonCommands(authenticationChain, authenticationChainJson);
-                    jsonResponse.addJsonElement(AUTHENTICATION_COMMANDS, authenticationChainJson);
+                    configuredCommands.add("authentication", authenticationChainJson);
 
                     JsonObject authorizationChainJson = new JsonObject();
                     createJsonCommands(authorizationChain, authorizationChainJson);
-                    jsonResponse.addJsonElement(AUTHORIZATION_COMMANDS, authorizationChainJson);
+                    configuredCommands.add("authorization", authorizationChainJson);
+                    
+                    jsonResponse.addJsonElement("configuredCommands", configuredCommands);
 
                 } catch (Exception ex) {
                     jsonResponse.setSuccess(false);
@@ -164,7 +168,7 @@ public class ConfiguredCommandsResource {
                 }
                 propertiesJson.add(propertyJson);
             }
-            commandJson.add("property", propertiesJson);
+            commandJson.add("properties", propertiesJson);
             commandsJson.add(commandJson);
         }
         chainJson.add("commands", commandsJson);

@@ -70,6 +70,17 @@
                                 
                                 objValue.push(obj);
                             }
+                            
+                            var checkboxArray=this.find("xtype", "checkbox");
+                          
+                            for(i=0; i<checkboxArray.length;i++){
+                                var obj={
+                                    "id":checkboxArray[i].id,
+                                    "value": checkboxArray[i].getValue()
+                                };
+                                
+                                objValue.push(obj);
+                            }
                            
                             return objValue;
                         },
@@ -142,7 +153,7 @@
                                 boxLabel: checkboxlabel,
                                 label: checkboxlabel,
                                 //checked: field.value,
-                                //hideLabel: true,
+                                hideLabel: true,
                                 id: checkboxID
                             });
                             var cmp=this;
@@ -348,9 +359,9 @@
                                                             var jsonResponseObj=eval('new Object(' + action.response.responseText + ')');
                                                             var label=form.findField(labelIcon);
                                                             if(iconSuccess){
-                                                              if(jsonResponseObj.id){
+                                                              if(jsonResponseObj){
                                                                 var idField=form.findField(fieldID);
-                                                                idField.setValue(jsonResponseObj.id);
+                                                                idField.setValue(jsonResponseObj.filePath);
                                                               }
                                                               label.setValue("<img src='"+iconSuccess+"'/>");
                                                            }else

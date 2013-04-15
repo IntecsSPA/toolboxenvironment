@@ -13,12 +13,16 @@ CreatePEPServiceInterface=function(){
 
     this.formInterface=new Object();
     
-      
+    this.configuredSteps=null;
+          
     this.init=function(){
         this.formInterface=createPanelExjFormByXml(this.xmlInterface, interfacesManager.lang);
+        this.getConfiguredSteps();
+        this.populateSteps("multiInputAuthentication", this.configuredSteps.authentication.commands);
+        this.populateSteps("multiInputAuthorization", this.configuredSteps.authorization.commands);
     },
 
-    this.render=function (elementID){
+    this.render=function (elementID){      
         this.formInterface.formsPanel.render(document.getElementById(elementID));
         this.formInterface.render();
     };
@@ -27,14 +31,19 @@ CreatePEPServiceInterface=function(){
     
     this.onCreate=function(){
        
+        var chosenSteps = JSON.parse(JSON.stringify(this.configuredSteps));
         
-
+        this.getStepsValue(chosenSteps.authentication.commands);
+        this.getStepsValue(chosenSteps.authorization.commands);
+        //console.log(JSON.stringify(chosenSteps.authentication.commands));
+        
         var jsonRequest=JSON.parse(this.formInterface.getJsonValueObject());
         
         if(jsonRequest){
+            jsonRequest.chosenCommands = chosenSteps;
           
-             var myMask = new Ext.LoadMask(Ext.getBody(), {
-            msg:"Please wait..."
+            var myMask = new Ext.LoadMask(Ext.getBody(), {
+                msg:"Please wait..."
             });
             // var myMask = new Ext.LoadMask(Ext.getCmp('bogus'+"createPEPServicefromWSDL").getEl(),
             //    {msg:"Please wait..."});
@@ -70,8 +79,8 @@ CreatePEPServiceInterface=function(){
                                 if(pepManager.createPEPOperationsInterface.operationsDefined){
                                     pepManager.serviceMenu.addService(this.serviceName);
                                 }else{
-                                    //TODO: Delete the service
-                                 } 
+                            //TODO: Delete the service
+                            } 
                             }  
                         },
                         shim:false,
@@ -131,7 +140,7 @@ CreatePEPServiceInterface=function(){
             headers.push("Content-Type,application/json");
             var onSubmit=sendAuthenticationXmlHttpRequestTimeOut("PUT",
                 this.restURL+jsonRequest['serviceName'],
-                false, this.formInterface.getJsonValueObject(), 
+                false, JSON.stringify(jsonRequest), 
                 interfacesManager.user, interfacesManager.password, 
                 800000, createPEPServiceFunc, createPEPServiceTimeOut,headers,
                 null, createPEPServiceError);
@@ -147,8 +156,88 @@ CreatePEPServiceInterface=function(){
            
     };
     
-    
+    this.getConfiguredSteps=function(){
+        var configuredStepsTemp=null;
+        var getPepConfStepsFunc=function(response){
+            var jsonResponse=JSON.parse(response);
+            if(jsonResponse.success){
+                configuredStepsTemp=jsonResponse.configuredCommands;      
+            }            
+        }
 
+        var getPepConfStepsError=function(){
+            Ext.Msg.show({
+                title:'Configuration Error',
+                buttons: Ext.Msg.OK,
+                msg: 'PEP Steps Configuration Error',
+                animEl: 'elId',
+                icon: Ext.MessageBox.ERROR
+            });
+        }
+
+        var getPepConfStepsTimeOut=function(){
+            Ext.Msg.show({
+                title:'Configuration Error',
+                buttons: Ext.Msg.OK,
+                msg: 'PEP Steps Configuration Request TIME-OUT!',
+                animEl: 'elId',
+                icon: Ext.MessageBox.ERROR
+            });
+        }
+
+        var onSubmit=sendAuthenticationXmlHttpRequestTimeOut("GET",
+            "rest/ConfiguredCommands",
+            false, null, interfacesManager.user, interfacesManager.password,
+            800000, getPepConfStepsFunc, getPepConfStepsTimeOut,null,
+            null, getPepConfStepsError);  
+        
+        this.configuredSteps=configuredStepsTemp;
+    };
+    
+    this.populateSteps=function(component, commands){
+        var multiInputAuth=Ext.getCmp(component);
+        for(var i=0; i < commands.length;i++){
+            var fieldSetName= "field_" + commands[i].id;
+            multiInputAuth.addFieldSet(fieldSetName, null, null, false, null);
+            multiInputAuth.addCheckBox(commands[i].id, commands[i].description, 
+                function(){}, fieldSetName, 20, null);
+            var commandProperties = commands[i].properties;
+            for (var j=0; j < commandProperties.length; j++){
+                if (commandProperties[j].type == "text"){
+                    multiInputAuth.addTextField(commandProperties[j].id, commandProperties[j].description, 
+                        commandProperties[j].value, 30, fieldSetName, 20, null, false);
+                } 
+                if (commandProperties[j].type == "file"){
+                    multiInputAuth.addFileField(commandProperties[j].id, commandProperties[j].description, 50, "rest/manager/storefile", 
+                        null, null, "styles/img/loaderFile.gif", "styles/img/fail.png", "styles/img/success.png", fieldSetName, 20);
+                }                      
+            }
+        }
+        multiInputAuth.doLayout();  
+    };
+    
+    this.getStepsValue = function(commands){    
+        for(var i=0; i < commands.length;i++){
+            commands[i].selected = Ext.getCmp(commands[i].id).getValue();
+            var commandProperties = commands[i].properties;
+            for (var j=0; j < commandProperties.length; j++){  
+                if (commandProperties[j].type == "text"){
+                    commandProperties[j].value = Ext.getCmp(commandProperties[j].id).getValue();
+                } 
+                if (commandProperties[j].type == "file"){
+                    var fileName = Ext.getCmp(commandProperties[j].id + "_file").getValue();
+                    var filePath = Ext.getCmp(commandProperties[j].id + "UploadID").getValue();
+                    commandProperties[j].value = {
+                        "fileName" : fileName,
+                        "uploadID" : filePath
+                    };               
+                }            
+            }
+        }
+        
+    };
+    
+    
     this.init();
 };
 

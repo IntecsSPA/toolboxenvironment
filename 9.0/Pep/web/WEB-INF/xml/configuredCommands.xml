@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chainConfig>
     <catalog id="configuredCommands">
-        <chain id="authenticationCommands" type="sequence" description="Authentication Steps">
-            <command id="persistToken" className="it.intecs.pisa.toolbox.security.chain.commands.PersistSAMLToken" description="Send the token for persistence to configured SAML Bean"/>
-            <command id="checkTokenTime" className="it.intecs.pisa.toolbox.security.chain.commands.CheckSAMLTokenValidityTime" description="Check the token validity time"/>
-            <command id="checkTokenIssuer" className="it.intecs.pisa.toolbox.security.chain.commands.CheckSAMLTokenIssuer" description="Check the token issuer">
-                <property id="issuer" value="http://earth.esa.int" description="The issuer of the token"/>
+        <chain id="authenticationCommands" description="Authentication Steps">
+            <command id="persistToken" className="it.intecs.pisa.toolbox.security.chain.commands.PersistSAMLToken" description="Send the token for persistence to configured SAML Bean" selected="false"/>
+            <command id="checkTokenTime" className="it.intecs.pisa.toolbox.security.chain.commands.CheckSAMLTokenValidityTime" description="Check the token validity time" selected="false"/>
+            <command id="checkTokenIssuer" className="it.intecs.pisa.toolbox.security.chain.commands.CheckSAMLTokenIssuer" description="Check the token issuer" selected="false">
+                <property id="issuer" value="http://earth.esa.int" description="The issuer of the token" type="text"/>
             </command>
         </chain>
-        <chain id="authorizationCommands" type="choice" description="Authorization Steps">
-            <command id="geoAuthorization" className="it.intecs.pisa.toolbox.security.chain.commands.GeoAuthorization" description="Standard Geo(XACML) authorization"/>
-            <command id="dailAuthorization" className="it.intecs.pisa.toolbox.security.chain.commands.DAILAuthorization" description="Custom step for the DAIL PEP">
-                <property id="policyDir" value="" description="Absolute path to XACML policy dir"/>
+        <chain id="authorizationCommands" description="Authorization Steps">
+            <command id="geoAuthorization" className="it.intecs.pisa.toolbox.security.chain.commands.GeoAuthorization" description="Standard Geo(XACML) authorization" selected="false">
+                <property id="xacmlFileLocation" value="" description="Local file containing the (Geo)XACML policy" type="file"/>
             </command>
-            <command id="gmesAuthorization" className="it.intecs.pisa.toolbox.security.chain.commands.GMESAuthorization" description="Custom step for the CDS PEP">
-                <property id="policyDir" value="" description="Absolute path to XACML policy dir"/>
+            <command id="dailAuthorization" className="it.intecs.pisa.toolbox.security.chain.commands.DAILAuthorization" description="Custom step for the DAIL PEP" selected="false">
+                <property id="dailPolicyDir" value="" description="Absolute path to XACML policy dir" type="text"/>
+            </command>
+            <command id="gmesAuthorization" className="it.intecs.pisa.toolbox.security.chain.commands.GMESAuthorization" description="Custom step for the CDS PEP" selected="false">
+                <property id="gmesPolicyDir" value="" description="Absolute path to XACML policy dir" type="text"/>
             </command>
         </chain>
     </catalog>

@@ -55,8 +55,8 @@ public class GMESAuthorization implements Command {
         return mPoliciesDir;
     }
 
-    public void setPoliciesDir(String policiesDir) {
-        mPoliciesDir = policiesDir;
+    public void setPoliciesDir(String gmesPolicyDir) {
+        mPoliciesDir = gmesPolicyDir;
     }
 
     @Override

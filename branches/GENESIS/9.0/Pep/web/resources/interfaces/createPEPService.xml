@@ -7,11 +7,11 @@
             <input type="text" name="serviceName" id="serviceName" label="Service Name" value="" optional="false" size="25"/>
         </group>
         <group label="Security Forward">
-          <input type="checkbox" name="forwardMessageWithCryptedToken" id="forwardMessageWithCryptedToken" colSpan="10"
+            <input type="checkbox" name="forwardMessageWithCryptedToken" id="forwardMessageWithCryptedToken" colSpan="10"
                 label="Forward message with security token encrypted" enableInputList="0-keyAlias" 
                 disableInputList="0-forwardMessageWithClearToken"/>    
-          <input type="text" name="keyAlias" id="keyAlias" label="Alias of the key to be used for encryption" value="" optional="false" size="40" disabled="true"/>  
-          <input type="checkbox" name="forwardMessageWithClearToken" id="forwardMessageWithClearToken" colSpan="10"
+            <input type="text" name="keyAlias" id="keyAlias" label="Alias of the key to be used for encryption" value="" optional="false" size="40" disabled="true"/>  
+            <input type="checkbox" name="forwardMessageWithClearToken" id="forwardMessageWithClearToken" colSpan="10"
                 label="Forward message with security token unencrypted" disableInputList="0-forwardMessageWithCryptedToken"/>
         </group>
     </section>
@@ -31,8 +31,16 @@
                iconWait="styles/img/loaderFile.gif"
                iconFailure="styles/img/fail.png"
                iconSuccess="styles/img/success.png"/>           
-        </group>     
-        <group label="XACML Service File">
+        </group>           
+    </section>
+    <section name="Authentication Checks">
+        <group label="Select the Authentication Checks">
+            <input type="multitext" name="multiInputAuthentication" id="multiInputAuthentication" label="Authentication Checks" size="50"/>       
+        </group>
+    </section>
+    
+    <section name="Authorization Checks">
+        <!-- <group label="XACML Service File">
             <input type="file" name="xacmlFileLocation" hideLabel="false" id="xacmlFileLocation" colSpan="10"
                optional="true"
                size="300"
@@ -43,9 +51,11 @@
                iconWait="styles/img/loaderFile.gif"
                iconFailure="styles/img/fail.png"
                iconSuccess="styles/img/success.png"/>   
-        </group>  
-        
-    </section>   
+        </group>  -->
+        <group label="Choose the XACML Authorization">
+            <input type="multitext" name="multiInputAuthorization" id="multiInputAuthorization" label="Authorization Choice" size="50"/>       
+        </group>
+    </section>
    
     <requestInformation>
         <buttons>

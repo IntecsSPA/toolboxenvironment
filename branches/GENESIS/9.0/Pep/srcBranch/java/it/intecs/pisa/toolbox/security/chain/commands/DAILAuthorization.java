@@ -36,8 +36,8 @@ public class DAILAuthorization implements Command {
      */
     private String policyDir;
 
-    public void setPolicyDir(String inPolicyDir) {
-        policyDir = inPolicyDir;
+    public void setPolicyDir(String dailPolicyDir) {
+        policyDir = dailPolicyDir;
     }
 
     @Override

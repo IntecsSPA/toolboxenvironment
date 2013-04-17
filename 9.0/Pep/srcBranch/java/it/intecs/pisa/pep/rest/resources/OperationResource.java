@@ -67,7 +67,8 @@ public class OperationResource {
             if(am.authenticate(authHeader, AuthenticationManager.ADMIN_RULE)){
                 JsonObject putResult=new JsonObject();
                 JsonObject contentJson=JsonUtil.getStringAsJSON(content);
-                putResult = new GatewayCommands().createGatewayOperation(this.name, contentJson);
+                //putResult = new GatewayCommands().createGatewayOperation(this.name, contentJson);
+                putResult = new GatewayCommands().protectOperation(this.name, contentJson);
                 return JsonUtil.getJsonAsString(putResult);
             }else
                return JsonUtil.getJsonAsString(am.notAuthorizatedResponse());

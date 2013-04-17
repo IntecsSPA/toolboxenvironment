@@ -133,6 +133,7 @@ public class GatewayCommands {
         } else {
             errorDetails += "JKS USER (" + JKS_USER_PROPERTY + ") mandatory property missing. ";
         }
+        
 
         if (!errorDetails.equals("")) {
             createGatewayResponse.setSuccess(false);
@@ -226,8 +227,17 @@ public class GatewayCommands {
             File serviceFolder = new File(serviceManager.getServicesRootDir(), serviceName);
             File localSchemaFolder = new File(serviceFolder, SERVICE_SCHEMAS_PATH);
             localSchemaFolder.mkdirs();
-            schemaUtil.saveWSDLSchemas(wsdlURL, localSchemaFolder);
-            createGatewayResponse.addJsonElement(OPERATION_INFO_PROPERTY, getSoapOperationsInfoList(wsdlURL));
+            //schemaUtil.saveWSDLSchemas(wsdlURL, localSchemaFolder);
+            JsonArray soapOperations = getSoapOperationsInfoList(wsdlURL);
+            for (int index = 0; index < soapOperations.size(); index++) {
+                JsonObject operation = soapOperations.get(index).getAsJsonObject();
+                JsonObject result = null;
+                operation.addProperty(SERVICE_NAME_PROPERTY, service.getServiceName());
+                result = createGatewayOperation(operation.get(OPERATION_PROPERTY).getAsString(), operation);
+                ToolboxSecurityConfigurator.addUnprotectedOperationToService(service.getServiceName(), operation.get(SOAP_OPERATION_PROPERTY).getAsString());
+                // TODO: handle result
+            }  
+            createGatewayResponse.addJsonElement(OPERATION_INFO_PROPERTY, soapOperations);
         } catch (Exception ex) {
             ex.printStackTrace();
             ServiceManager sm = ServiceManager.getInstance();
@@ -290,7 +300,7 @@ public class GatewayCommands {
                 new File(fileLocation).delete();
                 service.setJKSlocation(jksFile.getCanonicalPath());
 
-                ToolboxSecurityConfigurator.addWSSecurityLayerForService(service);
+                ToolboxSecurityConfigurator.updateWSSecurityLayerForService(service);
                 //update WSDL
                 service.deployWSDL();
                 ToolboxSecurityConfigurator.removeXACMLfiles(service.getServiceName());
@@ -387,6 +397,27 @@ public class GatewayCommands {
             return createGatewayOperationResponse.getJsonRestResponse();
         }
     }
+    
+     public JsonObject protectOperation(String operationName, JsonObject operationInformationJson) {
+        RestResponse createGatewayOperationResponse = new RestResponse("createGatewayOperation");
+
+        String serviceName, soapAction;
+
+        serviceName = operationInformationJson.get(SERVICE_NAME_PROPERTY).getAsString();
+        soapAction = operationInformationJson.get(SOAP_OPERATION_PROPERTY).getAsString();
+
+        try {
+            ToolboxSecurityConfigurator.makeOperationSecureToService(serviceName, soapAction);
+
+        } catch (Exception ex) {
+            createGatewayOperationResponse.setSuccess(false);
+            createGatewayOperationResponse.setDetails(ex.getMessage());
+            return createGatewayOperationResponse.getJsonRestResponse();
+        }
+
+        createGatewayOperationResponse.setSuccess(true);
+        return createGatewayOperationResponse.getJsonRestResponse();
+    }
 
     public JsonObject createGatewaySyncOperation(String operationName, JsonObject operationInformationJson) {
         RestResponse createGatewayOperationResponse = new RestResponse("createGatewayOperation");
@@ -400,11 +431,7 @@ public class GatewayCommands {
         operationOutputType = operationInformationJson.get(OPERATION_OUTPUT_TYPE_PROPERTY).getAsString();
         operationInputTypeNameSpace = operationInformationJson.get(OPERATION_INPUT_TYPE_NAMESPACE_PROPERTY).getAsString();
         operationOutputTypeNameSpace = operationInformationJson.get(OPERATION_OUTPUT_TYPE_NAMESPACE_PROPERTY).getAsString();
-        operationOutputTypeNameSpace = operationInformationJson.get(OPERATION_OUTPUT_TYPE_NAMESPACE_PROPERTY).getAsString();
-
-        operationOutputTypeNameSpace = operationInformationJson.get(OPERATION_OUTPUT_TYPE_NAMESPACE_PROPERTY).getAsString();
-        operationOutputTypeNameSpace = operationInformationJson.get(OPERATION_OUTPUT_TYPE_NAMESPACE_PROPERTY).getAsString();
-
+        
         serviceName = operationInformationJson.get(SERVICE_NAME_PROPERTY).getAsString();
         soapAction = operationInformationJson.get(SOAP_OPERATION_PROPERTY).getAsString();
         TBXSynchronousOperation operationDescr = new TBXSynchronousOperation();

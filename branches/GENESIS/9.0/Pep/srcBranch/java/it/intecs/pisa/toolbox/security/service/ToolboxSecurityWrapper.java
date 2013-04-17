@@ -7,7 +7,7 @@ package it.intecs.pisa.toolbox.security.service;
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.util.Util;
 import it.intecs.pisa.soap.toolbox.exceptions.ToolboxException;
-import it.intecs.pisa.toolbox.security.validator.ToolboxPEP;
+import it.intecs.pisa.toolbox.security.chain.commands.CommandsConstants;
 import it.intecs.pisa.toolbox.service.ServiceManager;
 import it.intecs.pisa.toolbox.service.TBXOperation;
 import it.intecs.pisa.toolbox.service.TBXService;
@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.net.URI;
 import java.util.Vector;
+import javawebparts.misc.chain.ChainContext;
+import javawebparts.misc.chain.ChainManager;
+import javawebparts.misc.chain.Result;
 import javax.servlet.http.HttpServletRequest;
 
 import javax.xml.namespace.QName;
@@ -103,57 +106,28 @@ public class ToolboxSecurityWrapper {
                 logger.error("ToolboxSecurityWrapper, an exception occurs while trying to retrieve the SAML token!!!", ex);
             }
 
+            //          callChain("Catalogue/mainChain", msgCtx);
             // TODO : PEP should be called even if SAML is null???
+            callChain("Catalogue/tempChain", msgCtx);
+           
+            saml = null;
             if (saml != null) {
-                //call PEP
-                //information about the SOAP needs to be passed to the PEP as a Element
-                OMElement soapOMElem = msgCtx.getEnvelope();//.getBody().getFirstElement();
-                Document soapDoc = stringToDocument(soapOMElem.toString());
-                Document requestSoap=stringToDocument(soapOMElem.toString());
-
-                ToolboxPEP pep = new ToolboxPEP();
-                int resp = pep.enforceChecks(new URI(req.getRequestURI()), operationName, saml, soapDoc);
- 
-                /* The resp variable can take one of the following values:
-                 * com.sun.xacml.ctx.Result.DECISION_DENY           (1)
-                 * com.sun.xacml.ctx.Result.DECISION_INDETERMINATE  (2)
-                 * com.sun.xacml.ctx.Result.DECISION_NOT_APPLICABLE (3)
-                 * com.sun.xacml.ctx.Result.DECISION_PERMIT         (0)
-                 */
-                if (resp == 1) {
-                    //extract information about the deny
-                    String denyMsg = "";
-                    NodeList nl = ((Element) soapDoc.getFirstChild()).getElementsByTagName("XACMLDeniedRule");
-                    Element elem = null;
-                    if (nl.getLength() > 0) {
-                        for (int i = 0; i < nl.getLength(); i++) {
-                            elem = (Element) nl.item(i);
-                            if (denyMsg.compareTo("") == 0) {
-                                denyMsg += elem.getTextContent();
-                            } else {
-                                denyMsg += "\n" + elem.getNodeValue();
-                            }
-                        }
-                    } else {
-                        denyMsg = "You are not allowed to access the requested resource(s)";
-                    }
-                    //throw AxisFault exception
+                Result result = callChain("Catalogue/geoAuthorizationChain", msgCtx);
+                if (result.getCode() == Result.FAIL) {
+                    String denyMsg = result.getExtraInfo();
                     fault = new AxisFault(new QName("http://www.intecs.it/PEP", "AccessDenied", "pep"), denyMsg,
                             new Exception("PEP: Deny!"));
 
-                    String[] requestSplit=req.getRequestURI().split("/");
-                    String serviceName=requestSplit[requestSplit.length-1];
-                    storeAccessDeniedInstanceIntoDB(requestSoap,serviceName,operationName,fault);
-                      
+                    String[] requestSplit = req.getRequestURI().split("/");
+                    String serviceName = requestSplit[requestSplit.length - 1];
+
+                    OMElement soapElemOM = msgCtx.getEnvelope();//.getBody().getFirstElement();
+
+                    Element soapElemDOM = XMLUtils.toDOM(soapElemOM);
+                    Document soapDoc = soapElemDOM.getOwnerDocument();
+                    storeAccessDeniedInstanceIntoDB(soapDoc, serviceName, operationName, fault);
+
                     throw fault;
-                }
-                else if (resp == 2) {
-                    //throw AxisFault exception
-                    String denyMsg = "The evaluation of the policy is indeterminate";
-                    fault = new AxisFault(new QName("http://www.intecs.it/PEP", "AccessDenied", "pep"), denyMsg,
-                            new Exception("PEP: Deny!"));
-
-                    throw fault; 
                 }
             }
             //policies checked successfully
@@ -223,6 +197,74 @@ public class ToolboxSecurityWrapper {
         return response;
     }
 
+    private Result callChain(String chain, MessageContext msgCtx) {
+
+        Logger logger = Toolbox.getInstance().getLogger();
+
+        ChainManager cm = new ChainManager();
+        ChainContext ct = cm.createContext();
+        ct.setAttribute(CommandsConstants.MESSAGE_CONTEXT, msgCtx);
+        cm.executeChain(chain, ct);
+        //boolean res = ct.getResult().getCode() == Result.SUCCESS;
+        return ct.getResult();
+    }
+
+    public OMElement pass(OMElement payload) throws AxisFault {
+        OMElement response = null;
+        AxisFault fault = null;
+        Logger logger = Toolbox.getInstance().getLogger();
+        try {
+
+            MessageContext msgCtx = MessageContext.getCurrentMessageContext();
+
+            HttpServletRequest req = (HttpServletRequest) msgCtx.getProperty("transport.http.servletRequest");
+
+            //now pass the request to the Toolbox
+            Toolbox toolbox = Toolbox.getInstance();
+            String uri = req.getRequestURI();
+
+            /*The following code can be used during development to force the test service invocation
+            if (uri.endsWith("testSeqService") || uri.endsWith("prova")){
+            uri = "TOOLBOX/services/testService";
+            }*/
+
+            callChain("Catalogue/passChain", msgCtx);
+
+
+            Document respDoc = null;
+            try {
+                respDoc = toolbox.executeServiceRequest(msgCtx, uri, false);
+            } catch (Exception e) {
+                //******** an exception has been thrown, sending a SOAP Fault ********************
+                try {
+                    if (e instanceof ToolboxException) {
+                        respDoc = Util.getSOAPFault((ToolboxException) e);
+                    } else {
+                        respDoc = Util.getSOAPFault(e.getMessage());
+                    }
+                    fault = new AxisFault("");
+                    fault.setDetail(org.apache.axis2.util.XMLUtils.toOM(respDoc.getDocumentElement()));
+
+                } catch (Exception ex) {
+                    logger.error("", ex);
+                }
+            }
+
+            response = XMLUtils.toOM(respDoc.getDocumentElement());
+
+        } catch (AxisFault ex) {
+            fault = ex;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        if (fault != null) {
+            throw fault;
+        }
+
+        return response;
+    }
+
     protected Document stringToDocument(String xml) throws IOException, SAXException {
         DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
         docBuilderFactory.setNamespaceAware(true);
@@ -234,14 +276,15 @@ public class ToolboxSecurityWrapper {
         }
         return docBuilder.parse(new InputSource(new StringReader(xml)));
     }
+    
     private void storeAccessDeniedInstanceIntoDB(Document soapReq, String serviceName, String soapAction, AxisFault axisFualt) throws Exception {
         TBXService tbxService;
-        ServiceManager serviceManager=ServiceManager.getInstance();
-        tbxService=serviceManager.getService(serviceName);
+        ServiceManager serviceManager = ServiceManager.getInstance();
+        tbxService = serviceManager.getService(serviceName);
 
-        TBXOperation tbxOp=tbxService.getOperationBySoapAction(soapAction);
+        TBXOperation tbxOp = tbxService.getOperationBySoapAction(soapAction);
         tbxOp.processAccessDeniedRequest(soapReq, true, axisFualt);
     }
-
+    
     
 }

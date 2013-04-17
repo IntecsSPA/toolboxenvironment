@@ -26,6 +26,7 @@ import org.apache.xml.security.signature.XMLSignature;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
 
 public class ToolboxSecurityConfigurator {
@@ -34,6 +35,10 @@ public class ToolboxSecurityConfigurator {
     public static String WSU_NAMESPACE = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd";
     public static String SERVICE_KEYSTORE_FILENAME = "service.jks";//the default name of the keystore for a given protected service
 
+     public static String SECURED_OPERATION = "execute";
+     public static String NOT_SECURED_OPERATION = "pass";
+     public static String ACTION_MAPPING = "actionMapping";
+      
     /**
      * Return the absolute path where the XACML policy file for the given service is located
      * @param serviceName
@@ -564,6 +569,213 @@ public class ToolboxSecurityConfigurator {
             throw ex;
         }
     }
+    
+    public static void addUnprotectedOperationToService(String serviceName, String soapAction) throws ToolboxException {
+        //Retrieve ToolboxSecurityWrapper service configuration file, i.e. services.xml
+        File serviceDesFile = ToolboxSecurityConfigurator.getServicesConfigFile();
+        Document services_xmlDoc = null;
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = null;
+        try {
+            db = documentBuilderFactory.newDocumentBuilder();
+            services_xmlDoc = db.parse(serviceDesFile);
+
+        } catch (Exception e) {
+            Toolbox.getInstance().getLogger().error("Impossible to parse the services.xml Axis2 file");
+            throw new ToolboxException("Impossible to parse the services.xml Axis2 file");
+
+        }
+        try {
+            NodeList serviceNodes = services_xmlDoc.getElementsByTagName("service");
+            Element serviceNode = null;
+            String serviceAttrValue = null;
+            for (int index = 0; index < serviceNodes.getLength(); index++) {
+                serviceAttrValue = ((Element) serviceNodes.item(index)).getAttribute("name");
+                if (serviceAttrValue.equals(serviceName)) {
+                    serviceNode = (Element) serviceNodes.item(index);
+                    break;
+                }
+            }
+
+            NodeList operationNodes = serviceNode.getElementsByTagName("operation");
+            Element operationNode = null;
+            String operationAttrValue = null;
+            for (int index = 0; index < operationNodes.getLength(); index++) {
+                operationAttrValue = ((Element) operationNodes.item(index)).getAttribute("name");
+                if (operationAttrValue.equals(NOT_SECURED_OPERATION)) {
+                    operationNode = (Element) operationNodes.item(index);
+                    break;
+                }
+            }
+
+            Element actionMapping = services_xmlDoc.createElement(ACTION_MAPPING);
+            Text actionMappingValue = services_xmlDoc.createTextNode(soapAction);
+            actionMapping.appendChild(actionMappingValue);
+
+            operationNode.appendChild(actionMapping);
+
+
+        } catch (Exception e) {
+            Toolbox.getInstance().getLogger().error("Impossible to add the new operation to Axis2 service");
+            throw new ToolboxException("Impossible to add the new operation to Axis2 service");
+        }
+
+        //save services.xml
+        try {
+            DOMUtil.dumpXML(services_xmlDoc, serviceDesFile);
+        } catch (Exception e) {
+            Toolbox.getInstance().getLogger().error("Impossible to write the services.xml Axis2 file");
+            throw new ToolboxException("Impossible to write the services.xml Axis2 file");
+        }
+    }
+    
+    public static void makeOperationSecureToService(String serviceName, String soapAction) throws ToolboxException {
+        //Retrieve ToolboxSecurityWrapper service configuration file, i.e. services.xml
+        File serviceDesFile = ToolboxSecurityConfigurator.getServicesConfigFile();
+        Document services_xmlDoc = null;
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = null;
+        try {
+            db = documentBuilderFactory.newDocumentBuilder();
+            services_xmlDoc = db.parse(serviceDesFile);
+
+        } catch (Exception e) {
+            Toolbox.getInstance().getLogger().error("Impossible to parse the services.xml Axis2 file");
+            throw new ToolboxException("Impossible to parse the services.xml Axis2 file");
+
+        }
+        try {
+            NodeList serviceNodes = services_xmlDoc.getElementsByTagName("service");
+            Element serviceNode = null;
+            String serviceAttrValue = null;
+            for (int index = 0; index < serviceNodes.getLength(); index++) {
+                serviceAttrValue = ((Element) serviceNodes.item(index)).getAttribute("name");
+                if (serviceAttrValue.equals(serviceName)) {
+                    serviceNode = (Element) serviceNodes.item(index);
+                    break;
+                }
+            }
+
+            NodeList operationNodes = serviceNode.getElementsByTagName("operation");
+            Element unsecOperationNode = null;
+            Element secOperationNode = null;
+            String operationAttrValue = null;
+            for (int index = 0; index < operationNodes.getLength(); index++) {
+                operationAttrValue = ((Element) operationNodes.item(index)).getAttribute("name");
+                if (operationAttrValue.equals(NOT_SECURED_OPERATION)) {
+                    unsecOperationNode = (Element) operationNodes.item(index);
+                }
+                if (operationAttrValue.equals(SECURED_OPERATION)) {
+                    secOperationNode = (Element) operationNodes.item(index);
+                }
+            }
+
+            NodeList actionMappings = unsecOperationNode.getElementsByTagName(ACTION_MAPPING);
+            Element actionMapping = null;
+            for (int index = 0; index < actionMappings.getLength(); index++) {
+                actionMapping = (Element) actionMappings.item(index);
+                if (actionMapping.getTextContent().contains(soapAction)) {
+                    break;
+                }
+            }
+            unsecOperationNode.removeChild(actionMapping);
+            
+            secOperationNode.appendChild(actionMapping);
+
+
+        } catch (Exception e) {
+            Toolbox.getInstance().getLogger().error("Impossible to make the operation secured for the Axis2 service");
+            throw new ToolboxException("Impossible to make the operation secured for the Axis2 service");
+        }
+
+        //save services.xml
+        try {
+            DOMUtil.dumpXML(services_xmlDoc, serviceDesFile);
+        } catch (Exception e) {
+            Toolbox.getInstance().getLogger().error("Impossible to write the services.xml Axis2 file");
+            throw new ToolboxException("Impossible to write the services.xml Axis2 file");
+        }
+    }
+
+    /**
+     * Updates the WS-security layer for the given service:
+     * -sets the JKS information
+     * @param descriptor
+     */
+    public static void updateWSSecurityLayerForService(Service service) throws ToolboxException {
+        //Retrieve ToolboxSecurityWrapper service configuration file, i.e. services.xml
+        File serviceDesFile = ToolboxSecurityConfigurator.getServicesConfigFile();
+        Document services_xmlDoc = null;
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = null;
+        try {
+            db = documentBuilderFactory.newDocumentBuilder();
+            services_xmlDoc = db.parse(serviceDesFile);
+
+        } catch (Exception e) {
+            Toolbox.getInstance().getLogger().error("Impossible to parse the services.xml Axis2 file");
+            throw new ToolboxException("Impossible to parse the services.xml Axis2 file");
+
+        }
+
+        //Retrieve the service from services.xml  
+        String serviceName = service.getServiceName();
+        NodeList serviceNodes = services_xmlDoc.getElementsByTagName("service");
+        Element serviceNode = null;
+        String serviceAttrValue = null;
+        for (int index = 0; index < serviceNodes.getLength(); index++) {
+            serviceAttrValue = ((Element) serviceNodes.item(index)).getAttribute("name");
+            if (serviceAttrValue.equals(serviceName)) {
+                serviceNode = (Element) serviceNodes.item(index);
+                break;
+            }
+        }
+
+
+        Element policyElem = (Element) serviceNode.getElementsByTagName("wsp:Policy").item(0);
+
+        setJKSinfo(policyElem, service);
+
+        //save services.xml
+        try {
+            DOMUtil.dumpXML(services_xmlDoc, serviceDesFile);
+        } catch (Exception e) {
+            Toolbox.getInstance().getLogger().error("Impossible to write the services.xml Axis2 file");
+            throw new ToolboxException("Impossible to write the services.xml Axis2 file");
+        }
+
+        //copy the wss policy for the asynchronous response getDefaultAsynchResponsePolicyPath
+        DOMUtil util = new DOMUtil();
+        try {
+            File defPolicyFile = new File(ToolboxSecurityConfigurator.getDefaultAsynchResponsePolicyPath());
+            Document defPolicy_xmlDoc = null;
+            try {
+                //db = documentBuilderFactory.newDocumentBuilder();
+                //defPolicy_xmlDoc= db.parse(defPolicyFile);
+                defPolicy_xmlDoc = util.fileToDocument(defPolicyFile);
+            } catch (Exception e) {
+                Toolbox.getInstance().getLogger().error("Impossible to parse the policy file for the aynchronous response");
+                throw new ToolboxException("Impossible to parse the policy file for the aynchronous response");
+
+            }
+            Element policy_xmlElem = defPolicy_xmlDoc.getDocumentElement();
+            setJKSinfo(policy_xmlElem, service);
+            //write wss policy
+            try {
+                DOMUtil.dumpXML(defPolicy_xmlDoc, new File(ToolboxSecurityConfigurator.getAsynchResponsePolicyPath(service)));
+            } catch (Exception e) {
+                Toolbox.getInstance().getLogger().error("Impossible to write the policy file for the aynchronous response");
+                throw new ToolboxException("Impossible the policy file for the aynchronous response");
+            }
+        } catch (ToolboxException ex) {
+            //remove the ws-security information already stored
+            try {
+                removeWSSecurityLayerForService(service.getServiceName());
+            } catch (Exception reallyStrangeHere) {
+            }
+            throw ex;
+        }
+    }
 
     /**
      * Removes the given service from the Axis2 services configuration list;
@@ -695,7 +907,10 @@ public class ToolboxSecurityConfigurator {
         //TODO retrieve RampartConfig using xpath???
         //Element rampartConfig = (Element) ((Element) policy.getElementsByTagName("wsp:All").item(0)).getElementsByTagName("ramp:RampartConfig").item(0);
 
-        Element rampartConfig = (Element) policy.getElementsByTagNameNS("http://ws.apache.org/rampart/policy", "RampartConfig").item(0);
+        //Element rampartConfig = (Element) policy.getElementsByTagNameNS("http://ws.apache.org/rampart/policy", "RampartConfig").item(0);
+        
+        NodeList rampartConfigList = policy.getElementsByTagName("ramp:RampartConfig");
+        Element rampartConfig = (Element) rampartConfigList.item(0);
 
         Element userElem = (Element) rampartConfig.getElementsByTagName("ramp:user").item(0);
 

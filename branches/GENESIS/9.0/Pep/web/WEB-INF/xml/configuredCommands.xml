@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chainConfig>
     <catalog id="configuredCommands">
+        <chain id="securityCommands">
+            <command id="authenticationCommands" chain="authenticationCommands"/>
+            <command id="authorizationCommands" chain="authorizationCommands"/>
+        </chain>
         <chain id="authenticationCommands" description="Authentication Steps">
             <command id="persistToken" className="it.intecs.pisa.toolbox.security.chain.commands.PersistSAMLToken" description="Send the token for persistence to configured SAML Bean" selected="false"/>
             <command id="checkTokenTime" className="it.intecs.pisa.toolbox.security.chain.commands.CheckSAMLTokenValidityTime" description="Check the token validity time" selected="false"/>

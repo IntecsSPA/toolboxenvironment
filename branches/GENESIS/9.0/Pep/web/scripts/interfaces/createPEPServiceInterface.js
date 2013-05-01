@@ -209,7 +209,7 @@ CreatePEPServiceInterface=function(){
                 } 
                 if (commandProperties[j].type == "file"){
                     multiInputAuth.addFileField(commandProperties[j].id, commandProperties[j].description, 50, "rest/manager/storefile", 
-                        null, null, "styles/img/loaderFile.gif", "styles/img/fail.png", "styles/img/success.png", fieldSetName, 20);
+                        null, "upload-icon", "styles/img/loaderFile.gif", "styles/img/fail.png", "styles/img/success.png", fieldSetName, 20);
                 }                      
             }
         }

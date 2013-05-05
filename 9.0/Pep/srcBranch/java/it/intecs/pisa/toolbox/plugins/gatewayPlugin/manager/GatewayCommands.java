@@ -9,6 +9,7 @@ import it.intecs.pisa.common.tbx.Script;
 import it.intecs.pisa.pep.rest.RestResponse;
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.security.ToolboxSecurityConfigurator;
+//import it.intecs.pisa.toolbox.security.chain.ConfigurationSecurityCommands;
 import it.intecs.pisa.toolbox.service.ServiceManager;
 import it.intecs.pisa.toolbox.service.TBXScript;
 import it.intecs.pisa.toolbox.service.TBXService;
@@ -26,16 +27,18 @@ import javax.wsdl.*;
 import javax.wsdl.factory.WSDLFactory;
 import javax.wsdl.xml.WSDLReader;
 import javax.xml.namespace.QName;
+import org.w3c.dom.Document;
 
 /**
  *
  * @author Andrea Marongiu
  */
 public class GatewayCommands {
-
+    
     // Json request Properties
     private static String WSDL_URL_PROPERTY = "wsdl";
     private static String SSL_CERTIFICATE_PROPERTY = "sslCertificate";
+    private static String FORWARD_MESSAGE_INCOMING_TOKEN_PROPERTY = "forwardMessageWithIncomingToken";
     private static String FORWARD_MESSAGE_CRYPTED_TOKEN_PROPERTY = "forwardMessageWithCryptedToken";
     private static String FORWARD_MESSAGE_CLEAR_TOKEN_PROPERTY = "forwardMessageWithClearToken";
     private static String KEY_ALIAS_PROPERTY = "keyAlias";
@@ -73,6 +76,7 @@ public class GatewayCommands {
         String wsdlURL = "", sslCertificate = "";
         String jksPasswd = "", jksUser = "", jksFileLocation = "";
         String errorDetails = "", xacmlFileLocation = "";
+        String forwardMessageWithIncomingToken = "";
         String forwardMessageWithClearToken = "";
         String forwardMessageWithCryptedToken = "", keyAlias = "";
         RestResponse createGatewayResponse = new RestResponse("createGatewayService");
@@ -96,6 +100,11 @@ public class GatewayCommands {
             xacmlFileLocation = ((JsonObject) xacmlFileLocationEl).get("uploadID").getAsString();
         }
 
+        JsonElement forwardMessageWithIncomingTokenEl = serviceInformationJson.get(FORWARD_MESSAGE_INCOMING_TOKEN_PROPERTY);
+        if (!(forwardMessageWithIncomingTokenEl == null || forwardMessageWithIncomingTokenEl instanceof com.google.gson.JsonNull)) {
+            forwardMessageWithIncomingToken = forwardMessageWithIncomingTokenEl.getAsString();
+        }
+        
         JsonElement forwardMessageWithClearTokenEl = serviceInformationJson.get(FORWARD_MESSAGE_CLEAR_TOKEN_PROPERTY);
         if (!(forwardMessageWithClearTokenEl == null || forwardMessageWithClearTokenEl instanceof com.google.gson.JsonNull)) {
             forwardMessageWithClearToken = forwardMessageWithClearTokenEl.getAsString();
@@ -134,7 +143,11 @@ public class GatewayCommands {
             errorDetails += "JKS USER (" + JKS_USER_PROPERTY + ") mandatory property missing. ";
         }
         
-
+//        ConfigurationSecurityCommands configCommands  = new ConfigurationSecurityCommands();
+//        String serviceChainPath = configCommands.createAndSaveServiceChain(serviceInformationJson);
+//        if (serviceChainPath == null)
+//            errorDetails += "error in choosing the security steps";
+        
         if (!errorDetails.equals("")) {
             createGatewayResponse.setSuccess(false);
             createGatewayResponse.setDetails(errorDetails);
@@ -170,10 +183,24 @@ public class GatewayCommands {
             jksFile.getParentFile().mkdirs();
             jksFile.createNewFile();
             IOUtil.copy(new FileInputStream(jksFileLocation), new FileOutputStream(jksFile));
+            
+//            File serviceChainFile = new File(serviceRoot + File.separator + "serviceChain.xml");     
+//            serviceChainFile.createNewFile();
+//            IOUtil.copy(new FileInputStream(serviceChainPath), new FileOutputStream(serviceChainFile));
+            //new File(serviceChainPath).delete();
+     
 
             Hashtable<String, Hashtable<String, String>> serviceVariables =
                     new Hashtable<String, Hashtable<String, String>>();
+            
+            
             Hashtable<String, String> variable = new Hashtable<String, String>();
+            variable.put("value", forwardMessageWithIncomingToken);
+            variable.put("type", "boolean");
+            variable.put("displayedText", "Forward message with incoming token");
+            serviceVariables.put("forwardMessageWithIncomingToken", variable);       
+            
+            variable = new Hashtable<String, String>();
             variable.put("value", forwardMessageWithClearToken);
             variable.put("type", "boolean");
             variable.put("displayedText", "Forward message with security token unencrypted");
@@ -364,6 +391,8 @@ public class GatewayCommands {
             serviceVariables = service.getImplementedInterface().getUserVariable();
             Hashtable<String, String> serviceVariable = serviceVariables.get("remoteUrl");
             serviceConf.addProperty("remoteUrl", serviceVariable.get("value"));
+            serviceVariable = serviceVariables.get("forwardMessageWithIncomingToken");
+            serviceConf.addProperty("forwardMessageWithIncomingToken", serviceVariable.get("value"));
             serviceVariable = serviceVariables.get("forwardMessageWithClearToken");
             serviceConf.addProperty("forwardMessageWithClearToken", serviceVariable.get("value"));
             serviceVariable = serviceVariables.get("forwardMessageWithCryptedToken");

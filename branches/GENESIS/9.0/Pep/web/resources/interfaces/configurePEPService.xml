@@ -8,38 +8,40 @@
         </group> 
         
         <group label="Security Forward">
-          <input type="checkbox" name="forwardMessageWithCryptedToken" id="forwardMessageWithCryptedToken" colSpan="10"
-                label="Forward message with security token encrypted" enableInputList="0-keyAlias" 
-                disableInputList="0-forwardMessageWithClearToken"/>    
-          <input type="text" name="keyAlias" id="keyAlias" label="Alias of the key to be used for encryption" value="" optional="false" size="40" disabled="true"/>  
-          <input type="checkbox" name="forwardMessageWithClearToken" id="forwardMessageWithClearToken" colSpan="10"
-                label="Forward message with security token unencrypted" disableInputList="0-forwardMessageWithCryptedToken"/>
+            <input type="checkbox" name="forwardMessageWithIncomingToken" id="forwardMessageWithIncomingToken" colSpan="10"
+                   label="Forward message with incoming security token" disableInputList="0-forwardMessageWithCryptedToken,1-forwardMessageWithClearToken"/>          
+            <input type="checkbox" name="forwardMessageWithCryptedToken" id="forwardMessageWithCryptedToken" colSpan="10"
+                   label="Forward message with security token re-encrypted" enableInputList="0-keyAlias" 
+                   disableInputList="0-forwardMessageWithIncomingToken,0-forwardMessageWithClearToken"/>    
+            <input type="text" name="keyAlias" id="keyAlias" label="Alias of the key to be used for encryption" value="" optional="false" size="40" disabled="true"/>  
+            <input type="checkbox" name="forwardMessageWithClearToken" id="forwardMessageWithClearToken" colSpan="10"
+                   label="Forward message with security token decrypted" disableInputList="0-forwardMessageWithIncomingToken,1-forwardMessageWithCryptedToken"/>
         </group>
         
         <group label="KeyStore">
-              <input type="file" name="jksFileLocation" hideLabel="false" id="jksFileLocation" colSpan="10"
-               optional="true"
-               size="300"
-               autoUploadURL="rest/manager/storefile"
-               iconImage="upload-icon"
-               blankText="Load Service keystore File"
-               label="KeyStore"
-               iconWait="styles/img/loaderFile.gif"
-               iconFailure="styles/img/fail.png"
-               iconSuccess="styles/img/success.png"/>      
+            <input type="file" name="jksFileLocation" hideLabel="false" id="jksFileLocation" colSpan="10"
+                     optional="true"
+                     size="300"
+                     autoUploadURL="rest/manager/storefile"
+                     iconImage="upload-icon"
+                     blankText="Load Service keystore File"
+                     label="KeyStore"
+                     iconWait="styles/img/loaderFile.gif"
+                     iconFailure="styles/img/fail.png"
+                     iconSuccess="styles/img/success.png"/>      
                
         </group>     
         <group label="XACML Service File">
             <input type="file" name="xacmlFileLocation" hideLabel="false" id="xacmlFileLocation" colSpan="10"
-               optional="true"
-               size="300"
-               autoUploadURL="rest/manager/storefile"
-               iconImage="upload-icon"
-               blankText="Load XACML File"
-               label="XACML"
-               iconWait="styles/img/loaderFile.gif"
-               iconFailure="styles/img/fail.png"
-               iconSuccess="styles/img/success.png"/>   
+                   optional="true"
+                   size="300"
+                   autoUploadURL="rest/manager/storefile"
+                   iconImage="upload-icon"
+                   blankText="Load XACML File"
+                   label="XACML"
+                   iconWait="styles/img/loaderFile.gif"
+                   iconFailure="styles/img/fail.png"
+                   iconSuccess="styles/img/success.png"/>   
         </group>    
     </section>   
    

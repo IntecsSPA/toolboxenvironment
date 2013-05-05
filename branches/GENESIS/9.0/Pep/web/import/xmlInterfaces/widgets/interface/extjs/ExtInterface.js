@@ -2832,7 +2832,7 @@ function generateCheckBoxField(field){
               "}}"+
               "var disableInputList=\""+disableInputList+"\";"+
               "if(disableInputList!='null'){"+
-                 "if(enableInputList.indexOf(',') != -1)"+  
+                 "if(disableInputList.indexOf(',') != -1)"+  
                      "arrayInput=disableInputList.split(',');"+
                  "else{"+  
                      "arrayInput=new Array();arrayInput.push(disableInputList);}"+

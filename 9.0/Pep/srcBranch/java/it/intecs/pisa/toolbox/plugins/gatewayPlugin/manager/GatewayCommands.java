@@ -1,8 +1,10 @@
 package it.intecs.pisa.toolbox.plugins.gatewayPlugin.manager;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.ibm.wsdl.extensions.soap.SOAPAddressImpl;
 import com.ibm.wsdl.extensions.soap.SOAPOperationImpl;
 import it.intecs.pisa.common.tbx.Script;
@@ -217,6 +219,11 @@ public class GatewayCommands {
             variable.put("type", "string");
             variable.put("displayedText", "Alias of the key to be used for encryption");
             serviceVariables.put("keyAlias", variable);
+            
+            String chosenCommandsS = serviceInformationJson.get("chosenCommands").toString();                    
+            variable = new Hashtable<String, String>();
+            variable.put("value", chosenCommandsS);
+            serviceVariables.put("chosenCommands", variable);
 
             service.getImplementedInterface().setUserVariables(serviceVariables);
 
@@ -399,6 +406,12 @@ public class GatewayCommands {
             serviceConf.addProperty("forwardMessageWithCryptedToken", serviceVariable.get("value"));
             serviceVariable = serviceVariables.get("keyAlias");
             serviceConf.addProperty("keyAlias", serviceVariable.get("value"));
+            
+            serviceVariable = serviceVariables.get("chosenCommands");
+            String chosenCommandsS = serviceVariable.get("value");
+            JsonParser jsonParser = new JsonParser();
+            JsonElement chosenCommandsJson = jsonParser.parse(chosenCommandsS);
+            serviceConf.add("chosenCommands", chosenCommandsJson);
 
         } catch (Exception ex) {
             ex.printStackTrace();

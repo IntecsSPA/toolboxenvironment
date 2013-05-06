@@ -20,30 +20,31 @@
         
         <group label="KeyStore">
             <input type="file" name="jksFileLocation" hideLabel="false" id="jksFileLocation" colSpan="10"
-                     optional="true"
-                     size="300"
-                     autoUploadURL="rest/manager/storefile"
-                     iconImage="upload-icon"
-                     blankText="Load Service keystore File"
-                     label="KeyStore"
-                     iconWait="styles/img/loaderFile.gif"
-                     iconFailure="styles/img/fail.png"
-                     iconSuccess="styles/img/success.png"/>      
-               
-        </group>     
-        <group label="XACML Service File">
-            <input type="file" name="xacmlFileLocation" hideLabel="false" id="xacmlFileLocation" colSpan="10"
                    optional="true"
                    size="300"
                    autoUploadURL="rest/manager/storefile"
                    iconImage="upload-icon"
-                   blankText="Load XACML File"
-                   label="XACML"
+                   blankText="Load Service keystore File"
+                   label="KeyStore"
                    iconWait="styles/img/loaderFile.gif"
                    iconFailure="styles/img/fail.png"
-                   iconSuccess="styles/img/success.png"/>   
-        </group>    
+                   iconSuccess="styles/img/success.png"/>      
+               
+        </group>     
+       
     </section>   
+    <section name="Authentication Checks">
+        <group label="Select the Authentication Checks">
+            <input type="multitext" name="multiInputAuthentication" id="multiInputAuthentication" label="Authentication Checks" size="50"/>       
+        </group>
+    </section>
+    
+    <section name="Authorization Checks">
+        
+        <group label="Choose the XACML Authorization">
+            <input type="multitext" name="multiInputAuthorization" id="multiInputAuthorization" label="Authorization Choice" size="50"/>       
+        </group>
+    </section>
    
     <requestInformation>
         <buttons>

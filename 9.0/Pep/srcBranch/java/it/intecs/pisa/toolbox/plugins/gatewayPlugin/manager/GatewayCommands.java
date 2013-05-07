@@ -70,6 +70,8 @@ public class GatewayCommands {
     static final String RESPONSE_BUILDER_SCRIPT_FILE_NAME = "respBuilder.tscript";
     static final String RESPONSE_BUILDER_ERROR_SCRIPT_FILE_NAME = "errorOnRespBuilder.tscript";
     static final String GLOBAL_ERROR_SCRIPT_FILE_NAME = "globalError.tscript";
+    
+    private static String TOKEN_MANDATORY = "tokenMandatory";
 
     public GatewayCommands() {
     }
@@ -440,7 +442,7 @@ public class GatewayCommands {
         }
     }
     
-     public JsonObject protectOperation(String operationName, JsonObject operationInformationJson) {
+    public JsonObject protectOperation(String operationName, JsonObject operationInformationJson) {
         RestResponse createGatewayOperationResponse = new RestResponse("createGatewayOperation");
 
         String serviceName, soapAction;
@@ -449,8 +451,8 @@ public class GatewayCommands {
         soapAction = operationInformationJson.get(SOAP_OPERATION_PROPERTY).getAsString();
 
         try {
-            ToolboxSecurityConfigurator.makeOperationSecureToService(serviceName, soapAction);
-
+            boolean tokenMandatory = operationInformationJson.get(TOKEN_MANDATORY).getAsBoolean();         
+             ToolboxSecurityConfigurator.makeOperationSecureToService(serviceName, soapAction, tokenMandatory);
         } catch (Exception ex) {
             createGatewayOperationResponse.setSuccess(false);
             createGatewayOperationResponse.setDetails(ex.getMessage());

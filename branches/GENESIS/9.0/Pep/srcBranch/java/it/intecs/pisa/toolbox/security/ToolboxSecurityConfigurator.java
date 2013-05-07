@@ -37,6 +37,8 @@ public class ToolboxSecurityConfigurator {
 
      public static String SECURED_OPERATION = "execute";
      public static String NOT_SECURED_OPERATION = "pass";
+     public static String OPTIONAL_SECURED_OPERATION = "check";
+     
      public static String ACTION_MAPPING = "actionMapping";
       
     /**
@@ -629,8 +631,8 @@ public class ToolboxSecurityConfigurator {
         }
     }
     
-    public static void makeOperationSecureToService(String serviceName, String soapAction) throws ToolboxException {
-        //Retrieve ToolboxSecurityWrapper service configuration file, i.e. services.xml
+   public static void makeOperationSecureToService(String serviceName, String soapAction, boolean mandatory) throws ToolboxException {
+        //Retrieve ToolboxSecurityWrapper service configuration file, i.e. services.xml      
         File serviceDesFile = ToolboxSecurityConfigurator.getServicesConfigFile();
         Document services_xmlDoc = null;
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -659,6 +661,7 @@ public class ToolboxSecurityConfigurator {
             NodeList operationNodes = serviceNode.getElementsByTagName("operation");
             Element unsecOperationNode = null;
             Element secOperationNode = null;
+            Element optionalSecOperationNode = null;
             String operationAttrValue = null;
             for (int index = 0; index < operationNodes.getLength(); index++) {
                 operationAttrValue = ((Element) operationNodes.item(index)).getAttribute("name");
@@ -667,6 +670,9 @@ public class ToolboxSecurityConfigurator {
                 }
                 if (operationAttrValue.equals(SECURED_OPERATION)) {
                     secOperationNode = (Element) operationNodes.item(index);
+                }
+                 if (operationAttrValue.equals(OPTIONAL_SECURED_OPERATION)) {
+                    optionalSecOperationNode = (Element) operationNodes.item(index);
                 }
             }
 
@@ -680,12 +686,19 @@ public class ToolboxSecurityConfigurator {
             }
             unsecOperationNode.removeChild(actionMapping);
             
-            secOperationNode.appendChild(actionMapping);
-
+            if (mandatory)
+                secOperationNode.appendChild(actionMapping);
+            else
+               optionalSecOperationNode.appendChild(actionMapping); 
 
         } catch (Exception e) {
-            Toolbox.getInstance().getLogger().error("Impossible to make the operation secured for the Axis2 service");
-            throw new ToolboxException("Impossible to make the operation secured for the Axis2 service");
+            String securityInfo = null;
+            if (mandatory)
+                securityInfo = "mandatory";
+            else
+                securityInfo = "optional";
+            Toolbox.getInstance().getLogger().error("Impossible to make the operation " + securityInfo + " secured for the Axis2 service");
+            throw new ToolboxException("Impossible to make the operation " + securityInfo + " secured for the Axis2 service");
         }
 
         //save services.xml

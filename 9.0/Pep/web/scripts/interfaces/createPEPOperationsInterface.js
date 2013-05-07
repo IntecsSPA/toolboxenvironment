@@ -40,6 +40,7 @@ CreatePEPOperationsInterface=function(operationsData, serviceName){
             currCheckBox=Ext.getCmp(this.operationInfo[i].operation);
             if(currCheckBox.getValue()){
                 numeberChecked++;
+                this.operationInfo[i].tokenMandatory = Ext.getCmp("tokenMandatory").getValue();
                 var createOperationFunc=function(response){
                     var jsonResponse=JSON.parse(response);
             

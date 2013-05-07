@@ -84,6 +84,9 @@
 		</wsp:Policy>
 		<!--END SECURITY -->
 	</operation>
+        <operation name="check">
+		<messageReceiver class="org.apache.axis2.receivers.RawXMLINOutMessageReceiver"/>
+	</operation>
 	<operation name="pass">
 		<messageReceiver class="org.apache.axis2.receivers.RawXMLINOutMessageReceiver"/>
 	</operation>

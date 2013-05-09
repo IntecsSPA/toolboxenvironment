@@ -11,7 +11,7 @@ import it.intecs.pisa.common.tbx.Script;
 import it.intecs.pisa.pep.rest.RestResponse;
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.security.ToolboxSecurityConfigurator;
-//import it.intecs.pisa.toolbox.security.chain.ConfigurationSecurityCommands;
+import it.intecs.pisa.toolbox.security.chain.ConfigurationSecurityCommands;
 import it.intecs.pisa.toolbox.service.ServiceManager;
 import it.intecs.pisa.toolbox.service.TBXScript;
 import it.intecs.pisa.toolbox.service.TBXService;
@@ -147,10 +147,10 @@ public class GatewayCommands {
             errorDetails += "JKS USER (" + JKS_USER_PROPERTY + ") mandatory property missing. ";
         }
         
-//        ConfigurationSecurityCommands configCommands  = new ConfigurationSecurityCommands();
-//        String serviceChainPath = configCommands.createAndSaveServiceChain(serviceInformationJson);
-//        if (serviceChainPath == null)
-//            errorDetails += "error in choosing the security steps";
+        ConfigurationSecurityCommands configCommands  = new ConfigurationSecurityCommands();
+        String serviceChainPath = configCommands.createAndSaveServiceChain(serviceInformationJson);
+        if (serviceChainPath == null)
+            errorDetails += "error in choosing the security steps";
         
         if (!errorDetails.equals("")) {
             createGatewayResponse.setSuccess(false);
@@ -188,9 +188,9 @@ public class GatewayCommands {
             jksFile.createNewFile();
             IOUtil.copy(new FileInputStream(jksFileLocation), new FileOutputStream(jksFile));
             
-//            File serviceChainFile = new File(serviceRoot + File.separator + "serviceChain.xml");     
-//            serviceChainFile.createNewFile();
-//            IOUtil.copy(new FileInputStream(serviceChainPath), new FileOutputStream(serviceChainFile));
+            File serviceChainFile = new File(serviceRoot + File.separator + "serviceChain.xml");     
+            serviceChainFile.createNewFile();
+            IOUtil.copy(new FileInputStream(serviceChainPath), new FileOutputStream(serviceChainFile));
             //new File(serviceChainPath).delete();
      
 

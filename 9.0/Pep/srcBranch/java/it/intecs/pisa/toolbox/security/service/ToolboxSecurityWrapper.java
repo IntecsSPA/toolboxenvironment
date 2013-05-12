@@ -267,7 +267,7 @@ public class ToolboxSecurityWrapper {
 
                 }
             }
-
+            
             //now pass the request to the Toolbox
             Toolbox toolbox = Toolbox.getInstance();
             String uri = req.getRequestURI();
@@ -385,20 +385,9 @@ public class ToolboxSecurityWrapper {
     private Result callServiceChain(String serviceName, MessageContext msgCtx) {
 
         Logger logger = Toolbox.getInstance().getLogger();
-
-        File file = Toolbox.getInstance().getServiceRoot(serviceName);
-        if (file == null) {
-            return new Result(Result.FAIL);
-        }
-        String serviceCommandsPath = null;
-         try {
-             serviceCommandsPath = file.getCanonicalPath() + File.separator + "serviceChain.xml";
-         } catch (Exception e) {
-             e.printStackTrace();
-             return new Result(Result.FAIL);
-         }
-          
-        serviceCommandsPath = "services/" + serviceName + "/serviceChain.xml";
+         
+        // the ChainManager expects a configuration file in the path WEB-INF/classes
+        String serviceCommandsPath = "../services/" + serviceName + "/serviceChain.xml";
         ChainManager cm = new ChainManager(serviceCommandsPath);
         ChainContext ct = cm.createContext();
         ct.setAttribute(CommandsConstants.MESSAGE_CONTEXT, msgCtx);

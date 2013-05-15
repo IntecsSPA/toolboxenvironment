@@ -23,16 +23,25 @@ ConfigurePEPServiceInterface=function(serviceName){
       
     this.init=function(){
         this.formInterface=createPanelExjFormByXml(this.xmlInterface, interfacesManager.lang, this.serviceName);
+        this.updateServiceCurrentConfiguration();
+        this.populateSteps("multiInputAuthentication" + this.serviceName, this.currentConfiguration.chosenCommands.authentication.commands);
+        this.populateSteps("multiInputAuthorization" + this.serviceName, this.currentConfiguration.chosenCommands.authorization.commands);
+
     },
 
-    this.render=function (elementID){
-        this.updateServiceCurrentConfiguration();
+    this.render=function (elementID){   
         this.formInterface.setJSONValues(this.currentConfiguration);
         this.formInterface.formsPanel.render(document.getElementById(elementID));
         this.formInterface.render();
     };
     
-    this.onSave=function(){
+    this.onSave=function(){ 
+       var chosenSteps = this.currentConfiguration.chosenCommands;
+        
+       this.getStepsValue(chosenSteps.authentication.commands);
+       this.getStepsValue(chosenSteps.authorization.commands);
+       //console.log(JSON.stringify(chosenSteps.authentication.commands));
+        
         var newJksFileID=null;
         var newXacmlFileID=null;
         if(this.formInterface.getFormValues().jksFileLocation)
@@ -40,6 +49,7 @@ ConfigurePEPServiceInterface=function(serviceName){
         if(this.formInterface.getFormValues().xacmlFileLocation)
             newXacmlFileID=this.formInterface.getFormValues().xacmlFileLocation.uploadID;
         var jsonRequest=JSON.parse(this.formInterface.getJsonValueObject());
+        jsonRequest.chosenCommands = chosenSteps;
         
         if(jsonRequest){
           
@@ -102,7 +112,7 @@ ConfigurePEPServiceInterface=function(serviceName){
             headers.push("Content-Type,application/json");
             var onSubmit=sendAuthenticationXmlHttpRequestTimeOut("PUT",
                 this.restURL+this.serviceName,
-                false, this.formInterface.getJsonValueObject(), 
+                false, JSON.stringify(jsonRequest), 
                 interfacesManager.user, interfacesManager.password, 
                 800000, updatePEPServiceFunc, updatePEPServiceTimeOut,headers,
                 null, updatePEPServiceError);
@@ -155,7 +165,61 @@ ConfigurePEPServiceInterface=function(serviceName){
             null, getPepServiceConfError);  
         
         this.currentConfiguration=configuration;
-    }
+    };
+    
+    this.populateSteps = function(component, commands) {
+        var multiInputAuth = Ext.getCmp(component); 
+        for (var i = 0; i < commands.length; i++) {
+            var fieldSetName = "field_" + commands[i].id;
+            multiInputAuth.addFieldSet(fieldSetName, null, null, false, null);
+            var commandProperties = commands[i].properties;
+            var commandIdArray = new Array();
+            for (var j = 0; j < commandProperties.length; j++) {
+                commandIdArray[j] = commandProperties[j].id;
+            }
+            var commandFun = function(commandIdArray) {
+                for (var j = 0; j < commandIdArray.length; j++) {
+                    var isDisabled = Ext.getCmp(commandIdArray[j]).disabled;
+                    Ext.getCmp(commandIdArray[j]).setDisabled(!isDisabled);
+                }
+            };
+            
+            multiInputAuth.addCheckBox(commands[i].id, commands[i].description,
+                    commandFun, fieldSetName, null, null, commands[i].selected);
+            for (var j = 0; j < commandProperties.length; j++) {
+                if (commandProperties[j].type == "text") {
+                    multiInputAuth.addTextField(commandProperties[j].id, commandProperties[j].description,
+                            commandProperties[j].value, 30, fieldSetName, 50, null, false);
+                }
+                if (commandProperties[j].type == "file") {
+                    multiInputAuth.addFileField(commandProperties[j].id, commandProperties[j].description, 50, "rest/manager/storefile",
+                            null, "upload-icon", "styles/img/loaderFile.gif", "styles/img/fail.png", "styles/img/success.png", fieldSetName, 50);
+                }
+            }
+        }
+        multiInputAuth.doLayout();
+    };
+    
+    this.getStepsValue = function(commands){    
+        for(var i=0; i < commands.length;i++){
+            commands[i].selected = Ext.getCmp(commands[i].id).getValue();
+            var commandProperties = commands[i].properties;
+            for (var j=0; j < commandProperties.length; j++){  
+                if (commandProperties[j].type == "text"){
+                    commandProperties[j].value = Ext.getCmp(commandProperties[j].id).getValue();
+                } 
+                if (commandProperties[j].type == "file"){
+                    var fileName = Ext.getCmp(commandProperties[j].id + "_file").getValue();
+                    var filePath = Ext.getCmp(commandProperties[j].id + "UploadID").getValue();
+                    commandProperties[j].value = {
+                        "fileName" : fileName,
+                        "uploadID" : filePath
+                    };               
+                }            
+            }
+        }
+        
+    };
     
     this.init();
 };

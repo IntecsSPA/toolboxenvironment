@@ -136,7 +136,7 @@
                             });
                         },
                         
-                        addCheckBox: function(checkboxID, checkboxlabel, checkboxOnChange,fieldSetId, colspan, itemCls){
+                        addCheckBox: function(checkboxID, checkboxlabel, checkboxOnChange,fieldSetId, colspan, itemCls, isChecked){
                             var colspanDef=1;
                            if(colspan)
                               colspanDef= colspan;
@@ -152,7 +152,7 @@
                                 },
                                 boxLabel: checkboxlabel,
                                 label: checkboxlabel,
-                                //checked: field.value,
+                                checked: isChecked,
                                 hideLabel: true,
                                 id: checkboxID
                             });

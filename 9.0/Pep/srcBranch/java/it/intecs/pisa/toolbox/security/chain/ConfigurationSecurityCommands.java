@@ -8,7 +8,6 @@ import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.util.DOMUtil;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.io.File;
@@ -37,12 +36,10 @@ public class ConfigurationSecurityCommands {
     private static String AUTHENTICATION_COMMANDS = "authenticationCommands";
     private static String AUTHORIZATION_COMMANDS = "authorizationCommands";
     static Logger logger = Logger.getLogger(ConfigurationSecurityCommands.class);
-    
-    String serviceName = null;
 
-    public Document createChainForService(JsonObject serviceInformationJson) {
+    public Document createChainForService(String serviceName, JsonObject serviceInformationJson) {
         Document serviceChain = null;
-        
+
         try {
             File stepsFile = new File(Toolbox.getInstance().getRootDir(), COMMANDS_CONFIGURATION_FILE);
 
@@ -53,8 +50,6 @@ public class ConfigurationSecurityCommands {
             // Set the name of the service catalog commands
             Element catalogEl = (Element) serviceChain.getElementsByTagName("catalog").item(0);
             Attr attr = catalogEl.getAttributeNode("id");
-            JsonElement serviceNameJson = serviceInformationJson.get("serviceName");
-            serviceName = serviceNameJson.getAsString();
             attr.setValue(serviceName);
 
             logger.info("Creating service command chain for service " + serviceName);
@@ -82,19 +77,24 @@ public class ConfigurationSecurityCommands {
         } catch (Exception ex) {
             logger.error("Error when creating command chain for service " + serviceName);
             ex.printStackTrace();
+            return null;
         }
 
         return serviceChain;
     }
 
-    public String saveServiceChainToFile(Document serviceChain) {
+    public String saveServiceChainToFile(String serviceName, Document serviceChain) {
         String filePath = null;
         try {
-            
-            logger.info("Saving service command chain for service " + serviceName + " to temporary folder" );
-            
+            if (serviceChain == null) {
+                logger.error("The service command chain for service " + serviceName + " is null");
+                return filePath;
+            }
+
+            logger.info("Saving service command chain for service " + serviceName + " to temporary folder");
+
             File outputFile = File.createTempFile("serviceChain", ".xml");
-            
+
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(serviceChain);
@@ -106,21 +106,21 @@ public class ConfigurationSecurityCommands {
             // filePath = filePath.replaceAll("\\\\", "\\\\\\\\");
 
         } catch (TransformerException tfe) {
-             logger.error("Error when saving service command chain for service " + serviceName);
+            logger.error("Error when saving service command chain for service " + serviceName);
             tfe.printStackTrace();
         } catch (IOException ioe) {
-             logger.error("Error when saving service command chain for service " + serviceName);
+            logger.error("Error when saving service command chain for service " + serviceName);
             ioe.printStackTrace();
         }
         return filePath;
 
     }
 
-    public String createAndSaveServiceChain(JsonObject serviceInformationJson) {
+    public String createAndSaveServiceChain(String serviceName, JsonObject serviceInformationJson) {
         String pathFile = null;
         try {
-            Document serviceChain = createChainForService(serviceInformationJson);
-            pathFile = saveServiceChainToFile(serviceChain);
+            Document serviceChain = createChainForService(serviceName, serviceInformationJson);
+            pathFile = saveServiceChainToFile(serviceName, serviceChain);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

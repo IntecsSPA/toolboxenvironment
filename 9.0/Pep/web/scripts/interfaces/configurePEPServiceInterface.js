@@ -177,19 +177,19 @@ ConfigurePEPServiceInterface=function(serviceName){
             for (var j = 0; j < commandProperties.length; j++) {
                 commandIdArray[j] = commandProperties[j].id;
             }
-            var commandFun = function(commandIdArray) {
+            var commandFun = function() {
+                var commandIdArray = this.dependComps;
                 for (var j = 0; j < commandIdArray.length; j++) {
                     var isDisabled = Ext.getCmp(commandIdArray[j]).disabled;
                     Ext.getCmp(commandIdArray[j]).setDisabled(!isDisabled);
                 }
-            };
-            
+            };         
             multiInputAuth.addCheckBox(commands[i].id, commands[i].description,
-                    commandFun, fieldSetName, null, null, commands[i].selected);
+                    commandFun, fieldSetName, null, commandIdArray, commands[i].selected);
             for (var j = 0; j < commandProperties.length; j++) {
                 if (commandProperties[j].type == "text") {
                     multiInputAuth.addTextField(commandProperties[j].id, commandProperties[j].description,
-                            commandProperties[j].value, 30, fieldSetName, 50, null, false);
+                            commandProperties[j].value, 30, fieldSetName, 50, null, !(commands[i].selected));
                 }
                 if (commandProperties[j].type == "file") {
                     multiInputAuth.addFileField(commandProperties[j].id, commandProperties[j].description, 50, "rest/manager/storefile",

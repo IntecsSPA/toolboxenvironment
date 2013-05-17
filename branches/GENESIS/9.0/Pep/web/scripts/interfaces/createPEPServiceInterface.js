@@ -216,7 +216,7 @@ CreatePEPServiceInterface=function(){
             for (var j = 0; j < commandProperties.length; j++) {
                 if (commandProperties[j].type == "text") {
                     multiInputAuth.addTextField(commandProperties[j].id, commandProperties[j].description,
-                            commandProperties[j].value, 30, fieldSetName, 50, null, false);
+                            commandProperties[j].value, 30, fieldSetName, 50, null, true);
                 }
                 if (commandProperties[j].type == "file") {
                     multiInputAuth.addFileField(commandProperties[j].id, commandProperties[j].description, 50, "rest/manager/storefile",

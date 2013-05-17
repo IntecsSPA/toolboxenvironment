@@ -24,7 +24,7 @@ CreatePEPServiceInterface=function(){
 
     this.render=function (elementID){      
         this.formInterface.formsPanel.render(document.getElementById(elementID));
-        this.formInterface.render();
+        this.formInterface.render();       
     };
 
 
@@ -98,7 +98,7 @@ CreatePEPServiceInterface=function(){
                         "Select PEP Operations", null, false, null);
                     for(var i=0; i<operations.length;i++){
                         multiInputOperations.addCheckBox(operations[i].operation, 
-                            operations[i].operation, function(){}, fieldSetName, null, null);
+                            operations[i].operation, function(){}, fieldSetName, null, null, false);
                         
                     }
                     multiInputOperations.doLayout();
@@ -194,26 +194,37 @@ CreatePEPServiceInterface=function(){
         this.configuredSteps=configuredStepsTemp;
     };
     
-    this.populateSteps=function(component, commands){
-        var multiInputAuth=Ext.getCmp(component);
-        for(var i=0; i < commands.length;i++){
-            var fieldSetName= "field_" + commands[i].id;
+    this.populateSteps = function(component, commands) {
+        var multiInputAuth = Ext.getCmp(component);
+        for (var i = 0; i < commands.length; i++) {
+            var fieldSetName = "field_" + commands[i].id;
             multiInputAuth.addFieldSet(fieldSetName, null, null, false, null);
-            multiInputAuth.addCheckBox(commands[i].id, commands[i].description, 
-                function(){}, fieldSetName, 20, null);
             var commandProperties = commands[i].properties;
-            for (var j=0; j < commandProperties.length; j++){
-                if (commandProperties[j].type == "text"){
-                    multiInputAuth.addTextField(commandProperties[j].id, commandProperties[j].description, 
-                        commandProperties[j].value, 30, fieldSetName, 20, null, false);
-                } 
-                if (commandProperties[j].type == "file"){
-                    multiInputAuth.addFileField(commandProperties[j].id, commandProperties[j].description, 50, "rest/manager/storefile", 
-                        null, "upload-icon", "styles/img/loaderFile.gif", "styles/img/fail.png", "styles/img/success.png", fieldSetName, 20);
-                }                      
+            var commandIdArray = new Array();
+            for (var j = 0; j < commandProperties.length; j++) {
+                commandIdArray[j] = commandProperties[j].id;
+            }
+            var commandFun = function() {
+                var commandIdArray = this.dependComps;
+                for (var j = 0; j < commandIdArray.length; j++) {
+                    var isDisabled = Ext.getCmp(commandIdArray[j]).disabled;
+                    Ext.getCmp(commandIdArray[j]).setDisabled(!isDisabled);
+                }
+            };
+            multiInputAuth.addCheckBox(commands[i].id, commands[i].description,
+                    commandFun, fieldSetName, null, commandIdArray, false);
+            for (var j = 0; j < commandProperties.length; j++) {
+                if (commandProperties[j].type == "text") {
+                    multiInputAuth.addTextField(commandProperties[j].id, commandProperties[j].description,
+                            commandProperties[j].value, 30, fieldSetName, 50, null, commands[i].selected);
+                }
+                if (commandProperties[j].type == "file") {
+                    multiInputAuth.addFileField(commandProperties[j].id, commandProperties[j].description, 50, "rest/manager/storefile",
+                            null, "upload-icon", "styles/img/loaderFile.gif", "styles/img/fail.png", "styles/img/success.png", fieldSetName, 50);
+                }
             }
         }
-        multiInputAuth.doLayout();  
+        multiInputAuth.doLayout();
     };
     
     this.getStepsValue = function(commands){    

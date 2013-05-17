@@ -4,22 +4,19 @@
  */
 package it.intecs.pisa.pep.rest.resources;
 
-import com.google.gson.JsonArray;
 import it.intecs.pisa.pep.rest.AuthenticationManager;
 import it.intecs.pisa.pep.rest.RestResponse;
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.util.DOMUtil;
 import it.intecs.pisa.util.json.JsonUtil;
 
-import com.google.gson.JsonElement;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.io.File;
-import java.io.FileReader;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -45,9 +42,9 @@ public class ConfiguredCommandsResource {
 
     @Context
     private UriInfo context;
-    private String COMMANDS_CONFIGURATION_FILE = "WEB-INF/xml/configuredCommands.xml";
-    private String AUTHENTICATION_COMMANDS = "authenticationCommands";
-    private String AUTHORIZATION_COMMANDS = "authorizationCommands";
+    private static String COMMANDS_CONFIGURATION_FILE = "WEB-INF/xml/configuredCommands.xml";
+    private static String AUTHENTICATION_COMMANDS = "authenticationCommands";
+    private static String AUTHORIZATION_COMMANDS = "authorizationCommands";
 
     /** Creates a new instance of ConfiguredCommandsResource */
     public ConfiguredCommandsResource() {

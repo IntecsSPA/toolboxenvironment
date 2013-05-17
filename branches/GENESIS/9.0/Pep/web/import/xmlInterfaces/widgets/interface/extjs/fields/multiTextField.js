@@ -136,8 +136,8 @@
                             });
                         },
                         
-                        addCheckBox: function(checkboxID, checkboxlabel, checkboxOnChange,fieldSetId, colspan, itemCls, isChecked){
-                            var colspanDef=1;
+                        addCheckBox: function(checkboxID, checkboxlabel, checkboxOnChange,fieldSetId, colspan, checkboxDepItems, isChecked){
+                           var colspanDef=1;
                            if(colspan)
                               colspanDef= colspan;
                             var checkboxField=new Ext.form.Checkbox({
@@ -154,7 +154,10 @@
                                 label: checkboxlabel,
                                 checked: isChecked,
                                 hideLabel: true,
-                                id: checkboxID
+                                id: checkboxID,
+                                // added to enable/disable other components 
+                                // when this checkbox is checked/uncheked
+                                dependComps: checkboxDepItems
                             });
                             var cmp=this;
                             if(fieldSetId)

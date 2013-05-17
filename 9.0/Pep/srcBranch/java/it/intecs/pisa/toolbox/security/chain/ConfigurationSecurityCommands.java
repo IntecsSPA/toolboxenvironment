@@ -116,7 +116,7 @@ public class ConfigurationSecurityCommands {
 
     }
 
-    public String createAndSaveServiceChain(String serviceName, JsonObject serviceInformationJson) {
+    public String createAndSaveServiceChainToTempFolder(String serviceName, JsonObject serviceInformationJson) {
         String pathFile = null;
         try {
             Document serviceChain = createChainForService(serviceName, serviceInformationJson);
@@ -125,6 +125,14 @@ public class ConfigurationSecurityCommands {
             ex.printStackTrace();
         }
         return pathFile;
+    }
+
+    public void createAndSaveServiceChainToServiceFolder(String serviceName, JsonObject serviceInformationJson) throws Exception {
+
+        Document serviceChain = createChainForService(serviceName, serviceInformationJson);
+        File serviceRoot = Toolbox.getInstance().getServiceRoot(serviceName);
+        File serviceChainFile = new File(serviceRoot + File.separator + "serviceChain.xml");
+        DOMUtil.dumpXML(serviceChain, serviceChainFile);
     }
 
     private void configureServiceCommands(Element chainDOM, JsonObject chainJson) {

@@ -32,6 +32,8 @@ import org.apache.axiom.om.OMAbstractFactory;
 
 
 import org.apache.axiom.om.OMElement;
+import org.apache.axiom.om.OMFactory;
+import org.apache.axiom.om.OMNamespace;
 import org.apache.axiom.soap.SOAPEnvelope;
 import org.apache.axiom.soap.SOAPFactory;
 import org.apache.axiom.soap.SOAPFault;
@@ -64,6 +66,9 @@ import org.xml.sax.SAXException;
 public class ToolboxSecurityWrapper {
 
     public static final String SERVICE_NAME = "ToolboxSecurityWrapper";
+    // the following string shall preced the specific detail 
+    // of possible failure in the policy enforcement process
+    private static String policyEnforcementError = "Policy enforcement restricts access. ";
 
     /**
      * payload: represents the payload of the incoming SOAP message.
@@ -75,57 +80,73 @@ public class ToolboxSecurityWrapper {
         AxisFault fault = null;
         Logger logger = Toolbox.getInstance().getLogger();
         logger.info("Processing secured operation");
+
+        MessageContext msgCtx = MessageContext.getCurrentMessageContext();
+
+        HttpServletRequest req = (HttpServletRequest) msgCtx.getProperty("transport.http.servletRequest");
+
+        //String soapAction = msgCtx.getSoapAction();
+        //System.out.println("ToolboxSecurityWrapper: soapAction = "+soapAction);
+
         try {
+            //retrieve the SAML token, if any
+            SAMLAssertion saml = null;
 
-            MessageContext msgCtx = MessageContext.getCurrentMessageContext();
+            //Object samlobj = (SAMLAssertion) msgCtx.getConfigurationContext().getProperty("SAMLToken");
 
-            //String soapAction = msgCtx.getSoapAction();
+            Vector results = null;
+            if ((results = (Vector) msgCtx.getProperty(WSHandlerConstants.RECV_RESULTS)) == null) {
+                logger.info("ToolboxSecurityWrapper, No security results!!");
+            } else {
+                for (int i = 0; i < results.size(); i++) {
+                    //Get hold of the WSHandlerResult instance
+                    WSHandlerResult rResult = (WSHandlerResult) results.get(i);
+                    Vector wsSecEngineResults = rResult.getResults();
+
+                    for (int j = 0; j < wsSecEngineResults.size(); j++) {
+                        //Get hold of the WSSecurityEngineResult instance
+                        WSSecurityEngineResult wser = (WSSecurityEngineResult) wsSecEngineResults.get(j);
+                        if (wser.get(WSSecurityEngineResult.TAG_SAML_ASSERTION) != null) {
+
+                            saml = (SAMLAssertion) wser.get(WSSecurityEngineResult.TAG_SAML_ASSERTION);
+                        }
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            logger.error("ToolboxSecurityWrapper, an exception occurs while trying to retrieve the SAML token!!!", ex);
+        }
+
+        // TODO : PEP should be called even if SAML is null???
+
+        try {
             String operationName = Toolbox.getOperationName(msgCtx);
-            //System.out.println("ToolboxSecurityWrapper: soapAction = "+soapAction);
-
-            HttpServletRequest req = (HttpServletRequest) msgCtx.getProperty("transport.http.servletRequest");
 
             String[] requestSplit = req.getRequestURI().split("/");
             String serviceName = requestSplit[requestSplit.length - 1];
 
-            //retrieve the SAML token, if any
-            SAMLAssertion saml = null;
-            try {
-                //Object samlobj = (SAMLAssertion) msgCtx.getConfigurationContext().getProperty("SAMLToken");
+            Result result = callServiceChain(serviceName, msgCtx);
+            if (result.getCode() == Result.FAIL) {
+                String denyMsg = result.getExtraInfo();
+                fault = generateExceptionReport(msgCtx, policyEnforcementError + denyMsg);
 
-                Vector results = null;
-                if ((results = (Vector) msgCtx.getProperty(WSHandlerConstants.RECV_RESULTS)) == null) {
-                    logger.info("ToolboxSecurityWrapper, No security results!!");
-                } else {
-                    for (int i = 0; i < results.size(); i++) {
-                        //Get hold of the WSHandlerResult instance
-                        WSHandlerResult rResult = (WSHandlerResult) results.get(i);
-                        Vector wsSecEngineResults = rResult.getResults();
+                OMElement soapElemOM = msgCtx.getEnvelope();//.getBody().getFirstElement();
 
-                        for (int j = 0; j < wsSecEngineResults.size(); j++) {
-                            //Get hold of the WSSecurityEngineResult instance
-                            WSSecurityEngineResult wser = (WSSecurityEngineResult) wsSecEngineResults.get(j);
-                            if (wser.get(WSSecurityEngineResult.TAG_SAML_ASSERTION) != null) {
+                Element soapElemDOM = XMLUtils.toDOM(soapElemOM);
+                Document soapDoc = soapElemDOM.getOwnerDocument();
+                storeAccessDeniedInstanceIntoDB(soapDoc, serviceName, operationName, fault);
 
-                                saml = (SAMLAssertion) wser.get(WSSecurityEngineResult.TAG_SAML_ASSERTION);
-                            }
-                        }
-                    }
-                }
-            } catch (Exception ex) {
-                logger.error("ToolboxSecurityWrapper, an exception occurs while trying to retrieve the SAML token!!!", ex);
+                throw fault;
             }
-
-            // TODO : PEP should be called even if SAML is null???
-
-            //callServiceChain(serviceName, msgCtx);
-
-            try {
-                Result result = callServiceChain(serviceName, msgCtx);
+            if (isIncomingTokenToBeRestored(serviceName)) {
+                ChainManager cm = new ChainManager();
+                ChainContext ct = cm.createContext();
+                ct.setAttribute(CommandsConstants.MESSAGE_CONTEXT, msgCtx);
+                cm.executeChain("default/restoreChain", ct);
+                result = ct.getResult();
                 if (result.getCode() == Result.FAIL) {
                     String denyMsg = result.getExtraInfo();
-                    fault = new AxisFault(new QName("http://www.intecs.it/PEP", "AccessDenied", "pep"), denyMsg,
-                            new Exception("PEP: Deny!"));
+                    fault = generateExceptionReport(msgCtx, policyEnforcementError + denyMsg);
 
                     OMElement soapElemOM = msgCtx.getEnvelope();//.getBody().getFirstElement();
 
@@ -135,42 +156,20 @@ public class ToolboxSecurityWrapper {
 
                     throw fault;
                 }
-                if (isIncomingTokenToBeRestored(serviceName)) {
-                    ChainManager cm = new ChainManager();
-                    ChainContext ct = cm.createContext();
-                    ct.setAttribute(CommandsConstants.MESSAGE_CONTEXT, msgCtx);
-                    cm.executeChain("default/restoreChain", ct);
-                    result = ct.getResult();
-                    if (result.getCode() == Result.FAIL) {
-                        logger.error("Restoring incoming token failed");
-                        throw new AxisFault("");
-                    }
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
             }
-            //policies checked successfully
-            //now re-route the request
-            /*
-             ServiceClient client = new ServiceClient(msgCtx.getConfigurationContext(), null);
-            
-             Options options = new Options();
-             options.setAction(soapAction);
-            
-             //retrieve the endpoint address from the services.xml
-             String targetendpoint = (String) msgCtx.getAxisService().getParameter("TargetServiceEndPoint").getValue();
-             options.setTo(new EndpointReference(targetendpoint));
-            
-             //set chunked to false, otherwise the request fails...
-             options.setProperty(org.apache.axis2.transport.http.HTTPConstants.CHUNKED, Boolean.FALSE);
-             //options.setSoapVersionURI(SOAP12Constants.SOAP_ENVELOPE_NAMESPACE_URI);
-             client.setOptions(options);
-            
-             //System.out.println("ToolboxSecurityWrapper invoking request  : " + msgCtx.getEnvelope().getBody().getFirstElement().toStringWithConsume());
-             System.out.println("ToolboxSecurityWrapper invoking request....");
-             response = client.sendReceive(msgCtx.getEnvelope().getBody().getFirstElement());*/
-
-            //Toolbox takes the entire envelope...
+        } catch (Exception ex) {
+            ex.getMessage();
+            if (fault != null) {
+                throw fault;
+            } else {
+                fault = generateExceptionReport(msgCtx, policyEnforcementError + ex.getMessage());
+                throw fault;
+            }
+        }
+        //policies checked successfully
+        //now re-route the request
+        //Toolbox takes the entire envelope...
+        try {
             Element soapRequestDocument = XMLUtils.toDOM(msgCtx.getEnvelope());
 
             //now pass the request to the Toolbox
@@ -267,7 +266,7 @@ public class ToolboxSecurityWrapper {
 
                 }
             }
-            
+
             //now pass the request to the Toolbox
             Toolbox toolbox = Toolbox.getInstance();
             String uri = req.getRequestURI();
@@ -385,7 +384,7 @@ public class ToolboxSecurityWrapper {
     private Result callServiceChain(String serviceName, MessageContext msgCtx) {
 
         Logger logger = Toolbox.getInstance().getLogger();
-         
+
         // the ChainManager expects a configuration file in the path WEB-INF/classes
         String serviceCommandsPath = "../services/" + serviceName + "/serviceChain.xml";
         ChainManager cm = new ChainManager(serviceCommandsPath);
@@ -415,5 +414,52 @@ public class ToolboxSecurityWrapper {
 
         TBXOperation tbxOp = tbxService.getOperationBySoapAction(soapAction);
         tbxOp.processAccessDeniedRequest(soapReq, true, axisFualt);
+    }
+
+    private AxisFault generateExceptionReport(MessageContext msgCtxt, String detailTextMsg) {
+
+        OMNamespace requestNamespace = msgCtxt.getEnvelope().getSOAPBodyFirstElementNS();
+
+        QName faultCode = new QName(requestNamespace.getNamespaceURI(), "ServiceExceptionReport", requestNamespace.getPrefix());
+        String faultReason = "Policy exception report";
+
+        try {
+
+            String CAT_NAMESPACE = "http://www.opengis.net/cat/csw/2.0.2";
+            String ORD_NAMESPACE = "http://earth.esa.int/hma/ordering";
+
+            String exceptionReportVersion = null;
+            String exceptionCode = null;
+
+
+            if (requestNamespace.getNamespaceURI().compareTo(CAT_NAMESPACE) == 0) {
+                exceptionReportVersion = "1.2.0";
+                exceptionCode = "wrs:InvalidRequest";
+            } else {
+                exceptionReportVersion = "1.0.0";
+                exceptionCode = "NoApplicableCode";
+            }
+
+            OMFactory factory = OMAbstractFactory.getOMFactory();
+
+            OMNamespace owsNamespace = factory.createOMNamespace("http://www.opengis.net/ows", "ows");
+
+            OMElement exceptionReportElement = factory.createOMElement("ExceptionReport", owsNamespace);
+            exceptionReportElement.addAttribute("version", exceptionReportVersion, null);
+
+            OMElement exceptionElement = factory.createOMElement("Exception", owsNamespace);
+            exceptionElement.addAttribute("exceptionCode", exceptionCode, null);
+            exceptionReportElement.addChild(exceptionElement);
+
+            OMElement exceptionTextElement = factory.createOMElement("ExceptionText", owsNamespace);
+            exceptionTextElement.setText(detailTextMsg);
+            exceptionElement.addChild(exceptionTextElement);
+
+            return new AxisFault(faultCode, faultReason, null, null, exceptionReportElement);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new AxisFault(faultCode, faultReason, null, null, null);
+        }
+
     }
 }

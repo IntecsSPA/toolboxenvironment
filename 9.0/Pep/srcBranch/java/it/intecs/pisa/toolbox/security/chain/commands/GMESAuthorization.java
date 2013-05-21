@@ -191,6 +191,7 @@ public class GMESAuthorization implements Command {
             logger.error(errorMsg);
             result.setCode(Result.FAIL);
             result.setExtraInfo(errorMsg);
+            return result;
         }
         result.setCode(Result.SUCCESS);
         return result;

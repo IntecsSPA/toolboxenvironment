@@ -170,8 +170,7 @@ public class ToolboxSecurityWrapper {
         //now re-route the request
         //Toolbox takes the entire envelope...
         try {
-            Element soapRequestDocument = XMLUtils.toDOM(msgCtx.getEnvelope());
-
+            //Element soapRequestDocument = XMLUtils.toDOM(msgCtx.getEnvelope());
             //now pass the request to the Toolbox
             Toolbox toolbox = Toolbox.getInstance();
             String uri = req.getRequestURI();
@@ -225,11 +224,13 @@ public class ToolboxSecurityWrapper {
         AxisFault fault = null;
         Logger logger = Toolbox.getInstance().getLogger();
         logger.info("Processing optional secured operation");
+
+        MessageContext msgCtx = MessageContext.getCurrentMessageContext();
+
+        HttpServletRequest req = (HttpServletRequest) msgCtx.getProperty("transport.http.servletRequest");
+
         try {
-
-            MessageContext msgCtx = MessageContext.getCurrentMessageContext();
-
-            HttpServletRequest req = (HttpServletRequest) msgCtx.getProperty("transport.http.servletRequest");
+            String operationName = Toolbox.getOperationName(msgCtx);
 
             String[] requestSplit = req.getRequestURI().split("/");
             String serviceName = requestSplit[requestSplit.length - 1];
@@ -247,26 +248,56 @@ public class ToolboxSecurityWrapper {
                     cm.executeChain("default/decryptAndCheckSignatureChain", ct);
                     Result result = ct.getResult();
                     if (result.getCode() == Result.FAIL) {
-                        logger.error("Decryption and check signature failed");
-                        throw new AxisFault("");
+                        String denyMsg = result.getExtraInfo();
+                        fault = generateExceptionReport(msgCtx, policyEnforcementError + denyMsg);
+
+                        OMElement soapElemOM = msgCtx.getEnvelope();//.getBody().getFirstElement();
+
+                        Element soapElemDOM = XMLUtils.toDOM(soapElemOM);
+                        Document soapDoc = soapElemDOM.getOwnerDocument();
+                        storeAccessDeniedInstanceIntoDB(soapDoc, serviceName, operationName, fault);
+
+                        throw fault;
                     }
                     result = callServiceChain(serviceName, msgCtx);
                     if (result.getCode() == Result.FAIL) {
-                        logger.error("Decryption and check signature failed");
-                        throw new AxisFault("");
+                        String denyMsg = result.getExtraInfo();
+                        fault = generateExceptionReport(msgCtx, policyEnforcementError + denyMsg);
+
+                        OMElement soapElemOM = msgCtx.getEnvelope();//.getBody().getFirstElement();
+
+                        Element soapElemDOM = XMLUtils.toDOM(soapElemOM);
+                        Document soapDoc = soapElemDOM.getOwnerDocument();
+                        storeAccessDeniedInstanceIntoDB(soapDoc, serviceName, operationName, fault);
                     }
                     if (isIncomingTokenToBeRestored(serviceName)) {
                         cm.executeChain("default/restoreChain", ct);
                         result = ct.getResult();
                         if (result.getCode() == Result.FAIL) {
-                            logger.error("Restoring incoming token failed");
-                            throw new AxisFault("");
+                            String denyMsg = result.getExtraInfo();
+                            fault = generateExceptionReport(msgCtx, policyEnforcementError + denyMsg);
+
+                            OMElement soapElemOM = msgCtx.getEnvelope();//.getBody().getFirstElement();
+
+                            Element soapElemDOM = XMLUtils.toDOM(soapElemOM);
+                            Document soapDoc = soapElemDOM.getOwnerDocument();
+                            storeAccessDeniedInstanceIntoDB(soapDoc, serviceName, operationName, fault);
                         }
                     }
 
                 }
             }
 
+        } catch (Exception ex) {
+            ex.getMessage();
+            if (fault != null) {
+                throw fault;
+            } else {
+                fault = generateExceptionReport(msgCtx, policyEnforcementError + ex.getMessage());
+                throw fault;
+            }
+        }
+        try {
             //now pass the request to the Toolbox
             Toolbox toolbox = Toolbox.getInstance();
             String uri = req.getRequestURI();

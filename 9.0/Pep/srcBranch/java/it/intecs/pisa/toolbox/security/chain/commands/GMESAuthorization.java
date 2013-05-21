@@ -11,6 +11,8 @@ import org.apache.axis2.context.MessageContext;
 import org.apache.axis2.util.XMLUtils;
 import org.apache.log4j.Logger;
 
+import org.opensaml.XML;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -48,15 +50,12 @@ public class GMESAuthorization implements Command {
     String mRequestType;
     String mRequestNamespace;
     ///////////////////////// CONFIGURABLE PARAMETERS //////////////////////////
-    private String mPoliciesDir = null;
+    private String gmesPolicyDir;
 
-    ///////////////// getter/setter for configuration parameters ///////////////
-    public String getPoliciesDir() {
-        return mPoliciesDir;
-    }
+    ///////////////// setter for configuration parameters ///////////////
 
-    public void setPoliciesDir(String gmesPolicyDir) {
-        mPoliciesDir = gmesPolicyDir;
+    public void setGmesPolicyDir(String inGmesPolicyDir) {
+        gmesPolicyDir = inGmesPolicyDir;
     }
 
     @Override
@@ -293,8 +292,17 @@ public class GMESAuthorization implements Command {
                 logger.info("No policy has to be applied for this request type");
                 return;
             }
+            
+            Element samlAssertion = null;
+            try {
+                samlAssertion = getSOAPElement(docWithAssertion, XML.SAML_NS, "Assertion");
+            } catch (Exception missingAssertion) {
+                // Use a default assertion for anonymous requests
+                logger.info("Managing anonymous request");
+                anonymous = true;
+            }
 
-            String applicablePoliciesDir = mPoliciesDir;
+            String applicablePoliciesDir = gmesPolicyDir;
             if (mRequestType.compareTo(SUBMIT_TAG_NAME) == 0){
                 applicablePoliciesDir += "/" + POLICY_TYPE_ORDER + "/";
 

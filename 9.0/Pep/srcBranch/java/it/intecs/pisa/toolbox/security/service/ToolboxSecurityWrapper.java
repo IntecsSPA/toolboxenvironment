@@ -229,6 +229,7 @@ public class ToolboxSecurityWrapper {
 
         HttpServletRequest req = (HttpServletRequest) msgCtx.getProperty("transport.http.servletRequest");
 
+        boolean isTokenIncludedInSOAPHeader = false;
         try {
             String operationName = Toolbox.getOperationName(msgCtx);
 
@@ -242,6 +243,7 @@ public class ToolboxSecurityWrapper {
             if (wsSecurity != null) {
                 OMElement encryptedData = wsSecurity.getFirstChildWithName(new QName(ENCRYPTED_DATA_NAMESPACE, ENCRYPTED_DATA));
                 if (encryptedData != null) {
+                    isTokenIncludedInSOAPHeader = true;
                     ChainManager cm = new ChainManager();
                     ChainContext ct = cm.createContext();
                     ct.setAttribute(CommandsConstants.MESSAGE_CONTEXT, msgCtx);
@@ -259,35 +261,40 @@ public class ToolboxSecurityWrapper {
 
                         throw fault;
                     }
-                    result = callServiceChain(serviceName, msgCtx);
-                    if (result.getCode() == Result.FAIL) {
-                        String denyMsg = result.getExtraInfo();
-                        fault = generateExceptionReport(msgCtx, policyEnforcementError + denyMsg);
-
-                        OMElement soapElemOM = msgCtx.getEnvelope();//.getBody().getFirstElement();
-
-                        Element soapElemDOM = XMLUtils.toDOM(soapElemOM);
-                        Document soapDoc = soapElemDOM.getOwnerDocument();
-                        storeAccessDeniedInstanceIntoDB(soapDoc, serviceName, operationName, fault);
-                    }
-                    if (isIncomingTokenToBeRestored(serviceName)) {
-                        cm.executeChain("default/restoreChain", ct);
-                        result = ct.getResult();
-                        if (result.getCode() == Result.FAIL) {
-                            String denyMsg = result.getExtraInfo();
-                            fault = generateExceptionReport(msgCtx, policyEnforcementError + denyMsg);
-
-                            OMElement soapElemOM = msgCtx.getEnvelope();//.getBody().getFirstElement();
-
-                            Element soapElemDOM = XMLUtils.toDOM(soapElemOM);
-                            Document soapDoc = soapElemDOM.getOwnerDocument();
-                            storeAccessDeniedInstanceIntoDB(soapDoc, serviceName, operationName, fault);
-                        }
-                    }
-
                 }
             }
 
+            Result result = callServiceChain(serviceName, msgCtx);
+            if (result.getCode() == Result.FAIL) {
+                String denyMsg = result.getExtraInfo();
+                fault = generateExceptionReport(msgCtx, policyEnforcementError + denyMsg);
+
+                OMElement soapElemOM = msgCtx.getEnvelope();//.getBody().getFirstElement();
+
+                Element soapElemDOM = XMLUtils.toDOM(soapElemOM);
+                Document soapDoc = soapElemDOM.getOwnerDocument();
+                storeAccessDeniedInstanceIntoDB(soapDoc, serviceName, operationName, fault);
+                
+                throw fault;
+            }
+            
+            if (isTokenIncludedInSOAPHeader && isIncomingTokenToBeRestored(serviceName)) {
+                ChainManager cm = new ChainManager();
+                ChainContext ct = cm.createContext();
+                ct.setAttribute(CommandsConstants.MESSAGE_CONTEXT, msgCtx);
+                cm.executeChain("default/restoreChain", ct);
+                result = ct.getResult();
+                if (result.getCode() == Result.FAIL) {
+                    String denyMsg = result.getExtraInfo();
+                    fault = generateExceptionReport(msgCtx, policyEnforcementError + denyMsg);
+
+                    OMElement soapElemOM = msgCtx.getEnvelope();//.getBody().getFirstElement();
+
+                    Element soapElemDOM = XMLUtils.toDOM(soapElemOM);
+                    Document soapDoc = soapElemDOM.getOwnerDocument();
+                    storeAccessDeniedInstanceIntoDB(soapDoc, serviceName, operationName, fault);
+                }
+            }
         } catch (Exception ex) {
             ex.getMessage();
             if (fault != null) {

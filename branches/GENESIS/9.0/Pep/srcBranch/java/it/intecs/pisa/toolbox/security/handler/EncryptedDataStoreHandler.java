@@ -30,12 +30,15 @@ public class EncryptedDataStoreHandler extends AbstractHandler {
 
         SOAPHeader soapHeader = envelope.getHeader();
 
-        OMElement wsSecurity = soapHeader.getFirstChildWithName(new QName(WS_SECURITY_NAMESPACE, WS_SECURITY));
-        if (wsSecurity != null) {
+        if (soapHeader != null) {
 
-            OMElement encryptedData = wsSecurity.getFirstChildWithName(new QName(ENCRYPTED_DATA_NAMESPACE, ENCRYPTED_DATA));
-            if (encryptedData != null) {
-                msgCtx.setProperty(ENCRYPTED_DATA, encryptedData);
+            OMElement wsSecurity = soapHeader.getFirstChildWithName(new QName(WS_SECURITY_NAMESPACE, WS_SECURITY));
+            if (wsSecurity != null) {
+
+                OMElement encryptedData = wsSecurity.getFirstChildWithName(new QName(ENCRYPTED_DATA_NAMESPACE, ENCRYPTED_DATA));
+                if (encryptedData != null) {
+                    msgCtx.setProperty(ENCRYPTED_DATA, encryptedData);
+                }
             }
         }
         return InvocationResponse.CONTINUE;

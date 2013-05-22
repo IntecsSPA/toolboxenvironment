@@ -9,7 +9,7 @@
             <command id="persistToken" className="it.intecs.pisa.toolbox.security.chain.commands.PersistSAMLToken" description="Send the token for persistence to configured SAML Bean" selected="false"/>
             <command id="checkTokenTime" className="it.intecs.pisa.toolbox.security.chain.commands.CheckSAMLTokenValidityTime" description="Check the token validity time" selected="false"/>
             <command id="checkTokenIssuer" className="it.intecs.pisa.toolbox.security.chain.commands.CheckSAMLTokenIssuer" description="Check the token issuer" selected="false">
-                <property id="issuer" value="http://earth.esa.int" description="The issuer of the token" type="text"/>
+                <property id="issuer" value="http://earth.esa.int" description="Issuer identifier" type="text"/>
             </command>
         </chain>
         <chain id="authorizationCommands" description="Authorization Steps">
@@ -17,10 +17,10 @@
                 <property id="xacmlFileLocation" value="" description="Local file containing the (Geo)XACML policy" type="file"/>
             </command>
             <command id="dailAuthorization" className="it.intecs.pisa.toolbox.security.chain.commands.DAILAuthorization" description="Custom step for the DAIL PEP" selected="false">
-                <property id="dailPolicyDir" value="" description="Absolute path to XACML policy dir" type="text"/>
+                <property id="dailPolicyDir" value="" description="Policies directory" type="text"/>
             </command>
             <command id="gmesAuthorization" className="it.intecs.pisa.toolbox.security.chain.commands.GMESAuthorization" description="Custom step for the CDS PEP" selected="false">
-                <property id="gmesPolicyDir" value="" description="Absolute path to XACML policy dir" type="text"/>
+                <property id="gmesPolicyDir"  value="" description="Policies directory" type="text"/>   
             </command>
         </chain>
     </catalog>

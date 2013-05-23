@@ -42,12 +42,13 @@ public class GatewayCommands {
     private static String SSL_CERTIFICATE_PROPERTY = "sslCertificate";
     private static String FORWARD_MESSAGE_INCOMING_TOKEN_PROPERTY = "forwardMessageWithIncomingToken";
     private static String FORWARD_MESSAGE_CRYPTED_TOKEN_PROPERTY = "forwardMessageWithCryptedToken";
-    private static String FORWARD_MESSAGE_CLEAR_TOKEN_PROPERTY = "forwardMessageWithClearToken";
+    private static String FORWARD_MESSAGE_CLEAR_TOKEN_PROPERTY = "forwardMessageWithClearToken";   
     private static String KEY_ALIAS_PROPERTY = "keyAlias";
     private static String JKS_PASSWORD_PROPERTY = "jksPasswd";
     private static String JKS_USER_PROPERTY = "jksUserName";
     private static String JKS_FILE_LOCATION_PROPERTY = "jksFileLocation";
     private static String XACML_FILE_LOCATION_PROPERTY = "xacmlFileLocation";
+    private static String CHECK_AUTHORIZATION_ON_RESPONSE_PROPERTY = "checkAuthorizationOnResponse";
     private static String OPERATION_INFO_PROPERTY = "operations";
     private static String SERVICE_OPERATION_PROPERTY = "service";
     private static String PORT_OPERATION_PROPERTY = "port";
@@ -82,6 +83,7 @@ public class GatewayCommands {
         String forwardMessageWithIncomingToken = "";
         String forwardMessageWithClearToken = "";
         String forwardMessageWithCryptedToken = "", keyAlias = "";
+        String checkAuthorizationOnResponse = "";
         RestResponse createGatewayResponse = new RestResponse("createGatewayService");
 
         JsonElement wsdlURLEl = serviceInformationJson.get(WSDL_URL_PROPERTY);
@@ -146,6 +148,11 @@ public class GatewayCommands {
             errorDetails += "JKS USER (" + JKS_USER_PROPERTY + ") mandatory property missing. ";
         }
 
+        JsonElement checkAuthorizationOnResponseEl = serviceInformationJson.get(CHECK_AUTHORIZATION_ON_RESPONSE_PROPERTY);
+        if (!(checkAuthorizationOnResponseEl == null || checkAuthorizationOnResponseEl instanceof com.google.gson.JsonNull)) {
+            checkAuthorizationOnResponse = checkAuthorizationOnResponseEl.getAsString();
+        }
+        
         ConfigurationSecurityCommands configCommands = new ConfigurationSecurityCommands();
         String serviceChainPath = configCommands.createAndSaveServiceChainToTempFolder(serviceName, serviceInformationJson);
         if (serviceChainPath == null) {
@@ -221,6 +228,12 @@ public class GatewayCommands {
             variable.put("type", "string");
             variable.put("displayedText", "Alias of the key to be used for encryption");
             serviceVariables.put("keyAlias", variable);
+            
+            variable = new Hashtable<String, String>();
+            variable.put("value", checkAuthorizationOnResponse);
+            variable.put("type", "boolean");
+            variable.put("displayedText", "Check the authorization also on message response");
+            serviceVariables.put("checkAuthorizationOnResponse", variable);
 
             String chosenCommandsS = serviceInformationJson.get("chosenCommands").toString();
             variable = new Hashtable<String, String>();
@@ -303,6 +316,7 @@ public class GatewayCommands {
         String forwardMessageWithIncomingToken = "";
         String forwardMessageWithClearToken = "";
         String forwardMessageWithCryptedToken = "", keyAlias = "";
+        String checkAuthorizationOnResponse = "";
         
         Hashtable<String, Hashtable<String, String>> serviceVariables;
 
@@ -390,6 +404,11 @@ public class GatewayCommands {
                 keyAlias = keyAliasEl.getAsString();
             }
             
+            JsonElement checkAuthorizationOnResponseEl = serviceInformationJson.get(CHECK_AUTHORIZATION_ON_RESPONSE_PROPERTY);
+            if (!(checkAuthorizationOnResponseEl == null || checkAuthorizationOnResponseEl instanceof com.google.gson.JsonNull)) {
+                checkAuthorizationOnResponse = checkAuthorizationOnResponseEl.getAsString();
+            }
+            
             serviceVariables = service.getImplementedInterface().getUserVariable();
             Hashtable<String, String> serviceVariable = null;        
                         
@@ -404,6 +423,9 @@ public class GatewayCommands {
             
             serviceVariable = serviceVariables.get("keyAlias");
             serviceVariable.put("value", keyAlias);
+            
+            serviceVariable = serviceVariables.get("checkAuthorizationOnResponse");
+            serviceVariable.put("value", checkAuthorizationOnResponse);
             
             String chosenCommandsS = serviceInformationJson.get("chosenCommands").toString();
             serviceVariable = serviceVariables.get("chosenCommands");
@@ -459,6 +481,8 @@ public class GatewayCommands {
             serviceConf.addProperty("forwardMessageWithCryptedToken", serviceVariable.get("value"));
             serviceVariable = serviceVariables.get("keyAlias");
             serviceConf.addProperty("keyAlias", serviceVariable.get("value"));
+            serviceVariable = serviceVariables.get("checkAuthorizationOnResponse");
+            serviceConf.addProperty("checkAuthorizationOnResponse", serviceVariable.get("value"));
 
             serviceVariable = serviceVariables.get("chosenCommands");
             String chosenCommandsS = serviceVariable.get("value");

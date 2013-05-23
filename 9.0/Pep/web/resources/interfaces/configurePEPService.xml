@@ -39,10 +39,13 @@
         </group>
     </section>
     
-    <section name="Authorization Checks">
-        
+    <section name="Authorization Checks">     
         <group label="Choose the XACML Authorization">
             <input type="multitext" name="multiInputAuthorization" id="multiInputAuthorization" label="Authorization Choice" size="50"/>       
+        </group>
+        <group label="Authorization on Response">
+            <input type="checkbox" name="checkAuthorizationOnResponse" id="checkAuthorizationOnResponse" colSpan="10"
+                   label="Check authorization also on the response"/>
         </group>
     </section>
    

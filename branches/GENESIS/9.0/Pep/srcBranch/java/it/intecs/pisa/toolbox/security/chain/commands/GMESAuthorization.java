@@ -44,6 +44,8 @@ public class GMESAuthorization implements Command {
     private static final String GET_RECORDBYID_NAMESPACE = "http://www.opengis.net/cat/csw/2.0.2";
     private static final String PARENT_IDENTIFIER_URI = "parentIdentifier";
     private static final String PROPERTY_NAME_TAG_NAME = "PropertyName";
+    
+    private static String RESPONSE_MESSAGE = "ResponseMessage";
    
     /////////////////  private class members ///////////////
     static Logger logger = Logger.getLogger(GMESAuthorization.class);
@@ -83,13 +85,14 @@ public class GMESAuthorization implements Command {
 
         // get SOAP message to access various parts of it
         SOAPEnvelope soapRequestMessage = msgCtxt.getEnvelope();
-
-        SOAPEnvelope soapResponseMessage = null;
+        
+        Document soapRequestDoc = null;
+        Document soapResponseDoc = null;
 
         if (!isRequest) {
-            soapResponseMessage = msgCtxt.getEnvelope();
+            soapResponseDoc = (Document)msgCtxt.getProperty(RESPONSE_MESSAGE);
         }
-        Document soapRequestDoc = null;
+       
         try {
             soapRequestDoc = XMLUtils.toDOM(soapRequestMessage).getOwnerDocument();
             getRequestInfo(soapRequestDoc);
@@ -102,13 +105,11 @@ public class GMESAuthorization implements Command {
 
         if (!isRequest) {
             ///////////////////////////// RESPONSE /////////////////////////////
-            Document soapResponseDoc = null;
-            try {
-                soapResponseDoc = XMLUtils.toDOM(soapResponseMessage).getOwnerDocument();
-            } catch (Exception e) {
-                logger.error("Response message retrieving error: " + e.getMessage());
+           
+            if (soapResponseDoc == null) {
+                logger.error("Response message retrieving error.");
                 result.setCode(Result.FAIL);
-                result.setExtraInfo("Response message retrieving error: " + e.getMessage());
+                result.setExtraInfo("Response message retrieving error.");
                 return result;
             }
 

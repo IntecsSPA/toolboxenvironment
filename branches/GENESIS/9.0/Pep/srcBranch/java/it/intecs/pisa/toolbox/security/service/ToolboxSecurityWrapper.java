@@ -34,6 +34,7 @@ import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.OMFactory;
 import org.apache.axiom.om.OMNamespace;
+import org.apache.axiom.om.util.CopyUtils;
 import org.apache.axiom.soap.SOAPEnvelope;
 import org.apache.axiom.soap.SOAPFactory;
 import org.apache.axiom.soap.SOAPFault;
@@ -69,6 +70,7 @@ public class ToolboxSecurityWrapper {
     // the following string shall preced the specific detail 
     // of possible failure in the policy enforcement process
     private static String policyEnforcementError = "Policy enforcement restricts access. ";
+    private static String RESPONSE_MESSAGE = "ResponseMessage";
 
     /**
      * payload: represents the payload of the incoming SOAP message.
@@ -229,12 +231,13 @@ public class ToolboxSecurityWrapper {
 
         HttpServletRequest req = (HttpServletRequest) msgCtx.getProperty("transport.http.servletRequest");
 
+        String[] requestSplit = req.getRequestURI().split("/");
+        String serviceName = requestSplit[requestSplit.length - 1];
+
         boolean isTokenIncludedInSOAPHeader = false;
+        MessageContext tempMsgCtx = null;
         try {
             String operationName = Toolbox.getOperationName(msgCtx);
-
-            String[] requestSplit = req.getRequestURI().split("/");
-            String serviceName = requestSplit[requestSplit.length - 1];
 
             SOAPEnvelope envelope = msgCtx.getEnvelope();
             SOAPHeader soapHeader = envelope.getHeader();
@@ -274,10 +277,14 @@ public class ToolboxSecurityWrapper {
                 Element soapElemDOM = XMLUtils.toDOM(soapElemOM);
                 Document soapDoc = soapElemDOM.getOwnerDocument();
                 storeAccessDeniedInstanceIntoDB(soapDoc, serviceName, operationName, fault);
-                
+
                 throw fault;
             }
-            
+
+            tempMsgCtx = new MessageContext();
+            SOAPEnvelope tempEnvelope = CopyUtils.copy(msgCtx.getEnvelope());
+            tempMsgCtx.setEnvelope(tempEnvelope);
+
             if (isTokenIncludedInSOAPHeader && isIncomingTokenToBeRestored(serviceName)) {
                 ChainManager cm = new ChainManager();
                 ChainContext ct = cm.createContext();
@@ -329,6 +336,27 @@ public class ToolboxSecurityWrapper {
             }
 
             response = XMLUtils.toOM(respDoc.getDocumentElement());
+            
+            if (isAuthorizationCheckOnResponseRequired(serviceName)) {          
+                Util.addSOAPEnvelope(respDoc);
+                boolean authorizeResponse = true;
+                if (authorizeResponse) {
+                    ChainManager cm = new ChainManager();
+                    ChainContext ct = cm.createContext();
+
+                    tempMsgCtx.setProperty(RESPONSE_MESSAGE, respDoc);
+                    tempMsgCtx.setFLOW(MessageContext.OUT_FLOW);
+                    ct.setAttribute(CommandsConstants.MESSAGE_CONTEXT, tempMsgCtx);
+
+                    cm.executeChain(serviceName + "/authorizationCommands", ct);
+                    Result result = ct.getResult();
+                    if (result.getCode() == Result.FAIL) {
+                        String denyMsg = result.getExtraInfo();
+                        fault = generateExceptionReport(msgCtx, policyEnforcementError + denyMsg);
+                        throw fault;
+                    }
+                }
+            }
 
         } catch (AxisFault ex) {
             fault = ex;
@@ -410,6 +438,26 @@ public class ToolboxSecurityWrapper {
             serviceVariables = service.getImplementedInterface().getUserVariable();
 
             Hashtable<String, String> serviceVariable = serviceVariables.get("forwardMessageWithIncomingToken");
+            String resString = serviceVariable.get("value");
+            res = Boolean.parseBoolean(resString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return res;
+    }
+
+    private boolean isAuthorizationCheckOnResponseRequired(String serviceName) {
+
+        ServiceManager serviceManager = ServiceManager.getInstance();
+        Hashtable<String, Hashtable<String, String>> serviceVariables;
+        boolean res = false;
+
+        try {
+            TBXService service = serviceManager.getService(serviceName);
+            serviceVariables = service.getImplementedInterface().getUserVariable();
+
+            Hashtable<String, String> serviceVariable = serviceVariables.get("checkAuthorizationOnResponse");
             String resString = serviceVariable.get("value");
             res = Boolean.parseBoolean(resString);
         } catch (Exception e) {

@@ -278,14 +278,17 @@ public class GatewayCommands {
             localSchemaFolder.mkdirs();
             //schemaUtil.saveWSDLSchemas(wsdlURL, localSchemaFolder);
             JsonArray soapOperations = getSoapOperationsInfoList(wsdlURL);
+            String[] soapActions  = new String[soapOperations.size()];
             for (int index = 0; index < soapOperations.size(); index++) {
                 JsonObject operation = soapOperations.get(index).getAsJsonObject();
                 JsonObject result = null;
                 operation.addProperty(SERVICE_NAME_PROPERTY, service.getServiceName());
                 result = createGatewayOperation(operation.get(OPERATION_PROPERTY).getAsString(), operation);
-                ToolboxSecurityConfigurator.addUnprotectedOperationToService(service.getServiceName(), operation.get(SOAP_OPERATION_PROPERTY).getAsString());
+                soapActions[index] = operation.get(SOAP_OPERATION_PROPERTY).getAsString();
+                
                 // TODO: handle result
             }
+            ToolboxSecurityConfigurator.addUnprotectedOperationToService(service.getServiceName(), soapActions);
             createGatewayResponse.addJsonElement(OPERATION_INFO_PROPERTY, soapOperations);
         } catch (Exception ex) {
             ex.printStackTrace();

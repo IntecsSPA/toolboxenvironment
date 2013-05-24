@@ -34,17 +34,18 @@ public class ToolboxSecurityConfigurator {
     public static String WSPOLICY_NAMESPACE = "http://schemas.xmlsoap.org/ws/2004/09/policy";
     public static String WSU_NAMESPACE = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd";
     public static String SERVICE_KEYSTORE_FILENAME = "service.jks";//the default name of the keystore for a given protected service
+    public static String SECURED_OPERATION = "execute";
+    public static String NOT_SECURED_OPERATION = "pass";
+    public static String OPTIONAL_SECURED_OPERATION = "check";
+    public static String ACTION_MAPPING = "actionMapping";
 
-     public static String SECURED_OPERATION = "execute";
-     public static String NOT_SECURED_OPERATION = "pass";
-     public static String OPTIONAL_SECURED_OPERATION = "check";
-     
-     public static String ACTION_MAPPING = "actionMapping";
-      
     /**
-     * Return the absolute path where the XACML policy file for the given service is located
+     * Return the absolute path where the XACML policy file for the given
+     * service is located
+     *
      * @param serviceName
-     * @return an empty string if the given service has no root in the current Toolbox configuration
+     * @return an empty string if the given service has no root in the current
+     * Toolbox configuration
      */
     public static String getXACMLpolicyDir(String serviceName) {
         File file = Toolbox.getInstance().getServiceRoot(serviceName);
@@ -57,8 +58,8 @@ public class ToolboxSecurityConfigurator {
     public static File[] getXACMLfiles(String serviceName) {
         File policyDir = new File(ToolboxSecurityConfigurator.getXACMLpolicyDir(serviceName));
         /*File policyDir = new File (new File (new File
-        (new File (Toolbox.getInstance().getServiceRoot(service.getServiceName()), service.getServiceName()), "Resources")
-        , "Security"), "Policy");*/
+         (new File (Toolbox.getInstance().getServiceRoot(service.getServiceName()), service.getServiceName()), "Resources")
+         , "Security"), "Policy");*/
         return policyDir.listFiles();
     }
 
@@ -74,8 +75,10 @@ public class ToolboxSecurityConfigurator {
 
     /**
      * Return the XACML url for the given service
+     *
      * @param serviceName
-     * @return an empty string if the given service does not exist or it has not XACML policy
+     * @return an empty string if the given service does not exist or it has not
+     * XACML policy
      */
     public static String getXACMLpolicyURL(String serviceName) {
         try {
@@ -105,6 +108,7 @@ public class ToolboxSecurityConfigurator {
 
     /**
      * Returns the location of the keystore associated to the given service
+     *
      * @author Stefano
      * @param service
      * @return
@@ -139,43 +143,33 @@ public class ToolboxSecurityConfigurator {
 
     /**
      * Set the location of the keystore associated to the given secure service
+     *
      * @author Stefano
      * @param service
      *
-    public static void storeJKSlocation(Service service, String location) throws ToolboxException{
-    String s = "";
-    if (service.hasWSSecurity() == false){
-    //TODO exception here!
-    return;
+     * public static void storeJKSlocation(Service service, String location)
+     * throws ToolboxException{ String s = ""; if (service.hasWSSecurity() ==
+     * false){ //TODO exception here! return; } try { Element serviceElem =
+     * Axis2ServicesConf.getAxis2ServiceConfigurationElement(service); NodeList
+     * propList =
+     * serviceElem.getElementsByTagNameNS("http://ws.apache.org/rampart/policy",
+     * "property"); Element temp = null; for (int i=0; i<propList.getLength();
+     * i++){ temp = (Element) propList.item(i); if
+     * (temp.getAttribute("name").compareTo("org.apache.ws.security.crypto.merlin.file")==0){
+     * DeferredTextImpl t = (DeferredTextImpl) temp.getFirstChild();
+     * t.setData(location);
+     *
+     * //save services.xml try { DOMUtil.dumpXML(serviceElem.getOwnerDocument(),
+     * ToolboxSecurityConfigurator.getServicesConfigFile()); } catch (Exception
+     * e) { Toolbox.getInstance().getLogger().error("Impossible to write the
+     * services.xml Axis2 file"); throw new ToolboxException("Impossible to
+     * write the services.xml Axis2 file"); } } }
+     *
+     * } catch (IOException e) { // TODO Auto-generated catch block
+     * e.printStackTrace(); } catch (SAXException e) { // TODO Auto-generated
+     * catch block e.printStackTrace(); }
     }
-    try {
-    Element serviceElem = Axis2ServicesConf.getAxis2ServiceConfigurationElement(service);
-    NodeList propList = serviceElem.getElementsByTagNameNS("http://ws.apache.org/rampart/policy", "property");
-    Element temp = null;
-    for (int i=0; i<propList.getLength(); i++){
-    temp = (Element) propList.item(i);
-    if (temp.getAttribute("name").compareTo("org.apache.ws.security.crypto.merlin.file")==0){
-    DeferredTextImpl t = (DeferredTextImpl) temp.getFirstChild();
-    t.setData(location);
-    
-    //save services.xml
-    try {
-    DOMUtil.dumpXML(serviceElem.getOwnerDocument(), ToolboxSecurityConfigurator.getServicesConfigFile());
-    } catch (Exception e) {
-    Toolbox.getInstance().getLogger().error("Impossible to write the services.xml Axis2 file");
-    throw new ToolboxException("Impossible to write the services.xml Axis2 file");
-    }
-    }
-    }
-    
-    } catch (IOException e) {
-    // TODO Auto-generated catch block
-    e.printStackTrace();
-    } catch (SAXException e) {
-    // TODO Auto-generated catch block
-    e.printStackTrace();
-    }
-    }*/
+     */
     public static void removeJKSfile(String serviceName) {
         File f = null;
         try {
@@ -191,6 +185,7 @@ public class ToolboxSecurityConfigurator {
 
     /**
      * Returns the username of the keystore associated to the given service
+     *
      * @author Stefano
      * @param service
      * @return
@@ -221,42 +216,36 @@ public class ToolboxSecurityConfigurator {
 
     /**
      * Set the username of the keystore associated to the given service
+     *
      * @author Stefano
      * @param service
      * @return
      *
-    public static void storeJKSuser(Service service, String jksUser) throws ToolboxException {
-    String s = "";
-    if (service.hasWSSecurity() == false){
-    //TODO exception here!!!
-    return;
+     * public static void storeJKSuser(Service service, String jksUser) throws
+     * ToolboxException { String s = ""; if (service.hasWSSecurity() == false){
+     * //TODO exception here!!! return; }
+     *
+     * try { Element serviceElem =
+     * Axis2ServicesConf.getAxis2ServiceConfigurationElement(service); Element
+     * userElem = (Element)
+     * serviceElem.getElementsByTagNameNS("http://ws.apache.org/rampart/policy",
+     * "user").item(0); DeferredTextImpl t = (DeferredTextImpl)
+     * userElem.getFirstChild(); t.setData(jksUser); //save services.xml try {
+     * DOMUtil.dumpXML(serviceElem.getOwnerDocument(),
+     * ToolboxSecurityConfigurator.getServicesConfigFile()); } catch (Exception
+     * e) { Toolbox.getInstance().getLogger().error("Impossible to write the
+     * services.xml Axis2 file"); throw new ToolboxException("Impossible to
+     * write the services.xml Axis2 file"); }
+     *
+     *
+     * } catch (IOException e) { // TODO Auto-generated catch block
+     * e.printStackTrace(); } catch (SAXException e) { // TODO Auto-generated
+     * catch block e.printStackTrace(); }
     }
-    
-    try {
-    Element serviceElem = Axis2ServicesConf.getAxis2ServiceConfigurationElement(service);
-    Element userElem = (Element) serviceElem.getElementsByTagNameNS("http://ws.apache.org/rampart/policy", "user").item(0);
-    DeferredTextImpl t = (DeferredTextImpl) userElem.getFirstChild();
-    t.setData(jksUser);
-    //save services.xml
-    try {
-    DOMUtil.dumpXML(serviceElem.getOwnerDocument(), ToolboxSecurityConfigurator.getServicesConfigFile());
-    } catch (Exception e) {
-    Toolbox.getInstance().getLogger().error("Impossible to write the services.xml Axis2 file");
-    throw new ToolboxException("Impossible to write the services.xml Axis2 file");
-    }
-    
-    
-    } catch (IOException e) {
-    // TODO Auto-generated catch block
-    e.printStackTrace();
-    } catch (SAXException e) {
-    // TODO Auto-generated catch block
-    e.printStackTrace();
-    }
-    }*/
-    
+     */
     /**
      * Returns the password of the keystore associated to the given service
+     *
      * @author Stefano
      * @param service
      * @return
@@ -293,6 +282,7 @@ public class ToolboxSecurityConfigurator {
 
     /**
      * Returns the password of the private key associated to the given service
+     *
      * @author Stefano
      * @param service
      * @return
@@ -329,51 +319,43 @@ public class ToolboxSecurityConfigurator {
 
     /**
      * Set the password of the keystore associated to the given service
+     *
      * @author Stefano
      * @param service
      * @return
      *
-    public static void setJKSpassword(Service service, String passwd) throws ToolboxException{
-    String s = "";
-    if (service.hasWSSecurity() == false){
-    //TODO exception here!!!
-    return;
-    } 	
-    try {
-    Element serviceElem = Axis2ServicesConf.getAxis2ServiceConfigurationElement(service);
-    NodeList propList = serviceElem.getElementsByTagNameNS("http://ws.apache.org/rampart/policy", "property");
-    Element temp = null;
-    for (int i=0; i<propList.getLength(); i++){
-    temp = (Element) propList.item(i);
-    if (temp.getAttribute("name").compareTo("org.apache.ws.security.crypto.merlin.keystore.password")==0){
-    DeferredTextImpl t = (DeferredTextImpl) temp.getFirstChild();
-    t.setData(passwd);
-    
-    //save services.xml
-    try {
-    DOMUtil.dumpXML(serviceElem.getOwnerDocument(), ToolboxSecurityConfigurator.getServicesConfigFile());
-    } catch (Exception e) {
-    Toolbox.getInstance().getLogger().error("Impossible to write the services.xml Axis2 file");
-    throw new ToolboxException("Impossible to write the services.xml Axis2 file");
+     * public static void setJKSpassword(Service service, String passwd) throws
+     * ToolboxException{ String s = ""; if (service.hasWSSecurity() == false){
+     * //TODO exception here!!! return; } try { Element serviceElem =
+     * Axis2ServicesConf.getAxis2ServiceConfigurationElement(service); NodeList
+     * propList =
+     * serviceElem.getElementsByTagNameNS("http://ws.apache.org/rampart/policy",
+     * "property"); Element temp = null; for (int i=0; i<propList.getLength();
+     * i++){ temp = (Element) propList.item(i); if
+     * (temp.getAttribute("name").compareTo("org.apache.ws.security.crypto.merlin.keystore.password")==0){
+     * DeferredTextImpl t = (DeferredTextImpl) temp.getFirstChild();
+     * t.setData(passwd);
+     *
+     * //save services.xml try { DOMUtil.dumpXML(serviceElem.getOwnerDocument(),
+     * ToolboxSecurityConfigurator.getServicesConfigFile()); } catch (Exception
+     * e) { Toolbox.getInstance().getLogger().error("Impossible to write the
+     * services.xml Axis2 file"); throw new ToolboxException("Impossible to
+     * write the services.xml Axis2 file"); } } }
+     *
+     * } catch (IOException e) { // TODO Auto-generated catch block
+     * e.printStackTrace(); } catch (SAXException e) { // TODO Auto-generated
+     * catch block e.printStackTrace(); }
     }
-    }
-    }
-    
-    } catch (IOException e) {
-    // TODO Auto-generated catch block
-    e.printStackTrace();
-    } catch (SAXException e) {
-    // TODO Auto-generated catch block
-    e.printStackTrace();
-    }
-    }*/
-    
+     */
     /**
      * Returns the WS-Security policy associated to the given service
+     *
      * @author Stefano
      * @param service
-     * @param includeRampartConfig Rampart service configuration is stored inside the WS-Security policy. Set it to false to remove Rampart configuration from the returned policy. 
-     * @return 
+     * @param includeRampartConfig Rampart service configuration is stored
+     * inside the WS-Security policy. Set it to false to remove Rampart
+     * configuration from the returned policy.
+     * @return
      */
     public static Element getWSSecurityPolicy(Service service, boolean includeRampartConfig) {
         if (!service.hasWSSecurity()) {
@@ -400,11 +382,15 @@ public class ToolboxSecurityConfigurator {
     }
 
     /**
-     * Returns the WS-Security policy associated to the given service used for the asynchronous response
+     * Returns the WS-Security policy associated to the given service used for
+     * the asynchronous response
+     *
      * @author Stefano
      * @param service
-     * @param includeRampartConfig Rampart service configuration is stored inside the WS-Security policy. Set it to false to remove Rampart configuration from the returned policy. 
-     * @return 
+     * @param includeRampartConfig Rampart service configuration is stored
+     * inside the WS-Security policy. Set it to false to remove Rampart
+     * configuration from the returned policy.
+     * @return
      */
     public static Element getWSSecurityPolicyForAsynchronousResponse(Service service, boolean includeRampartConfig) {
         if (!service.hasWSSecurity()) {
@@ -433,7 +419,9 @@ public class ToolboxSecurityConfigurator {
     }
 
     /**
-     * Returns the services.xml configurator file related to the ToolboxSecurityWrapper Axis2 service
+     * Returns the services.xml configurator file related to the
+     * ToolboxSecurityWrapper Axis2 service
+     *
      * @author Stefano
      * @return
      */
@@ -442,7 +430,9 @@ public class ToolboxSecurityConfigurator {
     }
 
     /**
-     * Returns the path where the default policy for the asynchronous response is located
+     * Returns the path where the default policy for the asynchronous response
+     * is located
+     *
      * @author Stefano
      * @return
      */
@@ -452,7 +442,9 @@ public class ToolboxSecurityConfigurator {
     }
 
     /**
-     * Returns the path where the policy for the asynchronous response is located
+     * Returns the path where the policy for the asynchronous response is
+     * located
+     *
      * @author Stefano
      * @param service
      * @return
@@ -468,6 +460,7 @@ public class ToolboxSecurityConfigurator {
 
     /**
      * Returns the policy used for asynchronous response
+     *
      * @author Stefano
      * @param service
      * @return
@@ -485,9 +478,10 @@ public class ToolboxSecurityConfigurator {
     }
 
     /**
-     * Configures the WS-security layer for the given service:
-     * -adds a new <service> entry to the ToolboxSecurityWrapper Axis2 configuration file (services.xml)
-     * -sets the JKS information
+     * Configures the WS-security layer for the given service: -adds a new
+     * <service> entry to the ToolboxSecurityWrapper Axis2 configuration file
+     * (services.xml) -sets the JKS information
+     *
      * @param descriptor
      */
     public static void addWSSecurityLayerForService(Service service) throws ToolboxException {
@@ -571,8 +565,8 @@ public class ToolboxSecurityConfigurator {
             throw ex;
         }
     }
-    
-    public static void addUnprotectedOperationToService(String serviceName, String soapAction) throws ToolboxException {
+
+    public static void addUnprotectedOperationToService(String serviceName, String[] soapActions) throws ToolboxException {
         //Retrieve ToolboxSecurityWrapper service configuration file, i.e. services.xml
         File serviceDesFile = ToolboxSecurityConfigurator.getServicesConfigFile();
         Document services_xmlDoc = null;
@@ -610,12 +604,13 @@ public class ToolboxSecurityConfigurator {
                 }
             }
 
-            Element actionMapping = services_xmlDoc.createElement(ACTION_MAPPING);
-            Text actionMappingValue = services_xmlDoc.createTextNode(soapAction);
-            actionMapping.appendChild(actionMappingValue);
+            for (String soapAction  : soapActions) {
+                Element actionMapping = services_xmlDoc.createElement(ACTION_MAPPING);
+                Text actionMappingValue = services_xmlDoc.createTextNode(soapAction);
+                actionMapping.appendChild(actionMappingValue);
 
-            operationNode.appendChild(actionMapping);
-
+                operationNode.appendChild(actionMapping);
+            }
 
         } catch (Exception e) {
             Toolbox.getInstance().getLogger().error("Impossible to add the new operation to Axis2 service");
@@ -630,8 +625,8 @@ public class ToolboxSecurityConfigurator {
             throw new ToolboxException("Impossible to write the services.xml Axis2 file");
         }
     }
-    
-   public static void makeOperationSecureToService(String serviceName, String soapAction, boolean mandatory) throws ToolboxException {
+
+    public static void makeOperationSecureToService(String serviceName, String soapAction, boolean mandatory) throws ToolboxException {
         //Retrieve ToolboxSecurityWrapper service configuration file, i.e. services.xml      
         File serviceDesFile = ToolboxSecurityConfigurator.getServicesConfigFile();
         Document services_xmlDoc = null;
@@ -671,7 +666,7 @@ public class ToolboxSecurityConfigurator {
                 if (operationAttrValue.equals(SECURED_OPERATION)) {
                     secOperationNode = (Element) operationNodes.item(index);
                 }
-                 if (operationAttrValue.equals(OPTIONAL_SECURED_OPERATION)) {
+                if (operationAttrValue.equals(OPTIONAL_SECURED_OPERATION)) {
                     optionalSecOperationNode = (Element) operationNodes.item(index);
                 }
             }
@@ -685,18 +680,20 @@ public class ToolboxSecurityConfigurator {
                 }
             }
             unsecOperationNode.removeChild(actionMapping);
-            
-            if (mandatory)
+
+            if (mandatory) {
                 secOperationNode.appendChild(actionMapping);
-            else
-               optionalSecOperationNode.appendChild(actionMapping); 
+            } else {
+                optionalSecOperationNode.appendChild(actionMapping);
+            }
 
         } catch (Exception e) {
             String securityInfo = null;
-            if (mandatory)
+            if (mandatory) {
                 securityInfo = "mandatory";
-            else
+            } else {
                 securityInfo = "optional";
+            }
             Toolbox.getInstance().getLogger().error("Impossible to make the operation " + securityInfo + " secured for the Axis2 service");
             throw new ToolboxException("Impossible to make the operation " + securityInfo + " secured for the Axis2 service");
         }
@@ -711,8 +708,9 @@ public class ToolboxSecurityConfigurator {
     }
 
     /**
-     * Updates the WS-security layer for the given service:
-     * -sets the JKS information
+     * Updates the WS-security layer for the given service: -sets the JKS
+     * information
+     *
      * @param descriptor
      */
     public static void updateWSSecurityLayerForService(Service service) throws ToolboxException {
@@ -791,8 +789,9 @@ public class ToolboxSecurityConfigurator {
     }
 
     /**
-     * Removes the given service from the Axis2 services configuration list;
-     * no exception is thrown if the given service is not found in the list.
+     * Removes the given service from the Axis2 services configuration list; no
+     * exception is thrown if the given service is not found in the list.
+     *
      * @param newServiceName
      * @author Stefano
      */
@@ -835,12 +834,13 @@ public class ToolboxSecurityConfigurator {
     }
 
     /**
-     * Returns the <service> Element in the axis2 ToolboxSecurityWrapper configuration file:
-     * this service has such Element only if it has wssecurity applied.
-     * 
+     * Returns the <service> Element in the axis2 ToolboxSecurityWrapper
+     * configuration file: this service has such Element only if it has
+     * wssecurity applied.
+     *
      * @throws IOException :
      * @throws SAXException :
-     * 
+     *
      * @author Stefano
      */
     public static Element getAxis2ServiceConfigurationElement(Service service) throws IOException, SAXException {
@@ -865,8 +865,10 @@ public class ToolboxSecurityConfigurator {
     }
 
     /**
-     * Stores the WSS security information for the given services. The information are stored in the ToolboxSecurityWrapper axis2
-     * configurator file (services.xml) and in the policy used for the asynchronous response.
+     * Stores the WSS security information for the given services. The
+     * information are stored in the ToolboxSecurityWrapper axis2 configurator
+     * file (services.xml) and in the policy used for the asynchronous response.
+     *
      * @author Stefano
      * @param service
      */
@@ -906,9 +908,10 @@ public class ToolboxSecurityConfigurator {
     }
 
     /**
-     * Takes in input a wsp:policy (xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy")
-     * Element and set the JKS information stored in the given Service.
-     * 
+     * Takes in input a wsp:policy
+     * (xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy") Element and
+     * set the JKS information stored in the given Service.
+     *
      * @author Stefano
      * @param policy
      * @param service
@@ -921,7 +924,7 @@ public class ToolboxSecurityConfigurator {
         //Element rampartConfig = (Element) ((Element) policy.getElementsByTagName("wsp:All").item(0)).getElementsByTagName("ramp:RampartConfig").item(0);
 
         //Element rampartConfig = (Element) policy.getElementsByTagNameNS("http://ws.apache.org/rampart/policy", "RampartConfig").item(0);
-        
+
         NodeList rampartConfigList = policy.getElementsByTagName("ramp:RampartConfig");
         Element rampartConfig = (Element) rampartConfigList.item(0);
 
@@ -995,6 +998,7 @@ public class ToolboxSecurityConfigurator {
 
     /**
      * Returns the default security resource (i.e. folder) for the given service
+     *
      * @author Stefano
      * @param service
      * @return
@@ -1006,7 +1010,9 @@ public class ToolboxSecurityConfigurator {
     }
 
     /**
-     * Return the Key from the given KeyStore associated to the given user and password.
+     * Return the Key from the given KeyStore associated to the given user and
+     * password.
+     *
      * @author Stefano
      * @param jks
      * @param username

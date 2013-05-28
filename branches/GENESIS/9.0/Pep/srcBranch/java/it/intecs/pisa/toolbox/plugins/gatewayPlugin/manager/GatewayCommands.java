@@ -42,7 +42,7 @@ public class GatewayCommands {
     private static String SSL_CERTIFICATE_PROPERTY = "sslCertificate";
     private static String FORWARD_MESSAGE_INCOMING_TOKEN_PROPERTY = "forwardMessageWithIncomingToken";
     private static String FORWARD_MESSAGE_CRYPTED_TOKEN_PROPERTY = "forwardMessageWithCryptedToken";
-    private static String FORWARD_MESSAGE_CLEAR_TOKEN_PROPERTY = "forwardMessageWithClearToken";   
+    private static String FORWARD_MESSAGE_CLEAR_TOKEN_PROPERTY = "forwardMessageWithClearToken";
     private static String KEY_ALIAS_PROPERTY = "keyAlias";
     private static String JKS_PASSWORD_PROPERTY = "jksPasswd";
     private static String JKS_USER_PROPERTY = "jksUserName";
@@ -152,7 +152,7 @@ public class GatewayCommands {
         if (!(checkAuthorizationOnResponseEl == null || checkAuthorizationOnResponseEl instanceof com.google.gson.JsonNull)) {
             checkAuthorizationOnResponse = checkAuthorizationOnResponseEl.getAsString();
         }
-        
+
         ConfigurationSecurityCommands configCommands = new ConfigurationSecurityCommands();
         String serviceChainPath = configCommands.createAndSaveServiceChainToTempFolder(serviceName, serviceInformationJson);
         if (serviceChainPath == null) {
@@ -228,7 +228,7 @@ public class GatewayCommands {
             variable.put("type", "string");
             variable.put("displayedText", "Alias of the key to be used for encryption");
             serviceVariables.put("keyAlias", variable);
-            
+
             variable = new Hashtable<String, String>();
             variable.put("value", checkAuthorizationOnResponse);
             variable.put("type", "boolean");
@@ -238,6 +238,8 @@ public class GatewayCommands {
             String chosenCommandsS = serviceInformationJson.get("chosenCommands").toString();
             variable = new Hashtable<String, String>();
             variable.put("value", chosenCommandsS);
+            variable.put("type", "string");
+            variable.put("displayedText", "List of commands to be executed by the service");
             serviceVariables.put("chosenCommands", variable);
 
             service.getImplementedInterface().setUserVariables(serviceVariables);
@@ -320,10 +322,10 @@ public class GatewayCommands {
         String forwardMessageWithClearToken = "";
         String forwardMessageWithCryptedToken = "", keyAlias = "";
         String checkAuthorizationOnResponse = "";
-        
+
         Hashtable<String, Hashtable<String, String>> serviceVariables;
 
-       // ToolboxSecurityConfigurator.removeXACMLfiles(serviceName);
+        ToolboxSecurityConfigurator.removeXACMLfiles(serviceName);
 
         try {
             TBXService service = serviceManager.getService(serviceName);
@@ -406,40 +408,40 @@ public class GatewayCommands {
             if (!(keyAliasEl == null || keyAliasEl instanceof com.google.gson.JsonNull)) {
                 keyAlias = keyAliasEl.getAsString();
             }
-            
+
             JsonElement checkAuthorizationOnResponseEl = serviceInformationJson.get(CHECK_AUTHORIZATION_ON_RESPONSE_PROPERTY);
             if (!(checkAuthorizationOnResponseEl == null || checkAuthorizationOnResponseEl instanceof com.google.gson.JsonNull)) {
                 checkAuthorizationOnResponse = checkAuthorizationOnResponseEl.getAsString();
             }
-            
+
             serviceVariables = service.getImplementedInterface().getUserVariable();
-            Hashtable<String, String> serviceVariable = null;        
-                        
+            Hashtable<String, String> serviceVariable = null;
+
             serviceVariable = serviceVariables.get("forwardMessageWithIncomingToken");
             serviceVariable.put("value", forwardMessageWithIncomingToken);
-            
+
             serviceVariable = serviceVariables.get("forwardMessageWithClearToken");
             serviceVariable.put("value", forwardMessageWithClearToken);
-                      
+
             serviceVariable = serviceVariables.get("forwardMessageWithCryptedToken");
             serviceVariable.put("value", forwardMessageWithCryptedToken);
-            
+
             serviceVariable = serviceVariables.get("keyAlias");
             serviceVariable.put("value", keyAlias);
-            
+
             serviceVariable = serviceVariables.get("checkAuthorizationOnResponse");
             serviceVariable.put("value", checkAuthorizationOnResponse);
-            
+
             String chosenCommandsS = serviceInformationJson.get("chosenCommands").toString();
             serviceVariable = serviceVariables.get("chosenCommands");
             serviceVariable.put("value", chosenCommandsS);
-            
+
             service.getImplementedInterface().setUserVariables(serviceVariables);
-            
+
             String errorDetails = null;
             ConfigurationSecurityCommands configCommands = new ConfigurationSecurityCommands();
             configCommands.createAndSaveServiceChainToServiceFolder(serviceName, serviceInformationJson);
-                     
+
             service.dumpToDisk(service.getDescriptorFile());
             service.attemptToDeployWSDLAndSchemas();
 

@@ -355,7 +355,6 @@ function createPanelExjFormByXml(xmlDocument,lang, multiInterfaceId){
 
                 },
                 render: function(){
-                      var indexActiveTab = this.formsTab.getActiveTab();
                       var k,i,u,j;
                       if(this.formsArray.length > 1){
                         for(i=0; i<this.formsArray.length;i++){
@@ -366,7 +365,7 @@ function createPanelExjFormByXml(xmlDocument,lang, multiInterfaceId){
                               for(k=0; k<this.formsFileArray[i].length;k++)
                                 this.formsFileArray[i][k].render(document.getElementById(this.formsFileArray[i][k].divName));
                         }
-                        this.formsTab.setActiveTab(indexActiveTab);
+                        this.formsTab.setActiveTab(0);
                       }else{
                          if(this.formsArray[0].items.length >0)
                             this.formsArray[0].render(document.getElementById(this.formsArray[0].divName));

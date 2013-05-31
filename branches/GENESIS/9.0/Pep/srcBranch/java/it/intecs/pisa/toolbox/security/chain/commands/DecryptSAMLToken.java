@@ -77,8 +77,8 @@ public class DecryptSAMLToken implements Command {
             Element tokenDecrypted = decryptor.decrypt(wsSecurityDOM, keystoreFile, alias, keyStorePwd);
 
             if (tokenDecrypted == null) {
-                logger.error("Error when decrypting token");
-                return new Result(Result.FAIL);
+                logger.error("Error while decrypting SAML token");
+                return new Result(Result.FAIL, "Error while decrypting SAML token.");
             }
 
             OMElement tokenEncrypted = wsSecurityOM.getFirstChildWithName(new QName(ENCRYPTED_DATA_NAMESPACE, ENCRYPTED_DATA));
@@ -89,8 +89,8 @@ public class DecryptSAMLToken implements Command {
 
             return new Result(Result.SUCCESS);
         } catch (Exception e) {
-            logger.error("Error when decrypting token: " + e.getMessage());
-            return new Result(Result.FAIL);
+            logger.error("Error while decrypting SAML token: " + e.getMessage());
+            return new Result(Result.FAIL, "Error while decrypting SAML token.");
         }
 
     }

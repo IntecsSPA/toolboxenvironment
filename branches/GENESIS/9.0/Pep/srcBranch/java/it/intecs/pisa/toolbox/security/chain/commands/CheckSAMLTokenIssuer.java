@@ -62,15 +62,16 @@ public class CheckSAMLTokenIssuer implements Command {
 
             String tokenIssuer = saml.getIssuer();
             if (issuer.compareTo(tokenIssuer) == 0) {
-                logger.info("The token issuer is valid");
+                logger.info("The SAML token issuer is valid");
                 return new Result(Result.SUCCESS);
             } else {
-                return new Result(Result.FAIL);
+                logger.error("The SAML token issuer is not valid");
+                return new Result(Result.FAIL, "The SAML token issuer is not valid.");
             }
 
         } catch (Exception e) {
-            logger.error("Error when checking token issuer: " + e.getMessage());
-            return new Result(Result.FAIL);
+            logger.error("Error when checking SAML token issuer: " + e.getMessage());
+            return new Result(Result.FAIL, "Error while checking SAML token issuer.");
         }
     }
 

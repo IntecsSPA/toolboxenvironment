@@ -67,7 +67,7 @@ public class RestoreEncryptedData implements Command {
             return new Result(Result.SUCCESS);
         } catch (Exception e) {
             logger.error("Error when restoring encrypted token: " + e.getMessage());
-            return new Result(Result.FAIL);
+            return new Result(Result.FAIL, "Error while restoring SAML encrypted token.");
         }
 
     }

@@ -8,7 +8,6 @@ import javawebparts.misc.chain.ChainContext;
 import javawebparts.misc.chain.Command;
 import javawebparts.misc.chain.Result;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.Calendar;
@@ -72,19 +71,19 @@ public class CheckSAMLTokenValidityTime implements Command {
 
 
             if (calCurrentDate.after(calBeforeDate) && calCurrentDate.before(calOnOrAfterDate)) {
-                logger.info("The token time condition is met");
+                logger.info("The SAML token time condition is met");
                 return new Result(Result.SUCCESS);
 
             } else {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 logger.error("The token is expired; the valid time interval was: "
                         + sdf.format(beforeDate) + " through " + sdf.format(onOrAfterDate));
-                return new Result(Result.FAIL);
+                return new Result(Result.FAIL, "The SAML token has expired.");
             }
 
         } catch (Exception e) {
-            logger.error("Error when checking token validity time: " + e.getMessage());
-            return new Result(Result.FAIL);
+            logger.error("Error when checking SAML token validity time: " + e.getMessage());
+            return new Result(Result.FAIL, "Error while checking SAML token validity time.");
         }
     }
 

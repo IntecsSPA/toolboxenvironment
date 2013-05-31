@@ -66,18 +66,18 @@ public class CheckSAMLTokenSignature implements Command {
                 logger.info("SIGNATURE CHECK: " + signatureOk);
             } catch (Exception e) {
                 logger.error("Failed to validate SAML signature value: " + e.getMessage());
-                return new Result(Result.FAIL);
+                return new Result(Result.FAIL, "Failed to validate SAML signature value.");
             }
 
             if (!signatureOk) {
                 logger.error("Failed to validate SAML signature value: invalid signature");
-                return new Result(Result.FAIL);
+                return new Result(Result.FAIL, "The SAML token signature is not valid.");
             }
 
             return new Result(Result.SUCCESS);
         } catch (Exception e) {
             logger.error("Error while checking signature: " + e.getMessage());
-            return new Result(Result.FAIL);
+            return new Result(Result.FAIL, "Error while checking SAML token signature.");
         }
     }
 

@@ -104,14 +104,14 @@ public class PersistSAMLToken implements Command {
             SOAPHeader soapHeader = message.getHeader();
             if (soapHeader == null) {
                 logger.error("No SOAP Header in the message: no token to be persisted");
-                return new Result(Result.FAIL);
+                return new Result(Result.FAIL, "Error while persisting SAML token: SOAP Header is null.");
             }
 
             OMElement wsSecurity = soapHeader.getFirstChildWithName(new QName(WS_SECURITY_NAMESPACE, WS_SECURITY));
 
             if (wsSecurity == null) {
                 logger.error("No WS-Security info in the message: no token to be persisted");
-                return new Result(Result.FAIL);
+                return new Result(Result.FAIL, "Error while persisting SAML token: WS-Security is null.");
             }
 
             /*
@@ -153,11 +153,11 @@ public class PersistSAMLToken implements Command {
 
         } catch (AxisFault aFault) {
             logger.error("Error calling SAML EJB: " + aFault.getMessage());
-            return new Result(Result.FAIL);
+            return new Result(Result.FAIL, "Error calling SAML EJB.");
 
         } catch (Exception e) {
             logger.error("Error when persisting token: " + e.getMessage());
-            return new Result(Result.FAIL);
+            return new Result(Result.FAIL, "Error while persisting SAML token.");
         }
     }
 

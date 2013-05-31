@@ -148,6 +148,11 @@ public class ConfigurationSecurityCommands {
                     continue;
                 }
             }
+
+            if (commandDOM != null) {
+                commandDOM.removeAttribute("selected");
+            }
+
             JsonArray propertiesJson = commandJson.getAsJsonArray("properties");
 
             for (int j = 0; j < propertiesJson.size(); j++) {
@@ -166,8 +171,6 @@ public class ConfigurationSecurityCommands {
                 Element propertyDOM = getElementByAttributeId(commandDOM, "property", propertyId);
                 Attr propertyValueDOM = propertyDOM.getAttributeNode("value");
                 propertyValueDOM.setValue(propertyValue);
-                propertyDOM.removeAttribute("selected");
-
             }
         }
     }

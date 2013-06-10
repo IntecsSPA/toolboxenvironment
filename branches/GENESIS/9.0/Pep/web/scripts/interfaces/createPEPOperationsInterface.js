@@ -99,7 +99,7 @@ CreatePEPOperationsInterface=function(operationsData, serviceName){
             Ext.Msg.show({
                 title:'Create Operations',
                 buttons: Ext.Msg.OK,
-                msg: "Please select least one operation",
+                msg: "Please select at least one operation",
                 animEl: 'elId',
                 icon: Ext.MessageBox.WARN
             });

@@ -310,7 +310,8 @@
                                         fileIconFailure,
                                         fileIconSuccess,
                                         fieldSetId,
-                                        colspan){
+                                        colspan,
+                                        disable){
                                    
                                         var colspanDef=1;
                                            if(colspan)
@@ -448,7 +449,8 @@
                                             //fileUpload: true,
                                             //frame: true,
                                             id: fileID,
-                                             width: fileSize*8,
+                                            width: fileSize*8,
+                                            disabled: disable,
                                             items: [contentForm]
                                         }                 
                                     );

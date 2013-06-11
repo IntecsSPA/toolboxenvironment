@@ -8,6 +8,7 @@ import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.util.DOMUtil;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.io.File;
@@ -163,9 +164,11 @@ public class ConfigurationSecurityCommands {
                 if (propertyType.compareTo("text") == 0) {
                     propertyValue = propertyJson.get("value").getAsString();
                 } else if (propertyType.compareTo("file") == 0) {
-
-                    JsonObject propertyValueObject = propertyJson.get("value").getAsJsonObject();
-                    propertyValue = propertyValueObject.get("fileName").getAsString();
+                    JsonElement propertyValueElement = propertyJson.get("value");
+                    if (!(propertyValueElement == null || propertyValueElement instanceof com.google.gson.JsonNull)) {
+                        JsonObject propertyValueObject = propertyJson.get("value").getAsJsonObject();
+                        propertyValue = propertyValueObject.get("fileName").getAsString();
+                    }
                 }
 
                 Element propertyDOM = getElementByAttributeId(commandDOM, "property", propertyId);

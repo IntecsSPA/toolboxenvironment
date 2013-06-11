@@ -17,9 +17,11 @@ ConfigurePEPServiceInterface=function(serviceName){
     
     this.currentConfiguration=null;
     
+    this.xacmlFileLocation=null;
+    
     this.jksFileID=null;
     
-    this.xacmlFileID=null;
+    //this.xacmlFileID=null; MRB comment
       
     this.init=function(){
         this.formInterface=createPanelExjFormByXml(this.xmlInterface, interfacesManager.lang, this.serviceName);
@@ -43,15 +45,20 @@ ConfigurePEPServiceInterface=function(serviceName){
        //console.log(JSON.stringify(chosenSteps.authentication.commands));
         
         var newJksFileID=null;
-        var newXacmlFileID=null;
         if(this.formInterface.getFormValues().jksFileLocation)
             newJksFileID=this.formInterface.getFormValues().jksFileLocation.uploadID;
+        
+        /* MRB comment
+        var newXacmlFileID=null;
         if(this.formInterface.getFormValues().xacmlFileLocation)
             newXacmlFileID=this.formInterface.getFormValues().xacmlFileLocation.uploadID;
+        */
+       
         var jsonRequest=JSON.parse(this.formInterface.getJsonValueObject());
-        jsonRequest.chosenCommands = chosenSteps;
         
         if(jsonRequest){
+            jsonRequest.xacmlFileLocation = this.xacmlFileLocation;
+            jsonRequest.chosenCommands = chosenSteps;
           
             var updatePEPServiceFunc=function(response){
           
@@ -103,10 +110,12 @@ ConfigurePEPServiceInterface=function(serviceName){
                     Ext.getCmp("jksFileLocation"+this.serviceName+"_file").setValue('');
             this.jksFileID = newJksFileID;
             
+            /* MRB comment
             if(this.xacmlFileID)
                 if(this.xacmlFileID == newXacmlFileID)  
                     Ext.getCmp("xacmlFileLocation"+this.serviceName+"_file").setValue('');
             this.xacmlFileID = newXacmlFileID;
+            */
             
             var headers=new Array();
             headers.push("Content-Type,application/json");
@@ -193,32 +202,37 @@ ConfigurePEPServiceInterface=function(serviceName){
                 }
                 if (commandProperties[j].type == "file") {
                     multiInputAuth.addFileField(commandProperties[j].id, commandProperties[j].description, 50, "rest/manager/storefile",
-                            null, "upload-icon", "styles/img/loaderFile.gif", "styles/img/fail.png", "styles/img/success.png", fieldSetName, 50);
+                            null, "upload-icon", "styles/img/loaderFile.gif", "styles/img/fail.png", "styles/img/success.png", fieldSetName, 50, !(commands[i].selected));
                 }
             }
         }
         multiInputAuth.doLayout();
     };
     
-    this.getStepsValue = function(commands){    
-        for(var i=0; i < commands.length;i++){
+    this.getStepsValue = function(commands) {
+        for (var i = 0; i < commands.length; i++) {
             commands[i].selected = Ext.getCmp(commands[i].id).getValue();
             var commandProperties = commands[i].properties;
-            for (var j=0; j < commandProperties.length; j++){  
-                if (commandProperties[j].type == "text"){
+            for (var j = 0; j < commandProperties.length; j++) {
+                if (commandProperties[j].type == "text") {
                     commandProperties[j].value = Ext.getCmp(commandProperties[j].id).getValue();
-                } 
-                if (commandProperties[j].type == "file"){
+                }
+                if (commandProperties[j].type == "file") {
                     var fileName = Ext.getCmp(commandProperties[j].id + "_file").getValue();
                     var filePath = Ext.getCmp(commandProperties[j].id + "UploadID").getValue();
-                    commandProperties[j].value = {
-                        "fileName" : fileName,
-                        "uploadID" : filePath
-                    };               
-                }            
+                    if (filePath != "") {
+                        commandProperties[j].value = {
+                            "fileName": fileName,
+                            "uploadID": filePath
+                        }
+                    }
+                    else {
+                        commandProperties[j].value = null;
+                    }
+                    this.xacmlFileLocation=commandProperties[j].value;              
+                }
             }
         }
-        
     };
     
     this.init();

@@ -14,6 +14,8 @@ CreatePEPServiceInterface=function(){
     this.formInterface=new Object();
     
     this.configuredSteps=null;
+    
+    this.xacmlFileLocation = null;
           
     this.init=function(){
         this.formInterface=createPanelExjFormByXml(this.xmlInterface, interfacesManager.lang);
@@ -40,6 +42,7 @@ CreatePEPServiceInterface=function(){
         var jsonRequest=JSON.parse(this.formInterface.getJsonValueObject());
         
         if(jsonRequest){
+            jsonRequest.xacmlFileLocation = this.xacmlFileLocation;
             jsonRequest.chosenCommands = chosenSteps;
           
             var myMask = new Ext.LoadMask(Ext.getBody(), {
@@ -220,7 +223,7 @@ CreatePEPServiceInterface=function(){
                 }
                 if (commandProperties[j].type == "file") {
                     multiInputAuth.addFileField(commandProperties[j].id, commandProperties[j].description, 50, "rest/manager/storefile",
-                            null, "upload-icon", "styles/img/loaderFile.gif", "styles/img/fail.png", "styles/img/success.png", fieldSetName, 50);
+                            null, "upload-icon", "styles/img/loaderFile.gif", "styles/img/fail.png", "styles/img/success.png", fieldSetName, 50, true);
                 }
             }
         }
@@ -238,10 +241,16 @@ CreatePEPServiceInterface=function(){
                 if (commandProperties[j].type == "file"){
                     var fileName = Ext.getCmp(commandProperties[j].id + "_file").getValue();
                     var filePath = Ext.getCmp(commandProperties[j].id + "UploadID").getValue();
-                    commandProperties[j].value = {
-                        "fileName" : fileName,
-                        "uploadID" : filePath
-                    };               
+                    if (filePath != "") {
+                        commandProperties[j].value = {
+                            "fileName": fileName,
+                            "uploadID": filePath
+                        }
+                    }
+                    else {
+                        commandProperties[j].value = null;
+                    }
+                    this.xacmlFileLocation=commandProperties[j].value;       
                 }            
             }
         }

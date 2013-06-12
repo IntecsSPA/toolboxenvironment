@@ -42,7 +42,7 @@
   var columns=1;
   if(field.columns)
       columns=parseInt(field.columns);
-  
+
   formField[u]={
              colspan: numberColsField+colSpan,
              layout: "form",
@@ -109,7 +109,7 @@
                                     collpsed=false;
                                     checkbox={tag: 'input', type: 'checkbox', name: idFieldSet+"_checkbox", id: idFieldSet+"_checkbox"}
                                 }    
-
+                              
                            cmp.add( {
                                 xtype:'fieldset',
                                 layout: 'table',
@@ -118,6 +118,7 @@
                                 colspan: numberColsField+colSpan,
                                 title: title,
                                 cls: itemCls,
+                                //width: cmp.width,
                                 expandMethod: expandMethod,
                                 collapsed: collpsed,
                                 id: idFieldSet,
@@ -402,13 +403,21 @@
                                        });
 
                            var contentForm=fileUpload;
-                           if(fileLabel)
+                         /*  if(fileLabel)
                                contentForm=new Ext.form.FieldSet({
                                       title: fileLabel,
                                       layout: 'table',
                                       autoHeight: true,
                                       items: [fileUpload]
                                 });
+                           else{*/
+                               contentForm=new Ext.Panel({
+                                      /*title: fileLabel,*/
+                                      layout: 'table',
+                                      autoHeight: true,
+                                      items: [fileUpload]
+                                });
+                          // } 
 
                            if(fileAutoUploadURL){
                                contentForm.items.add(

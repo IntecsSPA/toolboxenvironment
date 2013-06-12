@@ -30,8 +30,9 @@ InfoPEPServiceInterface=function(serviceName){
                 "<tr><td width='10%' class='cellsx_t'><b>Schema:</b></td><td><div id='schemaToolbar"+service+"'/></td></tr>"+
                 "<tr><td colspan='2'><table>"+
                 "<tr rowspan='2'><td width='35%' class='cellsx_t' BGCOLOR='#FFFFFF'><b>URL of the SOAP endpoint:</b></td><td BGCOLOR='#FFFFFF'>"+jsonResponse.serviceConfiguration.remoteUrl+"</td></tr>"+
-                "<tr><td width='35%' class='cellsx_t' BGCOLOR='#FFFFFF'><b>Forward message with security token unencrypted:</b></td><td BGCOLOR='#FFFFFF'>"+jsonResponse.serviceConfiguration.forwardMessageWithClearToken+"</td></tr>"+
-                "<tr><td width='35%' class='cellsx_t' BGCOLOR='#FFFFFF'><b>Forward message with security token encrypted (this will override all forwarding options):</b></td><td BGCOLOR='#FFFFFF'>"+jsonResponse.serviceConfiguration.forwardMessageWithCryptedToken+"</td></tr>"+
+                "<tr><td width='35%' class='cellsx_t' BGCOLOR='#FFFFFF'><b>Forward message with security token decrypted:</b></td><td BGCOLOR='#FFFFFF'>"+jsonResponse.serviceConfiguration.forwardMessageWithClearToken+"</td></tr>"+
+                "<tr><td width='35%' class='cellsx_t' BGCOLOR='#FFFFFF'><b>Forward message with security token re-encrypted (this will override all forwarding options):</b></td><td BGCOLOR='#FFFFFF'>"+jsonResponse.serviceConfiguration.forwardMessageWithCryptedToken+"</td></tr>"+
+                "<tr><td width='35%' class='cellsx_t' BGCOLOR='#FFFFFF'><b>Forward message with incoming security token:</b></td><td BGCOLOR='#FFFFFF'>"+jsonResponse.serviceConfiguration.forwardMessageWithIncomingToken+"</td></tr>"+
                 "</table></td></tr>"+
                 "</table>";     
                     

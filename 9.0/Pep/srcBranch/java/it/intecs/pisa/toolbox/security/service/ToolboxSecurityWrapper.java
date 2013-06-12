@@ -71,6 +71,13 @@ public class ToolboxSecurityWrapper {
     // of possible failure in the policy enforcement process
     private static String policyEnforcementError = "Policy enforcement restricts access. ";
     private static String RESPONSE_MESSAGE = "ResponseMessage";
+    
+    private ChainManager chainManager = null; 
+    
+    private void init(){
+        if (chainManager == null)
+            chainManager = new ChainManager();
+    }
 
     /**
      * payload: represents the payload of the incoming SOAP message.
@@ -78,10 +85,13 @@ public class ToolboxSecurityWrapper {
      * @returns OMElement : the payload of the return SOAP message.
      */
     public OMElement execute(OMElement payload) throws AxisFault {
+        
         OMElement response = null;
         AxisFault fault = null;
         Logger logger = Toolbox.getInstance().getLogger();
         logger.info("Processing secured operation");
+        
+        init();
 
         MessageContext msgCtx = MessageContext.getCurrentMessageContext();
 
@@ -119,8 +129,6 @@ public class ToolboxSecurityWrapper {
             logger.error("ToolboxSecurityWrapper, an exception occurs while trying to retrieve the SAML token!!!", ex);
         }
 
-        // TODO : PEP should be called even if SAML is null???
-
         try {
             String operationName = Toolbox.getOperationName(msgCtx);
 
@@ -141,10 +149,9 @@ public class ToolboxSecurityWrapper {
                 throw fault;
             }
             if (isIncomingTokenToBeRestored(serviceName)) {
-                ChainManager cm = new ChainManager();
-                ChainContext ct = cm.createContext();
+                ChainContext ct = chainManager.createContext();
                 ct.setAttribute(CommandsConstants.MESSAGE_CONTEXT, msgCtx);
-                cm.executeChain("default/restoreChain", ct);
+                chainManager.executeChain("default/restoreChain", ct);
                 result = ct.getResult();
                 if (result.getCode() == Result.FAIL) {
                     String denyMsg = result.getExtraInfo();
@@ -216,7 +223,7 @@ public class ToolboxSecurityWrapper {
         return response;
     }
 
-    public OMElement check(OMElement payload) throws AxisFault {
+    public OMElement check(OMElement payload) throws AxisFault {    
         String ENCRYPTED_DATA_NAMESPACE = "http://www.w3.org/2001/04/xmlenc#";
         String ENCRYPTED_DATA = "EncryptedData";
         String WS_SECURITY_NAMESPACE = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd";
@@ -226,6 +233,8 @@ public class ToolboxSecurityWrapper {
         AxisFault fault = null;
         Logger logger = Toolbox.getInstance().getLogger();
         logger.info("Processing optional secured operation");
+        
+        init();
 
         MessageContext msgCtx = MessageContext.getCurrentMessageContext();
 
@@ -246,11 +255,10 @@ public class ToolboxSecurityWrapper {
             if (wsSecurity != null) {
                 OMElement encryptedData = wsSecurity.getFirstChildWithName(new QName(ENCRYPTED_DATA_NAMESPACE, ENCRYPTED_DATA));
                 if (encryptedData != null) {
-                    isTokenIncludedInSOAPHeader = true;
-                    ChainManager cm = new ChainManager();
-                    ChainContext ct = cm.createContext();
+                    isTokenIncludedInSOAPHeader = true;                 
+                    ChainContext ct = chainManager.createContext();
                     ct.setAttribute(CommandsConstants.MESSAGE_CONTEXT, msgCtx);
-                    cm.executeChain("default/decryptAndCheckSignatureChain", ct);
+                    chainManager.executeChain("default/decryptAndCheckSignatureChain", ct);
                     Result result = ct.getResult();
                     if (result.getCode() == Result.FAIL) {
                         String denyMsg = result.getExtraInfo();
@@ -264,10 +272,25 @@ public class ToolboxSecurityWrapper {
 
                         throw fault;
                     }
+
+                    result = callServiceAuthenticationChain(serviceName, msgCtx);
+                    if (result.getCode() == Result.FAIL) {
+                        String denyMsg = result.getExtraInfo();
+                        fault = generateExceptionReport(msgCtx, policyEnforcementError + denyMsg);
+
+                        OMElement soapElemOM = msgCtx.getEnvelope();//.getBody().getFirstElement();
+
+                        Element soapElemDOM = XMLUtils.toDOM(soapElemOM);
+                        Document soapDoc = soapElemDOM.getOwnerDocument();
+                        storeAccessDeniedInstanceIntoDB(soapDoc, serviceName, operationName, fault);
+
+                        throw fault;
+                    }
                 }
+
             }
 
-            Result result = callServiceChain(serviceName, msgCtx);
+            Result result = callServiceAuthorizationChain(serviceName, msgCtx);
             if (result.getCode() == Result.FAIL) {
                 String denyMsg = result.getExtraInfo();
                 fault = generateExceptionReport(msgCtx, policyEnforcementError + denyMsg);
@@ -285,11 +308,10 @@ public class ToolboxSecurityWrapper {
             SOAPEnvelope tempEnvelope = CopyUtils.copy(msgCtx.getEnvelope());
             tempMsgCtx.setEnvelope(tempEnvelope);
 
-            if (isTokenIncludedInSOAPHeader && isIncomingTokenToBeRestored(serviceName)) {
-                ChainManager cm = new ChainManager();
-                ChainContext ct = cm.createContext();
+            if (isTokenIncludedInSOAPHeader && isIncomingTokenToBeRestored(serviceName)) {              
+                ChainContext ct = chainManager.createContext();
                 ct.setAttribute(CommandsConstants.MESSAGE_CONTEXT, msgCtx);
-                cm.executeChain("default/restoreChain", ct);
+                chainManager.executeChain("default/restoreChain", ct);
                 result = ct.getResult();
                 if (result.getCode() == Result.FAIL) {
                     String denyMsg = result.getExtraInfo();
@@ -336,26 +358,20 @@ public class ToolboxSecurityWrapper {
             }
 
             response = XMLUtils.toOM(respDoc.getDocumentElement());
-            
-            if (isAuthorizationCheckOnResponseRequired(serviceName)) {          
+
+            if (isAuthorizationCheckOnResponseRequired(serviceName)) {
                 Util.addSOAPEnvelope(respDoc);
-                boolean authorizeResponse = true;
-                if (authorizeResponse) {
-                    ChainManager cm = new ChainManager();
-                    ChainContext ct = cm.createContext();
 
-                    tempMsgCtx.setProperty(RESPONSE_MESSAGE, respDoc);
-                    tempMsgCtx.setFLOW(MessageContext.OUT_FLOW);
-                    ct.setAttribute(CommandsConstants.MESSAGE_CONTEXT, tempMsgCtx);
-
-                    cm.executeChain(serviceName + "/authorizationCommands", ct);
-                    Result result = ct.getResult();
-                    if (result.getCode() == Result.FAIL) {
-                        String denyMsg = result.getExtraInfo();
-                        fault = generateExceptionReport(msgCtx, policyEnforcementError + denyMsg);
-                        throw fault;
-                    }
+                tempMsgCtx.setProperty(RESPONSE_MESSAGE, respDoc);
+                tempMsgCtx.setFLOW(MessageContext.OUT_FLOW);
+                
+                Result result = callServiceAuthorizationChain(serviceName, tempMsgCtx);
+                if (result.getCode() == Result.FAIL) {
+                    String denyMsg = result.getExtraInfo();
+                    fault = generateExceptionReport(msgCtx, policyEnforcementError + denyMsg);
+                    throw fault;
                 }
+
             }
 
         } catch (AxisFault ex) {
@@ -471,14 +487,73 @@ public class ToolboxSecurityWrapper {
 
         Logger logger = Toolbox.getInstance().getLogger();
 
-        // the ChainManager expects a configuration file in the path WEB-INF/classes
-        String serviceCommandsPath = "../services/" + serviceName + "/serviceChain.xml";
-        ChainManager cm = new ChainManager(serviceCommandsPath);
-        ChainContext ct = cm.createContext();
-        ct.setAttribute(CommandsConstants.MESSAGE_CONTEXT, msgCtx);
-        cm.executeChain(serviceName + "/securityCommands", ct);
-        //boolean res = ct.getResult().getCode() == Result.SUCCESS;
-        return ct.getResult();
+        ServiceManager serviceManager = ServiceManager.getInstance();
+        try {
+
+            TBXService service = serviceManager.getService(serviceName);
+            if (service.getCommandChainConfigured() == false) {
+                // the ChainManager expects a configuration file in the path WEB-INF/classes
+                String serviceCommandsPath = "../services/" + serviceName + "/serviceChain.xml";
+                ChainManager cm = new ChainManager(serviceCommandsPath);
+
+                service.setCommandChainConfigured(true);
+            }
+            ChainContext ct = chainManager.createContext();
+            ct.setAttribute(CommandsConstants.MESSAGE_CONTEXT, msgCtx);
+            chainManager.executeChain(serviceName + "/securityCommands", ct);
+            return ct.getResult();
+        } catch (Exception ex) {
+            return new Result(Result.FAIL, ex.getMessage());
+        }
+    }
+
+    private Result callServiceAuthenticationChain(String serviceName, MessageContext msgCtx) {
+
+        Logger logger = Toolbox.getInstance().getLogger();
+
+        ServiceManager serviceManager = ServiceManager.getInstance();
+        try {
+
+            TBXService service = serviceManager.getService(serviceName);
+            if (service.getCommandChainConfigured() == false) {
+
+                // the ChainManager expects a configuration file in the path WEB-INF/classes
+                String serviceCommandsPath = "../services/" + serviceName + "/serviceChain.xml";
+                ChainManager cm = new ChainManager(serviceCommandsPath);
+
+                service.setCommandChainConfigured(true);
+            }
+            ChainContext ct = chainManager.createContext();
+            ct.setAttribute(CommandsConstants.MESSAGE_CONTEXT, msgCtx);
+            chainManager.executeChain(serviceName + "/authenticationCommands", ct);
+            return ct.getResult();
+        } catch (Exception ex) {
+            return new Result(Result.FAIL, ex.getMessage());
+        }
+    }
+
+    private Result callServiceAuthorizationChain(String serviceName, MessageContext msgCtx) {
+
+        Logger logger = Toolbox.getInstance().getLogger();
+        ServiceManager serviceManager = ServiceManager.getInstance();
+        try {
+
+            TBXService service = serviceManager.getService(serviceName);
+            if (service.getCommandChainConfigured() == false) {
+
+                // the ChainManager expects a configuration file in the path WEB-INF/classes
+                String serviceCommandsPath = "../services/" + serviceName + "/serviceChain.xml";
+                ChainManager cm = new ChainManager(serviceCommandsPath);
+
+                service.setCommandChainConfigured(true);
+            }
+            ChainContext ct = chainManager.createContext();
+            ct.setAttribute(CommandsConstants.MESSAGE_CONTEXT, msgCtx);
+            chainManager.executeChain(serviceName + "/authorizationCommands", ct);
+            return ct.getResult();
+        } catch (Exception ex) {
+            return new Result(Result.FAIL, ex.getMessage());
+        }
     }
 
     protected Document stringToDocument(String xml) throws IOException, SAXException {

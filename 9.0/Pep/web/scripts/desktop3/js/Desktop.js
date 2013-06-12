@@ -56,7 +56,8 @@ Ext.Desktop = function(app){
             Ext.applyIf(config||{}, {
                 manager: windows,
                 minimizable: true,
-                maximizable: true
+                maximizable: true,
+                autoScroll: true
             })
         );
         win.render(desktopEl);

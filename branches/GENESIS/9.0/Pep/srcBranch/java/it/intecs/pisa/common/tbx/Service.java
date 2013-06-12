@@ -42,6 +42,8 @@ public class Service {
     protected DOMUtil domutil = null;
     protected String version = null;
     protected boolean wssecurity = false;
+    
+    protected boolean commandChainConfigured = false;
     /**
      * The following attributes regarding JKS are not stored in the serviceDescriptor file, in fact they appear in the Axis2
      * service configuration file.
@@ -206,6 +208,14 @@ public class Service {
     	wssecurity = security;
     }
 
+    public boolean getCommandChainConfigured(){
+        return commandChainConfigured;
+    }
+    
+    public void setCommandChainConfigured(boolean chainConfig) {
+    	commandChainConfigured = chainConfig;
+    }
+    
     public Interface getImplementedInterface() {
         return implementedInterface;
     }

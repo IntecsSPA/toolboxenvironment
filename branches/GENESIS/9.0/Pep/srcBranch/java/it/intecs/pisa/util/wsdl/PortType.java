@@ -29,7 +29,7 @@ public class PortType {
 	
 	public PortType(WSDL wsdl)
 	{
-        super();
+        this();
 		this.wsdl=wsdl;
 		
 	}

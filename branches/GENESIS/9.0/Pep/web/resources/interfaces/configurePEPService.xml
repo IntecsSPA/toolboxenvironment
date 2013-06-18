@@ -35,16 +35,16 @@
     </section>   
     <section name="Authentication Checks">
         <group label="Select the Authentication Checks">
-            <input type="multitext" name="multiInputAuthentication" id="multiInputAuthentication" label="Authentication Checks" size="50"/>       
+            <input type="multitext" name="multiInputAuthentication" id="multiInputAuthentication" label="Authentication Checks" size="55"/>       
         </group>
     </section>
     
     <section name="Authorization Checks">     
         <group label="Choose the XACML Authorization">
-            <input type="multitext" name="multiInputAuthorization" id="multiInputAuthorization" label="Authorization Choice" size="50"/>       
+            <input type="multitext" name="multiInputAuthorization" id="multiInputAuthorization" label="Authorization Choice" size="55"/>       
         </group>
         <group label="Authorization on Response">
-            <input type="checkbox" name="checkAuthorizationOnResponse" id="checkAuthorizationOnResponse" colSpan="10"
+            <input type="checkbox" name="checkAuthorizationOnResponse" id="checkAuthorizationOnResponse" size="55"
                    label="Check authorization also on the response"/>
         </group>
     </section>

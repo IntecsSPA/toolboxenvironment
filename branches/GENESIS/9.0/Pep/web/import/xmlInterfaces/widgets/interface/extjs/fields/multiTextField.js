@@ -118,7 +118,7 @@
                                 colspan: numberColsField+colSpan,
                                 title: title,
                                 cls: itemCls,
-                                //width: cmp.width,
+                                width: cmp.width,
                                 expandMethod: expandMethod,
                                 collapsed: collpsed,
                                 id: idFieldSet,

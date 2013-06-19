@@ -198,7 +198,7 @@ public class GatewayCommands {
             File serviceChainFile = new File(serviceRoot + File.separator + "serviceChain.xml");
             serviceChainFile.createNewFile();
             IOUtil.copy(new FileInputStream(serviceChainPath), new FileOutputStream(serviceChainFile));
-            //new File(serviceChainPath).delete();
+            new File(serviceChainPath).delete();
 
 
             Hashtable<String, Hashtable<String, String>> serviceVariables =
@@ -279,6 +279,7 @@ public class GatewayCommands {
             File localSchemaFolder = new File(serviceFolder, SERVICE_SCHEMAS_PATH);
             localSchemaFolder.mkdirs();
             //schemaUtil.saveWSDLSchemas(wsdlURL, localSchemaFolder);
+            schemaUtil.updateWSDLSchemas(wsdlURL, localSchemaFolder);
             JsonArray soapOperations = getSoapOperationsInfoList(wsdlURL);
             String[] soapActions  = new String[soapOperations.size()];
             for (int index = 0; index < soapOperations.size(); index++) {

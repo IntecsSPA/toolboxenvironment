@@ -392,7 +392,7 @@ public class SAMLValidator extends PolicyBasedResultsValidator{
         while (aliases.hasMoreElements() && (!isSignValid)) {
             String alias = aliases.nextElement();
 
-            if (keyStore.isCertificateEntry(alias)) {
+            if (keyStore.getCertificate(alias) != null) {
                 X509Certificate certificate = (X509Certificate) keyStore.getCertificate(alias);
 
                 isSignValid = signature.checkSignatureValue(certificate);

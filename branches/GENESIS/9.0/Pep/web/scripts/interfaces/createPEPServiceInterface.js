@@ -68,8 +68,8 @@ CreatePEPServiceInterface=function(){
                         id: "interfaceSelectPEPOperationsWin",
                         title:"Select PEP Operations",
                         renderOp: renderOp,
-                        width: BrowserDetect.getWidth(50),
-                        height : BrowserDetect.getHeight(50),
+                        width: BrowserDetect.getWidth(60),
+                        height : BrowserDetect.getHeight(60),
                         serviceName: jsonRequest['serviceName'],
                         iconCls: 'bogus',
                         layout:'fit',
@@ -219,7 +219,7 @@ CreatePEPServiceInterface=function(){
             for (var j = 0; j < commandProperties.length; j++) {
                 if (commandProperties[j].type == "text") {
                     multiInputAuth.addTextField(commandProperties[j].id, commandProperties[j].description,
-                            commandProperties[j].value, 30, fieldSetName, 50, null, true);
+                            commandProperties[j].value, 50, fieldSetName, 1, null, true);
                 }
                 if (commandProperties[j].type == "file") {
                     multiInputAuth.addFileField(commandProperties[j].id, commandProperties[j].description, 50, "rest/manager/storefile",

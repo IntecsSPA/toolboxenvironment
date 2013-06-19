@@ -102,7 +102,7 @@ public class ChainManager {
   /**
    * Flag to determine if initialization has taken place.
    */
-  private static boolean configured;
+  private boolean configured;
 
 
   /**

@@ -32,7 +32,7 @@ public abstract class TBXOperation extends Operation {
 
     public TBXOperation() {
         super();
-
+   
     }
 
     public TBXOperation(Operation op) {
@@ -94,19 +94,19 @@ public abstract class TBXOperation extends Operation {
             throw new Exception("Error while creating instance for incoming message");
         }
         InstanceResources.storeXMLResource(soapRequest, serviceInstanceId, InstanceResources.TYPE_INPUT_MESSAGE);
-        
+
         faultDoc=du.newDocument();
         faultEl=faultDoc.createElement("securityFault");
         faultEl.setTextContent(axisFualt.getMessage());
         faultDoc.appendChild(faultEl);
-        
+
         InstanceResources.storeXMLResource(faultDoc, serviceInstanceId, InstanceResources.TYPE_OUTPUT_MESSAGE);
         updateInstanceStatus(serviceInstanceId, InstanceStatuses.STATUS_ACCESS_DENIED);
-   
+
         String errorOutputMessageType;
         errorOutputMessageType = isAsynch == true ? InstanceResources.TYPE_INVALID_RESPONSE_BUILDER_MESSAGE : InstanceResources.TYPE_INVALID_OUTPUT_MESSAGE;
 
-      //  InstanceResources.storeXMLResource(response, serviceInstanceId, errorOutputMessageType);
+        //  InstanceResources.storeXMLResource(response, serviceInstanceId, errorOutputMessageType);
 
 
 
@@ -141,7 +141,7 @@ public abstract class TBXOperation extends Operation {
             }
         } catch (Exception e) {
             processErrorOnInstanceCreation();
-            ErrorMailer.send(getServiceName(), soapAction, messageId, orderId, "Error while creating instance for incoming message");
+            // ErrorMailer.send(getServiceName(), soapAction, messageId, orderId, "Error while creating instance for incoming message");
             throw new Exception("Error while creating instance for incoming message");
         }
 
@@ -149,7 +149,7 @@ public abstract class TBXOperation extends Operation {
             storeInstanceKeys(serviceInstanceId, soapRequest, debugMode);
         } catch (Exception e) {
             processInvalidSOAP(serviceInstanceId);
-            ErrorMailer.send(serviceInstanceId, "Error while extracting information from the incomming SOAP message");
+            // ErrorMailer.send(serviceInstanceId, "Error while extracting information from the incomming SOAP message");
             throw e;
         }
 
@@ -158,7 +158,7 @@ public abstract class TBXOperation extends Operation {
         } catch (Exception e) {
             updateInstanceStatus(serviceInstanceId, InstanceStatuses.STATUS_INVALID_INPUT_MESSAGE);
             InstanceResources.storeXMLResource(soapRequest, serviceInstanceId, InstanceResources.TYPE_INVALID_INPUT_MESSAGE);
-            ErrorMailer.send(serviceInstanceId, "Error while checking input message:" + e.getMessage());
+            // ErrorMailer.send(serviceInstanceId, "Error while checking input message:" + e.getMessage());
 
             return processErrorRequest(serviceInstanceId, errorScriptToExecute, "Error while checking input message:" + e.getMessage());
         }
@@ -176,18 +176,20 @@ public abstract class TBXOperation extends Operation {
             } else {
                 updateInstanceStatus(serviceInstanceId, InstanceStatuses.STATUS_ERROR);
             }
-            ErrorMailer.send(serviceInstanceId, "Error while executing script. Cause" + e.getMessage());
+            // ErrorMailer.send(serviceInstanceId, "Error while executing script. Cause" + e.getMessage());
             return processErrorRequest(serviceInstanceId, errorScriptToExecute, "Error while executing script");
         }
 
         try {
 
             //TODO check this modification. We have disabled the outgoing message validation
-            if (SOAPUtil.isSOAPFault(response) == false && parentInterf.isValidationActive()) {
-                validOutputMessage = validateMessage(response);
-            } else {
-                validOutputMessage = response;
-            }
+//            if (SOAPUtil.isSOAPFault(response) == false && parentInterf.isValidationActive()) {
+//                validOutputMessage = validateMessage(response);
+//            } else {
+//                validOutputMessage = response;
+//            }
+
+            validOutputMessage = response;
 
             outputMessageType = isAsynch == true ? InstanceResources.TYPE_RESPONSE_BUILDER_MESSAGE : InstanceResources.TYPE_OUTPUT_MESSAGE;
             InstanceResources.storeXMLResource(validOutputMessage, serviceInstanceId, outputMessageType);
@@ -209,7 +211,7 @@ public abstract class TBXOperation extends Operation {
 
             updateInstanceStatus(serviceInstanceId, errorInstanceStatus);
             InstanceResources.storeXMLResource(response, serviceInstanceId, errorOutputMessageType);
-            ErrorMailer.send(serviceInstanceId, "Error while validating output message:" + ecc2.getMessage());
+            // ErrorMailer.send(serviceInstanceId, "Error while validating output message:" + ecc2.getMessage());
             return processErrorRequest(serviceInstanceId, errorScriptToExecute, "Error while validating output message:" + ecc2.getMessage());
         }
 
@@ -220,7 +222,7 @@ public abstract class TBXOperation extends Operation {
         Logger tbxLogger;
         tbx = Toolbox.getInstance();
         tbxLogger = tbx.getLogger();
-        logger.error("An error occurred when trying to create a new instance for the incoming message");
+        tbxLogger.error("An error occurred when trying to create a new instance for the incoming message");
     }
 
     protected void processInvalidSOAP(long serviceInstanceId) throws Exception {
@@ -397,12 +399,13 @@ public abstract class TBXOperation extends Operation {
         Document validInputMessage;
 
         inputMessageBody = Util.removeSOAPElements(soapRequest);
-        if (parentInterf.isValidationActive()) {
-            logger.info("Validating input message");
-            validInputMessage = validateMessage(inputMessageBody);
-        } else {
-            validInputMessage = inputMessageBody;
-        }
+//        if (parentInterf.isValidationActive()) {
+//            logger.info("Validating input message");
+//            validInputMessage = validateMessage(inputMessageBody);
+//        } else {
+//            validInputMessage = inputMessageBody;
+//        }
+        validInputMessage = inputMessageBody;
 
         return validInputMessage;
     }

@@ -377,7 +377,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             } catch (Exception e) {
                 errorMsg = "Error while serializing response document:: " + e.getMessage();
                 logger.error(errorMsg);
-                ErrorMailer.send(null, soapaction, null, null, errorMsg);
+                // ErrorMailer.send(null, soapaction, null, null, errorMsg);
                 throw new ToolboxException(errorMsg);
             }
 
@@ -460,7 +460,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         TBXOperation operation = (TBXOperation) service.getImplementedInterface().getOperationBySOAPAction(operationName);
         if (operation == null) {
             logger.error("[" + serviceName + "] " + "Unknown SOAP port" + operationName);
-            ErrorMailer.send(serviceName, operationName, null, null, "[" + serviceName + "] " + "Unknown SOAP port" + operationName);
+            // ErrorMailer.send(serviceName, operationName, null, null, "[" + serviceName + "] " + "Unknown SOAP port" + operationName);
             throw new ToolboxException("Unknown SOAP port" + operationName + " for service " + serviceName);
         }
 
@@ -514,7 +514,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
 
         if (operation == null) {
             logger.error("[" + serviceName + "] " + "Unknown message: the following element is not recognized" + namespace + ":" + tagName);
-            ErrorMailer.send(serviceName, tagName, null, null, "[" + serviceName + "] " + "Unknown message: the following element is not recognized" + namespace + ":" + tagName);
+            // ErrorMailer.send(serviceName, tagName, null, null, "[" + serviceName + "] " + "Unknown message: the following element is not recognized" + namespace + ":" + tagName);
             throw new ToolboxException("Unknown message: the following element is not recognized" + namespace + ":" + tagName);
         }
 
@@ -578,7 +578,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             } catch (Exception e) {
                 errorMsg = "Error while serializing response document:: " + e.getMessage();
                 logger.error(errorMsg);
-                ErrorMailer.send(null, soapaction, null, null, errorMsg);
+                // ErrorMailer.send(null, soapaction, null, null, errorMsg);
                 throw new ToolboxException(errorMsg);
             }
 

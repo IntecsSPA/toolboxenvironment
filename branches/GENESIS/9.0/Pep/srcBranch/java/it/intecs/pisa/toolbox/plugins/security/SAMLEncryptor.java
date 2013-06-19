@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.KeyStore;
+import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.Date;
@@ -124,6 +125,8 @@ public class SAMLEncryptor {
     
     public static void signSAML(Element samlElem, File jks4signature, String user, String pwd) throws Exception{
     	
+        boolean insertPublicKey = false; // choice currently disabled
+        
     	SAMLAssertion saml = new SAMLAssertion(samlElem);
     	// sign the assertion
     	
@@ -140,13 +143,54 @@ public class SAMLEncryptor {
             sigAlgo = XMLSignature.ALGO_ID_SIGNATURE_DSA;
         }
         
-        java.security.Key issuerPK = caKs.getKey(user, pwd.toCharArray());
-        
-        //System.out.println("getting SAML token, issuerPK = "+issuerPK);
-        
-        saml.sign(sigAlgo, issuerPK, Arrays.asList(issuerCerts));
+        // we assume that the alias password is the same as the keystore password
+        String passwdProtection  = new String(pwd);
+
+        KeyStore.ProtectionParameter keystoreProtection = new KeyStore.PasswordProtection(passwdProtection.toCharArray());
+        KeyStore.PrivateKeyEntry pkEntry = (KeyStore.PrivateKeyEntry) caKs.getEntry(user, keystoreProtection);
+
+        PrivateKey key = pkEntry.getPrivateKey();
+     
+        if (insertPublicKey) {
+            saml.sign(sigAlgo, key, Arrays.asList(issuerCerts));
+        } else {
+            saml.sign(sigAlgo, key, null);
+        }
+
         //saml.signWithTransformComments(sigAlgo, null, issuerPK, Arrays.asList(issuerCerts));
         saml.checkValidity();  
+    }
+    
+     public void signSAML(SAMLAssertion saml, File jks4signature, String storePass, String alias, String pwd_alias, boolean insertPublicKey) throws Exception {
+
+        KeyStore caKs = KeyStore.getInstance("JKS");
+
+        caKs.load(new FileInputStream(jks4signature), storePass.toCharArray());
+
+        X509Certificate cert = (X509Certificate) caKs.getCertificate(alias);
+        X509Certificate[] issuerCerts = {cert};
+
+        String sigAlgo = XMLSignature.ALGO_ID_SIGNATURE_RSA;
+        String pubKeyAlgo = issuerCerts[0].getPublicKey().getAlgorithm();
+        if (pubKeyAlgo.equalsIgnoreCase("DSA")) {
+            sigAlgo = XMLSignature.ALGO_ID_SIGNATURE_DSA;
+        }
+
+        String passwdProtection = pwd_alias.isEmpty() ? storePass : pwd_alias;
+
+        KeyStore.ProtectionParameter keystoreProtection = new KeyStore.PasswordProtection(passwdProtection.toCharArray());
+        KeyStore.PrivateKeyEntry pkEntry = (KeyStore.PrivateKeyEntry) caKs.getEntry(alias, keystoreProtection);
+
+        PrivateKey key = pkEntry.getPrivateKey();
+
+        if (insertPublicKey) {
+            saml.sign(sigAlgo, key, Arrays.asList(issuerCerts));
+        } else {
+            saml.sign(sigAlgo, key, null);
+        }
+
+        saml.checkValidity();
+
     }
      
     /**

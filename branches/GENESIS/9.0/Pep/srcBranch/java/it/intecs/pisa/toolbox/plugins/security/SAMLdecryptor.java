@@ -39,7 +39,7 @@ import org.w3c.dom.NodeList;
 public class SAMLdecryptor {
 
     private WSSConfig wssConfig = null;
-
+    
     public SAMLdecryptor() {
         wssConfig = WSSConfig.getDefaultWSConfig();
     }
@@ -55,6 +55,7 @@ public class SAMLdecryptor {
             Properties prop;
             Crypto crypto;
 
+            final WSSConfig cfg = getWssConfig();
             prop = new Properties();
             prop.setProperty("org.apache.ws.security.crypto.provider", "org.apache.ws.security.components.crypto.Merlin");
             prop.setProperty("org.apache.ws.security.crypto.merlin.keystore.type", "JKS");
@@ -67,8 +68,7 @@ public class SAMLdecryptor {
 
             Vector returnResults = new Vector();
             //element = (Element) element.getFirstChild().getNextSibling();
-
-            final WSSConfig cfg = getWssConfig();
+       
             WSDocInfo wsDocInfo = new WSDocInfo(element.getOwnerDocument().hashCode());
             wsDocInfo.setCrypto(crypto);
             TokenCallbackHandler tokenCallbackHandler = new TokenCallbackHandler();
@@ -113,6 +113,9 @@ public class SAMLdecryptor {
     public boolean checkSignature(XMLSignature signature) throws Exception {
         //signature.addResourceResolver(new OfflineResolver());
         // XMLUtils.outputDOMc14nWithComments(signature.getElement(), System.out);
+        
+        final WSSConfig cfg = getWssConfig();
+         
         KeyInfo ki = signature.getKeyInfo();
 
         if (ki != null) {

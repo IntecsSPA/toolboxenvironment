@@ -198,7 +198,7 @@ ConfigurePEPServiceInterface=function(serviceName){
             for (var j = 0; j < commandProperties.length; j++) {
                 if (commandProperties[j].type == "text") {
                     multiInputAuth.addTextField(commandProperties[j].id, commandProperties[j].description,
-                            commandProperties[j].value, 30, fieldSetName, 50, null, !(commands[i].selected));
+                            commandProperties[j].value, 50, fieldSetName, 1, null, !(commands[i].selected));
                 }
                 if (commandProperties[j].type == "file") {
                     multiInputAuth.addFileField(commandProperties[j].id, commandProperties[j].description, 50, "rest/manager/storefile",

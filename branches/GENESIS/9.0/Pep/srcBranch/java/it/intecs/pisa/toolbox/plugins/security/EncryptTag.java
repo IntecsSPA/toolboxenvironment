@@ -22,6 +22,7 @@ import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.Properties;
 import java.util.Vector;
+import org.apache.ws.security.WSConstants;
 
 public class EncryptTag extends NativeTagExecutor {
 
@@ -73,10 +74,19 @@ public class EncryptTag extends NativeTagExecutor {
             SAMLAssertion saml = new SAMLAssertion(doc.getDocumentElement());
             String samlId = saml.getId();
             WSSecEncrypt encr = new WSSecEncrypt();
+                      
             Vector encrParts = new Vector();
-            encrParts.add(new WSEncryptionPart("#" + samlId, "Element"));
+            encrParts.add(new WSEncryptionPart("#" + samlId, "Element"));        
+     
+            /* New version to be tested
+            Vector<WSEncryptionPart> encrParts = new Vector<WSEncryptionPart>();
+
+            WSEncryptionPart encryptionPart = new WSEncryptionPart("Assertion", WSConstants.SAML_NS, "Element");
+            encrParts.add(encryptionPart);   
+            */
+            
             encr.setParts(encrParts);
-            //encr.setWsConfig(rmd.getConfig());
+
             encr.setDocument(doc);
             //RampartUtil.setEncryptionUser(rmd, encr);
 
@@ -85,7 +95,7 @@ public class EncryptTag extends NativeTagExecutor {
             encr.setKeyEncAlgo(org.apache.ws.security.WSConstants.KEYTRANSPORT_RSA15); //http://www.w3.org/2001/04/xmlenc#rsa-1_5
 
             encr.setUserInfo(alias);
-
+            
             encr.prepare(doc, crypto);
 
             //Element bstElem = encr.getBinarySecurityTokenElement();

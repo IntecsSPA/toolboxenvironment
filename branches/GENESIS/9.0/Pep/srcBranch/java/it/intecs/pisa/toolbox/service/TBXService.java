@@ -79,7 +79,7 @@ public class TBXService extends Service {
     private String orderIdXpath;
     private HashMap soapActions = new HashMap();
     private static InetAddress localHost = null;
-
+   
     /**
      *
      * @param serviceRoot
@@ -147,7 +147,8 @@ public class TBXService extends Service {
         {
             IOUtil.rmdir(publicServiceDir);
             deployWSDL();
-            deploySchemaFilesNew();
+            //deploySchemaFilesNew();
+            deploySchemaFilesNewWithoutRelocation();
            
         }
         catch(Exception e)
@@ -270,7 +271,7 @@ public class TBXService extends Service {
         
         /* If the service is stopped, no processing is performed and an exception is thrown */
         if (ServiceStatuses.getStatus(serviceName)==ServiceStatuses.STATUS_STOPPED) {
-            ErrorMailer.send(serviceName, null, null, null,"Service stopped");
+            // ErrorMailer.send(serviceName, null, null, null,"Service stopped");
             throw new ToolboxException("Service stopped");
         }
 
@@ -359,6 +360,26 @@ public class TBXService extends Service {
             uri = new URI(ToolboxNetwork.getEndpointURL() + "/WSDL/" + serviceName);
             //SchemaSetRelocator.updateSchemaLocationToRelative(publicDir, schemaDir.toURI());
             SchemaSetRelocator.updateSchemaLocationToAbsolute(publicDir, uri);
+        } catch (Exception e) {
+            System.out.println("Cannot copy schema files to public directory");
+            logger.error("Cannot copy schema files to public directory");
+        }
+    }
+    
+     protected void deploySchemaFilesNewWithoutRelocation() throws Exception {
+        File serviceRoot;
+        File schemaDir;
+        File publicDir;
+        Toolbox tbx;
+        URI uri;
+
+        try {
+            tbx = Toolbox.getInstance();
+            serviceRoot = tbx.getServiceRoot(serviceName);
+            schemaDir = new File(serviceRoot, "Schemas");
+
+            publicDir = tbx.getPublicServiceDir(serviceName);
+            IOUtil.copyDirectory(schemaDir, publicDir);
         } catch (Exception e) {
             System.out.println("Cannot copy schema files to public directory");
             logger.error("Cannot copy schema files to public directory");

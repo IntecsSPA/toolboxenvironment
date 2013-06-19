@@ -8,9 +8,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -21,13 +24,16 @@ import org.w3c.dom.NodeList;
  */
 public class WSDL {
 
+    private static final String WSDL_NAMESPACE = "http://schemas.xmlsoap.org/wsdl/";
     private static final String ATTRIBUTE_TARGET_NAMESPACE = "targetNamespace";
-    
     private static final String TAG_IMPORT = "import";
     private static final String TAG_SCHEMA = "schema";
     private static final String TAG_TYPES = "types";
     private static final String ATTRIBUTE_SCHEMA_LOCATION = "schemaLocation";
-    private static final String ATTRIBUTE_NAMESPACE="namespace";
+    // MRB comment: an <import> statement can be present as a direct chid of the root element
+    // and its attribute "location" can address either another WSDL or a schema 
+    private static final String ATTRIBUTE_LOCATION = "location";
+    private static final String ATTRIBUTE_NAMESPACE = "namespace";
     private static final String TAG_MESSAGE = "message";
     private static final String TAG_BINDING = "binding";
     private static final String TAG_PORT_TYPE = "portType";
@@ -45,11 +51,12 @@ public class WSDL {
     protected Import[] imports = null;
     protected Hashtable<String, String> namespaces = null;
     private DOMUtil domutil;
-    private String [] importLocations;
-    private String [] importNamespaces;
-    
-    private Document [] schemas;
-    private String [] internalNamespaces;
+    private String[] importLocations;
+    private String[] importNamespaces;
+    private Document[] schemas;
+    private String[] internalNamespaces;
+    private Map<String, String> tempImportedSchema;
+    private String baseURL;
 
     /**
      * Default constructor
@@ -62,6 +69,7 @@ public class WSDL {
 
     /**
      * This constructor fills the class with WSDL parameters
+     *
      * @param wsdl
      */
     public WSDL(File wsdl) {
@@ -77,9 +85,10 @@ public class WSDL {
         }
 
     }
-    
+
     /**
      * This constructor fills the class with WSDL parameters
+     *
      * @param wsdl InputStream
      */
     public WSDL(InputStream wsdlInputStream) {
@@ -93,14 +102,16 @@ public class WSDL {
         }
 
     }
-    
-        /**
+
+    /**
      * This constructor fills the class with WSDL parameters
+     *
      * @param wsdlURL
      */
     public WSDL(URL wsdlURL) {
         this();
         try {
+            baseURL = getBaseURL(wsdlURL);
             InputStreamReader reader = new InputStreamReader(wsdlURL.openStream());
             wsdlDoc = domutil.readerToDocument(reader);
             parseWSDL(wsdlDoc);
@@ -236,6 +247,7 @@ public class WSDL {
 
     /**
      * This method parses the WSDL document and extract some informations
+     *
      * @param wsdlDoc2
      * @throws WSDLException
      */
@@ -253,59 +265,59 @@ public class WSDL {
 
         //gettting target name space
         this.targetNameSpace = root.getAttribute(ATTRIBUTE_TARGET_NAMESPACE);
-        
-         //parsing import schema locations
-        children = root.getElementsByTagNameNS("*", TAG_IMPORT);
-        count = children.getLength();
-        if(count >0){
-          importLocations = new String[count];
-          importNamespaces = new String[count];
-          for (int i = 0; i < count; i++) {
-                    tag = (Element) children.item(i);
-                    importLocations[i]=tag.getAttribute(ATTRIBUTE_SCHEMA_LOCATION);
-                    importNamespaces[i]=tag.getAttribute(ATTRIBUTE_NAMESPACE);
-          }
+
+        //parsing import schema locations
+        tempImportedSchema = new HashMap<String, String>();
+        String path = (baseURL != null) ? baseURL : null;
+        getSchemaNamespacesAndLocations(wsdlDoc, path);
+        count = tempImportedSchema.size();
+        importLocations = new String[count];
+        importNamespaces = new String[count];
+        int index = 0;
+        for (Map.Entry<String, String> entry : tempImportedSchema.entrySet()) {
+            importNamespaces[index] = entry.getKey();
+            importLocations[index] = entry.getValue();
+            index++;
         }
-        
-       
+
         //parsing internal schemas --- Andrea
         children = root.getElementsByTagNameNS("*", TAG_SCHEMA);
         count = children.getLength();
-        if(count >0){
-          schemas = new Document[count];
-          internalNamespaces = new String[count];
-          for (int i = 0; i < count; i++) {
-               tag = (Element) children.item(i);
-                try {
-                    schemas[i]= DOMUtil.getElementAsNewDocument(tag);
-                    internalNamespaces[i]=tag.getAttribute(ATTRIBUTE_TARGET_NAMESPACE);
-                } catch (Exception ex) {
-                    throw  new WSDLException(ex.getMessage());
-                }
-                    
-          }
-        }
-        
-        //parsing message type
-        
-        
-            children = root.getElementsByTagNameNS("*", TAG_MESSAGE);
-
-            count = children.getLength();
-            messages = new Message[count];
-
+        if (count > 0) {
+            schemas = new Document[count];
+            internalNamespaces = new String[count];
             for (int i = 0; i < count; i++) {
                 tag = (Element) children.item(i);
-                DOMUtil.copyNamespaces(root, tag);
+                try {
+                    schemas[i] = DOMUtil.getElementAsNewDocument(tag);
+                    internalNamespaces[i] = tag.getAttribute(ATTRIBUTE_TARGET_NAMESPACE);
+                } catch (Exception ex) {
+                    throw new WSDLException(ex.getMessage());
+                }
 
-                messages[i] = new Message();
-                messages[i].createFromXMLSnippet(tag);
             }
-      
-        
-        
+        }
+
+        //parsing message type
+
+
+        children = root.getElementsByTagNameNS(WSDL_NAMESPACE, TAG_MESSAGE);
+
+        count = children.getLength();
+        messages = new Message[count];
+
+        for (int i = 0; i < count; i++) {
+            tag = (Element) children.item(i);
+            DOMUtil.copyNamespaces(root, tag);
+
+            messages[i] = new Message();
+            messages[i].createFromXMLSnippet(tag);
+        }
+
+
+
         //Parsing portTypes
-        children = root.getElementsByTagNameNS("*", TAG_PORT_TYPE);
+        children = root.getElementsByTagNameNS(WSDL_NAMESPACE, TAG_PORT_TYPE);
 
         count = children.getLength();
         ports = new PortType[count];
@@ -319,7 +331,7 @@ public class WSDL {
         }
 
         //		Parsing bindings
-        children = root.getElementsByTagNameNS("*", TAG_BINDING); 
+        children = root.getElementsByTagNameNS(WSDL_NAMESPACE, TAG_BINDING);
 
         count = children.getLength();
         bindings = new Binding[count];
@@ -389,7 +401,6 @@ public class WSDL {
         namespaces.put("tns", targetNameSpace);
 
     }
-    
 
     public String getNameSpaceValue(String name) {
         return namespaces.get("xmlns:" + name);
@@ -445,36 +456,35 @@ public class WSDL {
     }
 
     public void setService(Service[] wsdlService) {
-        this.services=wsdlService;
+        this.services = wsdlService;
     }
 
     public void setCallbackService(Service[] service) {
-        this.callbackServices=service;
+        this.callbackServices = service;
     }
 
     private void createPartnerLink(Document wsdl) {
-        if(this.callbackports!=null)
-        {
-            Element plinkRootEl=wsdl.createElement("plnk:partnerLinkType");
-            plinkRootEl.setAttribute("name",name);
+        if (this.callbackports != null) {
+            Element plinkRootEl = wsdl.createElement("plnk:partnerLinkType");
+            plinkRootEl.setAttribute("name", name);
 
             wsdl.getDocumentElement().appendChild(plinkRootEl);
 
-            Element providerRoleEl=wsdl.createElement("plnk:role");
-            providerRoleEl.setAttribute("name", name+"ServiceProvider");
+            Element providerRoleEl = wsdl.createElement("plnk:role");
+            providerRoleEl.setAttribute("name", name + "ServiceProvider");
             plinkRootEl.appendChild(providerRoleEl);
 
-            Element providerPortTypeEl=wsdl.createElement("plnk:portType");
-            providerPortTypeEl.setAttribute("name", "tns:"+name);
+            Element providerPortTypeEl = wsdl.createElement("plnk:portType");
+            providerPortTypeEl.setAttribute("name", "tns:" + name);
             providerRoleEl.appendChild(providerPortTypeEl);
 
 
-            providerRoleEl=wsdl.createElement("plnk:role");
-            providerRoleEl.setAttribute("name", name+"ServiceRequester");
+            providerRoleEl = wsdl.createElement("plnk:role");
+            providerRoleEl.setAttribute("name", name + "ServiceRequester");
             plinkRootEl.appendChild(providerRoleEl);
 
-            providerPortTypeEl=wsdl.createElement("plnk:portType");
-            providerPortTypeEl.setAttribute("name", "tns:"+name+"Callback");
+            providerPortTypeEl = wsdl.createElement("plnk:portType");
+            providerPortTypeEl.setAttribute("name", "tns:" + name + "Callback");
             providerRoleEl.appendChild(providerPortTypeEl);
         }
     }
@@ -482,14 +492,14 @@ public class WSDL {
     /**
      * @return the importLocations
      */
-    public String [] getImportLocations() {
+    public String[] getImportLocations() {
         return importLocations;
     }
 
     /**
      * @return the importNamespaces
      */
-    public String [] getImportNamespaces() {
+    public String[] getImportNamespaces() {
         return importNamespaces;
     }
 
@@ -505,5 +515,60 @@ public class WSDL {
      */
     public String[] getInternalNamespaces() {
         return internalNamespaces;
+    }
+
+    private void getSchemaNamespacesAndLocations(Document wsdlDoc, String path) {
+
+        try {
+            Element root = wsdlDoc.getDocumentElement();
+            if (!root.getNamespaceURI().equals("http://schemas.xmlsoap.org/wsdl/")) {
+                return;
+            }
+            NodeList children = root.getElementsByTagNameNS("*", TAG_IMPORT);
+            Element tag = null;
+            for (int i = 0; i < children.getLength(); i++) {
+                tag = (Element) children.item(i);
+                if (tag.getNamespaceURI().equals("http://schemas.xmlsoap.org/wsdl/")) {
+                    String attributeValue = tag.getAttribute(ATTRIBUTE_LOCATION);
+                    if (!attributeValue.startsWith("http")) {
+                        if (path == null) {
+                            continue; // best-effort rationale
+                        } else {
+                            attributeValue = path + attributeValue;
+                        }
+                    }
+
+                    URL newURL = new URL(attributeValue);
+
+                    InputStreamReader reader = new InputStreamReader(newURL.openStream());
+                    Document newDoc = domutil.readerToDocument(reader);
+                    getSchemaNamespacesAndLocations(newDoc, getBaseURL(newURL));
+                } else {
+                    //the import element has "http://www.w3.org/2001/XMLSchema" as namespaceURI                  
+                    String attributeNamespace = tag.getAttribute(ATTRIBUTE_NAMESPACE);
+                    if (!tempImportedSchema.containsKey(attributeNamespace)) {
+                        String attributeSchemaLocation = tag.getAttribute(ATTRIBUTE_SCHEMA_LOCATION);
+                        if (!attributeSchemaLocation.startsWith("http")) {
+                            URL urlSchema = new URL(path + attributeSchemaLocation);
+                            URI urlSchemaCanonical = urlSchema.toURI().normalize();
+                            attributeSchemaLocation = urlSchemaCanonical.toString();
+                        }
+                        tempImportedSchema.put(attributeNamespace, attributeSchemaLocation);
+                    }
+
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage()); 
+            return;
+        }
+
+    }
+
+    private String getBaseURL(URL url) {
+        String tempURL = url.toExternalForm();
+        int index = tempURL.lastIndexOf('/');
+        tempURL = tempURL.substring(0, index);
+        return tempURL + '/';
     }
 }

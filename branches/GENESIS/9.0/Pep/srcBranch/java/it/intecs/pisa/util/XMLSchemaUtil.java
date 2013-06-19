@@ -22,6 +22,33 @@ public class XMLSchemaUtil {
     private static final String ATTRIBUTE_SCHEMA_LOCATION = "schemaLocation";
     private static final String MAIN_SCHEMA_FILE_NAME = "main.xsd";
     private static final int CONNECTION_TIME_OUT = 100000;
+    
+    public void updateWSDLSchemas(String wsdlURL, File schemaDirecorty) throws Exception {
+        int i;
+        DOMUtil domUtil = new DOMUtil();
+        Element elementImport;
+        File mainSchemaFile = new File(schemaDirecorty, MAIN_SCHEMA_FILE_NAME);
+        WSDL wsdl = new WSDL(new URL(wsdlURL));
+        Document schemaDoc = domUtil.inputStreamToDocument(new FileInputStream(mainSchemaFile));
+        String[] schemaImportLoc = wsdl.getImportLocations();
+        String[] namespaceImport = wsdl.getImportNamespaces();
+
+        if (schemaImportLoc != null) {
+            for (i = 0; i < schemaImportLoc.length; i++) {
+                if (schemaImportLoc[i].isEmpty()) {
+                    continue;
+                }
+                if (!namespaceImport[i].equals("http://schemas.xmlsoap.org/ws/2003/03/addressing")) {
+                    elementImport = schemaDoc.createElementNS(SCHEMA_NAMESPACE, "import");
+                    elementImport.setAttribute("schemaLocation", schemaImportLoc[i]);
+                    elementImport.setAttribute("namespace", namespaceImport[i]);
+                    schemaDoc.getDocumentElement().appendChild(elementImport);
+                }
+            }
+        }
+
+        DOMUtil.dumpXML(schemaDoc, mainSchemaFile);
+    }
 
     public String saveWSDLSchemas(String wsdlURL, File schemaDirecorty) throws Exception {
         String relativePath;
@@ -42,6 +69,8 @@ public class XMLSchemaUtil {
         if (schemaImportLoc != null) {
             importedSchemas = schemaImportLoc.length;
             for (i = 0; i < schemaImportLoc.length; i++) {
+                if (schemaImportLoc[i].isEmpty())
+                    continue;
                 relativePath = "wsdlSchemaImport_" + new Integer(i + 1).toString();
                 currentSchemaLocationDirecotry = new File(schemaDirecorty, relativePath);
                 currentSchemaLocationDirecotry.mkdirs();
@@ -59,19 +88,19 @@ public class XMLSchemaUtil {
             }
         }
 
-        if (schema != null) {
-            for (i = 0; i < schema.length; i++) {
-                relativePath = "wsdlSchemaImport_" + new Integer(importedSchemas + i + 1).toString();
-                currentSchemaLocationDirecotry = new File(schemaDirecorty, relativePath);
-                currentSchemaLocationDirecotry.mkdirs();
-                DOMUtil.dumpXML(schema[i], new File(currentSchemaLocationDirecotry.getCanonicalFile(), relativePath));
-                schemaFileName = "internalSchema_" + new Integer(i + 1) + ".xsd";
-                elementImport = schemaDoc.createElementNS(SCHEMA_NAMESPACE, "import");
-                elementImport.setAttribute("schemaLocation", relativePath + "/" + schemaFileName);
-                elementImport.setAttribute("namespace", internalNamespaces[i]);
-                schemaDoc.getDocumentElement().appendChild(elementImport);
-            }
-        }
+//        if (schema != null) {
+//            for (i = 0; i < schema.length; i++) {
+//                relativePath = "wsdlSchemaImport_" + new Integer(importedSchemas + i + 1).toString();
+//                currentSchemaLocationDirecotry = new File(schemaDirecorty, relativePath);
+//                currentSchemaLocationDirecotry.mkdirs();
+//                DOMUtil.dumpXML(schema[i], new File(currentSchemaLocationDirecotry.getCanonicalFile(), relativePath));
+//                schemaFileName = "internalSchema_" + new Integer(i + 1) + ".xsd";
+//                elementImport = schemaDoc.createElementNS(SCHEMA_NAMESPACE, "import");
+//                elementImport.setAttribute("schemaLocation", relativePath + "/" + schemaFileName);
+//                elementImport.setAttribute("namespace", internalNamespaces[i]);
+//                schemaDoc.getDocumentElement().appendChild(elementImport);
+//            }
+//        }
 
         DOMUtil.dumpXML(schemaDoc, mainSchemaFile);
         return wsdl.getTargetNameSpace();

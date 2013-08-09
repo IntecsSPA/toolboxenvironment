@@ -28,6 +28,7 @@ import org.xml.sax.SAXException;
 public class WPSGrassEngine implements WPSEngine{
 
   private static String GRASS_SCRIPT_PATH="Resources/GrassScripts";
+  private static String GRASS_CHECKSTATUS_PATH="Resources/Scripts/checkStatus.sh";
   private static String GRASS_SCRIPT_FILE_PREFIX ="execute_";
   private static String EXECUTE_GRASS_ENGINE_SCRIPT_FILE_NAME ="scriptGrassEngine.tscript";
   private static String EXECUTE_ERROR_SCRIPT_FILE_NAME ="globalError.tscript";
@@ -81,7 +82,8 @@ public class WPSGrassEngine implements WPSEngine{
         IOUtil.copy(new ByteArrayInputStream(getGrassScript().getBytes()),
                 new FileOutputStream(new File(newServicePath,getOriginalScriptPathforProcessingName(processingName))));
         String grassOutpManager=IOUtil.loadString(new File(newServicePath,GRASS_SCRIPT_PATH+"/"+GRASS_SCRIPT_FILE_PREFIX+processingName+"_outputManager.tmp"));
-        String grassProcessScript=getGrassScript()+grassOutpManager;
+        String grassCheckStatus=IOUtil.loadString(new File(newServicePath,GRASS_CHECKSTATUS_PATH));
+        String grassProcessScript=grassCheckStatus+getGrassScript().replaceAll("#!/bin/bash", "")+grassOutpManager;
         FileOutputStream grassScriptOutputStream=new FileOutputStream(new File(newServicePath,getScriptPathforProcessingName(processingName)));
         grassScriptOutputStream.write(grassProcessScript.getBytes());
         grassScriptOutputStream.close();
@@ -103,7 +105,8 @@ public class WPSGrassEngine implements WPSEngine{
         IOUtil.copy(new ByteArrayInputStream(getGrassScript().getBytes()),
                 new FileOutputStream(new File(newServicePath,getOriginalScriptPathforProcessingName(processingName))));
          String grassOutpManager=IOUtil.loadString(new File(newServicePath,GRASS_SCRIPT_PATH+"/"+GRASS_SCRIPT_FILE_PREFIX+processingName+"_outputManager.tmp"));
-         String grassProcessScript=getGrassScript()+grassOutpManager;
+         String grassCheckStatus=IOUtil.loadString(new File(newServicePath,GRASS_CHECKSTATUS_PATH));
+         String grassProcessScript=grassCheckStatus+getGrassScript().replaceAll("#!/bin/bash", "")+grassOutpManager;
          FileOutputStream grassScriptOutputStream=new FileOutputStream(new File(newServicePath,getScriptPathforProcessingName(processingName)));
          grassScriptOutputStream.write(grassProcessScript.getBytes());
          grassScriptOutputStream.close();

@@ -32,6 +32,7 @@ import org.xml.sax.SAXException;
 public class WPSShellEngine implements WPSEngine{
 
     private static String SHELL_SCRIPT_PATH="Resources/ShellScripts";
+    private static String SHELL_CHECKSTATUS_PATH="Resources/Scripts/checkStatus.sh";
     private static String SHELL_SCRIPT_FILE_PREFIX ="execute_";
     private static String EXECUTE_SHELL_ENGINE_SCRIPT_FILE_NAME ="scriptShellEngine.tscript";
     private static String EXECUTE_SHELL_ERROR_SCRIPT_FILE_NAME ="globalError.tscript";
@@ -78,9 +79,10 @@ public class WPSShellEngine implements WPSEngine{
         shellScriptOutputStream.close();*/
 
         String shellOutpManager=IOUtil.loadString(new File(newServicePath,SHELL_SCRIPT_PATH+"/"+SHELL_SCRIPT_FILE_PREFIX+processingName+"_outputManager.tmp"));
-        String shellProcessScript=IOUtil.inputToString(
+        String shellCheckStatus=IOUtil.loadString(new File(newServicePath,SHELL_CHECKSTATUS_PATH));
+        String shellProcessScript=shellCheckStatus+IOUtil.inputToString(
                 new FileInputStream(new File(shellScriptFolder,
-                SHELL_SCRIPT_FILE_PREFIX+processingName+"_original.sh")))
+                SHELL_SCRIPT_FILE_PREFIX+processingName+"_original.sh"))).replaceAll("#!/bin/bash", "")
                 +shellOutpManager;
         FileOutputStream shellScriptOutputStream=new FileOutputStream(new File(newServicePath,getScriptPathforProcessingName(processingName)));
         shellScriptOutputStream.write(shellProcessScript.getBytes());
@@ -171,9 +173,10 @@ public class WPSShellEngine implements WPSEngine{
         shellScriptOutputStream.close();*/
 
         String shellOutpManager=IOUtil.loadString(new File(newServicePath,SHELL_SCRIPT_PATH+"/"+SHELL_SCRIPT_FILE_PREFIX+processingName+"_outputManager.tmp"));
-        String shellProcessScript=IOUtil.inputToString(
+        String shellCheckStatus=IOUtil.loadString(new File(newServicePath,SHELL_CHECKSTATUS_PATH));
+        String shellProcessScript=shellCheckStatus+IOUtil.inputToString(
                 new FileInputStream(new File(shellScriptFolder,
-                SHELL_SCRIPT_FILE_PREFIX+processingName+"_original.sh")))
+                SHELL_SCRIPT_FILE_PREFIX+processingName+"_original.sh"))).replaceAll("#!/bin/bash", "")
                 +shellOutpManager;
         FileOutputStream shellScriptOutputStream=new FileOutputStream(new File(newServicePath,getScriptPathforProcessingName(processingName)));
         shellScriptOutputStream.write(shellProcessScript.getBytes());

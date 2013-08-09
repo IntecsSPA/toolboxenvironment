@@ -4,6 +4,8 @@
    <section name="Service Info">
         <group label="Service Identification: ">
             <input type="text" name="serviceName" label="Service Name" id="serviceName" optional="false" value="" size="52" remoteControlURL="rest/gui/creationWizard/validate/serviceName.json"/>
+            <input type="combo" name="serviceVersion" label="Service Version" id="serviceVersion" optional="false" store="VALUES" size="20"
+            storeFields="['value']" storeData="[['1.0.0'],['2.0.0']]" value="2.0.0"/>
             <input type="textarea" name="serviceAbstract" label="Abstract" id="serviceAbstract" optional="true" value="" cols="50" rows="5"/>
             <input type="text" name="serviceKeyWords" label="KeyWords( separated by ',')" id="serviceKeyWords" optional="true" value="" size="52"/>
             <input type="hidden" name="interfaceType" id="interfaceType" value="ordering"/>

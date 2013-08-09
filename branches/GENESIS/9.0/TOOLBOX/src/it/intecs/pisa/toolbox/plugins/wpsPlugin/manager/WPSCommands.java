@@ -38,7 +38,9 @@ public class WPSCommands extends WPSUtil{
     /*CREATE WPS SERVICE VARIABLES*/
     private static String CREATE_SERVICE_OP="createService";
     private static String SERVICE_NAME_TAG_NAME ="serviceName";
-    private static String SERVICE_TEMPLATE_PATH ="WEB-INF/WPS/templateService/WPSSoap.zip";
+    private static String SERVICE_VERSION_TAG_NAME ="serviceVersion";
+    private static String SERVICE_TEMPLATE_PATH ="WEB-INF/WPS/templateService/";//WPSSoap.zip
+    private static String SERVICE_TEMPLATE_FILE_NAME_PREFIX ="WPSSoap_";//WPSSoap.zip
     private static String SERVICE_SCHEMAS_PATH ="Schemas";
     
     private static String SERVICE_CREATE_EXTERNAL_INFORMATION_XSLT_PATH ="AdditionalResources/WPS/XSL/GenerateWPSExternalInformation.xsl";
@@ -62,12 +64,15 @@ public class WPSCommands extends WPSUtil{
     }
 
     public Document createWPSService(Document serviceInformationDocument) throws Exception {
-      String serviceName="";
+      String serviceName="", serviceVersion="", serviceTempateFile=SERVICE_TEMPLATE_FILE_NAME_PREFIX;
       Document xslDocument,doc=null;
       WPSCommandResponse createResponse=new WPSCommandResponse(CREATE_SERVICE_OP);
       NodeList nl=serviceInformationDocument.getElementsByTagName(SERVICE_NAME_TAG_NAME);
       serviceName=DOMUtil.getTextFromNode((Element) nl.item(0));
-      File wpsServiceTemplate=new File(Toolbox.getInstance().getRootDir(), SERVICE_TEMPLATE_PATH);
+      nl=serviceInformationDocument.getElementsByTagName(SERVICE_VERSION_TAG_NAME);
+      serviceVersion=DOMUtil.getTextFromNode((Element) nl.item(0));
+      serviceTempateFile+=serviceVersion.replaceAll("\\.", "_")+".zip";
+      File wpsServiceTemplate=new File(Toolbox.getInstance().getRootDir(), SERVICE_TEMPLATE_PATH+serviceTempateFile);
       ServiceManager serviceManager;
       serviceManager=ServiceManager.getInstance();
       try {

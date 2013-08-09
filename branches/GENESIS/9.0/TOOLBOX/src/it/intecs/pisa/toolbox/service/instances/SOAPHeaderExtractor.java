@@ -81,6 +81,7 @@ public class SOAPHeaderExtractor {
         {
             list = header.examineAllHeaderElements();
 
+            
             while (list.hasNext()) {
                 element = (SOAPHeaderElement) list.next();
 
@@ -97,10 +98,11 @@ public class SOAPHeaderExtractor {
 
         
             qname = element.getElementQName();
-            namespace = qname.getNamespaceURI();
+            String locNamespace = qname.getNamespaceURI();
             elName = qname.getLocalPart();
 
-            if (namespace.equals(NAMESPACE_ADDRESSING) || namespace.equals(NAMESPACE_ADDRESSING_2)) {
+            if (locNamespace.equals(NAMESPACE_ADDRESSING) || locNamespace.equals(NAMESPACE_ADDRESSING_2)) {
+                namespace=locNamespace;
                 if (elName.equals(ELEMENT_MESSAGE_ID)) {
                     messageId = element.getValue();
                 } else if (elName.equals(ELEMENT_REPLY_TO)) {

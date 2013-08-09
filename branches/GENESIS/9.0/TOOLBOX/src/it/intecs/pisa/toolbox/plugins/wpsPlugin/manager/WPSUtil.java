@@ -59,7 +59,7 @@ public class WPSUtil {
     public static String DESCRIBE_PROCESS_DESCRIPTION_IDENTIFIER_XPATH="//wps:ProcessDescriptions/ProcessDescription/ows:Identifier";
     public static String DESCRIBE_PROCESS_STORE_SUPPORTED_ATRRIBUTE="storeSupported";
     public static String DESCRIBE_FILE_PREFIX="DescribeInformation_";
-    public static String DESCRIBE_RESPONSE_SCHEMA_LOCATION ="Schemas/wps/1.0.0/wpsDescribeProcess_response.xsd";
+    //public static String DESCRIBE_RESPONSE_SCHEMA_LOCATION ="Schemas/wps/1.0.0/wpsDescribeProcess_response.xsd";
 
     /*WPS PROCESSING INFORMATION DOCUMENT */
     private static String INFORMATION_PROCESSING_FILE_NAME_SUFFIX="_Info.xml";
@@ -78,7 +78,7 @@ public class WPSUtil {
     private static String SCHEMA_FOLDER ="Schemas/";
     private static String ADDITIONAL_RESOURCES_PATH="AdditionalResources/WPS/";
     private static String DESCRIBE_TREE_FILE_NAME="DescribeTreeDump.xml";
-    private static String ALL_SCHEMA_LOCATION ="wps/1.0.0/wpsAll.xsd";//Schemas/
+    private static String ALL_SCHEMA_NAME ="wpsAll.xsd";//Schemas/
     private static String SCHEMA_SERVICE_ALL_FILE_NAME ="WPSSoapAll.xsd";
 
     protected DOMUtil domUtil=null;
@@ -189,14 +189,17 @@ public class WPSUtil {
    public void updateWPSSoapSchema(File newServicePath, Document describeDocument, String serviceName, String processingName) throws Exception{
        File stylesheet=new File(newServicePath, UPDATE_WPS_ALL_SCHEMA_XLST_PATH);
        Document xslDocument;
+       String [] wpsNamespaceSplit= describeDocument.getDocumentElement().getAttribute("xmlns:wps").split("/");
+       String wpsVersion= wpsNamespaceSplit[wpsNamespaceSplit.length-1];
        new File(newServicePath, SCHEMA_FOLDER+serviceName).mkdir();
        Document treeDescribeFolder=IOUtil.getDocumentFromDirectory(new File(newServicePath, DESCRIBE_PROCESS_PATH).getAbsolutePath());
+       System.out.println("treeDescribeFolder.getNamespaceURI(); --" +treeDescribeFolder.getNamespaceURI());
        DOMUtil.dumpXML(treeDescribeFolder, new File(newServicePath, ADDITIONAL_RESOURCES_PATH+DESCRIBE_TREE_FILE_NAME));
 
        if(stylesheet.exists()){
           xslDocument=domUtil.fileToDocument(stylesheet);
           transformer = TransformerFactory.newInstance().newTransformer(new DOMSource(xslDocument));
-          transformer.setParameter("wpsSchemaLocation", /*new File(newServicePath, */ALL_SCHEMA_LOCATION/*).getAbsolutePath()*/);
+          transformer.setParameter("wpsSchemaLocation", "wps/"+wpsVersion+"/"+ALL_SCHEMA_NAME);
           transformer.setParameter("wpsExecuteSchemaFolder", /*new File(newServicePath, SCHEMA_FOLDER+*/serviceName/*).getAbsolutePath()*/);
           transformer.transform(new DOMSource(treeDescribeFolder), new StreamResult(new FileOutputStream(new File(newServicePath,SCHEMA_FOLDER+SCHEMA_SERVICE_ALL_FILE_NAME))));
        }
@@ -205,7 +208,7 @@ public class WPSUtil {
        if(stylesheet.exists()){
            xslDocument=domUtil.fileToDocument(stylesheet);
            transformer = TransformerFactory.newInstance().newTransformer(new DOMSource(xslDocument));
-           transformer.setParameter("wpsSchemaLocation", /*new File(newServicePath, */ALL_SCHEMA_LOCATION/*).getAbsolutePath()*/);
+           transformer.setParameter("wpsSchemaLocation", "wps/"+wpsVersion+"/"+ALL_SCHEMA_NAME);
            transformer.transform(new DOMSource(describeDocument), new StreamResult(new FileOutputStream(new File(newServicePath,SCHEMA_FOLDER+serviceName+"/"+processingName+".xsd"))));
        }
 

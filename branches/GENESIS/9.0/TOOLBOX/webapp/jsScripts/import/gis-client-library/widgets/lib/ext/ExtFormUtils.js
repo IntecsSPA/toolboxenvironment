@@ -646,7 +646,7 @@ function createPanelExjFormByXml(xmlDocument,lang){
                              if(!input[j].validate())
                                 return(null); 
                              
-                             if((xtypeArray[u] == "combo") && label) 
+                             if((xtypeArray[u] === "combo") && label) 
                                  formValues[input[j].getItemId()]={
                                           id: input[j].getItemId(),
                                           value:input[j].getValueInformation('value'),

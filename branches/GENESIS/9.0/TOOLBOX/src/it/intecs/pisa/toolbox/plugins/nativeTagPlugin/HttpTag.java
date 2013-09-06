@@ -1,8 +1,13 @@
 package it.intecs.pisa.toolbox.plugins.nativeTagPlugin;
 
+import it.intecs.pisa.pluginscore.toolbox.engine.interfaces.IEngine;
 import it.intecs.pisa.toolbox.constants.MiscConstants;
+import static it.intecs.pisa.toolbox.plugins.nativeTagPlugin.NativeTagExecutor.FILE_TYPE;
+import static it.intecs.pisa.toolbox.plugins.nativeTagPlugin.NativeTagExecutor.METHOD;
 import it.intecs.pisa.util.DOMUtil;
+import it.intecs.pisa.util.IOUtil;
 import java.io.StringWriter;
+import java.net.URLEncoder;
 import java.util.Iterator;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -33,6 +38,7 @@ public class HttpTag extends NativeTagExecutor {
        HttpMethod method;
        int statusCode = 0;
         String urlStr;
+        String methodAttribute;
 
         TransformerFactory tfactory=null;
         Transformer transformer=null;
@@ -42,6 +48,16 @@ public class HttpTag extends NativeTagExecutor {
 
 
         urlStr=urlStr.replaceAll("&amp;", "&");
+        
+        String params[]= urlStr.split("&");
+        String paramValue;
+        String valueSplit[];
+        if(params.length>1)
+            for(int i=0; i<params.length; i++){
+               valueSplit= params[i].split("=");
+               paramValue= valueSplit[valueSplit.length-1];
+               urlStr= urlStr.replaceAll(paramValue, URLEncoder.encode(paramValue));
+            }
        // Create an instance of HttpClient.
        HttpClient client = new HttpClient();
        HostConfiguration hc=client.getHostConfiguration();
@@ -51,8 +67,10 @@ public class HttpTag extends NativeTagExecutor {
                new Integer(System.getProperty(MiscConstants.PROXY_PORT_KEY)));
        client.setHostConfiguration(hc);
        
-
-       if (http.getAttribute(METHOD).equals(POST)) {
+       methodAttribute=http.getAttribute(METHOD); 
+       methodAttribute=this.engine.evaluateString(methodAttribute, IEngine.EngineStringType.ATTRIBUTE);
+       
+       if (methodAttribute.equals(POST)) {
 
           method = new PostMethod(urlStr);
           Element bodyTag;
@@ -106,8 +124,15 @@ public class HttpTag extends NativeTagExecutor {
 
 
        // Read the response body.
-       byte[] responseBody = method.getResponseBody();
-       return responseBody;
+
+        if (http.getAttribute(FILE_TYPE).equals(XML)) {
+            return new DOMUtil().inputStreamToDocument(method.getResponseBodyAsStream());
+        }else
+           if (http.getAttribute(FILE_TYPE).equals(TEXT)) {
+            return method.getResponseBodyAsString();
+        }else 
+           return method.getResponseBody(); 
+       
     }
 }
             

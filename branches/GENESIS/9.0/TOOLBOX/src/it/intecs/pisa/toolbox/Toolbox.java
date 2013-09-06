@@ -112,7 +112,8 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     private String toolboxVersion = "";
     private String toolboxRevision = "";
     /**
-     *  Method accessed by the administration WEB application jsp pages, to retrieve the {@link Toolbox.ToolboxConfigurator} object.
+     * Method accessed by the administration WEB application jsp pages, to
+     * retrieve the {@link Toolbox.ToolboxConfigurator} object.
      */
     private static Toolbox servletInstance;
 
@@ -398,8 +399,9 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     }
 
     /**
-     * Executes the service identified by the given URI and SOAP action and returns the response.
-     * 
+     * Executes the service identified by the given URI and SOAP action and
+     * returns the response.
+     *
      * @param soapRequestDocument
      * @param soapAction
      * @param requestURI
@@ -500,9 +502,12 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         TBXOperation operation = (TBXOperation) service.getImplementedInterface().getOperationByMainTag(namespace, tagName);
 
         if (operation == null) {
-            logger.error("[" + serviceName + "] " + "Unknown message: the following element is not recognized" + namespace + ":" + tagName);
-            ErrorMailer.send(serviceName, tagName, null, null, "[" + serviceName + "] " + "Unknown message: the following element is not recognized" + namespace + ":" + tagName);
-            throw new ToolboxException("Unknown message: the following element is not recognized" + namespace + ":" + tagName);
+            operation = (TBXOperation) service.getImplementedInterface().getOperationByName(tag.getNodeName());
+            if (operation == null) {
+                logger.error("[" + serviceName + "] " + "Unknown message: the following element is not recognized" + namespace + ":" + tagName);
+                ErrorMailer.send(serviceName, tagName, null, null, "[" + serviceName + "] " + "Unknown message: the following element is not recognized" + namespace + ":" + tagName);
+                throw new ToolboxException("Unknown message: the following element is not recognized" + namespace + ":" + tagName);
+            }
         }
 
         //**************** Processing Request *********************
@@ -588,7 +593,8 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     }
 
     private void executeHttpGet(HttpServletRequest req, HttpServletResponse resp, String requestURI) throws IOException {
-        String service = "";
+
+        String serviceType = "";
         String operation = "";
         String identifier = "";
         Document doc = null;
@@ -604,16 +610,17 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
             resp.setContentType("text/xml");
             writer = resp.getWriter();
 
-            service = req.getParameter(RequestsConstants.REQUEST_PARAMETER_WPS_SERVICE);
 
-            if (service == null) {
+            serviceType = req.getParameter(RequestsConstants.REQUEST_PARAMETER_WPS_SERVICE);
+            responseDocument = executeServiceRequest(getXMLDocumentFromGetRequest(req), requestURI, false);
+           /* if (serviceType == null) {
                 doc = WPSGetUtil.getWPSExceptionDocument("MissingParameterValue",
                         RequestsConstants.REQUEST_PARAMETER_WPS_SERVICE + " is missing",
                         RequestsConstants.REQUEST_PARAMETER_WPS_SERVICE);
                 throw new Exception();
             }
 
-            if (!service.equals("WPS")) {
+            if (!serviceType.equalsIgnoreCase("WPS")) {
                 doc = WPSGetUtil.getWPSExceptionDocument("InvalidParameterValue",
                         "Only WPS is currently supported in HTTP GET",
                         RequestsConstants.REQUEST_PARAMETER_WPS_SERVICE);
@@ -622,17 +629,19 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
 
             operation = req.getParameter(RequestsConstants.REQUEST_PARAMETER_WPS_REQUEST);
 
-            if (service == null) {
+            if (operation == null) {
                 doc = WPSGetUtil.getWPSExceptionDocument("MissingParameterValue",
                         RequestsConstants.REQUEST_PARAMETER_WPS_REQUEST + " is missing",
                         RequestsConstants.REQUEST_PARAMETER_WPS_REQUEST);
                 throw new Exception();
             }
 
-            if (operation.equals("GetCapabilities")) {
-                soapRequestDocument = WPSGetUtil.getCapabilitiesRequestDocument();
+            if (operation.equalsIgnoreCase("GetCapabilities")) {
+                // responseDocument = service.processRequest(operation, soapRequestDoc, debugMode);
+                responseDocument = executeServiceRequest(getXMLDocumentFromGetRequest(req), requestURI, false);
+                // soapRequestDocument = WPSGetUtil.getCapabilitiesRequestDocument();
 
-            } else if (operation.equals("DescribeProcess")) {
+            /*} else if (operation.equals("DescribeProcess")) {
                 identifier = req.getParameter(RequestsConstants.REQUEST_PARAMETER_WPS_IDENTIFIER);
                 if (identifier == null) {
                     doc = WPSGetUtil.getWPSExceptionDocument("MissingParameterValue",
@@ -657,6 +666,28 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
 
             Util.addSOAPEnvelope(soapRequestDocument);
             responseDocument = executeServiceRequest(soapRequestDocument, requestURI, false);
+            try {
+                new XMLSerializer2(writer).serialize(responseDocument);
+                writer.flush();
+                writer.close();
+            } catch (Exception e) {
+                errorMsg = "Error while serializing response document:: " + e.getMessage();
+                logger.error(errorMsg);
+                ErrorMailer.send(null, soapaction, null, null, errorMsg);
+
+                doc = WPSGetUtil.getWPSExceptionDocument("NoApplicableCode",
+                        errorMsg);
+
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            try {
+                new XMLSerializer2(writer).serialize(doc);
+            } catch (Exception ex) {
+                ex.printStackTrace(System.out);
+            }
+            writer.close();
+        }*/
             try {
                 new XMLSerializer2(writer).serialize(responseDocument);
                 writer.flush();
@@ -723,26 +754,33 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     }
 
     /**
-     *  Used by {@link TBXService} objects to retrieve the {@link #processingRequest} variable
-     *  @see #processingRequest
-     *  @see #setProcessingRequest
+     * Used by {@link TBXService} objects to retrieve the
+     * {@link #processingRequest} variable
+     *
+     * @see #processingRequest
+     * @see #setProcessingRequest
      */
     public Object getProcessingRequest() {
         return processingRequest;
     }
 
     /**
-     *  Used by {@link TBXService} objects to set the {@link #processingRequest} variable
-     *  @see #processingRequest
-     *  @see #getProcessingRequest
+     * Used by {@link TBXService} objects to set the {@link #processingRequest}
+     * variable
+     *
+     * @see #processingRequest
+     * @see #getProcessingRequest
      */
     public void setProcessingRequest(Object processingRequest) {
         this.processingRequest = processingRequest;
     }
 
     /**
-     *  Part of the life cicle of every servlet, it is executed the first time the servlet receives a request.
-     *  After calling the corresponding method of the parent class, it loads configuration file and creates the instance of the {@link Toolbox.ToolboxConfigurator}. It doesn't execute the {@link #processConfiguration} method.
+     * Part of the life cicle of every servlet, it is executed the first time
+     * the servlet receives a request. After calling the corresponding method of
+     * the parent class, it loads configuration file and creates the instance of
+     * the {@link Toolbox.ToolboxConfigurator}. It doesn't execute the
+     * {@link #processConfiguration} method.
      */
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -941,7 +979,13 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     }
 
     /**
-     *  The loaded configuration parameters are taken into account. Namely, the logger is started, the {@link #queueMutex} is set, the {@link #ftpServerManager} is created and started and the {@link TBXService} table is filled. This method is called at the first invocation of the {@link #onMessage} method or upon any call to {@link Toolbox.ToolboxConfigurator} methods needing the configuration parameter to be processed.
+     * The loaded configuration parameters are taken into account. Namely, the
+     * logger is started, the {@link #queueMutex} is set, the
+     * {@link #ftpServerManager} is created and started and the
+     * {@link TBXService} table is filled. This method is called at the first
+     * invocation of the {@link #onMessage} method or upon any call to
+     * {@link Toolbox.ToolboxConfigurator} methods needing the configuration
+     * parameter to be processed.
      */
     public void processConfiguration() throws Exception {
         String proxyPort = null;
@@ -995,7 +1039,10 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     }
 
     /**
-     *  Invoked by the index.jsp as start page of the WEB application. It makes sure that the {@link #init} method has been invoked and hence the {@link Toolbox.ToolboxConfigurator} is available to the other JSP pages. It actually redirect on a static HTML file.
+     * Invoked by the index.jsp as start page of the WEB application. It makes
+     * sure that the {@link #init} method has been invoked and hence the
+     * {@link Toolbox.ToolboxConfigurator} is available to the other JSP pages.
+     * It actually redirect on a static HTML file.
      */
     @SuppressWarnings("empty-statement")
     @Override
@@ -1075,7 +1122,9 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     }
 
     /**
-     *  This method invokes the implementation of the super class, unless a "password" parameter is present, in which case it calls the {@link #doGet} method.
+     * This method invokes the implementation of the super class, unless a
+     * "password" parameter is present, in which case it calls the
+     * {@link #doGet} method.
      */
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, java.io.IOException {
@@ -1114,46 +1163,47 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     }
 
     /**
-     *  Returns the rootDir directory of the TOOLBOX WEB application
+     * Returns the rootDir directory of the TOOLBOX WEB application
      */
     public File getRootDir() {
         return rootDir;
     }
 
     /**
-     *  Returns the log directory
+     * Returns the log directory
      */
     public File getLogDir() {
         return logDir;
     }
 
     /**
-     *  Builds the public directory of a TBXService, given its name
+     * Builds the public directory of a TBXService, given its name
      */
     public File getPublicServiceDir(String serviceName) {
         return new File(new File(getRootDir(), ToolboxFoldersFileConstants.WSDL), serviceName);
     }
 
     /**
-     *  Builds the work directory of a TBXService, given its name
+     * Builds the work directory of a TBXService, given its name
      */
     public File getServiceRoot(String serviceName) {
         return new File(new File(new File(getRootDir(), ToolboxFoldersFileConstants.WEB_INF), ToolboxFoldersFileConstants.SERVICES), serviceName);
     }
 
     /**
-     *  returns the directory where the axis services are deployed (configured in the axis2.xml)
+     * returns the directory where the axis services are deployed (configured in
+     * the axis2.xml)
      */
     public File getAxis2ServicesRoot(String fileName) {
         return new File(new File(new File(getRootDir(), ToolboxFoldersFileConstants.WEB_INF), ToolboxFoldersFileConstants.AXIS2SERVICES), fileName);
     }
 
     /**
-     *  Adjusts the Schema cross references (import and include) paths according to the rootDir in every schema file in the rootDir directory
+     * Adjusts the Schema cross references (import and include) paths according
+     * to the rootDir in every schema file in the rootDir directory
      */
     private void adjustAllSchemaReferences() throws Exception {
         File[] schemas = new File(new File(getRootDir(), ToolboxFoldersFileConstants.WEB_INF), ToolboxFoldersFileConstants.SCHEMAS).listFiles(new FileFilter() {
-
             public boolean accept(File file) {
                 return file.getName().endsWith(".xsd");
             }
@@ -1162,7 +1212,8 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     }
 
     /**
-     *  Adjusts the Schema cross references (import and include) paths according to the rootDir in a given schema file. It uses {@link #getSchemaLocation}
+     * Adjusts the Schema cross references (import and include) paths according
+     * to the rootDir in a given schema file. It uses {@link #getSchemaLocation}
      */
     private void adjustSchemaReferences(File schemaFile) throws Exception {
 
@@ -1199,7 +1250,8 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     }
 
     /**
-     *  Builds the correct schema location, based on the old value and the current rootDir directory. It uses {@link Util#getURI}.
+     * Builds the correct schema location, based on the old value and the
+     * current rootDir directory. It uses {@link Util#getURI}.
      */
     private String getSchemaLocation(String oldSchemaLocation) {
         int slashIndex = oldSchemaLocation.lastIndexOf(MiscConstants.SLASH); // It is correct to search for SLASH since it is an URI
@@ -1208,7 +1260,9 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     }
 
     /**
-     *  Part of the life cicle of the Servlet, it is called when reloading the WEB application or when shutting down TOMCAT. It calls {@link #reset} and sets {@link #toolboxConfigurator} to null.
+     * Part of the life cicle of the Servlet, it is called when reloading the
+     * WEB application or when shutting down TOMCAT. It calls {@link #reset} and
+     * sets {@link #toolboxConfigurator} to null.
      */
     @Override
     public void destroy() {
@@ -1402,7 +1456,9 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
     }
 
     /**
-     * Return true if the service is a secure one, i.e. it has WS-Security policy applied
+     * Return true if the service is a secure one, i.e. it has WS-Security
+     * policy applied
+     *
      * @param req
      * @return
      * @author Stefano
@@ -1427,6 +1483,7 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
 
     /**
      * Tries to retrieve the requested operation from the given message context.
+     *
      * @author Stefano
      * @param msgCtx the Axis2 message context
      * @return the operation name or an empty string
@@ -1617,5 +1674,30 @@ public class Toolbox extends AxisServlet implements ServletContextListener {
         }
 
         return headers;
+    }
+    
+    private Document getXMLDocumentFromGetRequest(HttpServletRequest req){
+        Document xmlRequest;
+        String paramName;
+        DOMUtil domUtil=new DOMUtil();
+        xmlRequest= domUtil.newDocument();
+        Element paramElement;
+        Element root=xmlRequest.createElement(
+                req.getParameter(
+                RequestsConstants.REQUEST_PARAMETER_OGC_GET_REQUEST));
+        root.setAttribute(RequestsConstants.REQUEST_GET_ATTRIBUTE, "true");
+        Enumeration paramNames=req.getParameterNames();
+        
+        while(paramNames.hasMoreElements()){
+            paramName= (String) paramNames.nextElement();
+            paramElement= xmlRequest.createElement(paramName.toLowerCase());
+            paramElement.setTextContent(req.getParameter(paramName));
+            root.appendChild(paramElement);
+        }
+        xmlRequest.appendChild(root);
+        
+        Util.addSOAPEnvelope(xmlRequest);
+        return xmlRequest;
+    
     }
 }

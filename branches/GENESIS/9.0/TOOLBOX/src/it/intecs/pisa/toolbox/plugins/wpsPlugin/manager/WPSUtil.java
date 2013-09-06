@@ -57,6 +57,7 @@ public class WPSUtil {
     public static String PARSE_DESCRIBE_OP="parseDescribe";
     public static String DESCRIBE_PROCESS_DESCRIPTION_XPATH="//wps:ProcessDescriptions/ProcessDescription";
     public static String DESCRIBE_PROCESS_DESCRIPTION_IDENTIFIER_XPATH="//wps:ProcessDescriptions/ProcessDescription/ows:Identifier";
+    public static String DESCRIBE_PROCESS_DESCRIPTION_TITLE_XPATH="//wps:ProcessDescriptions/ProcessDescription/ows:Title";
     public static String DESCRIBE_PROCESS_STORE_SUPPORTED_ATRRIBUTE="storeSupported";
     public static String DESCRIBE_FILE_PREFIX="DescribeInformation_";
     //public static String DESCRIBE_RESPONSE_SCHEMA_LOCATION ="Schemas/wps/1.0.0/wpsDescribeProcess_response.xsd";
@@ -67,6 +68,8 @@ public class WPSUtil {
     private static String INFORMATION_PROCESSING_ELEMENT="ProcessingINFO";
     private static String INFORMATION_SERVICE_NAME_ELEMENT="ServiceName";
     private static String INFORMATION_NAME_ELEMENT="Name";
+    private static String INFORMATION_TITLE_ELEMENT="Title";
+    private static String INFORMATION_VERSION_ELEMENT="Version";
     private static String INFORMATION_TYPE_ELEMENT="Type";
     private static String INFORMATION_ASYNCHRONOUS_ELEMENT="Asynchronous";
     private static String INFORMATION_CREATION_DATE_ELEMENT="CreationDate";
@@ -237,11 +240,21 @@ public class WPSUtil {
    }
 
 
-   public void createWPSProcessingInformationDocument(File infoProcessPath, String serviceName, String processingName, String engineType, boolean async) throws Exception{
+   public void createWPSProcessingInformationDocument(File infoProcessPath, 
+           String serviceName, String processingName, String processingTitle,
+           String processingVersion,
+           String engineType, boolean async) throws Exception{
+       
         Document processingInfoDoc=domUtil.newDocument();
         Element root=processingInfoDoc.createElement(INFORMATION_PROCESSING_ELEMENT);
         Element el=processingInfoDoc.createElement(INFORMATION_NAME_ELEMENT);
         el.setTextContent(processingName);
+        root.appendChild(el);
+        el=processingInfoDoc.createElement(INFORMATION_TITLE_ELEMENT);
+        el.setTextContent(processingTitle);
+        root.appendChild(el);
+        el=processingInfoDoc.createElement(INFORMATION_VERSION_ELEMENT);
+        el.setTextContent(processingVersion);
         root.appendChild(el);
         el=processingInfoDoc.createElement(INFORMATION_SERVICE_NAME_ELEMENT);
         el.setTextContent(serviceName);

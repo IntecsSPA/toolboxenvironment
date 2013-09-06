@@ -21,9 +21,18 @@ public class WPSProcessingUpdateCommand extends NativeCommandsManagerPlugin{
 
      public void executeCommand(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         Document serviceInformationDocument=null;
-        String processingName="";
+        String processingName="",processingTitle, processingVersion;
         String serviceName=req.getParameter("serviceName");
         processingName=req.getParameter("processingName");
+        processingTitle=req.getParameter("processingTitle");
+        processingVersion=req.getParameter("processingVersion");
+        
+        if(processingTitle == null)
+            processingTitle="";
+        
+        if(processingVersion == null)
+            processingVersion="1.0.0";
+        
         String async=req.getParameter("async");
         String engineType=req.getParameter("engineType");
         String step=req.getParameter("step");
@@ -47,7 +56,8 @@ public class WPSProcessingUpdateCommand extends NativeCommandsManagerPlugin{
         }else{
             /* ------- UPDATE SCRIT ENGINE -------------*/
             if(step.equalsIgnoreCase("updateScriptEngine")){     
-               documentResponse=commands.updateWPSProcessEngineScript(serviceName, processingName,
+               documentResponse=commands.updateWPSProcessEngineScript(serviceName, 
+                       processingName, processingTitle, processingVersion,
                    Boolean.getBoolean(async), engineType, req.getInputStream());
             }
 

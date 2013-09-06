@@ -22,6 +22,7 @@ import it.intecs.pisa.toolbox.db.InstanceVariable;
 import it.intecs.pisa.toolbox.db.StatisticsUtil;
 import it.intecs.pisa.toolbox.log.ErrorMailer;
 import it.intecs.pisa.util.DOMUtil;
+import org.w3c.dom.Node;
 
 
 public abstract class TBXOperation extends Operation{
@@ -114,7 +115,7 @@ public abstract class TBXOperation extends Operation{
 
      try
      {
-        validInputMessage=checkMessage(soapRequest);
+       validInputMessage=checkMessage(soapRequest);
      }
      catch(Exception e)
      {
@@ -378,8 +379,9 @@ public abstract class TBXOperation extends Operation{
         Document validInputMessage;
 
         inputMessageBody = Util.removeSOAPElements(soapRequest);
-        if(parentInterf.isValidationActive())
-        {
+        
+        if(parentInterf.isValidationActive() && 
+                inputMessageBody.getDocumentElement().getAttributes().getNamedItem("getRequest") == null){
             logger.info("Validating input message");
             validInputMessage = validateMessage(inputMessageBody);
         }

@@ -4,6 +4,8 @@ package it.intecs.pisa.toolbox.plugins.wpsPlugin.manager;
 import it.intecs.pisa.common.tbx.Operation;
 import it.intecs.pisa.toolbox.Toolbox;
 import it.intecs.pisa.toolbox.plugins.wpsPlugin.engine.WPSEngine;
+import static it.intecs.pisa.toolbox.plugins.wpsPlugin.manager.WPSUtil.DESCRIBE_PROCESS_DESCRIPTION_IDENTIFIER_XPATH;
+import static it.intecs.pisa.toolbox.plugins.wpsPlugin.manager.WPSUtil.DESCRIBE_PROCESS_STORE_SUPPORTED_ATRRIBUTE;
 import it.intecs.pisa.toolbox.service.ServiceManager;
 import it.intecs.pisa.toolbox.service.TBXAsynchronousOperation;
 import it.intecs.pisa.toolbox.service.TBXSOAPInterface;
@@ -54,7 +56,11 @@ public class WPSCommands extends WPSUtil{
     /* PARSE IMPORTED DESCRIBE */
     private static String PROCESS_DESCRIPTION_ELEMENT="ProcessDescription";
     private static String IDENTIFIER_ELEMENT="Identifier";
+    private static String TITLE_ELEMENT="Title";
+    private static String VERSION_ATTRIBUTE= "processVersion";
     private static String OWS_NAMESPACE="http://www.opengis.net/ows/1.1";
+    private static String WPS_NAMESPACE="http://www.opengis.net/wps/";
+    private static String WPS_VERSION_ATTRIBUTE="version";
 
     
 
@@ -144,15 +150,22 @@ public class WPSCommands extends WPSUtil{
     public void importWPSProcess(Document importDescribeDocument, File importServiceFolder ,String serviceName) throws Exception {
         WPSCommandResponse createResponse=new WPSCommandResponse(PARSE_DESCRIBE_OP);
         int i;
-        String engineType="";
+        String engineType="", wpsVersion=null;
         File script=null;
         File newServicePath=tbxServlet.getServiceRoot(serviceName);
-        String asynchronous=null, processingName=null;
+        String asynchronous=null, processingName=null, processingTitle=null, processingVersion= null;
         Element processDescription=(Element)(importDescribeDocument.getElementsByTagName(PROCESS_DESCRIPTION_ELEMENT).item(0));
         Element identifier=(Element) processDescription.getElementsByTagNameNS(OWS_NAMESPACE,IDENTIFIER_ELEMENT).item(0);
+        Element title=(Element) processDescription.getElementsByTagNameNS(OWS_NAMESPACE,TITLE_ELEMENT).item(0);
         asynchronous=processDescription.getAttribute(DESCRIBE_PROCESS_STORE_SUPPORTED_ATRRIBUTE);
+        wpsVersion=processDescription.getAttribute(WPS_VERSION_ATTRIBUTE);
         processingName=DOMUtil.getTextFromNode(identifier);
-        createResponse.insertOperationInformation(serviceName, processingName, Boolean.valueOf(asynchronous));
+        processingTitle=DOMUtil.getTextFromNode(title);
+        processingVersion=processDescription.getAttributeNS(WPS_NAMESPACE+wpsVersion, VERSION_ATTRIBUTE);
+        createResponse.insertOperationInformation(
+                serviceName, processingName, processingTitle,
+                processingVersion,
+                Boolean.valueOf(asynchronous));
         File describeFolder=new File(newServicePath, DESCRIBE_PROCESS_PATH);
         describeFolder.mkdirs();
         DOMUtil.dumpXML(importDescribeDocument, new File(describeFolder, DESCRIBE_FILE_PREFIX+processingName+".xml"));
@@ -177,7 +190,10 @@ public class WPSCommands extends WPSUtil{
 
         //Operation operationDescr=null;
 
-        createWPSProcess(serviceName,processingName,Boolean.valueOf(asynchronous),engineType, new FileInputStream(script));
+        createWPSProcess(serviceName,processingName,
+                processingTitle,processingVersion,
+                Boolean.valueOf(asynchronous),engineType, 
+                new FileInputStream(script));
       
        
 }
@@ -187,7 +203,8 @@ public class WPSCommands extends WPSUtil{
         boolean validate=true;
         int i;
         File newServicePath=tbxServlet.getServiceRoot(serviceName);
-        String asynchronous=null, processingName=null;
+        String asynchronous, processingName, 
+                processingTitle, wpsVersion,processingVersion;
         ServiceManager serviceManager=ServiceManager.getInstance();
         TBXService tbxService=serviceManager.getService(serviceName);
         try{
@@ -200,10 +217,17 @@ public class WPSCommands extends WPSUtil{
          if(validate){
             Element processDescription=DOMUtil.getElementByXPath(DESCRIBE_PROCESS_DESCRIPTION_XPATH, describeDocument);
             Element identifier=DOMUtil.getElementByXPath(DESCRIBE_PROCESS_DESCRIPTION_IDENTIFIER_XPATH, describeDocument);
+            Element title=DOMUtil.getElementByXPath(DESCRIBE_PROCESS_DESCRIPTION_TITLE_XPATH, describeDocument);
             asynchronous=processDescription.getAttribute(DESCRIBE_PROCESS_STORE_SUPPORTED_ATRRIBUTE);
             processingName=DOMUtil.getTextFromNode(identifier);
+            processingTitle=DOMUtil.getTextFromNode(title);
+            wpsVersion=describeDocument.getDocumentElement().getAttribute(WPS_VERSION_ATTRIBUTE);
+            processingVersion=processDescription.getAttributeNS(WPS_NAMESPACE+wpsVersion, VERSION_ATTRIBUTE);
 
-            createResponse.insertOperationInformation(serviceName, processingName, Boolean.valueOf(asynchronous));
+            createResponse.insertOperationInformation(serviceName, 
+                    processingName, processingTitle,
+                    processingVersion,
+                    Boolean.valueOf(asynchronous));
  
             Document describeDoc=domUtil.newDocument();
             Node describeElement=processDescription.cloneNode(true);
@@ -244,6 +268,7 @@ public class WPSCommands extends WPSUtil{
     public Document updateWPSDescribeProcess(Document describeDocument, String serviceName, String processingName, String engineType, boolean currentAsync, File pluginDir) throws Exception {
         Document parseResponse=parseWPSDescribeProcess(describeDocument,serviceName, pluginDir);
         String asynchronous="", newProcessingName="";
+        String wpsVersion,newProcessingVersion,newProcessingTitle;
         NodeList errors=parseResponse.getElementsByTagName("ErrorValidation");
 
         if(errors.getLength()==0){
@@ -269,11 +294,17 @@ public class WPSCommands extends WPSUtil{
 
             Element processDescription=DOMUtil.getElementByXPath(DESCRIBE_PROCESS_DESCRIPTION_XPATH, describeDocument);
             Element identifier=DOMUtil.getElementByXPath(DESCRIBE_PROCESS_DESCRIPTION_IDENTIFIER_XPATH, describeDocument);
+            Element title=DOMUtil.getElementByXPath(DESCRIBE_PROCESS_DESCRIPTION_TITLE_XPATH, describeDocument);
             asynchronous=processDescription.getAttribute(DESCRIBE_PROCESS_STORE_SUPPORTED_ATRRIBUTE);
+            wpsVersion=describeDocument.getDocumentElement().getAttribute(WPS_VERSION_ATTRIBUTE);
             newProcessingName=DOMUtil.getTextFromNode(identifier);
+            newProcessingTitle=DOMUtil.getTextFromNode(title);
+            newProcessingVersion=processDescription.getAttributeNS(WPS_NAMESPACE+wpsVersion, VERSION_ATTRIBUTE);
 
             createWPSProcess(serviceName, newProcessingName,
-                    Boolean.valueOf(asynchronous), engineType, new FileInputStream(originalScriptTemp));
+                    newProcessingTitle, newProcessingVersion,
+                    Boolean.valueOf(asynchronous), engineType, 
+                    new FileInputStream(originalScriptTemp));
             
            /* 
                WPSCommandResponse updateCommandResponse=new WPSCommandResponse(PARSE_DESCRIBE_OP);
@@ -284,7 +315,9 @@ public class WPSCommands extends WPSUtil{
         return parseResponse;
     }
 
-    public Document createWPSProcess(String serviceName, String processingName, boolean async, String engineType, InputStream script) throws Exception{
+    public Document createWPSProcess(String serviceName, String processingName, 
+            String processingTitle, String processingVersion,  
+            boolean async, String engineType, InputStream script) throws Exception{
        File newServicePath=tbxServlet.getServiceRoot(serviceName);
        
        File originalScript=new File(newServicePath,SERVICE_RESOURCES_PATH+"/execute_"+processingName+"_script");
@@ -304,7 +337,9 @@ public class WPSCommands extends WPSUtil{
        }
 
 
-       createWPSProcessingInformationDocument(infoFolder, serviceName, processingName, engineType, async);
+       createWPSProcessingInformationDocument(infoFolder, serviceName,
+               processingName, processingTitle, processingVersion,
+               engineType, async);
        WPSCommandResponse createResponse=new WPSCommandResponse(CREATE_PROCESS_OP);
        Class wpsEngineClass = Class.forName(ENGINE_CLASS_PACKAGE+ENGINE_PREFIX+engineType);
        WPSEngine wpsEngine = (WPSEngine) wpsEngineClass.newInstance();
@@ -360,7 +395,9 @@ public class WPSCommands extends WPSUtil{
    }
 
 
-    public Document updateWPSProcessEngineScript(String serviceName, String processingName, boolean async, String engineType, InputStream script) throws Exception{
+    public Document updateWPSProcessEngineScript(String serviceName, String processingName, 
+           String processingTitle, String processingVersion,
+           boolean async, String engineType, InputStream script) throws Exception{
        File newServicePath=tbxServlet.getServiceRoot(serviceName);
        File originalScript=new File(newServicePath,SERVICE_RESOURCES_PATH+"/execute_"+processingName+"_script");
        IOUtil.copy(script, new FileOutputStream(originalScript));
@@ -368,7 +405,8 @@ public class WPSCommands extends WPSUtil{
        describeFolder.mkdirs();*/
        File infoFolder=new File(newServicePath, INFO_PROCESS_PATH);
        infoFolder.mkdirs();
-       createWPSProcessingInformationDocument(infoFolder, serviceName, processingName, engineType, async);
+       createWPSProcessingInformationDocument(infoFolder, serviceName, 
+               processingName, processingTitle, processingVersion, engineType, async);
        WPSCommandResponse createResponse=new WPSCommandResponse(CREATE_PROCESS_OP);
        Class wpsEngineClass = Class.forName(ENGINE_CLASS_PACKAGE+ENGINE_PREFIX+engineType);
        WPSEngine wpsEngine = (WPSEngine) wpsEngineClass.newInstance();

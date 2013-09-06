@@ -25,8 +25,8 @@ public class WPSProcessingCreateCommand extends NativeCommandsManagerPlugin {
 
     public void executeCommand(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         Document serviceInformationDocument=null;
-        String processingName="";
-        String asynchronous="";
+        String processingName, processingTitle, processingVersion;
+        String asynchronous;
      
         String serviceName=req.getParameter("serviceName");
         String step=req.getParameter("step");
@@ -50,9 +50,13 @@ public class WPSProcessingCreateCommand extends NativeCommandsManagerPlugin {
             /* ------- GENERATE OPERATION -------------*/
             if(step.equalsIgnoreCase("generateOperation")){
                processingName=req.getParameter("processingName");
+               processingTitle=req.getParameter("processingTitle");
+               processingVersion=req.getParameter("processingVersion");
                asynchronous=req.getParameter("asynchronous");
                String engineType=req.getParameter("engineType");
-               documentResponse=commands.createWPSProcess(serviceName, processingName,
+               documentResponse=commands.createWPSProcess(serviceName,
+                    processingName,
+                    processingTitle, processingVersion,  
                     Boolean.valueOf(asynchronous), engineType, req.getInputStream());
             }
            

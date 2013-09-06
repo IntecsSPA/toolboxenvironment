@@ -631,7 +631,7 @@ public class TBXService extends Service {
         op=this.implementedInterface.getOperations();
 
         for(Operation o:op)
-            operationNames.add(o);
+            operationNames.add(o.getName());
        
         return operationNames;
     }

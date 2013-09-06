@@ -1,6 +1,7 @@
 package it.intecs.pisa.toolbox.plugins.wpsPlugin.manager;
 
 import it.intecs.pisa.util.DOMUtil;
+import java.net.URLEncoder;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -26,6 +27,8 @@ public class WPSCommandResponse {
     private static String ELEMENT_ERROR_VALIDATION="ErrorValidation";
     private static String ELEMENT_SERVICE_NAME="ServiceName";
     private static String ELEMENT_PROCESSING_NAME="ProcessingName";
+    private static String ELEMENT_PROCESSING_VERSION="ProcessingVersion";
+    private static String ELEMENT_PROCESSING_TITLE="ProcessingTitle";
     private static String ELEMENT_ASYNC_INFO="Asynchronous";
     public static String DELETE_PROCESS_TYPE="deleteOperation";
     private static String ROOT_DELETE_PROCESS_OPERATION="deleteWPSProcessingResult";
@@ -75,13 +78,27 @@ public class WPSCommandResponse {
       documentResponse.getDocumentElement().setTextContent(""+result);
     }
 
-    public void insertOperationInformation (String serviceName, String operationName, boolean async){
+    public void insertOperationInformation (String serviceName, 
+            String operationName, 
+            String operationTitle, 
+            String operationVersion, 
+            boolean async){
         Element infoElement=documentResponse.createElement(ELEMENT_SERVICE_NAME);
         infoElement.setTextContent(serviceName);
         documentResponse.getDocumentElement().appendChild(infoElement);
+        
         infoElement=documentResponse.createElement(ELEMENT_PROCESSING_NAME);
         infoElement.setTextContent(operationName);
         documentResponse.getDocumentElement().appendChild(infoElement);
+        
+        infoElement=documentResponse.createElement(ELEMENT_PROCESSING_TITLE);
+        infoElement.setTextContent(operationTitle);
+        documentResponse.getDocumentElement().appendChild(infoElement);
+        
+        infoElement=documentResponse.createElement(ELEMENT_PROCESSING_VERSION);
+        infoElement.setTextContent(operationVersion);
+        documentResponse.getDocumentElement().appendChild(infoElement);
+        
         infoElement=documentResponse.createElement(ELEMENT_ASYNC_INFO);
         infoElement.setTextContent(""+async);
         documentResponse.getDocumentElement().appendChild(infoElement);

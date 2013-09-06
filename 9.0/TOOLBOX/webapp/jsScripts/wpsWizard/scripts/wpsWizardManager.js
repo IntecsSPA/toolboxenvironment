@@ -15,6 +15,8 @@ var insertEngineScriptWizardWindow=null;
 var describeProcessingEditAreaWindow=null;
 var serviceName;
 var processingName;
+var processingTitle;
+var processingVersion;
 var asynchronous;
 var eType;
 
@@ -189,6 +191,8 @@ function parseWPSDescribeProcessingRequest(){
                                 var toolboxTemplateElements=xmlResponse.selectNodes("parseWPSDescribrProcessingResult/ToolboxTemplate");
                                 var serviceNameElements=xmlResponse.selectNodes("parseWPSDescribrProcessingResult/ServiceName");
                                 var processNameElements=xmlResponse.selectNodes("parseWPSDescribrProcessingResult/ProcessingName");
+                                var processTitleElements=xmlResponse.selectNodes("parseWPSDescribrProcessingResult/ProcessingTitle");
+                                var processVersionElements=xmlResponse.selectNodes("parseWPSDescribrProcessingResult/ProcessingVersion");
                                 var asynchronousElements=xmlResponse.selectNodes("parseWPSDescribrProcessingResult/Asynchronous");
 
                                 
@@ -203,6 +207,8 @@ function parseWPSDescribeProcessingRequest(){
 
                                 serviceName=serviceNameElements[0].firstChild.nodeValue;
                                 processingName=processNameElements[0].firstChild.nodeValue;
+                                processingTitle=processTitleElements[0].firstChild.nodeValue;
+                                processingVersion=processVersionElements[0].firstChild.nodeValue;
                                 asynchronous=asynchronousElements[0].firstChild.nodeValue;
                                 if(controlNewWPSOperation(serviceName,"ExecuteProcess_"+processingName,"ExecuteProcess_"+processingName)){
                                     if(insertDescribeWizardWindow)
@@ -359,7 +365,11 @@ function createWPSProcessingRequest(){
                  };
 
                  var onSubmit=sendXmlHttpRequestTimeOut("POST",
-                             "manager?cmd=wpsProcessingCreate&step=generateOperation&engineType="+engineType+"&serviceName="+serviceName+"&processingName="+processingName+"&asynchronous="+asynchronous,
+                             "manager?cmd=wpsProcessingCreate&step=generateOperation&engineType="+engineType+"&serviceName="+serviceName
+                                     +"&processingName="+processingName
+                                     +"&processingTitle="+processingTitle
+                                     +"&processingVersion="+processingVersion
+                                     +"&asynchronous="+asynchronous,
                              true, engineScript, 800000, wpsProcessingCreateOperationControl, wpsProcessingCreateOperationControlTimeOut,null);
         }else{
 
@@ -650,7 +660,10 @@ function changeWPSDescribeProcessingRequest(){
                     });
        };
        sendXmlHttpRequestTimeOut("POST",
-           "manager?cmd=wpsProcessingUpdate&step=updateDescribe&serviceName="+serviceName+"&processingName="+processingName+"&engineType="+eType+"&async="+asynchronous,
+           "manager?cmd=wpsProcessingUpdate&step=updateDescribe&serviceName="+serviceName
+                   +"&processingName="+processingName+"&processingTitle="+processingTitle
+                   +"&processingVersion="+processingVersion
+                   +"&engineType="+eType+"&async="+asynchronous,
             true, describeProcess, 800000, wpsProcessingDescribeParseControl, wpsProcessingDescribeParseControlTimeOut,null);
     }
 
@@ -707,7 +720,10 @@ function changeWPSEngineScriptRequest(){
                 });
    };
    sendXmlHttpRequestTimeOut("POST",
-       "manager?cmd=wpsProcessingUpdate&step=updateScriptEngine&serviceName="+serviceName+"&processingName="+processingName+"&engineType="+eType+"&async="+asynchronous,
+       "manager?cmd=wpsProcessingUpdate&step=updateScriptEngine&serviceName="+serviceName
+               +"&processingName="+processingName+"&processingTitle="+processingTitle
+               +"&processingVersion="+processingVersion
+               +"&engineType="+eType+"&async="+asynchronous,
         true, scriptEngine, 800000, wpsUpdateScriptEngine, wpsUpdateScriptEngineTimeOut,null);
  }
 

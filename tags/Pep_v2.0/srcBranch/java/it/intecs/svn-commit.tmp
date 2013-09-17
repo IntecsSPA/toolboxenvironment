@@ -1,0 +1,8 @@
+
+--Questa linea, e quelle sotto di essa, saranno ignorate--
+
+_M   pisa
+D    pisa/gis
+M    pisa/pep/rest/InfoHtmlResource.java
+M    pisa/pep/rest/ServiceResource.java
+M    pisa/pep/rest/ServicesResource.java

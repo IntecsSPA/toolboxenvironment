@@ -1,0 +1,72 @@
+<!-- Timestamp with body signed -->
+
+<wsp:Policy wsu:Id="HMATpolicy"
+	xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+	xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+	xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+	xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702">
+
+	<wsp:All>
+           <sp:AsymmetricBinding>
+			<wsp:Policy>
+				<sp:InitiatorToken>
+					<wsp:Policy>
+						<sp:X509Token sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/Never">
+							<wsp:Policy>
+							    <sp:RequireThumbprintReference/> 
+								<sp:WssX509V3Token10/>
+							</wsp:Policy>
+						</sp:X509Token>
+					</wsp:Policy>
+				</sp:InitiatorToken>
+				<sp:RecipientToken>
+					<wsp:Policy>
+						<sp:X509Token sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/Never">
+							<wsp:Policy>
+							    <sp:RequireThumbprintReference/>
+								<sp:WssX509V3Token10/>
+							</wsp:Policy>
+						</sp:X509Token>
+					</wsp:Policy>
+				</sp:RecipientToken>
+				<sp:AlgorithmSuite>
+					<wsp:Policy>
+						<sp:Basic128Rsa15/>
+					</wsp:Policy>
+				</sp:AlgorithmSuite>
+				<sp:Layout>
+					<wsp:Policy>
+						<sp:Strict/>
+					</wsp:Policy>
+				</sp:Layout>
+				<sp:IncludeTimestamp/>
+			</wsp:Policy>
+		</sp:AsymmetricBinding>
+
+		<sp:SignedParts>
+			<sp:Body/>
+		</sp:SignedParts>
+        
+		<ramp:RampartConfig xmlns:ramp="http://ws.apache.org/rampart/policy"> 
+			<ramp:user></ramp:user>
+			<ramp:encryptionUser></ramp:encryptionUser>
+			<ramp:stsAlias></ramp:stsAlias>
+			<ramp:passwordCallbackClass>it.intecs.pisa.toolbox.security.handler.PWCBHandler</ramp:passwordCallbackClass>
+			<ramp:signatureCrypto>
+				<ramp:crypto provider="org.apache.ws.security.components.crypto.Merlin">
+					<ramp:property name="org.apache.ws.security.crypto.merlin.keystore.type">JKS</ramp:property>
+					<ramp:property name="org.apache.ws.security.crypto.merlin.file"></ramp:property>
+					<ramp:property name="org.apache.ws.security.crypto.merlin.keystore.password"></ramp:property>
+				</ramp:crypto>
+			</ramp:signatureCrypto>
+			
+			<ramp:encryptionCrypto>
+                   <ramp:crypto provider="org.apache.ws.security.components.crypto.Merlin">
+                           <ramp:property name="org.apache.ws.security.crypto.merlin.keystore.type">JKS</ramp:property>
+                           <ramp:property name="org.apache.ws.security.crypto.merlin.file"></ramp:property>
+                           <ramp:property name="org.apache.ws.security.crypto.merlin.keystore.password"></ramp:property>
+                   </ramp:crypto>
+			</ramp:encryptionCrypto>
+		</ramp:RampartConfig>
+	</wsp:All>
+</wsp:Policy>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ -
+ -  Developed By:      Intecs  S.P.A.
+ -  File Name:         $RCSfile: addStatusInfo.xml,v $
+ -  TOOLBOX Version:   $Name:  $
+ -  File Revision:     $Revision: 1.3 $
+ -  Revision Date:     $Date: 2004/04/15 12:16:49 $
+ -
+ -->
+
+<sequence xmlns="http://pisa.intecs.it/mass/toolbox/xmlScript">
+  <setVariable name="parent">
+    <methodInvocation methodName="getDocumentElement">
+      <object>
+        <xml attributePrefix="variable:" textTag="variable">
+          <mass:root xmlns:mass="http://mass.esrin.esa.it/namespace"/>
+        </xml>
+      </object>
+    </methodInvocation>
+  </setVariable>
+  <setVariable name="errorCode">
+    <literal value="0"/>
+  </setVariable>
+  <setVariable name="message">
+    <string>message</string>
+  </setVariable>
+  <setVariable name="result">
+    <methodInvocation methodName="getOwnerDocument">
+      <object>
+        <variable name="parent"/>
+      </object>
+    </methodInvocation>
+  </setVariable>
+  <setVariable name="massPrefix">
+    <methodInvocation methodName="getPrefix">
+      <object>
+        <methodInvocation methodName="getDocumentElement">
+          <object>
+            <variable name="result"/>
+          </object>
+        </methodInvocation>
+      </object>
+    </methodInvocation>
+  </setVariable>
+  <if>
+    <isNull>
+      <variable name="massPrefix"/>
+    </isNull>
+    <sequence>
+      <setVariable name="statusInfo">
+        <string>statusInfo</string>
+      </setVariable>
+      <setVariable name="statusId">
+        <string>statusId</string>
+      </setVariable>
+      <setVariable name="statusMsg">
+        <string>statusMsg</string>
+      </setVariable>
+    </sequence>
+    <sequence>
+      <setVariable name="statusInfo">
+        <stringCat>
+          <variable name="massPrefix"/>
+          <string>:statusInfo</string>
+        </stringCat>
+      </setVariable>
+      <setVariable name="statusId">
+        <stringCat>
+          <variable name="massPrefix"/>
+          <string>:statusId</string>
+        </stringCat>
+      </setVariable>
+      <setVariable name="statusMsg">
+        <stringCat>
+          <variable name="massPrefix"/>
+          <string>:statusMsg</string>
+        </stringCat>
+      </setVariable>
+    </sequence>
+  </if>
+  <setVariable name="statusInfoElement">
+    <methodInvocation methodName="appendChild">
+      <object>
+        <variable name="parent"/>
+      </object>
+      <parameter>
+        <classLiteral class="org.w3c.dom.Node"/>
+        <methodInvocation methodName="createElement">
+          <object>
+            <variable name="result"/>
+          </object>
+          <parameter>
+            <classLiteral class="java.lang.String"/>
+            <variable name="statusInfo"/>
+          </parameter>
+        </methodInvocation>
+      </parameter>
+    </methodInvocation>
+  </setVariable>
+  <methodInvocation methodName="appendChild">
+    <object>
+      <methodInvocation methodName="appendChild">
+        <object>
+          <variable name="statusInfoElement"/>
+        </object>
+        <parameter>
+          <classLiteral class="org.w3c.dom.Node"/>
+          <methodInvocation methodName="createElement">
+            <object>
+              <variable name="result"/>
+            </object>
+            <parameter>
+              <classLiteral class="java.lang.String"/>
+              <variable name="statusId"/>
+            </parameter>
+          </methodInvocation>
+        </parameter>
+      </methodInvocation>
+    </object>
+    <parameter>
+      <classLiteral class="org.w3c.dom.Node"/>
+      <methodInvocation methodName="createTextNode">
+        <object>
+          <variable name="result"/>
+        </object>
+        <parameter>
+          <classLiteral class="java.lang.String"/>
+          <methodInvocation methodName="toString">
+            <object>
+              <variable name="errorCode"/>
+            </object>
+          </methodInvocation>
+        </parameter>
+      </methodInvocation>
+    </parameter>
+  </methodInvocation>
+  <if>
+    <isNotNull>
+      <variable name="message"/>
+    </isNotNull>
+    <methodInvocation methodName="appendChild">
+      <object>
+        <methodInvocation methodName="appendChild">
+          <object>
+            <variable name="statusInfoElement"/>
+          </object>
+          <parameter>
+            <classLiteral class="org.w3c.dom.Node"/>
+            <methodInvocation methodName="createElement">
+              <object>
+                <variable name="result"/>
+              </object>
+              <parameter>
+                <classLiteral class="java.lang.String"/>
+                <variable name="statusMsg"/>
+              </parameter>
+            </methodInvocation>
+          </parameter>
+        </methodInvocation>
+      </object>
+      <parameter>
+        <classLiteral class="org.w3c.dom.Node"/>
+        <methodInvocation methodName="createTextNode">
+          <object>
+            <variable name="result"/>
+          </object>
+          <parameter>
+            <classLiteral class="java.lang.String"/>
+            <variable name="message"/>
+          </parameter>
+        </methodInvocation>
+      </parameter>
+    </methodInvocation>
+  </if>
+  <dumpXML>
+    <string>pippo.xml</string>
+    <variable name="result"/>
+  </dumpXML>
+</sequence>

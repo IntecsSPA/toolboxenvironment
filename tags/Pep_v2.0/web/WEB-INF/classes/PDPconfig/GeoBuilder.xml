@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ===========================================================================
+Assembling and configuration of an IGeoBuilder instance
+
+author: Benjamin Friedrich
+date:   05.06.2009.
+============================================================================ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <import resource="GeometryBagFunctionFactory.xml"/>
+    <import resource="GeometrySetFunctionFactory.xml"/>
+    <import resource="GeometryConversionFunctionFactory.xml"/>
+    <import resource="GeometryTopologicalFunctionFactory.xml"/>
+    <import resource="GeometryGeometricFunctionFactory.xml"/>
+    <import resource="GeometryAttributeProxyFactory.xml"/>
+
+    <!-- configuration of GeoBuilder -->
+    <bean id="GeoBuilder" class="net.eig.geoxacml.pdp.builder.GeoBuilder">
+
+        <property name="attributeProxyFactory">
+            <ref bean="GeometryAttributeProxyFactory" />
+        </property>
+
+        <property name="bagFunctionFactory">
+            <ref bean="GeometryBagFunctionFactory" />
+        </property>
+
+        <property name="setFunctionFactory">
+            <ref bean="GeometrySetFunctionFactory" />
+        </property>
+
+        <property name="conversionFunctionFactory">
+            <ref bean="GeometryConversionFunctionFactory" />
+        </property>
+
+        <property name="topologicalFunctionFactory">
+            <ref bean="GeometryTopologicalFunctionFactory" />
+        </property>
+
+        <property name="geometricFunctionFactory">
+            <ref bean="GeometryGeometricFunctionFactory" />
+        </property>
+
+   <!--   
+        <property name="loggerPropertiesFile">
+            <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+                <property name="targetObject">
+
+                    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+                        <property name="targetClass">
+                            <value>net.eig.geoxacml.pdp.util.GeoProperties</value>
+                        </property>
+                        <property name="targetMethod">
+                            <value>getInstance</value>
+                        </property>
+                    </bean>
+                </property>
+                <property name="targetMethod">
+                    <value>getProperty</value>
+                </property>
+                <property name="arguments">
+                    <list>
+                        <value>logger_properties</value>
+                    </list>
+                </property>
+            </bean>
+        </property>
+-->
+
+    </bean>
+
+</beans>

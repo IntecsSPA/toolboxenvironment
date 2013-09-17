@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ -
+ -  Developed By:      Intecs  S.P.A.
+ -  File Name:         $RCSfile: helpPage.xml,v $
+ -  TOOLBOX Version:   $Name:  $
+ -  File Revision:     $Revision: 1.9 $
+ -  Revision Date:     $Date: 2005/07/25 10:33:59 $
+ -
+ -->
+<?xml-stylesheet type="text/xsl" href="C:\progetti\NSI\DEVELOP\NSI\TOOLBOX\webapp\WEB-INF\XSL\helpPage.xsl"?>
+<help xmlns="http://www.mass.com/toolbox/help">
+	<key value="toolboxConfiguration">
+		<sumLink>RE/toolboxConfiguring.html</sumLink>
+	</key>
+	<key value="ftpAdding">
+		<sumLink>RE/ftpAdding.html</sumLink>
+	</key>
+	<key value="ftpListing">
+		<sumLink>RE/ftpListing.html</sumLink>
+	</key>
+	<key value="ftpManagement">
+		<sumLink>RE/ftpManagement.html</sumLink>
+	</key>        
+	<key value="operationManagement">
+		<sumLink>RE/operationManagement.html</sumLink>
+	</key>
+	<key value="operationReconfiguring">
+		<sumLink>RE/operationReconfiguring.html</sumLink>
+	</key>
+	<key value="operationListing">
+		<sumLink>RE/operationListing.html</sumLink>
+	</key>
+ 	<key value="serviceCreation">
+		<sumLink>RE/serviceCreation.html</sumLink>
+	</key>
+ 	<key value="serviceExporting">
+		<sumLink>RE/serviceExporting.html</sumLink>
+	</key>
+ 	<key value="serviceManagement">
+		<sumLink>RE/serviceManagement.html</sumLink>
+	</key>
+ 	<key value="serviceImporting">
+		<sumLink>RE/serviceImporting.html</sumLink>
+	</key>
+ 	<key value="serviceConfiguring">
+		<sumLink>RE/serviceConfiguring.html</sumLink>
+	</key>        
+ 	<key value="sendingSoapMessage">
+		<sumLink>RE/sendingSoapMessage.html</sumLink>
+	</key>
+ 	<key value="testingACatalogue">
+		<sumLink>RE/testingACatalogue.html</sumLink>
+	</key>
+ 	<key value="validatingAScript">
+		<sumLink>RE/validatingAScript.html</sumLink>
+	</key>
+ 	<key value="serviceLogging">
+		<sumLink>RE/serviceLogging.html</sumLink>
+	</key>
+ 	<key value="toolboxLogging">
+		<sumLink>RE/toolboxLogging.html</sumLink>
+	</key>
+ 	<key value="monitoringCenter">
+		<sumLink>RE/monitoringCenter.html</sumLink>
+	</key>
+ 	<key value="asynchronousInstances">
+		<sumLink>RE/asynchronousInstances.html</sumLink>
+	</key>
+ 	<key value="testingACatalogue">
+		<sumLink>RE/testingACatalogue.html</sumLink>
+	</key>
+ 	<key value="timerStatus">
+		<sumLink>RE/timerStatus.html</sumLink>
+	</key>
+ 	<key value="pushServer">
+		<sumLink>RE/pushServer.html</sumLink>
+	</key>
+</help>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ -
+ -  Developed By:      Intecs  S.P.A.
+ -  File Name:         $RCSfile: serviceStatus.xsd,v $
+ -  TOOLBOX Version:   $Name: HEAD $
+ -  File Revision:     $Revision: 1.1.1.1 $
+ -  Revision Date:     $Date: 2006/06/13 15:02:33 $
+ -
+ -->
+<xsd:schema xmlns="http://pisa.intecs.it/mass/toolbox/serviceStatus" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://pisa.intecs.it/mass/toolbox/serviceStatus" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:element name="serviceStatus">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="request" minOccurs="0" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:all>
+							<xsd:element name="variables" type="VariablesType" minOccurs="0"/>
+							<xsd:element name="cleanupMarkers" type="CleanupMarkersType" minOccurs="0"/>
+							<xsd:element name="leavingResponse" minOccurs="0">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:any processContents="skip"/>
+									</xsd:sequence>
+									<xsd:attribute name="remainingAttempts" type="xsd:integer" use="required"/>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:all>
+						<xsd:attribute name="operation" type="xsd:string" use="required"/>
+						<xsd:attribute name="messageId" type="xsd:string" use="required"/>
+						<xsd:attribute name="modifiedMessageId" type="xsd:string" use="required"/>
+						<xsd:attribute name="pushURL" type="xsd:string" use="required"/>
+						<xsd:attribute name="hostName" type="xsd:string" use="required"/>
+						<xsd:attribute name="hostIP" type="xsd:string"/>
+						<xsd:attribute name="orderId" type="xsd:string" use="required"/>
+						<xsd:attribute name="arrivalDateTime" type="xsd:dateTime" use="required"/>
+						<xsd:attribute name="serverExpirationDateTime" type="xsd:dateTime" use="required"/>
+						<xsd:attribute name="clientExpirationDateTime" type="xsd:dateTime" use="required"/>
+						<xsd:attribute name="xmlRequest" type="xsd:string" use="required"/>
+						<xsd:attribute name="status" use="required">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:enumeration value="waiting"/>
+									<xsd:enumeration value="executing"/>
+									<xsd:enumeration value="pending"/>
+									<xsd:enumeration value="ready"/>
+									<xsd:enumeration value="aborted"/>
+									<xsd:enumeration value="cancelled"/>
+									<xsd:enumeration value="rejected"/>
+									<xsd:enumeration value="expired"/>
+									<xsd:enumeration value="responseLeaving"/>
+									<xsd:enumeration value="completed"/>
+									<xsd:enumeration value="unpushed"/>
+									<xsd:enumeration value="error"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:attribute>
+						<xsd:attribute name="reasonForStatus" type="xsd:string"/>
+						<xsd:attribute name="statusPath" type="xsd:string" use="required"/>
+						<xsd:attribute name="errorNotificationEmail" type="xsd:string"/>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+			<xsd:attribute name="suspended" type="xsd:boolean" use="required"/>
+			<xsd:attribute name="stopped" type="xsd:boolean" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="VariablesType">
+		<xsd:sequence maxOccurs="unbounded">
+			<xsd:choice>
+				<xsd:element name="xml">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:any processContents="skip"/>
+						</xsd:sequence>
+						<xsd:attribute name="name" type="xsd:string" use="required"/>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="variable">
+					<xsd:complexType>
+						<xsd:attribute name="name" type="xsd:string" use="required"/>
+						<xsd:attribute name="value" type="xsd:string" use="required"/>
+						<xsd:attribute name="type" type="TypeType" use="required"/>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CleanupMarkersType">
+		<xsd:sequence>
+			<xsd:element name="marker" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:attribute name="value" type="xsd:string" use="required"/>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="TypeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="byte"/>
+			<xsd:enumeration value="short"/>
+			<xsd:enumeration value="int"/>
+			<xsd:enumeration value="long"/>
+			<xsd:enumeration value="float"/>
+			<xsd:enumeration value="double"/>
+			<xsd:enumeration value="char"/>
+			<xsd:enumeration value="boolean"/>
+			<xsd:enumeration value="string"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin name="GUIManagerPlugin" version="1.0">
+    <restCommandViaGet cmd="/rest/gui/getJs/*" class="it.intecs.pisa.toolbox.plugins.gui.GetJsCommand"/>
+    <restCommandViaGet cmd="/rest/gui/getDefinition/*" class="it.intecs.pisa.toolbox.plugins.gui.GetDefinitionCommand"/>
+    <restCommandViaPut cmd="/rest/gui/createService" class="it.intecs.pisa.toolbox.plugins.gui.CreateServiceCommand"/>
+    <restCommandViaGet cmd="/rest/gui/creationWizardSections" class="it.intecs.pisa.toolbox.plugins.gui.CreationWizardSectionsCommand"/>
+    <restCommandViaGet cmd="/rest/gui/creationWizard/*" class="it.intecs.pisa.toolbox.plugins.gui.CreationWizardCommand"/>
+    <restCommandViaGet cmd="/rest/gui/creationWizardInterface/*" class="it.intecs.pisa.toolbox.plugins.gui.CreationWizardInterfaceCommand"/>
+    <restCommandViaGet cmd="/rest/gui/creationWizardWPS" class="it.intecs.pisa.toolbox.plugins.gui.CreationWizardWPSCommand"/>
+    <restCommandViaGet cmd="/rest/gui/creationWizardInterfaceWPS" class="it.intecs.pisa.toolbox.plugins.gui.CreationWizardInterfaceWPSCommand"/>
+    <restCommandViaGet cmd="/rest/gui/creationWizard/validate/serviceName" class="it.intecs.pisa.toolbox.plugins.gui.CreationWizardValidateNameCommand"/>
+    <restCommandViaPost cmd="/rest/gui/storeData" class="it.intecs.pisa.toolbox.plugins.gui.StoreDataCommand"/>
+    <restCommandViaPost cmd="/rest/gui/pushAndRetrieveData" class="it.intecs.pisa.toolbox.plugins.gui.PushAndRetrieveDataCommand"/>
+    <restCommandViaPost cmd="/rest/gui/cloneServices" class="it.intecs.pisa.toolbox.plugins.gui.CloneMultipleServicesCommand"/>
+    <restCommandViaGet cmd="/rest/gui/deleteServices" class="it.intecs.pisa.toolbox.plugins.gui.DeleteMultipleServicesCommand"/>
+</plugin>
+

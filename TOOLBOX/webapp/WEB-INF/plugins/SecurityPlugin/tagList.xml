@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<tagList>
-    <tag name="serviceKeyStorePath" class="it.intecs.pisa.toolbox.plugins.security.ServiceKeyStorePathTag"/>
-    <tag name="serviceKeyStorePwd" class="it.intecs.pisa.toolbox.plugins.security.ServiceKeyStorePwdTag"/>
-    <tag name="encrypt" class="it.intecs.pisa.toolbox.plugins.security.EncryptTag"/>
-    <tag name="decrypt" class="it.intecs.pisa.toolbox.plugins.security.EncryptTag"/>
-</tagList>

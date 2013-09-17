@@ -1,0 +1,12 @@
+
+<chainConfig>
+    <catalog id="default">
+        <chain id="decryptAndCheckSignatureChain">
+            <command id="decryptToken" className="it.intecs.pisa.toolbox.security.chain.commands.DecryptSAMLToken"/>
+            <command id="checkTokenSignature" className="it.intecs.pisa.toolbox.security.chain.commands.CheckSAMLTokenSignature"/>
+        </chain>
+        <chain id="restoreChain">
+            <command id="restoreEncryptedToken" className="it.intecs.pisa.toolbox.security.chain.commands.RestoreEncryptedData"/>
+        </chain>
+    </catalog>
+</chainConfig>

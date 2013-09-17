@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<sequence>
-    <copy from="resources/OGC-06-131r6_standalone/GetRecords/eop.xslt" to="Resources/eop.xslt"/>
-</sequence>

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry exported="true" kind="lib" path="/TDE libs/jars/xercesImpl.jar"/>
-	<classpathentry kind="lib" path="C:/Programmi/Java/jdk1.5.0_12/lib/tools.jar"/>
-	<classpathentry kind="output" path="bin"/>
-</classpath>

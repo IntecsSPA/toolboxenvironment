@@ -1,0 +1,146 @@
+
+	
+#!/bin/bash
+
+#############################################################################
+#
+# $Id: execute_TestOperation.sh,v    $
+# UPDATED:	
+#
+# MODULE:   	TEST MODULE 
+#
+# AUTHOR(S):	Insert autors
+#               
+# PURPOSE:  	Convert a raster to another file format and stores the resulting raster file.
+#
+# COPYRIGHT: (C) 2009 Intecs Informatica e tecnologia del Software SpA 
+#
+#               
+#############################################################################
+
+# ********* External Environment Variables ************************************************************************************************
+# -----WPS Service Varibles
+# *OUTPUT_REPOSITORY : Output Repository Directory (This Folder should contain all the GRASS output files)
+# *INPUT_REPOSITORY : Input Repository Directory (This Folder should contain all the Complex Data Input files)
+# *GENERAL_SERVICES_RESOURCES : Services General Resources Directory (This Folder contains general resources for all Toolbox services ).
+# *SERVICE_RESOURCES : Service Resources Directory (This Folder contains only the resources of the current service)
+# *TEMP_REPOSITORY : Temporaney Data Repository Directory (This Folder should contain all the temporaney files)		
+# *WPS_PROCESSING_NAME: WPS Processing Name
+# *INSTANCE_VALUE: Instance Operation Value (for multiple Instances)
+# *GRASS_LOG_FILE: File path for GRASS text LOG	(This File should contain all GRASS messages)
+# *STATUS_FILE: File path for XML Status file (This XML File should contain the status information of the GRASS operation)		
+#					 
+#					 
+# ***************************************************************************************************************************************
+		
+		
+# ********* Input Environment Variables ***************************************************************************************************
+
+# *InputRaster: Local Path of Complex Value "InputRaster" defined by reference in the Execute Request. 
+#      (Input Description: Input raster file)
+   
+# *InputRaster_MimeType: Mime Type of "InputRaster" Input Complex Data. 
+#      (Mime Type Supported:  image/tiff  application/x-netcdf3  application/x-netcdf4  application/x-hdf  )
+    
+# *InputRasterMultiple_MULTIPLE_INPUT_FOLDER: (Folder that contains the multiple Complex Value "InputRasterMultiple" Input defined by reference in the Execute Request.)
+#      (Input Description: Input raster file)
+   
+# *InputRasterMultiple_MULTIPLE_INPUT_MimeType: Mime Types List separted from ',' for the multiple "InputRasterMultiple" Complex Data. 
+#      (Each value correspond at the Mime Type of the file, called like the list position of the Mime Type value, in the "InputRasterMultiple_MULTIPLE_INPUT_FOLDER" folder)
+#      (Supported:  application/x-netcdf4  )
+    
+# *InputRasterNotMandatory_MULTIPLE_INPUT_FOLDER: (Folder that contains the multiple Complex Value "InputRasterNotMandatory" Input defined by reference in the Execute Request.)
+#      (Input Description: Input raster file)
+   
+# *InputRasterNotMandatory_MULTIPLE_INPUT_MimeType: Mime Types List separted from ',' for the multiple "InputRasterNotMandatory" Complex Data. 
+#      (Each value correspond at the Mime Type of the file, called like the list position of the Mime Type value, in the "InputRasterNotMandatory_MULTIPLE_INPUT_FOLDER" folder)
+#      (Supported:  application/x-netcdf4  )
+    
+# The "BoundingBox" Bounding Box Input information is contained in two environment variables (one for the Lower Corner and one for Upper Corner): 
+# *BoundingBox_LOWER_CORNER: Lower Corner Coordinate of "BoundingBox" Input Bounding Box Data.
+# *BoundingBox_UPPER_CORNER: Upper Corner Coordinate of "BoundingBox" Input Bounding Box Data.
+#      (Input Description: The bounding box to clip the raster to)
+# *BoundingBox_EPSG: EPSG of "BoundingBox" Input Bounding Box Data.
+#      (EPSG Supported:  EPSG:4326  )
+        
+# The "BoundingBoxMultipleNotMandatory" Multiple Bounding Box Input information is contained in two environment variables (one for the Lower Cornerslist and one for Upper Corners list ): 
+# *BoundingBoxMultipleNotMandatory_MULTIPLE_BBOX_LOWER_CORNER: Lower Corner Coordinate List separted from '*' for the "BoundingBoxMultipleNotMandatory" multiple Input Bounding Box Data.
+# *BoundingBoxMultipleNotMandatory_MULTIPLE_BBOX_UPPER_CORNER: Upper Corner Coordinate List separted from '*' for the "BoundingBoxMultipleNotMandatory" multiple Input Bounding Box Data.
+#      (Input Description: The bounding box to clip the raster to)
+# *BoundingBoxMultipleNotMandatory_MULTIPLE_BBOX_EPSG: EPSG value list separted from ',' of  the "BoundingBoxMultipleNotMandatory" multiple Input Bounding Box Data.
+#      (EPSG Supported:  EPSG:4326  )
+        
+# *InputFormat: Literal Datata "InputFormat" Input value.
+#      (Input Description: The format of the raster input file)
+#      (Allowed Values:  netCDF4  )
+# *OutputDataType: Literal Datata "OutputDataType" Input value.
+#      (Input Description: The data type of the raster output file)
+#      (Allowed Values:  Byte  Int16  UInt16  UInt32  Int32  Float32  Float64  CInt16  CInt32  CFloat32  CFloat64  )
+# *LiteralMultipleNotMandatory_MULTIPLE_LITERAL_LIST: Values List separted from ',' that contains the multiple Literal Value "LiteralMultipleNotMandatory" Input.
+#      (Input Description: The data type of the raster output file)
+#      (Allowed Values:  Byte  Int16  UInt16  UInt32  Int32  Float32  Float64  CInt16  CInt32  CFloat32  CFloat64  )
+#					 
+#					 
+# ***************************************************************************************************************************************
+
+
+
+# ********* Output Environment Variables *************************************************************************************************
+
+# *OutputRaster: Name of the file that will contain the "OutputRaster" Complex Data Output. (This file must be saved in theOutput Repository Folder. This folder is defined by the environment variable OUTPUT_REPOSITORY)
+# *OutputRaster_OUTPUT_PATH: Path of the file that will contain the "OutputRaster" Complex Data Output. (This PATH is obtained from the concatenation of the environment variable "OUTPUT_REPOSITORY" and the the environment variable "OutputRaster")
+#      (Output Description: Output raster file)
+    
+# *OutputRaster_MimeType: OutputRaster Output Mime Type (Mime type, for the OutputRaster Complex Output, required in the Execute Request).
+#      (Mime Type Supported:  image/tiff  application/x-netcdf  application/x-hdf  image/png  image/jpeg  image/gif  )
+    
+# *OutputMessage: This environment variable will contain the value for "OutputMessage" Literal Data Output.
+#      (Output Description: OutputMessage)
+#      (Data Type: string)
+      
+# The "BBOX" Bounding Box Output information will be contained in four environment variables (one for each cardinal directions): 
+# *BBOX_N: This variable will contain the NORTH coordinate for the  "BBOX" Bounding Box  Output.
+#  BBOX_S: This variable will contain the SOUTH coordinate for the  "BBOX" Bounding Box  Output.
+#  BBOX_E: This variable will contain the EAST coordinate for the  "BBOX" Bounding Box  Output.
+#  BBOX_W: This variable will contain the WEST coordinate for the  "BBOX" Bounding Box  Output.
+#      (Output Description: BBOX)
+# *BBOX_EPSG: EPSG of "BBOX" Bounding Box Output. (Projection Code, for the BBOX Bounding Box Output, required in the Execute Request).
+#      (Supported:  EPSG:4326  )
+
+
+
+      
+#					 
+#					 
+#******************************************************************************************************************************
+
+
+# ------------------------------  GRASS SCRIPT -------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+                              # Insert GRASS Script
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ------------------------------  END GRASS SCRIPT ------------------------------------------------------------------------------------------------------------------------------
+  

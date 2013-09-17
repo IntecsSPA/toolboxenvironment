@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<csw:GetCapabilities xmlns:csw="http://www.opengis.net/cat/csw/2.0.2"
-	xmlns:ogc="http://www.opengis.net/ogc"
-	xmlns:gml="http://www.opengis.net/gml"
-	xmlns:wrs="http://www.opengis.net/cat/wrs/1.0"
-	xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0"
-	service="CSW-ebRIM">
-</csw:GetCapabilities>
-

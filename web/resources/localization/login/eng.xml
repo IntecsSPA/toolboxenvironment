@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : Eng.xml
+    Created on : 19 febbraio 2009, 17.57
+    Author     : Andrea Marongiu
+    Description:
+        Purpose of the document follows.
+-->
+
+<Localization xmlns="http://gisClient.pisa.intecs.it/localization">
+    <applicationName>Toolbox Manager</applicationName>
+    
+    
+    
+    <startMenuDoc>Documentation</startMenuDoc>
+    <startMenuConf>Configuration</startMenuConf>
+    <startMenuToolboxInfo>About</startMenuToolboxInfo>
+    <applicationDocumentation>Toolbox Documentation</applicationDocumentation>
+    
+    
+    <mainMenuServices>Services Management</mainMenuServices>
+        <subMenuNewService>Create a new Service</subMenuNewService>  
+            <subMenuOrdering>Ordering</subMenuOrdering>
+                <subMenuOrderingSSE14>SSE Version 1.4</subMenuOrderingSSE14>
+                <subMenuOrderingSSE16>SSE Version 1.6</subMenuOrderingSSE16>
+                <subMenuOrderingHMAOrdering10>HMA Ordering version 1.0</subMenuOrderingHMAOrdering10>
+            <subMenuCatalog>Catalog</subMenuCatalog>   
+                <subMenuCatalogEOLI26>EOLI version 2.6</subMenuCatalogEOLI26>
+            <subMenuWPS>WPS</subMenuWPS>  
+                <subMenuWPSGrass>GRASS Based</subMenuWPSGrass>
+                <subMenuWPSWhitoutTool>Whitout Tools</subMenuWPSWhitoutTool>
+        <subMenuImportService>Import a Service</subMenuImportService>
+        <subMenuDisplayStatusServices>Display all Services Status</subMenuDisplayStatusServices>
+        <subMenuStartAllServices>Start all Services</subMenuStartAllServices>
+        <subMenuStopAllServices>Stop all Services</subMenuStopAllServices>
+    <subMenuCreateServiceNoInterface>No Interface</subMenuCreateServiceNoInterface>
+    
+    <mainMenuTestCenter>Test Center</mainMenuTestCenter>
+        <subMenuTestCenterToolboxClient>Toolbox Services Client</subMenuTestCenterToolboxClient>
+        <subMenuTestCenterCatalog>Test a Catalogue</subMenuTestCenterCatalog>
+        <subMenuTestCenterWSClient>Web Services Generic Client</subMenuTestCenterWSClient>
+        <subMenuTestCenterValidate>Validate a XML Script</subMenuTestCenterValidate>
+        <subMenuTestCenterPushServer>Push Server</subMenuTestCenterPushServer>
+     
+    <loginButton>Login</loginButton>
+    <labelUser>User</labelUser>
+    <labelPassword>Password</labelPassword>
+    <groupLogin>User Authentication</groupLogin>
+    <errorLogin>Incorrect user name or password. Please try again.</errorLogin>
+    
+</Localization>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chainConfig>
+    <catalog id="configuredCommands">
+        <chain id="securityCommands">
+            <command id="authenticationCommands" chain="authenticationCommands"/>
+            <command id="authorizationCommands" chain="authorizationCommands"/>
+        </chain>
+        <chain id="authenticationCommands" description="Authentication Steps">
+            <command id="persistToken" className="it.intecs.pisa.toolbox.security.chain.commands.PersistSAMLToken" description="Send the token for persistence to configured SAML Bean" selected="false"/>
+            <command id="checkTokenTime" className="it.intecs.pisa.toolbox.security.chain.commands.CheckSAMLTokenValidityTime" description="Check the token validity time" selected="false"/>
+            <command id="checkTokenIssuer" className="it.intecs.pisa.toolbox.security.chain.commands.CheckSAMLTokenIssuer" description="Check the token issuer" selected="false">
+                <property id="issuer" value="http://earth.esa.int" description="Issuer identifier" type="text"/>
+            </command>
+        </chain>
+        <chain id="authorizationCommands" description="Authorization Steps">
+            <command id="geoAuthorization" className="it.intecs.pisa.toolbox.security.chain.commands.GeoAuthorization" description="Standard Geo(XACML) authorization" selected="false">
+                <property id="xacmlFileLocation" value="" description="Local file containing the (Geo)XACML policy" type="file"/>
+            </command>
+            <command id="dailAuthorization" className="it.intecs.pisa.toolbox.security.chain.commands.DAILAuthorization" description="Custom step for the DAIL PEP" selected="false">
+                <property id="dailPolicyDir" value="" description="Policies directory" type="text"/>
+            </command>
+            <command id="gmesAuthorization" className="it.intecs.pisa.toolbox.security.chain.commands.GMESAuthorization" description="Custom step for the CDS PEP" selected="false">
+                <property id="gmesPolicyDir"  value="" description="Policies directory" type="text"/>   
+            </command>
+        </chain>
+    </catalog>
+</chainConfig>

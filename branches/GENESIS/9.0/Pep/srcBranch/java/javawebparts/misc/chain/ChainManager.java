@@ -100,9 +100,9 @@ public class ChainManager {
 
 
   /**
-   * Flag to determine if initialization has taken place.
+   * Flag to determine if default initialization has taken place.
    */
-  private boolean configured;
+  private static boolean configuredDefault;
 
 
   /**
@@ -129,7 +129,7 @@ public class ChainManager {
   public ChainManager(String inConfigFilename) {
 
     log.info("ChainManager...");
-    if (!configured) {
+    if ((!configuredDefault) || (inConfigFilename != null)) {
 
       String configFilename = inConfigFilename;
       if (configFilename == null) {
@@ -228,7 +228,8 @@ public class ChainManager {
       // Display configured object graph.
       log.info(catalogs);
       log.info("ChainManager configured");
-      configured = true;
+      if (inConfigFilename == null) 
+          configuredDefault = true;
 
     } else {
 

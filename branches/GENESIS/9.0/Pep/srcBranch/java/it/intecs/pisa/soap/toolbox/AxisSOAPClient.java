@@ -44,6 +44,9 @@ import org.apache.axis2.util.XMLUtils;
 import org.apache.axis2.wsdl.WSDLConstants;
 import org.w3c.dom.*;
 
+import javax.xml.namespace.QName; 
+import org.apache.axis2.AxisFault;
+
 
 // imports needed for the SSL communication
 import javax.xml.soap.SOAPMessage;
@@ -55,9 +58,19 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMAttribute;
+import org.apache.axiom.om.OMException;
 import org.apache.axiom.om.OMNamespace;
 import org.apache.axiom.soap.SOAP11Constants;
+import org.apache.axiom.soap.SOAPFactory;
+import org.apache.axiom.soap.SOAPFault;
+import org.apache.axiom.soap.SOAPFaultCode;
+import org.apache.axiom.soap.SOAPFaultDetail;
+import org.apache.axiom.soap.SOAPFaultNode;
+import org.apache.axiom.soap.SOAPFaultReason;
+import org.apache.axiom.soap.SOAPFaultText;
+import org.apache.axiom.soap.SOAPFaultValue;
 import org.apache.axiom.soap.SOAPHeaderBlock;
+import org.apache.axiom.soap.SOAPProcessingException;
 import org.apache.axiom.soap.impl.llom.soap11.SOAP11Factory;
 
 public class AxisSOAPClient {
@@ -285,16 +298,64 @@ Read more: http://kickjava.com/src/org/apache/axis2/engine/SOAPversionTest.java.
         {
             inputMsg=(OMElement)XMLUtils.toOM(inStream);
             result = client.sendReceive(inputMsg);
-
         }
-        catch(Exception ecc)
-        {
-            ecc.printStackTrace();
+      catch (AxisFault af) {
+            System.out.println("AxisFault - An error occured in the communication with the endpoint: "
+                    + af.getLocalizedMessage());
+            SOAPFault fault = createSOAP11Fault(af);
+            result = fault;
         }
         return XMLUtils.toDOM(result);
     }
 
+    private static SOAPFault createSOAP11Fault(AxisFault af) {
+        SOAPFactory soapFactory = OMAbstractFactory.getSOAP11Factory();
+       
+        QName code = af.getFaultCode();
+        String reason = af.getReason();
+        String node = af.getFaultNode();
+        OMElement detail = af.getDetail();
 
+        SOAPFaultCode soapFaultCode = null;
+        if (code != null) {
+            soapFaultCode = soapFactory.createSOAPFaultCode();
+            soapFaultCode.setText(code);
+        }
+
+        SOAPFaultReason soapFaultReason = null;
+        if (reason != null) {
+            soapFaultReason = soapFactory.createSOAPFaultReason();       
+            soapFaultReason.setText(reason);
+        }
+
+        SOAPFaultNode soapFaultNode = null;
+        if (node != null) {
+            soapFaultNode = soapFactory.createSOAPFaultNode();
+            soapFaultNode.setNodeValue(node);
+        }
+
+        SOAPFaultDetail soapFaultDetail = null;
+        if (detail != null) {
+            soapFaultDetail = soapFactory.createSOAPFaultDetail();
+            soapFaultDetail.addDetailEntry(detail);
+        }
+
+        SOAPFault fault = soapFactory.createSOAPFault();
+        if (soapFaultCode != null) {
+            fault.setCode(soapFaultCode);
+        }
+        if (soapFaultReason != null) {
+            fault.setReason(soapFaultReason);
+        }
+        if (soapFaultNode != null) {
+            fault.setNode(soapFaultNode);
+        }
+        if (soapFaultDetail != null) {
+            fault.setDetail(soapFaultDetail);
+        }
+
+        return fault;
+    }
   
     /**
      *

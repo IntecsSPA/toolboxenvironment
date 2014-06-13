@@ -102,6 +102,25 @@ public class StoreItemDeserializer implements JsonDeserializer<StoreItem> {
                     item.publishCatalogue[i] = array.get(i).getAsString();
                 }
             } else item.publishCatalogue = new String[0];
+            
+            
+            array = publishObj.getAsJsonArray("openSearchCatalogueIngestion");
+            if (array != null) {
+                item.ingestionOpenSearchCatalogue = new String[array.size()];
+                for (int i = 0; i < array.size(); i++) {
+                    item.ingestionOpenSearchCatalogue[i] = array.get(i).getAsString();
+                }
+            } else item.ingestionOpenSearchCatalogue = new String[0];
+            
+            
+            array = publishObj.getAsJsonArray("openSearchCatalogue");
+            if (array != null) {
+                item.publishOpenSearchCatalogue = new String[array.size()];
+                for (int i = 0; i < array.size(); i++) {
+                    item.publishOpenSearchCatalogue[i] = array.get(i).getAsString();
+                }
+            } else item.publishOpenSearchCatalogue = new String[0];
+            
 
             array = publishObj.getAsJsonArray("GeoServer");
 
@@ -129,6 +148,8 @@ public class StoreItemDeserializer implements JsonDeserializer<StoreItem> {
         {
             item.publishFtp = new String[0];
             item.publishCatalogue = new String[0];
+            item.publishOpenSearchCatalogue = new String[0];
+            item.ingestionOpenSearchCatalogue = new String[0];
             item.publishGeoserver = new String[0];
         }
        

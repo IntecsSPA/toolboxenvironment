@@ -14,6 +14,7 @@ public class ItemStatus {
     public String downloadStatus;
     public String[] http;
     public String[] catalogues;
+    public String[] openSearchCatalogues;
     public String[] sos;
     public String[] ftp;
     public String[] geoserver;

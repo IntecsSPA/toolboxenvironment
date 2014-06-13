@@ -56,6 +56,7 @@ public class DownloadFromHttp implements Command {
 
                 fileName=storeItem.downloadUrl.substring(storeItem.downloadUrl.lastIndexOf("/")+1);
                 cc.setAttribute(CommandsConstants.DOWNLOADED_FILE_NAME, fileName);
+                cc.setAttribute(CommandsConstants.LOCAL_FILE, outFile);
             }
         } catch (Exception e) {
             id=(String) cc.getAttribute(CommandsConstants.ITEM_ID);

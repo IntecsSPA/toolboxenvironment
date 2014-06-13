@@ -15,6 +15,7 @@ package it.intecs.pisa.archivingserver.data;
  *      <publishFtp>ftp://..</publishFtp>
  *      <publishGeoServer></publishGeoServer>
  *      <publishCatalogue>http://...</publishCatalogue>
+ *      <publishOpenSearchCatalogue>http://...</publishOpenSearchCatalogue>
  *   </publish>
  * </storeItem>
  * @author Massimiliano Fanciulli
@@ -34,6 +35,8 @@ public class StoreItem {
     public String geoserverDimensions;
     public String geoserverFileNameTemplate;
     public String[] publishCatalogue;
+    public String[] publishOpenSearchCatalogue;
+    public String[] ingestionOpenSearchCatalogue;
     public String[] publishSOS;
     public boolean publishHttp;
 

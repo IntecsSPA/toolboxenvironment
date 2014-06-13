@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author massi
+ * @author massi, Andrea Marongiu
  */
 public class ItemStatusSerializer implements JsonSerializer<ItemStatus>{
 
@@ -53,6 +53,18 @@ public class ItemStatusSerializer implements JsonSerializer<ItemStatus>{
 
         if(t.catalogues.length>0)
             obj.add("catalogues", array);
+        
+        array=new JsonArray();
+        try {
+            for (String url : t.openSearchCatalogues) {
+                array.add(new JsonPrimitive(url));
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ItemStatusSerializer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if(t.openSearchCatalogues.length>0)
+            obj.add("openSearchCatalogues", array);
 
         array=new JsonArray();
         try {

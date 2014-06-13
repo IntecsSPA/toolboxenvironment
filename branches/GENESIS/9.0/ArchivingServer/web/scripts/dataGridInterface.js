@@ -109,7 +109,8 @@ DataGridInterface=function(){
                 "<tr><td ALIGN=\"center\" width=\"25%\"><b>Status</b></td><td ALIGN=\"center\" width=\"75%\">{downloadStatus}</td></tr>"+
                 "<tr><td ALIGN=\"center\"><b>HTTP</b></td><td><a href=\"javascript:armsManager.newWindow('{http}','http');\">{http}</a></td></tr>"+
                 "<tr><td ALIGN=\"center\"><b>FTP</b></td><td><a href=\"javascript:armsManager.newWindow('{ftp}','ftp');\">{ftp}</a></td></tr>"+
-                "<tr><td ALIGN=\"center\"><b>CATALOGUE</b></td><td><a href=\"javascript:armsManager.newWindow('{catalogues}','catalogues');\">{catalogues}</a></td></tr>"+
+                "<tr><td ALIGN=\"center\"><b>EbRIM CATALOGUE</b></td><td><a href=\"javascript:armsManager.newWindow('{catalogues}','catalogues');\">{catalogues}</a></td></tr>"+
+                "<tr><td ALIGN=\"center\"><b>Open Search CATALOGUE</b></td><td><a href=\"javascript:armsManager.newWindow('{openSearchCatalogues}','openSearchCatalogues');\">{openSearchCatalogues}</a></td></tr>"+
                 "<tr><td ALIGN=\"center\"><b>GEOSERVER</b></td><td><a href=\"javascript:armsManager.newWindow('{geoserver}','geoserver');\">{geoserver}</a></td></tr>"+
                 "<tr><td ALIGN=\"center\"><b>SOS</b></td><td><a href=\"javascript:armsManager.newWindow('{sos}','sos');\">{sos}</a></td></tr>"+
                 "</table></td>"+

@@ -126,7 +126,8 @@ WatchInterface=function(){
          //Add Fieldset Section  
          
          this.addFTPOptions(multiType);
-         this.addCatalogueOptions(multiType);
+         this.addEbRIMCatalogueOptions(multiType);
+         this.addOpenSearchCatalogueOptions(multiType);
          this.addGeoserverOptions(multiType);
          this.addSOSOptions(multiType);
          
@@ -137,6 +138,7 @@ WatchInterface=function(){
              Ext.getCmp("watchFTPFieldSet_"+this.watchNumber).collapse();
              Ext.getCmp("watchGeoserverFieldSet_"+this.watchNumber).collapse();
              Ext.getCmp("watchCatalogueFieldSet_"+this.watchNumber).collapse();
+             Ext.getCmp("watchOpenSearchCatalogueFieldSet_"+this.watchNumber).collapse();
              Ext.getCmp("watchSOSFieldSet_"+this.watchNumber).collapse(); 
              Ext.getCmp("watchDeleteAfterFieldSet_"+this.watchNumber).collapse();
          }
@@ -187,8 +189,8 @@ WatchInterface=function(){
          multiType.addSpace("ftpwatchSpace4_"+this.watchNumber,4, "watchFTPFieldSet_"+this.watchNumber);      
      };
      
-     this.addCatalogueOptions= function (multiType){
-         // Add Catalogue input Text
+     this.addEbRIMCatalogueOptions= function (multiType){
+         // Add EbRIM Catalogue input Text
          
          multiType.addFieldSet("watchCatalogueFieldSet_"+this.watchNumber, 
              "Catalogue", "watchFieldSetSet_"+this.watchNumber, true);
@@ -196,6 +198,22 @@ WatchInterface=function(){
 
          multiType.addTextField("catalogueUrl_"+this.watchNumber, 
             "Catalogue URL", "", 80, "watchCatalogueFieldSet_"+this.watchNumber);
+     };
+     
+     
+     this.addOpenSearchCatalogueOptions= function (multiType){
+         // Add OpenSearch Catalogue input Text
+         
+         multiType.addFieldSet("watchOpenSearchCatalogueFieldSet_"+this.watchNumber, 
+             "OpenSearch Catalogue", "watchFieldSetSet_"+this.watchNumber, true);
+         
+         multiType.addTextField("catalogueOpenSearchUrl_"+this.watchNumber, 
+            "OpenSearch Catalogue URL", "", 80, "watchOpenSearchCatalogueFieldSet_"+this.watchNumber);
+            
+         multiType.addTextField("catalogueOpenSearchIngestUrl_"+this.watchNumber, 
+            "OpenSearch Catalogue Ingestion URL", "", 80, "watchOpenSearchCatalogueFieldSet_"+this.watchNumber);
+            
+            
      };
      
      this.addGeoserverOptions= function (multiType){
@@ -373,6 +391,14 @@ WatchInterface=function(){
            Ext.getCmp("catalogueUrl_"+watchIndex).setValue(defaultValues.ebRIMCatalogue[0]);
         }else
            Ext.getCmp("watchCatalogueFieldSet_"+watchIndex).collapse();
+       
+       if(defaultValues.openSearchCatalogueIngestion.length>0){
+           Ext.getCmp("watchOpenSearchCatalogueFieldSet_"+watchIndex).expand(); 
+           Ext.getCmp("catalogueOpenSearchUrl_"+watchIndex).setValue(defaultValues.openSearchCatalogue[0]);
+           Ext.getCmp("catalogueOpenSearchIngestUrl_"+watchIndex).setValue(defaultValues.openSearchCatalogueIngestion[0]);
+           Ext.getCmp("catalogueOpenSearchUrl_"+watchIndex).setValue(defaultValues.openSearchCatalogue[0]);
+        }else
+           Ext.getCmp("watchOpenSearchCatalogueFieldSet_"+watchIndex).collapse();
 
          if(defaultValues.SOS.length>0){
            Ext.getCmp("watchSOSFieldSet_"+watchIndex).expand();
@@ -582,6 +608,39 @@ WatchInterface=function(){
            }else
             watchData.idString+="false";    
         }
+        
+        if(Ext.getCmp("watchOpenSearchCatalogueFieldSet_"+watchIndex)){
+           value=Ext.getCmp("watchOpenSearchCatalogueFieldSet_"+watchIndex).collapsed;
+           if(!value){
+             watchData.openSearchCatalogueIngestion=new Array();
+             watchData.openSearchCatalogue=new Array();
+             
+             if(Ext.getCmp("catalogueOpenSearchUrl_"+watchIndex)){
+                value=Ext.getCmp("catalogueOpenSearchUrl_"+watchIndex).getValue(); 
+                if(value){
+                    protocol = value.substring(7,0);
+                    if(protocol == "http://")
+                        watchData.openSearchCatalogue.push(value); 
+                    else
+                        watchData.openSearchCatalogue.push("http://"+value);
+                    watchData.idString+=value;
+                }
+             }
+             
+             if(Ext.getCmp("catalogueOpenSearchIngestUrl_"+watchIndex)){
+                value=Ext.getCmp("catalogueOpenSearchIngestUrl_"+watchIndex).getValue(); 
+                if(value){
+                    protocol = value.substring(7,0);
+                    if(protocol == "http://")
+                        watchData.openSearchCatalogueIngestion.push(value); 
+                    else
+                        watchData.openSearchCatalogueIngestion.push("http://"+value);
+                    watchData.idString+=value;
+                }
+             }   
+           }else
+            watchData.idString+="false";    
+        }
   
         if(Ext.getCmp("watchSOSFieldSet_"+watchIndex)){
            value=Ext.getCmp("watchSOSFieldSet_"+watchIndex).collapsed;
@@ -700,6 +759,7 @@ Watch=function(){
    /* this.geoserverUser= "";
     this.geoserverPassword= "";*/
     this.ebRIMCatalogue= new Array();
+    this.openSearchCatalogueIngestion= new Array();
     this.SOS= new Array();
     this.Http= null;
 }

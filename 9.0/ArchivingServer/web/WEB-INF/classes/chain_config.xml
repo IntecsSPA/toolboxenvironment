@@ -34,7 +34,8 @@
             <command id="publishToInternalHttp" className="it.intecs.pisa.archivingserver.chain.commands.PublishToInternalHttp" />
             <command id="publishToInternalFtp" className="it.intecs.pisa.archivingserver.chain.commands.PublishToInternalFTP" />
             <command id="publishToFtp" className="it.intecs.pisa.archivingserver.chain.commands.PublishToFTP" />
-            <command id="publishToCatalogue" className="it.intecs.pisa.archivingserver.chain.commands.PublishToEbRIMCatalogue" />
+            <command id="publishToEbRIMCatalogue" className="it.intecs.pisa.archivingserver.chain.commands.PublishToEbRIMCatalogue" />
+            <command id="publishToOpenSearchCatalogue" className="it.intecs.pisa.archivingserver.chain.commands.PublishToOpenSearchCatalogue" />
             <command id="publishToGeoServer" className="it.intecs.pisa.archivingserver.chain.commands.PublishToGeoServer" />
             <command id="publishToSOS" className="it.intecs.pisa.archivingserver.chain.commands.PublishToSOS" />
             <command id="changeStatusToPublished" className="it.intecs.pisa.archivingserver.chain.commands.ChangeStatusToPublished" />
@@ -56,7 +57,8 @@
 
         <chain id="deleteChain">
             <command id="local" chain="deleteLocal"/>
-            <command id="deleteCatalogues" className="it.intecs.pisa.archivingserver.chain.commands.DeleteFromEbRIMCatalogue"/>
+            <command id="deleteToEbRIMCatalogues" className="it.intecs.pisa.archivingserver.chain.commands.DeleteFromEbRIMCatalogue"/>
+            <command id="deleteToOpenSearchCatalogues" className="it.intecs.pisa.archivingserver.chain.commands.DeleteFromOpenSearchCatalogue"/>
             <command id="deleteFtp" className="it.intecs.pisa.archivingserver.chain.commands.DeleteFromFTP"/>
             <command id="deleteGeoserver" className="it.intecs.pisa.archivingserver.chain.commands.DeleteFromGeoServer"/>
         </chain>

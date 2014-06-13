@@ -255,6 +255,8 @@ public class AutomaticFolderPublishingService extends Thread {
             storeitem.metadataUrl = "";
             storeitem.type = type;
             storeitem.publishCatalogue = new String[0];
+            storeitem.publishOpenSearchCatalogue = new String[0];
+            storeitem.ingestionOpenSearchCatalogue = new String[0];
             storeitem.publishFtp = new String[0];
             storeitem.publishGeoserver = new String[0];
 

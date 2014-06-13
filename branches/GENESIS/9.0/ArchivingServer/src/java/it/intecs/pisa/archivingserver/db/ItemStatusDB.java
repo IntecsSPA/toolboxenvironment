@@ -20,6 +20,7 @@ public class ItemStatusDB {
        status.id=id;
        status.downloadStatus=DownloadsDB.getStatus(id);
        status.catalogues=SOAPCatalogueAccessible.getUrls(id);
+       status.openSearchCatalogues=OpenSearchCatalogueAccessible.getUrls(id);
        status.sos=SOSAccessible.getUrls(id);
        status.http=HttpAccessible.getUrls(id);
        status.ftp=FTPAccessible.getUrls(id);

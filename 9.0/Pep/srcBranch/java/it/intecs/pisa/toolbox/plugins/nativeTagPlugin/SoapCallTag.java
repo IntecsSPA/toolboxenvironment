@@ -85,8 +85,8 @@ public class SoapCallTag extends NativeTagExecutor {
             throw new Exception("An error occurred while performing the SOAP exchange");
         }
 
-       
-        dumpResourceAndAddToDebugTree(soapResponse.getOwnerDocument());
+        // Intecs comment 2015-11: the following row has been commented to reduce the number of dumped messages
+        // dumpResourceAndAddToDebugTree(soapResponse.getOwnerDocument());
 
         return soapResponse.getOwnerDocument();
     }

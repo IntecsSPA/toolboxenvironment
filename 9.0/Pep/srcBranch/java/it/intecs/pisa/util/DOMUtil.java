@@ -46,8 +46,8 @@ public class DOMUtil {
     private static final String SCHEMA_LOCATION_NS = "http://apache.org/xml/properties/schema/external-schemaLocation";
     private static final String TRUE = "true";
     private static final String ONE = "1";
-
-    public static LinkedList getChildren(Element element) {
+    
+    public static synchronized LinkedList getChildren(Element element) {
         LinkedList result = new LinkedList();
         NodeList children = element.getChildNodes();
         Node child;
@@ -60,7 +60,7 @@ public class DOMUtil {
         return result;
     }
 
-    public static Element getFirstChild(Element element) {
+    public static synchronized Element getFirstChild(Element element) {
         NodeList children = element.getChildNodes();
         Node child;
         for (int index = 0; index < children.getLength(); index++) {
@@ -72,7 +72,7 @@ public class DOMUtil {
         return null;
     }
     
-     public static Element getLastChild(Element element) {
+     public static synchronized Element getLastChild(Element element) {
         NodeList children = element.getChildNodes();
         Node child;
         Element last=null;
@@ -85,7 +85,7 @@ public class DOMUtil {
         return last;
     }
 
-    public static Element getNextElement(Element element) {
+    public static synchronized Element getNextElement(Element element) {
         Node next;
 
         try {
@@ -100,7 +100,7 @@ public class DOMUtil {
         return (Element) next;
     }
 
-    public static Element getChildByTagName(Element element, String tag) {
+    public static synchronized Element getChildByTagName(Element element, String tag) {
         NodeList children = element.getChildNodes();
         Node child;
         for (int index = 0; index < children.getLength(); index++) {
@@ -112,7 +112,7 @@ public class DOMUtil {
         return null;
     }
 
-    public static LinkedList getChildrenByTagName(Element element, String tag) {
+    public static synchronized LinkedList getChildrenByTagName(Element element, String tag) {
         LinkedList result = new LinkedList();
         NodeList children = element.getChildNodes();
         Node child;
@@ -125,7 +125,7 @@ public class DOMUtil {
         return result;
     }
 
-    public static Element getChildByLocalName(Element element, String tag) {
+    public static synchronized Element getChildByLocalName(Element element, String tag) {
         NodeList children = element.getChildNodes();
         Node child;
         for (int index = 0; index < children.getLength(); index++) {
@@ -137,7 +137,7 @@ public class DOMUtil {
         return null;
     }
 
-    public static LinkedList getChildrenByLocalName(Element element, String tag) {
+    public static synchronized LinkedList getChildrenByLocalName(Element element, String tag) {
         LinkedList result = new LinkedList();
         NodeList children = element.getChildNodes();
         Node child;
@@ -480,7 +480,17 @@ public class DOMUtil {
         return new ByteArrayInputStream(out.toByteArray());
     }
 
-    public static InputStream getDocumentAsInputStream(Document xml)
+     public static InputStream getDocumentAsInputStream(Document xml)
+            throws Exception {
+        Source xmlSource = new DOMSource(xml);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        Result outputTarget = new StreamResult(outputStream);
+        TransformerFactory.newInstance().newTransformer().transform(xmlSource, outputTarget);
+        return new ByteArrayInputStream(outputStream.toByteArray());
+    }
+
+    
+/*    public static InputStream getDocumentAsInputStream(Document xml)
             throws Exception {
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -488,7 +498,7 @@ public class DOMUtil {
         transformer.transform(new DOMSource(xml), res);
         return new ByteArrayInputStream(out.toByteArray());
     }
-
+*/
     public static String getDocumentAsString(Document xml)
             throws Exception {
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -835,6 +845,7 @@ public class DOMUtil {
         }
     }
 
+    /* ORIGINAL VERSION
     public static Document getCopyOfDocument(Document doc) throws Exception
     {
         Document newDoc;
@@ -847,6 +858,38 @@ public class DOMUtil {
         util=new DOMUtil();
         str=DOMUtil.getDocumentAsInputStream(doc);
         return util.inputStreamToDocument(str);
+    } */
+    
+    /* SECOND VERSION OPTIMIZED
+    public static synchronized Document getCopyOfDocument(Document doc) throws Exception
+    {
+        if (doc == null)
+            return null;
+       
+        TransformerFactory tfactory = TransformerFactory.newInstance();
+        Transformer tx   = tfactory.newTransformer();
+        DOMSource source = new DOMSource(doc);
+        DOMResult result = new DOMResult();
+        tx.transform(source,result);
+        return (Document)result.getNode();
+    }
+    */
+    
+    
+
+    public static synchronized Document getCopyOfDocument(Document doc) throws Exception {
+        if (doc == null) {
+            return null;
+        }
+
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+
+        Document clonedDoc = documentBuilder.newDocument();
+        Node clonedRoot = clonedDoc.importNode(doc.getDocumentElement(), true);
+        clonedDoc.appendChild(clonedRoot);
+        return clonedDoc;
+
     }
 
     public static Document getElementAsNewDocument(Element el) throws Exception

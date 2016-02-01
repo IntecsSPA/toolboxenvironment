@@ -354,9 +354,10 @@ public class InstanceHandler {
         toolboxEngine.put(EngineConstants.OPERATION_MODE, serviceMode);
         toolboxEngine.put(EngineConstants.XML_REQUEST, xmlRequest);
         toolboxEngine.put(EngineConstants.SOAP_REQUEST, soapRequest);
-
-        InstanceResources.storeXMLResource(xmlRequest, serviceInstanceId, InstanceResources.VARIABLE_BODY_REQUEST);
-        InstanceResources.storeXMLResource(soapRequest, serviceInstanceId, InstanceResources.VARIABLE_SOAP_REQUEST);
+        
+//      INTECS comment 2015-11: the following rows have been commented to reduce the number of dumped messages
+//      InstanceResources.storeXMLResource(xmlRequest, serviceInstanceId, InstanceResources.VARIABLE_BODY_REQUEST);
+//      InstanceResources.storeXMLResource(soapRequest, serviceInstanceId, InstanceResources.VARIABLE_SOAP_REQUEST);
 
         if(interf.getTargetNameSpace()!= null)
             toolboxEngine.put(ToolboxEngineVariablesKeys.TARGET_NAMESPACE, interf.getTargetNameSpace());

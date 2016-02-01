@@ -58,13 +58,13 @@ public class ResourceSequence {
     }
 
     private static void init() throws Exception {
-        String sql = "SELECT LIMIT 0 1 ID FROM T_INSTANCES_RESOURCES ORDER BY ID DESC";
+        String sql = "SELECT LIMIT 0 1 ID FROM T_INSTANCES_RESOURCES ORDER BY CAST (ID AS BIGINT) DESC";
         ToolboxInternalDatabase db = ToolboxInternalDatabase.getInstance();
         Statement stm = db.getStatement();
         ResultSet rs = stm.executeQuery(sql);
 
         if(rs.next()==true)
-           id=rs.getLong("ID");
+           id=rs.getLong("ID") + 1;
         else id=0;
 
         inited=true;

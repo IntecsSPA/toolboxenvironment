@@ -194,6 +194,9 @@ public  class ToolboxConfiguration {
         
         jsonConf.addProperty(ToolboxConfiguration.LOG_PATTERN, 
                 getConfigurationValue(ToolboxConfiguration.LOG_PATTERN));
+        
+         jsonConf.addProperty(ToolboxConfiguration.CLEANUP_EVERY, 
+                getConfigurationValue(ToolboxConfiguration.CLEANUP_EVERY));
         /*-----------------------------------------------------*/
         
         /*---------- GET FTP Configuration -----------------*/
@@ -305,6 +308,10 @@ public  class ToolboxConfiguration {
         jsonEl=jsonConfiguration.get(ToolboxConfiguration.LOG_PATTERN);
         if(!(jsonEl==null || jsonEl instanceof com.google.gson.JsonNull))
             setConfigurationValue(ToolboxConfiguration.LOG_PATTERN, jsonEl.getAsString());
+        
+        jsonEl=jsonConfiguration.get(ToolboxConfiguration.CLEANUP_EVERY);
+        if(!(jsonEl==null || jsonEl instanceof com.google.gson.JsonNull))
+            setConfigurationValue(ToolboxConfiguration.CLEANUP_EVERY, jsonEl.getAsString());
         /*--------------------------------------------------*/
         
         /*---------- FTP Configuration -----------------*/

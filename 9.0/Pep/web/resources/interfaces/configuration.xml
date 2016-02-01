@@ -18,6 +18,7 @@
             storeData="[['ALL'],['DEBUG'],['INFO'],['WARN'],['ERROR'],['FATAL'],['OFF']]"/>  
            <input type="text" name="logDir" id="logDir" label="Log Directory" value="" optional="false" size="50" colSpan="3"/>
            <input type="numeric" name="logFileSize" id="logFileSize" label="Log File Size (KB)" value="100" optional="false" size="10" colSpan="3"/>
+           <input type="text" name="cleanupEvery" id="cleanupEvery" label="Log Messages Clean Up Interval" value="" optional="true" size="10" colSpan="3"/>
         </group>
     </section>
    <section name="General Security Configuration">

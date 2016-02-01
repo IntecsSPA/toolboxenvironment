@@ -17,7 +17,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.URI;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Set;
 import java.util.Vector;
 import javawebparts.misc.chain.ChainContext;
 import javawebparts.misc.chain.ChainManager;
@@ -71,12 +74,18 @@ public class ToolboxSecurityWrapper {
     // of possible failure in the policy enforcement process
     private static String policyEnforcementError = "Policy enforcement restricts access. ";
     private static String RESPONSE_MESSAGE = "ResponseMessage";
+    private static Set<String> chainsConfigured = Collections.synchronizedSet(new HashSet<String>());
+    public static final String DEFAULT_CHAIN = "no_specific_service";
     
     private ChainManager chainManager = null; 
     
-    private void init(){
-        if (chainManager == null)
+    private void init() {
+        if (chainManager == null) {
+            if (!chainsConfigured.contains(DEFAULT_CHAIN)) {
+                configureChain(DEFAULT_CHAIN);
+            }
             chainManager = new ChainManager();
+        }
     }
 
     /**
@@ -486,21 +495,23 @@ public class ToolboxSecurityWrapper {
         return res;
     }
 
+    public static synchronized void configureChain(String serviceName) {
+        if (!chainsConfigured.contains(serviceName)) {
+            if (serviceName.compareTo(DEFAULT_CHAIN) != 0) {
+                String serviceCommandsPath = "../services/" + serviceName + "/serviceChain.xml";
+                new ChainManager(serviceCommandsPath);
+            } else {
+                new ChainManager();
+            }
+            chainsConfigured.add(serviceName);
+        }
+    }
+    
     private Result callServiceChain(String serviceName, MessageContext msgCtx) {
 
         Logger logger = Toolbox.getInstance().getLogger();
-
-        ServiceManager serviceManager = ServiceManager.getInstance();
         try {
-
-            TBXService service = serviceManager.getService(serviceName);
-            if (service.getCommandChainConfigured() == false) {
-                // the ChainManager expects a configuration file in the path WEB-INF/classes
-                String serviceCommandsPath = "../services/" + serviceName + "/serviceChain.xml";
-                ChainManager cm = new ChainManager(serviceCommandsPath);
-
-                service.setCommandChainConfigured(true);
-            }
+            configureChain(serviceName);          
             ChainContext ct = chainManager.createContext();
             ct.setAttribute(CommandsConstants.MESSAGE_CONTEXT, msgCtx);
             chainManager.executeChain(serviceName + "/securityCommands", ct);
@@ -514,18 +525,8 @@ public class ToolboxSecurityWrapper {
 
         Logger logger = Toolbox.getInstance().getLogger();
 
-        ServiceManager serviceManager = ServiceManager.getInstance();
         try {
-
-            TBXService service = serviceManager.getService(serviceName);
-            if (service.getCommandChainConfigured() == false) {
-
-                // the ChainManager expects a configuration file in the path WEB-INF/classes
-                String serviceCommandsPath = "../services/" + serviceName + "/serviceChain.xml";
-                ChainManager cm = new ChainManager(serviceCommandsPath);
-
-                service.setCommandChainConfigured(true);
-            }
+            configureChain(serviceName); 
             ChainContext ct = chainManager.createContext();
             ct.setAttribute(CommandsConstants.MESSAGE_CONTEXT, msgCtx);
             chainManager.executeChain(serviceName + "/authenticationCommands", ct);
@@ -538,18 +539,9 @@ public class ToolboxSecurityWrapper {
     private Result callServiceAuthorizationChain(String serviceName, MessageContext msgCtx) {
 
         Logger logger = Toolbox.getInstance().getLogger();
-        ServiceManager serviceManager = ServiceManager.getInstance();
+        
         try {
-
-            TBXService service = serviceManager.getService(serviceName);
-            if (service.getCommandChainConfigured() == false) {
-
-                // the ChainManager expects a configuration file in the path WEB-INF/classes
-                String serviceCommandsPath = "../services/" + serviceName + "/serviceChain.xml";
-                ChainManager cm = new ChainManager(serviceCommandsPath);
-
-                service.setCommandChainConfigured(true);
-            }
+            configureChain(serviceName); 
             ChainContext ct = chainManager.createContext();
             ct.setAttribute(CommandsConstants.MESSAGE_CONTEXT, msgCtx);
             chainManager.executeChain(serviceName + "/authorizationCommands", ct);
@@ -591,14 +583,26 @@ public class ToolboxSecurityWrapper {
 
             String CAT_NAMESPACE = "http://www.opengis.net/cat/csw/2.0.2";
             String ORD_NAMESPACE = "http://earth.esa.int/hma/ordering";
+            
+            // The following namespaces are related to the SPS interface
+            String SPS_NAMESPACE =    "http://www.opengis.net/sps/2.0";
+            String EO_SPS_NAMESPACE = "http://www.opengis.net/eosps/2.0";
+            String SWES_NAMESPACE =   "http://www.opengis.net/swes/2.0";
 
             String exceptionReportVersion = null;
             String exceptionCode = null;
 
-
+            String OWS_NAMESPACE = "http://www.opengis.net/ows";
+            
             if (requestNamespace.getNamespaceURI().compareTo(CAT_NAMESPACE) == 0) {
                 exceptionReportVersion = "1.2.0";
                 exceptionCode = "wrs:InvalidRequest";
+            } else if (requestNamespace.getNamespaceURI().compareTo(SPS_NAMESPACE) == 0
+                    || requestNamespace.getNamespaceURI().compareTo(EO_SPS_NAMESPACE) == 0
+                    || requestNamespace.getNamespaceURI().compareTo(SWES_NAMESPACE) == 0) {
+                exceptionReportVersion = "1.1.0";
+                exceptionCode = "NoApplicableCode";
+                OWS_NAMESPACE = "http://www.opengis.net/ows/1.1";
             } else {
                 exceptionReportVersion = "1.0.0";
                 exceptionCode = "NoApplicableCode";
@@ -606,7 +610,7 @@ public class ToolboxSecurityWrapper {
 
             OMFactory factory = OMAbstractFactory.getOMFactory();
 
-            OMNamespace owsNamespace = factory.createOMNamespace("http://www.opengis.net/ows", "ows");
+            OMNamespace owsNamespace = factory.createOMNamespace(OWS_NAMESPACE, "ows");
 
             OMElement exceptionReportElement = factory.createOMElement("ExceptionReport", owsNamespace);
             exceptionReportElement.addAttribute("version", exceptionReportVersion, null);
